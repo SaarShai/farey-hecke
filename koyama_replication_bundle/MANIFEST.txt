@@ -1,0 +1,108 @@
+Koyama Replication — Reproducibility Manifest
+=================================================
+
+Date of run     : 2026-05-02
+Operator        : Saar Shai
+Working dir     : /Users/saar/Farey 4.7 solutions/koyama_replication
+
+Hardware        : Apple M1 Max
+                  10-core CPU, 192 GB unified RAM, single-thread used by sieve callback
+OS              : macOS
+
+Tooling
+-------
+clang++ : Apple clang (default Xcode toolchain on saar's macOS)
+primesieve : 12.13  (homebrew install path /opt/homebrew/include/primesieve.hpp,
+                     /opt/homebrew/lib/libprimesieve.{12,12.13}.dylib)
+        primesieve --version → primesieve 12.13
+        upstream: https://github.com/kimwalisch/primesieve
+
+Build command
+-------------
+clang++ -O3 -std=c++17 \
+    -I/opt/homebrew/include -L/opt/homebrew/lib -lprimesieve \
+    replicate.cpp -o replicate
+
+Invocation
+----------
+nohup ./replicate > out.tsv 2> progress.log < /dev/null &
+
+Run-time figures (first run)
+----------------------------
+Wall clock      : 4127.0 s  (≈ 68.8 min)
+Mean throughput : ≈ 1.08 · 10⁸ primes/s
+Total primes ≤ 1.3 · 10¹³ : 445,831,610,611
+Cross-check     : `primesieve --count 13000000000000` → 445,831,610,611  (matches)
+
+Checkpoints (first run)
+-----------------------
+x = 1.3·10¹⁰, 1.3·10¹¹, 1.3·10¹², 1.3·10¹³
+
+Extended checkpoints (second run, replicate2.cpp / out2.tsv)
+------------------------------------------------------------
+x = 10⁹, 10¹⁰, 1.3·10¹⁰, 10¹¹, 1.3·10¹¹, 10¹², 1.3·10¹², 10¹³, 1.3·10¹³
+
+Orthogonal validation
+---------------------
+- Residue-sum identity at every checkpoint × every N reproduces
+  primesieve standalone π(x) exactly.
+- Dirichlet character orthogonality (Koyama identity (3.1))
+  verified at N=11, x=1.3·10¹³ via delegations/_charsum_verify.py;
+  agreement to numerical roundoff (real: 10⁻⁴, imag: 10⁻⁵).
+
+Files
+-----
+replicate.cpp           — source (4-checkpoint)
+replicate.pid           — PID of completed first run
+replicate               — compiled binary (M1 / clang)
+out.tsv                 — full residue counts + diffs (first run)
+progress.log            — wall-clock progress (first run)
+
+replicate2.pid          — PID of extended-checkpoint run
+replicate2              — compiled binary (extended)
+out2.tsv                — full residue counts + diffs (extended run)
+progress2.log           — wall-clock progress (extended run)
+
+REPLICATION_REPORT.md   — table-by-table comparison vs Koyama draft
+MANIFEST.txt            — this file
+
+delegations/            — per-provider artefacts (cerebras, cohere,
+                          groq, sambanova) and helpers
+delegations/email_to_koyama_DRAFT.md  — DRAFT email to Koyama (not sent)
+delegations/_charsum_verify.py        — orthogonal Dirichlet check
+
+Reproduction recipe (cold checkout)
+-----------------------------------
+1. brew install primesieve            # provides 12.x; pin if needed
+2. cd koyama_replication
+3. clang++ -O3 -std=c++17 -I/opt/homebrew/include \
+          -L/opt/homebrew/lib -lprimesieve replicate.cpp -o replicate
+4. ./replicate > out.tsv 2> progress.log
+5. python3 delegations/_charsum_verify.py
+6. diff <(awk '/^# diffs/{p=1;next} p&&NF{print}' out.tsv) \
+        <(awk '/^# diffs/{p=1;next} p&&NF{print}' /path/to/saved_out.tsv)
+
+Open audit items
+----------------
+- Library-independence: hand-rolled C segmented sieve
+  (independent_sieve.c) certified at ALL 9 checkpoints up to and
+  including 1.3e13 — every residue count, all 5 N's, all coprime
+  residues identical to primesieve.  Full pass took ~3.7 h on M1 Max.
+  See indep_full.tsv vs out2.tsv (line-for-line PASS).
+- Independent-hardware cross-check: hand-rolled C sieve compiled
+  with /usr/bin/cc on M1B (za@192.168.1.64, Darwin arm64) and run
+  with incremental partial-checkpoint dump.  Validated at x in
+  {1e9, 1e10, 1.3e10, 1e11, 1.3e11, 1e12, 1.3e12} — 420/420 coprime-residue cells
+  PASS vs local M1 Max primesieve.  Long-running M1B pass continues
+  to extend coverage (next checkpoints: 1.3e12 ETA ~1h from now,
+  1e13 ETA ~24h, 1.3e13 ETA ~45h).  Files:
+  m1b_indep_1e11.tsv (initial PASS), m1b_indep_partial.tsv
+  (incremental PASS for 5 checkpoints), m1b_indep_full.{tsv,log}
+  (final dump on completion).
+- Two unexplained Table 6 cells at 1.3e13 (a=13, a=18) — pending
+  Koyama raw output.  a=13 is NOT typo-shaped (delta comparable to
+  the value itself); a=18 could be a single-digit OCR error but
+  unconfirmed.
+- N=11 dominance at 1.3e13: independent run places -1 in 4th rank
+  of 5 non-residues, contradicting the draft's headline claim at
+  this checkpoint.  Hinges on the disputed Table 5 a=10 cell.

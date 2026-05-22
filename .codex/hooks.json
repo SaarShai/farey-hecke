@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ./.claude/skills/context-keeper/hook.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/za/Documents/Farey NOW/projects/agents-triage/hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+# L1 Index
+
+Compact pointers. Fetch details on demand.
+
+- start -> `start.md`
+- config -> `token-economy.yaml`
+- model registry -> `models.yaml`
+- L0 rules -> `L0_rules.md`
+- schema -> `schema.md`
+- wiki catalog -> `index.md`
+- log -> `log.md`
+- raw sources -> `raw/` (search only; fetch after relevance)
+- koyama_replication_bundle/BUNDLE_README (page) -> `koyama_replication_bundle/BUNDLE_README.md`
+- koyama_replication_bundle/CREST_EXECUTIVE_ONEPAGE (page) -> `koyama_replication_bundle/CREST_EXECUTIVE_ONEPAGE.md`
+- koyama_replication_bundle/REPLICATION_REPORT (page) -> `koyama_replication_bundle/REPLICATION_REPORT.md`
+- primes-equispaced/.claude/CLAUDE (page) -> `primes-equispaced/.claude/CLAUDE.md`
+- primes-equispaced/.claude/RUN_GUIDELINES (page) -> `primes-equispaced/.claude/RUN_GUIDELINES.md`
+- primes-equispaced/.lake/packages/Cli/README (page) -> `primes-equispaced/.lake/packages/Cli/README.md`
+- primes-equispaced/.lake/packages/LeanSearchClient/README (page) -> `primes-equispaced/.lake/packages/LeanSearchClient/README.md`
+- primes-equispaced/.lake/packages/Qq/README (page) -> `primes-equispaced/.lake/packages/Qq/README.md`
+- primes-equispaced/.lake/packages/aesop/README (page) -> `primes-equispaced/.lake/packages/aesop/README.md`
+- primes-equispaced/.lake/packages/batteries/README (page) -> `primes-equispaced/.lake/packages/batteries/README.md`
+- primes-equispaced/.lake/packages/batteries/docs/README (page) -> `primes-equispaced/.lake/packages/batteries/docs/README.md`
+- primes-equispaced/.lake/packages/importGraph/README (page) -> `primes-equispaced/.lake/packages/importGraph/README.md`
+- primes-equispaced/.lake/packages/importGraph/html-template/README (page) -> `primes-equispaced/.lake/packages/importGraph/html-template/README.md`
+- primes-equispaced/.lake/packages/mathlib/.github/CONTRIBUTING (page) -> `primes-equispaced/.lake/packages/mathlib/.github/CONTRIBUTING.md`
+- primes-equispaced/.lake/packages/mathlib/.github/PULL_REQUEST_TEMPLATE (page) -> `primes-equispaced/.lake/packages/mathlib/.github/PULL_REQUEST_TEMPLATE.md`
+- primes-equispaced/.lake/packages/mathlib/Archive/Imo/README (page) -> `primes-equispaced/.lake/packages/mathlib/Archive/Imo/README.md`
+- primes-equispaced/.lake/packages/mathlib/Archive/README (page) -> `primes-equispaced/.lake/packages/mathlib/Archive/README.md`
+- primes-equispaced/.lake/packages/mathlib/Archive/Wiedijk100Theorems/README (page) -> `primes-equispaced/.lake/packages/mathlib/Archive/Wiedijk100Theorems/README.md`
+- primes-equispaced/.lake/packages/mathlib/CITATION (page) -> `primes-equispaced/.lake/packages/mathlib/CITATION.md`
+- primes-equispaced/.lake/packages/mathlib/CODE_OF_CONDUCT (page) -> `primes-equispaced/.lake/packages/mathlib/CODE_OF_CONDUCT.md`
+- primes-equispaced/.lake/packages/mathlib/Cache/README (page) -> `primes-equispaced/.lake/packages/mathlib/Cache/README.md`
+- primes-equispaced/.lake/packages/mathlib/DownstreamTest/README (page) -> `primes-equispaced/.lake/packages/mathlib/DownstreamTest/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/Notation/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/Notation/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/Cone/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/Cone/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/Cone/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/Cone/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/Growth/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/Growth/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Mathport/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Mathport/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Order/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Order/README.md`
+- primes-equispaced/.lake/packages/mathlib/README (page) -> `primes-equispaced/.lake/packages/mathlib/README.md`
