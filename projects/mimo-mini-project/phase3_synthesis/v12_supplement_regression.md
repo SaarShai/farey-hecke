@@ -58,3 +58,29 @@ Either way: the **leading-order coefficient 1/(6Q) is empirically validated to ~
 - 50+ more (Q, NW(Q)) data points to drive slope SE below 0.02 and test b = 1.0 cleanly
 - Dense sweep of Q where |M(Q)| is locally extremal (Mertens conjecture-disprover regions)
 - Whether the residual after subtracting M²/(6Q) is itself correlated with any other arithmetic invariant
+
+## Self-criticism: stress tests reveal the correlation is outlier-driven
+
+| Subset | n | Max |M(Q)| | Pearson | Notes |
+|---|---|---|---|---|
+| All 28 (with plateau) | 28 | 230 | 0.97 | Inflated by 6-pt plateau |
+| Deduplicated | 23 | 230 | 0.93 | Honest |
+| Uniform 50k grid only (no selection) | 16 | 230 | **0.94** | **Survives — real signal** |
+| Grid + off-grid primes | 20 | 368 | 0.96 | All unbiased on NW |
+| Spearman rank (combined 20 unbiased) | 20 | — | **0.68** | **Rank correlation more moderate** |
+| Spearman rank (uniform grid) | 16 | — | 0.62 | |
+| Drop top 6 |M| | 17 | 163 | 0.73 | Weakens |
+| Drop |M| > 100 | 16 | 100 | **0.50** | Weak at small \|M\| |
+| Smaller \|M\| half (\|M\|<50) | 11 | 50 | **−0.59** | **NEGATIVE in low-\|M| regime** |
+
+**Honest interpretation**:
+- The Pearson 0.94-0.97 headline is driven by **3-6 large-|M| outlier Q values**
+- For small |M(Q)|, the M²/(6Q) term is small relative to other (m≥2) variance in NW(Q), so the correlation is dominated by noise
+- The off-grid predictions still landed within 0.5% — meaning when |M(Q)| IS large, the formula's quantitative prediction is correct
+- A more honest framing: **"For Q with anomalously large |M(Q)|, NW(Q) − C ≈ M(Q)²/(6Q) with ~10% accuracy"** rather than "Pearson 0.97 universally"
+- The Spearman rank of 0.62-0.68 is a more conservative summary of the universal trend
+
+This does NOT refute the Mertens-Mikolás mechanism. It refines the claim:
+- **Mechanism is real** (off-grid primes match precisely)
+- **Magnitude only dominates NW(Q) − C when |M(Q)| is large**
+- **At small |M(Q)|, NW(Q) − C has additional variance from m≥2 terms, fluctuating around zero or a small constant**
