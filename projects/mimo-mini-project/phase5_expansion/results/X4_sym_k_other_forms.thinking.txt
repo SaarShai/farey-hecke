@@ -1,0 +1,591 @@
+Let me work through each part carefully.
+
+## A. Level-1 weight-k modular forms
+
+For S_k(SL_2(Z)), the dimensions are:
+- k=12: dim=1
+- k=16: dim=1
+- k=18: dim=1
+- k=20: dim=1
+- k=22: dim=1
+- k=26: dim=1
+
+These are all 1-dimensional spaces, so there's a unique normalized newform in each.
+
+These are well-known. Let me recall/derive the Fourier coefficients.
+
+The unique normalized cusp form in S_k(SL_2(Z)) for k ∈ {12,16,18,20,22,26} can be computed. They are all on LMFDB.
+
+For weight 12: Δ = q - 24q² + 252q³ - 1472q⁴ + 4830q⁵ - ...
+a(2) = -24, a(3) = 252, a(5) = 4830, a(7) = -16744
+
+For weight 16: This is E_4 · Δ = (1 + 240q + 2160q² + ...) · (q - 24q² + 252q³ + ...)
+Actually, E_4 = 1 + 240Σσ_3(n)q^n. And Δ = q - 24q² + 252q³ + ...
+So E_4 · Δ has leading term q.
+
+Let me compute:
+E_4 · Δ = (1 + 240q + 2160q² + 6720q³ + 17520q⁴ + 30240q⁵ + ...) · (q - 24q² + 252q³ - 1472q⁴ + 4830q⁵ + ...)
+
+Coefficient of q: 1
+Coefficient of q²: -24 + 240 = 216
+Coefficient of q³: 252 + 240·(-24) + 2160 = 252 - 5760 + 2160 = -3348
+Coefficient of q⁴: -1472 + 240·252 + 2160·(-24) + 6720 = -1472 + 60480 - 51840 + 6720 = 13888
+Coefficient of q⁵: 4830 + 240·(-1472) + 2160·252 + 6720·(-24) + 17520 = 4830 - 353280 + 544320 - 161280 + 17520 = 52110
+
+Wait, let me redo this more carefully. S_16(SL_2(Z)) is 1-dimensional. The unique newform is E_4 · Δ divided by its leading coefficient (which is 1 already since the leading coefficient of E_4·Δ is 1).
+
+Hmm, but actually, S_16 = E_4 · S_12? No, that's not right in general. Let me think again.
+
+The space S_k(SL_2(Z)) for level 1 is spanned by products of Eisenstein series and cusp forms. For weight 16:
+S_16 has dimension 1.
+E_16 has dimension... The Eisenstein series E_16 exists.
+
+Actually, the cusp form of weight 16 is E_4 · Δ. Let me verify: E_4 has weight 4, Δ has weight 12, so E_4 · Δ has weight 16. Since Δ is a cusp form, the product E_4 · Δ is a cusp form. And since dim S_16 = 1, this must be the unique normalized cusp form (up to scaling).
+
+The normalized form would be E_4 · Δ / (leading coefficient of E_4 · Δ). The leading coefficient of E_4 · Δ is 1 (since both E_4 and Δ have leading coefficient 1 when written as q-expansions with leading term 1·q^1 and 1 + ... respectively; E_4 starts with 1 and Δ starts with q, so E_4 · Δ starts with q).
+
+So the weight 16 newform is f_16 = E_4 · Δ.
+
+a(2) = 216
+a(3) = -3348
+a(5) = 52110
+
+Hmm, let me double-check a(3). 
+
+E_4 = 1 + 240q + 2160q² + 6720q³ + ...
+Δ = q - 24q² + 252q³ + ...
+
+Coefficient of q³ in E_4 · Δ:
+= 1·252 + 240·(-24) + 2160·1
+= 252 - 5760 + 2160
+= -3348
+
+OK. Let me also compute a(7).
+
+Coefficient of q⁷ in E_4 · Δ:
+We need:
+E_4 coefficients: e(0)=1, e(1)=240, e(2)=2160, e(3)=6720, e(4)=17520, e(5)=30240, e(6)=60480
+
+Wait, I need the coefficients of E_4 more carefully. E_4 = 1 + 240 Σ_{n≥1} σ_3(n) q^n where σ_3(n) = Σ_{d|n} d^3.
+
+σ_3(1) = 1
+σ_3(2) = 1 + 8 = 9
+σ_3(3) = 1 + 27 = 28
+σ_3(4) = 1 + 8 + 64 = 73
+σ_3(5) = 1 + 125 = 126
+σ_3(6) = 1 + 8 + 27 + 216 = 252
+
+So E_4 = 1 + 240q + 2160q² + 6720q³ + 17520q⁴ + 30240q⁵ + 60480q⁶ + ...
+
+And Δ coefficients:
+τ(1) = 1
+τ(2) = -24
+τ(3) = 252
+τ(4) = -1472
+τ(5) = 4830
+τ(6) = -6048
+τ(7) = -16744
+
+Coefficient of q⁷ in E_4 · Δ:
+= e(0)τ(7) + e(1)τ(6) + e(2)τ(5) + e(3)τ(4) + e(4)τ(3) + e(5)τ(2) + e(6)τ(1)
+= 1·(-16744) + 240·(-6048) + 2160·4830 + 6720·(-1472) + 17520·252 + 30240·(-24) + 60480·1
+= -16744 - 1451520 + 10432800 - 9891840 + 4415040 - 725760 + 60480
+= let me compute step by step:
+-16744 - 1451520 = -1468264
+-1468264 + 10432800 = 8964536
+8964536 - 9891840 = -927304
+-927304 + 4415040 = 3487736
+3487736 - 725760 = 2761976
+2761976 + 60480 = 2822456
+
+Hmm, let me double check. Actually, I should look this up or compute differently.
+
+Actually, I realize I should be more careful. Let me verify these against known values.
+
+The LMFDB label for the weight 16 level 1 newform should be 1.16.a.a.
+
+Let me try to verify a(2) = 216 for weight 16.
+
+Actually, there's a formula. The Hecke eigenvalue a(p) for the level 1 weight k newform can be computed using the relation to Eisenstein series and the Dedekind eta function. But let me just trust the computation for now and verify via alternative means.
+
+For weight 18:
+S_18 is 1-dimensional, spanned by E_6 · Δ (where E_6 is the weight 6 Eisenstein series).
+
+E_6 = 1 - 504 Σ_{n≥1} σ_5(n) q^n
+
+σ_5(1) = 1
+σ_5(2) = 1 + 32 = 33
+σ_5(3) = 1 + 243 = 244
+σ_5(4) = 1 + 32 + 1024 = 1057
+σ_5(5) = 1 + 3125 = 3126
+σ_5(6) = 1 + 32 + 243 + 7776 = 8052
+
+E_6 = 1 - 504q - 16632q² - 122976q³ - 532728q⁴ - 1575504q⁵ - 4058208q⁶ - ...
+
+f_18 = E_6 · Δ
+
+a(2) = 1·(-24) + (-504)·1 = -24 - 504 = -528
+a(3) = 1·252 + (-504)·(-24) + (-16632)·1 = 252 + 12096 - 16632 = -4284
+
+Hmm, let me double check. Actually, I'm not sure E_6·Δ is the right cusp form. S_18 is 1-dimensional, and it's spanned by E_6·Δ since E_6 has weight 6 and Δ has weight 12, giving weight 18.
+
+a(5):
+= 1·4830 + (-504)·(-1472) + (-16632)·252 + (-122976)·(-24) + (-532728)·1
+= 4830 + 741888 - 4191264 + 2951424 - 532728
+= 4830 + 741888 - 4191264 + 2951424 - 532728
+= 4830 + 741888 = 746718
+746718 - 4191264 = -3444546
+-3444546 + 2951424 = -493122
+-493122 - 532728 = -1025850
+
+For weight 20: S_20 has dimension 1. The cusp form is E_4² · Δ (weight 8 + 12 = 20) or E_8 · Δ (weight 8 + 12 = 20). Wait, E_8 = E_4² (since E_8 = E_4² as modular forms... actually this is correct: E_4² = E_8 for level 1).
+
+So f_20 = E_8 · Δ = E_4² · Δ.
+
+Hmm, but that's the same as E_4 · f_16. Actually, for a space that's 1-dimensional, any generator works and we normalize.
+
+Actually, for a cusp form space that's 1-dimensional, the unique normalized newform f has a(1) = 1. If we take g = E_4 · Δ (weight 16), then g has a(1) = 1 already, so f_16 = E_4 · Δ is already normalized.
+
+For weight 20: f_20 = E_4 · f_16 = E_4 · E_4 · Δ = E_4² · Δ = E_8 · Δ.
+
+Let me compute a(2) for f_20:
+
+E_8 = 1 + 480 Σ σ_7(n) q^n
+σ_7(1) = 1
+σ_7(2) = 1 + 128 = 129
+
+E_8 = 1 + 480q + 480·129 q² + ... = 1 + 480q + 61920q² + ...
+
+Actually, this is getting complicated. Let me use the LMFDB approach.
+
+Let me look up what I know. The LMFDB has these forms. The labels would be:
+- 1.12.a.a (weight 12, Δ)
+- 1.16.a.a (weight 16)
+- 1.18.a.a (weight 18)
+- 1.20.a.a (weight 20)
+- 1.22.a.a (weight 22)
+- 1.26.a.a (weight 26)
+
+For the Fourier coefficients, let me try to compute or recall them.
+
+Actually, I know the following well-known facts:
+
+For the level 1 weight k newforms (k ∈ {12,16,18,20,22,26}):
+
+Weight 12 (Δ): a₂ = -24, a₃ = 252, a₅ = 4830, a₇ = -16744
+
+Weight 16: a₂ = 216, a₃ = -3348, a₅ = 52110, a₇ = -102036
+
+Hmm, I'm not sure about a₇ for weight 16. Let me try to compute.
+
+Actually, let me try a different approach. I know that the weight 16 form is E_4 · Δ, and I computed:
+a(2) = 216
+a(3) = -3348
+
+For a(5):
+E_4 · Δ coefficient of q⁵:
+= e(0)τ(5) + e(1)τ(4) + e(2)τ(3) + e(3)τ(2) + e(4)τ(1)
+= 1·4830 + 240·(-1472) + 2160·252 + 6720·(-24) + 17520·1
+= 4830 - 353280 + 544320 - 161280 + 17520
+= 4830 - 353280 = -348450
+-348450 + 544320 = 195870
+195870 - 161280 = 34590
+34590 + 17520 = 52110
+
+So a(5) = 52110 for weight 16. ✓
+
+For a(7):
+= e(0)τ(7) + e(1)τ(6) + e(2)τ(5) + e(3)τ(4) + e(4)τ(3) + e(5)τ(2) + e(6)τ(1)
+
+I need τ(6) = -6048 and σ_3(6).
+
+σ_3(6) = σ_3(2·3) = σ_3(2)·σ_3(3) = 9·28 = 252
+
+e(6) = 240·252 = 60480
+
+So:
+= 1·(-16744) + 240·(-6048) + 2160·4830 + 6720·(-1472) + 17520·252 + 30240·(-24) + 60480·1
+
+Let me compute:
+1·(-16744) = -16744
+240·(-6048) = -1451520
+2160·4830 = 10432800
+6720·(-1472) = -9891840
+17520·252 = 4415040
+30240·(-24) = -725760
+60480·1 = 60480
+
+Sum: -16744 - 1451520 + 10432800 - 9891840 + 4415040 - 725760 + 60480
+
+Let me add step by step:
+-16744 - 1451520 = -1468264
+-1468264 + 10432800 = 8964536
+8964536 - 9891840 = -927304
+-927304 + 4415040 = 3487736
+3487736 - 725760 = 2761976
+2761976 + 60480 = 2822456
+
+Hmm, that gives a(7) = 2822456 for weight 16. Let me verify this against LMFDB if I can recall.
+
+Actually, I'm not confident in this value. Let me try a different check. The Hecke eigenvalue should satisfy the Ramanujan bound |a(p)| ≤ 2p^{(k-1)/2}.
+
+For weight 16, p=7: |a(7)| ≤ 2·7^{15/2} = 2·7^{7.5} ≈ 2·256,572,640 ≈ 513,145,280.
+
+My value 2822456 is well within this bound. ✓
+
+Actually, let me try to verify by computing the product E_4² · Δ in a different way. E_4² = E_8 (up to normalization). 
+
+E_8 = 1 + 480 Σ σ_7(n) q^n
+
+σ_7(1) = 1
+σ_7(2) = 1+128 = 129
+σ_7(3) = 1+2187 = 2188
+σ_7(4) = 1+128+16384 = 16513
+
+E_8 = 1 + 480q + 61920q² + 1050240q³ + ...
+
+f_20 = E_8 · Δ
+a(2) = 1·(-24) + 480·1 = 456
+a(3) = 1·252 + 480·(-24) + 61920·1 = 252 - 11520 + 61920 = 50652
+
+Hmm wait, that doesn't seem right. Let me reconsider.
+
+Actually, for weight 20, the cusp form is the unique element of S_20, which is E_4²·Δ = E_8·Δ.
+
+a(2) = 480 - 24 = 456
+
+Wait, no: the coefficient of q² in E_8·Δ is:
+e_8(0)·τ(2) + e_8(1)·τ(1) = 1·(-24) + 480·1 = 456.
+
+And the coefficient of q³:
+e_8(0)·τ(3) + e_8(1)·τ(2) + e_8(2)·τ(1) = 252 + 480·(-24) + 61920·1 = 252 - 11520 + 61920 = 50652.
+
+Let me verify the Ramanujan bound: |a(3)| ≤ 2·3^{19/2} = 2·3^{9.5} ≈ 2·3·3^9 = 6·19683 ≈ hmm, 3^{9.5} = 3^9 · √3 = 19683 · 1.732 ≈ 34092, so bound ≈ 68184. My value 50652 is within the bound. ✓
+
+OK, but this is getting tedious. Let me just list the first few coefficients for each weight.
+
+Actually, I realize I should be more systematic. Let me use the fact that for level 1, the normalized cusp forms can be written as:
+
+Weight 12: Δ
+Weight 16: E_4 · Δ
+Weight 18: E_6 · Δ  
+Weight 20: E_4² · Δ = E_8 · Δ
+Weight 22: E_4 · E_6 · Δ = E_{10} · Δ
+Weight 26: E_4² · E_6 · Δ = E_4 · E_{10} · Δ ... hmm, actually I need to think about which products give which weights.
+
+The possible weights for cusp forms from level 1 are: 12, 16, 18, 20, 22, 24, 26, 28, ...
+
+The dimension of S_k for k=24 is 2, so there's not a unique form there.
+
+For k ∈ {12, 16, 18, 20, 22, 26}, the space is 1-dimensional, so the form is unique.
+
+Weight 12: Δ (the Ramanujan tau function)
+Weight 16: E_4 · Δ
+Weight 18: E_6 · Δ
+Weight 20: E_4² · Δ (which equals E_8 · Δ since E_8 = E_4²)
+Weight 22: E_4 · E_6 · Δ (which equals E_{10} · Δ since E_{10} = E_4 · E_6)
+
+Hmm wait, is E_{10} = E_4 · E_6? Let me think. E_4 and E_6 are the unique Eisenstein series of weights 4 and 6. Their product E_4·E_6 has weight 10. Since the Eisenstein space of weight 10 is 1-dimensional, E_{10} must be proportional to E_4·E_6. And by normalization (leading coefficient 1), E_{10} = E_4·E_6.
+
+So f_22 = E_{10} · Δ.
+
+Weight 26: The cusp form is... We need a product of Eisenstein series and Δ that has weight 26. The possibilities are:
+- E_{14} · Δ (weight 14+12=26)
+- E_4 · E_{10} · Δ = E_4² · E_6 · Δ (weight 4+10+12=26)
+- E_6 · E_8 · Δ (weight 6+8+12=26)
+- E_4³ · Δ (weight 12+12=24, nope)
+
+Actually, E_{14} = E_4 · E_{10} = E_4² · E_6 (since the Eisenstein space is 1-dimensional for each weight). So they're all the same up to normalization.
+
+Actually wait. Is E_{14} = E_4 · E_{10}? The Eisenstein space M_k^{Eis} is 1-dimensional for each even k ≥ 4 (or k=0). So yes, E_{14} is a scalar multiple of E_4 · E_{10}, and by normalization E_{14} = E_4 · E_{10}.
+
+So f_26 = E_{14} · Δ = E_4 · E_{10} · Δ = E_4² · E_6 · Δ.
+
+OK, this is getting complex. Let me just try to state the first few coefficients for each, computing what I can.
+
+Actually, I think the most honest approach is to state what I can verify computationally. Let me use the following:
+
+For level 1 weight k newform f_k, the Hecke eigenvalues satisfy a recursion related to the representation theory.
+
+Let me compute the first few a(p) for each weight.
+
+Actually, I realize I can use the LMFDB API or known tables. Let me try to recall or compute carefully.
+
+Here's what I know from memory/computation:
+
+**Weight 12 (Δ):**
+a(2) = -24, a(3) = 252, a(5) = 4830, a(7) = -16744
+
+**Weight 16 (E_4 · Δ):**
+a(2) = 216, a(3) = -3348, a(5) = 52110, a(7) = ?
+
+Let me compute a(7) more carefully.
+
+Coefficients of E_4: e(n) = 240σ_3(n) for n ≥ 1, e(0) = 1.
+Coefficients of Δ: τ(n).
+
+e(0) = 1, e(1) = 240, e(2) = 2160, e(3) = 6720, e(4) = 17520, e(5) = 30240, e(6) = 60480
+
+τ(1) = 1, τ(2) = -24, τ(3) = 252, τ(4) = -1472, τ(5) = 4830, τ(6) = -6048, τ(7) = -16744
+
+a(7) for f_16 = E_4·Δ:
+= e(0)τ(7) + e(1)τ(6) + e(2)τ(5) + e(3)τ(4) + e(4)τ(3) + e(5)τ(2) + e(6)τ(1)
+= 1·(-16744) + 240·(-6048) + 2160·4830 + 6720·(-1472) + 17520·252 + 30240·(-24) + 60480·1
+
+Let me compute each term:
+-16744
+-1451520
++10432800
+-9891840
++4415040
+-725760
++60480
+
+Sum: Let me group:
+(-16744 - 1451520) = -1468264
+(+10432800 - 9891840) = 540960
+(+4415040 - 725760) = 3689280
+(+60480) = 60480
+
+Total: -1468264 + 540960 + 3689280 + 60480 = -1468264 + 4290720 = 2822456
+
+So a(7) = 2822456 for weight 16.
+
+Hmm, but actually I want to double-check this. Let me verify with a different approach.
+
+We know that f_16 is a Hecke eigenform with eigenvalue a(p) at prime p. It satisfies the Hecke relations:
+a(m)a(n) = Σ_{d|(m,n)} d^{k-1} a(mn/d²) for k=16.
+
+So a(2)² = a(4) + 2^{15} = a(4) + 32768.
+216² = 46656, so a(4) = 46656 - 32768 = 13888.
+
+Let me verify: coefficient of q⁴ in E_4·Δ:
+= e(0)τ(4) + e(1)τ(3) + e(2)τ(2) + e(3)τ(1)
+= (-1472) + 240·252 + 2160·(-24) + 6720·1
+= -1472 + 60480 - 51840 + 6720
+= 13888 ✓
+
+Great. Now a(2)·a(3) = a(6).
+216 · (-3348) = -723168.
+
+Hecke relation: a(2)a(3) = a(6) (since gcd(2,3)=1, no extra terms).
+
+Coefficient of q⁶ in E_4·Δ:
+= e(0)τ(6) + e(1)τ(5) + e(2)τ(4) + e(3)τ(3) + e(4)τ(2) + e(5)τ(1)
+= -6048 + 240·4830 + 2160·(-1472) + 6720·252 + 17520·(-24) + 30240·1
+= -6048 + 1159200 - 3179520 + 1693440 - 420480 + 30240
+= -6048 + 1159200 = 1153152
+1153152 - 3179520 = -2026368
+-2026368 + 1693440 = -332928
+-332928 - 420480 = -753408
+-753408 + 30240 = -723168
+
+So a(6) = -723168 = 216 · (-3348) = -723168. ✓
+
+Now let me check a(7). I'll use the Hecke relation: a(2)a(7) = a(14) if gcd(2,7)=1.
+Also a(3)a(7) = a(21) and a(5)a(7) = a(35).
+
+Hmm, these are hard to verify without computing more coefficients.
+
+Let me try: a(7)² = a(49) + 7^{15} = a(49) + 4747561509943.
+
+Actually, this is getting unwieldy. Let me just trust my computation.
+
+Now for **Weight 18 (E_6 · Δ):**
+
+E_6 = 1 - 504 Σ σ_5(n) q^n
+
+e_6(0) = 1, e_6(1) = -504, e_6(2) = -504·33 = -16632, e_6(3) = -504·244 = -122976, e_6(4) = -504·1057 = -532728, e_6(5) = -504·3126 = -1575504, e_6(6) = -504·8052 = -4058208
+
+a(2) = e_6(0)τ(2) + e_6(1)τ(1) = -24 + (-504) = -528
+a(3) = e_6(0)τ(3) + e_6(1)τ(2) + e_6(2)τ(1) = 252 + (-504)·(-24) + (-16632) = 252 + 12096 - 16632 = -4284
+a(5) = e_6(0)τ(5) + e_6(1)τ(4) + e_6(2)τ(3) + e_6(3)τ(2) + e_6(4)τ(1)
+= 4830 + (-504)·(-1472) + (-16632)·252 + (-122976)·(-24) + (-532728)·1
+= 4830 + 741888 - 4191264 + 2951424 - 532728
+= 4830 + 741888 = 746718
+746718 - 4191264 = -3444546
+-3444546 + 2951424 = -493122
+-493122 - 532728 = -1025850
+
+So a(5) = -1025850 for weight 18.
+
+a(7) = e_6(0)τ(7) + e_6(1)τ(6) + e_6(2)τ(5) + e_6(3)τ(4) + e_6(4)τ(3) + e_6(5)τ(2) + e_6(6)τ(1)
+= (-16744) + (-504)·(-6048) + (-16632)·4830 + (-122976)·(-1472) + (-532728)·252 + (-1575504)·(-24) + (-4058208)·1
+
+Let me compute each term:
+-16744
++3048192 (504·6048)
+-80332560 (16632·4830)
++181020672 (122976·1472)
+-134247456 (532728·252)
++37812096 (1575504·24)
+-4058208
+
+Sum:
+-16744 + 3048192 = 3031448
+3031448 - 80332560 = -77301112
+-77301112 + 181020672 = 103719560
+103719560 - 134247456 = -30527896
+-30527896 + 37812096 = 7284200
+7284200 - 4058208 = 3225992
+
+Hmm, I'm getting a(7) = 3225992 for weight 18. I'm not confident in this. Let me double-check a(2) at least.
+
+a(2) = -24 - 504 = -528. Let me verify via the Hecke relation.
+a(2)² = a(4) + 2^{17} = a(4) + 131072.
+528² = 278784, so a(4) = 278784 - 131072 = 147712.
+
+Let me compute a(4) directly:
+= e_6(0)τ(4) + e_6(1)τ(3) + e_6(2)τ(2) + e_6(3)τ(1)
+= -1472 + (-504)·252 + (-16632)·(-24) + (-122976)·1
+= -1472 - 127008 + 399168 - 122976
+= -1472 - 127008 = -128480
+-128480 + 399168 = 270688
+270688 - 122976 = 147712
+
+Great, this matches! ✓
+
+OK, I think my computations are correct. Let me continue.
+
+**Weight 20 (E_8 · Δ):**
+
+E_8 = 1 + 480 Σ σ_7(n) q^n
+
+σ_7(1) = 1
+σ_7(2) = 1 + 128 = 129
+σ_7(3) = 1 + 2187 = 2188
+σ_7(4) = 1 + 128 + 16384 = 16513
+σ_7(5) = 1 + 78125 = 78126
+σ_7(6) = σ_7(2)·σ_7(3) = 129·2188 = 282252
+
+e_8(0) = 1, e_8(1) = 480, e_8(2) = 480·129 = 61920, e_8(3) = 480·2188 = 1050240, e_8(4) = 480·16513 = 7926240, e_8(5) = 480·78126 = 37500480, e_8(6) = 480·282252 = 135480960
+
+a(2) = 1·(-24) + 480·1 = 456
+a(3) = 252 + 480·(-24) + 61920·1 = 252 - 11520 + 61920 = 50652
+a(5) = 4830 + 480·(-1472) + 61920·252 + 1050240·(-24) + 7926240·1
+= 4830 - 706560 + 15603840 - 25205760 + 7926240
+= 4830 - 706560 = -701730
+-701730 + 15603840 = 14902110
+14902110 - 25205760 = -10303650
+-10303650 + 7926240 = -2377410
+
+a(5) = -2377410 for weight 20.
+
+Let me verify a(2):
+a(2)² = a(4) + 2^{19} = a(4) + 524288
+456² = 207936, so a(4) = 207936 - 524288 = -316352.
+
+Direct computation of a(4):
+= e_8(0)τ(4) + e_8(1)τ(3) + e_8(2)τ(2) + e_8(3)τ(1)
+= -1472 + 480·252 + 61920·(-24) + 1050240·1
+= -1472 + 120960 - 1486080 + 1050240
+= -1472 + 120960 = 119488
+119488 - 1486080 = -1366592
+-1366592 + 1050240 = -316352 ✓
+
+Great!
+
+For **Weight 22 (E_{10} · Δ):**
+
+E_{10} = E_4 · E_6. Let me compute E_{10} coefficients.
+
+E_4 = 1 + 240q + 2160q² + 6720q³ + 17520q⁴ + 30240q⁵ + 60480q⁶ + ...
+E_6 = 1 - 504q - 16632q² - 122976q³ - 532728q⁴ - 1575504q⁵ - 4058208q⁶ + ...
+
+E_{10} = E_4 · E_6:
+n=0: 1
+n=1: 240 - 504 = -264
+n=2: 2160 + 240·(-504) + (-16632) = 2160 - 120960 - 16632 = -135432
+
+Wait, that doesn't look right. Let me reconsider. E_{10} should be the normalized Eisenstein series of weight 10. Its q-expansion starts with 1 + c₁q + c₂q² + ...
+
+E_{10} = 1 + (B_{10}/10) · (-20/2) Σ σ_9(n) q^n ... hmm, I don't remember the exact formula.
+
+Actually, the Eisenstein series E_{2k} = 1 - (4k/B_{2k}) Σ σ_{2k-1}(n) q^n.
+
+For k=5 (weight 10): E_{10} = 1 - (20/B_{10}) Σ σ_9(n) q^n.
+
+B_{10} = 5/66.
+
+So -20/B_{10} = -20·66/5 = -264.
+
+E_{10} = 1 - 264 Σ σ_9(n) q^n.
+
+σ_9(1) = 1, σ_9(2) = 1 + 512 = 513.
+
+E_{10} = 1 - 264q - 264·513 q² + ... = 1 - 264q - 135432q² + ...
+
+Let me verify: the coefficient of q in E_4 · E_6 is 240 - 504 = -264. ✓
+
+The coefficient of q² in E_4 · E_6:
+= 2160 + 240·(-504) + (-16632) = 2160 - 120960 - 16632 = -135432. ✓
+
+
+
+So E_{10} = 1 - 264q - 135432q² - ...
+
+σ_9(3) = 1 + 19683 = 19684, so the q³ coefficient of E_{10} is -264·19684 = -5196576.
+
+f_22 = E_{10} · Δ:
+a(2) = 1·(-24) + (-264)·1 = -288
+a(3) = 252 + (-264)·(-24) + (-135432)·1 = 252 + 6336 - 135432 = -128844
+
+Hmm, let me double-check a(2).
+a(2)² = a(4) + 2^{21} = a(4) + 2097152.
+288² = 82944, so a(4) = 82944 - 2097152 = -2014208.
+
+Let me verify directly. I need E_{10} coefficients:
+e_{10}(0) = 1, e_{10}(1) = -264, e_{10}(2) = -135432, e_{10}(3) = -5196576
+
+a(4) = τ(4) + (-264)τ(3) + (-135432)τ(2) + (-5196576)τ(1)
+= -1472 + (-264)(252) + (-135432)(-24) + (-5196576)(1)
+= -1472 - 66528 + 3250368 - 5196576
+= -1472 - 66528 = -68000
+-68000 + 3250368 = 3182368
+3182368 - 5196576 = -2014208 ✓
+
+**Weight 26 (E_{14} · Δ = E_4 · E_{10} · Δ):**
+
+E_{14} = E_4 · E_{10}.
+
+E_{14} = 1 + (B_{14}/(-14))·... hmm.
+
+For k=7 (weight 14): E_{14} = 1 - (28/B_{14}) Σ σ_{13}(n) q^n.
+
+B_{14} = 7/6.
+
+So -28/B_{14} = -28·6/7 = -24.
+
+E_{14} = 1 - 24 Σ σ_{13}(n) q^n.
+
+σ_{13}(1) = 1, σ_{13}(2) = 1 + 8192 = 8193.
+
+E_{14} = 1 - 24q - 24·8193 q² + ... = 1 - 24q - 196632q² + ...
+
+Let me verify: the coefficient of q in E_4 · E_{10} is 240 + (-264) = -24. ✓
+
+f_26 = E_{14} · Δ:
+a(2) = 1·(-24) + (-24)·1 = -48
+a(3) = 252 + (-24)(-24) + (-196632)(1) = 252 + 576 - 196632 = -195804
+
+Let me verify a(2):
+a(2)² = a(4) + 2^{25} = a(4) + 33554432.
+48² = 2304, so a(4) = 2304 - 33554432 = -33552128.
+
+Hmm, that seems large. Let me double-check.
+
+Actually wait, weight 26: k-1 = 25, so the Hecke relation is a(2)² = a(4) + 2^{25} = a(4) + 33554432.
+And 48² = 2304, so a(4) = 2304 - 33554432 = -33552128.
+
+Let me compute a(4) directly:
+E_{14} coefficients: e_{14}(0) = 1, e_{14}(1) = -24, e_{14}(2) = -196632, e_{14}(3) = ...
+
+σ_{13}(3) = 1 + 3^{13} = 1 + 1594323 = 1594324.
+e_{14}(3) = -24 · 1594324 = -38263776.
+
+a(4) = τ(4) + (-24)τ(3) + (-196632)τ(2) + (-38263776)τ(1)
+= -1472 - 24·252 - 196632·(-24) - 38263776
+= -1472 - 6048 + 4719168 - 38263776
+= -1472 - 6048 = -7520
+-7520 + 4719168 = 4711648
+47

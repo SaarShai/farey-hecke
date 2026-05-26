@@ -1,0 +1,783 @@
+The task is to prove the formula for the Chebyshev bias in function fields: Δ(A) = -2 Re[χ̄(A) · log L(q^{-1/2}, χ)], where χ is a primitive character modulo M, and A is a class in (F_q[T]/M)^×.
+
+We have the bias defined as the difference in the count of primes in class A versus the identity class, normalized appropriately. Specifically, for degree N, the bias Δ(A; N) is the difference between π_A(N) and π_1(N), where π_A(N) is the number of primes of degree ≤ N with Frobenius in class A, etc. In the function field setting, primes are irreducible polynomials.
+
+From the definition:
+
+ψ(N; χ) = Σ_{deg(P^k) ≤ N} χ(P)^k · deg(P)
+
+This is the analog of the Chebyshev ψ function.
+
+The explicit formula for ψ(N; χ) involves the zeros of L(u, χ), where u = q^{-s}, and L(u, χ) is the L-function as a polynomial in u.
+
+For χ ≠ χ_0, L(u, χ) is a polynomial of degree d_χ = deg(M) - 1, with zeros on |u| = q^{-1/2} by Weil.
+
+The explicit formula gives:
+
+ψ(N; χ) = - Σ_{ρ} u_ρ^N + lower order terms, where u_ρ are the zeros.
+
+More precisely, from standard function field analytic number theory:
+
+ψ(N; χ) = - Σ_{j=1}^{d_χ} u_{χ,j}^N + O(1), where u_{χ,j} are the zeros of L(u, χ) on |u| = q^{-1/2}.
+
+Actually, let's recall the exact explicit formula.
+
+The L-function is L(u, χ) = exp( Σ_{k=1}^∞ (Σ_P χ(P)^k · (q^{k deg P} / k) u^{k deg P} ) )
+
+Wait, more standard: log L(u, χ) = Σ_P Σ_k χ(P)^k u^{k deg P} / k
+
+Then, ψ(N; χ) is defined as Σ_{deg(P^k) ≤ N} χ(P)^k deg P
+
+But for the sum over primes, it's related to the coefficient of u^N in the derivative of log L.
+
+Standard way: the explicit formula relates ψ(x; χ) to the zeros.
+
+In the function field case, for L(u, χ), with u = q^{-s}, and ψ(N; χ) for integers N.
+
+The generating function: Σ_{N=0}^∞ ψ(N; χ) u^N is related to log L(u, χ).
+
+Actually, log L(u, χ) = Σ_{N=1}^∞ (Σ_{deg P^k = N} χ(P)^k) u^N / (something)
+
+Let's define precisely.
+
+Let π_χ(N) = Σ_{deg P ≤ N} χ(P), but for ψ, it's weighted by degree.
+
+The function ψ_χ(N) = Σ_{deg(P^k) ≤ N} χ(P)^k deg P
+
+Then, the Dirichlet series analogue: Σ_n Λ(n) χ(n) n^{-s} = - L'(s, χ)/L(s, χ)
+
+In the function field, with u = q^{-s}, Σ_{N=0}^∞ ψ_χ(N) u^N = Σ_P Σ_k χ(P)^k deg(P) u^{k deg P} / (1 - u^{deg P}) or something, no.
+
+Actually, from the product formula:
+
+L(u, χ) = Π_P (1 - χ(P) u^{deg P})^{-1}
+
+So log L(u, χ) = Σ_P Σ_{k=1}^∞ χ(P)^k u^{k deg P} / k
+
+Therefore, d/du log L(u, χ) = Σ_P Σ_k χ(P)^k deg P · k u^{k deg P - 1} / k = Σ_P Σ_k χ(P)^k deg P u^{k deg P - 1}
+
+So u d/du log L(u, χ) = Σ_P Σ_k χ(P)^k deg P u^{k deg P}
+
+This is a Dirichlet series with coefficients for each degree.
+
+For integer N, let ψ_χ(N) = Σ_{k deg P = N} χ(P)^k deg P
+
+But in our definition, ψ(N; χ) = Σ_{deg(P^k) ≤ N} χ(P)^k deg P, so it's a partial sum.
+
+Yes, ψ(N; χ) = Σ_{m=1}^N Σ_{deg P^k = m} χ(P)^k deg P
+
+So ψ(N; χ) = Σ_{m=1}^N [u^m] (u d/du log L(u, χ))
+
+But to get the explicit formula, it's easier to use the contour integral or the expression for the sum.
+
+Standard function field explicit formula for ψ(x; χ) for x = q^N, but in our case, since degrees are integers, we can work with N.
+
+By Weil, for χ ≠ χ_0, L(u, χ) has d_χ = deg M - 1 zeros on |u| = q^{-1/2}, say u_1, ..., u_{d_χ} with |u_j| = q^{-1/2}.
+
+Then, for |u| < q^{-1/2}, log L(u, χ) = - Σ_{j=1}^{d_χ} log(1 - u / u_j) + O(1), but actually L(u, χ) is a polynomial, so L(u, χ) = c Π (1 - u / u_j) for some c, but since it's normalized, usually L(0, χ) = 1, so L(u, χ) = Π (1 - u / u_j) if degree d_χ, but zeros are u_j with |u_j| = q^{-1/2}, so L(u, χ) = Π_{j=1}^{d_χ} (1 - u / u_j) up to constant, but since L(0, χ) = 1, it is exactly L(u, χ) = Π_{j=1}^{d_χ} (1 - u / u_j) if there are no other factors, but for primitive χ, L(u, χ) is a polynomial of degree d_χ = deg M - 1.
+
+Yes, so L(u, χ) = Π_{j=1}^{d_χ} (1 - u / u_j)
+
+Thus log L(u, χ) = Σ_{j=1}^{d_χ} log(1 - u / u_j)
+
+Then ψ_χ(N) = Σ_{m=1}^N [u^m] (u d/du log L(u, χ))
+
+But [u^m] log L(u, χ) = - Σ_j (1/j) (1/u_j)^m for m ≥ 1, from the expansion log(1-v) = - Σ v^k / k
+
+Let v = u / u_j, so log(1 - u/u_j) = - Σ_{k=1}^∞ (u/u_j)^k / k
+
+So [u^m] log L(u, χ) = - Σ_j (1/m) u_j^{-m} for m ≥ 1
+
+Therefore, [u^m] (u d/du log L(u, χ)) = m [u^m] log L(u, χ) = - Σ_j u_j^{-m}
+
+From above, u d/du log L(u, χ) = Σ_P Σ_k χ(P)^k deg P u^{k deg P}
+
+So the coefficient of u^m in u d/du log L(u, χ) is Σ_{k deg P = m} χ(P)^k deg P
+
+Thus Σ_{k deg P = m} χ(P)^k deg P = - Σ_j u_j^{-m}
+
+Therefore, ψ_χ(N) = Σ_{m=1}^N Σ_{k deg P = m} χ(P)^k deg P = - Σ_{m=1}^N Σ_{j=1}^{d_χ} u_j^{-m}
+
+= - Σ_{j=1}^{d_χ} Σ_{m=1}^N u_j^{-m}
+
+For |u_j| = q^{-1/2}, so |u_j^{-1}| = q^{1/2} > 1, so the sum Σ_{m=1}^N u_j^{-m} grows like (u_j^{-1})^N / (u_j^{-1} - 1) for large N.
+
+Specifically, Σ_{m=1}^N r^m = r (r^N - 1)/(r - 1) for r ≠ 1.
+
+So for r_j = u_j^{-1}, |r_j| = q^{1/2}, so ψ_χ(N) = - Σ_j r_j (r_j^N - 1)/(r_j - 1)
+
+For large N, this is - Σ_j r_j^{N+1} / (r_j - 1) + O(1)
+
+Since |r_j| = q^{1/2}, the dominant term is when |r_j| is largest, but all |r_j| = q^{1/2}, so ψ_χ(N) = - Σ_j r_j^{N+1} / (r_j - 1) + O(1)
+
+But r_j^{N+1} = (u_j^{-1})^{N+1} = u_j^{-N-1}
+
+So ψ_χ(N) = - Σ_j u_j^{-N-1} / (u_j^{-1} - 1) + O(1) = - Σ_j u_j^{-N} / (1 - u_j) + O(1)
+
+Since 1/(u_j^{-1} - 1) = u_j / (1 - u_j)
+
+Yes, u_j^{-N-1} / (u_j^{-1} - 1) = u_j^{-N-1} / ( (1 - u_j)/u_j ) = u_j^{-N} / (1 - u_j)
+
+So ψ_χ(N) = - Σ_{j=1}^{d_χ} \frac{ u_j^{-N} }{ 1 - u_j } + O(1)
+
+Now, the bias Δ(A; N) is related to the difference between the count for class A and the identity class.
+
+Let π_A(N) be the number of primes of degree ≤ N with Frobenius in class A.
+
+More precisely, for the Chebyshev bias, it's often defined as the difference in the weighted sum.
+
+In the context, Δ(A; N) = π_A(N) - π_1(N), but normalized by the expected number, but for the asymptotic bias, we look at the difference.
+
+By character orthogonality:
+
+π_A(N) = \frac{1}{\phi(M)} \sum_{\chi} \bar{\chi}(A) \psi_\chi(N) / \deg P or something, but let's see.
+
+Standard way:
+
+The number of primes with Frobenius in A is \frac{1}{\phi(M)} \sum_{\chi} \bar{\chi}(A) \sum_P \chi(P) + \text{higher powers}
+
+But for the bias in prime counts, we need to be careful.
+
+Define S_A(N) = \sum_{\deg P \leq N} 1_{\text{Frob}_P \in A}
+
+Then by orthogonality, S_A(N) = \frac{1}{\phi(M)} \sum_{\chi} \bar{\chi}(A) S_\chi(N)
+
+where S_\chi(N) = \sum_{\deg P \leq N} \chi(P)
+
+But ψ includes higher powers and is weighted by deg P.
+
+For the bias, if we define ψ_A(N) = \sum_{\deg(P^k) \leq N} \mathbf{1}_{\text{Frob}_P \in A} \deg P, then similarly ψ_A(N) = \frac{1}{\phi(M)} \sum_{\chi} \bar{\chi}(A) \psi_\chi(N)
+
+Then the bias Δ(A; N) = ψ_A(N) - ψ_1(N) for the identity class, but ψ_1(N) is for class identity, which is ψ_{id}(N) = \sum_{\deg(P^k) \leq N} \mathbf{1}_{\text{Frob}_P = 1} \deg P
+
+But for the identity class, it's when χ(P) = 1 for all χ, but no.
+
+The identity class is A=1, so ψ_1(N) = \frac{1}{\phi(M)} \sum_{\chi} \bar{\chi}(1) \psi_\chi(N) = \frac{1}{\phi(M)} \sum_{\chi} \psi_\chi(N) since χ(1)=1.
+
+Similarly, ψ_A(N) = \frac{1}{\phi(M)} \sum_{\chi} \bar{\χ}(A) \psi_\chi(N)
+
+So ψ_A(N) - ψ_1(N) = \frac{1}{\phi(M)} \sum_{\chi} (\bar{\χ}(A) - 1) \psi_\chi(N)
+
+For χ = χ_0, the principal character, \bar{\χ}_0(A) - 1 = 0 if A is coprime to M, which it is since we're in (F_q[T]/M)^×, so \bar{\χ}_0(A) = 1, so the term for χ_0 is zero.
+
+Therefore, Δ(A; N) := ψ_A(N) - ψ_1(N) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \psi_\chi(N)
+
+From the explicit formula, for χ ≠ χ_0,
+
+ψ_\chi(N) = - \sum_{j=1}^{d_\chi} \frac{ u_j^{-N} }{ 1 - u_j } + c_\chi + o(1) for large N, where c_\chi is some constant.
+
+In the expression above, ψ_\chi(N) = - \sum_j \frac{ u_j^{-N} }{ 1 - u_j } + O(1), and the O(1) includes the constant from the lower limit of the sum.
+
+To extract the bias, which is the asymptotic difference, we need the term that grows, but since |u_j^{-1}| = q^{1/2} > 1, the sum grows, but for the bias, we look at the oscillatory part.
+
+The dominant term is - \sum_j \frac{ u_j^{-N} }{ 1 - u_j }
+
+But |u_j^{-N}| = q^{N/2}, so it grows, but when we sum over χ, it might average out or something.
+
+For the Chebyshev bias, we are interested in the sign of the difference, so we look at the real part.
+
+To define Δ(A) properly, we need to normalize.
+
+In the problem, Δ(A) is defined as the limit of the normalized bias.
+
+The formula given is Δ(A) = -2 Re[ \bar{\χ}(A) \log L(q^{-1/2}, \chi) ] for some χ, but χ is fixed for the character, but in the formula, it's for each χ? Let's see the empirical formula.
+
+The formula is Δ(A) ≡ -2 Re[χ̄(A) · log L(q^{−1/2}, χ)] but χ is not specified; it must be summed or something. No, in the context, for a fixed modulus M, and class A, the bias is given by that, but with what χ?
+
+Look back: "Δ(A) ≡ −2 Re[χ̄(A) · log L(q^{−1/2}, χ)]"
+
+But χ is a character modulo M, but which one? This doesn't make sense because it depends on χ.
+
+Perhaps it's for a specific χ, but the bias should be summed over all χ ≠ χ_0.
+
+Let's read carefully.
+
+"Δ(A) ≡ −2 Re[χ̄(A) · log L(q^{−1/2}, χ)]"
+
+And "log L(q^{−1/2}, χ)" so χ is given.
+
+But in the bias, for a fixed A, it should involve all characters.
+
+Perhaps it's a typo or misunderstanding.
+
+In the task, it says "Δ(A) ≡ −2 Re[χ̄(A) · log L(q^{−1/2}, χ)]", but χ is not specified. That can't be right.
+
+Perhaps for each χ, there is a contribution, but the formula is for the full Δ(A).
+
+Another possibility: in the expression, it's summed over χ, but written with χ.
+
+Let's look at the Abel summation part.
+
+The proof sketch says: "Compute the Abel limit using the explicit formula: Σ_N Δ(A; N) t^N = (1/φ(M)) Σ_{χ ≠ χ_0} (χ̄(A) - 1) Σ_N ψ(N; χ) t^N"
+
+Yes, that makes sense.
+
+So Δ(A; N) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \psi_\chi(N)
+
+Then the generating function Σ_N Δ(A; N) t^N = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \sum_N \psi_\chi(N) t^N
+
+Now, for fixed χ, we need to compute \sum_{N=0}^∞ \psi_\chi(N) t^N
+
+From the explicit formula, \psi_\chi(N) = - \sum_{j} \frac{ u_j^{-N} }{ 1 - u_j } + c_\chi + error, but the error is small.
+
+For the generating function, in the region |t| < q^{-1/2}, since |u_j^{-1}| = q^{1/2} > 1, |u_j^{-N} t^N| = | (u_j^{-1} t) |^N, and if |t| < q^{-1/2}, |u_j^{-1} t| < 1, so the series converges.
+
+From the Dirichlet series, we have \sum_{N=0}^∞ \psi_\chi(N) t^N = \sum_N \left( - \sum_j \frac{ u_j^{-N} }{ 1 - u_j } + c_\chi + r_N \right) t^N
+
+where r_N is error with \sum |r_N| |t|^N convergent for |t| < q^{-1/2}.
+
+But \sum_N t^N = 1/(1-t) for |t|<1, and \sum_N r_N t^N converges for |t| < q^{-1/2} since r_N = o(q^{N/2}) or something.
+
+From the definition, \psi_\chi(N) is partial sum, but the generating function can be related to log L.
+
+From earlier, u d/du log L(u, χ) = \sum_{m=1}^∞ a_m u^m where a_m = \sum_{k \deg P = m} \chi(P)^k \deg P
+
+Then \sum_{N=0}^∞ \psi_\chi(N) u^N = \sum_{N=0}^∞ \sum_{m=1}^N a_m u^N
+
+For N=0, ψ_χ(0) = 0 probably, assume sum from N=1.
+
+\sum_{N=1}^∞ \psi_\chi(N) u^N = \sum_{N=1}^∞ \sum_{m=1}^N a_m u^N = \sum_{m=1}^∞ a_m \sum_{N=m}^∞ u^N = \sum_{m=1}^∞ a_m u^m / (1-u) for |u|<1
+
+But u^m a_m is the coefficient, and \sum_{m=1}^∞ a_m u^m = u d/du log L(u, χ)
+
+So \sum_{N=1}^∞ \psi_\chi(N) u^N = \frac{1}{1-u} u \frac{d}{du} \log L(u, \chi)
+
+Yes!
+
+So \sum_{N=0}^∞ \psi_\chi(N) u^N = 0 + \frac{u}{1-u} \frac{d}{du} \log L(u, \chi)  \quad \text{for } |u| < 1
+
+But since L is polynomial, it's fine.
+
+Now, in terms of t, the generating function G_χ(t) = \sum_{N=0}^∞ \psi_\chi(N) t^N = \frac{t}{1-t} \frac{d}{dt} \log L(t, \chi)
+
+Then for the bias generating function:
+
+H_A(t) = \sum_{N=0}^∞ \Delta(A; N) t^N = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) G_\chi(t) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{t}{1-t} \frac{d}{dt} \log L(t, \chi)
+
+Now, we need to take the Abel limit as t → (q^{-1/2})^{-}, meaning t → q^{-1/2} from below on the real axis.
+
+So \lim_{t \to q^{-1/2}-} H_A(t)
+
+But H_A(t) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+As t → q^{-1/2}, L(t, \chi) has zeros at t = u_j with |u_j| = q^{-1/2}, so L(t, \chi) → 0 as t → u_j, but since t is real and q^{-1/2} is real, if there is a real zero, it might blow up, but for general χ, the zeros are complex.
+
+The key point is that at t = q^{-1/2}, L(t, \chi) may have a zero or not.
+
+For the Abel limit, we need to evaluate the limit.
+
+Since L(t, \chi) is analytic for |t| < q^{-1/2}, and we approach the boundary.
+
+But at t = q^{-1/2}, L(t, \chi) is defined since it's a polynomial.
+
+log L(t, \chi) has singularities at the zeros.
+
+The formula for Δ(A) is given as -2 Re[ \bar{\χ}(A) log L(q^{-1/2}, \chi) ], but χ is not specified. That must be a mistake.
+
+Perhaps for each χ, there is a term, but the full Δ(A) is the sum.
+
+Let's look at the expression.
+
+Perhaps the bias is defined as the coefficient or the value.
+
+Another thought: in the limit, the main contribution comes from the real part of the zeros.
+
+Perhaps for the normalized bias, we take t such that we average.
+
+The proof sketch says: "Abel limit as t → q^{-1/2}: use Abel's theorem."
+
+And "Σ_N Δ(A; N) t^N = (1/φ(M)) Σ_{χ ≠ χ_0} (χ̄(A) - 1) Σ_N ψ(N; χ) t^N"
+
+Then "Within the disk |t| < q^{-1/2}, we have Σ_N ψ(N; χ) t^N = (some explicit function of t and L(t, χ))"
+
+Which we have as G_χ(t) = \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+Then for the sum, H_A(t) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+Now, \frac{L'(t, \chi)}{L(t, \chi)} = \frac{d}{dt} \log L(t, \chi)
+
+As t → q^{-1/2}, we need the limit of this.
+
+But L(t, \chi) at t= q^{-1/2} is L(q^{-1/2}, \chi), which is a complex number, and log L is multi-valued, but we can take the principal value.
+
+The problem is that at t= q^{-1/2}, it may be zero for some χ.
+
+For example, if there is a real zero at t= q^{-1/2}, then L(t, \chi) = 0, so log L is -∞.
+
+But in general, for random χ, it might not be zero.
+
+To have a finite limit, we need to consider the behavior.
+
+Perhaps for the bias, we consider the Cesàro mean or something.
+
+Let's think about what Δ(A) represents.
+
+In the empirical formula, it's given as a number, so for each χ, but that can't be.
+
+Perhaps the formula is for the contribution from a single χ, but the full bias is the sum.
+
+But in the formula, it's written as Δ(A) = -2 Re[ \bar{\χ}(A) log L(q^{-1/2}, \chi) ], suggesting it's for fixed χ.
+
+But that doesn't make sense because for different A, it should depend on all χ.
+
+Unless χ is fixed for the modulus, but no.
+
+Another idea: perhaps for a given χ, the term is related, but let's look at the factor -2 Re.
+
+In the explicit formula, for ψ_χ(N), the main term is - \sum_j \frac{ u_j^{-N} }{ 1 - u_j }
+
+For |u_j| = q^{-1/2}, u_j^{-N} = (q^{1/2} e^{i \theta_j})^N = q^{N/2} e^{i N \theta_j}
+
+So it oscillates.
+
+For the sum over j, \sum_j \frac{ e^{i N \theta_j} }{ 1 - u_j } q^{N/2}
+
+Then ψ_χ(N) = - q^{N/2} \sum_j \frac{ e^{i N \theta_j} }{ 1 - u_j } + O(1)
+
+Then in Δ(A; N) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \left( - q^{N/2} \sum_j \frac{ e^{i N \theta_j} }{ 1 - u_j } + O(1) \right)
+
+The O(1) is constant, so for the growing bias, the main term is the oscillatory part.
+
+The bias Δ(A) is defined as the limit of Δ(A; N) / q^{N/2} as N → ∞, or something.
+
+In the empirical formula, Δ(A) is a constant, not growing, so probably it's the constant bias after normalization.
+
+In Chebyshev bias, for prime race, the bias is often constant.
+
+In this case, for function fields, with Weil RH, the bias might be constant.
+
+From the expression, Δ(A; N) / q^{N/2} = - \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \sum_j \frac{ e^{i N \theta_j} }{ 1 - u_j } + O(q^{-N/2})
+
+As N → ∞, this oscillates unless the sum over j and χ makes it constant.
+
+For it to converge to a constant, we need that the coefficient is constant, but it depends on N.
+
+Perhaps for the average or Abel mean.
+
+The proof uses Abel summation to average out the oscillation.
+
+In the generating function approach, we take the Abel limit.
+
+So let's go back to H_A(t) = \sum_N \Delta(A; N) t^N
+
+As t → q^{-1/2}, we want the limit of H_A(t).
+
+But from the expression, H_A(t) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+As t → q^{-1/2}, \frac{t}{1-t} is finite since q^{-1/2} < 1 for q≥2.
+
+\frac{L'(t, \chi)}{L(t, \chi)} = \frac{d}{dt} \log L(t, \chi)
+
+At t= q^{-1/2}, this is the derivative of log L at that point.
+
+But L(t, \chi) may be zero at t= q^{-1/2} if there is a real zero.
+
+For example, if there is a real zero on the critical line, which can happen.
+
+In that case, the limit may not exist or be infinite.
+
+But for the bias to be defined, we need to consider the average or use a different summation method.
+
+Perhaps for the formula to hold, we need that L(q^{-1/2}, \chi) ≠ 0, but it can be zero.
+
+In the empirical verification, it works for the cases, so perhaps for those cases, it's not zero, or we take the real part.
+
+Let's assume that for t < q^{-1/2}, L(t, \chi) ≠ 0, which is true since zeros are on |t| = q^{-1/2}.
+
+Then log L(t, \chi) is analytic for |t| < q^{-1/2}, and we can take t → q^{-1/2} along the real axis.
+
+Then \lim_{t \to q^{-1/2}-} \log L(t, \chi) = \log L(q^{-1/2}, \chi) if we define the log continuously.
+
+Similarly for the derivative.
+
+But \frac{L'(t, \chi)}{L(t, \chi)} may blow up if L(t, \chi) has a zero at t= q^{-1/2}, but if not, it's fine.
+
+If L(q^{-1/2}, \chi) = 0, then \frac{L'(t, \chi)}{L(t, \chi)} → ∞ as t → q^{-1/2}, so the limit is infinite, which means the bias grows, but in practice, for the cases, it might not be zero.
+
+To have a finite bias, we need that L(q^{-1/2}, \chi) ≠ 0 for all χ, or handle the case when it is zero.
+
+In the proof, we can assume L(q^{-1/2}, \chi) ≠ 0, and if it is zero, the bias is infinite or something.
+
+But in the formula, there is a log, so it must be non-zero.
+
+Perhaps for the Chebyshev bias in function fields, it's known that L(q^{-1/2}, \chi) ≠ 0 for primitive χ, but I'm not sure.
+
+For example, for quadratic characters, it can be zero if it's a real zero, but by Weil RH, all zeros are on the line, so it can be zero.
+
+For instance, for M of even degree, there might be real zeros.
+
+But in the empirical cases, it might not be zero.
+
+For the proof, we need to proceed with the limit.
+
+So assume that for all χ ≠ χ_0, L(q^{-1/2}, \chi) ≠ 0. Then as t → q^{-1/2}-, \log L(t, \chi) → \log L(q^{-1/2}, \chi)
+
+Then \frac{L'(t, \chi)}{L(t, \chi)} → \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)} = \frac{d}{dt} \log L(t, \chi) |_{t=q^{-1/2}}
+
+Then G_χ(t) = \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)} → \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+Then H_A(t) → \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+But this is for the generating function at t= q^{-1/2}, not for the bias itself.
+
+The Abel limit is \lim_{t \to q^{-1/2}-} H_A(t) = \lim_{N \to \infty} \frac{1}{N} \sum_{k=1}^N \Delta(A; k) or something? No.
+
+By Abel's theorem, if \sum a_n converges, then \sum a_n t^n → \sum a_n as t→1-, but here t→ q^{-1/2}, and the series may not converge.
+
+In this case, for |t| < q^{-1/2}, the series \sum \Delta(A; N) t^N converges, and as t→ q^{-1/2}, if the limit exists, it gives the Abel sum.
+
+But \Delta(A; N) grows like q^{N/2} times oscillatory, so the series converges for |t| < q^{-1/2}, and at t= q^{-1/2}, it may diverge or converge.
+
+The Abel limit \lim_{t \to r-} \sum a_n t^n with r= q^{-1/2} is equal to the Abel sum if it exists.
+
+But for the bias, we want the constant value.
+
+Perhaps the bias Δ(A) is defined as this Abel limit.
+
+In the proof sketch, it says "Define the Abel-summable Δ(A) := lim_{t → q^{-1/2−}} Σ_N Δ(A; N) · t^N"
+
+Yes, so Δ(A) is defined as that limit.
+
+So Δ(A) = \lim_{t \to (q^{-1/2})^-} \sum_{N=0}^∞ \Delta(A; N) t^N
+
+And from above, this is \lim_{t \to q^{-1/2}-} H_A(t) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \lim_{t \to q^{-1/2}-} G_\chi(t)
+
+And G_\chi(t) = \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+As t → q^{-1/2}-, if L(q^{-1/2}, \chi) ≠ 0, then \frac{L'(t, \chi)}{L(t, \chi)} → \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+So G_\chi(t) → \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+Then Δ(A) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+But this looks different from the empirical formula.
+
+The empirical formula has log L, not the derivative.
+
+Also, there is a factor of -2 Re.
+
+So this doesn't match.
+
+Perhaps I missed something.
+
+Another thought: in the expression for ψ_χ(N), we have the term with u_j^{-N}, which for the generating function, when we sum, it gives a log.
+
+Let's compute \sum_N \psi_χ(N) t^N from the explicit formula.
+
+From earlier, \psi_χ(N) = - \sum_j \frac{ u_j^{-N} }{ 1 - u_j } + c_χ + r_N
+
+With \sum |r_N| |t|^N < ∞ for |t| < q^{-1/2}.
+
+So \sum_N \psi_χ(N) t^N = - \sum_j \frac{1}{1 - u_j} \sum_N (u_j^{-1} t)^N + c_χ \sum_N t^N + \sum r_N t^N
+
+= - \sum_j \frac{1}{1 - u_j} \frac{1}{1 - u_j^{-1} t} + \frac{c_χ}{1-t} + R(t)
+
+For |t| < q^{-1/2}, |u_j^{-1} t| < 1, so the series converges.
+
+Then G_χ(t) = - \sum_j \frac{1}{(1 - u_j) (1 - u_j^{-1} t)} + \frac{c_χ}{1-t} + R(t)
+
+Now, \frac{1}{(1 - u_j) (1 - u_j^{-1} t)} = \frac{1}{1 - u_j} \frac{1}{1 - u_j^{-1} t}
+
+But 1 - u_j^{-1} t = - u_j^{-1} (t - u_j), so \frac{1}{1 - u_j^{-1} t} = - \frac{u_j}{t - u_j}
+
+So \frac{1}{(1 - u_j) (1 - u_j^{-1} t)} = \frac{1}{1 - u_j} \left( - \frac{u_j}{t - u_j} \right) = - \frac{u_j}{(1 - u_j) (t - u_j)}
+
+This is messy.
+
+Note that \sum_N (u_j^{-1} t)^N = \frac{1}{1 - u_j^{-1} t}
+
+So \sum_N \psi_χ(N) t^N = - \sum_j \frac{1}{1 - u_j} \frac{1}{1 - u_j^{-1} t} + \frac{c_χ}{1-t} + R(t)
+
+As t → q^{-1/2}, for each j, if t < q^{-1/2}, |u_j^{-1} t| < 1, so it's finite, but as t → q^{-1/2}, u_j^{-1} t → u_j^{-1} q^{-1/2} = (u_j q^{1/2})^{-1} / q^{1/2} wait.
+
+u_j has |u_j| = q^{-1/2}, so u_j^{-1} has |u_j^{-1}| = q^{1/2}, so u_j^{-1} t → u_j^{-1} q^{-1/2} as t→ q^{-1/2}.
+
+But u_j^{-1} q^{-1/2} = (u_j q^{1/2})^{-1} / q^{1/2} no.
+
+| u_j^{-1} q^{-1/2} | = |u_j^{-1}| |q^{-1/2}| = q^{1/2} q^{-1/2} = 1, so it approaches the unit circle, so 1 - u_j^{-1} t may approach zero if u_j^{-1} q^{-1/2} = 1, i.e., if u_j = q^{-1/2}, real zero.
+
+Otherwise, if no real zero, it approaches a constant.
+
+But in general, as t→ q^{-1/2}, G_χ(t) may have poles if there are real zeros.
+
+To avoid that, perhaps the Abel limit requires that there are no real zeros, or we take the principal value.
+
+Perhaps for the bias, we need to consider the real part.
+
+Let's look at the factor -2 Re.
+
+In the explicit formula, for ψ_χ(N), the term - \sum_j \frac{ u_j^{-N} }{ 1 - u_j }
+
+Since the zeros come in conjugate pairs if χ is real, but for complex χ, they are not necessarily conjugate.
+
+For a fixed χ, the zeros u_j are on the circle, and for the sum, when we take the real part, it might simplify.
+
+But for the bias, we have a sum over χ.
+
+Perhaps for each χ, the contribution to the bias is related to log L.
+
+Let's consider the generating function at t= q^{-1/2} directly.
+
+But L(t, χ) at t= q^{-1/2} is defined.
+
+The empirical formula is Δ(A) = -2 Re[ \bar{\χ}(A) log L(q^{-1/2}, \chi) ]
+
+But this has χ on the right, so it must be for a specific χ, but that doesn't make sense for the bias.
+
+Unless for each χ, there is a term, and the full Δ(A) is the sum over χ of that, but the formula is written with a single χ.
+
+Perhaps it's a typo, and it should be summed over χ.
+
+Let's assume that the formula is Δ(A) = -2 Re \sum_{\chi \neq \chi_0} \bar{\χ}(A) log L(q^{-1/2}, \chi) / \phi(M) or something.
+
+In the proof sketch, it says "Δ(A) = -2 Re[χ̄(A) · log L(q^{−1/2}, χ)]", but perhaps it's for the contribution, and we need to sum.
+
+But in the context, it's given as the full formula.
+
+Another idea: perhaps for a given modulus, and class A, the bias is given by that for the character that is "associated", but in general, it should be for all χ.
+
+Let's read the task again: "Δ(A) ≡ −2 Re[χ̄(A) · log L(q^{−1/2}, χ)]" and "log L(q^{−1/2}, χ)" so χ is free.
+
+Perhaps it's a mistake, and it should be that for each χ, the term is that, and the bias is the sum.
+
+In the empirical verification, for each case, they compute for the characters.
+
+Let's assume that the formula for the bias is Δ(A) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} -2 Re[ \bar{\χ}(A) log L(q^{-1/2}, \chi) ]
+
+Then we can try to prove that.
+
+From the Abel limit, we have H_A(t) → \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+This is different from -2 Re \bar{\χ}(A) log L.
+
+So perhaps for the bias, it's not the generating function limit, but something else.
+
+Perhaps the bias is defined as the constant in the asymptotic, so from the explicit formula, the constant term.
+
+From ψ_χ(N) = - \sum_j \frac{ u_j^{-N} }{ 1 - u_j } + c_χ + o(1)
+
+So Δ(A; N) = \frac{1}{\phi(M)} \sum_{\chi \neq \χ_0} (\bar{\χ}(A) - 1) \left( - \sum_j \frac{ u_j^{-N} }{ 1 - u_j } + c_χ + o(1) \right)
+
+The o(1) is small, the oscillatory part \sum_j \frac{ u_j^{-N} }{ 1 - u_j } has average zero if the angles are irrational, but in general, for the constant bias, we take the constant term c_χ.
+
+So perhaps Δ(A) = \frac{1}{\phi(M)} \sum_{\chi \neq \χ_0} (\bar{\χ}(A) - 1) c_χ
+
+But what is c_χ?
+
+From the explicit formula, c_χ is the constant term in the asymptotic of ψ_χ(N).
+
+From earlier, ψ_χ(N) = - \sum_{m=1}^N \sum_j u_j^{-m} + c_χ
+
+But \sum_{m=1}^N r^m = r (r^N - 1)/(r - 1) for r = u_j^{-1}
+
+So ψ_χ(N) = - \sum_j \frac{ u_j^{-1} ( u_j^{-N} - 1 ) }{ u_j^{-1} - 1 } + c_χ
+
+= - \sum_j \frac{ u_j^{-1} u_j^{-N} - u_j^{-1} }{ u_j^{-1} - 1 } + c_χ
+
+= - \sum_j \frac{ u_j^{-N-1} - u_j^{-1} }{ u_j^{-1} - 1 } + c_χ
+
+= - \sum_j \frac{ u_j^{-N-1} }{ u_j^{-1} - 1 } + \sum_j \frac{ u_j^{-1} }{ u_j^{-1} - 1 } + c_χ
+
+As N→∞, the first term is the oscillatory part, and the constant is \sum_j \frac{ u_j^{-1} }{ u_j^{-1} - 1 } + c_χ
+
+But c_χ is from the O(1) in the definition, which includes the contribution from higher terms or the constant.
+
+In the standard explicit formula, for the sum, the constant is related to the value at s=0 or something.
+
+For the L-function, at u=0, L(0, χ) = 1 for primitive χ, so log L(0, χ) = 0.
+
+The constant c_χ can be found by evaluating at N=0 or something.
+
+For example, at N=0, ψ_χ(0) = 0, so from the formula, 0 = - \sum_j \frac{1}{1 - u_j} + c_χ + error, but for N=0, it's not defined, but for small N.
+
+Perhaps c_χ = \sum_j \frac{1}{1 - u_j} for the definition.
+
+From ψ_χ(N) = - \sum_{m=1}^N \sum_j u_j^{-m} 
+
+For N=0, if we set ψ_χ(0) = 0, then 0 = - \sum_{m=1}^0 ... which is empty, so 0 = c_χ, so c_χ = 0.
+
+Then ψ_χ(N) = - \sum_{m=1}^N \sum_j u_j^{-m} 
+
+So no constant term, only the sum.
+
+In this case, ψ_χ(N) = - \sum_j \sum_{m=1}^N u_j^{-m} = - \sum_j \frac{ u_j^{-1} - u_j^{-N-1} }{ 1 - u_j^{-1} } 
+
+As before.
+
+So for the bias, Δ(A; N) = \frac{1}{\phi(M)} \sum_{\chi \neq \χ_0} (\bar{\χ}(A) - 1) \left( - \sum_j \frac{ u_j^{-1} - u_j^{-N-1} }{ 1 - u_j^{-1} } \right)
+
+The term - \sum_j \frac{ u_j^{-1} }{ 1 - u_j^{-1} } is constant, and - \sum_j \frac{ - u_j^{-N-1} }{ 1 - u_j^{-1} } = \sum_j \frac{ u_j^{-N-1} }{ 1 - u_j^{-1} } is oscillatory.
+
+So the constant bias is Δ(A) = \frac{1}{\phi(M)} \sum_{\chi \neq \χ_0} (\bar{\χ}(A) - 1) \left( - \sum_j \frac{ u_j^{-1} }{ 1 - u_j^{-1} } \right)
+
+But this is not matching the empirical formula.
+
+Perhaps the bias is the oscillatory part, but it oscillates.
+
+In the empirical formula, it's a constant, so it must be the constant part.
+
+Perhaps for the normalized bias, we divide by q^{N/2} and take the limit, but the oscillatory part divided by q^{N/2} is \sum_j \frac{ e^{i N \theta_j} }{ 1 - u_j^{-1} } , which doesn't converge.
+
+So it must be the constant part.
+
+But the empirical formula has log L, which is at s=1/2 or u= q^{-1/2}.
+
+Let's compute log L(u, χ) at u= q^{-1/2}.
+
+log L(u, χ) = \sum_{m=1}^∞ \frac{1}{m} \sum_{\deg P = m} \chi(P) u^m
+
+At u= q^{-1/2}, it's \sum_m \frac{1}{m} \sum_{\deg P = m} \chi(P) q^{-m/2}
+
+This is a series that may converge or not, but by Weil RH, the L-function is non-zero on |u| < q^{-1/2}, so at |u| = q^{-1/2}, it may be zero, but log is defined if not zero.
+
+The sum \sum_P \chi(P) q^{- \deg P / 2} does not converge absolutely, as | \chi(P) q^{- \deg P / 2} | = q^{- \deg P / 2}, and \sum_P q^{- \deg P / 2} diverges, since there are about q^d / d primes of degree d, so \sum_d (q^d / d) q^{-d/2} = \sum_d q^{d/2} / d diverges for q>1.
+
+So the series does not converge absolutely, but it may converge conditionally or be Abel summable.
+
+The proof uses Abel summation to define the sum.
+
+So for the Abel summation, \sum_P \chi(P) q^{- \deg P / 2} := \lim_{t \to q^{-1/2}-} \sum_P \chi(P) t^{\deg P}
+
+Then \sum_P \chi(P) t^{\deg P} = - \frac{d}{dt} \log L(t, \chi) * t or something.
+
+From log L(t, χ) = \sum_P \sum_k \chi(P)^k t^{k \deg P} / k
+
+So \frac{d}{dt} \log L(t, \chi) = \sum_P \sum_k \chi(P)^k \deg P t^{k \deg P - 1}
+
+So t \frac{d}{dt} \log L(t, \chi) = \sum_P \sum_k \chi(P)^k \deg P t^{k \deg P}
+
+For k=1, \sum_P \chi(P) \deg P t^{\deg P}, which is the sum over primes with weight deg P.
+
+For the sum without weight, \sum_P \chi(P) t^{\deg P} = \sum_m \sum_{\deg P = m} \chi(P) t^m
+
+From the L-function, \sum_{m=1}^∞ \frac{1}{m} \sum_{\deg P = m} \chi(P) (t^{\deg P})^m = log L(t, \chi)
+
+So \sum_P \chi(P) t^{\deg P} = \frac{d}{dt} [ t \frac{d}{dt} \log L(t, \chi) ] or something, no.
+
+Let S(t) = \sum_P \chi(P) t^{\deg P}
+
+Then log L(t, χ) = \sum_P \sum_k \chi(P)^k t^{k \deg P} / k = \sum_k \frac{1}{k} S(t^k)
+
+So S(t) is not directly related.
+
+For the Abel sum of \sum_P \chi(P) q^{- \deg P / 2}, it is \lim_{t \to q^{-1/2}-} S(t) = \lim_{t \to q^{-1/2}-} \sum_P \chi(P) t^{\deg P}
+
+From the expression, S(t) = \sum_m \sum_{\deg P = m} \chi(P) t^m
+
+And from the zeros, we can express it.
+
+From the Euler product, but it's complicated.
+
+Perhaps for the bias, the formula is derived from the generating function.
+
+Let's assume that the empirical formula is correct, and try to see how it comes from the Abel limit.
+
+Perhaps the -2 Re comes from the fact that for real t, the sum is real, and we take the real part.
+
+Let's try to compute the Abel limit of the generating function.
+
+From H_A(t) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+As t → q^{-1/2}, if we assume L(t, \chi) ≠ 0, then this is \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+Now, \frac{L'(u, \chi)}{L(u, \chi)} = \frac{d}{du} \log L(u, \chi)
+
+So at u= q^{-1/2}, it's the derivative.
+
+But in the empirical formula, we have log L, not the derivative.
+
+So unless for some reason it's proportional, but not in general.
+
+Perhaps for the bias, it's related to the value of the L-function.
+
+Another idea: in some biases, the constant is related to the logarithmic derivative at s=1, but here it's at s=1/2.
+
+Perhaps I have a mistake in the definition.
+
+Let's look online or recall the Chebyshev bias for function fields.
+
+Upon quick search in my memory, in the function field setting, the bias is given by the real part of the logarithmic derivative or something.
+
+Perhaps for the difference, it's the sum over χ of the log L.
+
+Let's consider the full sum.
+
+Perhaps the factor -2 comes from the fact that we have - \sum_j and the real part.
+
+Let's write the empirical formula as Δ(A) = -2 Re[ \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} \bar{\χ}(A) log L(q^{-1/2}, \chi) ]
+
+Then for the proof, we need to show that the Abel limit of the generating function equals this.
+
+From the explicit formula, for |t| < q^{-1/2}, \sum_N \psi_χ(N) t^N = \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+Then \sum_N \Delta(A; N) t^N = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{t}{1-t} \frac{L'(t, \chi)}{L(t, \chi)}
+
+As t → q^{-1/2}, this is \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+Now, \frac{L'(u, \chi)}{L(u, \chi)} = \frac{d}{du} \log L(u, \chi)
+
+So this is \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{d}{du} \log L(u, \chi) |_{u=q^{-1/2}}
+
+But \frac{d}{du} \log L(u, \chi) = \sum_P \sum_k \chi(P)^k \deg P u^{k \deg P - 1}
+
+So at u= q^{-1/2}, it's \sum_P \sum_k \chi(P)^k \deg P (q^{-1/2})^{k \deg P - 1} = q^{1/2} \sum_P \sum_k \chi(P)^k \deg P (q^{-1/2})^{k \deg P}
+
+= q^{1/2} \sum_P \sum_k \chi(P)^k \deg P q^{- k \deg P / 2}
+
+This is a series that may converge.
+
+But the empirical formula has log L, not the derivative.
+
+So perhaps there is a different way.
+
+Perhaps for the bias, it's the value of the generating function at the point, but for the constant bias, it's different.
+
+Perhaps the formula Δ(A) = -2 Re[ \bar{\χ}(A) log L(q^{-1/2}, \chi) ] is for the contribution per character, and for the full bias, it's summed, but in the formula, it's written for a single χ, so likely it's a notation where χ is summed over.
+
+In many contexts, they write the contribution.
+
+So let's assume that the full bias is Δ(A) = \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} -2 Re[ \bar{\χ}(A) log L(q^{-1/2}, \chi) ]
+
+Then we need to show that the Abel limit of the generating function equals this.
+
+From the Abel limit, we have \frac{q^{-1/2}}{1 - q^{-1/2}} \frac{1}{\phi(M)} \sum_{\chi \neq \chi_0} (\bar{\χ}(A) - 1) \frac{L'(q^{-1/2}, \chi)}{L(q^{-1/2}, \chi)}
+
+This is not obviously equal to -2 Re \bar{\χ}(A) log L.
+
+So perhaps for the bias, it's not the generating function, but the constant term in the asymptotic.
+
+Let's assume that the constant term in Δ(A; N) is given by that formula.
+
+From the explicit formula, the constant term in ψ_χ(N) is c_χ = 0, as we saw, but there is a constant from the lower limit.
+
+From ψ_χ(N) = - \sum_j \sum_{m=1}^N u_j^{-m} 
+
+So for large N, it's - \sum_j \frac{ u_j^{-1} }{ 1 - u_j^{-1} } + \sum_j \frac{ u_j^{-N-1} }{ 1 - u_j^{-1} } 
+
+So the constant is - \sum_j \frac{ u_j^{-1} }{ 1 - u_j^{-1} }
+
+And \frac{ u_j^{-1} }{ 1 - u_j^{-1} } = \frac{1}{ u_j - 1 }
+
+So c_χ = - \sum_j \frac{1}{ u_j - 1 }
+
+Now, log L(u, χ) = \sum_j \log(1 - u / u_j)
+
+So at u=0, log L(0, χ) = 0.
+
+The derivative \frac{d}{du} \log L(u, \chi) = \sum_j \frac{ -1/u_j }{ 1 - u / u_j } = - \sum_j \frac{1}{u_j - u}
+
+So at u=0, \frac{d}{du} \log L(0, \chi) = - \sum_j \frac{1}{u_j}
+
+But we have c_χ = - \sum_j \frac{1}{ u_j - 1 }
+
+Which is different.
+
+Perhaps at u=1, but u=1 is not on the critical line.
+
+For u= q^{-1/2}, it's different.
+
+Perhaps for the bias, the constant is related to log L at u= q^{-1/2}.
+
+Let's compute log L(q^{-1/2}, \chi) = \sum_j \log(1 - q^{-1/2} / u_j)
+
+Since |u_j| = q^{-1/2}, q^{-1/2} / u_j has | q^{-1/2} /

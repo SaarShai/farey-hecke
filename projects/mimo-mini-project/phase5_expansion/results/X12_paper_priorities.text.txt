@@ -1,0 +1,85 @@
+As a research-mathematician, my primary goal is to separate empirical curiosities (which lead to rejected papers) from rigorous, derivable mathematics (which lead to tenure and impact). 
+
+The proposed "Bundle B" (the "Farey universality paper") is a classic trap: bundling five partially-verified empirical claims into a single paper creates a "conjecture-fest" that high-impact journals (like *Inventiones* or *Annals*) will desk-reject. Mathematical papers must be anchored by at least one deep, rigorous theorem.
+
+Here is the realistic, optimized publication plan for your discoveries.
+
+### Part 1: The Hard Truths (Discoveries to DROP or SHELVE)
+
+**DROP #10 (NW spike phenomenon):** It is withdrawn. Investigate offline; do not include in any publication strategy.
+**SHELVE #3 (C = 0.66989):** Empirical constants derived from "Multi-Q convergence" are the bane of mathematical referees. Unless you have a rigorous analytic continuation or a closed-form algebraic representation, this is a numerical coincidence until proven otherwise. 
+*Strategy:* Do not write a paper about it. Place it as a "Numerical Conjecture" at the end of Paper II (see below).
+**SHELVE #9 (D* expansion):** If you cannot define $D^*$ precisely, it is not a discovery; it is a research direction. It currently has zero standalone publication value. Keep it in your lab notebook.
+
+---
+
+### Part 2: Per-Discovery Audit & Shortest Path
+
+Here is the ranked audit of the remaining 7 discoveries, moving from most to least publishable.
+
+**1. Discovery #8: $\Delta(A)$ function-field formula**
+*   **Status:** Heuristic.
+*   **Shortest Path:** Use Abel summation to convert the heuristic explicit formula into a rigorous bound over $\mathbb{F}_q[T]$. Function-field prime number race biases (like Rubinstein-Sarnak) are highly valued.
+*   **Effort:** 4 weeks (focused entirely on the analytic proof).
+*   **Target:** *Algebra & Number Theory* (ANT) or *Journal of Number Theory*.
+*   **Risk/Reward:** Low risk, high reward. This is a "classic" number theory paper.
+*   **Bundling:** **Standalone.**
+
+**2. Discovery #4: Sym^k Chebyshev recurrence**
+*   **Status:** Verified.
+*   **Shortest Path:** You have a mathematical fact, but it currently lacks a "home." You must connect it to the Beyond Endoscopy program or explicit formulas for symmetric power L-functions.
+*   **Effort:** 2 weeks to formalize, but requires intellectual heavy lifting to contextualize.
+*   **Target:** *Forum Mathematicum* or *Journal of the EMS*.
+*   **Risk/Reward:** Medium risk (needs motivation), high reward if linked to Langlands.
+*   **Bundling:** **Bundle with #6.**
+
+**3. Discovery #6: Outside Wigner-Dyson**
+*   **Status:** Real, but unquantified.
+*   **Shortest Path:** Prove that a specific matrix model or quantum graph—constructed using the Sym^k recurrence from #4—yields intermediate statistics (e.g., semi-Poisson) that are strictly outside the WD universality classes.
+*   **Effort:** 6-8 weeks.
+*   **Target:** *Communications in Mathematical Physics*.
+*   **Risk/Reward:** High risk, massive reward.
+*   **Bundling:** **Bundle with #4.** (Use #3, the $0.66989$ constant, as a numerical conjecture in the appendix of this paper).
+
+**4. Discovery #1 & #2: MUSIC L-zero + Cramér-Rao bound**
+*   **Status:** Concept demo & Novel bound.
+*   **Shortest Path:** Formalize the MUSIC L-zero algorithm for sparse spectral estimation (likely applied to zeros of L-functions or similar spectra) and prove the novel Cramér-Rao lower bound for its efficiency.
+*   **Effort:** 3-4 weeks.
+*   **Target:** *IEEE Transactions on Information Theory* or *Inverse Problems*.
+*   **Risk/Reward:** Low risk (applied math journals love algorithms + lower bounds), medium-high reward.
+*   **Bundling:** **Bundle together.** 
+
+**5. Discoveries #5 & #7: Lag-1 correlation & Cluster=2**
+*   **Status:** Empirical/Real.
+*   **Shortest Path:** These are *observations*, not theorems. You cannot publish them alone. 
+*   **Bundling:** Use them as the "Numerical Evidence and Motivation" section for Paper I (the $\Delta(A)$ paper). 
+
+---
+
+### Part 3: The Optimal 3-Paper Publication Plan
+
+By bundling this way, we separate your work into three distinct, highly publishable mathematical narratives: one Pure Math, one Mathematical Physics, and one Applied Math.
+
+#### Paper I: The Number Theory Paper (Highest Publishability)
+*   **Title:** *Prime Number Races in Function Fields: A Rigorous $\Delta(A)$ Formula via Abel Summation.*
+*   **Discoveries used:** **#8** (Main Result), **#5** and **#7** (Motivation/Numerics).
+*   **Narrative:** You prove the formula for $\Delta(A)$ over function fields. The paper opens by showing that standard models fail to capture the empirical Lag-1 correlation (#5) and Cluster=2 (#7) you observed, making your new rigorous formula essential to understanding these anomalies.
+*   **Target Journal:** *Algebra & Number Theory* (or *Mathematische Annalen*).
+
+#### Paper II: The Quantum Chaos / RMT Paper (Highest Risk/Reward)
+*   **Title:** *Non-Wigner-Dyson Universality Generated by Sym^k Chebyshev Recurrences.*
+*   **Discoveries used:** **#4** and **#6** (Main Results), **#3** (Appendix Conjecture).
+*   **Narrative:** You use your verified Sym^k recurrence (#4) to construct an explicit spectral model. You then rigorously prove that the local spacing statistics of this model exhibit a new universality class outside of Wigner-Dyson (#6). The constant $C=0.66989$ (#3) is introduced as a mysterious scaling limit observed in numerics, providing a roadmap for future research.
+*   **Target Journal:** *Communications in Mathematical Physics*.
+
+#### Paper III: The Applied Math / Inverse Problems Paper
+*   **Title:** *Sparse Spectral Estimation: The L0-MUSIC Algorithm and its Cramér-Rao Bound.*
+*   **Discoveries used:** **#1** and **#2** (Main Results).
+*   **Narrative:** A clean, self-contained paper. You introduce the L-zero modification to the MUSIC algorithm to resolve clustered spectral lines (connecting back to #7). You then derive the novel Cramér-Rao bound (#2) that proves the theoretical limits of this estimator.
+*   **Target Journal:** *IEEE Transactions on Information Theory* (or *Applied and Computational Harmonic Analysis*).
+
+### Summary of Next Steps
+1.  **Immediate:** Drop #10, #9, and #3 as standalone targets. 
+2.  **This Week:** Start drafting the Abel summation proof for the $\Delta(A)$ function-field formula (#8). This is your quickest path to a top-tier pure math publication.
+3.  **Next Month:** Pivot to formalizing the Sym^k recurrence (#4) and attempting to use it to explicitly construct the matrix model that generates the non-Wigner Dyson statistics (#6).
+4.  **Ongoing:** Clean up the MUSIC L-zero code (#1) to ensure you have reproducible graphs for the IEEE submission.

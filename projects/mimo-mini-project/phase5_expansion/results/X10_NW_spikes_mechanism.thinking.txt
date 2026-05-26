@@ -1,0 +1,679 @@
+Let me carefully analyze this problem. We're looking at NW(Q) = Q · J(Q) / Φ(Q) where J(Q) is some quantity related to Farey fractions and Φ(Q) relates to the totient sum. The claim is that NW(Q) has a baseline near C ≈ 0.66989 but shows elevations at certain Q values.
+
+Let me think about what NW(Q) actually measures. 
+
+Looking at the context, this seems to be related to the Farey sequence F_Q and some metric of "non-uniformity" or "gap structure." J(Q) likely involves the sum of squared gaps or some deviation measure in the Farey sequence.
+
+Let me reconsider. The Mikolás formula is mentioned:
+$$J(Q) = \frac{1}{2\pi^2} \sum_{m \geq 1} \frac{\left|1 + \sum_{\substack{d | m \\ d \leq Q}} d \cdot M(\lfloor Q/d \rfloor)\right|^2}{m^2}$$
+
+where M(x) is the Mertens function $\sum_{n \leq x} \mu(n)$.
+
+This is related to the variance of Farey sequence distribution. The function J(Q) measures some quadratic statistic of the Farey fractions.
+
+Now, NW(Q) = Q · J(Q) / Φ(Q) where $\Phi(Q) = \sum_{n \leq Q} \phi(n) \sim \frac{3}{\pi^2} Q^2$.
+
+So NW(Q) is a normalized version. The "constant" C ≈ 0.66989 is presumably the limiting value.
+
+Let me think about the Mertens function connection more carefully.
+
+For m = 1: the contribution is $|1 + M(Q)|^2$ (since only d=1 divides 1, and 1 ≤ Q).
+
+For m = 2: $|1 + M(Q) + 2M(\lfloor Q/2 \rfloor)|^2 / 4$ if 2 ≤ Q.
+
+For m = p (prime): $|1 + M(Q) + pM(\lfloor Q/p \rfloor)|^2 / p^2$.
+
+The key insight for Task B is: if M(Q) is anomalously large, then |1 + M(Q)|² is large, contributing to J(Q). But the Mertens function values given:
+
+- M(300000) = -49 → |1 + (-49)|² = |-48|² = 2304
+- M(350000) = -23 → |1 + (-23)|² = |-22|² = 484
+- M(600000) = -75 → |1 + (-75)|² = |-74|² = 5476
+- M(10⁶) = +212 → |1 + 212|² = 213² = 45369
+
+Compare with "typical" values where M(Q) ≈ 0: |1 + 0|² = 1.
+
+So the m=1 contribution alone can vary enormously! At Q = 10⁶, it's 45369/1 = 45369, versus baseline 1. That's a massive spike.
+
+But wait, these are divided by 1 (since m=1), so the relative impact depends on how much this single term contributes to the total sum.
+
+Actually, let me reconsider. The sum is $\sum_{m \geq 1} |...|^2 / m^2$. The m=1 term is $|1 + M(Q)|^2$. If $|M(Q)|$ is much larger than typical $O(\sqrt{Q} \log Q)$... hmm, but M(10⁶) = 212 and $\sqrt{10^6} = 1000$, so 212 is actually within typical bounds.
+
+Let me reconsider what "anomalous" means here. Under RH, $M(x) = O(x^{1/2+\epsilon})$. The values given:
+- M(300000) = -49, √300000 ≈ 548 → ratio 49/548 ≈ 0.09
+- M(350000) = -23, √350000 ≈ 592 → ratio 23/592 ≈ 0.04
+- M(600000) = -75, √600000 ≈ 775 → ratio 75/775 ≈ 0.10
+- M(10⁶) = 212, √10⁶ = 1000 → ratio 212/1000 ≈ 0.21
+
+None of these are truly "anomalous" for M(Q). So the m=1 contribution alone doesn't explain the spikes.
+
+Let me think differently. Maybe the spikes aren't about M(Q) specifically, but about the full inner sum $S_Q(m) = \sum_{d|m, d \leq Q} d \cdot M(\lfloor Q/d \rfloor)$ being large for some specific small m.
+
+For Q near 300000, if we consider m with many small divisors (like m = 30, 60, 120, etc.), the sum $S_Q(m)$ involves $M(Q), M(Q/2), M(Q/3), M(Q/5), M(Q/6), ...$
+
+The key observation from Task E is remarkable: Q = 299998, 299999, ..., 300003 ALL give the same elevated NW. These have completely different factorizations. So the spike cannot depend on σ(Q), φ(Q), divisor structure of Q, or anything that varies rapidly with Q.
+
+What varies slowly? 
+1. M(Q) itself - the Mertens function. M(299998), M(299999), M(300000), ..., M(300003) will all be very similar (differ by at most μ(299999) + ... which is ±1 per step).
+
+2. The values M(Q/d) for small d - these are M(150000), M(100000), M(75000), M(60000), etc. These change very slowly as Q varies by a few units.
+
+3. The Farey fraction gap structure near Q - a specific gap between consecutive Farey fractions that persists across many Q values.
+
+I think the right way to think about this is via the Mikolás formula. Let me be more precise.
+
+For Q near 300000, consider the m=1 term:
+$|1 + M(Q)|^2$
+
+M(300000) = -49. For nearby Q:
+M(299998) = M(300000) + μ(300000) + μ(299999) = -49 + ... (these μ values could be 0 or ±1)
+
+Actually, M(n) changes by μ(n) at each step. So M(Q) for Q = 299998 to 300003 will be in the range [-55, -43] or something like that (6 steps, each contributing -1, 0, or +1).
+
+The |1 + M(Q)|² values would be around |1 - 49|² = 2304, give or take.
+
+But is 2304 "anomalous"? It depends on the total sum $\sum_{m \geq 1} |...|^2/m^2$. Let me think about what the total looks like.
+
+For the m=1 term: |1 + M(Q)|² ≈ 2304
+For m=2: |1 + M(Q) + 2M(Q/2)|² / 4. If M(Q/2) = M(150000) ≈ some value, this could be large or small.
+
+The total J(Q) is $\frac{1}{2\pi^2}$ times the sum. So J(Q) ≈ $\frac{1}{2\pi^2}$ × (total sum). The m=1 term contributes $\frac{2304}{2\pi^2} ≈ 116.7$ to J(Q).
+
+For baseline where M(Q) ≈ 0: m=1 contributes $\frac{1}{2\pi^2} ≈ 0.0507$.
+
+So the m=1 contribution alone jumps by ~116. Now, Φ(300000) = $\sum_{n \leq 300000} \phi(n) \approx \frac{3}{\pi^2} (300000)^2 ≈ 2.73 \times 10^{10}$.
+
+NW = Q · J(Q) / Φ(Q). With the extra 116 from m=1:
+ΔNW ≈ 300000 × 116 / (2.73 × 10^{10}) ≈ 34.8 × 10^6 / (2.73 × 10^{10}) ≈ 0.00127
+
+Hmm, that would give ΔNW ≈ 0.0013, but the observed elevation is about 0.698 - 0.670 = 0.028. So the m=1 term alone doesn't account for the full spike, but it's not negligible.
+
+Wait, let me recalculate more carefully. Let me reconsider what Φ(Q) is. If $\Phi(Q) = \sum_{n \leq Q} \phi(n) = \frac{3}{\pi^2} Q^2 + O(Q \log Q)$, then:
+
+$\Phi(300000) ≈ \frac{3}{\pi^2} \times 9 \times 10^{10} ≈ 2.735 \times 10^{10}$
+
+NW(Q) = Q · J(Q) / Φ(Q) = 300000 · J(300000) / (2.735 × 10^{10})
+
+For NW ≈ 0.698:
+J(300000) = 0.698 × 2.735 × 10^{10} / 300000 = 0.698 × 91167 ≈ 63635
+
+For NW ≈ 0.670:
+J(300000) = 0.670 × 91167 ≈ 61082
+
+The difference in J is about 2553.
+
+Now, from the Mikolás formula:
+$J(Q) = \frac{1}{2\pi^2} \sum_{m \geq 1} \frac{|1 + S_Q(m)|^2}{m^2}$
+
+The m=1 contribution: |1 + M(Q)|² / 1 = |1 - 49|² = 2304
+
+Divided by $2\pi^2$: 2304 / 19.74 ≈ 116.7
+
+The contribution to NW: 300000 × 116.7 / (2.735 × 10^{10}) ≈ 0.00128
+
+So the m=1 term contributes only about 0.0013 to the NW elevation. The total elevation is 0.028. So we need contributions from many other m values too.
+
+Hmm, but maybe the issue is that for the Farey sequence, there are specific m values where the inner sum is very large?
+
+Actually, let me reconsider the problem from a completely different angle.
+
+## The Farey gap perspective
+
+NW(Q) is related to the maximal gap in the Farey sequence F_Q. The largest gap in F_Q is between 0/1 and 1/Q (or between (Q-1)/Q and 1/1), which has size 1/Q. But this isn't the interesting gap.
+
+Actually, I think NW(Q) might be measuring something else. Let me reconsider.
+
+Looking at the Mikolás formula again, this is the "J-function" that appears in the study of Farey sequence point distributions. The quantity J(Q) relates to the variance of the discrepancy or some quadratic statistic.
+
+Let me think about this differently. The key question is: why do consecutive Q values (299998-300003) all spike?
+
+## Hypothesis: Q/d structure for small d
+
+For Q near 300000, the relevant terms in the Mikolás sum involve:
+- M(Q) ≈ -49
+- M(Q/2) ≈ M(150000) 
+- M(Q/3) ≈ M(100000)
+- M(Q/5) ≈ M(60000)
+- M(Q/6) ≈ M(50000)
+- M(Q/10) ≈ M(30000)
+- etc.
+
+When Q changes by ±1 or ±2, Q/d for small d barely changes. For d=1, M(Q) changes by at most 2 or 3. For d=2, M(⌊Q/2⌋) doesn't change at all (since ⌊Q/2⌋ is the same for Q and Q+1 when Q is even). For d=3, ⌊Q/3⌋ changes only when Q is a multiple of 3.
+
+So the entire sum S_Q(m) changes very little when Q varies by a small amount. This perfectly explains the plateau!
+
+Now, the question is: what makes S_Q(m) large for some Q values?
+
+## The actual mechanism
+
+The Mikolás formula sum involves $S_Q(m) = \sum_{d|m, d \leq Q} d \cdot M(\lfloor Q/d \rfloor)$.
+
+For this to be large, we need some combination of:
+1. Many divisors d of m
+2. Each contributing $d \cdot M(\lfloor Q/d \rfloor)$ with the same sign
+3. The values $M(Q/d)$ being large
+
+The key insight: **the spike is caused by M(Q/d) being large (in absolute value) for several small divisors d simultaneously, and these contributions reinforcing each other in S_Q(m).**
+
+When M(Q) ≈ -49, M(Q/2) ≈ something, M(Q/3) ≈ something, and they all have the same sign (all negative or combining constructively), S_Q(m) becomes large for m with many small divisors.
+
+## Testing the hypothesis
+
+The question becomes: for which Q in [10^5, 2×10^6] do we have M(Q/d) being simultaneously large for many small d?
+
+Let me think about what "simultaneously large" means. For the m=1 term, only M(Q) matters. For m with small prime factors, we get M(Q/p) for small primes p.
+
+The specific m values that contribute most are those with $|S_Q(m)|^2 / m^2$ large. For m with many divisors but m itself not too large, this ratio can be substantial.
+
+Actually, I think I should approach this more concretely.
+
+## Re-examining the 300k plateau
+
+The fact that Q = 299998 through 300003 all spike tells us the spike depends on the "bulk" values M(Q/d) for small d, not on Q itself. As Q varies by 5:
+- M(Q) changes by ±5 (at most)
+- M(⌊Q/2⌋) changes by ±2
+- M(⌊Q/3⌋) changes by ±2
+- M(⌊Q/5⌋) changes by ±1
+
+So the Mikolás sum barely changes. 
+
+## What about 320000 and 200000?
+
+If Q = 320000 gives normal NW, then M(320000/d) for small d must not be anomalously large simultaneously. Similarly for 200000.
+
+This is testable: compare M(300000), M(150000), M(100000), M(75000), M(60000) with M(320000), M(160000), M(106666), M(80000), M(64000).
+
+If the first set has M values that are large and same-signed while the second set doesn't, that confirms the hypothesis.
+
+Actually, I realize I should think about this more carefully. The question is specifically about what causes the elevations. Let me consider several possibilities:
+
+### Possibility 1: Mertens function correlations
+The Mikolás formula explicitly involves M(Q/d). If these are anomalously large for a specific Q, J(Q) is elevated.
+
+### Possibility 2: Farey gap structure
+There might be a specific pair of Farey fractions with an unusually large gap that persists across many Q values. This is the hypothesis raised in Task E.
+
+### Possibility 3: Some other arithmetic function
+Maybe it's about the divisor function, σ(Q), or something else entirely.
+
+Let me think about Possibility 2 more carefully.
+
+## Farey gap analysis
+
+In the Farey sequence F_Q, two fractions a/b and c/d are consecutive iff bc - ad = 1 and b + d > Q. Their gap is 1/(bd).
+
+For a large gap, we want bd small, meaning b and d both small. But if b+d > Q, then at least one of b, d > Q/2, so bd > Q/2 × 1 = Q/2. The maximum gap is about 1/Q (between 0/1 and 1/Q).
+
+Hmm, that's not quite right. Let me reconsider.
+
+The gap between consecutive Farey fractions a/b and c/d in F_Q is exactly 1/(bd). For this to be large, bd must be small. But for them to be consecutive in F_Q, we need b + d > Q (this is a necessary and sufficient condition for two neighbors in some F_{Q'} to be neighbors in F_Q as well, as long as the mediant has denominator > Q).
+
+Actually, more precisely: a/b and c/d are neighbors in F_Q iff bc - ad = 1 and b + d > Q. Their gap is 1/(bd).
+
+For a specific large gap in F_Q, we need bd to be small. The smallest bd with b + d > Q is achieved when b ≈ Q/2, d ≈ Q/2, giving bd ≈ Q²/4 and gap ≈ 4/Q². But that's a small gap.
+
+Wait, I'm confusing myself. Let me reconsider.
+
+If b + d > Q, the minimum value of bd subject to this constraint with bd minimized... actually b ≥ 1, d ≥ 1, b + d > Q. If b = Q - d + 1, then bd = (Q-d+1)d = Qd - d² + d. This is minimized at d = 1 (giving bd = Q) or at the boundary. With d = 1, b = Q, gap = 1/Q. With d = Q-1, b = 2, gap = 1/(2(Q-1)). 
+
+So the largest gaps in F_Q are of order 1/Q (from the ends) and the smallest are of order 1/Q² (from the middle).
+
+But wait, NW(Q) isn't measuring the maximum gap. It's measuring J(Q) which from the Mikolás formula is a specific quadratic form.
+
+Let me reconsider what J(Q) actually is. 
+
+Looking at the Mikolás formula:
+$$J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|1 + \sum_{d|m, d \leq Q} d \cdot M(\lfloor Q/d \rfloor)|^2}{m^2}$$
+
+Hmm wait. I think this might be related to the "Farey point distribution" discrepancy or variance. Let me reconsider.
+
+Actually, I recall that in the study of Farey sequences, there's a function related to the Fourier coefficients. The number of Farey fractions of order Q in an interval [α, β] is approximately $\frac{3}{\pi^2} Q^2 (\beta - \alpha)$, with fluctuations.
+
+The Mikolás-type formula expresses the variance of these fluctuations. The $S_Q(m)$ terms are related to the m-th Fourier coefficient of the Farey fraction distribution.
+
+If $S_Q(m)$ is large for some m, the distribution has a strong m-th harmonic component, which means there's a systematic periodic deviation.
+
+## Key insight for the plateau
+
+The Fourier coefficient at frequency m is related to:
+$$\hat{F}_Q(m) = \sum_{\substack{0 \leq a/b \leq 1 \\ \gcd(a,b)=1, b \leq Q}} e^{2\pi i m a/b}$$
+
+For the Mikolás formula, this sum is related to $S_Q(m)$.
+
+Now, for Q = 300000 specifically, the Farey fractions near certain locations might create a coherent Fourier signal. This signal depends on M(Q/d) for small d, which change slowly with Q.
+
+## Let me think about the prediction problem
+
+For Task C, I need to predict which Q in [10^5, 2×10^6] should have elevated NW. 
+
+If the mechanism is Mertens-related, I should look for Q where multiple M(Q/d) values are simultaneously large. 
+
+Under RH, M(x) = O(x^{1/2+ε}). But the actual values fluctuate. Known peaks include:
+- M(10^6) = 212 (this is anomalously large; √10^6 = 1000, so 212/1000 = 0.212)
+- There are known values of M where it's quite large.
+
+Actually, the known record-breaking values of |M(x)| include several in the range we're looking at. Let me think about which Q would give anomalous sums.
+
+For the m=1 term to be large: |M(Q)| must be large.
+
+For the m=p (prime) term to contribute: $|M(Q) + p \cdot M(Q/p)|^2 / p^2$ must be large. This happens when M(Q) and p·M(Q/p) reinforce each other.
+
+For m with many prime factors: similar reinforcement needed.
+
+## Let me reconsider the specific Mertens values
+
+Known Mertens function values (these are well-tabulated):
+- M(10^6) = 212
+
+The Mertens function is known to have record values at:
+- x ≈ 9.2 × 10^5, |M(x)| ≈ 350 or so (I'm not sure of exact values)
+
+Actually, I don't have the Mertens function values memorized for all these points. Let me think about what I can say.
+
+The Mertens function M(n) = $\sum_{k=1}^n \mu(k)$. Its behavior is closely related to the zeros of the Riemann zeta function.
+
+Known record values (from OEIS A084237 or similar):
+- The record values of |M(n)|/√n occur at specific points related to the zeros of ζ(s).
+
+Hmm, I think I should focus on the mechanism rather than trying to compute exact values.
+
+## Revised analysis
+
+Let me reconsider the problem from scratch. The key observations are:
+
+1. NW(Q) spikes at Q ≈ 300000, 350000, 600000, 700000, 900000, 10^6
+2. The 300k plateau (Q = 299998 to 300003) shows the effect depends on "bulk" properties of Q
+3. Smooth Q values like 200000 and 320000 do NOT spike
+
+The Mikolás formula involves M(Q/d) for various d. The plateau behavior is naturally explained because M(Q/d) changes slowly as Q varies by a small amount.
+
+Now, what makes M(Q/d) large for some Q values? The Mertens function has a complex oscillatory behavior related to the zeros of ζ(s). There are known "resonance" effects where M(x) is particularly large.
+
+But the more interesting question is: what makes the SUM $\sum_m |1+S_Q(m)|^2/m^2$ particularly large?
+
+## The spectrum of the Farey sum
+
+Let me think about which m values dominate the Mikolás sum. The contribution of the m-th term is:
+$$\frac{|1 + S_Q(m)|^2}{m^2}$$
+
+where $S_Q(m) = \sum_{d|m, d \leq Q} d \cdot M(\lfloor Q/d \rfloor)$.
+
+For m = 1: $S_Q(1) = M(Q)$. Contribution: $|1 + M(Q)|^2$.
+
+For m = 2: $S_Q(2) = M(Q) + 2M(\lfloor Q/2 \rfloor)$. Contribution: $|1 + M(Q) + 2M(Q/2)|^2 / 4$.
+
+For m = 6: $S_Q(6) = M(Q) + 2M(Q/2) + 3M(Q/3) + 6M(Q/6)$. Contribution: $|1 + S_Q(6)|^2 / 36$.
+
+For m = 30: $S_Q(30) = M(Q) + 2M(Q/2) + 3M(Q/3) + 5M(Q/5) + 6M(Q/6) + 10M(Q/10) + 15M(Q/15) + 30M(Q/30)$. Contribution: $|1 + S_Q(30)|^2 / 900$.
+
+Now, the contribution of m = 30 is $|S_Q(30)|^2 / 900$. If $S_Q(30) \sim 30 \times \sqrt{Q/30}$ (order of magnitude), then the contribution is $\sim 900 \times Q/30 / 900 = Q/30$. For Q = 300000, that's 10000.
+
+Compare with m = 1: $|M(Q)|^2 \sim Q$ (if M(Q) ~ √Q). For Q = 300000, that's 300000.
+
+So the m = 1 term dominates by far, unless the inner sum for larger m has special cancellation or reinforcement.
+
+Actually wait. For m = 1, the "typical" contribution is $|M(Q)|^2 \sim Q$. But the sum is $\sum_m |...|^2 / m^2$. So the m=1 term contributes ~Q, and the total sum is dominated by small m values unless there's something special about larger m.
+
+But this means J(Q) ≈ M(Q)² / (2π²) for the dominant term. And:
+
+NW(Q) = Q · J(Q) / Φ(Q) ≈ Q · M(Q)² / (2π²) / (3Q²/π²) = M(Q)² / (6Q)
+
+If M(Q) ~ √Q, then NW(Q) ~ Q / (6Q) = 1/6 ≈ 0.167. But the baseline is 0.670. So my analysis is wrong somewhere, or the other terms contribute significantly.
+
+Hmm, let me reconsider. Perhaps the dominant contribution comes from a range of m values, not just m = 1.
+
+Actually, I think I may be misunderstanding the formula. Let me reconsider.
+
+The total sum $\sum_{m=1}^{\infty} |1 + S_Q(m)|^2 / m^2$. For large m, the sum $S_Q(m)$ involves many divisors, but each $M(Q/d)$ is bounded. The key is the interplay.
+
+Let me consider the "random model" where $M(x) \approx \sqrt{x} \cdot Z(x)$ with Z(x) a random walk with standard deviation 1. Then:
+
+$S_Q(m) = \sum_{d|m} d \cdot M(Q/d) \approx \sum_{d|m} d \cdot \sqrt{Q/d} \cdot Z(Q/d) = \sqrt{Q} \sum_{d|m} \sqrt{d} \cdot Z(Q/d)$
+
+If the Z values are independent with variance 1:
+$E[S_Q(m)^2] = Q \sum_{d|m} d = Q \cdot \sigma_1(m)$
+
+where $\sigma_1(m) = \sum_{d|m} d$ is the sum of divisors.
+
+So $E[|S_Q(m)|^2 / m^2] = Q \sigma_1(m) / m^2$.
+
+And $\sum_{m=1}^{\infty} Q \sigma_1(m) / m^2 = Q \sum_{m=1}^{\infty} \sigma_1(m)/m^2$.
+
+But $\sum_{m=1}^{\infty} \sigma_1(m)/m^s = \zeta(s)\zeta(s-1)$. At s=2: $\zeta(2)\zeta(1)$ which diverges! So this model has a divergent sum.
+
+Actually, this suggests that the sum is actually dominated by large m, not small m. The $1/m^2$ decay is too slow to overcome the $\sigma_1(m)$ growth.
+
+Hmm, but the Mikolás formula does converge (presumably). There must be cancellation in $S_Q(m)$ for large m.
+
+Actually, for large m, many of the M(Q/d) values are zero (when Q/d < 1) or very small (when Q/d is small, M is small). So the sum $S_Q(m)$ is actually truncated at d ≤ Q, meaning we only sum over divisors d of m with d ≤ Q. For m >> Q, most divisors d of m are > Q and don't contribute, so $S_Q(m) \approx M(Q)$ (just the d=1 term), and the contribution is $|1 + M(Q)|^2 / m^2$, which sums to $|1+M(Q)|^2 \cdot \pi^2/6$ over m > Q.
+
+OK so I think the sum is more subtle than I initially thought. Let me try to think about this differently.
+
+## Alternative approach: concrete computation
+
+Rather than trying to fully analyze the Mikolás formula analytically, let me think about what computational tests would be most informative.
+
+The most direct test: compute $S_Q(m)$ for small m and see which m values contribute most to the spike.
+
+For Q = 300000:
+- m=1: $S_Q(1) = M(300000) = -49$. Contribution: $|1-49|^2 = 2304$.
+- m=2: $S_Q(2) = M(300000) + 2M(150000)$. We need M(150000). If M(150000) = say -30, then $S_Q(2) = -49 + 2(-30) = -109$. Contribution: $|1-109|^2/4 = 11664/4 = 2916$.
+- m=6: Need M(100000), M(50000). If M(100000) = 20, M(50000) = -10, M(30000) = 5. Then $S_Q(6) = -49 + 2(-30) + 3(20) + 6(-10) = -49 - 60 + 60 - 60 = -109$. Contribution: $|1-109|^2/36 = 2916/36 = 109$.
+
+Hmm, I don't know the actual Mertens values. Let me just state what I can deduce.
+
+## What I can determine with confidence
+
+### 1. The plateau mechanism is clear
+
+The Q-independence of NW(Q) for Q = 299998-300003 is fully explained by the Mikolás formula: $S_Q(m)$ depends on $M(\lfloor Q/d \rfloor)$ for divisors d of m. When Q varies by a small amount (say 5), each $M(Q/d)$ changes by at most O(1) (since M changes by μ(n) at each step, which is O(1)). The relative change is tiny, so NW(Q) is essentially constant over short ranges.
+
+### 2. The spike mechanism involves M(Q/d) correlations
+
+The elevation in NW(Q) above baseline C comes from $S_Q(m)$ being systematically larger (in absolute value) than typical. This happens when $M(Q/d)$ values are large for multiple d simultaneously, with contributions that reinforce.
+
+### 3. Which Q values spike depends on the global Mertens function
+
+Since the Mertens function M(x) is a global function (determined by all primes up to x), the spike positions are determined by the arithmetic of the Mertens function at specific scales.
+
+## Predicting spike Q values
+
+For Task C, I need to identify Q values where the Mertens function is simultaneously large at Q, Q/2, Q/3, Q/5, etc.
+
+This is related to the theory of "resonances" in the Mertens function. These resonances are connected to the imaginary parts of the zeros of the Riemann zeta function.
+
+Under the explicit formula for M(x):
+$$M(x) = \sum_{\rho} \frac{x^{\rho}}{\rho \zeta'(\rho)} + \text{(other terms)}$$
+
+where the sum is over non-trivial zeros ρ = 1/2 + iγ of ζ(s).
+
+M(x) is large when the oscillatory terms $\sum_\rho x^{1/2+i\gamma} / (\rho \zeta'(\rho))$ constructively interfere. This happens at specific x values.
+
+For M(Q/d) to be large for multiple d, we need the constructive interference pattern to persist across scales Q, Q/2, Q/3, ...
+
+This is a strong condition! It means the "beat pattern" of the Mertens oscillations must be coherent across a range of scales.
+
+## The connection to specific zeta zeros
+
+The low-lying zeros of ζ(s) have imaginary parts:
+- γ₁ ≈ 14.1347
+- γ₂ ≈ 21.0220
+- γ₃ ≈ 25.0109
+- ...
+
+The "period" of the k-th oscillation in M(x) is roughly $2\pi / \gamma_k$ in log-scale. That is, the contribution of the k-th zero oscillates with frequency $\gamma_k$ in the variable $\log x$.
+
+For the Mertens oscillation to be coherent at x and x/2, we need $\gamma_k \log(x)$ and $\gamma_k \log(x/2) = \gamma_k \log x - \gamma_k \log 2$ to be in phase. This happens when $\gamma_k \log 2 \approx 2\pi n$ for some integer n, i.e., $\gamma_k \approx 2\pi n / \log 2 \approx 9.065 n$.
+
+The zeros close to these "resonant" values would create oscillations that are coherent between x and x/2.
+
+Similarly, coherence between x and x/3 requires $\gamma_k \approx 2\pi n / \log 3 \approx 5.721 n$.
+
+And between x and x/5: $\gamma_k \approx 2\pi n / \log 5 \approx 3.920 n$.
+
+For the same zero to be coherent between x, x/2, AND x/3 simultaneously:
+$\gamma_k \log 2 / (2\pi)$ and $\gamma_k \log 3 / (2\pi)$ must both be close to integers.
+
+$\gamma_k \log 2 / (2\pi) \approx 0.1103 \gamma_k$
+$\gamma_k \log 3 / (2\pi) \approx 0.1748 \gamma_k$
+
+For both to be near integers, we need $0.1103 \gamma_k \approx n_1$ and $0.1748 \gamma_k \approx n_2$ for integers $n_1, n_2$.
+
+This means $\gamma_k \approx n_1 / 0.1103 \approx n_2 / 0.1748$, so $n_2/n_1 \approx 0.1748/0.1103 \approx 1.585 \approx \log 3 / \log 2$.
+
+This is a Diophantine condition on $\gamma_k$. For small γ values:
+- γ₁ = 14.1347: 0.1103 × 14.1347 = 1.559, 0.1748 × 14.1347 = 2.471. Not close to integers.
+- γ₂ = 21.0220: 2.319, 3.674. Not great.
+- γ₃ = 25.0109: 2.759, 4.372. No.
+- γ₄ = 30.4249: 3.356, 5.319. No.
+- γ₅ = 32.9350: 3.633, 5.757. No.
+- γ₆ = 37.5862: 4.146, 6.570. No.
+
+These don't obviously resonate. But the effect involves ALL zeros, not just one.
+
+Actually, let me reconsider. The coherent sum doesn't require a single zero to resonate across scales. It requires the TOTAL contribution to be large at each scale.
+
+## Let me reconsider from the Farey gap perspective
+
+Perhaps the spike isn't really about Mertens function at all, but about specific Farey fraction pairs.
+
+Consider the Farey fraction pairs a/b and c/d with bc - ad = 1 and b + d > Q. These are consecutive in F_Q.
+
+A specific pair (a/b, c/d) becomes "visible" in F_Q when Q drops below b + d (specifically, when Q < b+d, the mediant (a+c)/(b+d) is not in F_Q, so a/b and c/d are consecutive).
+
+The gap 1/(bd) is constant regardless of Q. But whether this gap appears in F_Q depends on whether b+d > Q.
+
+So as Q increases through values near b+d, a specific gap disappears (the mediant enters F_Q, splitting the gap). This transition creates a change in J(Q).
+
+The NW(Q) value depends on the GAPS present in F_Q. At Q = 300000, the set of gaps includes all those with b+d > 300000. As Q increases to 300001, gaps with b+d = 300000 disappear (split by mediants).
+
+But the plateau says NW is constant from 299998 to 300003. This means no significant gaps change in this range. Which makes sense: the gaps that change are those with b+d exactly equal to 299998, 299999, ..., 300003. These are specific isolated gaps, and their contribution to J(Q) is tiny.
+
+OK so the plateau is natural from the Farey gap perspective too. The question remains: why is NW elevated near Q = 300000?
+
+## The dominant gaps contribution
+
+J(Q) depends on the distribution of all gaps in F_Q. The dominant contribution to J(Q) (or equivalently to NW(Q)) comes from a set of gaps.
+
+Let me think about this more carefully. If J(Q) = $\sum_{\text{consecutive pairs}} (\text{gap}_i - \text{expected gap})^2$ or something similar, then the dominant contribution comes from the largest deviations.
+
+Actually, I think J(Q) might be the sum of squared gaps: $\sum \Delta_i^2$ where $\Delta_i$ are the gaps between consecutive Farey fractions. Or it might be related to the $L^2$ discrepancy.
+
+In the Farey sequence F_Q, there are N = Φ(Q) + 1 fractions (where $\Phi(Q) = 1 + \sum_{n=1}^Q \phi(n)$), and the gaps sum to 1. The "average" gap is $1/N \approx \pi^2/(3Q^2)$.
+
+The sum of squared gaps is:
+$$J(Q) = \sum_{i} \Delta_i^2 = \sum_{\substack{a/b, c/d \text{ consecutive} \\ \text{in } F_Q}} \frac{1}{(bd)^2}$$
+
+Now, this sum depends on which fraction pairs are "visible" at order Q, which depends on the boundary condition b+d > Q.
+
+The key observation: the sum of $1/(bd)^2$ over all fraction pairs with $bc - ad = 1$ and $b + d > Q$ is the same as:
+$$\sum_{b+d > Q} \frac{1}{(bd)^2} \cdot (\text{number of pairs with denominators } b, d)$$
+
+The number of pairs (a/b, c/d) with bc - ad = 1, gcd(a,b)=1, gcd(c,d)=1 and given b,d is either 0 or... actually, for given coprime b,d, the number of solutions to bc - ad = 1 with gcd(a,b) = gcd(c,d) = 1 is... hmm, this is related to Euler's totient.
+
+Actually, for consecutive Farey fractions with denominators b and d, we need bc - ad = 1 where 1 ≤ a ≤ b, 1 ≤ c ≤ d. This has exactly one solution with 0 ≤ a < b, 0 ≤ c < d (by the theory of modular inverses). And the fraction a/b is in lowest terms iff gcd(a,b)=1, similarly for c/d.
+
+Hmm, this is getting complicated. Let me try yet another approach.
+
+## Approach via explicit formula for J(Q)
+
+There's a known formula:
+$$\sum_{i} \frac{1}{b_i d_i} = \frac{1}{2} \sum_{n \leq Q} \frac{\phi(n)}{n} + O(\log Q)$$
+
+Wait, I recall that $\sum \frac{1}{b_i d_i}$ over consecutive Farey pairs equals something involving $\Phi(Q)$.
+
+But I think we want $\sum \frac{1}{(b_i d_i)^2}$.
+
+Actually, for the sum $\sum 1/(bd)$ over consecutive pairs in F_Q: each gap is $1/(bd)$, and the sum of all gaps is 1, so $\sum 1/(bd) = 1$ trivially.
+
+The sum $\sum 1/(bd)^2$ is the sum of squared gaps, which is $J(Q)$.
+
+Let me compute this differently. The Farey fractions are $\{a/b : 0 \leq a \leq b, \gcd(a,b) = 1, 1 \leq b \leq Q\}$ arranged in order.
+
+The sum of squared gaps is:
+$$J(Q) = \sum_{\text{consecutive pairs}} \frac{1}{b^2 d^2}$$
+
+Now I recall: there's a result that relates this to the Ramanujan sum or similar. Let me try to use the Mikolás formula.
+
+From the Mikolás formula:
+$$J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|G_Q(m)|^2}{m^2}$$
+
+where $G_Q(m) = 1 + \sum_{d|m, d \leq Q} d \cdot M(\lfloor Q/d \rfloor)$.
+
+Let me verify this makes sense dimensionally. For Q → ∞:
+
+$G_Q(1) = 1 + M(Q)$. Under RH, $M(Q) = O(\sqrt{Q} \log^2 Q)$, so $|G_Q(1)|^2 \sim Q$.
+
+$G_Q(m)$ for general m: the sum involves $O(\tau(m))$ terms (divisor function), each of size $O(d \cdot \sqrt{Q/d} \log^2(Q/d)) = O(\sqrt{dQ} \log^2 Q)$. So $G_Q(m) = O(\sigma_{1/2}(m) \sqrt{Q} \log^2 Q)$ where $\sigma_{1/2}(m) = \sum_{d|m} d^{1/2}$.
+
+Then $|G_Q(m)|^2 / m^2 = O(\sigma_{1/2}(m)^2 Q \log^4 Q / m^2)$.
+
+$\sum_m \sigma_{1/2}(m)^2 / m^2$ converges (it's related to $\zeta(s)$ products), so:
+
+$J(Q) = O(Q \log^4 Q)$
+
+And $NW(Q) = Q \cdot J(Q) / \Phi(Q) = Q \cdot O(Q \log^4 Q) / O(Q^2) = O(\log^4 Q)$.
+
+Hmm, that gives NW = O(log⁴ Q), which doesn't converge to a constant. Something is off.
+
+Let me reconsider. Maybe the formula is different. Perhaps:
+
+$J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|G_Q(m)|^2}{m^2}$
+
+but with the leading term being $O(Q)$ and the fluctuations being $O(\sqrt{Q} \log^2 Q)$.
+
+Actually, I think the formula might be:
+$$J(Q) = \frac{3Q^2}{\pi^4} \left(1 + O(...)\right)$$
+
+Wait, $\Phi(Q) \sim 3Q^2/\pi^2$. If NW(Q) = Q·J(Q)/Φ(Q) → C, then J(Q) ~ C·Φ(Q)/Q ~ C·3Q/π^2. So J(Q) = Θ(Q).
+
+With the Mikolás formula: $J(Q) = \frac{1}{2\pi^2} \sum_m |G_Q(m)|^2/m^2$. If J(Q) = Θ(Q), then $\sum_m |G_Q(m)|^2/m^2 = \Theta(\pi^2 Q) = \Theta(Q)$.
+
+The m=1 term contributes $|1+M(Q)|^2$. Under RH, this is $1 + O(\sqrt{Q}\log^2 Q)$, which is O(Q) only in the worst case. Actually, $|1+M(Q)|^2 = 1 + 2M(Q) + M(Q)^2 = O(Q \log^4 Q)$ under RH.
+
+So the m=1 term is $O(Q \log^4 Q)$, which is already the right order. But we need $\sum_m = \Theta(Q)$, and the m=1 term is $\Theta(Q)$ (under the RH prediction $M(Q) \sim \sqrt{Q}$). The other terms contribute $\Theta(Q)$ as well, presumably.
+
+Hmm, but $M(Q)^2 \approx Q$ (under the conjecture $M(Q) \sim \sqrt{Q}$), while the baseline for $|1+M(Q)|^2$ when $M(Q) = 0$ is just 1. So the m=1 contribution varies between $O(1)$ and $O(Q)$ depending on M(Q).
+
+If $M(Q) = 0$ exactly, the m=1 term contributes 1. If $M(Q) = \pm 212$ (at Q=10^6), it contributes 213² = 45369.
+
+So the m=1 term alone can cause substantial fluctuations in J(Q) depending on M(Q).
+
+Now, NW(Q) = Q·J(Q)/Φ(Q). If J(Q) fluctuates due to M(Q), then NW(Q) fluctuates too.
+
+At Q = 10^6: M(10^6) = 212, so m=1 contribution ≈ 45369. J(Q) gets an extra ~45369/(2π²) ≈ 2300 from this. ΔNW ≈ 10^6 × 2300 / Φ(10^6) ≈ 10^6 × 2300 / (3 × 10^{12}/π²) ≈ 2.3 × 10^9 / (3.04 × 10^{11}) ≈ 0.0076.
+
+Observed: NW(10^6) - C ≈ 0.6793 - 0.6699 ≈ 0.0094.
+
+So the m=1 term explains about 80% of the spike at Q = 10^6! That's quite good.
+
+For Q = 300000: M(300000) = -49, m=1 contribution ≈ 2500. ΔNW ≈ 300000 × 2500/(2π²) / Φ(300000) ≈ 300000 × 126.7 / (3 × 9×10^{10}/π²) ≈ 38 × 10^6 / (2.73 × 10^{10}) ≈ 0.0014.
+
+But observed ΔNW at Q=300000 is about 0.029. So the m=1 term explains only ~5% of the spike.
+
+This means at Q = 300000, the spike is NOT primarily from m=1 (i.e., not primarily from M(Q)), but from higher m values.
+
+At Q = 10^6, the spike IS primarily from m=1 (i.e., from M(10^6) being large).
+
+This is interesting! It suggests different mechanisms at different Q.
+
+For Q = 300000, the spike must come from S_Q(m) being large for some m > 1. The question is: which m?
+
+For m = 2: $S_Q(2) = M(Q) + 2M(Q/2) = -49 + 2M(150000)$. I need M(150000).
+
+For m = 6: $S_Q(6) = M(Q) + 2M(Q/2) + 3M(Q/3) + 6M(Q/6)$. Need M(150000), M(100000), M(50000).
+
+The key question is: are M(150000), M(100000), M(50000), M(30000), etc. simultaneously large with the same sign?
+
+Actually, let me reconsider. Let me look up or estimate M values.
+
+From known data:
+- M(10^5) ≈ 100 or so (I don't recall exactly)
+- M(10^6) = 212
+
+Let me try to estimate. Under RH, $M(x) \approx \sum_\gamma \frac{x^{1/2+i\gamma}}{(1/2+i\gamma)\zeta'(1/2+i\gamma)}$. The dominant terms are from low-lying zeros.
+
+But this is getting too speculative without actual values. Let me focus on what I can determine structurally.
+
+## Structural analysis
+
+The key structural insight: the Mikolás formula decomposes J(Q) into contributions from different "frequencies" m. The spike at Q = 300000 comes from anomalous behavior of S_Q(m) for some range of m values.
+
+For the plateau (Q = 299998-300003 all spike equally), the explanation is: S_Q(m) depends on M(Q/d) for divisors d of m. When Q varies by 5, each M(Q/d) changes by at most O(1), so S_Q(m) is essentially unchanged.
+
+## For the prediction task (C)
+
+I need to predict which Q values in [10^5, 2×10^6] will have elevated NW. The mechanism is:
+1. M(Q) is large (contributes to m=1 term)
+2. M(Q/d) values are simultaneously large and coherent (contributes to larger m terms)
+
+The most promising approach: look at the "combined" quantity
+$$V(Q) = \sum_{m} \frac{|G_Q(m)|^2}{m^2}$$
+
+or more practically, compute a proxy for the anomalous part.
+
+A simpler proxy: compute $\sum_{d \leq D} d^2 \cdot M(Q/d)^2$ for some cutoff D. If this sum is large, J(Q) is likely elevated.
+
+Actually, let me think about which m values contribute most. The m=1 term is $|1+M(Q)|^2$. For m with prime factorization $m = p_1^{a_1} \cdots p_k^{a_k}$, the sum $S_Q(m) = \sum_{d|m} d \cdot M(Q/d)$. For m with many small prime factors, this involves many M values.
+
+The most important small m values: m = 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 16, 18, 20, 24, 30, ...
+
+For each Q, compute $G_Q(m)$ for small m and check if the sum is elevated.
+
+But without the actual Mertens values, I can't compute this directly. Let me think about what we know about the Mertens function.
+
+## Known Mertens function properties
+
+The Mertens function has been computed to very large values. Key known values (from various sources):
+
+I recall that M(10^n) for small n:
+- M(10) = -1
+- M(100) = 1
+- M(1000) = 2
+- M(10000) = -23
+- M(100000) = -48
+- M(1000000) = 212
+
+Wait, these don't seem right. Let me reconsider.
+
+Actually, from OEIS A002321 (Mertens function):
+M(1) = 1
+M(2) = 0
+M(3) = -1
+M(10) = -1
+M(100) = 1
+M(1000) = 2
+M(10000) = -23
+M(100000) = -48
+M(1000000) = 212
+
+Hmm, let me verify: M(100000) = -48. The user states M(300000) = -49. Since M changes by -1, 0, or +1 at each step, going from M(100000) = -48 to M(300000) = -49 means the net change over 200000 integers is -1. That seems plausible but tight - the Mertens function must have almost perfectly balanced cancellation over that range.
+
+Actually, wait. Let me reconsider. M(100000) = -48 and M(300000) = -49. That means between n=100001 and n=300000, the sum of μ(n) is -1. Over 200000 values, the net sum is -1? That would be remarkably close to zero.
+
+Under the prime number theorem, the "expected" value of M(n) is 0 (since $\sum \mu(k)$ should cancel). The fluctuation is $O(\sqrt{n})$ under RH. So M(100000) ≈ -48 and M(300000) ≈ -49 are both within the expected range (|M| << √n = 316 and 548 respectively).
+
+But the near-constancy (M barely changing from 100k to 300k) is actually not that surprising - it just means the Mertens function happens to be nearly constant over that range.
+
+Let me think about what M(150000) might be. If M(100000) = -48 and M(300000) = -49, then M(150000) should be somewhere in between, maybe around -50 to -40.
+
+Similarly, M(Q/d) for Q = 300000 and various d:
+- M(300000) ≈ -49
+- M(150000) ≈ -48 to -50
+- M(100000) = -48
+- M(75000) ≈ ?
+- M(60000) ≈ ?
+- M(50000) ≈ ?
+- M(30000) ≈ ?
+- M(25000) ≈ ?
+- M(20000) ≈ ?
+
+If ALL of these are around -40 to -50 (all the same sign, all moderately large), then for m with many divisors, $S_Q(m) = \sum_{d|m} d \cdot M(Q/d)$ will have each term contributing with the same sign, making $|S_Q(m)|$ large.
+
+For example, for m = 60 = 2²·3·5:
+$S_Q(60) = M(Q) + 2M(Q/2) + 3M(Q/3) + 4M(Q/4) + 5M(Q/5) + 6M(Q/6) + 10M(Q/10) + 12M(Q/12) + 15M(Q/15) + 20M(Q/20) + 30M(Q/30) + 60M(Q/60)$
+
+If all M(Q/d) ≈ -48, then:
+$S_Q(60) ≈ -48 \times (1+2+3+4+5+6+10+12+15+20+30+60) = -48 \times 168 = -8064$
+
+$|G_Q(60)|^2 / 60^2 = |1 + S_Q(60)|^2 / 3600 ≈ 8064^2 / 3600 ≈ 18063$
+
+That's a huge contribution! Compare with the baseline where M ≈ 0: $|1|^2/3600 ≈ 0.0003$.
+
+So if M(Q/d) is approximately constant for all d up to Q/60, the m=60 term alone contributes ~18000 to the sum, which is massive.
+
+The contribution to J(Q): $\frac{1}{2\pi^2} \times 18063 ≈ 915$.
+The contribution to NW(Q): $300000 \times 915 / \Phi(300000) ≈ 300000 \times 915 / (2.73 \times 10^{10}) ≈ 0.0101$.
+
+That's about a third of the observed spike! And this is just the m=60 term.
+
+If we add contributions from all m values with many divisors (m = 30, 60, 120, 180, 210, 240, ...), the total could easily reach 0.028.
+
+## The key prediction
+
+The spikes occur when M(x) is approximately constant over a wide range of x values. Specifically, when $M(Q/d) \approx M(Q)$ for all small d, meaning $M(x)$ is nearly flat for $x$ from $Q/D$ to $Q$ (where D is the largest "small" divisor).
+
+This would make $S_Q(m) \approx M(Q) \cdot \sigma_1(m)$ for m with all divisors ≤ D, giving $|G_Q(m)|^2/m^2 \approx |1 + M(Q)\sigma_1(m)|^2/m^2 \approx M(Q)^2 \sigma_1(m)^2/m^2$.
+
+The sum $\sum_{m \leq M} \sigma_1(m)^2/m^2$ converges to $\frac{\zeta(2)^2 \zeta(3)}{\zeta(6)}$ or some similar Euler product. Actually:
+
+$\sum_{

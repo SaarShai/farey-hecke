@@ -1,0 +1,14 @@
+This is a fascinating problem that bridges analytic number theory, statistical signal processing, and information geometry. The fundamental tension here is that the "signal" (the explicit formula) and the "noise" (the high zeros) come from the *exact same underlying arithmetic structure*. Modeling the truncation tail as white Gaussian noise is a brilliant heuristic that allows us to import powerful spectral estimation bounds.
+
+Here is the rigorous derivation, the identification of $\sigma^2$, and the scaling laws.
+
+---
+
+### A. Rigorous Fisher Information and the Sharp Coefficient
+
+Let the signal model be $z(t) = -2 \text{Re} \sum_{k=1}^K \frac{e^{i\gamma_k t}}{1/2 + i\gamma_k}$.
+Assuming $\gamma_k \gg 1/2$, the amplitude is $|c_k| \approx 2/\gamma_k$ and the phase is roughly $\pi/2$. We can approximate the signal as:
+$$z(t) \approx -2 \sum_{k=1}^K \frac{1}{\gamma_k} \sin(\gamma_k t)$$
+
+**1. Compute the Derivative:**
+Taking the partial

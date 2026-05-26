@@ -1,0 +1,676 @@
+Let me carefully work through this. The claim is about a discrepancy D*(F_N) for the Farey sequence F_N, with expansion 1/N − π²/(3N²) + O(1/N³).
+
+## Task A: Definition of D*
+
+The Farey sequence F_N is the set of fractions a/q with 0 ≤ a ≤ q ≤ N, gcd(a,q)=1, ordered by value. Let me denote F_N = {α_1 < α_2 < ... < α_M} where M = |F_N| = 1 + Σ_{n≤N} φ(n).
+
+The "star discrepancy" in the classical sense (for quasi-random sequences) would be:
+D*(F_N) = sup_{x ∈ [0,1]} |A([0,x], F_N)/|F_N| − x|
+
+where A([0,x], F_N) counts the number of Farey points ≤ x.
+
+But as I noted, this gives ~ π²/(3N²) at leading order, which is 1/N² behavior, not 1/N.
+
+Let me think about what gives 1/N behavior.
+
+Actually, let me reconsider. There's a classical result about the distribution of Farey points. The counting function:
+N_F(x) = #{α ∈ F_N : α ≤ x}
+
+The key fact is that for the uniform distribution, we'd expect N_F(x) ≈ |F_N| · x. The discrepancy measures the deviation.
+
+The Franel-Landau result concerns:
+Σ_{α ∈ F_N} (N_F(α) − |F_N|·α)²
+
+But let's think about what discrepancy gives 1/N scaling.
+
+If we define:
+D*(F_N) = sup_{x ∈ [0,1]} |N_F(x) − |F_N|·x|
+
+without dividing by |F_N|, then since |F_N| ~ 3N²/π², we'd get ~ 3N/π² which grows, so that's not right either.
+
+Wait, let me reconsider the claim. Perhaps D* here is not the standard star discrepancy but something else.
+
+Let me think about this differently. Perhaps the discrepancy is defined relative to N rather than |F_N|.
+
+Actually, let me look at this from a different angle. The Farey points satisfy a well-known spacing property: consecutive Farey fractions a/q and a'/q' satisfy a'q - aq' = 1, and the gap between them is 1/(qq').
+
+The maximum gap between consecutive Farey fractions of order N is 1/N (between 0/1 and 1/N, or between (N-1)/N and 1/1). The minimum gap is of order 1/N².
+
+For the discrepancy, let me reconsider. In the theory of uniform distribution, if we have M points on [0,1], the discrepancy is typically 1/M^{1+o(1)} for well-distributed sequences. For Farey points, M ~ 3N²/π², so 1/M ~ π²/(3N²).
+
+Hmm, let me try yet another definition. Perhaps:
+D_N*(F_N) = sup_{[a,b] ⊂ [0,1]} |N_F([a,b]) / N − (b−a)|
+
+where we divide by N instead of |F_N|. This is unusual but could give 1/N scaling.
+
+Wait, actually let me think about what the "right" discrepancy for Farey sequences is.
+
+There's a classical notion: the discrepancy of the Farey sequence with respect to the counting measure. Specifically, define:
+E_N(x) = #{α ∈ F_N : α ≤ x} − |F_N| · x
+
+The L∞ norm of E_N gives information about how uniformly distributed the Farey points are.
+
+At a Farey point α = a/q, the counting function jumps by 1, so E_N(α⁺) − E_N(α⁻) = 1. The maximum of |E_N(x)| is bounded by 1/2 plus the accumulated error, which depends on the local distribution.
+
+Actually, for the classical Farey sequence, the maximum discrepancy |E_N(x)| is known to be on the order of √N (under RH) or unconditionally related to the Dirichlet divisor problem.
+
+Let me recall: the key identity is that if we define S_N(t) = Σ_{n≤N} φ(n)/n · {nt}... no, this isn't quite right.
+
+Actually, let me recall the Franel-Landau connection more carefully.
+
+For the Farey sequence F_N = {a/q : 0 ≤ a ≤ q ≤ N, gcd(a,q) = 1}, the "error function" is:
+
+E_N(x) = Σ_{a/q ∈ F_N, a/q ≤ x} 1 − x · |F_N|
+
+The Franel-Landau theorem says:
+||E_N||₂² = Σ_{a/q ∈ F_N} (rank(a/q)/|F_N| − a/q)²
+
+is related to RH. Actually, let me be more precise.
+
+The Franel-Landau theorem: The Riemann Hypothesis is equivalent to:
+Σ_{j=1}^{|F_N|} (j/|F_N| − α_j)² = O(N^{-1+ε}) for all ε > 0
+
+where α_j is the j-th Farey fraction.
+
+Hmm, but this is the L² discrepancy, not L∞.
+
+Let me try to compute D*(F_N) using the standard star discrepancy definition:
+D*(F_N) = sup_{x ∈ [0,1]} |A([0,x])/M − x|
+
+where A([0,x]) = #{α ∈ F_N ∩ [0,x]} and M = |F_N|.
+
+The jump at each Farey point α_j is 1/M. The function A([0,x])/M is a staircase function that starts at 0, ends at 1, and jumps by 1/M at each Farey point.
+
+The discrepancy D* measures the maximum deviation from the diagonal y = x. This maximum is achieved just before or just after a jump.
+
+Just after α_j (i.e., at x = α_j⁺):
+A([0,x])/M − x = j/M − α_j
+
+Just before α_j (i.e., at x = α_j⁻):
+x − A([0,x])/M = α_j − (j−1)/M
+
+So:
+D* = max(max_j(j/M − α_j), max_j(α_j − (j−1)/M))
+
+= max(max_j(j/M − α_j), max_j(α_j − (j−1)/M))
+
+Now I need to understand the maximum of |j/M − α_j|.
+
+For the Farey sequence, the key result is about the "Farey discepancy" function. Let me denote by ψ(x) = #{a/q ∈ F_N : a/q ≤ x} − Mx.
+
+The maximum of |ψ(x)| is related to the maximum of |Σ_{n≤N} μ(n)/n · floor(nx) − x · Σ_{n≤N} μ(n)| or something like that... I'm getting confused.
+
+Let me try a direct computational approach. Let me compute the star discrepancy numerically for several values of N and see what the scaling looks like.
+
+Actually, let me think about this more carefully. 
+
+For the standard star discrepancy of the Farey sequence, there are known results. Let me recall:
+
+The Farey sequence of order N has M = 1 + Σ_{n=1}^N φ(n) elements. For the discrepancy, I'll think of it as:
+
+D*(F_N) = sup_{0 ≤ x ≤ 1} |#{α ∈ F_N : α ≤ x}/M − x|
+
+This is the classical star discrepancy.
+
+The key observation is that at x = 0, the function is 0, and just after x = 0 (if 0 ∈ F_N, which it does as 0/1), we have 1/M. So D* ≥ 1/M already from the endpoints. Similarly, just before x = 1, we get close to (M-1)/M = 1 - 1/M, giving deviation 1/M.
+
+But the question is whether the discrepancy is actually larger than 1/M due to non-uniform spacing.
+
+The non-uniformity of Farey fractions is controlled by the Möbius function. Specifically:
+
+#{a/q ∈ F_N : a/q ≤ x} = Σ_{q=1}^N Σ_{\substack{a=1 \\ gcd(a,q)=1}}^{floor(qx)} 1 = Σ_{q=1}^N Σ_{a ≤ qx} Σ_{d|gcd(a,q)} μ(d)
+= Σ_{d=1}^N μ(d) Σ_{q' ≤ N/d} Σ_{a' ≤ q'x} 1 = Σ_{d=1}^N μ(d) Σ_{q' ≤ N/d} floor(q'x)
+= Σ_{d=1}^N μ(d) Σ_{q' ≤ N/d} (q'x − {q'x})
+= x Σ_{d=1}^N μ(d) Σ_{q' ≤ N/d} q' − Σ_{d=1}^N μ(d) Σ_{q' ≤ N/d} {q'x}
+
+The first term: x Σ_{d≤N} μ(d) · (N/d)(N/d+1)/2 ≈ x · (3/π²) · N²/2 · ... hmm, let me be more careful.
+
+Σ_{q' ≤ N/d} q' = (N/d)(N/d + 1)/2
+
+So the first term is:
+x Σ_{d≤N} μ(d) · (N/d)(N/d+1)/2
+
+= (x/2) Σ_{d≤N} μ(d)[(N/d)² + (N/d)]
+
+= (x/2)[N² Σ_{d≤N} μ(d)/d² + N Σ_{d≤N} μ(d)/d]
+
+Now, Σ_{d≤N} μ(d)/d² → 1/ζ(2) = 6/π² as N → ∞.
+And Σ_{d≤N} μ(d)/d → 0 (this is equivalent to PNT).
+
+So the first term ≈ (x/2)[N² · 6/π² + N · 0] = 3xN²/π²
+
+And M = |F_N| = 1 + Σ_{n≤N} φ(n) = 1 + Σ_{n≤N} n Σ_{d|n} μ(d)/d = ... well, Σ_{n≤N} φ(n) ≈ 3N²/π².
+
+So the first term is ≈ x · M.
+
+The discrepancy is then:
+ψ(x) = #{F_N ∩ [0,x]} − Mx ≈ −Σ_{d≤N} μ(d) Σ_{q'≤N/d} {q'x}
+
+(ignoring some lower order terms).
+
+The key sum is:
+S(x) = Σ_{d≤N} μ(d) Σ_{q'≤N/d} {q'x}
+
+The discrepancy is essentially |S(x)|.
+
+Now, for a fixed x, {q'x} = q'x − floor(q'x), and Σ_{q'≤K} {q'x} is related to the sawtooth function sum, which has well-known properties.
+
+For x = a/q (a Farey fraction), {q'x} has period q (divided by gcd(a,q)... well, it depends). Let me not go down this path and instead compute numerically.
+
+Let me just compute the star discrepancy of F_N numerically for various N and see the scaling.
+
+Actually, I realize I should just write code to do this. Let me compute it.
+
+Let me reconsider the problem. The claim is D*(F_N) = 1/N − π²/(3N²) + O(1/N³).
+
+If D* is the standard star discrepancy with normalization by M = |F_N|, then the leading term should be ~c/N² (since M ~ 3N²/π² and the raw discrepancy might be ~const).
+
+If D* is normalized by N instead of M, i.e., D* = sup_x |#{F_N ≤ x}/N − x|, then with #{F_N ≤ x} ~ (3N²/π²)x, this would grow as N, which doesn't make sense.
+
+Hmm, wait. Maybe the claim is about a different quantity entirely. Let me think about what could give 1/N − π²/(3N²).
+
+Actually, 1/N − π²/(3N²) = (1/N)(1 − π²/(3N)). If the second term were π²/(3N²), then:
+D*(F_N) = (1/N)(1 − π²/3N + ...)
+
+For this to be positive, we need N > π²/3 ≈ 3.29, so for N ≥ 4.
+
+Hmm, what if D*(F_N) is defined as:
+D*(F_N) = sup_{x ∈ [0,1]} |#{α ∈ F_N : α ≤ x} − N·x| / N
+
+So we compare the count to N·x (not M·x), and divide by N. Then:
+At x = 1/M: #{α ≤ x}/N = 1/N (assuming α₁ = 0 and α₂ > 1/M), and x = 1/M ≈ π²/(3N²).
+So D* ≥ |1/N − π²/(3N²)| = 1/N − π²/(3N²).
+
+That's exactly the claimed leading terms! Let me check this more carefully.
+
+If the definition is:
+D*(F_N) = sup_{0 ≤ x ≤ 1} |#{α ∈ F_N : α ≤ x}/N − x|
+
+Hmm, but that doesn't quite work dimensionally. #{α ≤ x} ≤ M ~ 3N²/π², so #{α ≤ x}/N ~ 3N/π², which grows. So this can't be right.
+
+What if:
+D*(F_N) = sup_{0 ≤ x ≤ 1} |#{α ∈ F_N : α ≤ x} − N·x|
+
+divided by something. Let me think differently.
+
+Oh wait, maybe the definition involves the fractional parts. In the theory of the Farey sequence and RH, a common object is:
+
+The "Farey net" or "Farey fraction discrepancy" defined differently.
+
+Actually, let me reconsider. Perhaps D*(F_N) is defined as:
+
+D*(F_N) = sup_{0 ≤ x ≤ 1} |Σ_{a/q ∈ F_N, a/q ≤ x} (1/q − [something])|
+
+No, that's getting too speculative. Let me try to think about what quantity naturally gives 1/N − π²/(3N²) + O(1/N³).
+
+Actually, I wonder if this is about the discrepancy of the Farey sequence in a different sense. Let me consider:
+
+For the Farey sequence F_N, consider the "covering radius" or "mesh norm":
+δ(F_N) = max_{x ∈ [0,1]} min_{α ∈ F_N} |x − α|
+
+This is the maximum distance from any point to the nearest Farey fraction. By the properties of Farey fractions, consecutive fractions a/q and a'/q' have gap 1/(qq'), and the maximum gap is 1/N (between 0/1 and 1/N, or between (N-1)/N and 1/1).
+
+But 1/N is the exact value, not 1/N − π²/(3N²), so this isn't it.
+
+Hmm, let me try: the second-largest gap? That might give a correction term.
+
+Actually wait, maybe D* isn't about the Farey sequence F_N as a point set, but about the distribution of Farey fractions around a specific point?
+
+Let me try another angle. Consider the "local discrepancy":
+D*(F_N) = sup_{x} |1/N · #{a/q ∈ F_N : q ≤ N, a/q ≤ x} − x|
+
+Wait, but we'd need to be precise about what we're dividing by. Let me try:
+
+D*(F_N) = sup_{x ∈ [0,1]} |1/N · #{(a,q) : 1 ≤ q ≤ N, gcd(a,q)=1, a/q ≤ x} − x|
+
+Here, #{(a,q)} is not the number of Farey points but the number of coprime pairs, which is Σ_{q≤N} φ(q) ≈ 3N²/π².
+
+Actually, I think I may be overcomplicating this. Let me just search for what the standard "star discrepancy" of the Farey sequence is, and what expansions exist.
+
+Let me look at this from the Franel-Landau angle. The key quantity there is:
+
+||ψ_N||² = Σ_{j=1}^{M} (j/M − α_j)²
+
+where α_1 < ... < α_M is the Farey sequence of order N and M = |F_N|.
+
+Franel (1924) and Landau (1924) showed that RH is equivalent to:
+||ψ_N|| = O(N^{-1/2+ε}) for all ε > 0.
+
+Now ||ψ_N||² is a sum of M terms, each at most D*² where D* = max|j/M − α_j|. If D* ~ c/N² (from the standard discrepancy), then ||ψ_N||² ≤ M · D*² ~ (3N²/π²) · c²/N⁴ = 3c²/(π²N²), giving ||ψ_N|| ~ √3 c/(π N).
+
+For RH, we need ||ψ_N|| = O(N^{-1/2+ε}), and √3c/(πN) = O(N^{-1}) which is much better than N^{-1/2}. So actually the L∞ bound gives something much stronger than what RH implies for L².
+
+Wait, that can't be right. The L∞ star discrepancy of the Farey sequence must be larger than 1/M. Let me think again.
+
+The star discrepancy D* is at least 1/(2M) because the staircase function jumps by 1/M and must cross the diagonal. But actually, the jumps could happen exactly at the right times to keep D* small. However, for the Farey sequence, the distribution is non-uniform (heavier near 0 and 1, lighter in the middle due to clustering of fractions with small denominators).
+
+Hmm, actually, fractions with small denominators are more spread out, and fractions with large denominators fill in the gaps. The distribution of Farey points is actually quite uniform. But not perfectly uniform.
+
+Let me just compute this numerically.
+
+Let me code this up.
+
+Actually, thinking more carefully: the standard star discrepancy of F_N should be computed as follows.
+
+Farey fractions of order N: {a/q : 0 ≤ a ≤ q, gcd(a,q) = 1, 1 ≤ q ≤ N} ∪ {1/1} (or equivalently 0 ≤ a ≤ q with the conventions).
+
+Let me define M = |F_N| = 1 + Σ_{q=1}^N φ(q).
+
+For x ∈ [0,1], let A(x) = #{α ∈ F_N : α ≤ x}.
+
+The star discrepancy is D*(F_N) = sup_{x ∈ [0,1]} |A(x)/M − x|.
+
+For x just after a Farey fraction α_j = a_j/q_j:
+A(x)/M − x = j/M − x → j/M − α_j as x → α_j⁺
+
+For x just before α_j:
+x − A(x)/M = x − (j−1)/M → α_j − (j−1)/M as x → α_j⁻
+
+So:
+D* = max(max_j (j/M − α_j), max_j (α_j − (j−1)/M))
+= max(max_j (j/M − α_j), max_j (α_j + 1/M − j/M))
+= max(max_j (j/M − α_j), max_j ((α_j − j/M) + 1/M))
+
+Let d_j = j/M − α_j (the "signed discrepancy" at the j-th point from the right after the jump).
+
+Then:
+D* = max(max_j d_j, max_j(−d_j + 1/M)) = max(max_j d_j, 1/M − min_j d_j)
+
+If the discrepancy is dominated by the boundary terms, then at j = 1 (α₁ = 0):
+d_1 = 1/M − 0 = 1/M
+
+At j = M (α_M = 1):
+d_M = M/M − 1 = 0
+
+At j = M (checking just before 1):
+α_M − (M−1)/M = 1 − (M−1)/M = 1/M
+
+So D* ≥ 1/M from the boundary terms. The question is whether the interior terms give a larger discrepancy.
+
+For the interior, the maximum deviation depends on how non-uniformly the Farey fractions are distributed. If the distribution is exactly uniform, D* = 1/M. But the distribution is not exactly uniform.
+
+Actually, I recall that for the Farey sequence, there's a connection to the Dirichlet divisor problem and the Riemann zeta function. The error term in the asymptotic for Σ_{n≤x} φ(n) is related to the distribution of Farey fractions.
+
+Let me just compute numerically for several values of N and see what the discrepancy looks like.
+
+Let me code this up in Python.
+
+Actually, let me reconsider the claim once more. The expansion 1/N − π²/(3N²) + O(1/N³) could be for a specific type of discrepancy. Note:
+
+1/N − π²/(3N²) = (3N − π²)/(3N²) ≈ (3N − 9.87)/(3N²)
+
+For large N, this is approximately 1/N, and the coefficient of 1/N is 1.
+
+Now, 1/M ≈ π²/(3N²) which is much smaller than 1/N for large N. So D* = 1/N − π²/(3N²) is much larger than the trivial bound 1/M.
+
+This suggests that the discrepancy is not the standard star discrepancy with normalization by M, but rather with some other normalization.
+
+OR, it's a different quantity altogether.
+
+Let me think about what gives 1/N naturally.
+
+The maximum gap between consecutive Farey fractions is 1/N (between 0/1 and 1/N, or between (N-1)/N and 1/1). This gives the "mesh norm" as 1/N.
+
+But 1/N − π²/(3N²) suggests a correction to the mesh norm, perhaps the second-largest gap or an average maximum gap.
+
+Hmm, actually wait. Let me reconsider the problem. Maybe D*(F_N) isn't about uniform distribution at all. Maybe it's about something else entirely.
+
+Let me search for "D star Farey sequence" or similar terms.
+
+Actually, I think the notation D* might refer to the "Dirichlet series" or "Dirichlet discrepancy" or some other specific concept in the theory of Farey fractions.
+
+Alternatively, perhaps D*(F_N) is the discrepancy of the Farey sequence with respect to a specific test function or a specific measure, not the Lebesgue measure.
+
+Let me try yet another interpretation. Perhaps:
+D*(F_N) = sup_{x ∈ [0,1]} |Σ_{a/q ∈ F_N, a/q ≤ x} 1/q − x|
+
+Here we weight each Farey fraction by 1/q instead of counting uniformly. Note that Σ_{a/q ∈ F_N} 1/q = Σ_{q=1}^N φ(q)/q = Σ_{q=1}^N Σ_{d|q} μ(d)/d = Σ_{d=1}^N μ(d)/d · floor(N/d) ≈ Σ_{d=1}^N μ(d)/d · N/d = N · Σ_{d=1}^N μ(d)/d² ≈ N/ζ(2) = 6N/π².
+
+So the total weight is ~ 6N/π², and the expected weight up to x is ~ 6Nx/π². If we divide by the total weight 6N/π², we get the standard discrepancy. If we divide by N, we get something of order 1.
+
+Let me try: D*(F_N) = sup_x |1/N Σ_{a/q ∈ F_N, a/q ≤ x} 1/q − x · 6/π²| · π²/6... no, this is getting too speculative.
+
+OK let me just compute things numerically. I'll compute the standard star discrepancy of the Farey sequence and also try some other definitions to see what gives the claimed expansion.
+
+Let me code this up.
+
+Wait, before coding, let me think about one more possibility. Maybe the claim is about the discrepancy with respect to a specific arithmetic function, not the counting function.
+
+In the study of the Farey sequence and RH, the key quantity is often:
+Σ_{a/q ∈ F_N, a/q ≤ x} e(a/q · n)
+
+for various n. The exponential sums over Farey fractions are related to the Möbius function and the Riemann zeta function.
+
+Actually, let me just try a different approach. Let me look at the leading term 1/N. Note that 1/N is the gap between 0 and the next Farey fraction 1/N (for N ≥ 2). In the standard discrepancy framework:
+
+At x = 1/N:
+A(x)/M − x = 2/M − 1/N (if 0/1 and 1/N are the only two Farey fractions ≤ 1/N)
+
+Hmm, for large N, A(1/N) ≈ Σ_{q≤N} floor(q/N) = ... actually, a/q ≤ 1/N means a ≤ q/N, and since a ≥ 1 (for a/q ≠ 0), we need q ≥ N. So A(1/N) = 1 + #{a/q : gcd(a,q)=1, a ≤ q/N, q ≤ N, a ≥ 1} = 1 + #{q = N, a = 1, gcd(1,N)=1} = 2 (since only 1/N satisfies the condition among positive fractions, and 0/1 is the other one).
+
+So A(1/N) = 2, and A(1/N)/M − 1/N = 2/M − 1/N ≈ 2π²/(3N²) − 1/N < 0 for large N.
+
+So x − A(x)/M = 1/N − 2/M ≈ 1/N − 2π²/(3N²).
+
+Interesting! So the discrepancy at x = 1/N is approximately 1/N − 2π²/(3N²), which is close to the claimed 1/N − π²/(3N²).
+
+Hmm, but there's a factor of 2 discrepancy. Let me reconsider.
+
+Wait, A(1/N) = 2 (0/1 and 1/N), and M = |F_N|. So:
+x − A(x)/M = 1/N − 2/M
+
+With M ≈ 3N²/π²:
+1/N − 2/(3N²/π²) = 1/N − 2π²/(3N²)
+
+But the claim is 1/N − π²/(3N²). So there's a factor of 2 off.
+
+Unless... the supremum is not at x = 1/N but at x = 1/(2N) or some other point.
+
+At x = 1/(N+1) (which is not a Farey fraction for general N):
+A(x) = 1 (only 0/1 ≤ x)
+x − A(x)/M = 1/(N+1) − 1/M ≈ 1/(N+1) − π²/(3N²)
+
+For large N: 1/(N+1) = 1/N − 1/N² + ..., so:
+1/(N+1) − π²/(3N²) ≈ 1/N − 1/N² − π²/(3N²) = 1/N − (1 + π²/3)/N²
+
+That doesn't match either.
+
+Hmm, let me reconsider. Maybe the supremum is at a point between 0 and 1/N.
+
+At x ∈ (0, 1/N), A(x) = 1, so:
+x − 1/M is maximized at x = 1/N⁻ (just before 1/N), giving 1/N − 1/M = 1/N − π²/(3N²) + ...
+
+That gives exactly 1/N − π²/(3N²) at leading order! So D* = 1/N − 1/M + ... = 1/N − π²/(3N²) + O(1/N³).
+
+Wait, but is this really the maximum? I need to check other intervals too.
+
+The discrepancy on (α_j, α_{j+1}) where A(x) = j for x ∈ (α_j, α_{j+1}):
+- On the "above diagonal" side: max(j/M − x) for x ∈ (α_j, α_{j+1}) is at x = α_j⁺, giving j/M − α_j.
+- On the "below diagonal" side: max(x − j/M) for x ∈ (α_j, α_{j+1}) is at x = α_{j+1}⁻, giving α_{j+1} − j/M = α_{j+1} − (j+1)/M + 1/M = 1/M − d_{j+1}.
+
+So the maximum discrepancy over all intervals is max(max_j d_j, max_j(1/M − d_j)) = max(max_j d_j, 1/M − min_j d_j).
+
+If the maximum discrepancy occurs at the boundary (j=0 to j=1 interval):
+d_0 = 0/M − 0 = 0 (trivially)
+1/M − d_0 = 1/M
+But we also need to check d_1 = 1/M − α_1 = 1/M − 0 = 1/M.
+And 1/M − d_1 = 0.
+Also at the other boundary (j=M-1 to j=M):
+d_M = M/M − 1 = 0
+d_{M-1} = (M-1)/M − α_{M-1} = (M-1)/M − (N-1)/N = ... let me think. For the Farey sequence, α_{M-1} = (N-1)/N. So d_{M-1} = (M-1)/M − (N-1)/N = 1 − 1/M − 1 + 1/N = 1/N − 1/M.
+
+So d_{M-1} = 1/N − 1/M, and the discrepancy from this interval is:
+On the "above diagonal" side at the start of the interval (just after (N-1)/N):
+d_{M-1} = (M-1)/M − (N-1)/N = 1/N − 1/M
+
+On the "below diagonal" side at the end of the interval (just before 1):
+1/M − d_{M-1} = 1/M − 1/N + 1/M = 2/M − 1/N < 0 for large N.
+
+Hmm wait, that's negative, meaning the "below diagonal" part is negative at the end, which means the discrepancy is on the "above diagonal" side.
+
+Actually, let me reconsider. At the interval ((N-1)/N, 1), the count is M−1. The discrepancy function is:
+f(x) = (M−1)/M − x for x ∈ ((N−1)/N, 1)
+
+This is positive at x = (N−1)/N + ε and negative at x = 1 − ε. The maximum of |f(x)| on this interval is max(f((N−1)/N), |f(1)|) = max((M−1)/M − (N−1)/N, |(M−1)/M − 1|) = max(1/N − 1/M, 1/M).
+
+Since 1/N >> 1/M for large N, the max is 1/N − 1/M.
+
+So we have two boundary intervals contributing:
+- Interval (0, 1/N): discrepancy = max(0, 1/N − 1/M) = 1/N − 1/M
+- Interval ((N−1)/N, 1): discrepancy = 1/N − 1/M (same)
+
+These are equal by the symmetry of the Farey sequence (α ↦ 1−α maps F_N to itself).
+
+Now, the question is: are there interior intervals with larger discrepancy?
+
+For the interior, the discrepancy depends on how non-uniformly the Farey fractions are distributed. If the distribution were perfectly uniform, each interval would have width 1/M and the discrepancy would be 1/(2M) in each interval.
+
+But the Farey sequence is NOT uniformly distributed. The local density of Farey fractions near a point x is related to Σ_{q=1}^N φ(q)·1_{a/q near x}, and for x not near 0 or 1, the density is approximately M (since there are ~M points in [0,1]).
+
+However, the density varies. Near rationals with small denominators, the density is lower (since there are no fractions with denominators between, say, 1 and N that are very close to 0 except 0 itself and 1/N).
+
+Hmm, let me think about the interior more carefully.
+
+The density of Farey fractions near x is:
+ρ_N(x) = Σ_{q=1}^N Σ_{\substack{a=1 \\ gcd(a,q)=1}}^q δ(a/q − x)
+
+In the continuous approximation:
+ρ_N(x) ≈ Σ_{q=1}^N φ(q) · q · 1_{a/q = x} ... this doesn't make sense for general x.
+
+Let me think about the "average local density." Over a small interval [x, x+dx], the expected number of Farey fractions is:
+E[#{F_N ∩ [x, x+dx]}] ≈ M · dx
+
+since M = |F_N| points are spread over [0,1]. But this is only the average; the actual density fluctuates.
+
+For the discrepancy to be larger than 1/N − 1/M at an interior point, we'd need a region where the cumulative count deviates significantly from Mx. This would require a large gap or cluster in the Farey sequence.
+
+The largest gap between consecutive Farey fractions in F_N is 1/N (between 0/1 and 1/N, and between (N-1)/N and 1/1). The second-largest gap depends on N, but it's typically much smaller (on the order of 1/N² or similar).
+
+Wait, actually, the second-largest gap might also be 1/N in some cases. For example, 1/N and 2/N have gap 1/N if gcd(2,N) = 1 (i.e., N is odd). But 1/N is not necessarily a Farey fraction's neighbor—let me check.
+
+For N large, the gap between 1/N and the next Farey fraction is 1/N − 1/(N+1) or something... no, the Farey fractions near 0 are: 0/1, 1/N, and then fractions like 1/(N-1), 1/(N-2), etc. (in decreasing order of the fraction value). Actually, 1/N < 1/(N-1) < ... < 1/2 < 1/1.
+
+The gap between 0/1 and 1/N is 1/N. The gap between 1/N and 1/(N-1) is 1/(N-1) − 1/N = 1/(N(N-1)). This is much smaller.
+
+So the boundary gaps dominate, and the interior discrepancy is much smaller.
+
+Therefore, D* = 1/N − 1/M + (small corrections).
+
+With M = 1 + Σ_{n≤N} φ(n):
+1/M = 1/(1 + Σ_{n≤N} φ(n))
+
+Now, Σ_{n≤N} φ(n) = 3N²/π² + O(N log N).
+
+So M = 3N²/π² + O(N log N), and:
+1/M = π²/(3N²) · 1/(1 + O(log N / N)) = π²/(3N²) + O(log N / N³)
+
+Hmm, but the claim is:
+D* = 1/N − π²/(3N²) + O(1/N³)
+
+So:
+D* = 1/N − 1/M = 1/N − π²/(3N²) + ...
+
+For the O(1/N³) term, we need the next term in 1/M. Let me expand:
+
+M = 3N²/π² + c₁N log N + c₂N + ...
+
+where c₁ and c₂ come from the asymptotic expansion of Σ_{n≤N} φ(n).
+
+The standard result is:
+Σ_{n=1}^N φ(n) = 3N²/π² − N log N/(2π²) · ... 
+
+Actually, let me look up the precise asymptotic. The classical result is:
+Σ_{n≤N} φ(n) = 3N²/π² + O(N log N)
+
+The more precise version uses the Dirichlet hyperbola method:
+Σ_{n≤N} φ(n) = Σ_{n≤N} Σ_{d|n} μ(d) · n/d = Σ_{d≤N} μ(d) Σ_{k≤N/d} k = Σ_{d≤N} μ(d) · (N/d)(N/d+1)/2
+
+= (1/2) Σ_{d≤N} μ(d)[N²/d² + N/d]
+
+= N²/2 · Σ_{d≤N} μ(d)/d² + N/2 · Σ_{d≤N} μ(d)/d
+
+Now, Σ_{d≤N} μ(d)/d² = 1/ζ(2) + O(1/N) = 6/π² + O(1/N)
+
+And Σ_{d≤N} μ(d)/d = O(exp(−c√log N)) = o(1) by the PNT (this sum converges to 0 as N → ∞, since Σ_{d=1}^∞ μ(d)/d = 0).
+
+Actually, more precisely: Σ_{d≤N} μ(d)/d = M(N)/N where M(N) = Σ_{d≤N} μ(d) is the Mertens function. Under RH, M(N) = O(N^{1/2+ε}), so Σ_{d≤N} μ(d)/d = O(N^{-1/2+ε}). Unconditionally, M(N) = O(N exp(−c√(log N))).
+
+So:
+Σ_{n≤N} φ(n) = (N²/2)(6/π² + O(1/N)) + (N/2) · O(N^{-1/2+ε})
+= 3N²/π² + O(N) + O(N^{1/2+ε})
+= 3N²/π² + O(N)
+
+Wait, that gives O(N) error, not O(N log N). Let me recheck.
+
+Oh wait, I think the issue is that Σ_{d≤N} μ(d)/d² = 1/ζ(2) − Σ_{d>N} μ(d)/d². And Σ_{d>N} μ(d)/d² = O(∫_N^∞ dt/t²) = O(1/N). So indeed the error is O(N).
+
+So:
+M = 1 + 3N²/π² + O(N)
+
+1/M = 1/(3N²/π² + O(N)) = (π²/(3N²)) · 1/(1 + O(1/N)) = π²/(3N²)(1 + O(1/N)) = π²/(3N²) + O(1/N³)
+
+So:
+D* = 1/N − 1/M = 1/N − π²/(3N²) + O(1/N³)
+
+This matches the claimed expansion! And the O(1/N³) term is determined by the O(N) error in Σ φ(n).
+
+To get the exact coefficient of 1/N³, I'd need the more precise asymptotic of Σ_{n≤N} φ(n). Specifically:
+
+Σ_{n≤N} φ(n) = 3N²/π² + R(N)
+
+where R(N) = N/2 · Σ_{d≤N} μ(d)/d = (N/2) · M(N)/N ... wait, let me redo this.
+
+Σ_{n≤N} φ(n) = (N²/2) Σ_{d≤N} μ(d)/d² + (N/2) Σ_{d≤N} μ(d)/d
+
+Let A(N) = Σ_{d≤N} μ(d)/d² and B(N) = Σ_{d≤N} μ(d)/d.
+
+Then Σ φ(n) = N²A(N)/2 + NB(N)/2.
+
+Now, A(N) = 1/ζ(2) − Σ_{d>N} μ(d)/d² = 6/π² − Σ_{d>N} μ(d)/d².
+
+The tail Σ_{d>N} μ(d)/d² = O(1/N) but we can be more precise:
+Σ_{d>N} μ(d)/d² ≈ ∫_N^∞ M'(t)/t² dt ... hmm, this involves the Möbius function directly.
+
+Actually, let me use partial summation differently. We have:
+A(N) = Σ_{d≤N} μ(d)/d² = 6/π² − Σ_{d>N} μ(d)/d²
+
+And Σ_{d>N} μ(d)/d² = ∫_N^∞ (1/t²) dM(t) where M(t) = Σ_{d≤t} μ(d).
+
+By partial summation:
+Σ_{d>N} μ(d)/d² = [M(t)/t²]_N^∞ + 2∫_N^∞ M(t)/t³ dt
+
+If M(t) = O(t^{1/2+ε}) (under RH), then M(t)/t² → 0 as t → ∞, and:
+Σ_{d>N} μ(d)/d² = −M(N)/N² + 2∫_N^∞ M(t)/t³ dt
+
+Both terms are O(N^{-3/2+ε}) under RH. So:
+A(N) = 6/π² + O(N^{-3/2+ε}) under RH
+
+And:
+B(N) = Σ_{d≤N} μ(d)/d = M(N)/N + ∫_1^N M(t)/t² dt ... wait, by partial summation:
+Σ_{d≤N} μ(d)/d = M(N)/N + ∫_1^N M(t)/t² dt ... no.
+
+Actually, Σ_{d≤N} μ(d)/d = ∫_{1^-}^N (1/t) dM(t) = M(N)/N + ∫_1^N M(t)/t² dt
+
+Hmm, let me just compute:
+B(N) = Σ_{d=1}^N μ(d)/d
+
+We know that Σ_{d=1}^∞ μ(d)/d = 0 (this is equivalent to PNT, since it equals 1/ζ(1) in a sense... actually, Σ μ(d)/d^s = 1/ζ(s), and at s=1 this diverges. Hmm, but Σ μ(d)/d does converge by partial summation from M(N) = o(N)).
+
+Actually, Σ_{d=1}^∞ μ(d)/d does converge. It equals lim_{s→1+} 1/ζ(s) = 0. This is because 1/ζ(s) → 0 as s → 1+ (since ζ(s) → ∞).
+
+So B(N) → 0 as N → ∞, and B(N) = o(1).
+
+More precisely, B(N) = O(N^{-1/2+ε}) under RH (since M(N) = O(N^{1/2+ε}) and by partial summation).
+
+So:
+Σ_{n≤N} φ(n) = N²/2 · (6/π² + O(N^{-3/2+ε})) + N/2 · O(N^{-1/2+ε})
+= 3N²/π² + O(N^{1/2+ε}) + O(N^{1/2+ε})
+= 3N²/π² + O(N^{1/2+ε}) under RH
+
+So the error term in Σ φ(n) is O(N^{1/2+ε}) under RH (this is related to the Dirichlet divisor problem).
+
+Therefore:
+M = 3N²/π² + O(N^{1/2+ε})
+
+And:
+1/M = π²/(3N²) · 1/(1 + O(N^{-3/2+ε}))
+= π²/(3N²)(1 + O(N^{-3/2+ε}))
+= π²/(3N²) + O(N^{-7/2+ε})
+
+So:
+D* = 1/N − π²/(3N²) + O(N^{-7/2+ε})
+
+Under RH, the error is O(N^{-7/2+ε}), which is much smaller than 1/N³. So the expansion D* = 1/N − π²/(3N²) + O(1/N³) holds unconditionally (since the error is O(N^{-3/2}) unconditionally, which is certainly O(1/N³) only for N large enough... wait, O(N^{-3/2}) is NOT O(N^{-3}). Hmm.
+
+Wait, let me recompute. Unconditionally, M(N) = Σ_{d≤N} μ(d) = O(N exp(−c√(log N))), so:
+B(N) = O(exp(−c√(log N))) and A(N) = 6/π² + O(1/N).
+
+Actually, let me just be more careful.
+
+A(N) = Σ_{d≤N} μ(d)/d² = 6/π² − Σ_{d>N} μ(d)/d².
+
+|Σ_{d>N} μ(d)/d²| ≤ Σ_{d>N} 1/d² = O(1/N).
+
+So A(N) = 6/π² + O(1/N).
+
+And B(N) = Σ_{d≤N} μ(d)/d = o(1) (unconditionally).
+
+So:
+Σ φ(n) = N²/2 · (6/π² + O(1/N)) + N/2 · o(1)
+= 3N²/π² + O(N) + o(N)
+= 3N²/π² + O(N)
+
+So M = 3N²/π² + O(N), and:
+1/M = π²/(3N²) · 1/(1 + O(1/N))
+= π²/(3N²) − O(1/N³)
+
+Hmm wait, 1/(1 + x) = 1 − x + x² − ... for |x| < 1. Here x = O(1/N), so:
+1/M = π²/(3N²) · (1 − O(1/N) + O(1/N²))
+= π²/(3N²) + O(1/N³)
+
+So D* = 1/N − 1/M = 1/N − π²/(3N²) + O(1/N³).
+
+This holds UNCONDITIONALLY since we only need Σ φ(n) = 3N²/π² + O(N), which is elementary.
+
+The claim D*(F_N) = 1/N − π²/(3N²) + O(1/N³) is therefore correct, with D* being the standard star discrepancy, and the expansion is unconditional.
+
+But wait, I need to verify that the supremum in the discrepancy is indeed achieved at the boundary intervals (near 0 and near 1), not at some interior point.
+
+For the boundary intervals:
+- Near 0: discrepancy = 1/N − 1/M ≈ 1/N − π²/(3N²)
+- Near 1: same by symmetry
+
+For the interior: the discrepancy depends on the local distribution of Farey fractions. The maximum interior gap between consecutive Farey fractions is bounded by 2/N (this follows from the three-distance theorem or direct analysis). But actually, the maximum gap in the interior is much smaller.
+
+For x ∈ (1/N, 1 − 1/N), the number of Farey fractions ≤ x is:
+A(x) = Σ_{q≤N} Σ_{\substack{a≤qx \\ gcd(a,q)=1}} 1
+
+The discrepancy at x is |A(x)/M − x|. To get the maximum interior discrepancy, I need to find where |A(x)/M − x| is maximized.
+
+Actually, I realize I should think about this more carefully. The maximum discrepancy could occur at an interior point if there's a large gap in the interior of the Farey sequence. But for the Farey sequence, the gaps between consecutive fractions decrease as we move away from the boundaries.
+
+Let me think about the gap structure. Consecutive Farey fractions a/q and a'/q' satisfy a'q − aq' = 1, and the gap is (a'q − aq')/(qq') = 1/(qq'). So the gap between consecutive fractions is 1/(qq') where q and q' are their denominators.
+
+The largest gap is 1/(1·N) = 1/N (between 0/1 and 1/N, and between (N-1)/N and 1/1).
+
+The second-largest gap would be between fractions with small denominators. For example, between 1/N and 1/(N−1), the gap is 1/(N(N−1)), which is ~1/N².
+
+But wait, between 0/1 and 1/N, the "gap" in the counting function is: A(0) = 1 and A(1/N) = 2. The discrepancy on (0, 1/N) is max(x − 1/M) for x ∈ (0, 1/N), which is 1/N − 1/M at x = 1/N⁻.
+
+For an interior interval (α_j, α_{j+1}), the discrepancy on the "below diagonal" side is α_{j+1} − j/M. If α_{j+1} − α_j = 1/(qq'), then the discrepancy changes by 1/(qq') over the interval. The maximum discrepancy on this interval is:
+max(j/M − α_j, α_{j+1} − j/M)
+
+Since j/M = α_j + d_j (where d_j = j/M − α_j), and α_{j+1} = α_j + 1/(qq'):
+α_{j+1} − j/M = 1/(qq') − d_j
+
+So the discrepancy on interval j is max(d_j, 1/(qq') − d_j), which is maximized when d_j = 0 (giving discrepancy 1/(qq')) or when d_j is at its extremes.
+
+The maximum gap in the interior is much smaller than 1/N, so the interior discrepancy is much smaller than the boundary discrepancy.
+
+But I should check: is it possible that d_j grows as we accumulate errors from many small gaps? The signed discrepancy d_j = j/M − α_j satisfies:
+d_{j+1} − d_j = 1/M − (α_{j+1} − α_j) = 1/M − 1/(q_j q_{j+1})
+
+where q_j is the denominator of α_j.
+
+So d_j = d_0 + Σ_{k=0}^{j-1} (1/M − 1/(q_k q_{k+1})).
+
+The mean of 1/(q_k q_{k+1}) over all k should be approximately 1/M (since the average gap is 1/M). So d_j performs a "random walk" with mean step ≈ 0. The fluctuations depend on the variance of the gaps.
+
+For the Farey sequence, the gaps 1/(qq') have a wide distribution. The maximum of |d_j| over j = 1, ..., M determines the interior discrepancy.
+
+For the boundary discrepancy to be dominant, we need:
+max_j |d_j| ≈ 1/N − 1/M ≈ 1/N
+
+This means the "random walk" d_j reaches ±1/N at some point. Given M ~ 3N²/π² steps with typical step size ~1/M ~ π²/(3N²), the random walk reaches ±1/N after about N/√(variance) steps... hmm, this analysis is getting complicated.
+
+Actually, I think the key insight is that the boundary discrepancy (1/N − 1/M) is much larger than any interior discrepancy. The reason is that the gap between 0 and 1/N is the unique largest gap, and all other gaps are much smaller. The cumulative effect of many small gaps doesn't accumulate enough to exceed 1/N.
+
+But I'm not 100% sure about this. Let me just compute it numerically.
+
+Let me write code to:
+1. Generate the Farey sequence F_N
+2. Compute the star discrepancy D*(F_N)
+3. Compare with 1/N − π²/(3N²)
+4. See if there's a pattern
+
+Let me also think about whether the maximum of |d_j| might actually be larger than 1/N − 1/M at some interior point. Consider x = 1/2. The number of Farey fractions ≤ 1/2 is roughly M/2 (by symmetry). More precisely, #{a/q ∈ F_N : a/q ≤ 1/2} = (M+1)/2 if M is odd (
