@@ -22,6 +22,7 @@ By construction, c_q(1) = μ(q), so **S_Q(1) = M(Q) exactly**. The m=1 contribut
 | 2000 | 8 | 0.024% | 0.6504 | 0.020 | small |
 | 5000 | 5 | 0.003% | 0.6503 | 0.020 | moderate |
 | 10000 | 23 | 1.3% | 0.6494 | 0.021 | **6%** of m≥2 mass |
+| 20000 | 26 | 0.9% | 0.6553 | 0.015 | **13%** of m≥2 mass |
 
 **Headline**: m=1 is a tiny fraction (typically <2%) of the Σ |S_Q(m)|²/m² sum. The constant C ≈ 0.67 comes essentially entirely from the m≥2 terms.
 
