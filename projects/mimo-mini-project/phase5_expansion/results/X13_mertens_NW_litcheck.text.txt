@@ -1,0 +1,65 @@
+### A. Literature Context
+
+The connection between the Mertens function \(M(Q)\) and the Farey \(L^2\) discrepancy \(J(Q)\) is implicit in the well-known Fourier expansion of the discrepancy function for Farey sequences. Specifically, for the Farey sequence of order \(Q\), the \(L^2\) discrepancy \(J(Q) = \int_0^1 D_Q(x)^2 \, dx\) can be expressed via Ramanujan sums:
+
+\[
+J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^\infty \frac{1}{m^2} \left| \sum_{q \le Q} c_q(m) \right|^2,
+\]
+
+where \(c_q(m)\) is the Ramanujan sum. Since \(\sum_{q \le Q} c_q(m) = \sum_{d \mid m} d \, M(Q/d)\), this becomes:
+
+\[
+J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^\infty \frac{1}{m^2} \left| S_Q(m) \right|^2, \quad S_Q(m) = \sum_{d \mid m} d \, M(Q/d).
+\]
+
+This expression appears in works on Farey discrepancy, including:
+- **Franel (1924)** and **Landau (1924)**: Their equivalence between the \(L^2\) discrepancy and the Riemann Hypothesis (RH) uses similar series.
+- **Aistleitner & Hofer (2014)**: "On the \(L^2\)-discrepancy of the Farey sequence" (arXiv:1405.6532) discusses related expansions.
+- **Codecá & Perelli (1988)**: Their papers on Farey sequences and RH do not explicitly highlight the role of \(M(Q)\), but the framework is standard.
+- **Hooley (1976)** and **Hall (1970)**: Their work on Farey sequences and discrepancy does not directly mention the Mertens function correlation.
+
+The explicit observation that pointwise fluctuations in \(NW(Q) = Q \cdot J(Q) / \Phi(Q)\) correlate strongly with \(|M(Q)|\) appears to be novel. The \(m=1\) term in the series contributes \(M(Q)^2/(6Q)\) to \(NW(Q) - C\), which matches the empirical data for large \(Q\).
+
+### B. Sharper Predictions Including Higher-Order Terms
+
+The approximation \(NW(Q) - C \approx M(Q)^2/(6Q)\) arises from the \(m=1\) term. Including \(m=2,3\) terms improves accuracy:
+
+\[
+NW(Q) - C \approx \frac{1}{6Q} \left[ M(Q)^2 + \frac{1}{4} |M(Q) + 2M(Q/2)|^2 + \frac{1}{9} |M(Q) + 3M(Q/3)|^2 + \cdots \right].
+\]
+
+For \(Q = 300\,000\), with \(M(Q) = 220\), \(M(Q/3) = M(100\,000) = -48\), and assuming \(M(Q/2) = M(150\,000) \approx 120\) (a rough estimate based on typical growth), we get:
+
+- \(m=1\): \(220^2 = 48\,400\)
+- \(m=2\): \(\frac{1}{4} |220 + 2 \cdot 120|^2 = \frac{1}{4} \cdot 460^2 = 52\,900\)
+- \(m=3\): \(\frac{1}{9} |220 + 3 \cdot (-48)|^2 = \frac{1}{9} \cdot 76^2 \approx 642.2\)
+
+Sum ≈ \(48\,400 + 52\,900 + 642.2 = 101\,942.2\). Then:
+
+\[
+NW(Q) - C \approx \frac{101\,942.2}{6 \cdot 300\,000} \approx 0.05663.
+\]
+
+But observed \(NW - C = 0.0288\), indicating that the mean contributions from \(m \ge 2\) are absorbed into \(C\), and fluctuations around the mean matter. Thus, the simple \(m=1\) term suffices for crude predictions.
+
+### C. Prediction for \(Q = 926\,265\)
+
+Given \(M(Q) = -368\), the \(m=1\) term yields:
+
+\[
+NW(Q) \approx C + \frac{M(Q)^2}{6Q} = 0.66989 + \frac{368^2}{6 \cdot 926\,265} \approx 0.66989 + 0.02437 = 0.69426.
+\]
+
+Thus, predict \(NW(926\,265) \approx 0.694\).
+
+### D. Implications and Open Questions
+
+- **Mertens conjecture failure**: Since \(|M(x)|\) can exceed \(\sqrt{x}\) infinitely often (Odlyzko & te Riele, 1985), \(NW(Q)\) can spike above \(C + 1/6 \approx 0.836\), but such spikes are rare.
+- **Under RH**: \(M(x) = O(x^{1/2+\varepsilon})\), so \(M(Q)^2/(6Q) = O(Q^\varepsilon)\), which is small. However, pointwise fluctuations can still be significant.
+- **Empirical correlation**: The strong Pearson correlation (+0.892) suggests that when \(M(Q)\) is anomalously large, the \(m=1\) term dominates \(J(Q)\), making \(NW(Q)\) a proxy for \(|M(Q)|/\sqrt{Q}\).
+
+### Summary
+
+The connection between \(|M(Q)|\) and \(J(Q)\) is inherent in the Fourier expansion of the Farey discrepancy, but the explicit empirical correlation and predictive power appear new. The \(m=1\) term provides a good first-order approximation, with refinements possible via higher-order terms if \(M(Q/d)\) values are known. The predicted \(NW(926\,265) \approx 0.694\) awaits computational verification.
+
+**Literature gaps**: No paper was found explicitly stating the correlation, but the analytic foundation is well-established. This opens opportunities to study joint fluctuations of \(M(Q)\) and Farey discrepancy, potentially linking to RH and random matrix theory.

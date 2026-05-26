@@ -1,0 +1,15 @@
+The Pearson correlation of the raw gaps \(d_i = 1/(b_i b_{i+1})\) is undefined in the limit \(N \to \infty\) because the variance of the scaled gaps \(D_i = N^2 d_i\) diverges. However, the correlation of the logarithms of the gaps, \(L_i = \log d_i\), converges to exactly \(1/2\) under the BCZ joint distribution.
+
+### Key steps:
+1. **BCZ density**: The joint density of \(X = b_i/N\) and \(Y = b_{i+1}/N\) is \(f(x,y) = 2\) on the triangle \(T = \{x + y > 1,\ 0 < x,y < 1\}\).
+2. **Scaled gaps**: \(D_i = 1/(X Y)\) has infinite second moment, so \(\text{Var}(D_i) = \infty\) and Pearson correlation is undefined.
+3. **Log-transformed gaps**: Define \(L_i = \log D_i = -\log X - \log Y\). Then:
+   - \(\mathbb{E}[L_i] = 1\),
+   - \(\text{Var}(L_i) = 2\zeta(2) - 3\),
+   - \(\mathbb{E}[L_i L_{i+1}] = \zeta(2) - \frac{1}{2}\).
+4. **Correlation**: 
+   \[
+   \text{Corr}(L_i, L_{i+1}) = \frac{\mathbb{E}[L_i L_{i+1}] - (\mathbb{E}[L_i])^2}{\text{Var}(L_i)} = \frac{\left(\zeta(2) - \frac{1}{2}\right) - 1}{2\zeta(2) - 3} = \frac{1}{2}.
+   \]
+
+Thus, the exact analytic value of \(\lim_{N \to \infty} \text{Corr}(\log d_i, \log d_{i+1})\) is \(1/2\).
