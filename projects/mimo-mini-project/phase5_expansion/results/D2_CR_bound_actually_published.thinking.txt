@@ -1,0 +1,811 @@
+The user is asking me to fact-check a claim about the Cramér-Rao bound (CR bound) for frequency estimation in the context of L-function zeros. Let me work through this carefully.
+
+Let me reason through each part systematically.
+
+## Part A: The canonical CR bound for sinusoidal frequency estimation
+
+For a single complex sinusoid sampled at integer times t = 0, 1, ..., N-1:
+y(t) = A exp(2πi f t) + w(t), where w(t) ~ CN(0, σ²)
+
+The Fisher information for f is:
+I(f) = (2π)² · |A|² · Σ_{t=0}^{N-1} t² / σ²
+
+For the complex case with SNR defined as |A|²/σ²:
+I(f) = (4π² A²/σ²) · Σ_{t=0}^{N-1} t²
+
+Σ_{t=0}^{N-1} t² = (N-1)N(2N-1)/6
+
+So Var(f̂) ≥ σ² / [4π² A² · (N-1)N(2N-1)/6] = 6σ² / [4π² A² N(N-1)(2N-1)]
+
+For large N: ≈ 6σ² / [4π² A² · 2N³/2] ... wait let me be more careful.
+
+Actually, for large N: N(N-1)(2N-1) ≈ 2N³
+
+So Var(f̂) ≥ 6σ² / (4π² A² · 2N³) = 6σ²/(8π² A² N³) = 3σ²/(4π² A² N³)
+
+Hmm, let me look at this differently using time T and sampling.
+
+If we sample at times t_n = nΔt for n = 0, ..., N-1, with T = (N-1)Δt being the observation time:
+
+The Fisher information for frequency f (in Hz) is:
+I(f) = (2π)² Σ_{n=0}^{N-1} (nΔt)² |A|²/σ² = (2π)²|A|²Δt²/σ² · Σ n² 
+
+With Σ_{n=0}^{N-1} n² = (N-1)N(2N-1)/6
+
+Now let me use the convention from Kay, Vol I. 
+
+From Kay, "Fundamentals of Statistical Signal Processing, Volume I: Estimation Theory," Chapter 7 (on the CR bound) and specifically around §7.6:
+
+For the real sinusoidal model:
+x[n] = A cos(2π f₀ n + φ) + w[n]
+
+Kay derives CR bounds for this. Let me recall the specific formula.
+
+Actually, I think the standard result that appears in many textbooks is:
+
+For a complex sinusoid y(t) = A exp(2πi f t) + noise, sampled at N equally spaced points over observation interval T:
+
+Var(f̂) ≥ 12σ² / (4π² A² T² N)   ... no that's not right either.
+
+Let me be very careful. Let me rederive from scratch.
+
+**Case 1: Complex sinusoid, unit sampling rate, t = 0, 1, ..., N-1**
+
+y[n] = A exp(2πi f n) + w[n], w[n] ~ CN(0, σ²)
+
+Log-likelihood (up to constants):
+L = -N ln(σ²) - (1/σ²) Σ |y[n] - A exp(2πi f n)|²
+
+For the Fisher information of f (treating A as known):
+
+∂/∂f [A exp(2πi f n)] = 2πi n A exp(2πi f n)
+
+The Fisher information matrix element:
+I_ff = (1/σ²) Σ_{n=0}^{N-1} |2πi n A|² = (4π² |A|²/σ²) Σ_{n=0}^{N-1} n²
+
+Σ_{n=0}^{N-1} n² = (N-1)N(2N-1)/6
+
+So: I_ff = (4π² A²/σ²) · (N-1)N(2N-1)/6
+
+Var(f̂) ≥ 1/I_ff = 6σ² / [4π² A² (N-1)N(2N-1)]
+
+For large N: (N-1)N(2N-1) ≈ 2N³, so:
+
+Var(f̂) ≈ 6σ²/(4π² A² · 2N³) = 3σ²/(4π² A² N³)
+
+Now, if T = NΔt and we express things in terms of T:
+
+With sampling interval Δt, times are t_n = nΔt. The frequency is f (in Hz, so 2πf is angular frequency).
+
+∂/∂f [A exp(2πi f nΔt)] = 2πi nΔt A exp(...)
+
+I_ff = (4π² A²/σ²) Δt² Σ n² = (4π² A²/σ²) Δt² (N-1)N(2N-1)/6
+
+With T = (N-1)Δt (or approximately NΔt for large N):
+
+For large N: I_ff ≈ (4π² A²/σ²) · (T/N)² · N³/2 = (4π² A²/σ²) · T² N / 2
+
+Wait, that gives:
+I_ff ≈ 2π² A² T² N / σ²
+
+Var(f̂) ≥ σ²/(2π² A² T² N)
+
+Hmm, that doesn't match the standard form either. Let me be more careful.
+
+Δt = T/(N-1) ≈ T/N for large N.
+
+I_ff = (4π²A²/σ²)(T/N)² · N³/2 = (4π²A²/σ²) · T²N/2 = 2π²A²T²N/σ²
+
+So Var(f̂) ≥ σ²/(2π²A²T²N)
+
+For the case where σ² is the noise variance per sample and the "total SNR" is SNR_total = NA²/σ²... actually this gets complicated with normalization.
+
+**Case 2: Real sinusoid**
+
+y[n] = A cos(2π f n + φ) + w[n] = Re[A exp(i(2πfn + φ))] + w[n]
+
+Or equivalently: y[n] = α cos(2πfn) + β sin(2πfn) + w[n]
+
+where A = √(α² + β²), φ = atan2(-β, α).
+
+This is a linear model in (α, β), and the CR bound for f follows from the Fisher information.
+
+For the real case with known amplitude and phase:
+
+∂y/∂f = -2πn A sin(2πfn + φ)
+
+I_ff = (1/σ²) Σ (-2πnA)² sin²(2πfn + φ) = (4π²A²/σ²) Σ n² sin²(2πfn + φ)
+
+For non-integer f, this averages to approximately (4π²A²/σ²) · (1/2) · N³/2 = (π²A²/σ²) · N³/2
+
+Wait, the sin² term: if 2πfn is not near 0 or π, then sin² averages to 1/2. So:
+
+I_ff ≈ (4π²A²/σ²) · (1/2) · (N-1)N(2N-1)/6 ≈ (π²A²/σ²) · N³/... hmm.
+
+Actually for the real case:
+Σ n² sin²(2πfn+φ) ≈ (1/2) Σ n² = (1/2)(N-1)N(2N-1)/6
+
+So I_ff ≈ (4π²A²/σ²) · (N-1)N(2N-1)/12
+
+For large N: I_ff ≈ (4π²A²/σ²) · N³/12... wait:
+
+(N-1)N(2N-1)/12 ≈ 2N³/12 = N³/6
+
+I_ff ≈ (4π²A²/σ²) · N³/6 = (2π²A²N³)/(3σ²)
+
+Hmm wait, let me redo. (N-1)N(2N-1)/6 ≈ 2N³/6 = N³/3 for large N.
+
+So Σ n² ≈ N³/3.
+
+For the real sinusoid: Σ n² sin²(...) ≈ (1/2)N³/3 = N³/6.
+
+I_ff = (4π²A²/σ²) · N³/6 = 2π²A²N³/(3σ²)
+
+Var(f̂) ≥ 3σ²/(2π²A²N³)
+
+With T = NΔt and expressing in terms of T:
+
+I_ff = (4π²A²/σ²)Δt² · N³/6 = (4π²A²/σ²)(T/N)²·N³/6 = (4π²A²/σ²)T²N/6 = 2π²A²T²N/(3σ²)
+
+Var(f̂) ≥ 3σ²/(2π²A²T²N)
+
+Hmm wait, I need to be more careful about whether we're talking about a real or complex sinusoid.
+
+OK let me look at this from the Kay textbook perspective. From Kay, Vol I, Chapter 7:
+
+For a real sinusoid x[n] = A cos(2πf₀n + φ) + w[n], w[n] ~ N(0, σ²), n = 0, 1, ..., N-1:
+
+The CR bound for f₀ (assuming unknown A, φ, σ²) is given in Theorem 7.3 or thereabouts.
+
+Actually, I recall that Kay (Vol I, §7.6, specifically around p. 178 in some editions) gives:
+
+For known A, φ, σ²:
+Var(f̂₀) ≥ 2/[A²/(σ²) · (2π)² · Σ n² · (1 - cos²error term)]
+
+This gets complicated. Let me think about what the standard result is.
+
+**The standard textbook result (Kay)**
+
+From Kay's "Fundamentals of Statistical Signal Processing, Vol. I: Estimation Theory":
+
+Theorem 7.3 gives the CR bound for a single real sinusoid in white Gaussian noise.
+
+For the case of known amplitude and phase, unknown frequency:
+
+I(f₀) = (2πA/σ)² Σ_{n=0}^{N-1} n² sin²(2πf₀n + φ)
+
+For the case where 2πf₀ is not near 0 or π (which is generic):
+sin²(...) averages to 1/2 over the summation, so:
+
+I(f₀) ≈ (2πA/σ)² · (1/2) · N(N-1)(2N-1)/6
+
+The CRB(f₀) = 1/I(f₀) ≈ 6σ²/[(2πA)² · (1/2) · N(N-1)(2N-1)]
+= 12σ²/[(2πA)² · N(N-1)(2N-1)]
+= 12σ²/[4π²A² · N(N-1)(2N-1)]
+= 3σ²/[π²A² · N(N-1)(2N-1)]
+
+For large N:
+≈ 3σ²/(π²A² · 2N³) = 3σ²/(2π²A²N³)
+
+Now, this is for a **real** sinusoid. For a **complex** sinusoid y[n] = A exp(2πif₀n) + w[n]:
+
+I(f₀) = (2πA/σ)² Σ n² = (2πA/σ)² · N(N-1)(2N-1)/6
+
+CRB(f₀) = 6σ²/[(2πA)² · N(N-1)(2N-1)] = 6σ²/[4π²A² · N(N-1)(2N-1)]
+
+For large N: ≈ 6σ²/(4π²A² · 2N³) = 3σ²/(4π²A²N³)
+
+So the complex case gives CRB that is **half** the real case (since the real case has the 1/2 averaging factor from sin²).
+
+Now, let me also consider the formulation with T. If sampling at rate 1/Δt, with N samples over time T = (N-1)Δt:
+
+For the complex case:
+CRB(f₀) = 6σ²/[4π²A² · (N-1)N(2N-1)Δt² · (1/Δt²)] ... wait I'm confusing myself.
+
+Actually, let me just express the result properly.
+
+For sampling at times t_n = nΔt, n = 0,...,N-1, the signal is:
+y(t_n) = A exp(2πi f₀ t_n) = A exp(2πi f₀ nΔt)
+
+∂y/∂f₀ = 2πi t_n A exp(...) = 2πi nΔt A exp(...)
+
+|∂y/∂f₀|² = 4π² n² Δt² A²
+
+I(f₀) = (1/σ²) Σ 4π² n² Δt² A² = (4π²A²Δt²/σ²) Σ n²
+
+Σ_{n=0}^{N-1} n² = (N-1)N(2N-1)/6
+
+I(f₀) = (4π²A²/σ²) · Δt² · (N-1)N(2N-1)/6
+
+Now T = (N-1)Δt, so Δt = T/(N-1).
+
+I(f₀) = (4π²A²/σ²) · T²/(N-1)² · (N-1)N(2N-1)/6
+= (4π²A²/σ²) · T² · N(2N-1) / [6(N-1)]
+
+For large N: N(2N-1)/(N-1) ≈ 2N, so:
+I(f₀) ≈ (4π²A²/σ²) · T² · 2N/6 = (4π²A²/σ²) · T²N/3
+
+So CRB(f₀) ≈ 3σ²/(4π²A²T²N)
+
+For the real case, divide I(f₀) by approximately 2 (the sin² averaging):
+I(f₀) ≈ (4π²A²/σ²) · T²N/6 = (2π²A²/σ²) · T²N/3
+
+CRB(f₀) ≈ 3σ²/(2π²A²T²N)
+
+Now, the formulas I often see are:
+
+For a real sinusoid: CRB(f₀) ≈ 6σ²/(A² T³ ... hmm wait.
+
+Actually, I think there's a version that uses N (total number of samples) vs T (observation time). Let me reconcile.
+
+If we use N samples at unit rate, T = N-1 ≈ N:
+CRB(f₀) ≈ 3σ²/(2π²A²N³) for the real case (large N, unit sampling)
+
+Actually, I recall a commonly cited result:
+
+CRB(f₀) = 6/(SNR · N(N²-1) · (2π)²)    [for complex sinusoid]
+
+where SNR = A²/σ².
+
+Let me verify: 6σ²/[4π²A² · N(N-1)(2N-1)] 
+
+Hmm, N(N-1)(2N-1) ≠ N(N²-1).
+
+N(N²-1) = N(N-1)(N+1).
+
+N(N-1)(2N-1) vs N(N-1)(N+1): these are different.
+
+So the exact formula is CRB(f₀) = 6σ²/[4π²A² · N(N-1)(2N-1)] for the complex case.
+
+For the real case: CRB(f₀) = 12σ²/[4π²A² · N(N-1)(2N-1)] = 3σ²/[π²A² · N(N-1)(2N-1)]
+
+But wait, in the real case the exact formula depends on the frequency because sin²(2πf₀n + φ) doesn't average out exactly. So the exact CRB for the real case depends on f₀, φ. The formulas above with 1/2 averaging are approximations valid for generic frequencies.
+
+Hmm, but Kay does give exact formulas. Let me reconsider.
+
+Actually, for the real sinusoidal model where f₀, A, φ are all unknown, the exact CRB is more complex and involves the Fisher information matrix.
+
+But for the simple case where only f₀ is unknown (A and φ known):
+
+I_ff = (A²/σ²)(2π)² Σ_{n=0}^{N-1} n² sin²(2πf₀n + φ)
+
+This depends on the actual frequency f₀ and phase φ. The bound varies with frequency.
+
+For the case where f₀ is such that 2πf₀n + φ sweeps through many cycles (i.e., f₀ is not too close to 0 or 1/2), we get the averaging result I gave above.
+
+OK so now let me go to what I think the user actually cares about.
+
+## Part B: The L-zero signal model
+
+The user's signal model is:
+z(t) = -2 Re Σ_k (1/ρ_k) exp(iγ_k t)
+
+where ρ_k are the residues at the L-function zeros γ_k (complex, with imaginary part being the zero height).
+
+The amplitude for each component is A_k = 2/|ρ_k| ≈ 2/γ_k (since |ρ_k| ~ γ_k for high zeros).
+
+Now, this is a **real** signal (it's the real part of something), composed of multiple sinusoidal components.
+
+For a single component at frequency γ_k with amplitude A_k = 2/γ_k:
+
+The CR bound for estimating γ_k in the presence of noise with variance σ² per sample, using N samples:
+
+**If we treat each component independently** (which is an approximation, valid when the zeros are well-separated relative to the frequency resolution):
+
+For the real sinusoidal case, the CRB for γ_k is:
+Var(γ̂_k) ≥ 3σ²/(π²A_k²N³)    (large N approximation, generic frequency)
+
+Wait, but γ_k is playing the role of the angular frequency 2πf, not f itself. Let me be careful about the frequency parameterization.
+
+If the signal is: x(t) = A cos(γt + φ)
+
+Then γ is an angular frequency. The Fisher information for γ:
+
+∂x/∂γ = -At sin(γt + φ)
+
+I_γγ = (A²/σ²) Σ t² sin²(γt + φ)
+
+For large N and generic γ:
+I_γγ ≈ (A²/σ²) · (1/2) · Σ t²
+
+At unit sampling rate, Σ_{t=0}^{N-1} t² = (N-1)N(2N-1)/6 ≈ N³/3
+
+I_γγ ≈ A²N³/(6σ²)
+
+CRB(γ) = 6σ²/(A²N³)
+
+With A = 2/γ_k:
+CRB(γ_k) ≥ 6σ²/(4/γ_k² · N³) = 6γ_k²σ²/(4N³) = 3γ_k²σ²/(2N³)
+
+Hmm, so Var(γ̂_k) ≥ 3γ_k²σ²/(2N³).
+
+Wait, but this is using the approximation sin² ≈ 1/2. Let me think about whether the "3/2 coefficient" the user mentions refers to something else.
+
+If σ² = 1 (noise variance) and we consider:
+
+CRB(γ_k) ≥ 3γ_k²/(2N³)
+
+The coefficient is 3/2. This matches what Z4 claimed: "The CR bound 3/2."
+
+So the claim is that with the specific amplitude A_k = 2/γ_k (from the L-function explicit formula) and noise variance σ² = 1, the CRB coefficient in front of γ_k²/N³ is 3/2.
+
+But wait, let me recheck. With A_k = 2/γ_k:
+
+CRB(γ_k) = 6σ²/(A_k²N³) = 6σ²γ_k²/(4N³) = (3/2)σ²γ_k²/N³
+
+With σ² = 1: CRB(γ_k) = (3/2)γ_k²/N³
+
+Yes, the coefficient is 3/2.
+
+But hold on - is this the real sinusoid formula or the complex sinusoid formula?
+
+For a **complex** sinusoid y(t) = A exp(iγt):
+I_γγ = (A²/σ²) Σ t² ≈ A²N³/(3σ²)
+
+CRB(γ) = 3σ²/(A²N³) = 3σ²γ_k²/(4N³) = (3/4)σ²γ_k²/N³
+
+So with the complex formula, the coefficient would be 3/4, not 3/2.
+
+The real formula gives coefficient 3/2, the complex gives 3/4.
+
+Now, the signal z(t) = -2 Re Σ_k (1/ρ_k) exp(iγ_k t) is a real signal. Each component is:
+
+z_k(t) = -2 Re[(1/ρ_k) exp(iγ_k t)] = -(2/|ρ_k|) cos(γ_k t + arg(ρ_k))
+
+This is a real sinusoid with amplitude A_k = 2/|ρ_k|.
+
+So the appropriate formula is the real sinusoidal CRB, and the coefficient is 3/2.
+
+Now, wait. There's a subtlety. The exact CRB for a real sinusoid depends on the phase. The approximation sin² ≈ 1/2 is for generic frequencies, but the exact formula involves the actual values of sin²(γ_k t_n + φ_k). For the L-function zeros, the phases φ_k = arg(ρ_k) are determined by the residues. But generically, the 1/2 approximation should hold.
+
+Actually, wait. I need to reconsider. The sin² term comes from:
+
+∂/∂γ [cos(γt + φ)] = -t sin(γt + φ)
+
+So I_γγ = (1/σ²) Σ t² sin²(γt + φ)
+
+If γ is not close to 0 and we're sampling at unit rate, then as n ranges over 0 to N-1, the argument γn + φ sweeps through approximately γN/(2π) cycles. For γ >> 2π/N (i.e., many cycles in the observation window), sin² oscillates and averages to 1/2. So:
+
+I_γγ ≈ (1/σ²) · (1/2) · Σ n² = (1/σ²) · (1/2) · N³/3 = N³/(6σ²)
+
+For the L-function zeros, γ_k ~ 2π·k/log(k) or so (depending on normalization), and for large k, γ_k >> 2π/N, so the approximation is valid.
+
+CRB(γ_k) = 6σ²/A_k²N³ = 6σ²·γ_k²/(4N³) = (3/2)σ²γ_k²/N³
+
+OK so this confirms the 3/2 coefficient.
+
+## Now about Stoica-Nehorai 1989
+
+The paper by Stoica and Nehorai (1989) "MUSIC, Maximum Likelihood, and Cramér-Rao Bound" derives CR bounds for sinusoidal parameter estimation. They consider:
+
+y(t) = Σ_k a_k exp(iω_k t) + noise
+
+where ω_k = 2πf_k are the frequencies.
+
+The CRB they derive involves the Fisher information matrix, and for the frequency parameters, the key formula involves the amplitudes and the noise variance.
+
+The key result is (from the paper):
+
+For complex sinusoids in white noise, the CRB for the frequency vector has diagonal elements:
+
+CRB(ω_k) ≈ σ²/(2T · |a_k|² · (T²/12))  ... something like this.
+
+Actually, I don't have the paper in front of me, but the standard result from Stoica-Nehorai is that the CRB for frequency estimation of a single sinusoid is:
+
+Var(ω̂_k) ≥ 12σ²/(T² · SNR_k · N)   (approximately, for large N, complex case)
+
+Hmm, I need to be more careful.
+
+Actually, I think what Stoica-Nehorai derive is for the general case of multiple sinusoids. The single-sinusoid case reduces to the textbook formula.
+
+Let me just relate the parameters:
+
+The mapping Z4 suggests:
+- f_k → γ_k (our L-function zeros)
+- SNR → 1/σ²
+- T → 1 (observation length)
+
+If T = 1 and N samples are taken in [0, 1], then the sampling rate is N. In their formula, the CRB is expressed in terms of T.
+
+The standard result for a single complex sinusoid:
+CRB(f) = 12σ²/(4π²A² · T² · N) ... no, let me think again.
+
+Actually, using the exact sum: for a complex sinusoid at sampling times t = 0, Δt, ..., (N-1)Δt with Δt = T/(N-1):
+
+I_ff = (4π²A²/σ²) · Δt² · N(N-1)(2N-1)/6
+
+For large N:
+≈ (4π²A²/σ²) · (T/N)² · N³/3 = (4π²A²/σ²) · T²N/3
+
+Hmm, but this uses f as the frequency in Hz. If we use angular frequency ω = 2πf:
+
+I_ωω = I_ff / (2π)² = (A²/σ²) · T²N/3
+
+CRB(ω) = 3σ²/(A²T²N)
+
+For the L-zero case with ω = γ, A = 2/γ, and if T = 1:
+
+CRB(γ) = 3σ²/(4/γ² · 1 · N) = 3σ²γ²/(4N)
+
+Hmm wait, that's different from what I got before. Let me recheck.
+
+With T = 1 and N samples in [0, 1] at rate N-1 (so Δt = 1/(N-1) ≈ 1/N for large N):
+
+I_γγ = (A²/σ²) Σ t_n² = (A²/σ²) · (1/2) · Σ n²Δt² 
+
+Wait, I'm getting confused between angular frequency and ordinary frequency. Let me be very precise.
+
+The signal is: x(t_n) = A cos(γ t_n + φ) + w(t_n)
+
+where t_n = n/(N-1) for n = 0, ..., N-1, and γ is the angular frequency parameter we want to estimate.
+
+∂x/∂γ = -A t_n sin(γ t_n + φ)
+
+I_γγ = (A²/σ²) Σ_{n=0}^{N-1} t_n² sin²(γ t_n + φ)
+
+With t_n = n/(N-1):
+t_n² = n²/(N-1)²
+
+For generic γ (sin² averages to 1/2):
+I_γγ ≈ (A²/(2σ²)) · (1/(N-1)²) · Σ n² = (A²/(2σ²)) · (N(2N-1))/(6(N-1))
+
+For large N:
+≈ (A²/(2σ²)) · (2N³)/(6N²) = (A²/(2σ²)) · N/3 = A²N/(6σ²)
+
+So: CRB(γ) = 6σ²/(A²N)
+
+With A = 2/γ_k:
+CRB(γ_k) = 6σ²/(4γ_k^{-2} · N) = 6σ²γ_k²/(4N) = (3/2)σ²γ_k²/N
+
+If σ² = 1: CRB(γ_k) = (3/2)γ_k²/N
+
+Hmm, so the coefficient is 3/2, but the power of N is just N, not N³. This is because T = 1 means the observation time is fixed and only the number of samples grows.
+
+Wait, but that doesn't seem right dimensionally. If we have more samples in a fixed time interval, we should get better estimates, but the improvement should eventually saturate (you can't estimate better than the information in the continuous-time signal over time T).
+
+Actually no, for fixed T and increasing N (finer sampling), the Fisher information does increase linearly with N, until N is so large that the signal bandwidth is fully resolved. For a single sinusoid, the bandwidth is essentially zero (delta function in frequency), so in principle, more samples always help. But in practice, with a continuous-time model, there's a different CRB.
+
+For continuous-time observation over [0, T] with white noise (spectral density σ²):
+
+I_γγ = (A²/σ²) ∫_0^T t² sin²(γt + φ) dt
+
+For generic γ:
+≈ (A²/(2σ²)) · T³/3 = A²T³/(6σ²)
+
+CRB(γ) = 6σ²/(A²T³)
+
+With A = 2/γ_k, T = 1:
+CRB(γ_k) = 6σ²γ_k²/4 = (3/2)σ²γ_k²
+
+Hmm wait, that doesn't have N in it because in continuous time, there's no N.
+
+For discrete time with N samples in [0, T], Δt = T/(N-1):
+
+I_γγ = (A²/σ²) Σ_n (nΔt)² sin²(γnΔt + φ)
+
+For large N:
+≈ (A²/(2σ²)) Δt² Σ n² = (A²/(2σ²)) (T/(N-1))² (N-1)N(2N-1)/6
+≈ (A²/(2σ²)) (T²/N²) · N³/3 = A²T²N/(6σ²)
+
+Hmm, so I_γγ = A²T²N/(6σ²), giving CRB(γ) = 6σ²/(A²T²N).
+
+But the continuous-time result was I_γγ = A²T³/(6σ²), giving CRB(γ) = 6σ²/(A²T³).
+
+These match when T²N = T³, i.e., N = T/Δt and... wait, that only works if Δt = 1. So for unit sampling rate (Δt = 1) and T = N-1 ≈ N, we get T²N ≈ N³ and T³ ≈ N³, so they agree.
+
+OK so now let me reconcile everything. The key formula in the continuous-time limit (or equivalently, unit sampling rate, T = N-1):
+
+For a real sinusoid with amplitude A, angular frequency γ:
+CRB(γ) = 6σ²/(A² T³)
+
+(or equivalently 6σ²/(A²N³) when T ≈ N with unit sampling)
+
+For the L-zero signal with A_k = 2/γ_k:
+CRB(γ_k) = 6σ²γ_k²/(4T³) = (3/2)σ²γ_k²/T³
+
+With T = 1 and σ² = 1:
+CRB(γ_k) = (3/2)γ_k²
+
+OK but that seems like a trivial bound since it doesn't improve with sample size (because T is fixed at 1). The improvement comes from having N samples, giving:
+
+CRB(γ_k) = (3/2)σ²γ_k²/N³   (for T = N with unit sampling)
+
+or
+
+CRB(γ_k) = (3/2)σ²γ_k²/(T²N)   (for T observation time, N samples)
+
+Let me now think about what the user's actual signal model and parameterization is.
+
+Actually, I think the key point is:
+
+**The coefficient is 3/2** (for the real sinusoidal case with the specific amplitude A_k = 2/γ_k from the explicit formula for L-functions).
+
+And this is indeed a direct substitution of γ_k for f_k in the standard Stoica-Nehorai / Kay textbook formula.
+
+Now, the user mentions that "Kay Vol I §7.6" has this. Let me think about what exactly is in Kay.
+
+Kay, Vol I, §7.6 is about "Sinusoidal Parameters" and the CR bound for sinusoidal frequency estimation. The key formula in that section is:
+
+For x[n] = A cos(2πf₀n + φ) + w[n], w[n] ~ N(0, σ²):
+
+The CRB matrix for θ = [A, f₀, φ]ᵀ is:
+
+C_CRB = σ²/(2) · [Σ n⁰ sin² Σ n sin² Σ sin²; Σ n sin² Σ n² sin² Σ n sin²; Σ sin² Σ n sin² Σ n⁰ sin²]^{-1}
+
+Wait, this isn't quite right. The model is nonlinear in f₀, so the Fisher information matrix involves:
+
+∂x/∂A = cos(2πf₀n + φ)
+∂x/∂f₀ = -2πAn sin(2πf₀n + φ)
+∂x/∂φ = -A sin(2πf₀n + φ)
+
+I_ij = (1/σ²) Σ (∂x/∂θ_i)(∂x/∂θ_j)
+
+The (f₀, f₀) element:
+I_{f₀f₀} = (4π²A²/σ²) Σ n² sin²(2πf₀n + φ)
+
+And the full Fisher information matrix:
+
+I = (1/σ²) [Σcos² -2πAΣn·cos·sin -AΣcos·sin;
+ -2πAΣn·cos·sin 4π²A²Σn²·sin² 2πA²Σn·sin²;
+ -AΣcos·sin 2πA²Σn·sin² A²Σsin²]
+
+This is messy. The point is that when all three parameters are unknown, the CRB for f₀ is obtained by inverting the full matrix and taking the (2,2) element.
+
+For the single-sinusoid case with known A and φ, it's simpler:
+CRB(f₀) = σ²/(4π²A² Σ n² sin²(2πf₀n + φ))
+
+And the approximation for generic frequency (sin² ≈ 1/2):
+CRB(f₀) ≈ σ²/(4π²A² · N³/6) = 6σ²/(4π²A²N³) = 3σ²/(2π²A²N³)
+
+In terms of angular frequency ω₀ = 2πf₀:
+CRB(ω₀) = (2π)² CRB(f₀) = 3σ²/(A²N³/... 
+
+Wait, CRB(ω₀) = 4π² · 3σ²/(2π²A²N³) = 6σ²/(A²N³)
+
+Yes, so for angular frequency ω:
+CRB(ω) = 6σ²/(A²N³)
+
+For the L-zero case with ω = γ_k, A = 2/γ_k:
+CRB(γ_k) = 6σ²γ_k²/(4N³) = (3/2)σ²γ_k²/N³
+
+Great, so the coefficient 3/2 is confirmed.
+
+Now, the question about Stoica-Nehorai:
+
+Stoica & Nehorai (1989) consider the model:
+y(t) = Σ_k A_k exp(iω_k t) + noise
+
+and derive the CRB for (A_k, ω_k). The result for the frequency CRB (diagonal of the inverse Fisher information matrix) is essentially the same as the textbook formula.
+
+For the single-sinusoid complex case:
+CRB(ω_k) ≥ 3σ²/(A_k²N³)
+
+The mapping Z4 suggests:
+- f_k → γ_k: Yes, if we use angular frequency
+- SNR → 1/σ²: Yes, since SNR = A²/σ² and A is known
+- T → 1: This needs clarification
+
+If we use the formula CRB(γ_k) = 6σ²/(A_k²N³) with A_k = 2/γ_k:
+= 6σ²γ_k²/(4N³) = (3/2)σ²γ_k²/N³
+
+This is the 3/2 coefficient Z4 refers to. But it's the **real** sinusoidal case (factor of 6 rather than 3 for the complex case).
+
+Wait, let me recheck. For the **complex** sinusoid:
+I_ωω = (A²/σ²) Σ n² ≈ A²N³/(3σ²)
+CRB(ω) = 3σ²/(A²N³)
+
+For the **real** sinusoid (generic frequency):
+I_ωω = (A²/σ²) Σ n² sin²(...) ≈ A²N³/(6σ²)
+CRB(ω) = 6σ²/(A²N³)
+
+So the real case gives CRB that is **twice** the complex case.
+
+With A_k = 2/γ_k:
+- Complex: CRB(γ_k) = 3σ²γ_k²/(4N³) = (3/4)σ²γ_k²/N³
+- Real: CRB(γ_k) = 6σ²γ_k²/(4N³) = (3/2)σ²γ_k²/N³
+
+So the 3/2 coefficient corresponds to the **real sinusoidal** formula, which is appropriate since z(t) is real.
+
+Now, about Stoica-Nehorai specifically:
+
+The Stoica-Nehorai paper derives the CRB for the general model y(t) = Σ A_k exp(iω_k t) + noise. This is a **complex** model. If we apply this directly, we'd get the 3/4 coefficient.
+
+To get the 3/2 coefficient for the real model, you need to adapt the formula. This adaptation is textbook (Kay does it), but it's a step beyond directly citing Stoica-Nehorai.
+
+So the claim "The CR bound 3/2 is a relabeled Stoica-Nehorai (1989)" is **slightly oversimplified**. The Stoica-Nehorai formula gives the complex sinusoidal CRB. The real sinusoidal CRB (which gives 3/2) requires the additional step of accounting for the real-valued signal, which is standard in Kay but goes beyond the original Stoica-Nehorai paper.
+
+That said, the mathematical content is entirely standard. The 3/2 coefficient is a straightforward consequence of:
+1. The textbook CRB for real sinusoidal frequency estimation (Kay, or equivalent)
+2. Substituting A_k = 2/γ_k from the explicit formula for L-functions
+3. Using σ² for the noise variance
+
+## Part C: Is the L-zero application novel?
+
+The question of novelty is about whether anyone has previously written down the CRB for L-function zeros.
+
+In signal processing: the formula is textbook. No novelty.
+In number theory: as the user notes, AV1 (presumably a literature search) found no explicit CRB for L-zero estimation. So there is novelty in the explicit application.
+
+The nature of the novelty:
+- The mathematical formula is a direct textbook adaptation
+- The number-theoretic motivation (why we care about estimating L-function zeros from prime-counting data) is domain-specific
+- The noise model σ² may need number-theoretic input to be physically meaningful (e.g., what is the actual noise in the explicit formula remainder term?)
+
+So I'd characterize the novelty as:
+- **In signal processing terms**: "modest, applied" — it's a textbook formula applied to a new domain
+- **In number theory terms**: "genuine but modest" — writing down an explicit CRB is new but the math is elementary
+- **Cross-disciplinary value**: moderate — the explicit formula connecting number-theoretic estimation to classical estimation theory is a useful bridge, even if the math is straightforward
+
+## Summary
+
+Let me now write up a clear answer.
+
+Actually, let me reconsider one thing. The user asks about the exact formula from Stoica-Nehorai and Kay.
+
+From Stoica-Nehorai 1989 (IEEE Trans. ASSP, vol. 37, no. 5, May 1989), the paper considers the model:
+
+x(t) = A·s(t,θ) + e(t)
+
+For sinusoidal signals, they derive the CRB. The key result for the frequency estimation of sinusoids in white noise is their equation involving the signal subspace.
+
+The specific formula for a single complex sinusoid (which is the simplest case) in their framework gives:
+
+CRB(ω) = σ²/(2·|A|² · (T²N/12))
+
+Wait, that doesn't look right either. Let me think about what the standard form is.
+
+The standard result that appears in many places, including Stoica-Nehorai, Kay, and many radar/sonar textbooks, for the CRB of frequency estimation:
+
+For a complex sinusoid y[n] = A exp(iωn) + w[n], n = 0,...,N-1:
+
+CRB(ω) = 6σ²/(A²N(N²-1))
+
+Wait, N(N²-1) = N(N-1)(N+1). Is this the same as what I had?
+
+Earlier I had: 6σ²/[A² · N(N-1)(2N-1)]
+
+N(N-1)(N+1) vs N(N-1)(2N-1): these are different!
+
+Let me recompute Σ_{n=0}^{N-1} n² = (N-1)N(2N-1)/6.
+
+So CRB(ω) = σ²/(A² · (N-1)N(2N-1)/6) = 6σ²/(A²(N-1)N(2N-1))
+
+This is for the complex case. For the real case (generic frequency):
+CRB(ω) = 12σ²/(A²(N-1)N(2N-1)) = 12σ²/(A²·N(N-1)(2N-1))
+
+Hmm, but some references write it as 12σ²/(A²N(N²-1)). Let me check:
+
+N(N²-1) = N(N-1)(N+1) ≠ N(N-1)(2N-1) for N > 1.
+
+So these formulas are actually different. The exact sum is Σ_{n=0}^{N-1} n² = (N-1)N(2N-1)/6.
+
+But wait, if the sampling is from n = -(N-1)/2 to (N-1)/2 (centered), then:
+
+Σ_{n=-(N-1)/2}^{(N-1)/2} n² = 2·Σ_{n=1}^{(N-1)/2} n² = 2·(N-1)/2·(N+1)/2·N/... 
+
+Hmm, this depends on whether N is odd. For the centered case with N odd:
+
+n ranges from -(N-1)/2 to (N-1)/2.
+
+Σ n² = 2·Σ_{k=1}^{(N-1)/2} k² = 2·((N-1)/2)((N-1)/2+1)(2·(N-1)/2+1)/6
+= 2·((N-1)/2)((N+1)/2)(N)/6
+= (N-1)(N+1)N/12
+= N(N²-1)/12
+
+So CRB(ω) = σ²/(A² · N(N²-1)/12) = 12σ²/(A²N(N²-1))
+
+AH HA! So the factor of 12 appears when you use centered sampling (symmetric around 0). The factor of 6 appears when you use one-sided sampling (starting from 0).
+
+This resolves the "coefficient ambiguity" the user mentions (3 vs 12 vs 3/2 vs 6).
+
+For one-sided sampling n = 0, ..., N-1:
+Σ n² = (N-1)N(2N-1)/6
+CRB(ω) = 6σ²/(A²(N-1)N(2N-1))
+
+For centered sampling n = -(N-1)/2, ..., (N-1)/2 (N odd):
+Σ n² = N(N²-1)/12
+CRB(ω) = 12σ²/(A²N(N²-1))
+
+For large N:
+- One-sided: ≈ 6σ²/(2A²N³) = 3σ²/(A²N³)
+- Centered: ≈ 12σ²/(A²N³)
+
+So the centered case gives **twice** the Fisher information (CRB is halved) compared to one-sided.
+
+This is because the centered time window is more informative about frequency (the origin is in the middle of the observation, giving better leverage for frequency estimation).
+
+Now, which one does Stoica-Nehorai use? And which does Kay use?
+
+In most radar/sonar applications, time starts at 0 (one-sided), so the formula is:
+CRB(ω) = 6σ²/(A²N(N-1)(2N-1))
+
+But many textbooks simplify to large-N approximation: 3σ²/(A²N³) for one-sided, or 6σ²/(A²N³) for centered.
+
+The "12" that appears in many references corresponds to the centered sampling case.
+
+And the user's "3/2" comes from substituting A = 2/γ into the real-sinusoid, one-sided formula:
+
+For real sinusoid, one-sided, large N:
+CRB(ω) = 6σ²/(A²N³)
+
+With A = 2/γ:
+CRB(γ) = 6σ²γ²/(4N³) = (3/2)σ²γ²/N³
+
+Alternatively, for the centered real sinusoid:
+CRB(ω) = 12σ²/(A²N³)
+With A = 2/γ: CRB(γ) = 12σ²γ²/(4N³) = 3σ²γ²/N³
+
+And for the complex sinusoid:
+- One-sided: CRB(ω) = 3σ²/(A²N³), with A = 2/γ: (3/4)σ²γ²/N³
+- Centered: CRB(ω) = 6σ²/(A²N³), with A = 2/γ: (3/2)σ²γ²/N³
+
+So the coefficient 3/2 can arise from either:
+(a) Real sinusoid, one-sided sampling, OR
+(b) Complex sinusoid, centered sampling
+
+The fact that these two give the same coefficient is a coincidence of the factor of 2 cancelling.
+
+Now, which applies to our signal model?
+
+The signal z(t) = -2 Re Σ_k (1/ρ_k) exp(iγ_k t) is real-valued. If we sample at t = 0, Δt, ..., (N-1)Δt (one-sided), then we should use the real, one-sided formula.
+
+But actually, there's another subtlety. The signal involves exp(iγ_k t) where γ_k is the imaginary part of the k-th zero (which grows with k). For the Riemann zeta function, the zeros are at 1/2 + iγ_k, and γ_1 ≈ 14.13, γ_2 ≈ 21.02, etc.
+
+If we're sampling at integer times t = 0, 1, 2, ..., N-1, then exp(iγ_k t) oscillates with angular frequency γ_k. The Nyquist criterion requires γ_k < π for the sampling to be adequate. But γ_k >> π for all but possibly the first few zeros!
+
+So there's a potential aliasing issue. But if the signal model is already defined at discrete times (which is the case if we're working with prime-counting data), then the relevant frequency is γ_k mod 2π, which folds back.
+
+This is an important practical consideration, but it doesn't affect the formal CRB calculation (which assumes the model is correctly specified).
+
+OK, I think I've been going deep enough. Let me now compose the answer.
+
+Actually, let me reconsider one more thing. The user says "Z4 said: 'The CR bound 3/2 is a relabeled Stoica-Nehorai (1989). It's in Kay Vol I §7.6.'"
+
+The key question is whether Stoica-Nehorai 1989 explicitly writes down a formula that, with the substitution f_k → γ_k, SNR → 1/σ², T → 1, gives exactly 3/2.
+
+Let me think about what Stoica-Nehorai actually derive. Their paper focuses on MUSIC vs. ML for sinusoidal estimation, and the CRB is used as a benchmark. The CRB formula they use is the standard one.
+
+The exact formula in Stoica-Nehorai for a single complex sinusoid in white Gaussian noise is (in their notation):
+
+CRB(ω) = 6σ² / (|A|² · T_s² · M(M²-1))
+
+where T_s is the sampling period, M is the number of samples. This uses centered sampling (M odd, from -(M-1)/2 to (M-1)/2).
+
+Wait, actually I think they use M samples starting from t = 0. Let me not guess and instead just note the general form.
+
+The general result from Stoica-Nehorai is for multiple sinusoids, and the single-sinusoid case is a special case that reduces to the textbook formula.
+
+Z4's claim that "it's in Kay Vol I §7.6" is plausible, as Kay §7.6 covers the CRB for sinusoidal parameters.
+
+The specific mapping Z4 proposes:
+- f_k → γ_k: Replace frequency with zero height
+- SNR → 1/σ²: Since the signal amplitude is determined by the number-theoretic model, the free parameter is noise level
+- T → 1: This likely means the observation window is [0, 1]
+
+If T = 1, then for discrete sampling at t = 0, 1/N, 2/N, ..., (N-1)/N (N samples in [0,1]):
+
+Actually wait, if T = 1 and we have N samples, the sampling rate is N. Then Δt = 1/(N-1).
+
+For the real sinusoid with one-sided sampling in [0, 1]:
+I_γγ = (A²/σ²) · (1/2) · Σ_{n=0}^{N-1} (n/(N-1))² 
+= (A²/(2σ²)) · 1/(N-1)² · (N-1)N(2N-1)/6
+= A²N(2N-1)/(12σ²(N-1))
+
+For large N:
+≈ A² · 2N² / (12σ² · N) = A²N/(6σ²)
+
+So CRB(γ) = 6σ²/(A²N)
+
+With A = 2/γ: CRB(γ) = 6σ²γ²/(4N) = (3/2)σ²γ²/N
+
+Hmm, but this is for T = 1 with N samples. The bound improves with N (more samples per unit time). This is the discrete-time CRB.
+
+If instead we use the continuous-time CRB with T = 1:
+CRB(γ) = 6σ²/(A²T³) = 6σ²/(A²) = (3/2)σ²γ²
+
+This doesn't improve with N, as there's no N in continuous time. But it gives a different numerical value.
+
+I think the user's parameterization is: unit sampling rate, observation time T = N, so T and N are the same.
+
+In that case:
+CRB(γ_k) = 6σ²
