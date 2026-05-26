@@ -1,0 +1,45 @@
+# 2D Farey Generalization Predictions
+
+## Discovery #2: Lag-1 Correlation
+
+**Precise 2D generalization**: For each point \( p \in F_N^2 \), define its Voronoi cell \( V(p) \) as the set of points in \([0,1]^2\) closer to \( p \) than to any other point in \( F_N^2 \). Define "lag-1" as the correlation between the areas of cells of *adjacent* points (Voronoi cells sharing an edge). Specifically, for adjacent points \( p, q \), compute \( \text{Corr}(|V(p)|, |V(q)|) \) as \( N \to \infty \).
+
+**Prediction**: Yes, it generalizes, but to a **dimension-dependent constant** \( c_d \) not necessarily \( 1/2 \). In \( d \)-dimensional space, the Voronoi cell areas are approximately \( 1/|F_N^d| \approx \zeta(d+1)/N^{d+1} \). The local clustering might induce correlations. I predict \( c_2 > 1/2 \), perhaps around \( 2/3 \), due to higher connectivity.
+
+**Experiment**: Generate \( F_N^2 \) for large \( N \) (e.g., \( N = 10^4 \)), compute Voronoi diagram (use library like SciPy), extract edges (adjacent pairs), compute cell areas, then correlation coefficient. Test for convergence as \( N \) increases. Compare with simulation of random Poisson points in \([0,1]^2\) as control (which should give lower correlation).
+
+## Discovery #3: L-zero Tomography via MUSIC
+
+**Precise 2D generalization**: Define 2D "prime-count data" as the indicator function \( \chi(a/c, b/c) = 1 \) if \( c \) is prime, 0 otherwise, restricted to \( c \leq N \). The 2D Fourier transform of this data should encode zeros of the 2D L-function \( L(s, \chi) = \sum_{a,b,c} \chi(a/c,b/c) (a/c)^{-s_1}(b/c)^{-s_2} \) (or a suitable Rankin–Selberg type). MUSIC algorithm (MUltiple SIgnal Classification) applied to the 2D data's spectral decomposition should extract these zeros.
+
+**Prediction**: Yes, but with caveats. The MUSIC algorithm relies on orthogonality of signal and noise subspaces. In 2D, the prime-count data is sparser (density \( \sim 1/\log N \)) and the L-function has two complex variables. The zeros might be extracted along certain lines (e.g., \( \text{Re}(s_1) = \text{Re}(s_2) = 1/2 \)). The algorithm may need modifications for 2D (e.g., 2D root-music).
+
+**Experiment**: Generate \( F_N^2 \) up to \( N = 10^5 \), restrict to prime denominators, compute 2D DFT on a grid, identify peaks/valleys. Compare with known zeros of the 2D L-function attached to the character \( \chi(a,b,c) = \chi_0(c) \) where \( \chi_0 \) is principal character mod c? Actually, need to define character properly. Simpler: Use the set of primitive triples \((a,b,c)\) with \( c \) prime. Apply MUSIC to estimate frequencies; these should correspond to zeros. Compare with numerical computation of \( L(s, \chi) \) zeros via Euler product.
+
+## Discovery #6: F′ Improvement = 1/2
+
+**Precise 2D generalization**: Define \( F'^2_N = \{(a/c, b/c) \in F_N^2 : c \text{ prime} \leq N\} \). Compare its discrepancy \( D(F'^2_N) \) (e.g., star discrepancy with respect to axis-aligned rectangles) to \( D(F_N^2) \). The ratio \( D(F'^2_N)/D(F_N^2) \) is the "discrepancy improvement".
+
+**Prediction**: Yes, but the ratio is **not necessarily 1/2**. In 1D, the Farey sequence with prime denominators has half the discrepancy due to number-theoretic spacing. In 2D, the primes are sparser among integers, and the 2D distribution might have different scaling. I predict the ratio to be \( \sim 1/\log N \) (which tends to 0), because prime denominators are only \( \sim N/\log N \) in number vs \( \sim N \) total denominators, so the set is much sparser. But need to normalize by size? Actually discrepancy is about uniformity, not cardinality. Let's check: In 1D, the size of \( F_N \) is \( \sim 3N^2/\pi^2 \), while \( F'_N \) (prime denominators) has size \( \sim N^2/(2\log N) \). So \( F'_N \) is smaller, yet discrepancy is halved. In 2D, size of \( F_N^2 \) is \( \sim N^3/\zeta(3) \), size of \( F'^2_N \) is \( \sim N^3/(\zeta(3)\log N) \). The discrepancy might scale similarly: \( D(F_N^2) \sim 1/N \), \( D(F'^2_N) \sim \log N / N \), so ratio diverges. But maybe with a different discrepancy measure (e.g., discrepancy on the unit square with respect to the measure induced by the Farey set itself), the ratio could be constant. Better to use discrepancy with respect to Lebesgue measure. I need to test numerically.
+
+**Experiment**: Compute star discrepancy for \( F_N^2 \) and \( F'^2_N \) for increasing \( N \) (e.g., \( N=100, 200, 500, 1000 \)). Use Monte Carlo integration for discrepancy. If ratio tends to 0, then it doesn't generalize; if tends to a constant, it does. Also test discrepancy in other norms (e.g., L2 discrepancy).
+
+## Discovery #7: Cluster Size = 2
+
+**Precise 2D generalization**: In \( F_N^2 \), define two points as *adjacent* if their Voronoi cells share an edge. A *cluster* is a connected component of the adjacency graph. Compute the distribution of cluster sizes (number of points in a cluster).
+
+**Prediction**: No, it does **not** generalize to 2. In 2D, the adjacency graph is much more connected. The Voronoi diagram of a dense set in \([0,1]^2\) typically yields a planar graph where most vertices have degree 3. Clusters are the entire graph if the graph is connected (which it is for dense enough points). Actually, for Farey points, are they connected? Likely yes, because the Farey set is dense in the unit square (limit points are all rationals). So there is only one giant cluster. But maybe "cluster" is defined differently: maybe points that are neighbors in the Stern-Brocot tree sense (mediants). In 1D, clusters of size 2 correspond to Farey neighbors. In 2D, one could define neighbors via the Stern-Brocot tree generalization: two points are neighbors if there is no other point in the triple's convex hull? Possibly the cluster size becomes 3 or 4. I need to define adjacency via the tree structure: In the 2D Stern-Brocot tree, each node has two children (mediants in two directions). Neighbors might be parent-child or sibling relationships. Then clusters might be of size 3 (a node and its two children). But need to check.
+
+**Experiment**: Generate \( F_N^2 \) for moderate N (say N=50). Build the Voronoi diagram, extract adjacency graph. Compute connected components sizes. Most components will be large (one giant component). Alternatively, define adjacency via the Farey graph: connect two points if there exists \( c' < c \) such that \( a/c \) and \( b/d \) are neighbors in the Farey sequence for some ordering? Hard. Better: Use the known structure of 2D Farey fractions as vertices of the Apollonian gasket or something? Not sure. Numerical experiment will clarify.
+
+## Overall Assessment
+
+Given the predictions:
+- Discovery #2: Yes (with constant)
+- Discovery #3: Yes (with caveats)
+- Discovery #6: Probably no (ratio not 1/2)
+- Discovery #7: Probably no (cluster size >2)
+
+Plus the other 3 discoveries (not detailed here) likely also have mixed results. I suspect only 2-3 discoveries generalize cleanly (maybe #2, #3, and perhaps #1 or #4 if they are more universal). The ones that rely heavily on 1D ordering (like #7) are brittle. The number-theoretic ones (like #3) might generalize if L-functions in higher dimensions are considered.
+
+**Final summary**: The generalization to 2D Farey is nontrivial. Discovery #2 (lag-1 correlation) likely generalizes to a dimension-dependent constant. Discovery #3 (L-zero tomography) might generalize with modifications to 2D L-functions. Discovery #6 (F′ improvement) probably does not generalize to 1/2, but might have a different asymptotic. Discovery #7 (cluster size=2) does not generalize; clusters are larger. So only 1-2 discoveries generalize cleanly, indicating they are more 1D-specific. This suggests a major extension would be challenging but could reveal new structure in 2D rational approximations.

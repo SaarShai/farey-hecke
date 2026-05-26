@@ -1,0 +1,54 @@
+# Five Applications of Lag-1 Farey Correlation = 1/2
+
+## A. Streaming Algorithms with Exploitable Correlation
+
+**Use case:** A quantile-sketch for Farey-distributed streams that reserves less memory by exploiting predictable consecutive gaps.
+
+**Feasibility:** The AR(1) predictor $\hat{d}_{i+1} = \mu + \tfrac{1}{2}(d_i - \mu)$ reduces residual variance to $\tfrac{3}{4}\sigma^2$, yielding a constant-factor memory saving in reservoir-sampling-based quantile estimation. However, fixed-space sketches (KLL, t-digest) don't *skip* items — they compress *all* of them — so the correlation cannot reduce the information-theoretic minimum. The gain is at most $\sim 15\%$ in space for sampling-based variants. **Comparison:** Existing KLL sketches already achieve $O(\tfrac{1}{\varepsilon}\log\log N)$ bits, which is near-optimal; the correlation buys a small constant factor. **Verdict:** Technically valid, but **incremental** — not the killer app.
+
+## B. Correcting Number-Theoretic Monte Carlo
+
+**Use case:** Recomputing confidence intervals for sampled statistics of Farey fractions (e.g., moments of gap distribution) by inflating variance estimates by factor $(1+\rho)/(1-\rho) = 3$.
+
+**Feasibility:** The effective sample size under lag-1 correlation $\rho$ is $n_{\text{eff}} \approx n\frac{1-\rho}{1+\rho} = n/3$; any published confidence interval using $n$ independent samples would be $\sqrt{3}\approx 1.73\times$ too narrow. But most number-theorists compute Farey sequences *exactly* (all $O(N^2)$ fractions), not by random sampling — so the population of studies that need correcting is small. **Comparison:** The standard correction (Newey-West HAC estimator) handles arbitrary lag structures and is well-established in econometrics; applying it to number-theory experiments is straightforward bookkeeping, not a new technique. **Verdict:** Good hygiene, but **niche** — few papers rely on independent-sampling assumptions for Farey fractions.
+
+## C. Extremal Clustering and Corrected Maximum-Gap Asymptotics *(KILLER APP)*
+
+**Use case:** Derive the **extremal index** $\theta$ for Farey gaps via the AR(1) proxy $\rho = \tfrac{1}{2}$, yielding a corrected formula for $P\!\bigl(\max_{i\leq N} d_i > x\bigr)$ that accounts for the clustering of large gaps.
+
+**Feasibility:** The Leadbetter–Lindgren–Rootzén theory gives the extremal index for an AR(1) process as $\theta = 1 - \rho^2 = \tfrac{3}{4}$ (for Gaussian innovations) or $\theta = e^{-\lambda}$ related to the local dependence structure. Under this proxy, the classical Poisson-approximation estimate $P(\max > x) \approx N\cdot P(d_1 > x)$ is replaced by $P(\max > x) \approx \theta \cdot N\cdot P(d_1 > x)$, giving a **3/4 correction factor** to the maximum-gap probability. This is testable by direct enumeration of Farey sequences for large $N$ (computing the empirical extremal index via the ratio of exceedance clusters to exceedance counts). The full BCZ cocycle gives the exact Markov kernel on gap sizes, so the AR(1) with $\rho = \tfrac{1}{2}$ is a *tractable surrogate* — analytically solvable but approximately capturing the true dynamics.
+
+**Comparison:** Existing maximum-gap results (Franel–Landau error term, Huxley's $O(N^{-1/2+\varepsilon})$ bounds) derive from the full continued-fraction structure but typically give the *leading* term only. The extremal-index correction provides a **refined constant** in the tail probability that is *invisible* at leading order but crucial for:
+- Tighter bounds on the probability of an unusually large gap (relevant to diophantine approximation guarantees),
+- The expected number of "gap clusters" (consecutive large gaps) in a Farey sequence, which is $N\cdot P(d_1 > x)\cdot(1 - \theta)$,
+- Connection to the ergodic theory of the Gauss map: the extremal index should equal $1 - \mu(\{x : T(x) < x\})$ where $T$ is the Gauss map and $\mu$ is the Gauss measure — a **new, testable identity** linking extremes to continued fractions.
+
+**Specific prediction:** For Farey sequences of order $N = 10^6$, the empirical extremal index (computed as $\theta = \text{(\# exceedance clusters)}/\text{(\# exceedances)}$ for threshold $x = c\log N / N$) should be approximately $0.74\text{--}0.76$, consistent with $\theta = \tfrac{3}{4}$ from the AR(1) model. Deviations from $\tfrac{3}{4}$ would quantitatively measure the *non-Gaussian* contribution of the BCZ cocycle.
+
+**Verdict:** **Novel, feasible, and deep.** This is the killer application: it bridges time-series extreme-value theory with number theory, is testable by straightforward computation, and yields a new constant (the extremal index) that encodes the clustering phenomenon in a single number.
+
+## D. Generative ML with Farey-Correlation Inductive Bias
+
+**Use case:** A sequence-prediction model for arithmetic data that constrains its hidden state to track the lag-1 correlation, reducing sample complexity.
+
+**Feasibility:** Modern transformers can learn lag-1 correlations from data with negligible overhead; hard-coding $\rho = \tfrac{1}{2}$ as an architectural constraint saves almost nothing when training data is abundant, and when data is scarce the domain is too specialized to matter. The correlation is also easily learned in ~10 gradient steps. **Comparison:** Inductive biases in ML work best when they encode *invariances* (translation, rotation) that are universal; $\rho = \tfrac{1}{2}$ is specific to one arithmetic construction. **Verdict:** **Not actionable.** The inductive bias is too narrow and too easily learned.
+
+## E. "Farey-Fingerprint" Hypothesis Test
+
+**Use case:** A statistical test: given a sequence of positive values $(x_i)$, test $H_0$: iid vs. $H_1$: lag-1 autocorrelation $\approx \tfrac{1}{2}$ with polynomial-decaying higher lags, as evidence of continued-fraction / arithmetic structure.
+
+**Feasibility:** The test statistic is simply the sample lag-1 autocorrelation $\hat{\rho}_1$; under $H_0$, $\hat{\rho}_1 \sim N(0, 1/n)$, so a value of $\hat{\rho}_1 \approx 0.5$ with $n > 50$ is overwhelmingly significant. But this only detects *any* positive autocorrelation, not specifically $\rho = \tfrac{1}{2}$. To distinguish Farey-like from generic AR(1), you'd also need to test the *polynomial decay* of higher lags (vs. geometric decay for AR(1)). **Comparison:** The Ljung-Box test detects general autocorrelation; a specialized test for $\rho_1 = \tfrac{1}{2}$ + polynomial $\rho_k$ decay would be genuinely more diagnostic. Candidate domain: classifying diffraction spectra of quasicrystals (Fibonacci chain → Farey structure) vs. random alloys. **Verdict:** **Feasible and moderately novel**, but requires a specific application domain where "Farey-like vs. generic" discrimination matters. **Promising as a secondary application** — testable immediately with a short simulation study.
+
+---
+
+## Summary
+
+| App | Novelty | Feasibility | Impact | Verdict |
+|-----|---------|-------------|--------|---------|
+| A. Streaming | Low | High | Low (constant factor) | Incremental |
+| B. Monte Carlo correction | Low | High | Low (few affected papers) | Hygiene only |
+| **C. Extremal index** | **High** | **High** | **High** (new constant, new identity) | **Killer app** |
+| D. ML inductive bias | Low | Low | Low | Not actionable |
+| E. Fingerprint test | Medium | High | Medium | Promising secondary |
+
+**The killer application is C.** The specific, testable prediction: *the extremal index for Farey gaps is $\theta \approx \tfrac{3}{4}$*, which corrects the maximum-gap tail probability by a factor of $3/4$ relative to the independent-exceedance approximation. This bridges Leadbetter's extreme-value theory for dependent sequences with the BCZ cocycle structure of the Farey flow, and the identity $\theta = f(\text{Gauss map dynamics})$ would be a new result in the ergodic theory of continued fractions. A simulation study computing $\theta$ for $N = 10^3$ to $10^7$ should take less than a day and would either confirm the AR(1) proxy or reveal the precise *non-Gaussian correction* from the full BCZ cocycle — either outcome is publishable.

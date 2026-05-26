@@ -1,0 +1,16 @@
+Target: identify which constant C matches Σ_ρ 1/(|ρ|²|ζ'(ρ)|²) · (π²/3)
+
+Candidate C values and corresponding S = (3/π²)·C:
+         Laplace limit: C = 0.6627434193, predicted S = 0.2014498431
+        twin-prime / 2: C = 0.6601618158, predicted S = 0.2006651297
+               π² / 15: C = 0.6579736267, predicted S = 0.2000000000
+                   2/3: C = 0.6666666667, predicted S = 0.2026423673
+
+Computing S from zeta zeros + |ζ'(ρ)|² (this is slow)...
+  N=   10: S = 0.0126558805,  C = (π²/3)·S = 0.0416361779
+  N=   50: S = 0.0138794729,  C = (π²/3)·S = 0.0456616356
+  N=  100: S = 0.0141436361,  C = (π²/3)·S = 0.0465306976
+
+Final S (100 zeros) = 0.0141436361
+Implied C = (π²/3)·S = 0.0465306976
+Wallclock: 7s

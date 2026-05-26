@@ -1,0 +1,1000 @@
+Let me carefully work through this construction for n=12.
+
+## Setup
+
+n = 12 = 2² × 3¹
+
+The divisor lattice D(12) has elements {1, 2, 3, 4, 6, 12} with partial order given by divisibility.
+
+The lattice structure is:
+```
+12
+├── 6 (2·3)
+├── 4 (2²)
+│   └── 2 (2¹)
+├── 3 (3¹)
+└── 1
+```
+
+Wait, let me draw this more carefully with the correct lattice structure.
+
+Divisors of 12: 1, 2, 3, 4, 6, 12
+
+Covering relations (d₁ | d₂ and d₂/d₁ is prime):
+- 1 → 2 (×2)
+- 1 → 3 (×3)
+- 2 → 4 (×2)
+- 2 → 6 (×3)
+- 3 → 6 (×2)
+- 4 → 12 (×3)
+- 6 → 12 (×2)
+
+So the lattice looks like:
+```
+        12
+       / \
+      4    6
+      |   / \
+      2  3   
+       \ /
+        1
+```
+
+This is a product of chains: {0,1,2} × {0,1} where the first coordinate is the exponent of 2 and the second is the exponent of 3.
+
+Elements as tuples (e₂, e₃):
+- 1 = (0,0)
+- 2 = (1,0)
+- 3 = (0,1)
+- 4 = (2,0)
+- 6 = (1,1)
+- 12 = (2,1)
+
+The lattice is the product [2] × [1] where [a] = {0, 1, ..., a}.
+
+## Chain lengths and "degree"
+
+The "height" of an element in the divisor lattice is the sum of the exponents:
+- 1: height 0
+- 2: height 1
+- 3: height 1
+- 4: height 2
+- 6: height 2
+- 12: height 3
+
+The maximum chain length is 3 (from 1 to 12: 1→2→4→12 or 1→2→6→12 or 1→3→6→12).
+
+## Functions on the lattice
+
+A function f: D(12) → F_q is a vector in F_q^6 indexed by the divisors.
+
+Let me order the divisors by height:
+Height 0: {1}
+Height 1: {2, 3}
+Height 2: {4, 6}
+Height 3: {12}
+
+So f = (f(1), f(2), f(3), f(4), f(6), f(12)).
+
+## The Möbius function
+
+The Möbius function for the divisor lattice of n = p₁^{a₁} · p₂^{a₂} · ... · p_m^{a_m} is:
+
+μ(d₁, d₂) = μ(d₂/d₁) where μ is the number-theoretic Möbius function.
+
+Wait, actually for the divisor lattice, if d₁ | d₂, then:
+
+μ(d₁, d₂) = μ_{number-theoretic}(d₂/d₁)
+
+where μ_{number-theoretic}(n) = (-1)^k if n is squarefree with k prime factors, and 0 otherwise.
+
+Let me compute:
+- μ(1, 1) = 1
+- μ(1, 2) = μ(2) = -1
+- μ(1, 3) = μ(3) = -1
+- μ(1, 4) = μ(4) = 0 (since 4 = 2²)
+- μ(1, 6) = μ(6) = 1 (since 6 = 2·3)
+- μ(1, 12) = μ(12) = 0 (since 12 = 4·3 = 2²·3)
+
+- μ(2, 2) = 1
+- μ(2, 4) = μ(2) = -1
+- μ(2, 6) = μ(3) = -1
+- μ(2, 12) = μ(6) = 1
+
+- μ(3, 3) = 1
+- μ(3, 6) = μ(2) = -1
+- μ(3, 12) = μ(4) = 0
+
+- μ(4, 4) = 1
+- μ(4, 12) = μ(3) = -1
+
+- μ(6, 6) = 1
+- μ(6, 12) = μ(2) = -1
+
+- μ(12, 12) = 1
+
+## Möbius inversion
+
+The Möbius inversion on this lattice says:
+
+If g(d) = Σ_{c | d} f(c), then f(d) = Σ_{c | d} μ(c, d) g(c)
+
+This is the standard Möbius inversion for multiplicative functions.
+
+## Defining "degree" for functions on the lattice
+
+In the Boolean Reed-Muller case, a function f: {0,1}^m → F_2 has degree at most r if f can be written as a polynomial of degree at most r.
+
+For the divisor lattice, we need to define an analogous notion of "degree."
+
+The problem statement says: "The 'degree' of f is the maximum length of any chain in D(n) where f has support."
+
+Hmm, this is a bit ambiguous. Let me think about what makes sense.
+
+Actually, let me think about this differently. The divisor lattice D(12) is isomorphic to the product of chains [2] × [1]. A function on this lattice is a function f: [2] × [1] → F_q.
+
+One natural way to define "degree" is through the Fourier-Möbius transform. In the Boolean case, the Walsh-Hadamard transform decomposes functions into characters, and the degree is the maximum Hamming weight of a character in the support of the transform.
+
+For the divisor lattice, the Möbius transform gives us a way to decompose functions. Let me think about this more carefully.
+
+Actually, I think the right way to think about this is as follows. The divisor lattice D(12) is the product [2] × [1]. We can define "monomials" on this lattice. In the Boolean case, a monomial x^S for S ⊆ {1,...,m} is the function that is 1 only when all variables in S are 1.
+
+For [2] × [1], we have variables x₁ ∈ {0,1,2} and x₂ ∈ {0,1}. The "monomials" would be functions of the form:
+
+x₁^{a₁} · x₂^{a₂}
+
+But this doesn't quite work because we need to be careful about what "degree" means for a function on a non-Boolean lattice.
+
+Actually, I think the problem is using a different notion of degree. Let me re-read: "The 'degree' of f is the maximum length of any chain in D(n) where f has support."
+
+I think this means: the degree of f is the maximum length of a chain d₁ < d₂ < ... < d_k in the divisor lattice such that f(d_i) ≠ 0 for all i.
+
+Actually wait, that's not quite right either. Let me think about this differently.
+
+Perhaps the degree should be defined through the Möbius transform. Let me define:
+
+The "Möbius spectrum" of f is the set of divisors d where the Möbius transform f̂(d) ≠ 0.
+
+The "degree" could be the maximum height of any d in the Möbius spectrum.
+
+Hmm, but I need to be more careful. Let me think about what the natural basis for "low-degree" functions is.
+
+Actually, let me approach this from the product-of-chains perspective. D(12) = [2] × [1]. We can think of functions on this as a 2D array:
+
+f = f(0,0), f(1,0), f(0,1), f(2,0), f(1,1), f(2,1)
+
+corresponding to divisors 1, 2, 3, 4, 6, 12.
+
+The "natural monomials" on a product of chains [a₁] × [a₂] are the "rectangle functions" or "interval functions." But this gets complicated.
+
+Let me try a different approach. Let me use the zeta transform / Möbius transform framework directly.
+
+Define the zeta matrix Z where Z_{d,e} = 1 if e | d (i.e., e ≤ d in the lattice), and 0 otherwise.
+
+The Möbius matrix M is the inverse of Z.
+
+If g = Z · f (the zeta transform of f), then f = M · g (the Möbius transform of g).
+
+In the Boolean Reed-Muller case:
+- The Boolean lattice {0,1}^m has zeta matrix = Walsh-Hadamard matrix (up to scaling).
+- A function of degree ≤ r has its Möbius transform supported only on elements of height ≤ r.
+
+So for the divisor lattice, I'll define:
+- A function f has "degree ≤ r" if its Möbius transform f̂ is supported only on divisors of height ≤ r.
+
+This is analogous to the Boolean case where "degree ≤ r" means the Fourier (Walsh-Hadamard) transform is supported on inputs of weight ≤ r.
+
+Wait, actually I need to be more careful. In the Boolean case, the Walsh-Hadamard transform gives:
+
+f̂(a) = Σ_x f(x) (-1)^{a·x}
+
+A function has degree ≤ r iff f̂(a) = 0 whenever |a| > r (where |a| is the Hamming weight).
+
+The Möbius transform on the Boolean lattice {0,1}^m is:
+ĝ(a) = Σ_{x ≤ a} (-1)^{|a-x|} f(x) = Σ_{x ≤ a} μ(x,a) f(x)
+
+where x ≤ a means x_i ≤ a_i for all i.
+
+This is related to but different from the Walsh-Hadamard transform. The Möbius transform on the Boolean lattice gives:
+
+f(x) = Σ_{a ≤ x} g(a)
+
+So g(a) = Σ_{b ≤ a} μ(b,a) f(b) = Σ_{b ≤ a} (-1)^{|a-b|} f(b)
+
+A function has degree ≤ r in the RM sense iff g(a) = 0 for all a with |a| > r.
+
+OK so this is the right framework. For the divisor lattice, we define:
+
+f(d) = Σ_{c | d} f̂(c)
+
+where f̂(c) = Σ_{e | c} μ(e, c) f(e)
+
+And we say f has degree ≤ r if f̂(c) = 0 whenever height(c) > r.
+
+For n = 12:
+Height 0: {1}
+Height 1: {2, 3}
+Height 2: {4, 6}
+Height 3: {12}
+
+So for degree ≤ r, we only use f̂ values for divisors of height ≤ r.
+
+## Computing parameters
+
+Let me denote the divisors ordered by height as:
+d₀ = 1 (height 0)
+d₁ = 2, d₂ = 3 (height 1)
+d₃ = 4, d₄ = 6 (height 2)
+d₅ = 12 (height 3)
+
+For a function f of degree ≤ r:
+- r = 0: f̂ supported on {1}. This means f̂(d) = 0 for d ≠ 1. Since f = Z · f̂, we have f(d) = f̂(1) for all d. So f is constant. k = 1.
+- r = 1: f̂ supported on {1, 2, 3}. f̂(4) = f̂(6) = f̂(12) = 0. k = 3.
+- r = 2: f̂ supported on {1, 2, 3, 4, 6}. f̂(12) = 0. k = 5.
+- r = 3: All f̂ values can be non-zero. k = 6.
+
+So for F_q, the parameters are:
+[n, k, d] where n = 6 (the number of divisors).
+
+For r = 0: [6, 1, 6] — this is a repetition code (all entries equal).
+
+For r = 1: [6, 3, ?]
+For r = 2: [6, 5, ?]
+For r = 3: [6, 6, 1] — this is the whole space.
+
+Now I need to compute the minimum distances. Let me work this out carefully.
+
+## Explicit construction for F₂ (q = 2)
+
+Let me work over F₂ for concreteness (matching the Boolean RM setting).
+
+The Möbius function values:
+μ(1, 1) = 1
+μ(1, 2) = -1 ≡ 1 (mod 2)
+μ(1, 3) = -1 ≡ 1 (mod 2)
+μ(1, 4) = 0
+μ(1, 6) = 1
+μ(1, 12) = 0
+
+μ(2, 2) = 1
+μ(2, 4) = -1 ≡ 1 (mod 2)
+μ(2, 6) = -1 ≡ 1 (mod 2)
+μ(2, 12) = 1
+
+μ(3, 3) = 1
+μ(3, 6) = -1 ≡ 1 (mod 2)
+μ(3, 12) = 0
+
+μ(4, 4) = 1
+μ(4, 12) = -1 ≡ 1 (mod 2)
+
+μ(6, 6) = 1
+μ(6, 12) = -1 ≡ 1 (mod 2)
+
+μ(12, 12) = 1
+
+The zeta matrix Z (where Z_{i,j} = 1 if d_j | d_i):
+
+Columns: d₀=1, d₁=2, d₂=3, d₃=4, d₄=6, d₅=12
+Rows: same order
+
+Z = 
+     1  2  3  4  6  12
+1  [ 1  0  0  0  0   0 ]
+2  [ 1  1  0  0  0   0 ]
+3  [ 1  0  1  0  0   0 ]
+4  [ 1  1  0  1  0   0 ]
+6  [ 1  1  1  0  1   0 ]
+12 [ 1  1  1  1  1   1 ]
+
+The Möbius matrix M = Z⁻¹:
+
+M_{i,j} = μ(d_j, d_i) if d_j | d_i, else 0.
+
+Over F₂ (where -1 = 1):
+
+M = 
+     1  2  3  4  6  12
+1  [ 1  0  0  0  0   0 ]
+2  [ 1  1  0  0  0   0 ]
+3  [ 1  0  1  0  0   0 ]
+4  [ 0  1  0  1  0   0 ]
+6  [ 1  1  1  0  1   0 ]
+12 [ 0  1  0  1  1   1 ]
+
+Wait, let me recompute this more carefully.
+
+M_{i,j} = μ(d_j, d_i) if d_j | d_i
+
+M[1,1] = μ(1,1) = 1
+M[2,1] = μ(1,2) = -1 ≡ 1 (mod 2)
+M[2,2] = μ(2,2) = 1
+M[3,1] = μ(1,3) = -1 ≡ 1 (mod 2)
+M[3,3] = μ(3,3) = 1
+M[4,1] = μ(1,4) = 0
+M[4,2] = μ(2,4) = -1 ≡ 1 (mod 2)
+M[4,4] = μ(4,4) = 1
+M[6,1] = μ(1,6) = 1
+M[6,2] = μ(2,6) = -1 ≡ 1 (mod 2)
+M[6,3] = μ(3,6) = -1 ≡ 1 (mod 2)
+M[6,6] = μ(6,6) = 1
+M[12,1] = μ(1,12) = 0
+M[12,2] = μ(2,12) = 1
+M[12,3] = μ(3,12) = 0
+M[12,4] = μ(4,12) = -1 ≡ 1 (mod 2)
+M[12,6] = μ(6,12) = -1 ≡ 1 (mod 2)
+M[12,12] = μ(12,12) = 1
+
+So M (over F₂) is:
+
+     1  2  3  4  6  12
+1  [ 1  0  0  0  0   0 ]
+2  [ 1  1  0  0  0   0 ]
+3  [ 1  0  1  0  0   0 ]
+4  [ 0  1  0  1  0   0 ]
+6  [ 1  1  1  0  1   0 ]
+12 [ 0  1  0  1  1   1 ]
+
+Let me verify Z · M = I (mod 2):
+
+(Z · M)[1,1] = Z[1,·] · M[·,1] = 1·1 + 0·1 + 0·1 + 0·0 + 0·1 + 0·0 = 1 ✓
+(Z · M)[4,1] = Z[4,·] · M[·,1] = 1·1 + 1·1 + 0·1 + 1·0 + 0·1 + 0·0 = 1+1+0 = 0 ✓
+(Z · M)[6,1] = Z[6,·] · M[·,1] = 1·1 + 1·1 + 1·1 + 0·0 + 1·1 + 0·0 = 1+1+1+1 = 0 ✓
+(Z · M)[12,1] = Z[12,·] · M[·,1] = 1·1 + 1·1 + 1·1 + 1·0 + 1·1 + 1·0 = 1+1+1+1 = 0 ✓
+
+Good. Let me verify (Z · M)[2,3]:
+= Z[2,·] · M[·,3] = 1·0 + 1·0 + 0·1 + 0·0 + 0·1 + 0·0 = 0 ✓
+
+(Z · M)[6,3]:
+= Z[6,·] · M[·,3] = 1·0 + 1·0 + 1·1 + 0·0 + 1·1 + 0·0 = 1+1 = 0 ✓
+
+OK, seems correct.
+
+## The generator matrix
+
+The code D-RM(n, r) consists of all functions f such that f̂(d) = 0 for height(d) > r.
+
+We have f = Z · f̂, so the codeword is f = Z · f̂.
+
+The generator matrix G has columns corresponding to the basis vectors of f̂:
+- Column for each divisor d with height(d) ≤ r is the column of Z corresponding to d.
+
+So:
+For r = 0: G = column of Z for d=1:
+G = [1, 1, 1, 1, 1, 1]^T
+
+This is the [6, 1, 6] repetition code. ✓
+
+For r = 1: G = columns of Z for d=1, 2, 3:
+G = [1, 1, 1, 1, 1, 1;  0, 1, 0, 1, 1, 1;  0, 0, 1, 0, 1, 1]
+
+As a matrix (rows = codeword positions {1,2,3,4,6,12}, columns = basis {1, 2, 3}):
+
+G = 
+     f̂(1)  f̂(2)  f̂(3)
+1  [  1      0      0  ]
+2  [  1      1      0  ]
+3  [  1      0      1  ]
+4  [  1      1      0  ]
+6  [  1      1      1  ]
+12 [  1      1      1  ]
+
+This is a 6×3 matrix over F₂.
+
+For r = 2: G = columns of Z for d=1, 2, 3, 4, 6:
+G = 
+     f̂(1)  f̂(2)  f̂(3)  f̂(4)  f̂(6)
+1  [  1      0      0      0      0  ]
+2  [  1      1      0      0      0  ]
+3  [  1      0      1      0      0  ]
+4  [  1      1      0      1      0  ]
+6  [  1      1      1      0      1  ]
+12 [  1      1      1      1      1  ]
+
+This is a 6×5 matrix over F₂.
+
+For r = 3: G = Z (the full 6×6 matrix). k = 6, so this is the whole space F₂^6. d = 1.
+
+## Computing minimum distances
+
+### r = 0: [6, 1, 6] — repetition code.
+
+### r = 1: [6, 3, ?]
+
+The codewords are all linear combinations of the three basis vectors over F₂:
+
+v₁ = (1,1,1,1,1,1)
+v₂ = (0,1,0,1,1,1)
+v₃ = (0,0,1,0,1,1)
+
+All 8 codewords:
+(0,0,0) → (0,0,0,0,0,0) weight 0
+(1,0,0) → (1,1,1,1,1,1) weight 6
+(0,1,0) → (0,1,0,1,1,1) weight 4
+(0,0,1) → (0,0,1,0,1,1) weight 3
+(1,1,0) → (1,0,1,0,0,0) weight 2
+(1,0,1) → (1,1,0,1,0,0) weight 3
+(0,1,1) → (0,1,1,1,0,0) weight 3
+(1,1,1) → (1,0,0,0,1,0) weight 2
+
+Wait, let me recompute.
+
+(1,1,0): v₁ + v₂ = (1+0, 1+1, 1+0, 1+1, 1+1, 1+1) = (1,0,1,0,0,0) weight 2
+(1,0,1): v₁ + v₃ = (1+0, 1+0, 1+1, 1+0, 1+1, 1+1) = (1,1,0,1,0,0) weight 3
+(0,1,1): v₂ + v₃ = (0+0, 1+0, 0+1, 1+0, 1+1, 1+1) = (0,1,1,1,0,0) weight 3
+(1,1,1): v₁ + v₂ + v₃ = (1+0+0, 1+1+0, 1+0+1, 1+1+0, 1+1+1, 1+1+1) = (1,0,0,0,1,0) weight 2
+
+So the non-zero weights are: 6, 4, 3, 3, 2, 2, 3. Minimum distance = 2.
+
+Hmm, that's not great. [6, 3, 2].
+
+Wait, let me double-check (1,0,1) = v₁ + v₃:
+v₁ = (1,1,1,1,1,1)
+v₃ = (0,0,1,0,1,1)
+sum = (1,1,0,1,0,0) → weight 3. ✓
+
+(0,1,1) = v₂ + v₃:
+v₂ = (0,1,0,1,1,1)
+v₃ = (0,0,1,0,1,1)
+sum = (0,1,1,1,0,0) → weight 3. ✓
+
+So minimum distance is 2. The [6, 3, 2] code over F₂.
+
+### r = 2: [6, 5, ?]
+
+Basis vectors:
+v₁ = (1,1,1,1,1,1)
+v₂ = (0,1,0,1,1,1)
+v₃ = (0,0,1,0,1,1)
+v₄ = (0,0,0,1,0,1)
+v₅ = (0,0,0,0,1,1)
+
+Let me find the minimum weight codeword. We need to find the minimum weight non-zero linear combination.
+
+Single basis vectors:
+v₁: weight 6
+v₂: weight 4
+v₃: weight 3
+v₄: weight 2
+v₅: weight 2
+
+Already d ≤ 2. Can we get weight 1? That would require some codeword with exactly one 1. Let's check.
+
+Any codeword is f = a₁v₁ + a₂v₂ + a₃v₃ + a₄v₄ + a₅v₅.
+
+The entry at position 1 (divisor 1) is: a₁ (since only v₁ has a 1 at position 1).
+The entry at position 2 (divisor 2) is: a₁ + a₂.
+The entry at position 3 (divisor 3) is: a₁ + a₃.
+The entry at position 4 (divisor 4) is: a₁ + a₂ + a₄.
+The entry at position 6 (divisor 6) is: a₁ + a₂ + a₃ + a₅.
+The entry at position 12 (divisor 12) is: a₁ + a₂ + a₃ + a₄ + a₅.
+
+For weight 1, we need exactly one entry to be 1.
+
+Case 1: only entry at position 1 is 1.
+Then a₁ = 1, a₁ + a₂ = 0 → a₂ = 1, a₁ + a₃ = 0 → a₃ = 1.
+a₁ + a₂ + a₄ = 0 → 1 + 1 + a₄ = 0 → a₄ = 0.
+a₁ + a₂ + a₃ + a₅ = 0 → 1 + 1 + 1 + a₅ = 0 → a₅ = 1.
+a₁ + a₂ + a₃ + a₄ + a₅ = 1 + 1 + 1 + 0 + 1 = 0. ✓
+So f = v₁ + v₂ + v₃ + v₅ = (1,0,0,0,0,0). Wait, let me check:
+(1+0+0+0, 1+1+0+0, 1+0+1+0, 1+1+0+0, 1+1+1+1, 1+1+1+0+1) 
+
+Hmm, I need to be more careful. Let me just compute.
+
+v₁ + v₂ + v₃ + v₅:
+v₁ = (1,1,1,1,1,1)
+v₂ = (0,1,0,1,1,1)
+v₃ = (0,0,1,0,1,1)
+v₅ = (0,0,0,0,1,1)
+
+Sum = (1, 1+1, 1+0+1, 1+1, 1+1+1+1, 1+1+1+1) = (1, 0, 0, 0, 0, 0). ✓
+
+So we have a codeword of weight 1! That means d = 1 for [6, 5, 1] over F₂.
+
+That makes sense — with dimension 5 out of 6, it's almost the whole space, and we can get codewords with support on a single position.
+
+Wait, but this is F₂ with k=5 and n=6. The Singleton bound gives d ≤ n - k + 1 = 6 - 5 + 1 = 2. But we found d = 1. So it doesn't even achieve Singleton.
+
+Hmm, that's disappointing. Let me reconsider.
+
+Actually, wait. I need to think about whether the code definition is correct. Let me reconsider the "degree" definition.
+
+Actually, I realize there might be an issue with my approach. Let me reconsider.
+
+In the Boolean case, the Reed-Muller code is:
+- Functions f: {0,1}^m → F₂ of algebraic degree ≤ r
+- The "algebraic degree" is the degree of the multilinear polynomial representation
+
+This is equivalent to saying the Walsh-Hadamard transform (or Möbius transform) is supported on inputs of weight ≤ r.
+
+For the divisor lattice D(n) = [a₁] × [a₂] × ... × [a_m], the natural polynomial ring would be:
+
+F_q[x₁, x₂, ..., x_m] / (x₁^{a₁+1} - x₁, x₂^{a₂+1} - x₂, ..., x_m^{a_m+1} - x_m)
+
+Wait, that's not quite right either. Let me think about this differently.
+
+For the Boolean case [1]^m = {0,1}^m, a function f: {0,1}^m → F_q can be written uniquely as a multilinear polynomial (since x² = x for x ∈ {0,1}). The degree is the usual polynomial degree.
+
+For [2] × [1], a function f: {0,1,2} × {0,1} → F_q can be written as:
+
+f(x₁, x₂) = Σ_{i=0}^{2} Σ_{j=0}^{1} c_{ij} · x₁^i · x₂^j
+
+But wait, this doesn't have the right structure because x₁ ∈ {0,1,2} doesn't satisfy x₁² = x₁.
+
+Hmm, I think the right approach is different. Let me think about this using the language of incidence algebras and the Möbius inversion.
+
+Actually, I think the problem statement is using a specific definition: "The 'degree' of f is the maximum length of any chain in D(n) where f has support."
+
+This means: a function f: D(n) → F_q has degree ≤ r if whenever f(d) ≠ 0, the maximum chain length ending at d is ≤ r. Wait, no, the maximum chain length ending at d is just the height of d.
+
+Hmm, but that would mean the degree of f is the maximum height of any d where f(d) ≠ 0. That's just the "support extent."
+
+Actually, re-reading: "The 'degree' of f is the maximum length of any chain in D(n) where f has support."
+
+I think "a chain where f has support" means a chain d₁ < d₂ < ... < d_k such that f(d_i) ≠ 0 for all i. The "degree" is the maximum such k.
+
+This is a different definition! Let me reconsider.
+
+For example, if f is supported only on {1, 4, 12}, then the chain 1 < 4 < 12 has length 3 (number of elements) and f has support on all three. So degree would be 3.
+
+If f is supported on {2, 3}, then the chains where f has support are just {2} and {3} (since 2 and 3 are incomparable). So degree would be 1.
+
+If f is supported on {1, 6, 12}, then the chain 1 < 6 < 12 has length 3. Degree = 3.
+
+Hmm, but this definition doesn't give us a vector space of functions of bounded degree, because if f₁ has support on {2} and f₂ has support on {3}, then f₁ + f₂ has support on {2, 3} and degree 1. But if f₁ has support on {1} and f₂ has support on {4}, then f₁ + f₂ has support on {1, 4} and degree 2 (chain 1 < 4 has length 2).
+
+Actually, wait. The chain 1 < 4 has length 2 (two elements), but we need f to be non-zero at all elements of the chain. f₁ + f₂ is non-zero at 1 and 4, so yes, this chain has support for f₁ + f₂.
+
+But for a code, we need a linear subspace. If the "degree" is defined this way, the set of functions with degree ≤ r might not be a linear subspace.
+
+Let me try a different interpretation. Maybe "degree" is defined through the Möbius spectrum, as I initially thought.
+
+Actually, you know what, let me re-read the problem more carefully. It says:
+
+"The code D-RM(n, r): Codewords indexed by functions f: D(n) → F_q where F_q is the alphabet field. The 'degree' of f is the maximum length of any chain in D(n) where f has support. Evaluate at all |D(n)| divisors → length-|D(n)| vector over F_q."
+
+Hmm, this is still ambiguous. Let me try yet another interpretation.
+
+Maybe "the degree of f" should be defined through the Möbius decomposition, similar to how in the Boolean case, the degree is the maximum degree of a monomial in the algebraic normal form.
+
+In the Boolean case, f(x) = Σ_{S ⊆ [m], |S| ≤ r} c_S · Π_{i ∈ S} x_i.
+
+For the divisor lattice, the "monomials" could be the indicator functions of principal ideals. For each divisor d, let e_d be the indicator function of the set {e : d | e}. Then f = Σ_d f̂(d) · e_d.
+
+The "degree" of f would then be the maximum height of d such that f̂(d) ≠ 0.
+
+Actually, I think this is the most natural definition, and it makes the code a linear subspace. Let me go with this.
+
+So: f has degree ≤ r if f̂(d) = 0 whenever height(d) > r, where f̂ is the Möbius transform of f.
+
+This is exactly what I computed before. So:
+
+For F₂, the parameters are:
+- r = 0: [6, 1, 6]
+- r = 1: [6, 3, 2]
+- r = 2: [6, 5, 1]
+- r = 3: [6, 6, 1]
+
+The minimum distances are disappointing for r ≥ 1. This is because the divisor lattice is "small" and "non-uniform" compared to the Boolean lattice.
+
+But wait, maybe I should consider a different alphabet. Let me try F_q for q > 2.
+
+Actually, wait. For F₂, the Möbius function values are all 0 or 1 (since -1 ≡ 1 mod 2). This might be causing issues. Let me try working over F₃ or a general F_q.
+
+Actually, let me reconsider the whole setup. The problem says "where F_q is the alphabet field" — it's not specified that q = 2. Let me try q = 3.
+
+Hmm, but actually, for Reed-Muller codes, the alphabet is typically F₂. Let me think about what makes sense here.
+
+Actually, let me reconsider the definition of degree. Maybe there's a better way to define it for the divisor lattice.
+
+Let me think about this differently. The divisor lattice D(12) is isomorphic to [2] × [1]. We can think of a function f: [2] × [1] → F_q as a function of two variables x₁ ∈ {0,1,2} and x₂ ∈ {0,1}.
+
+One natural way to define "degree" is:
+- Consider the polynomial ring F_q[x₁, x₂].
+- A function f: [2] × [1] → F_q can be represented as a polynomial of degree ≤ 2 in x₁ and degree ≤ 1 in x₂.
+- The "total degree" of f is the minimum total degree of a polynomial representing f.
+
+But this is not the same as the Möbius spectrum definition. Let me think about what polynomial ring gives us the Möbius spectrum.
+
+In the Boolean case [1]^m, a function f: {0,1}^m → F₂ can be written as:
+f(x) = Σ_{S ⊆ [m]} c_S · Π_{i ∈ S} x_i
+
+The monomial Π_{i ∈ S} x_i is the indicator function of the cube {y : y ≥ x_S} where x_S is the vector with 1's exactly in positions S. And c_S = f̂(S) in the Möbius transform.
+
+So the Möbius transform coefficients are exactly the polynomial coefficients in the multilinear representation.
+
+For [2] × [1], a function f: {0,1,2} × {0,1} → F_q can be written as:
+f(x₁, x₂) = c_{00} + c_{10}x₁ + c_{20}x₁² + c_{01}x₂ + c_{11}x₁x₂ + c_{21}x₁²x₂
+
+But this is just a polynomial representation, not directly related to the Möbius transform.
+
+Hmm, let me think about what the Möbius transform gives us in terms of polynomial coefficients.
+
+For the divisor lattice D(12) = [2] × [1], the Möbius transform gives:
+
+f̂(d) = Σ_{c | d} μ(c, d) f(c)
+
+In terms of coordinates (e₂, e₃) where d = 2^{e₂} · 3^{e₃}:
+
+f̂(e₂, e₃) = Σ_{f₂ ≤ e₂, f₃ ≤ e₃} μ((f₂, f₃), (e₂, e₃)) · f(f₂, f₃)
+
+The Möbius function of the product lattice [2] × [1] is:
+μ((f₂, f₃), (e₂, e₃)) = μ₁(f₂, e₂) · μ₂(f₃, e₃)
+
+where μ₁ is the Möbius function of [2] and μ₂ is the Möbius function of [1].
+
+For a chain [a], the Möbius function is:
+μ(i, j) = (-1)^{j-i} for i ≤ j (this is the Möbius function of a chain).
+
+Wait, actually for a chain, μ(i, j) = (-1)^{j-i} for j - i = 0 or 1, and 0 otherwise. No wait, for a chain 0 < 1 < 2 < ... < a, μ(i, j) = (-1)^{j-i} if j - i ≤ ... hmm, let me think again.
+
+For a chain of length n (i.e., with n+1 elements), the Möbius function is:
+μ(i, j) = (-1)^{j-i} for all i ≤ j.
+
+Actually no. For a chain (totally ordered set), μ(i, i) = 1, μ(i, i+1) = -1, and μ(i, j) = 0 for j - i > 1.
+
+Wait, that's for the chain as a poset with covering relations. Let me reconsider.
+
+For a chain poset 0 < 1 < 2, the Möbius function is:
+μ(0, 0) = 1
+μ(0, 1) = -1
+μ(0, 2) = 0 (since μ(0,2) = -μ(0,0) - μ(0,1) = -1+1 = 0... wait)
+
+Actually, the Möbius function of a chain is:
+μ(i, j) = 
+  1 if i = j
+  -1 if j = i + 1
+  0 if j > i + 1
+
+This is because in a chain, the interval [i, j] is itself a chain of length j - i, and the Möbius function of a chain of length n is (-1)^n only for n = 0 or 1, and 0 for n ≥ 2.
+
+Wait no, that's wrong. Let me look this up from scratch.
+
+For a chain (totally ordered poset) with elements 0 < 1 < ... < n, the Möbius function is:
+μ(i, j) = (-1)^{j-i} if j - i ≤ ... hmm.
+
+Actually, the standard result is: the Möbius function of a chain is:
+μ(i, j) = 1 if i = j
+μ(i, j) = -1 if j = i + 1
+μ(i, j) = 0 if j ≥ i + 2
+
+This is because for a chain, the poset is equivalent to the chain of natural numbers, and:
+μ(i, j) = -Σ_{i ≤ k < j} μ(i, k)
+
+μ(i, i) = 1
+μ(i, i+1) = -μ(i, i) = -1
+μ(i, i+2) = -μ(i, i) - μ(i, i+1) = -1 + 1 = 0
+μ(i, i+3) = -μ(i, i) - μ(i, i+1) - μ(i, i+2) = -1 + 1 + 0 = 0
+
+Yes! So for a chain, μ(i, j) = 0 for j - i ≥ 2.
+
+Now, for the divisor lattice D(n) where n = p₁^{a₁} · p₂^{a₂} · ... · p_m^{a_m}, the lattice is the product of chains [a₁] × [a₂] × ... × [a_m].
+
+The Möbius function of the product is the product of the Möbius functions:
+μ((e₁,...,e_m), (f₁,...,f_m)) = Π_i μ_{[a_i]}(e_i, f_i)
+
+where μ_{[a]} is the Möbius function of the chain [a] = {0, 1, ..., a}.
+
+Since μ_{[a]}(i, j) = (-1)^{j-i} for j - i ∈ {0, 1} and 0 for j - i ≥ 2, we get:
+
+μ((e₁,...,e_m), (f₁,...,f_m)) = (-1)^{Σ(f_i - e_i)} if each f_i - e_i ∈ {0, 1}, and 0 otherwise.
+
+This is the same as saying: μ(e, f) ≠ 0 iff f covers e or f = e, and μ(e, f) = (-1)^{|f-e|₁}.
+
+But wait, this is the Möbius function of the product lattice, which is NOT the same as the number-theoretic Möbius function μ(d) for the divisor lattice of a general integer!
+
+Let me reconcile. For n = p₁^{a₁} · ... · p_m^{a_m}, the divisor lattice D(n) is the product [a₁] × ... × [a_m]. The Möbius function of this lattice is:
+
+μ(e, f) = Π_i μ_{[a_i]}(e_i, f_i)
+
+The number-theoretic Möbius function is:
+μ(d) = μ(1, d) in the divisor lattice.
+
+For n = 12 = 2² · 3, and d = 4 = 2²:
+μ(1, 4) = μ_{[2]}(0, 2) · μ_{[1]}(0, 0) = 0 · 1 = 0.
+
+And indeed, the number-theoretic μ(4) = 0 since 4 is not squarefree. ✓
+
+For d = 6 = 2 · 3:
+μ(1, 6) = μ_{[2]}(0, 1) · μ_{[1]}(0, 1) = (-1) · (-1) = 1.
+
+And the number-theoretic μ(6) = μ(2·3) = 1. ✓
+
+OK great, so the Möbius function of the divisor lattice is consistent with the number-theoretic Möbius function.
+
+Now, back to the "degree" definition. For the product lattice [a₁] × ... × [a_m], a natural notion of degree is:
+
+A function f: [a₁] × ... × [a_m] → F_q has "degree ≤ r" if its Möbius transform f̂ is supported on elements (e₁, ..., e_m) with Σ e_i ≤ r.
+
+This is the direct analogue of the Boolean case, where "degree ≤ r" means the Möbius transform is supported on elements of weight ≤ r.
+
+Wait, but in the Boolean case [1]^m, the height of an element (e₁, ..., e_m) is Σ e_i, and this is the same as the Hamming weight. So "degree ≤ r" = "Möbius transform supported on weight ≤ r" = "Möbius transform supported on height ≤ r."
+
+For the general product lattice, height(e₁, ..., e_m) = Σ e_i. So "degree ≤ r" = "Möbius transform supported on height ≤ r."
+
+This is what I had before! So my computation was correct.
+
+The issue is that for small lattices, the resulting codes have poor minimum distances.
+
+Let me reconsider whether there's a better way to define "degree" that gives better codes.
+
+Actually, let me try a different approach. Instead of using the Möbius transform, let me use the "polynomial" interpretation.
+
+For the Boolean case [1]^m, a function f: {0,1}^m → F_q of degree ≤ r can be written as:
+f(x) = Σ_{|S| ≤ r} c_S · Π_{i ∈ S} x_i
+
+For [2] × [1], a function f: {0,1,2} × {0,1} → F_q can be written as:
+f(x₁, x₂) = Σ_{i=0}^{2} Σ_{j=0}^{1} c_{ij} · x₁^i · x₂^j
+
+The "degree" of a monomial x₁^i · x₂^j is i + j. A function has "polynomial degree ≤ r" if it can be represented by a polynomial of total degree ≤ r.
+
+But this is not the same as the Möbius spectrum definition! Let me check.
+
+For the Boolean case, x_i² = x_i, so x_i^i = x_i for i ≥ 1. The polynomial x₁^i · x₂^j = x₁^{min(i,1)} · x₂^{min(j,1)} on {0,1}². So the multilinear polynomial representation is the unique one, and the degree is the maximum weight of a monomial.
+
+For [2] × [1], we don't have the relation x₁² = x₁ (since x₁ ∈ {0,1,2}). So x₁ and x₁² are genuinely different functions.
+
+Let me compute the Möbius spectrum of the monomials.
+
+For the element (e₁, e₂) ∈ [2] × [1], the "indicator monomial" is:
+
+I_{(e₁, e₂)}(x₁, x₂) = product of indicator functions.
+
+Hmm, this is getting complicated. Let me just directly compute the Möbius spectrum.
+
+For a function f: [2] × [1] → F_q, the Möbius transform is:
+
+f̂(e₁, e₂) = Σ_{f₁ ≤ e₁, f₂ ≤ e₂} μ((f₁, f₂), (e₁, e₂)) · f(f₁, f₂)
+
+Since μ((f₁, f₂), (e₁, e₂)) = μ₁(f₁, e₁) · μ₂(f₂, e₂), and:
+
+μ₁(0, 0) = 1, μ₁(0, 1) = -1, μ₁(0, 2) = 0
+μ₁(1, 1) = 1, μ₁(1, 2) = -1
+μ₁(2, 2) = 1
+
+μ₂(0, 0) = 1, μ₂(0, 1) = -1
+μ₂(1, 1) = 1
+
+So the Möbius transform is:
+
+f̂(0, 0) = f(0, 0)
+f̂(1, 0) = f(1, 0) - f(0, 0)
+f̂(2, 0) = f(2, 0) - f(1, 0)
+f̂(0, 1) = f(0, 1) - f(0, 0)
+f̂(1, 1) = f(1, 1) - f(0, 1) - f(1, 0) + f(0, 0)
+f̂(2, 1) = f(2, 1) - f(1, 1) - f(2, 0) + f(1, 0)
+
+And the inverse:
+f(e₁, e₂) = Σ_{f₁ ≤ e₁, f₂ ≤ e₂} f̂(f₁, f₂)
+
+So:
+f(0, 0) = f̂(0, 0)
+f(1, 0) = f̂(0, 0) + f̂(1, 0)
+f(2, 0) = f̂(0, 0) + f̂(1, 0) + f̂(2, 0)
+f(0, 1) = f̂(0, 0) + f̂(0, 1)
+f(1, 1) = f̂(0, 0) + f̂(1, 0) + f̂(0, 1) + f̂(1, 1)
+f(2, 1) = f̂(0, 0) + f̂(1, 0) + f̂(2, 0) + f̂(0, 1) + f̂(1, 1) + f̂(2, 1)
+
+Now, for the degree definition "Möbius spectrum supported on height ≤ r":
+
+r = 0: f̂ supported on {(0,0)}. f is constant. k = 1.
+r = 1: f̂ supported on {(0,0), (1,0), (0,1)}. k = 3.
+r = 2: f̂ supported on {(0,0), (1,0), (0,1), (2,0), (1,1)}. k = 5.
+r = 3: All. k = 6.
+
+This matches what I had before. The generator matrix for the code D-RM(12, r) is the matrix whose columns are the "basis functions" b_{(e₁,e₂)} defined by:
+
+b_{(e₁,e₂)}(d₁, d₂) = 1 if (e₁, e₂) ≤ (d₁, d₂) (i.e., e₁ ≤ d₁ and e₂ ≤ d₂), and 0 otherwise.
+
+These are the columns of the zeta matrix Z.
+
+For r = 1, the generator matrix (over any F_q) is:
+
+G = [b_{(0,0)}, b_{(1,0)}, b_{(0,1)}]
+
+where:
+b_{(0,0)} = (1, 1, 1, 1, 1, 1) [constant function 1]
+b_{(1,0)} = (0, 1, 0, 1, 1, 1) [1 if 2 | d]
+b_{(0,1)} = (0, 0, 1, 0, 1, 1) [1 if 3 | d]
+
+In matrix form (rows indexed by divisors {1, 2, 3, 4, 6, 12}):
+
+G = 
+[1  0  0]
+[1  1  0]
+[1  0  1]
+[1  1  0]
+[1  1  1]
+[1  1  1]
+
+Over F₂, I computed d = 2.
+
+Over F₃, let me compute the minimum distance.
+
+The code is 3-dimensional over F₃, so there are 27 codewords. The minimum weight of a non-zero codeword.
+
+For a codeword c = a · b_{(0,0)} + b · b_{(1,0)} + c · b_{(0,1)}:
+
+c(1) = a
+c(2) = a + b
+c(3) = a + c
+c(4) = a + b
+c(6) = a + b + c
+c(12) = a + b + c
+
+For a non-zero codeword, at least one of a, b, c is non-zero.
+
+Weight = number of non-zero entries.
+
+Case 1: a = 0. Then c = (0, b, c, b, b+c, b+c).
+- b = 1, c = 0: (0, 1, 0, 1, 1, 1). Weight = 4.
+- b = 0, c = 1: (0, 0, 1, 0, 1, 1). Weight = 3.
+- b = 1, c = 1: (0, 1, 1, 1, 2, 2). Weight = 5.
+- b = 1, c = 2: (0, 1, 2, 1, 0, 0). Weight = 3.
+- b = 2, c = 1: (0, 2, 1, 2, 0, 0). Weight = 3.
+- b = 2, c = 2: (0, 2, 2, 2, 1, 1). Weight = 5.
+
+Case 2: a = 1. Then c = (1, 1+b, 1+c, 1+b, 1+b+c, 1+b+c).
+- b = 0, c = 0: (1, 1, 1, 1, 1, 1). Weight = 6.
+- b = 1, c = 0: (1, 2, 1, 2, 2, 2). Weight = 6.
+- b = 2, c = 0: (1, 0, 1, 0, 0, 0). Weight = 2.
+- b = 0, c = 1: (1, 1, 2, 1, 2, 2). Weight = 6.
+- b = 0, c = 2: (1, 1, 0, 1, 0, 0). Weight = 3.
+- b = 1, c = 1: (1, 2, 2, 2, 0, 0). Weight = 4.
+- b = 1, c = 2: (1, 2, 0, 2, 1, 1). Weight = 5.
+- b = 2, c = 1: (1, 0, 2, 0, 1, 1). Weight = 3.
+- b = 2, c = 2: (1, 0, 0, 0, 2, 2). Weight = 3.
+
+Case 3: a = 2. Then c = (2, 2+b, 2+c, 2+b, 2+b+c, 2+b+c).
+- b = 0, c = 0: (2, 2, 2, 2, 2, 2). Weight = 6.
+- b = 1, c = 0: (2, 0, 2, 0, 0, 0). Weight = 2.
+- b = 2, c = 0: (2, 1, 2, 1, 1, 1). Weight = 6.
+- b = 0, c = 1: (2, 2, 0, 2, 0, 0). Weight = 3.
+- b = 0, c = 2: (2, 2, 1, 2, 1, 1). Weight = 6.
+- b = 1, c = 1: (2, 0, 0, 0, 1, 1). Weight = 3.
+- b = 1, c = 2: (2, 0, 1, 0, 2, 2). Weight = 3.
+- b = 2, c = 1: (2, 1, 0, 1, 2, 2). Weight = 5.
+- b = 2, c = 2: (2, 1, 1, 1, 0, 0). Weight = 4.
+
+The minimum non-zero weight is 2 (achieved by several codewords).
+
+So for F₃: [6, 3, 2]. Same as F₂!
+
+Hmm, interesting. The minimum distance is 2 regardless of the field.
+
+Actually, let me think about why. The generator matrix has two identical rows (rows 2 and 4, corresponding to divisors 2 and 4):
+
+Row 2: [1, 1, 0]
+Row 4: [1, 1, 0]
+
+These are identical! So any codeword will have c(2) = c(4), which means the difference c(2) - c(4) = 0 always. But this doesn't directly give us a low-weight codeword.
+
+Wait, it means positions 2 and 4 are "linked" — they always have the same value. So if a codeword has c(2) ≠ 0, then c(4) ≠ 0 as well (and they're equal). This limits the minimum distance but doesn't force it to be 2.
+
+Actually, the minimum distance being 2 is because the code has dimension 3 and length 6, so by the Singleton bound, d ≤ 6 - 3 + 1 = 4. But we're getting d = 2, which is much worse.
+
+The reason is that the generator matrix has rank 3 (good), but the rows are not "spread out" enough. Two rows are identical (rows 2 and 4), which creates a dependency that hurts the distance.
+
+Let me now consider a different definition of "degree" that might give better codes.
+
+## Alternative: Polynomial degree on the product of chains
+
+Instead of using the Möbius spectrum, let me use polynomial degree.
+
+For [2] × [1], a function f: {0,1,2} × {0,1} → F_q can be written as a polynomial:
+
+f(x₁, x₂) = Σ_{i=0}^{2} Σ_{j=0}^{1} c_{ij} · x₁^i · x₂^j
+
+The "polynomial degree" is max{i + j : c_{ij} ≠ 0}.
+
+Let me compute the relationship between polynomial coefficients and Möbius coefficients.
+
+The polynomial basis functions are:
+- 1 (degree 0)
+- x₁ (degree 1)
+- x₂ (degree 1)
+- x₁² (degree 2)
+- x₁x₂ (degree 2)
+- x₁²x₂ (degree 3)
+
+The Möbius basis functions (columns of Z) are:
+- b_{(0,0)} = (1, 1, 1, 1, 1, 1) — constant
+- b_{(1,0)} = (0, 1, 0, 1, 1, 1) — 1 if 2|d
+- b_{(0,1)} = (0, 0, 1, 0, 1, 1) — 1 if 3|d
+- b_{(2,0)} = (0, 0, 0, 1, 0, 1) — 1 if 4|d
+- b_{(1,1)} = (0, 0, 0, 0, 1, 1) — 1 if 6|d
+- b_{(2,1)} = (0, 0, 0, 0, 0, 1) — 1 if 12|d
+
+Now, the polynomial functions evaluated at (e₂, e₃) where the divisor is 2^{e₂} · 3^{e₃}:
+
+- 1: (1, 1, 1, 1, 1, 1) — same as b_{(0,0)}
+- x₁ = e₂: (0, 1, 0, 2, 1, 2) — different from b_{(1,0)}!
+- x₂ = e₃: (0, 0, 1, 0, 1, 1) — same as b_{(0,1)}
+- x₁² = e₂²: (0, 1, 0, 4, 1, 4) — over F₂, this is (0, 1, 0, 0, 1, 0)
+- x₁x₂ = e₂·e₃: (0, 0, 0, 0, 1, 2) — over F₂, this is (0, 0, 0, 0, 1, 0)
+- x₁²x₂ = e₂²·e₃: (0, 0, 0, 0, 1, 4) — over F₂, this is (0, 0, 0, 0, 1, 0)
+
+Hmm, over F₂, the polynomial functions x₁x₂ and x₁²x₂ give the same function on [2] × [1]! This is because e₃ ∈ {0,1}, so e₃ = e₃², and e₂·e₃ = e₂²·e₃ when e₃ ∈ {0,1} and e₂ ∈ {0,1,2}... let me check:
+
+e₂=1, e₃=1: e₂·e₃ = 1, e₂²·e₃ = 1. Same.
+e₂=2, e₃=1: e₂·e₃ = 2, e₂²·e₃ = 4. Over F₂: 2 mod 2 = 0, 4 mod 2 = 0. Same!
+
+So over F₂, x₁x₂ and x₁²x₂ are the same function on {0,1,2} × {0,1}. This means the polynomial basis is not a good basis over F₂.
+
+Let me try over F_q for q ≥ 5 (so that we don't have collisions).
+
+Over F₅:
+- 1: (1, 1, 1, 1, 1, 1)
+- x₁: (0, 1, 0, 2, 1, 2)
+- x₂: (0, 0, 1, 0, 1, 1)
+- x₁²: (0, 1, 0, 4, 1, 4)
+- x₁x₂: (0, 0, 0, 0, 1, 2)
+- x₁²x₂: (0, 0, 0, 0, 1, 4)
+
+These 6 vectors are linearly independent over F₅ (I should check, but they form a Vandermonde-like system).
+
+The code with polynomial degree ≤ r would be:
+r = 0: span{1} → [6, 1, ?]
+r = 1: span{1, x₁, x₂} → [6, 3, ?]
+r = 2: span{1, x₁, x₂, x₁², x₁x₂} → [6, 5, ?]
+r = 3: span{all 6} → [6, 6, 1]
+
+For r = 1 over F₅, the generator matrix is:
+G = [1, x₁, x₂] =
+[1  0  0]
+[1  1  0]
+[1  0  1]
+[1  2  0]
+[1  1  1]
+[1  2  1]
+
+Hmm, this is different from the Möbius-based generator matrix because x₁ gives (0,1,0,2,1,2) instead of (0,1,0,1,1,1).
+
+Let me compute the minimum distance for this code over F₅.
+
+A codeword is c = a·1 + b·x₁ + c·x₂ = (a, a+b, a+c, a+2b, a+b+c, a+2b+c).
+
+For a non-zero codeword, at least one of a, b, c is non-zero.
+
+Weight = number of non-zero entries.
+
+I need to find the minimum weight over all non-trivial (a,b,c) ∈ F₅³ \ {0}.
+
+c(1) = a
+c(2) = a+b
+c(3) = a+c
+c(4) = a+2b
+c(6) = a+b+c
+c(12) = a+2b+c
+
+Let me try to find a codeword with few non-zero entries.
+
+Weight 1: We need 5 of the 6 entries to be zero. 
+
+If c(2) = c(3) = c(4) = c(6) = c(12) = 0:
+a+b = 0, a+c = 0, a+2b = 0, a+b+c = 0, a+2b+c = 0.
+From a+b = 0 and a+c = 0: b = c = -a.
+From a+2b = 0: a + 2(-a) = -a = 0, so a = 0. Then b = c = 0. Trivial.
+
+If c(1) = c(3) = c(4) = c(6) = c(12) = 0:
+a = 0, a+c = 0 → c = 0, a+2b = 0 → b = 0. Trivial.
+
+So no weight-1 codewords.
+
+Weight 2: We need 4 of the 6 entries to be zero.
+
+Case: c(1) = c(2) = 0, and 4 of the remaining are zero.
+a = 0, a+b = 0 → b = 0.
+Then c = (0, 0, c, 0, c, c). This has weight 3 if c ≠ 0. Not weight 2.
+
+Case: c(1) = c(3) = 0.
+a = 0, a+c = 0 → c = 0.
+Then c = (0, b, 0, 2b, b, 2b). Weight is 4 if b ≠ 0 (since b and 2b are both non-zero for b ≠ 0 in F₅). Wait, actually 2b could equal 0 only if b = 0. So weight = 4.
+
+Case: c(2) = c(3) = 0.
+a+b = 0 → b = -a, a+c = 0 → c = -a.
+c = (a, 0, 0, a-2a, a-a-a, a-2a-a) = (a, 0, 0, -a, -a, -2a).
+If a ≠ 0, then c = (a, 0, 0, -a, -a, -2a). Weight = 4 (since a, -a, -a, -2a are all non-zero for a ≠ 0 in F₅).
+
+Case: c(2) = c(4) = 0.
+a+b = 0 → b = -a, a+2b = 0 → a - 

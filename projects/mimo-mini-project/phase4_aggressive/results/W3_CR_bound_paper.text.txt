@@ -1,0 +1,36 @@
+We consider the problem of estimating the imaginary parts γ_k of the nontrivial zeros ρ_k = β_k + iγ_k of an L-function L(s) from observations of the prime-counting function ψ_L(x) at log-spaced points. Under the Riemann Hypothesis (β_k = 1/2), the explicit formula gives
+
+\[
+z(t) = e^{-t/2} \left( \psi_L(e^t) - e^t \right) \approx -2 \operatorname{Re} \sum_{\gamma > 0} \frac{e^{i\gamma t}}{1/2 + i\gamma},
+\]
+
+where \( t = \log x \). This is a sum of cosines with frequencies γ_k and amplitudes \( a_k = 2/|\rho_k| \approx 2/\gamma_k \). Observations are taken at \( t_n \) for \( n = 1, \dots, N \), with \( t \in [\log X_{\min}, \log X_{\max}] \), so the log-window is \( T = \log(X_{\max}/X_{\min}) \). The truncation error from omitting zeros above a cutoff Γ is modeled as additive noise with variance \( \sigma^2 \approx \frac{2}{\pi} \frac{\log(\Gamma/2\pi) + 1}{\Gamma} \).
+
+For a sum of sinusoids in white Gaussian noise, the Cramér-Rao lower bound (CRB) for the variance of the frequency estimate \( \hat{\gamma}_k \) is
+
+\[
+\operatorname{Var}(\hat{\gamma}_k) \geq \frac{12 \sigma^2}{a_k^2 T^3} = \frac{12 \sigma^2 |\rho_k|^2}{T^3} \approx \frac{12 \sigma^2 \gamma_k^2}{T^3}.
+\]
+
+This bound is derived from the Fisher information for a single sinusoid and remains approximately valid for well-separated frequencies in a sum.
+
+### Novelty
+A literature search suggests that this specific CRB for estimating L-zeros from prime data has not been published. Classical works on frequency estimation in signal processing provide the bound, but its application to L-functions appears new.
+
+### MUSIC Performance
+MUSIC is a high-resolution subspace method that achieves the CRB for frequency estimation in white noise when the signal-to-noise ratio is sufficiently high and frequencies are well-separated. Empirical comparison is needed to verify that MUSIC attains this bound for L-zero estimation.
+
+### Minimum Data Requirement for 1% Precision
+Assume \( N = 100 \) samples, \( X_{\min} = 100 \), and include zeros up to Γ such that the number of estimated frequencies \( d \approx N/2 = 50 \). For the Riemann zeta function, this gives Γ ≈ 94. Then \( \sigma^2 \approx 0.025 \). For the first zero (\( \gamma_1 \approx 14.13 \)):
+
+\[
+\operatorname{Var}(\hat{\gamma}_1) \geq \frac{12 \times 0.025 \times 199.7}{T^3} = \frac{60.1}{T^3}.
+\]
+
+Setting \( \operatorname{Var}(\hat{\gamma}_1) \leq (0.01 \gamma_1)^2 = 0.02 \) yields \( T^3 \geq 3005 \), so \( T \geq 14.4 \). Thus \( X_{\max} \geq X_{\min} e^{14.4} \approx 1.8 \times 10^8 \). For higher zeros, larger Γ may be needed, reducing σ², but the required T may increase due to larger γ_k.
+
+### Optimal Algorithms
+If MUSIC is suboptimal, maximum likelihood estimation (MLE) achieves the CRB asymptotically but is computationally intensive for many frequencies. Alternatives like Matrix Pencil, IQML, or atomic norm minimization may also approach the bound. However, for well-separated zeros, MUSIC is expected to be near-optimal.
+
+### Conclusion
+The CRB provides a theoretical foundation for the precision limits of L-zero estimation from prime data. Deriving this bound and demonstrating that MUSIC achieves it would transform the work into a rigorous theory-algorithm-experiment paper.

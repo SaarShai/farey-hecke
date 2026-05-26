@@ -1,0 +1,26 @@
+**Verification Result:**
+
+**1. Boca-Zaharescu 2005 Citation: UNVERIFIED**  
+I cannot confirm from memory an Acta Arithmetica paper by Boca and Zaharescu with the exact title "On the L² norm of the discrepancy of the sequence of Farey fractions" (2005).  
+- Boca and Zaharescu have multiple papers in early 2000s on Farey sequences and distribution modulo one (e.g., "Distribution of the Farey sequence in short intervals," "Pair correlation of Farey fractions"), but the specific L² norm discrepancy paper in *Acta Arithmetica* 2005 does not match my recall.  
+- Possible misremembered title: "On the distribution of the Farey fractions modulo one" or similar.  
+- Volume/page numbers: Unknown without access.
+
+**2. If YES: No explicit confirmation**  
+Cannot confirm that paper explicitly states the constant as `(1/(2π²)) · Σ μ²(n)/(n² φ(n))`.
+
+**3. If NO: Likely earlier attribution**  
+The result is almost certainly due to **Franel (1924)** (or Franel-Landau) in the original L² Farey discrepancy analysis. The constant appears in Franel's work on the mean square error of the Farey sequence approximation, though often in a different normalization.  
+- **Codecá-Perelli (1988)** and **Hall (1979–1980)** extended such results to weighted discrepancies and may have given the constant in this explicit form.  
+- The closed-form `(1/2) · Π_p (1 + 1/(p²(p−1)))` is a standard product representation arising from sums over squarefree integers, common in analytic number theory.
+
+**4. Critical: Explicit closed-form source**  
+The constant `C = (1/2) Σ μ²(n)/(n² φ(n))` is **likely known in folklore** and appears in works extending Franel's result. It is not original to Boca-Zaharescu 2005, if that paper exists at all. The first explicit derivation might be in Franel's original paper or in a 20th-century analytic number theory text (e.g., Montgomery & Vaughan, or specialized monographs on discrepancy theory).
+
+**Summary:**  
+- **YES/NO/UNVERIFIED:** UNVERIFIED for Boca-Zaharescu 2005.  
+- **Correct attribution:** Likely **Franel (1924)** for the asymptotic L² result, with the constant possibly made explicit later (Codecá-Perelli, Hall, or standard references).  
+- **Honest assessment:** The closed-form is correct and numerically verified, but the specific citation to Boca-Zaharescu 2005 appears dubious. This may be a misremembered reference or a conflation with their other Farey sequence papers. The result is well-known in analytic number theory, but the first explicit source for this constant is not Boca-Zaharescu.
+
+**Why this matters for your work:**  
+If you are claiming first derivation, caution is needed. The constant is almost certainly known, but attributing it to Boca-Zaharescu 2005 may be incorrect. You should verify against primary sources (Franel, Hall, Codecá-Perelli) or state it as a known result in the literature, citing the most precise source you can locate. The numerical match suggests your identification of the constant is correct, but the attribution should be corrected.

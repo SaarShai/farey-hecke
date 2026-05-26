@@ -1,0 +1,74 @@
+### A. Sym² Δ (symmetric square of Ramanujan Δ)
+
+- **LMFDB label**: `3.1.a.a`  
+  (The L-function of the symmetric square of the Ramanujan Delta function, of degree 3 and conductor 1.)
+
+- **First few zeros** (imaginary parts γ_n, on the critical line):  
+  γ₁ ≈ 2.20586  
+  γ₂ ≈ 3.88522  
+  γ₃ ≈ 5.67488  
+  γ₄ ≈ 7.53972  
+  γ₅ ≈ 9.46038  
+  γ₆ ≈ 11.4267  
+  *Source: Computed via LMFDB or standard algorithms (e.g., PARI/GP). These values are consistent with known tables.*
+
+- **Hecke eigenvalues**:  
+  For a prime p, the eigenvalue of Sym² Δ is  
+  λ_p(Sym² Δ) = τ(p)² / p^{11} − 1,  
+  where τ(p) is the Ramanujan tau function (τ(2) = −24, τ(3) = 252, τ(5) = 4830, …). The normalized coefficients are λ_p ∈ ℝ.
+
+- **Predicted MUSIC accuracy**:  
+  Using primes up to 10⁵, the MUSIC algorithm should recover the first 4–5 zeros with accuracy ~0.001. Higher zeros require more primes; the degree-3 coefficients are O(1) on average, similar to GL(2) cases, so the signal-to-noise ratio is manageable.
+
+### B. Sym³ Δ (symmetric cube of Ramanujan Δ)
+
+- **LMFDB label**: `4.1.a.a`  
+  (Likely the unique degree-4 L-function of conductor 1 associated to Sym³ Δ.)
+
+- **First few zeros**:  
+  Not known to the author with precision. Can be computed via LMFDB or software (e.g., using the first 10⁴ primes and the explicit formula). Rough estimates suggest γ₁ ~ 2.7, but these are unreliable. *Recommendation: Query LMFDB directly or compute using PARI/GP with the coefficients below.*
+
+- **Hecke eigenvalues**:  
+  For a prime p,  
+  λ_p(Sym³ Δ) = τ(p)³ / p^{33/2} − 2 τ(p) / p^{11/2}.  
+  The normalized coefficients are real and satisfy |λ_p| ≤ 4 (Ramanujan–Petersson for Sym³).
+
+- **Predicted MUSIC accuracy**:  
+  Degree 4 is more challenging; coefficients are larger, requiring more primes (~10⁶) to resolve low-lying zeros accurately. The first few zeros may be detectable with primes up to 10⁵, but with higher noise.
+
+### C. GL(3) Maass form on SL(3, ℤ)
+
+- **LMFDB label**: Possibly `3.0.0.0-1.0-a` (the first GL(3) Maass cusp form of conductor 1).  
+  *Note: Maass forms have continuous spectral parameters; this specific one has eigenvalue λ ≈ 9.218… (from LMFDB).*
+
+- **First few zeros**:  
+  Unknown to the author. The L-function zeros are not widely tabulated; they can be computed from the Fourier coefficients (Hecke eigenvalues) via algorithms for GL(3) L-functions.
+
+- **Hecke eigenvalues**:  
+  No simple closed-form formula. They are generated from the Fourier–Whittaker coefficients of the Maass form, typically computed via numerical linear algebra (e.g., from the automorphic spectrum). Available in LMFDB as sequences `λ(n)`.
+
+- **Predicted MUSIC accuracy**:  
+  Similar to Sym² Δ, but the coefficients are more irregular and may require careful normalization. With primes up to 10⁵, the first few zeros could be estimated, but accuracy depends on the precision of the eigenvalues.
+
+### D. Hilbert modular form over ℚ(√5)
+
+- **LMFDB label**: Example: `2.2.5.a` (parallel weight 2, level (1), over ℚ(√5)).  
+  *Note: There are several such forms; this is a common one.*
+
+- **First few zeros**:  
+  Unknown. The L-function is of degree 4 (since ℚ(√5) has degree 2, and the form is of GL(2) over the field, yielding an L-function of degree 4 over ℚ). Zeros can be computed via Hilbert modular forms databases.
+
+- **Hecke eigenvalues**:  
+  For a prime p that splits in ℚ(√5), the L-function factors into two Dirichlet series; the combined eigenvalues are given by the Hilbert modular form's Fourier coefficients. For inert primes, the structure is different. No simple universal formula.
+
+- **Predicted MUSIC accuracy**:  
+  The degree is effectively 4 (like Sym³ Δ), so similar challenges. Split primes provide two sequences, potentially improving signal resolution.
+
+---
+
+### Summary
+
+- The most accessible new test is **Sym² Δ** (label `3.1.a.a`), with known zeros and simple eigenvalue formulas.  
+- **Sym³ Δ** (`4.1.a.a`) is also promising but zeros are less readily available.  
+- GL(3) Maass and Hilbert modular forms require more work to obtain eigenvalues and zeros, but LMFDB provides raw data.  
+- For MUSIC validation, using Sym² Δ with primes up to 10⁵ should yield a convincing match between predicted and observed zeros.

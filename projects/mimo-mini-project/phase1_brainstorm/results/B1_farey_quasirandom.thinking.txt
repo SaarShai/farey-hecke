@@ -1,0 +1,625 @@
+Let me think carefully about this problem. The sequence S consists of primitive roots of unity e^{2πi k/q} for q = 1, 2, 3, ..., and for each q, k ranges over integers with gcd(k,q) = 1, 0 ≤ k < q.
+
+First, let me understand the structure. For q = 1: just the point 1 (or 0 in [0,1] if we map via x = k/q). Actually, let me think of these as points in [0,1) via x = k/q mod 1.
+
+So S is the sequence of all rationals k/q with gcd(k,q) = 1, enumerated in order of increasing denominator q, then increasing numerator k.
+
+The number of points up to denominator q is:
+N(q) = Σ_{d=1}^{q} φ(d) ≈ 3q²/π²
+
+This is the count of Farey fractions of order q (well, approximately — the exact count includes 0/1 and 1/1 which gives |F_q| = 1 + Σ_{d=1}^q φ(d)).
+
+## Part 1: Star Discrepancy
+
+The star discrepancy D*_N measures how well the first N points of S distribute themselves. Let me think about what happens at block boundaries.
+
+Let N_k = Σ_{d=1}^{k} φ(d) ≈ 3k²/π². At N = N_k, we have exactly the Farey sequence F_k in [0,1).
+
+**Known result about Farey sequence discrepancy**: The discrepancy of the Farey sequence F_N is well-studied.
+
+Actually, let me recall. The Farey sequence F_N has |F_N| ≈ 3N²/π² points. The discrepancy of Farey fractions has been studied by several people.
+
+The key result: The discrepancy of the Farey sequence of order N is:
+
+D*(F_N) = O(1/N)  — wait, is that right?
+
+Actually, the Farey sequence is known to have very low discrepancy. Let me think more carefully.
+
+For the Farey sequence F_N of order N, with M = |F_N| = 1 + Σ_{d≤N} φ(d) ≈ 3N²/π² points:
+
+The discrepancy is D*(F_N) = O(log N / N) or something like that.
+
+Hmm, actually I need to be more careful. Let me think about this from first principles.
+
+For an interval [0, t) ⊂ [0,1], the counting function counts the number of Farey fractions p/q ≤ t with q ≤ N. This is:
+
+A(t) = Σ_{q=1}^{N} Σ_{0 ≤ p ≤ qt, gcd(p,q)=1} 1
+
+= Σ_{q=1}^{N} Σ_{p=0}^{⌊qt⌋} [gcd(p,q)=1]
+
+= Σ_{q=1}^{N} (Σ_{p=0}^{⌊qt⌋} Σ_{d|gcd(p,q)} μ(d))
+
+= Σ_{q=1}^{N} Σ_{d|q} μ(d) (⌊qt/d⌋ + 1)/d... hmm wait let me be more careful.
+
+Actually:
+
+A(t) = Σ_{q=1}^{N} Σ_{p=0}^{⌊qt⌋} [gcd(p,q)=1]
+
+Let me use Möbius inversion. [gcd(p,q) = 1] = Σ_{d|gcd(p,q)} μ(d).
+
+So A(t) = Σ_{q=1}^{N} Σ_{d|q} μ(d) Σ_{p=0, d|p}^{⌊qt⌋} 1
+
+= Σ_{q=1}^{N} Σ_{d|q} μ(d) (⌊qt/d⌋ + 1)... wait, we need d|p and 0 ≤ p ≤ ⌊qt⌋.
+
+Hmm, actually I realize the issue: we're summing over p with 0 ≤ p ≤ ⌊qt⌋ and d|p. The number of such p is ⌊qt/(d)⌋ + 1 (since p = 0 is included). But wait, we should be more careful about including 0.
+
+Actually, for the counting function, we want to count fractions p/q ∈ [0, t). For p = 0, the fraction is 0. So:
+
+A(t) = Σ_{q=1}^{N} #{p ∈ {0, 1, ..., q-1} : gcd(p,q) = 1, p/q < t}
+
+Hmm, this is getting complicated. Let me use a different approach.
+
+The expected (equidistributed) number of points in [0,t) would be t · N where N = total number of points ≈ 3N_0²/π² if we use N_0 for the max denominator.
+
+The discrepancy measures |A(t) - tN|.
+
+Using Möbius function:
+
+A(t) = Σ_{q=1}^{N_0} #{k : 0 ≤ k/q < t, gcd(k,q) = 1}
+
+= Σ_{q=1}^{N_0} Σ_{d|q} μ(d) #{k : 0 ≤ k < qt, d|k}
+
+= Σ_{q=1}^{N_0} Σ_{d|q} μ(d) (⌊(qt-1)/d⌋ + 1) ... hmm, not quite clean.
+
+Let me set m = q/d. Then:
+
+A(t) = Σ_{q=1}^{N_0} Σ_{d|q} μ(d) ⌊qt/d⌋ + Σ_{q=1}^{N_0} Σ_{d|q} μ(d) [the 0 term]
+
+Actually, the 0 term: for p=0, gcd(0,q) = q, so [gcd(0,q)=1] = [q=1]. So the p=0 term only contributes 1 (for q=1). Let me just focus on p ≥ 1 for now.
+
+A'(t) = Σ_{q=1}^{N_0} Σ_{1 ≤ p/q < t, gcd(p,q)=1} 1
+
+= Σ_{q=1}^{N_0} Σ_{d|q} μ(d) Σ_{1 ≤ p < qt, d|p} 1
+
+= Σ_{q=1}^{N_0} Σ_{d|q} μ(d) ⌊(qt-1)/d⌋... hmm.
+
+Actually, let me simplify. Let's think about q·t where t might not be rational, and we're summing over 1 ≤ p ≤ ⌊qt⌋ with d | p. The count is ⌊⌊qt⌋/d⌋. 
+
+Hmm, this is getting messy. Let me use the well-known formula:
+
+Σ_{1≤n≤x, gcd(n,q)=1} 1 = Σ_{d|q} μ(d) ⌊x/d⌋
+
+So for each q, the count of primitive fractions p/q with 0 < p/q ≤ t is:
+
+Σ_{d|q} μ(d) ⌊qt/d⌋ (where the sum counts p = 1, ..., ⌊qt⌋ with gcd(p,q)=1)
+
+Wait, but we want p < q (for fractions in [0,1)), so we need p ≤ min(q-1, ⌊qt⌋). Actually, since t ≤ 1, we have qt ≤ q, and p ranges up to min(q-1, ⌊qt⌋). But for most t, ⌊qt⌋ < q anyway.
+
+Let me just focus on the "smooth" part. The main term is:
+
+A'(t) ≈ Σ_{q=1}^{N_0} Σ_{d|q} μ(d) · qt/d = t · Σ_{q=1}^{N_0} q Σ_{d|q} μ(d)/d
+
+Now Σ_{d|q} μ(d)/d = φ(q)/q, so:
+
+A'(t) ≈ t · Σ_{q=1}^{N_0} φ(q) = t · N'
+
+where N' = Σ_{q=1}^{N_0} φ(q) is the total count. Good, this confirms equidistribution at the first order.
+
+The error term involves the floor functions:
+
+E(t) = A'(t) - tN' = Σ_{q=1}^{N_0} Σ_{d|q} μ(d) ({qt/d} - {something})... 
+
+Hmm, let me be more careful. Let me write:
+
+#{p : 1 ≤ p ≤ ⌊qt⌋, d|p} = ⌊⌊qt⌋/d⌋
+
+Hmm wait, that's not quite right either. Let's say #{p : 1 ≤ p ≤ M, d|p} = ⌊M/d⌋.
+
+So for each q, the count is Σ_{d|q} μ(d) ⌊⌊qt⌋/d⌋.
+
+And ⌊M/d⌋ = M/d - {M/d} where {·} is fractional part.
+
+So the error is:
+
+E(t) = Σ_{q=1}^{N_0} Σ_{d|q} μ(d) (⌊⌊qt⌋/d⌋ - qt/d)
+
+The size of each term ⌊⌊qt⌋/d⌋ - qt/d is bounded by 1 + 1 = 2... but we want a tighter bound.
+
+Actually, |⌊x⌋ - x| ≤ 1 and |⌊qt⌋ - qt| ≤ 1, so ⌊⌊qt⌋/d⌋ = ⌊qt/d + O(1/d)⌋... no, ⌊⌊qt⌋/d⌋ differs from ⌊qt/d⌋ by at most 1.
+
+So E(t) = Σ_{q=1}^{N_0} Σ_{d|q} μ(d) (⌊qt/d⌋ - qt/d) + O(Σ_{q=1}^{N_0} d(q))
+
+where d(q) is the number of divisors.
+
+The first sum: Σ_{q=1}^{N_0} Σ_{d|q} μ(d) ({-qt/d}) [since ⌊x⌋ - x = -{x}]
+
+Hmm, {x} = x - ⌊x⌋, so ⌊x⌋ - x = -{x}.
+
+E(t) = -Σ_{q=1}^{N_0} Σ_{d|q} μ(d) {qt/d} + O(Σ_{q=1}^{N_0} d(q))
+
+The divisor sum Σ_{q≤N} d(q) = O(N log N).
+
+For the main error term, let me substitute q = dm:
+
+E'(t) = -Σ_{d=1}^{N_0} Σ_{m=1}^{⌊N_0/d⌋} μ(d) {dmt}
+
+= -Σ_{d=1}^{N_0} μ(d) Σ_{m=1}^{⌊N_0/d⌋} {dmt}
+
+Now, Σ_{m=1}^{M} {mα} has a well-known bound. For irrational α, this sum is M/2 + O(1) if α is well-approximable... actually, for α irrational, Σ_{m=1}^M {mα} = M/2 + O(log M / ... ) — this depends on the continued fraction expansion of α.
+
+But in our case α = dt, and we're summing over d with the Möbius function. This is getting quite involved.
+
+Let me try a different approach. Let me think about the discrepancy more directly.
+
+**Approach via known results on Farey sequence discrepancy:**
+
+The discrepancy of the Farey sequence of order N (i.e., all fractions p/q with 0 ≤ p/q ≤ 1, gcd(p,q) = 1, 1 ≤ q ≤ N) has been studied.
+
+I recall that for the Farey sequence, the discrepancy is:
+
+D*_N ≍ log N / N
+
+Wait, but here N refers to the order of the Farey sequence, not the number of points. If the order is N_0, the number of points is M ≈ 3N_0²/π², and the discrepancy is in terms of M.
+
+Actually, I think the key reference is the work of Niederreiter and others on the discrepancy of Farey sequences.
+
+Let me think about this differently. The Farey sequence of order N consists of fractions p/q in lowest terms with 1 ≤ q ≤ N. As a sequence of points in [0,1], what is its discrepancy?
+
+There's a classical result: the discrepancy of the Farey sequence of order N is:
+
+D*(F_N) = O((log N) / N)
+
+But wait, this is in terms of N = max denominator, not the number of points. With M ≈ cN² points:
+
+D* = O(log N / N) = O(√(log √M / √M)) = O(√(log M / M))
+
+Hmm, that would make it comparable to random, which doesn't seem right.
+
+Actually, wait. Let me reconsider. The discrepancy depends on the number of points. If we have M points, the discrepancy is at most 1. With M = |F_N| = 1 + Σ_{d≤N} φ(d) ≈ 3N²/π², we get N ≈ π√M/√3.
+
+The discrepancy in terms of M: D*_M = D*(F_N) in terms of N.
+
+Let me look at this more carefully. The discrepancy D*_M of a point set of M points x_1, ..., x_M in [0,1) is:
+
+D*_M = sup_{0≤a≤1} |(1/M) #{i : x_i ∈ [0,a)} - a|
+
+For the Farey sequence, the maximum deviation from uniformity is related to the "gaps" between consecutive fractions.
+
+For the Farey sequence F_N, consecutive fractions p/q and p'/q' satisfy p'q - pq' = 1, and the gap between them is 1/(qq'). The largest gaps in F_N are of size about 1/N (between 0 and 1/N, or between (N-1)/N and 1, etc.).
+
+But the discrepancy is about the cumulative count, not individual gaps. Let me think about the worst-case interval.
+
+For the interval [0, a), the count is #{p/q ∈ F_N : p/q < a}. For a = t/N (small), we're counting fractions with p/q < t/N, i.e., p < qt/N.
+
+For small a, the discrepancy |A(a)/M - a| = |A(a)/M - a|. For a very small, A(a) could be 0 or 1 or a few, while a·M = a · 3N²/π².
+
+If a = 1/(2N), then a·M = 3N/(2π²), while A(a) counts fractions p/q < 1/(2N). The fraction 1/N is in the sequence (for q = N), and 1/(2N) < 1/N, so the only fractions in [0, 1/(2N)) are 0/1. So A(a) = 1, and:
+
+|A(a)/M - a| = |1/M - 1/(2N)| ≈ |π²/(3N²) - 1/(2N)|
+
+For large N, this is approximately 1/(2N), which is large. Hmm, but that's the discrepancy contribution from the boundary.
+
+Wait, actually I should think about what the standard discrepancy is for the Farey sequence.
+
+Hmm, actually the issue is that the Farey sequence includes 0 and 1, and the gap near 0 is 1/N (between 0/1 and 1/N), which is much larger than the typical gap of ~1/M ~ π²/(3N²). So near 0, the local density is too low.
+
+But this is the standard issue with any point set that includes the boundary.
+
+Let me think about this more carefully.
+
+Actually, I realize the standard Farey sequence F_N is a *set*, not an *ordered sequence* (it's naturally ordered by value). The discrepancy of a set of M points is defined as the supremum over intervals [0,a) of |count/M - a|.
+
+For F_N, the key result (I believe from the theory of Diophantine approximation) is:
+
+D*(F_N) = 1/(2N) + lower order terms
+
+Wait, I think I recall now. The discrepancy of the Farey sequence of order N is exactly:
+
+D*(F_N) = (some expression) ≈ 1/N
+
+Because M ≈ cN² and D* · M = discrepancy in count ≈ M/N ≈ cN.
+
+Hmm wait, D* should be relative to M points, so D* = (max deviation in count)/M ≈ N/(cN²) ≈ 1/(cN).
+
+Let me think about the interval [0, a). The count of fractions p/q ≤ a with q ≤ N is:
+
+A(a) = Σ_{q≤N} Σ_{p≤qa, gcd(p,q)=1} 1
+
+For a = c/N², the expected count is a·M ≈ c·3/π² ≈ 0.3c, so for small c, the count is often 0 while the expected count is small. The discrepancy is at most about a·M + ... hmm, this is just the boundary effect.
+
+Actually, for a standard analysis: the discrepancy of the Farey sequence F_N, viewed as M ≈ 3N²/π² points in [0,1], should be:
+
+D*(F_N) = Θ(log N / N)
+
+Hmm, let me think about why. Consider the interval [0, 1/q) for various q ≤ N. The count of Farey fractions in [0, 1/q) is:
+
+A(1/q) = #{p/r ∈ F_N : p/r < 1/q} 
+
+This counts fractions p/r < 1/q with r ≤ N. For r ≤ q-1, p/r < 1/q means p = 0, giving just the fraction 0/1. For r = q, p/q < 1/q means p = 0, giving 0/1. For r > q, p/r < 1/q means p < r/q, so p can be 0, 1, ..., ⌊(r-1)/q⌋ with gcd(p,r) = 1.
+
+So A(1/q) = 1 + Σ_{r=q+1}^{N} Σ_{p=1}^{⌊(r-1)/q⌋} [gcd(p,r)=1]
+
+For r in [q+1, 2q-1], ⌊(r-1)/q⌋ = 1, so we count p=1 with gcd(1,r) = 1, which is always true. So we get q-1 such terms.
+
+For r in [2q, 3q-1], ⌊(r-1)/q⌋ = 2, we count p=1 (always coprime) and p=2 with gcd(2,r)=1, i.e., r odd.
+
+This is getting complicated. Let me try a more direct approach.
+
+The deviation from uniformity at the point t/N (for small t) is:
+
+|A(t/N)/M - t/N| = |A(t/N) - t·M/N| / M
+
+Now t·M/N = t·3N/π². And A(t/N) counts Farey fractions ≤ t/N.
+
+The fractions in [0, t/N] include 0/1 and 1/N (if 1 ≤ t). For 0 < t < 1, the only fraction in [0, t/N] is 0/1, so A(t/N) = 1.
+
+|1 - t·3N/π²| / M = |1 - 3tN/π²| · π²/(3N²)
+
+For large N, this is approximately t/N · π²/(3N²)... wait, no. 
+
+|1 - 3tN/π²| / (3N²/π²) = |π²/(3N²) - t/N| 
+
+For t = 0, this is π²/(3N²) → 0. For t = π²/(3N), this is 0. For t = 1, this is |π²/(3N²) - 1/N| ≈ 1/N.
+
+So the discrepancy from the boundary near 0 is about 1/N (in terms of the order N of the Farey sequence).
+
+Now 1/N in terms of the number of points M ≈ 3N²/π² is: 1/N = π²/(3N²) · N = π²/3 · M^{-1/2} · (√(3)/π) = √(π²/3) · M^{-1/2} ... hmm.
+
+So D* ≈ 1/N ≈ c/√M where c = π/√3.
+
+This means D*(F_N) ≈ π/(√3 · √M) ≈ 1.81/√M.
+
+Compare to:
+- Halton: O(log M / M) — much better for large M
+- van der Corput: O(log M / M)
+- Random: O(√(log log M / M))
+
+So D*(F_N) ≈ 1/√M is *worse* than random! That can't be right for all choices of interval...
+
+Wait, I think I'm making an error. Let me reconsider.
+
+The discrepancy 1/N comes from the boundary region. But maybe there are also contributions from other regions.
+
+Actually, I realize the boundary issue is fundamental. The Farey sequence of order N starts with 0/1, 1/N, ... and near 0, there's a gap of size 1/N, much larger than the average spacing 1/M ~ 1/N². This alone gives a discrepancy of at least 1/N = Θ(1/√M).
+
+But wait — low-discrepancy sequences also have this issue at boundaries, typically with the discrepancy being O(log M/M). The difference is that low-discrepancy sequences have M ~ N (not N²) and distribute points much more uniformly.
+
+The problem with the Farey sequence is that it has M ~ N² points but the spacing is highly non-uniform: it ranges from 1/(N²) (between two fractions with denominator N) to 1/N (between 0 and 1/N). The ratio is N, which is large.
+
+Hmm, but actually, for the discrepancy to be as bad as 1/N = 1/√M, we need a single interval where the count is off by √M. Let me check: near 0, the interval [0, 1/N) should contain about M/N = cN points for uniform distribution, but it only contains about 1 (just 0/1). So the deviation is |1 - cN| ≈ cN, and D* = cN/M = cN/(c'N²) = 1/(c''N) = Θ(1/√M).
+
+But wait, is the interval [0, 1/N) actually the worst? Let me reconsider. Let me compute A(1/N):
+
+Fractions p/q ∈ F_N with p/q ≤ 1/N and q ≤ N: we need p ≤ q/N. For q < N, p ≤ q/N < 1, so p = 0 (giving 0/1). For q = N, p ≤ 1, so p = 0 or p = 1. And gcd(1, N) = 1 always, so 1/N is included.
+
+So A(1/N) = 2 (the fractions 0/1 and 1/N).
+
+Expected count: M/N ≈ 3N/π².
+
+Deviation: |2 - 3N/π²| ≈ 3N/π².
+
+D* ≥ 3N/(π²M) = 3N/(π² · 3N²/π²) = 1/N.
+
+Yes, so D*(F_N) ≥ 1/N ≈ c/√M.
+
+Now, is there a matching upper bound? Let me think about intervals [0, a) for general a.
+
+A(a) = Σ_{q≤N} #{p ≤ qa : gcd(p,q) = 1}
+
+For the discrepancy, we need sup_a |A(a) - aM| / M.
+
+The "smooth" part gives aM, and the error is from the fractional parts.
+
+From the Möbius formula:
+
+A(a) = Σ_{q≤N} Σ_{d|q} μ(d) ⌊qa/d⌋
+
+= Σ_{q≤N} Σ_{d|q} μ(d) (qa/d - {qa/d})
+
+= a Σ_{q≤N} q Σ_{d|q} μ(d)/d - Σ_{q≤N} Σ_{d|q} μ(d){qa/d}
+
+= a · M - Σ_{q≤N} Σ_{d|q} μ(d){qa/d}
+
+So E(a) = A(a) - aM = -Σ_{q≤N} Σ_{d|q} μ(d){qa/d}.
+
+Let me substitute q = de:
+
+E(a) = -Σ_{d≤N} μ(d) Σ_{e≤N/d} {dea}
+
+Now I need to bound |Σ_{e≤N/d} {dea}|. This is a well-studied sum. For a = irrational, the partial sums of {ea} form a sequence with specific discrepancy properties.
+
+Hmm, this is related to the Erdős-Turán inequality and the theory of uniform distribution.
+
+Actually, let me use a simpler bound: |{x}| ≤ 1, so |Σ_{e≤M} {dea}| ≤ M. This gives:
+
+|E(a)| ≤ Σ_{d≤N} |μ(d)| · N/d = N Σ_{d≤N} |μ(d)|/d = N · (6/π²) · log N + O(N)
+
+Wait, Σ_{d≤N} |μ(d)|/d = Σ_{d≤N, squarefree} 1/d ≈ (6/π²) log N... hmm, actually:
+
+Σ_{d≤N} |μ(d)|/d = Σ_{d squarefree, d≤N} 1/d
+
+The density of squarefree numbers is 6/π², so this sum is approximately (6/π²) H_N ≈ (6/π²) log N.
+
+Wait, that's not right either. Σ_{d≤N, squarefree} 1/d. The indicator of squarefree is multiplicative: f(p) = 1, f(p²) = 0. The Dirichlet series is ζ(s)/ζ(2s). The partial sum Σ_{d≤N, squarefree} 1 = (6/π²)N + O(√N).
+
+By partial summation: Σ_{d≤N, squarefree} 1/d ≈ (6/π²) log N.
+
+So |E(a)| ≤ N · (6/π²) log N + ... hmm, but this gives |E(a)| = O(N log N) and D* = O(N log N / M) = O(N log N / N²) = O(log N / N).
+
+So D*(F_N) = O(log N / N) = O(log √M / √M) = O(log M / (2√M)).
+
+Hmm wait, that doesn't seem right. We showed D* ≥ 1/N, and the bound gives D* = O(log N / N). So D*(F_N) = Θ(log N / N) potentially, with the log coming from the sum.
+
+But let me double-check. Is the bound tight?
+
+For a = 1/N, E(1/N) = -Σ_{d≤N} μ(d) Σ_{e≤N/d} {de/N}.
+
+For d = 1: Σ_{e≤N} {e/N} = Σ_{e=1}^{N} e/N = (N+1)/2 (since {e/N} = e/N for 1 ≤ e ≤ N).
+
+Wait, that's not right. {e/N} = e/N for 0 < e < N, and {N/N} = {1} = 0.
+
+Σ_{e=1}^{N} {e/N} = Σ_{e=1}^{N-1} e/N + 0 = N(N-1)/(2N) = (N-1)/2.
+
+For d = 2 (if μ(2) = -1, so we're computing -μ(2) Σ... = +Σ): Σ_{e≤N/2} {2e/N} = Σ_{e=1}^{⌊N/2⌋} 2e/N.
+
+Hmm wait, I need to be more careful. {2e/N} for e = 1, ..., ⌊N/2⌋: if N is even, {2e/N} = 2e/N for e < N/2, and {2·(N/2)/N} = {1} = 0.
+
+So Σ_{e=1}^{N/2} {2e/N} = Σ_{e=1}^{N/2-1} 2e/N = 2/(N) · (N/2-1)(N/2)/2 = (N/2-1)/2 = N/4 - 1/2.
+
+Hmm, this is getting messy. Let me just note that the bound is D*(F_N) = Θ(log N / N).
+
+Actually, I realize I should be more careful about the bound. Let me re-examine.
+
+We have E(a) = -Σ_{d≤N} μ(d) S(N/d, da) where S(M, α) = Σ_{e=1}^{M} {eα}.
+
+Now, S(M, α) = M/2 + O(1) when α is irrational (by Weyl's theorem, with the error depending on the continued fraction of α). But for α rational, S(M, α) can have a different behavior.
+
+For α = da, where a is arbitrary, S(M, da) = M/2 + O(min(M, 1/||da||)) where ||x|| is the distance to the nearest integer.
+
+Hmm, actually the bound S(M, α) = M/2 + O(min(M, 1/||α||)) is not quite right. Let me recall:
+
+Σ_{n=1}^{M} {nα} = M/2 - (1/2)Σ_{k=1}^{∞} (sin(2πkMα)/(πk sin(πkα)) ... no, this doesn't look right.
+
+Actually, I think the standard bound is:
+
+|Σ_{n=1}^{M} ({nα} - 1/2)| ≤ min(M, 1/(2||α||))
+
+where ||α|| = min({α}, 1-{α}).
+
+Wait, I don't think that's right either. Let me think again.
+
+The sum Σ_{n=1}^{M} e^{2πinα} = e^{2πiα}(1 - e^{2πiMα})/(1 - e^{2πiα}).
+
+This has absolute value ≤ min(M, 1/|sin(πα)|) ≤ min(M, 1/(2||α||)).
+
+Now, {nα} - 1/2 = -(1/π) Σ_{k=1}^{∞} sin(2πknα)/k (Fourier series of {x} - 1/2 on [0,1]).
+
+So |Σ_{n=1}^{M}({nα} - 1/2)| ≤ (1/π) Σ_{k=1}^{∞} (1/k) min(M, 1/(2||kα||)).
+
+For most α, this gives |Σ| = O(log M) or something similar.
+
+But actually, for our purposes, I think the key point is:
+
+E(a) = -Σ_{d≤N} μ(d) S(N/d, da)
+
+If we write S(M, α) = M/2 + R(M, α), then:
+
+E(a) = -Σ_{d≤N} μ(d) [N/(2d) + R(N/d, da)]
+
+= -(N/2) Σ_{d≤N} μ(d)/d - Σ_{d≤N} μ(d) R(N/d, da)
+
+The first sum: Σ_{d≤N} μ(d)/d → 0 as N → ∞ (since Σ μ(d)/d converges to 0). More precisely, Σ_{d≤N} μ(d)/d = O(1/N)... no wait, that's not right. Σ_{d=1}^{∞} μ(d)/d = 0 (well-known), and Σ_{d≤N} μ(d)/d = M(N)/N + ... hmm.
+
+Actually, Σ_{d≤N} μ(d)/d = o(1) but the rate depends on the prime number theorem. Specifically, Σ_{d≤N} μ(d)/d = O(e^{-c√(log N)}) unconditionally.
+
+So the first term is -N/2 · O(e^{-c√(log N)}) which is negligible.
+
+The second term: |Σ_{d≤N} μ(d) R(N/d, da)|.
+
+For each d, |R(M, α)| = |Σ_{n=1}^{M}({nα} - 1/2)| ≤ ... some bound.
+
+In the worst case over a, for each d, we could have |R(N/d, da)| up to about N/d. But the sum Σ |μ(d)| · N/d = O(N log N).
+
+But this is too crude. We need to think about cancellation in the sum over d.
+
+Hmm, this is getting very technical. Let me try to just establish the order of magnitude.
+
+Actually, I think the right result is that the discrepancy of the Farey sequence of order N, as a set of M ≈ 3N²/π² points, is:
+
+D*(F_N) = Θ(log N / N)
+
+This is a known result. The lower bound D* ≥ c/N comes from the boundary effect (as we computed). The upper bound D* ≤ C log N / N comes from the Möbius cancellation.
+
+In terms of M: N ≈ π√M/√3, so:
+
+D*(F_N) = Θ(log √M / √M) = Θ(log M / √M)
+
+Wait, that seems too bad. Let me reconsider.
+
+Actually, hold on. I think there might be a result that says the discrepancy is better. Let me reconsider.
+
+The issue is the boundary effect near 0 (and 1). In the interval [0, 1/N), we have 2 points (0/1 and 1/N) out of M ≈ 3N²/π². The expected number is 2. Hmm wait, the expected number is M · (1/N) = 3N/π². So the deficit is 3N/π² - 2 ≈ 3N/π². The discrepancy contribution is 3/(π²N) ≈ 0.3/N.
+
+But maybe the boundary isn't the worst case. Let me consider the interval [0, 1/(N+1)). The expected count is M/(N+1) ≈ 3N/π². The actual count is 1 (only 0/1). So the deficit is ≈ 3N/π², and discrepancy contribution is 3N/(π² M) ≈ 1/N.
+
+What about an interval in the middle? Consider [1/2, 1/2 + ε). We need to count Farey fractions in this interval. The fractions near 1/2 include those with p ≈ q/2. The density of Farey fractions near 1/2 should be approximately uniform (since the sequence is "locally uniform" in the middle).
+
+Actually, the gaps in the Farey sequence between consecutive fractions p/q and p'/q' with p'/q' - p/q = 1/(qq'). For fractions near t ∈ (0,1), the typical denominator is about N, so the typical gap is about 1/N². The density is approximately constant, so the discrepancy from the middle should be smaller.
+
+So the dominant contribution to the discrepancy comes from the boundaries, giving D* ≈ 1/N.
+
+Wait, but this means D*(F_N) ≈ 1/N in terms of the order N, which in terms of M is ≈ c/√M. This is much worse than the O(log M / M) of Halton/van der Corput sequences.
+
+But wait — is 1/N a lower bound or the actual discrepancy? Let me reconsider.
+
+Hmm, I computed that for the interval [0, 1/N), the count is 2 and expected is M/N = 3N/π². So the deviation in count is ≈ 3N/π², and D* ≥ 3N/(π²M) = 3/(π²·(3N²/π²)/N) = 3N/(3N²) = 1/N.
+
+And the upper bound argument (roughly) gives D* ≤ C log N / N. So D* = Θ(log N / N) or Θ(1/N).
+
+But in terms of the number of points M ≈ 3N²/π², we have N ≈ π√M/√3, so:
+
+D* = Θ(1/N) = Θ(1/√M)
+
+This is MUCH worse than Halton (O(log M / M)) and comparable to (actually worse than) random (O(√(log log M / M))).
+
+Hmm, but that seems really bad. Let me reconsider whether the boundary is really the issue.
+
+Oh wait, I think I see the issue. The Farey sequence is naturally ordered by value, not by some "space-filling" order. When we enumerate S in lexicographic order (by q, then by k), the first N points of S are NOT the same as the first N points of F_N by value. 
+
+But actually, for the discrepancy of a set, the order doesn't matter — only which points are included. The first N_k = Σ_{d≤k} φ(d) points of S (corresponding to denominators up to k) form exactly F_k (minus perhaps some endpoints). So at these special values of N, the discrepancy is D*(F_k).
+
+For N between N_k and N_{k+1}, we're adding fractions with denominator k+1. The discrepancy might briefly improve or worsen.
+
+But the key point remains: D*(F_k) ≈ 1/k ≈ c/√N_k, so D*_N(S) = Ω(1/√N).
+
+This means the Farey-primitive sequence has WORSE discrepancy than a random sequence! That's because the points cluster near fractions with small denominators, leaving big gaps elsewhere.
+
+Wait, actually no. The points DON'T cluster near fractions with small denominators. There are only φ(1) + φ(2) + ... + φ(k) fractions with denominator ≤ k, which is ≈ 3k²/π² points. The total number with denominator ≤ N is ≈ 3N²/π². So most points have large denominators.
+
+But the problem is structural: near 0, the only points are 0/1 and 1/N (for denominator N). So the interval [0, 1/N) is underrepresented. This is a fundamental issue.
+
+Hmm wait, but 0/1 is the point 0. With denominator 2, we get 1/2. With denominator 3, we get 1/3 and 2/3. With denominator q, we get fractions k/q with gcd(k,q)=1.
+
+So near 0, the closest fractions are 0/1 = 0, 1/N, 1/(N-1), ... These are at distances 0, 1/N, 1/(N-1), etc. from 0. The interval [0, 1/(2N)) contains only the point 0/1 = 0.
+
+So the discrepancy contribution from the interval [0, 1/(2N)) is:
+
+|1/M - 1/(2N)| = |1/M - 1/(2N)|
+
+With M = 3N²/π², this is:
+
+|π²/(3N²) - 1/(2N)| = 1/(2N) - π²/(3N²) ≈ 1/(2N) for large N.
+
+And 1/(2N) = π/(2√3) · 1/√M.
+
+So D* ≥ π/(2√3) · 1/√M ≈ 0.907/√M.
+
+For comparison, the random discrepancy is about √(log log M / M), which is much smaller for large M.
+
+So the Farey sequence is indeed WORSE than random for discrepancy!
+
+But wait — the question asks about the sequence S, which is the Farey fractions enumerated by denominator then by numerator. The discrepancy of a *sequence* can be better than the discrepancy of the *set* if the ordering matters. But actually, for the star discrepancy of the first N points, what matters is which points are included, not their order. So D*_N(S) depends on the set of the first N points.
+
+For N = N_k = Σ_{d≤k} φ(d), the first N points form F_k, and D* = Θ(1/k) = Θ(1/√N).
+
+For N between N_k and N_{k+1}, the first N points form F_k plus some fractions with denominator k+1. Adding points can only improve the discrepancy (by the empty-interval property), so:
+
+D*_N(S) ≤ D*_{N_k}(S) for N_k ≤ N ≤ N_{k+1}.
+
+But the improvement from adding φ(k+1) fractions with denominator k+1 is at most ... well, the new fractions are at k/q positions, which helps fill in the gaps but the gaps near 0 are still at scale 1/(k+1).
+
+Hmm, actually, the fractions with denominator k+1 include 1/(k+1), which helps fill the gap near 0. After adding all fractions with denominator ≤ k+1, the smallest positive fraction is 1/(k+1).
+
+So the discrepancy D*_N(S) ≈ 1/k ≈ 1/√N regardless (up to constants).
+
+This means **the star discrepancy of the Farey-primitive sequence is Θ(1/√N), which is much worse than both Halton (Θ(log N / N)) and random (Θ(√(log log N / N))).**
+
+So the answer to Question 1 is: S does WORSE than random, let alone Halton.
+
+But wait, let me reconsider. Maybe I'm wrong about the lower bound. Let me think about what happens if we DON'T include 0/1 as the first point.
+
+In the sequence S as defined: for q = 1, we have k = 0 with gcd(0,1) = 1. So 0/1 = 0 is included. For q = 2, k = 1 with gcd(1,2) = 1. So 1/2 is included. Etc.
+
+Actually, gcd(0,1) = 1 by convention, so 0/1 is included. And 1/1 = 1 would be k/q with k = q, but k < q, so we don't include 1. Or actually, k ranges from 0 to q-1? Let me re-read the problem.
+
+"gcd(k,q)=1, 0 ≤ k < q"
+
+For q = 1: k = 0, gcd(0,1) = 1. So we get 0/1 = 0.
+For q = 2: k = 1, gcd(1,2) = 1. So we get 1/2.
+For q = 3: k = 1, gcd(1,3) = 1 and k = 2, gcd(2,3) = 1. So we get 1/3, 2/3.
+
+OK so 0 is always in the set, and 1 is never in the set (since k < q, so k/q < 1). The set of points with denominator ≤ N is {k/q : 1 ≤ q ≤ N, 0 ≤ k < q, gcd(k,q) = 1}, which is F_N \ {1} (excluding 1/1).
+
+The boundary effect near 0 is the same: the interval [0, 1/(N+1)) contains only the point 0.
+
+OK so my analysis seems correct. The Farey sequence has discrepancy Θ(1/N) in terms of the order N, which is Θ(1/√M) in terms of the number of points M.
+
+Hmm, but this seems to be a well-known fact and the question seems to expect something different. Let me re-read the question.
+
+Oh, I see. The question says:
+
+"Specifically: does S achieve the optimal log/N rate, beat it for special N (e.g. N = (1/2) Σ_{q≤k} φ(q)), or do worse?"
+
+So the question acknowledges the possibility that S does worse. And indeed it does.
+
+But wait, I want to double-check my analysis by considering whether the problem is that I'm looking at the star discrepancy on [0,1), or perhaps the intended interpretation is different.
+
+Actually, let me reconsider. The question maps to the unit circle via e^{2πi k/q}. On the circle, there's no boundary. The discrepancy on the circle is defined differently (no "starting point").
+
+If we define discrepancy on the circle as: D* = sup_{arc A} |#{points in A}/N - |A|/(2π)|, then the boundary issue disappears!
+
+On the circle, the Farey points are the primitive roots of unity up to order N. The "gaps" between consecutive roots are of varying sizes. The largest gap is between consecutive Farey fractions, which by the properties of Farey sequences is 1/(q·q') where q, q' are consecutive denominators.
+
+For the Farey sequence of order N, the largest gap is 1/N (between 0/1 and 1/N, or between (N-1)/N and 1). But on the circle, these are just two gaps among many, and the discrepancy analysis is different.
+
+Actually, on the circle, the discrepancy of the Farey sequence is still the same as on [0,1) if we use the standard definition. The point is that the "star" discrepancy uses intervals starting from 0, which creates the boundary effect. The "extreme" discrepancy (supremum over ALL intervals) avoids this.
+
+But on the circle (using arcs), we can start anywhere. So the discrepancy of the Farey sequence ON THE CIRCLE would be:
+
+D*_{circle} = sup_{arc A starting anywhere} |count/N - |A||
+
+For a very small arc of length ε centered at 0, the count is 1 (just 0/1), so the deviation is |1/M - ε| ≈ ε for small ε. Taking ε → 0, the deviation → 0.
+
+For an arc of length 1/N centered at 0, the count is 2 (0/1 and 1/N), and the deviation is |2/M - 1/N| ≈ 1/N.
+
+For an arc of length L centered at a generic point (not near 0), the count is approximately LM, so the deviation is small.
+
+Actually, I think the worst case on the circle is also arcs near 0 (or near any point where there's a large gap). The gap between 0/1 and 1/N has size 1/N, and an arc of this size centered at, say, 1/(2N) would contain no points. So the deviation would be |0/M - 1/N| = 1/N.
+
+Wait, that's the same bound. So the discrepancy on the circle is also Θ(1/N) = Θ(1/√M).
+
+Hmm, but actually, the gap between 0/1 and 1/N on the circle has length 1/N. An arc of this length starting from, say, 1/N - 1/(2N) = 1/(2N) would include the fraction 1/N but not 0/1. Hmm, wait.
+
+On the circle, the arc from 1/(2N) to 1/(2N) + 1/N = 3/(2N) contains only the fraction 1/N. Its length is 1/N, and the expected count is M/N ≈ 3N/π². The deviation is |1 - 3N/π²| ≈ 3N/π², and D* ≥ 3/(π²) · N/M = 3/(π²N) ≈ 0.3/N.
+
+Hmm, that's the same as before. So the discrepancy on the circle is also Θ(1/N).
+
+But wait, I just realized: the arcs of length 1/N that contain only 1 point are all near 0 (or near 1). The gap between 0/1 and 1/N is 1/N. But the gap between 1/N and 2/N (or the next Farey fraction after 1/N) is much smaller — about 1/N².
+
+So the large gaps are only near 0 and near 1. In the interior, the gaps are all about 1/N².
+
+But on the circle, we can still find arcs of length ≈ 1/N that contain very few points: just center the arc on the gap between 0/1 and 1/N.
+
+So D*_{circle} ≥ c/N as well. The lower bound stands.
+
+OK, so I'm now fairly confident: **the star discrepancy of the Farey-primitive sequence is Θ(1/√N) where N is the number of points**, which is WORSE than random.
+
+Actually, wait. Let me reconsider the claim more carefully. The gap between 0/1 and 1/N is 1/N. But is there a point 1/(N-1) nearby? 1/(N-1) = (N-1)^{-1}. For N large, 1/(N-1) ≈ 1/N + 1/N². So 1/(N-1) is very close to 1/N.
+
+The fractions near 0 are: 0, 1/N, 1/(N-1), 1/(N-2), ..., 1/2, 1/1. Wait, but 1/1 = 1 which is not in our set.
+
+So the positive fractions near 0, in order, are: 1/N, 1/(N-1), 1/(N-2), ..., 1/3, 1/2.
+
+The gap between 0 and 1/N is 1/N. The gap between 1/N and 1/(N-1) is 1/(N(N-1)) ≈ 1/N². The gap between 1/(N-1) and 1/(N-2) is 1/((N-1)(N-2)) ≈ 1/N². Etc.
+
+So the only "large" gap is the first one: 0 to 1/N. After that, the fractions 1/(N-1), 1/(N-2), etc. fill in densely (at spacing ≈ 1/N²).
+
+Now, the interval [0, 1/(2N)) contains only 0. So:
+
+D* ≥ |1/M - 1/(2N)| = 1/(2N) - 1/M = 1/(2N) - π²/(3N²) ≈ 1/(2N)
+
+In terms of M: D* ≥ π/(2√3) · M^{-1/2} ≈ 0.907 · M^{-1/2}.
+
+And the upper bound: for any interval [0, a), the count A(a) satisfies |A(a) - aM| ≤ C·N for some constant C (I believe, based on the Möbius sum bound). So D* ≤ C·N/M = C/N ≈ C·π/√3 · M^{-1/2}.
+
+So D* = Θ(M^{-1/2}).
+
+Now, I realize this is the star discrepancy (which uses intervals starting at 0). For the general discrepancy (sup over all intervals), the analysis would be different and potentially better. But the question asks about star discrepancy, so D* = Θ(1/√M).
+
+Hmm wait, but now let me reconsider whether the upper bound is really Θ(1/N) or whether the logarithmic factor appears.
+
+Going back to the error term:
+
+E(a) = -Σ_{d≤N} μ(d) Σ_{e≤N/d} {dea}
+
+For the specific case a = 1/(2N):
+
+{de/(2N)} for d, e ≤ N. When de ≤ 2N, {de/(2N)} = de/(2N). When de > 2N, we need to reduce modulo 1.
+
+For d = 1, Σ_{e≤N} {e/(2N)} = Σ_{e=1}^{N} e/(2N) = N(N+1)/(4N) = (N+1)/4.
+
+Hmm, this is order N. So |E(1/(2N))| ≈ (N+1)/4 + (contributions from other d).
+
+With μ(1) = 1, the d=1 term gives -(N+1)/4.
+
+With μ(2) = -1, the d=2 term gives +Σ_{e≤N/2} {2e/(2N)} = +Σ_{e≤N/2} {e

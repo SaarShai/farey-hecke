@@ -1,0 +1,128 @@
+We are going to design a test for the MUSIC algorithm on the L-function of an elliptic curve. We'll use the curve 11a1 (also known as 11.a1 in LMFDB) as the primary example.
+
+ Steps:
+
+ 1. Choose an elliptic curve: 11a1 (conductor 11, rank 0, so L-function does not vanish at s=1/2).
+ 2. We want to compute the zeros of L(E, s) on the critical line (which is Re(s)=1/2 for these L-functions).
+ 3. We'll use the MUSIC algorithm to estimate the first few zeros from the a_p coefficients.
+
+ However, note that the L-function of an elliptic curve is defined by a Dirichlet series: 
+    L(E, s) = Σ_{n=1}^∞ a_n / n^s,
+ and it has a functional equation relating s to 1-s. The non-trivial zeros lie on the critical line Re(s)=1/2.
+
+ We denote the zeros by 1/2 + i γ_n. We want to find the γ_n.
+
+ 4. We'll compute the a_p for primes p up to a certain bound (say, 10^5 or 10^6) and then form the signal:
+    s_k = Σ_{p ≤ x_k} (a_p / √p) log p
+    where x_k are logarithmically spaced points.
+
+ 5. We'll apply the MUSIC algorithm to the sequence s_k to estimate the frequencies, which correspond to the γ_n.
+
+ 6. We expect the MUSIC algorithm to yield estimates for the γ_n. We can compare these with known values.
+
+ 7. For the curve 11a1, the first few γ values (from LMFDB or standard tables) are approximately:
+        γ_1 ≈ 6.36261
+        γ_2 ≈ 8.04303
+        γ_3 ≈ 10.3546
+        γ_4 ≈ 12.7094
+        γ_5 ≈ 14.5167
+        γ_6 ≈ 16.6090
+
+ 8. We'll provide code (in Python/Sage) to compute a_p for 11a1 up to a given bound and then apply MUSIC.
+
+ 9. We'll also consider alternative curves to test the robustness of the method.
+
+ Let's write the code step by step.
+
+ We'll break it into two parts:
+
+ Part 1: Compute the a_p for 11a1.
+
+ Part 2: Use the a_p to form the signal and apply MUSIC.
+
+ We assume that the elliptic curve is given by the equation: y^2 + y = x^3 - x^2.
+
+ In Sage, we can define this curve and count points over finite fields to get a_p.
+
+ However, note that for large primes (up to 10^5 or more) we might use Schoof's algorithm or even better, we can use the built-in `ap` function in Sage for elliptic curves.
+
+ Let's write the code in SageMath.
+
+ We'll use:
+   E = EllipticCurve([0, -1, 1, -1, 0])   # but note: the coefficients are [a1, a2, a3, a4, a6] for the equation:
+        y^2 + a1*x*y + a3*y = x^3 + a2*x^2 + a4*x + a6
+   For 11a1: y^2 + y = x^3 - x^2, so a1=0, a2=-1, a3=1, a4=-1, a6=0.
+
+ We can get the a_p for a prime p by E.ap(p) in Sage.
+
+ However, note: the a_p in the L-function is p+1 - #E(F_p), and E.ap(p) returns exactly that.
+
+ We'll compute a_p for all primes p up to a bound N.
+
+ We then form the signal:
+
+   s_k = Σ_{p ≤ x_k} (a_p / √p) * log p
+
+ We choose x_k to be logarithmically spaced, say, from 2 to N (the bound for primes) in m steps.
+
+ Then we use the MUSIC algorithm on the sequence s_k.
+
+ The MUSIC algorithm for a sequence of real numbers (signal) assumes that the signal is a sum of complex exponentials with additive white noise.
+
+ We'll write a function for the MUSIC algorithm.
+
+ Steps for MUSIC (standard algorithm):
+
+   Given a signal vector s = [s_1, s_2, ..., s_m] (which we assume to be a sum of d complex exponentials with frequencies ω_j = γ_j):
+
+   1. Form the autocorrelation matrix R of size (M x M) where M is the model order (we choose M, say, 10).
+      We can form the data matrix from the signal by creating a Hankel matrix or by using the standard autocorrelation method.
+
+   2. Compute the eigendecomposition of R.
+
+   3. The noise subspace is spanned by the eigenvectors corresponding to the smallest (M-d) eigenvalues.
+
+   4. The MUSIC spectrum is given by P(ω) = 1 / ( e(ω)^H * U_n * U_n^H * e(ω) ), where e(ω) = [1, e^{iω}, ..., e^{iω(M-1)}]^T.
+
+   5. The frequencies ω are estimated by the peaks of P(ω).
+
+ We note that in our case, the signal s_k is real and we expect the frequencies to come in pairs (γ and -γ) because the L-function has a symmetry (functional equation). 
+ However, we are only interested in the positive γ.
+
+ We'll write the code in SageMath, but note that SageMath is built on Python and we can use numpy for the eigendecomposition.
+
+ Let's write the code accordingly.
+
+ We'll do:
+
+   Step 1: Compute a_p for primes p up to N=100000 (or 10^5).
+   Step 2: Form the signal s_k for k=1,...,m (say m=1000) with logarithmically spaced x_k.
+   Step 3: Apply MUSIC to the signal s_k.
+
+ We'll then compare the estimated γ's with the known ones.
+
+ However, note: the signal s_k is not exactly a sum of complex exponentials, but the MUSIC algorithm is designed for that. We hope that the zeros of the L-function manifest as frequencies in the signal.
+
+ Let's code accordingly.
+
+ We'll write the code in a way that it can be run in a SageMath environment.
+
+ Note: We are going to compute a_p for primes only, but note that the Dirichlet series for L(E,s) includes all n, but the a_p for primes are multiplicative. We are only using the prime terms in the signal.
+
+ This is a common approach in studying the zeros of L-functions: the explicit formula relates the zeros to the sum over primes.
+
+ We are going to compute:
+
+   s(x) = Σ_{p ≤ x} λ_E(p) log p, where λ_E(p) = a_p / √p.
+
+ Then, by the explicit formula for the L-function, s(x) is related to the zeros and the logarithmic derivative of the L-function.
+
+ We are going to use the MUSIC algorithm to extract the frequencies (zeros) from s(x) for logarithmically spaced x.
+
+ Let's code accordingly.
+
+ We'll break the code into functions.
+
+ We'll also provide an alternative using the OSCAR package in Sage for elliptic curves, but note that the standard Sage elliptic curve methods are sufficient.
+
+ Let's code.

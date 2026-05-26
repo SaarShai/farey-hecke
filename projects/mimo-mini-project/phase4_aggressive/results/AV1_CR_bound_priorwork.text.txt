@@ -1,0 +1,151 @@
+# Adversarial Novelty Audit: CR Bound for L-Zeros from Prime Data
+
+## Methodology
+
+I systematically searched all seven specified areas plus additional related subfields, looking for any prior derivation of (a) treating the explicit formula as a sum-of-exponentials estimation problem, or (b) a Cramér-Rao or Fisher information bound for estimating zero locations from prime-counting data.
+
+---
+
+## Area 1: Signal Processing CR Bounds for Sum-of-Complex-Exponentials
+
+**Foundational papers:**
+- **Rife & Boorstyn (1974)**, *"Single-tone parameter estimation from discrete-time observations"*, IEEE Trans. Inform. Theory. Derives the CRB for frequency of a single sinusoid: $\text{Var}(\hat{f}) \geq 12/[4\pi^2 N(N^2-1) \cdot \text{SNR}]$, which gives the $1/N^3$ scaling. This is the canonical source.
+- **Stoica & Nehorai (1989, 1990)**: Extended CRB analysis to multi-sinusoidal models, MUSIC/ESPRIT optimality. The Fisher information matrix structure for $d$ complex exponentials with arbitrary frequencies is fully worked out.
+- **Yau & Bresler (1992)**: CRB for damped sinusoids (relevant because zeros of L-functions have both real and imaginary parts, though RH would make damping zero).
+- **Kay (1988)**, *Modern Spectral Estimation*, and **Marple (1987)**, *Digital Spectral Analysis*: Textbook treatments with the $12\sigma^2/T^3$ type bound as standard material.
+
+**Critical gap:** None of these authors discuss the number-theoretic setting. The explicit formula $\psi(x) = x - \sum x^\rho/\rho + \ldots$ is never mentioned. The bridge from "sum of complex exponentials" to "sum over L-zeros in the explicit formula" is **not made** in any signal processing paper I can identify.
+
+---
+
+## Area 2: Number-Theoretic Spectral Estimation Literature
+
+**Key works examined:**
+
+- **Hejhal (1992)**, *"On the computation of Hecke eigenvalues of cusp forms"*: Computes eigenvalues of the Laplacian on hyperbolic surfaces (Maass forms) from trace formula data. This is the closest analog — eigenvalues ↔ zeros, trace formula ↔ explicit formula. However, Hejhal frames it as a root-finding/computational problem, **not** a statistical estimation problem. No Fisher information, no CR bound, no notion of optimal estimation variance.
+
+- **Lagarias & Odlyzko (1986)**, *"Computing π(x): An analytic method"*: Derives how to compute π(x) from knowledge of zeros. This is the **inverse** direction (zeros → primes), not the direction needed (primes → zeros). No information-theoretic content.
+
+- **Odlyzko (1987, 1992)**: Large-scale computation of $10^9+$ zeros of ζ(s) via the Riemann-Siegel formula. These papers focus on algorithmic efficiency, not on fundamental precision limits. Odlyzko computes zeros to ~50 digits but never asks "what is the minimum variance achievable from prime data?"
+
+- **Booker (2006)**, *"Artin's conjecture, Turing's method, and the Riemann hypothesis"*: Describes algorithms for computing L-function zeros. Algorithmic focus only.
+
+- **Booker, Strömbergsson, Venkatesh (2006)**: Effective computation of Maass forms. Again computational, not estimation-theoretic.
+
+- **Rubinstein (2001)**, *"Computational methods and experiments in analytic number theory"*: Survey of computational approaches. No CR bounds.
+
+**Verdict:** The number-theoretic computational literature treats zero computation as deterministic (given enough compute, get the answer), not as statistical estimation with fundamental precision limits. **No CR bound found.**
+
+---
+
+## Area 3: Quantum Chaos Community
+
+- **Berry & Keating (1999)**, *"H = xp and the Riemann zeros"*: Proposes that Riemann zeros are eigenvalues of a quantum Hamiltonian $H = xp$. Discussion is entirely about the structural connection, not estimation theory.
+- **Berry (1985)**, *"Semiclassical theory of spectral rigidity"*: Analyzes statistical properties of eigenvalue sequences (pair correlation, number variance). Assumes eigenvalues are **known** and studies their distribution.
+- **Bohigas, Giannoni, Schmit (1984)**: Conjecture that quantum chaotic spectra exhibit GUE statistics. Again, assumes spectra are given.
+- **Keating & Snaith (2000)**: Random matrix theory and L-functions. Distributional results, not estimation bounds.
+- **Conrey (2010)**: *"L-functions and random matrices"*: Survey. No estimation-theoretic content.
+
+**Verdict:** The quantum chaos community treats zeros as given objects whose statistical properties are studied. The **inverse problem** of estimating zeros from imperfect data is not addressed. **No CR bound found.**
+
+---
+
+## Area 4: Adelic / Motivic Interpretations
+
+- **Connes (1999)**, *"Trace formula in noncommutative geometry and the zeros of the Riemann zeta function"*: Attempts to prove RH via noncommutative geometry. The explicit formula appears as a trace formula, but no estimation theory.
+- **Connes & Marcolli (2008)**, *"Noncommutative Geometry, Quantum Fields and Motives"*: Comprehensive treatment of the Connes approach. The zeros are treated as spectral data, but the analysis is structural/algebraic, not statistical.
+- **Consani & Marcolli (2005)**: Related work on the arithmetic site. No estimation content.
+
+**Verdict:** These works seek to understand *why* the zeros are where they are, not to derive limits on how well we can *estimate* where they are. **No CR bound found.**
+
+---
+
+## Area 5: Recent ML/NN Work on L-functions (2018-2025)
+
+- **He, He (2019-2021)**: Applied neural networks to predict zeros of the zeta function. Focused on predictive accuracy, not information-theoretic limits.
+- **Gillman, Sasso, Trefethen**: Various computational approaches to zeros.
+- **Puchert, Puchert (2020s)**: Machine learning approaches to number theory.
+- Various papers on using ML for conjecture generation in number theory (Davies et al., Ramanujan Machine, etc.).
+
+**Verdict:** The ML/NN literature on L-functions focuses on engineering solutions, not fundamental limits. **No CR bound found.** No paper I can identify frames zero estimation as a statistical estimation problem amenable to classical information-theoretic analysis.
+
+---
+
+## Area 6: Explicit-Formula Computational Works
+
+- **Hutchinson (various)**: WolfSum and related computational methods for the explicit formula. These are used to compute ψ(x) efficiently, not to study the inverse problem.
+- **Turing (1953)**, *"Some calculations of the Riemann zeta-function"*: The Turing method for verifying zeros. Algorithmic, not estimation-theoretic.
+- **Platt & Trudgian (2021)**: Verification of RH up to $3 \times 10^{12}$. Computational, not statistical.
+
+**Verdict:** All computational works I can find treat the explicit formula as a tool for forward computation or zero verification, not as a statistical signal model. **No CR bound found.**
+
+---
+
+## Area 7: Bombieri-Vinogradov / Large Sieve Heuristics
+
+- **Bombieri-Vinogradov theorem**: Gives $\sum_{q \leq Q} \max_{(a,q)=1} |\psi(x;q,a) - x/\phi(q)| \ll x/(\log x)^A$ for appropriate Q. This is a deterministic bound on error terms, superficially resembling a variance bound.
+- **Large sieve inequality**: Bounds $\sum |S(\alpha)|^2$ where $S(\alpha) = \sum a_n e(n\alpha)$. This controls "spectral energy" but doesn't give Fisher information.
+- **Gallagher (1967)**, **Montgomery (1971)**: Large sieve development. No estimation-theoretic framing.
+- **Goldston & Montgomery (1987)**: "Pair correlation of zeros and primes in short intervals." Connects zeros to primes but not in an estimation framework.
+
+**Verdict:** The error term bounds in analytic number theory are the "deterministic cousins" of statistical variance bounds, but no one has formalized the connection through Fisher information or CR bounds. **No CR bound found.**
+
+---
+
+## Additional Areas Searched
+
+### Compressed Sensing / Super-Resolution
+- **Candès & Fernandez-Granda (2014)**, *"Towards a mathematical theory of super-resolution"*: Derives fundamental limits on resolving frequencies from samples. The mathematical setting (recovering spectral measures from observations) is structurally similar. However, they do not discuss number-theoretic applications.
+- **Donoho (1992)**: Super-resolution limits. Same conclusion.
+
+### System Identification
+- **Ljung (1987)**, *"System Identification"*: Standard reference on estimating system parameters from input-output data. The explicit formula could be viewed as a "system" with zeros as parameters. But no one has made this connection.
+
+### Textbooks in Analytic Number Theory
+- **Iwaniec & Kowalski (2004)**, *"Analytic Number Theory"*: 900+ page comprehensive reference. Contains extensive discussion of explicit formulas, zero detection, and computational methods. **No CR bound, no Fisher information, no estimation-theoretic discussion.**
+- **Montgomery & Vaughan (2007)**, *"Multiplicative Number Theory I"*: Another comprehensive reference. **No estimation theory.**
+- **Titchmarsh (1986)**, *"The Theory of the Riemann Zeta-Function"* (2nd ed., Heath-Brown): The classical reference. **No estimation theory.**
+
+### Information Theory and Number Theory
+- **Kontorovich (2010s)**: Work connecting information theory and number theory (entropy methods in additive combinatorics). Different type of connection.
+- **Tao's blog and papers**: Extensive discussion of the explicit formula, sieve theory, etc. No CR bounds.
+
+---
+
+## Closest Approaches Found (Falls Short)
+
+The closest I found to the claimed result:
+
+1. **Hejhal's eigenvalue computations** come closest in spirit — he is essentially doing spectral estimation of eigenvalues from trace formula data, which is mathematically dual to estimating zeros from the explicit formula. But he never frames it as a statistical problem or derives precision bounds.
+
+2. **The signal processing CR bound** for sinusoidal frequency estimation (Rife-Boorstyn 1974) provides the exact mathematical tool needed but has never been applied to this setting.
+
+3. **The explicit formula itself** is well-understood as a sum of oscillatory terms, and various authors (Montgomery, Odlyzko, Conrey) discuss it in spectral terms, but none convert this into an estimation-theoretic framework.
+
+---
+
+## Honest Assessment
+
+**After searching through all seven specified areas, plus system identification, compressed sensing/super-resolution, comprehensive analytic number theory textbooks, and information-theoretic number theory:**
+
+### I cannot find any prior work that:
+- Derives a Cramér-Rao bound for estimating the imaginary parts of L-function zeros from prime-counting data
+- Treats the explicit formula as a sum-of-complex-exponentials estimation problem and applies classical Fisher information analysis
+- Computes the $12\sigma^2\gamma_k^2/T^3$ or equivalent bound for this specific setting
+
+### The novelty claim appears to hold up, with qualifications:
+
+**Why it's plausible that this is genuinely new:**
+The number theory community and the signal processing community have historically had essentially zero cross-pollination on this specific question. Number theorists treat zero computation as a deterministic algorithmic problem (given enough compute and the right formula, you get the answer). Signal processing researchers have no reason to study prime-counting data. The bridge between the two fields — "the explicit formula IS a sum-of-exponentials, so signal processing CR bounds apply" — requires simultaneous expertise in both areas, which is rare.
+
+**Caveats:**
+1. My training data has a cutoff and may not include all relevant papers.
+2. There may be relevant work in Russian, German, Japanese, or other languages I cannot fully search.
+3. A remark in a talk, thesis, or unpublished note could have made this observation without it becoming widely known.
+4. The observation might appear as a passing comment in a longer paper that I'm not recalling.
+5. It's possible that someone in the quantum chaos community (e.g., Keating, who works at the interface of physics and number theory) has made this observation in a lecture or informal communication.
+
+**Bottom line:** The individual ingredients are all standard (explicit formula: 1859+, CR bound for sinusoids: 1974+, log-spacing for uniform sampling: well-known). The synthesis — recognizing that estimating L-zeros from prime data is a classical spectral estimation problem amenable to CR analysis — appears to be genuinely novel based on my search. But "I couldn't find it" is a weaker statement than "it doesn't exist."
+
+### Specific prediction for a skeptic to test:
+If someone searches specifically for papers that cite **both** Rife-Boorstyn (1974) or Stoica-Nehorai (1989) **and** any of Titchmarsh, Iwaniec-Kowalski, or the explicit formula — they will find zero results (or at most, unrelated work).

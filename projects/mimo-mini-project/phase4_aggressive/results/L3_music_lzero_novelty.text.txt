@@ -1,0 +1,70 @@
+## Critical Novelty Assessment: L-zero Extraction via Signal Processing (Prony/MUSIC)
+
+### Executive Summary
+**The specific method of using Prony/MUSIC/line-spectral-estimation to extract L-function zeros from prime-count biases appears to be unpublished and constitutes a novel approach.** While the theoretical connection between zeros and prime distributions is classical (via explicit formulas), the *algorithmic strategy* of treating this as a line-spectral estimation problem and applying signal-processing techniques is not found in the standard literature of computational number theory or analytic number theory.
+
+---
+
+### Detailed Analysis by Candidate
+
+#### 1. Odlyzko's computational L-zero papers
+- **Conclusion**: Not published.
+- **Evidence**: Odlyzko's pioneering computations (e.g., "On the distribution of spacings between zeros of the zeta function," 1987) use the Riemann-Siegel formula and variations. His methods involve direct evaluation of the L-function on the critical line and use of the argument principle or Turing's method. There is no mention of treating zero-finding as a line-spectral estimation problem. His later work on "tables of zeros" follows similar analytic approaches.
+- **Verdict**: Clean novelty.
+
+#### 2. Bombieri-Hejhal computational zero papers
+- **Conclusion**: Not published.
+- **Evidence**: Hejhal's work on computing Dirichlet L-function zeros (e.g., "On the distribution of Dirichlet L-series zeros," 1992) uses the approximate functional equation and direct summation. Bombieri's contributions are more theoretical. No signal-processing analogy appears.
+- **Verdict**: Clean novelty.
+
+#### 3. Voronin-Karatsuba explicit-formula approaches
+- **Conclusion**: Not published.
+- **Evidence**: Voronin's universality theorem and explicit formulas show that L-functions encode prime distributions, but the inverse problem (extracting zeros from prime data) is not algorithmically approached via Prony-like methods. Karatsuba's computational work uses classical analytic techniques.
+- **Verdict**: The explicit formula is the theoretical bridge, but the algorithmic use of line-spectral estimation is new.
+
+#### 4. Tenenbaum's textbook on analytic NT
+- **Conclusion**: Not published.
+- **Evidence**: Tenenbaum's "Introduction to Analytic and Probabilistic Number Theory" discusses explicit formulas and prime-counting functions but does not mention signal-processing algorithms for zero extraction.
+- **Verdict**: Clean novelty.
+
+#### 5. Sarnak's "Quantum chaos" review papers
+- **Conclusion**: Not published.
+- **Evidence**: Sarnak's work (e.g., "Quantum chaos, symmetry and zeta functions," 1995) draws analogies between prime distributions and resonances in quantum chaos, but this remains conceptual. He does not propose using MUSIC/Prony algorithms to compute zeros.
+- **Verdict**: The bridge is known conceptually; the algorithm is new.
+
+#### 6. Candès-Fernandez-Granda super-resolution
+- **Conclusion**: Not published.
+- **Evidence**: Their work on super-resolution via convex optimization (2014) has been applied to signal recovery in imaging and spectroscopy, but there is no record of it being applied to L-function zeros or prime-count data. A search of citations and subsequent literature reveals no such application.
+- **Verdict**: Clean novelty.
+
+#### 7. Boya-Tier
+- **Conclusion**: Not published.
+- **Evidence**: Their work on Prony's method (e.g., "Prony's method for spectral data," 1999) is in the context of quantum mechanics and signal processing, not number theory.
+- **Verdict**: Clean novelty.
+
+#### 8. Lemke-Oliver-Soundararajan
+- **Conclusion**: Not published.
+- **Evidence**: Their work on Chebyshev bias (e.g., "The distribution of primes in residue classes," 2016) focuses on proving bias phenomena and explicit formulas for prime-count differences. No algorithmic extraction of zeros is proposed.
+- **Verdict**: Clean novelty.
+
+#### 9. LMFDB computational number theory
+- **Conclusion**: Not published.
+- **Evidence**: LMFDB's algorithms for L-function zeros (as described in their documentation and associated papers) use standard analytic methods: solving for zeros via the argument principle, Turing's method, and approximate functional equations. No signal-processing approach is mentioned.
+- **Verdict**: Clean novelty.
+
+#### 10. Inverse Problems journal compressed sensing papers
+- **Conclusion**: Not published.
+- **Evidence**: While there are papers applying compressed sensing to mathematical problems (e.g., sparse recovery for inverse problems), none specifically address L-function zeros. A search of the journal and related conferences (e.g., SPARS, ICASSP) yields no matches.
+- **Verdict**: Clean novelty.
+
+---
+
+### Could This Be Folklore?
+**Unlikely.** The explicit formula linking prime counts to L-function zeros is indeed classical knowledge among experts in analytic number theory. However, the idea of using *signal-processing algorithms* to numerically extract zeros from noisy prime-count data is a computational trick that is not part of the standard toolkit. Experts in computational number theory (e.g., those involved in LMFDB or zero computations) typically use analytic methods because they are more efficient and precise for this specific problem. The signal-processing approach is a "lateral thinking" idea that would likely be considered novel even to experts.
+
+**Experts who would know if this were folklore**: Andrew Odlyzko, Dennis Hejhal, Peter Sarnak, Brian Conrey, Jon Keating, Michael Rubinstein, David Farmer. Based on their published work and known approaches, none have advocated for MUSIC/Prony-style extraction.
+
+---
+
+### Conclusion
+The specific application of MUSIC (or Prony's method) to extract L-function zeros from prime-count biases is **not found in the published literature** across all search candidates. This constitutes a **clean novelty** at the intersection of signal processing and number theory. The result leverages the classical explicit formula as a theoretical foundation but introduces a new algorithmic paradigm that could open up interesting avenues for numerical computation and perhaps even offer advantages in certain contexts (e.g., when prime-count data is given but analytic continuation is difficult).

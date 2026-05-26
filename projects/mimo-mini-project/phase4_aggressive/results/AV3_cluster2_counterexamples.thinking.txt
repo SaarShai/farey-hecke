@@ -1,0 +1,520 @@
+Let me carefully analyze each attack vector and think through the mathematics of Farey sequence gaps at extreme quantiles.
+
+## Background: Farey Sequence Gap Structure
+
+For the Farey sequence F_N, the gaps between consecutive terms a/b and c/d are exactly 1/(bd). The largest gaps occur when both b and d are small. 
+
+The extreme gaps come from fractions with small denominators. For a fraction a/b in F_N, its neighbors are determined by the mediant structure. Specifically, if a/b has neighbors with denominators c/d (left neighbor) and e/f (right neighbor), then:
+
+- ad - bc = 1 (left neighbor condition)  
+- be - af = 1 (right neighbor condition)
+
+The gaps are 1/(bd) and 1/(bf).
+
+## The Heuristic Mechanism (P5's argument)
+
+For a fraction a/b with denominator b (where b is small), the neighboring fractions have denominators that are constrained by:
+- The left neighbor c/d satisfies ad - bc = 1, so c ≡ -b⁻¹ (mod a) and d ≡ a⁻¹ (mod b) — roughly, d can be up to N
+- Actually, the neighboring fractions of a/b in F_N have denominators that sum to > N in a specific sense.
+
+Wait, let me be more precise. In the Farey sequence F_N, for consecutive fractions a/b and c/d:
+- ad - bc = 1
+- b + d > N (this is the key constraint)
+
+So for a fraction a/b with small b, the neighbor on one side has denominator d > N - b, which is close to N. Similarly for the other side. This means:
+
+- The gap to the left neighbor is 1/(b·d₁) where d₁ > N-b
+- The gap to the right neighbor is 1/(b·d₂) where d₂ > N-b
+
+Both gaps are roughly 1/(bN), so they're roughly EQUAL and LARGE. This creates a "pair cluster" of size 2.
+
+## Attack Vector 1: Larger N
+
+As N grows, the number of fractions with small denominator b remains approximately constant (it's roughly the number of reduced fractions a/b for fixed b). For each such fraction, the pair structure persists as long as:
+
+- The neighbors on both sides have denominators ≈ N (very large)
+- The gaps 1/(bd₁) and 1/(bd₂) are both large enough to be in the top quantile
+
+The question is: as N grows, does the top quantile threshold change such that MORE such pair clusters exist, or does the quantile select a different set?
+
+For a fixed quantile q, the top (1-q) fraction of gaps are selected. The number of gaps in F_N is |F_N| - 1 ≈ 3N²/π². 
+
+The largest gaps come from fractions with the smallest denominators. The k-th largest gap (for small k) comes from fractions with denominators of order k^(1/2) or so.
+
+Actually, let me think about this more carefully. The gaps in F_N are of the form 1/(bd) where (a,b) and (c,d) are consecutive in F_N. The largest gap is between 0 = 0/1 and 1/N, which has size 1/N. Wait, no: the largest gap is between 0/1 and 1/N, which is 1/N. Actually, that's not right either.
+
+Let me reconsider. The gap between consecutive fractions a/b and c/d in F_N is |a/b - c/d| = 1/(bd) (assuming ad - bc = ±1).
+
+The largest gap occurs for the smallest product bd. The fractions 0/1 and 1/N are consecutive, giving gap 1/(1·N) = 1/N. The gap between 1/N and its right neighbor depends on the structure.
+
+Actually wait. The gap between 0/1 and 1/N is 1/N. The gap between (N-1)/N and 1/1 is also 1/N. But there might be larger gaps?
+
+No — the gap between 0/1 and 1/N is 1/N, and the gap between 1/N and the next fraction depends on the next fraction after 1/N. The next fraction after 1/N in F_N is determined by the Stern-Brocot tree structure.
+
+Actually, the largest gap in F_N is exactly 1/N (at the edges). No wait, that's the gap between 0 and 1/N. But 1/1 and (N-1)/N give a gap of 1/N too.
+
+Hmm, actually the gap between 0/1 and 1/N is 1·N in the denominator, so 1/(1·N) = 1/N. Similarly, the second largest gap might be between some other pair.
+
+Let me think about the top quantile gaps more carefully.
+
+For N large, the number of gaps ≈ 3N²/π². The top-quantile at level q = 99.99% means we're looking at the top 0.01% of gaps, i.e., roughly 3N²/π² × 10⁻⁴ gaps. For N = 10⁴, this is about 30000 gaps.
+
+Wait, that seems like a lot. Let me reconsider. For N = 10⁴, |F_N| ≈ 3(10⁴)²/π² ≈ 3 × 10⁸/9.87 ≈ 3.04 × 10⁷. So the number of gaps is about 3 × 10⁷. The top 0.01% is 3000 gaps.
+
+Hmm, but these 3000 gaps should come from fractions with small denominators. For denominator b, there are about φ(b) fractions a/b in F_N (for b << N), each contributing 2 gaps. So the total number of gaps from denominators ≤ B is roughly 2∑_{b=1}^{B} φ(b) ≈ 6B²/π².
+
+To get 3000 gaps: 6B²/π² ≈ 3000, so B ≈ π√(500) ≈ 70. So fractions with denominator up to about 70 contribute to the top 0.01% of gaps.
+
+For each fraction a/b with b ≤ 70, the pair structure gives 2 gaps per fraction, forming a cluster of size 2. As long as both neighbors have denominators > N - b ≈ N (which is true for N >> B), the pair structure holds.
+
+Now, as N grows to 10⁷ or 10⁹, the number of gaps grows as N², and the top quantile still selects fractions with small denominators (up to B where 6B²/π² ≈ 3 × 10⁸ × 10⁻⁴ = 30000, so B ≈ 220). The pair structure still holds as long as N >> B, which it is.
+
+So the cluster size should remain 2 as N grows! The mechanism is robust.
+
+But wait — there might be complications. Let me think about whether clusters of size > 2 can form.
+
+A cluster of size > 2 would occur if THREE or more consecutive gaps are all above the threshold. This would require three consecutive fractions a/b, c/d, e/f all with small enough denominators that 1/(bd) and 1/(df) are above the threshold.
+
+For three consecutive fractions to all have small denominators, we'd need b, d, f all small. But consecutive fractions in F_N satisfy ad - bc = 1 and de - cf = 1 (or similar). If b and d are small, then typically f is large (because of the constraint b + d > N... wait, that's not right).
+
+Actually, the constraint is: for consecutive fractions a/b and c/d in F_N, we need b + d > N (otherwise a/b and c/d wouldn't be consecutive — there would be a mediant between them).
+
+So if b is small (< N/2), then d > N - b > N/2. Then for c/d and its right neighbor e/f, we need d + f > N. Since d > N/2, f > N - d. But d could be anything from N-b to N.
+
+Hmm, so the structure is:
+- For a fraction a/b with b small, left neighbor has denominator d₁ > N - b ≈ N, right neighbor has denominator d₂ > N - b ≈ N.
+- The gap to left: 1/(bd₁), gap to right: 1/(bd₂). Both are ≈ 1/(bN). These form a PAIR.
+- Now, the left neighbor c/d₁ has its own left neighbor with denominator > N - d₁. Since d₁ ≈ N, the left neighbor of c/d₁ has denominator > N - d₁ which could be small!
+
+This is the key insight. The fraction c/d₁ (with d₁ large) has a left neighbor with denominator potentially as small as 1. So the gap to the left of c/d₁ could be 1/(d₁ × small denominator), which is also large.
+
+So the structure might be: ... small/small gap ... large gap ... pair of large gaps ... large gap ... small/small gap ...
+
+Wait, no. Let me be more careful.
+
+Consider a fraction a/b with b small (say b = 1, so a/b = 0/1 or 1/1). 
+
+Take a/b = 1/2. Its neighbors in F_N:
+- Left neighbor: The fraction just before 1/2 in F_N. This has denominator d₁ such that 1·d₁ - 2·c = -1 (or ad - bc = 1 with a=1, b=2). So d₁ - 2c = ±1. The fraction just before 1/2 with the constraint d₁ ≤ N and 2 + d₁ > N. So d₁ > N-2, meaning d₁ = N-1 or N. For the largest gap, we want d₁ as small as possible, so d₁ = N-1 (if N is odd) or similar. Actually, d₁ is the largest integer ≤ N such that d₁ - 2c = ±1 has a solution. For d₁ = N-1 (if N is odd): d₁ - 2c = 1, so c = (N-2)/2. For d₁ = N (if N is even): d₁ - 2c = 1, so c = (N-1)/2.
+
+Hmm, this is getting complicated. Let me think about specific examples.
+
+For N = 10:
+F_10 = {0/1, 1/10, 1/9, 1/8, 1/7, 1/6, 1/5, 2/9, 1/4, 2/7, 3/10, 1/3, 3/8, 2/5, 3/7, 4/9, 1/2, 5/9, 4/7, 3/5, 5/8, 2/3, 7/10, 5/7, 3/4, 7/9, 4/5, 5/6, 6/7, 7/8, 8/9, 9/10, 1/1}
+
+The gaps are:
+1/(1×10) = 1/10
+1/(10×9) = 1/90
+1/(9×8) = 1/72
+1/(8×7) = 1/56
+1/(7×6) = 1/42
+1/(6×5) = 1/30
+1/(5×9) = 1/45
+1/(9×4) = 1/36
+1/(4×7) = 1/28
+1/(7×10) = 1/70
+1/(10×3) = 1/30
+1/(3×8) = 1/24
+1/(8×5) = 1/40
+1/(5×7) = 1/35
+1/(7×9) = 1/63
+1/(9×2) = 1/18
+1/(2×9) = 1/18
+1/(9×7) = 1/63
+...
+
+The largest gaps are 1/10 (at edges) and 1/18 (around 1/2). So the cluster around 1/2 has two gaps of 1/18 each. That's a pair.
+
+Now consider the fraction 1/3. Its neighbors:
+- Left: 3/10 (denominator 10), gap = 1/(10×3) = 1/30
+- Right: 3/8 (denominator 8), gap = 1/(3×8) = 1/24
+
+These are 1/30 and 1/24, not equal, and not as large as 1/18.
+
+For 1/4:
+- Left: 2/7 (denominator 7), gap = 1/(7×4) = 1/28
+- Right: 2/9 (denominator 9), gap = 1/(4×9) = 1/36
+
+Hmm wait, I'm getting the neighbors wrong. Let me recheck.
+
+F_10 = {0/1, 1/10, 1/9, 1/8, 1/7, 1/6, 1/5, 2/9, 1/4, 2/7, 3/10, 1/3, 3/8, 2/5, 3/7, 4/9, 1/2, 5/9, 4/7, 3/5, 5/8, 2/3, 7/10, 5/7, 3/4, 7/9, 4/5, 5/6, 6/7, 7/8, 8/9, 9/10, 1/1}
+
+So around 1/4:
+Left neighbor of 1/4 is 2/9, right neighbor is 2/7.
+Gaps: 1/(9×4) = 1/36 and 1/(4×7) = 1/28.
+
+These aren't equal. So the "pair cluster" doesn't always produce equal gaps.
+
+But the key claim is that they're SIMILAR ENOUGH to be in the same cluster, forming a pair. The ratio of 1/28 to 1/36 is about 1.29.
+
+For larger N, the ratio should be closer to 1 because the neighbors' denominators are both close to N.
+
+Specifically, for a fraction a/b, the left neighbor has denominator d₁ ≈ N - b and the right neighbor has denominator d₂ ≈ N - b (both constrained to be > N - b). The ratio of the two gaps is d₂/d₁, which should be close to 1 when b << N.
+
+Hmm, but actually, the denominators aren't both ≈ N-b. They're both > N-b, but one could be N-1 and the other N-2, etc. The specific values depend on the modular arithmetic.
+
+Actually, I recall that for a fraction a/b in F_N, the right neighbor is the fraction c/d where d is the smallest integer > 0 such that:
+1. d ≤ N
+2. There exists c with gcd(c,d) = 1 and bc - ad = 1
+
+This means d ≡ a⁻¹ (mod b), so d = a⁻¹ + kb for some k ≥ 0. The smallest such d with d ≤ N is... well, it's a⁻¹ mod b (in the range 1 to b-1), or b + (a⁻¹ mod b), etc. The largest d ≤ N would be approximately N.
+
+Actually no, for the RIGHT neighbor of a/b, we want the fraction just after a/b. Let me think again.
+
+For two consecutive fractions a/b < c/d in F_N, we have:
+- bc - ad = 1
+- b + d > N
+
+The right neighbor of a/b is c/d where d is the smallest integer > N - b such that bc ≡ 1 (mod a)... no, this is getting complicated.
+
+Let me think about it differently. The standard result is:
+
+Given a/b in F_N, its right neighbor c/d satisfies:
+- d is the largest integer ≤ N such that d·a⁻¹ mod b gives the appropriate c
+- More precisely, d ≡ -b⁻¹ (mod a) ... no
+
+OK, I think the key result is:
+
+The right neighbor of a/b in F_N has denominator d = the largest integer in {1, ..., N} such that d ≡ a⁻¹ mod b (where a⁻¹ is the modular inverse of a mod b). Wait, I don't think that's right either.
+
+Let me use the standard fact: for a/b in F_N with right neighbor c/d, we have bc - ad = 1. So c ≡ a⁻¹ (mod b) and d ≡ -b⁻¹ (mod a)... hmm, from bc - ad = 1, we get bc ≡ 1 (mod a), so c ≡ b⁻¹ (mod a). And d = (bc - 1)/a.
+
+For d to be ≤ N and maximal, we want c to be as large as possible with c ≤ (aN + 1)/b and c ≡ b⁻¹ (mod a). So c = b⁻¹ (mod a) + ka for some k, and d = (b·c - 1)/a.
+
+The largest such d ≤ N gives the right neighbor.
+
+Similarly for the left neighbor.
+
+The point is: for a/b with b small and a/b not near 0 or 1, the right neighbor has denominator d ≈ N and the left neighbor has denominator d' ≈ N, but their exact values are constrained by modular arithmetic.
+
+Now, the question about clusters of size > 2. A cluster of size > 2 means we have THREE consecutive gaps all above the threshold. This means three consecutive fractions, say x, y, z, with all three gaps (y-x) and (z-y) above threshold, AND the gap before x or after z also above threshold.
+
+Wait, no. A cluster is a maximal set of consecutive fractions where ALL gaps between them are above the threshold. So a cluster of size k means k consecutive gaps above the threshold.
+
+A cluster of size 3 means three consecutive fractions a/b, c/d, e/f such that:
+- 1/(bd) > threshold
+- 1/(df) > threshold
+
+For this to happen, bd and df must both be small enough. This requires d to be small OR both b and f to be small.
+
+If d is small, then b and f are both > N - d ≈ N (since b + d > N and d + f > N). Then 1/(bd) ≈ 1/(Nd) and 1/(df) ≈ 1/(Nd), both large. And this creates a PAIR around the fraction c/d.
+
+But what about the neighbors of c/d? The fraction c/d has left neighbor a/b with b > N - d ≈ N, and right neighbor e/f with f > N - d ≈ N. 
+
+Now, the fraction a/b has its OWN left neighbor with denominator > N - b. Since b ≈ N, this left neighbor could have a very small denominator (even 1). So the gap to the left of a/b could be large.
+
+Similarly, the fraction e/f has its own right neighbor with potentially small denominator.
+
+So the structure is:
+- Small denominator fraction c/d creates a pair of large gaps
+- The neighbors a/b and e/f (with b, f ≈ N) are "mediators"
+- Beyond them, the next fractions might have small denominators, creating more large gaps
+
+But the gaps around a/b and e/f (beyond the pair) are of the form 1/(b·d') where d' could be small. For example, the left gap of a/b is 1/(b·d') where d' could be 1, making the gap 1/b ≈ 1/N. While the pair gaps are 1/(d·b) ≈ 1/(dN). For d small (say d = 2), the pair gaps are ≈ 1/(2N), which is comparable to 1/N.
+
+Hmm, so for the FRACTION 1/2 (d = 2):
+- Pair gaps: ≈ 1/(2N) each
+- The next gaps outward: 1/(N · 1) = 1/N (at the edges) or 1/(N · d') where d' is the next small denominator.
+
+The gap of 1/N (from the edge fractions) is TWICE as large as 1/(2N). So the edge gaps are larger than the 1/2-pair gaps. They would NOT be in the same cluster (since there's a large gap between them).
+
+Actually, let me trace through more carefully. Consider N large and the fraction 1/2 in F_N. Its neighbors are:
+- Left: (N-1)/(2(N-1)/1)... no, let me compute properly.
+
+For N = 100, 1/2 in F_100:
+Right neighbor: The fraction c/d just after 1/2 with d ≤ 100 and 2c - d = 1. So d = 2c - 1, and d ≤ 100, so c ≤ 50. The largest d ≤ 100 with d odd (since d = 2c-1): d = 99, c = 50. So right neighbor is 50/99.
+
+Left neighbor: The fraction c/d just before 1/2 with d ≤ 100 and d - 2c = 1. So d = 2c + 1, c = (d-1)/2. The largest d ≤ 100 with d odd: d = 99, c = 49. So left neighbor is 49/99.
+
+Gaps: 1/(2×99) = 1/198 on each side. Equal! That's the pair.
+
+Now, the fraction 49/99 has its own left neighbor. Let's find it. For 49/99 in F_100, left neighbor c'/d' satisfies 99c' - 49d' = 1 and 99 + d' > 100, so d' > 1. So d' ≥ 2. We need 99c' ≡ 1 (mod 49). 99 mod 49 = 99 - 49×2 = 1. So c' ≡ 1 (mod 49), i.e., c' = 1, 50, 99, ... For c' = 1: d' = (99-1)/49 = 2. Check: 49×1 - 99×2... wait, I need to be more careful.
+
+For consecutive fractions c'/d' < 49/99 in F_100, we need 99c' - 49d' = 1 (so c'/d' < 49/99, and they're neighbors).
+
+Actually, for two consecutive fractions in F_N with the left one being c'/d' and the right one being 49/99, we need:
+49d' - 99c' = 1
+d' + 99 > 100, so d' > 1, so d' ≥ 2.
+
+49d' - 99c' = 1 → 49d' ≡ 1 (mod 99).
+
+49 × 2 = 98 ≡ -1 (mod 99), so 49 × (-2) ≡ 1 (mod 99), so 49 × 97 ≡ 1 (mod 99). So d' ≡ 97 (mod 99).
+
+d' = 97: c' = (49×97 - 1)/99 = (4753-1)/99 = 4752/99 = 48. So left neighbor of 49/99 is 48/97.
+
+Gap between 48/97 and 49/99: 1/(97×99) = 1/9603. This is much smaller than 1/198.
+
+What about d' = 97 - 99 < 0? That doesn't work. What about the next valid d'? d' ≡ 97 (mod 99), so d' = 97, 196, ... But d' ≤ 100, so d' = 97 is the only option. 
+
+So the left neighbor of 49/99 is 48/97, and the gap is 1/9603. Very small.
+
+Similarly, the right neighbor of 50/99 is... let's find it. For 50/99 in F_100, right neighbor c''/d'' satisfies 99c'' - 50d'' = 1 and d'' + 99 > 100, d'' ≥ 2.
+
+99c'' - 50d'' = 1. 99 ≡ -1 (mod 50), so -c'' ≡ 1 (mod 50), so c'' ≡ 49 (mod 50). c'' = 49: d'' = (99×49 - 1)/50 = (4851-1)/50 = 4850/50 = 97. So right neighbor is 49/97.
+
+Gap between 50/99 and 49/97: 1/(99×97) = 1/9603. Again very small.
+
+So the structure around 1/2 is:
+... 48/97 --[1/9603]-- 49/99 --[1/198]-- 1/2 --[1/198]-- 50/99 --[1/9603]-- 49/97 ...
+
+The pair of gaps 1/198 forms a cluster of size 2. The surrounding gaps are tiny. ✓
+
+Now let's look at the fraction 1/3 in F_100. Its neighbors:
+Right neighbor c/d with 3c - d = 1, d ≤ 100, d > 100 - 3 = 97. So d ∈ {98, 99, 100}.
+
+3c - d = 1:
+d = 98: 3c = 99, c = 33. So right neighbor 33/98. Gap = 1/(3×98) = 1/294.
+d = 99: 3c = 100, c not integer.
+d = 100: 3c = 101, c not integer.
+
+So right neighbor is 33/98, gap = 1/294.
+
+Left neighbor c'/d' with d' - 3c' = 1 (wait, for left neighbor of 1/3): we need 1/3 - c'/d' > 0 and 1×d' - 3c' = 1, d' + 3 > 100, d' > 97.
+
+d' - 3c' = 1:
+d' = 98: 3c' = 97, c' not integer.
+d' = 99: 3c' = 98, c' not integer.
+d' = 100: 3c' = 99, c' = 33. So left neighbor 33/100. Gap = 1/(3×100) = 1/300.
+
+Hmm wait, but 33/100 has denominator 100, which is allowed (≤ N = 100). And gcd(33,100) = 1, so it's in F_100.
+
+So around 1/3: ... 33/100 --[1/300]-- 1/3 --[1/294]-- 33/98 ...
+
+These two gaps (1/300 and 1/294) are close but not equal. They form a pair cluster.
+
+Now, are 1/300 and 1/294 close enough to be in the "same cluster"? This depends on the threshold τ. For the top quantile claim, we need to specify what threshold we're using.
+
+The cluster claim is about the RANKING of gaps, not their absolute size. So the question is: among the top gaps, do we always see PAIRS?
+
+For N = 100, the largest gaps are:
+1/(1×100) = 1/100 (at 0/1 and 1/1)
+1/(2×99) = 1/198 (around 1/2)
+1/(3×100) = 1/300 (around 1/3)
+1/(3×98) = 1/294 (around 1/3)
+1/(4×97) = 1/388 (around 1/4)... let me check.
+
+For 1/4 in F_100: right neighbor c/d with 4c - d = 1, d > 96.
+d = 97: 4c = 98, c not integer.
+d = 98: 4c = 99, c not integer.
+d = 99: 4c = 100, c = 25. So 25/99. Gap = 1/(4×99) = 1/396.
+d = 100: 4c = 101, c not integer.
+
+Left neighbor c'/d' with d' - 4c' = 1, d' > 96.
+d' = 97: 4c' = 96, c' = 24. So 24/97. Gap = 1/(4×97) = 1/388.
+
+So around 1/4: gaps 1/388 and 1/396. Pair.
+
+For 1/5 in F_100:
+Right: 5c - d = 1, d > 95, d ≤ 100.
+d = 96: 5c = 97, c not integer.
+d = 99: 5c = 100, c = 20. So 20/99. Gap = 1/(5×99) = 1/495.
+d = 101: too large.
+
+Wait, d = 99: 5c - 99 = 1, c = 20. So right neighbor 20/99. Gap 1/495.
+d = 96: 5c = 97, no.
+d = 97: 5c = 98, no.
+d = 98: 5c = 99, no.
+d = 100: 5c = 101, no.
+So only d = 99 works.
+
+Left: d' - 5c' = 1, d' > 95, d' ≤ 100.
+d' = 96: 5c' = 95, c' = 19. So 19/96. Gap = 1/(5×96) = 1/480.
+
+Around 1/5: gaps 1/480 and 1/495. Pair.
+
+Let me also check 2/5 in F_100:
+Right neighbor: 5c - 2d = 1, d > 95.
+d = 96: 5c = 193, c not integer.
+d = 98: 5c = 197, c not integer.
+d = 99: 5c = 199, c not integer.
+d = 100: 5c = 201, c not integer.
+
+Hmm, wait. For 2/5, the right neighbor c/d satisfies 5c - 2d = 1. So 5c ≡ 1 (mod 2), which is always true. And c ≡ ... hmm.
+
+Actually, 5c - 2d = 1 means d = (5c - 1)/2. For d ≤ 100: 5c - 1 ≤ 200, c ≤ 40. And d > 95: 5c - 1 > 190, c > 38.2, so c ≥ 39.
+c = 39: d = (195-1)/2 = 97. gcd(39,97) = 1. ✓. So right neighbor 39/97. Gap = 1/(5×97) = 1/485.
+c = 40: d = (200-1)/2 = 99.5, not integer.
+
+So right gap = 1/485.
+
+Left neighbor: 2d' - 5c' = 1, d' > 95.
+2d' ≡ 1 (mod 5), so d' ≡ 3 (mod 5). d' ∈ {98}. 2×98 = 196, 196 - 5c' = 1, c' = 39. gcd(39,98) = 1. ✓. So left neighbor 39/98. Gap = 1/(5×98) = 1/490.
+
+Hmm wait, I need to double-check. For consecutive fractions a/b < c/d in F_N, bc - ad = 1. For 2/5 and its left neighbor c'/d':
+5c' - 2d' = 1. No wait: for c'/d' < 2/5 and consecutive, 5c' - 2d' = 1 (since (2,5) is the right one and (c',d') is the left one, we need 5c' - 2d' = 1). So 5c' = 2d' + 1. d' > N - 5 = 95.
+
+d' = 96: 5c' = 193, c' not integer.
+d' = 98: 5c' = 197, c' not integer.
+d' = 99: 5c' = 199, c' not integer.
+d' = 100: 5c' = 201, c' not integer.
+
+None work! Hmm, that can't be right. Let me reconsider.
+
+Oh wait, I think I have the formula wrong. For consecutive fractions a/b < c/d in F_N with bc - ad = 1, the formula is that if I'm looking for the left neighbor of a/b, I need c'/d' such that bc' - ad' = 1 (note the order: c'/d' is the left one, a/b is the right one, so b·c' - a·d' = 1).
+
+For a/b = 2/5: 5c' - 2d' = 1. We need d' + 5 > N = 100, so d' > 95.
+5c' = 2d' + 1.
+
+d' = 96: 2×96+1 = 193. 193/5 = 38.6. No.
+d' = 97: 2×97+1 = 195. 195/5 = 39. Yes! c' = 39. gcd(39,97) = 1. So left neighbor is 39/97.
+
+But wait, 39/97 ≈ 0.402 and 2/5 = 0.4. So 39/97 > 2/5, which means it's the RIGHT neighbor, not the left.
+
+I think I'm confusing myself with the ordering. Let me be very explicit.
+
+For fractions in F_N listed in order, for two consecutive fractions p/q < r/s:
+s·p - q·r = -1, or equivalently, q·r - s·p = 1.
+So r·q - p·s = 1... no, let me just use: r·q - p·s = 1 for p/q < r/s consecutive.
+
+Hmm, the standard fact is: for consecutive fractions a/b < c/d in F_N, we have bc - ad = 1.
+
+So for a/b = 2/5, and its right neighbor c/d: 5c - 2d = 1.
+For its left neighbor c'/d': 5c' - 2d' = -1 (i.e., c'/d' < 2/5, and for the pair c'/d' < 2/5 with them being consecutive: c'·5 - d'·2 = -1, or 2d' - 5c' = 1).
+
+Wait no. Let's be very careful. If c'/d' and a/b are consecutive in F_N with c'/d' < a/b, then b·c' - a·d' = 1, i.e., 5c' - 2d' = 1. But I need c'/d' < 2/5, which means 5c' < 2d', i.e., 5c' - 2d' < 0. So 5c' - 2d' can't be +1.
+
+I think the correct formula is: if a/b < c/d are consecutive in F_N, then bc - ad = 1. So for consecutive pair c'/d' < a/b, we have d'·a - b·c' = 1, i.e., 2d' - 5c' = 1.
+
+2d' - 5c' = 1 with d' > 95:
+d' = 98: 2×98 - 5c' = 1, 5c' = 195, c' = 39. gcd(39,98)=1. ✓.
+
+So left neighbor of 2/5 is 39/98. 39/98 ≈ 0.398, and 2/5 = 0.4. So 39/98 < 2/5. ✓.
+
+Gap between 39/98 and 2/5: |39/98 - 2/5| = |39×5 - 2×98|/(98×5) = |195-196|/490 = 1/490.
+
+For the right neighbor of 2/5: c/d > 2/5, 5c - 2d = 1.
+d > 95.
+5c = 2d + 1.
+d = 98: 5c = 197, not divisible by 5.
+d = 99: 5c = 199, not divisible by 5.
+d = 97: 5c = 195, c = 39. gcd(39,97)=1. ✓.
+
+39/97 ≈ 0.402 > 2/5 = 0.4. ✓.
+
+So right neighbor of 2/5 is 39/97. Gap = 1/(5×97) = 1/485.
+
+So around 2/5: gaps 1/490 and 1/485. Another pair.
+
+So far, for every fraction with small denominator b, I'm seeing a pair of gaps. The pattern holds.
+
+Now, the key question: can THREE consecutive gaps all be large?
+
+For three consecutive gaps to be large, we need three consecutive fractions a/b, c/d, e/f with 1/(bd), 1/(df) all large. For both to be large, we need bd and df to be small. If d is small, then b and f are both > N - d ≈ N, so bd ≈ dN and df ≈ dN, giving gaps ≈ 1/(dN) — these are the pair gaps. But the THIRD gap (before a/b or after e/f) would involve the denominator of the NEXT fraction.
+
+The fraction before a/b: call it a'/b'. Then b' + b > N, and b > N - d, so b' > N - b < d. So b' < d, which is small. So the gap before a/b is 1/(b'×b), where b' is small (≤ d) and b is large (≈ N). This gap is 1/(b'b) ≈ 1/(b'N). If b' = 1 (the fraction is 0/1 or 1/1), then this gap is 1/N, which is comparable to the pair gaps 1/(dN) (within a factor of d).
+
+Hmm, so for the fraction 1/2 (d = 2), the pair gaps are ≈ 1/(2N), and the next gaps outward are ≈ 1/(1×N) = 1/N (if the neighbors' neighbors have denominator 1). But 1/N is LARGER than 1/(2N), so the gap of 1/N is not between the pair — it's further out.
+
+Wait, let me trace through more carefully for N = 100 around 1/2.
+
+From my earlier computation:
+48/97 --[1/9603]-- 49/99 --[1/198]-- 1/2 --[1/198]-- 50/99 --[1/9603]-- 49/97
+
+The fractions 48/97 and 49/97 are very close (their gap is tiny). And 50/99 and 49/97 are also very close. The gap structure radiating out from 1/2 is: ..., tiny, 1/198, 1/198, tiny, ...
+
+So the cluster around 1/2 is exactly 2 gaps.
+
+What about the fractions further out? The fraction 1/1 (= 1) has left neighbor 99/100, gap = 1/(100×1) = 1/100. And 99/100 has its own left neighbor... which would be 98/99 or similar, with a tiny gap.
+
+So the gap 1/100 (at the edge) is a singleton cluster of size 1? No wait, 0/1 has gap 1/(1×100) = 1/100 to the right, and no gap to the left (it's the first fraction). And 1/1 has gap 1/(100×1) = 1/100 to the left.
+
+So the edge gaps are singletons of size 1, and the interior small-denominator fractions create pairs of size 2.
+
+This suggests that the claim "cluster size = 2 with >99% mass" would mean that the mass in size-1 clusters (edges) and any larger clusters is less than 1%.
+
+At the edges, there are only 2 gaps of size 1/N. These are among the largest gaps but they contribute very little mass to the "top quantile" set (since they're just 2 gaps out of thousands in the top quantile).
+
+## Now let me think about whether clusters of size 3+ can occur
+
+For a cluster of size 3, we need three consecutive fractions where all three gaps are large. This means three consecutive fractions a/b, c/d, e/f with b, d, f all ≤ some threshold.
+
+For consecutive fractions in F_N:
+- a/b and c/d: bc - ad = 1, b + d > N
+- c/d and e/f: df - ce = 1 (wait, de - cf = 1... let me be careful)
+- c/d and e/f: d·e - c·f = 1, d + f > N
+
+If b and f are both > N/2 (forced by b+d > N and d+f > N when d is small), and d is small, then:
+- Gap 1: 1/(bd) ≈ 1/(Nd)
+- Gap 2: 1/(df) ≈ 1/(Nd)
+
+These are both ≈ 1/(Nd), forming the pair.
+
+But what about the gap BETWEEN the pair members? Oh wait, the pair IS two consecutive gaps around the fraction c/d. There's no gap "between" them.
+
+A cluster of size 3 would mean three consecutive fractions with all gaps large. For example: a/b, c/d, e/f where:
+- 1/(bd) > τ
+- 1/(df) > τ
+
+This requires both bd and df to be small. Since d + b > N and d + f > N, if d is small, then b > N-d and f > N-d, making bd ≈ dN and df ≈ dN. So the gaps are ≈ 1/(dN). This gives a cluster of size 2 around c/d.
+
+For a cluster of size 3, we'd need ANOTHER large gap adjacent. For example, the gap before a/b: 1/(b'·b) where b' is the denominator of the fraction before a/b. Since b > N - d (large), b' > N - b < d (so b' ≤ d-1, small). So 1/(b'·b) ≈ 1/(b'N). This gap is large if b' is small.
+
+For instance, if d = 2 and b' = 1, then:
+- Gap before a/b: 1/(1·N) = 1/N
+- Gap a/b to c/d: 1/(N·2) = 1/(2N)
+- Gap c/d to e/f: 1/(2·N) = 1/(2N)
+
+So the three consecutive gaps would be 1/N, 1/(2N), 1/(2N). Is 1/N in the same "cluster" as 1/(2N)?
+
+If the cluster threshold τ is between 1/(2N) and 1/N, then the three gaps are: above τ, above τ, above τ — forming a cluster of size 3!
+
+But wait, the gap of 1/N corresponds to the edge gap (between 0/1 and 1/N or between (N-1)/N and 1/1). This is at the boundary of the interval, not in the interior.
+
+Hmm, let me reconsider. The fraction a/b has left neighbor with denominator b' < d. If b' = 1, then a/b is the fraction 1/(N-1) or similar (adjacent to 0 or 1).
+
+Actually, if b' = 1, the left neighbor is 0/1 or 1/1. So a/b is the fraction 1/N or (N-1)/N. This is the edge.
+
+In the interior, the left neighbor of a/b would have denominator b' where b' is the second-largest possible denominator for the left neighbor, which is about d - 1 or so. Hmm, this is getting complicated.
+
+Let me think about a concrete case. Consider the fraction 1/3 in F_100 (so d = 3). Its neighbors:
+- Right: 33/98 (denominator 98), gap = 1/294
+- Left: 33/100 (denominator 100), gap = 1/300
+
+The fraction 33/100 has left neighbor with denominator b'. We need b' + 100 > 100, so b' > 0, i.e., b' ≥ 1. And 100·c' - 33·b' = 1. 
+
+100c' - 33b' = 1. 100 ≡ 1 (mod 33), so c' ≡ 1 (mod 33)... hmm, let me just solve. 
+
+We need 100c' - 33b' = 1 and b' ≤ 100.
+
+b' = 1: 100c' = 34, c' not integer.
+b' = 2: 100c' = 67, c' not integer.
+b' = 3: 100c' = 100, c' = 1. gcd(1,3)=1. But 1/3 = 1/3, and 33/100 is on the other side. So the left neighbor of 33/100 is 1/3? That's the fraction we just came from! That means 33/100 and 1/3 are consecutive, which we already knew.
+
+I think I need to find the fraction BEFORE 33/100 (not 1/3, which is AFTER 33/100... wait, 33/100 < 1/3 < 33/98). So in order: ..., 33/100, 1/3, 33/98, ...
+
+Wait, 33/100 = 0.33 and 1/3 ≈ 0.333... and 33/98 ≈ 0.3367. So yes, 33/100 < 1/3 < 33/98.
+
+The fraction before 33/100: c'/d' < 33/100, 100c' - 33d' = 1, d' + 100 > 100, d' ≥ 1.
+
+100c' - 33d' = 1. 
+c' = 1: 100 - 33d' = 1, d' = 3. gcd(1,3)=1. So 1/3. But that's 1/3 which is AFTER 33/100, not before!
+
+Hmm, I think I have the ordering confused. Let me re-examine. 
+
+If a/b = 33/100 and c'/d' is the LEFT neighbor, then c'/d' < 33/100 and 100c' - 33d' = 1.
+
+100c' = 33d' + 1.
+
+For small d': 
+d' = 1: 100c' = 34, no.
+d' = 2: 100c' = 67, no.
+d' = 3: 100c' = 100, c' = 1. But 1/3 > 33/100 = 0.33. So this gives a RIGHT neighbor, not left.
+
+Hmm wait. I need to be more careful about the formula. For consecutive fractions p/q < r/s in F_N: sq - pr = 1.
+
+If 33/100 is the LARGER fraction and c'/d' is the SMALLER one: 100·c' - 33·d' = 1.
+
+Wait no. For p/q < r/s consecutive: s·p - q·r = 1... no. The standard is: r·q - p·s = 1 (for p/q < r/s consecutive in F_N).
+
+So for p/q = c'/d' < r/s = 33/100: 33·d' - 100·c' = 1.
+
+33d' - 100c' = 1.
+d' = 3: 99 - 100c' = 1, c' = 98/100, not integer.
+d' = 7: 231 - 100c' = 1, c' = 2.3, no.
+d' = 33: 1089 - 100c' = 1, c' = 10.88, no.
+
+Hmm, let me just use the formula: 33d' ≡ 1 (mod 100). 
+
+33 × 3 = 99 ≡ -1 (mod 100). So 33 × (-3) ≡ 1 (mod 100), i.e., 33 × 97 ≡ 1 (mod 100).
+
+d' ≡ 97 (mod 100). But d' ≤ 

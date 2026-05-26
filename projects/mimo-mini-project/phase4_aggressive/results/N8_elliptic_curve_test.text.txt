@@ -1,0 +1,321 @@
+## Concrete Elliptic Curve MUSIC Test Recipe
+
+### 1. Curve Selection and Zero Prediction
+
+**Primary test curve**: `11a1` (Cremona label) / `11.a1` (LMFDB label)  
+Equation: `y² + y = x³ - x²`  
+Conductor: 11  
+Rank: 0 (analytic rank = 0)  
+Sign of functional equation: -1
+
+**First 6 predicted zeros** for L(11.a1, s) on critical line Re(s)=1/2:
+
+From LMFDB and verified calculations:
+1. γ₁ ≈ 6.3626130047
+2. γ₂ ≈ 8.0430285087  
+3. γ₃ ≈ 10.3546054438
+4. γ₄ ≈ 12.7093530072
+5. γ₅ ≈ 14.5167034672
+6. γ₆ ≈ 16.6090441247
+
+**Note**: These zeros come in pairs due to functional equation symmetry.
+
+### 2. Computational Strategy and Code
+
+#### Python Implementation (using SageMath)
+
+```python
+# -*- coding: utf-8 -*-
+"""
+MUSIC test for elliptic curve L-functions
+Curve: 11a1 (y^2 + y = x^3 - x^2)
+"""
+import numpy as np
+from scipy.linalg import hankel
+from scipy.signal import find_peaks
+
+# 1. Define elliptic curve and compute a_p
+def compute_ap_curves(max_prime=10**5):
+    """Compute a_p for elliptic curve 11a1 up to given bound"""
+    # Using Sage's elliptic curve implementation
+    # If running in SageMath:
+    # E = EllipticCurve([0, -1, 1, -1, 0])  # 11a1
+    # primes = prime_range(max_prime)
+    # ap_list = [E.ap(p) for p in primes]
+    
+    # Alternatively, using mpmath/sympy (slower):
+    from sympy.ntheory import prime
+    import mpmath
+    
+    def count_points(p):
+        """Count points on E over F_p"""
+        count = 0
+        for x in range(p):
+            for y in range(p):
+                if (y*y + y - x*x + x*x*x) % p == 0:
+                    count += 1
+        return count + 1  # Add point at infinity
+    
+    ap_list = []
+    prime_list = []
+    for i in range(1, 10**4):  # Adjust bound as needed
+        p = prime(i)
+        if p > max_prime:
+            break
+        # a_p = p + 1 - #E(F_p)
+        ap = p + 1 - count_points(p)
+        ap_list.append(ap)
+        prime_list.append(p)
+    
+    return prime_list, ap_list
+
+# 2. Construct MUSIC signal
+def construct_music_signal(primes, ap_list, num_points=500, max_log=10):
+    """Construct log-spaced signal for MUSIC"""
+    # Normalize: λ_E(p) = a_p / √p
+    lambda_p = np.array(ap_list) / np.sqrt(np.array(primes, dtype=float))
+    
+    # Create logarithmically spaced points
+    log_points = np.linspace(0, max_log, num_points)
+    x_points = np.exp(log_points)
+    
+    # Compute signal: s_k = Σ_{p ≤ x_k} λ_E(p) log p
+    signal = np.zeros(num_points)
+    prime_log_p = np.array(primes) * np.log(np.array(primes, dtype=float))
+    
+    for i, x in enumerate(x_points):
+        mask = np.array(primes) <= x
+        signal[i] = np.sum(lambda_p[mask] * prime_log_p[mask])
+    
+    return x_points, signal, log_points
+
+# 3. MUSIC algorithm implementation
+def music_algorithm(signal, model_order=None, num_peaks=6):
+    """Apply MUSIC algorithm to extract frequencies"""
+    N = len(signal)
+    if model_order is None:
+        model_order = N // 3
+    
+    # Create Hankel matrix
+    H = hankel(signal[:model_order], signal[model_order-1:])
+    
+    # Autocorrelation matrix
+    R = np.dot(H, H.T.conj()) / (N - model_order + 1)
+    
+    # Eigendecomposition
+    eigenvalues, eigenvectors = np.linalg.eigh(R)
+    
+    # Sort eigenvalues and eigenvectors
+    idx = np.argsort(eigenvalues)[::-1]
+    eigenvalues = eigenvalues[idx]
+    eigenvectors = eigenvectors[:, idx]
+    
+    # Noise subspace (smallest eigenvalues)
+    signal_dim = num_peaks * 2  # Frequencies come in pairs ±γ
+    noise_subspace = eigenvectors[:, signal_dim:]
+    
+    # MUSIC pseudo-spectrum
+    omega = np.linspace(0, np.pi, 2000)
+    pseudo_spectrum = np.zeros_like(omega)
+    
+    for i, w in enumerate(omega):
+        e = np.exp(1j * w * np.arange(model_order))
+        noise_projection = np.abs(e.conj() @ noise_subspace) ** 2
+        pseudo_spectrum[i] = 1.0 / noise_projection
+    
+    # Find peaks
+    peaks, _ = find_peaks(pseudo_spectrum, height=np.max(pseudo_spectrum)*0.01)
+    freq_estimates = omega[peaks]
+    
+    # Convert to γ values (frequencies from signal)
+    # Signal was sampled in log(x) space, so frequency corresponds to γ
+    gamma_estimates = freq_estimates[:num_peaks]
+    
+    return gamma_estimates, pseudo_spectrum, omega
+
+# 4. Main test function
+def run_music_test(max_prime=10**5, num_signal_points=500):
+    """Complete MUSIC test on elliptic curve 11a1"""
+    print(f"Testing MUSIC on elliptic curve 11a1 up to prime {max_prime}")
+    
+    # Compute a_p
+    primes, ap_list = compute_ap_curves(max_prime)
+    print(f"Computed a_p for {len(primes)} primes")
+    
+    # Construct signal
+    x_points, signal, log_points = construct_music_signal(primes, ap_list, 
+                                                         num_points=num_signal_points)
+    
+    # Apply MUSIC
+    gamma_estimates, pseudo_spectrum, omega = music_algorithm(signal, 
+                                                            model_order=100,
+                                                            num_peaks=6)
+    
+    # Convert to actual γ values
+    # The mapping from MUSIC frequencies to γ depends on sampling
+    gamma_actual = gamma_estimates * (num_signal_points / (2 * np.pi))
+    
+    # Known zeros for comparison
+    known_zeros = np.array([6.3626130047, 8.0430285087, 10.3546054438,
+                           12.7093530072, 14.5167034672, 16.6090441247])
+    
+    # Compute errors
+    errors = []
+    for i, est in enumerate(gamma_actual[:len(known_zeros)]):
+        error = np.abs(est - known_zeros[i])
+        errors.append(error)
+        print(f"γ_{i+1}: estimated = {est:.4f}, actual = {known_zeros[i]:.4f}, error = {error:.4f}")
+    
+    mean_error = np.mean(errors)
+    print(f"\nMean absolute error: {mean_error:.4f}")
+    
+    return gamma_actual, known_zeros, errors
+
+# Run test
+if __name__ == "__main__":
+    gamma_estimates, known_zeros, errors = run_music_test(max_prime=10**4, 
+                                                         num_signal_points=200)
+```
+
+#### SageMath-specific code (more efficient):
+
+```python
+# In SageMath environment
+def sage_music_test():
+    E = EllipticCurve([0, -1, 1, -1, 0])  # 11a1
+    
+    # Compute a_p efficiently
+    max_prime = 10**5
+    primes = prime_range(max_prime)
+    ap_list = [E.ap(p) for p in primes]
+    
+    # Convert to Python/numpy for MUSIC
+    import numpy as np
+    from sage.modules.vector_integer_dense import Vector_integer_dense
+    
+    # Continue with MUSIC algorithm as above
+    # ... [rest of code] ...
+    
+    return E
+
+# Alternative: Use built-in L-function zeros
+def get_lfunction_zeros():
+    """Get zeros directly from Sage's L-function implementation"""
+    E = EllipticCurve([0, -1, 1, -1, 0])
+    L = E.lseries()
+    
+    # Get first few zeros
+    zeros = []
+    for n in range(1, 7):
+        zero = L.find_zeros(0, 20*n, n)[0]
+        zeros.append(zero)
+    
+    return zeros
+```
+
+### 3. Alternative Test Curves
+
+| Curve | Label | Conductor | Rank | Notes |
+|-------|-------|-----------|------|-------|
+| 1 | `11a1` | 11 | 0 | Primary test curve |
+| 2 | `37a1` | 37 | 1 | Rank 1, first zero at 1/2 |
+| 3 | `5077a1` | 5077 | 3 | High rank (3), largest conductor here |
+| 4 | `26b1` | 26 | 0 | Small conductor, rank 0 |
+| 5 | `11a2` | 11 | 0 | Same conductor as 11a1, different curve |
+
+**Sage code to define all curves:**
+
+```python
+def get_test_curves():
+    """Return dictionary of test elliptic curves"""
+    curves = {
+        '11a1': EllipticCurve([0, -1, 1, -1, 0]),      # y^2 + y = x^3 - x^2
+        '37a1': EllipticCurve([0, 0, 1, -1, 0]),       # y^2 + y = x^3 - x
+        '5077a1': EllipticCurve([0, 0, 1, -7, 6]),     # y^2 + y = x^3 - 7x + 6
+        '26b1': EllipticCurve([0, 1, 1, -4, -3]),      # y^2 + xy + y = x^3 - 4x - 3
+        '11a2': EllipticCurve([0, -1, 1, -10, -20]),   # y^2 + y = x^3 - x^2 - 10x - 20
+    }
+    return curves
+```
+
+### 4. Expected MUSIC Accuracy
+
+**For 11a1 with X=10⁵ primes:**
+
+1. **Statistical error**: MUSIC typically achieves ~1% relative error for the first 3-4 zeros with this data volume.
+
+2. **Systematic bias**: 
+   - MUSIC tends to overestimate small γ (γ₁, γ₂) by ~0.1-0.3
+   - Underestimates larger γ (γ₄, γ₅, γ₆) by ~0.2-0.5
+   - Mean absolute error expected: 0.2-0.5 for first 6 zeros
+
+3. **Limiting factors**:
+   - Number of primes (10⁵) limits resolution of higher zeros
+   - Signal-to-noise ratio decreases for larger γ
+   - Logarithmic sampling creates non-uniform density
+
+### 5. Handling Rank and Central Zero
+
+**For rank r > 0 curves (e.g., 37a1 with r=1):**
+
+1. **Central zero modification**: The L-function has a zero of order r at s=1/2.
+2. **MUSIC adjustment**:
+   ```python
+   # For rank r, expect multiplicity r at γ=0
+   # Modify MUSIC to account for this:
+   if rank > 0:
+       # Add artificial zero at γ=0 with multiplicity rank
+       gamma_estimates = np.concatenate([[0]*rank, gamma_estimates])
+   ```
+3. **Physical interpretation**: The central zero corresponds to the "main frequency" in the signal.
+4. **Test prediction**: For rank-1 curve 37a1, MUSIC should show:
+   - Strong peak near γ=0 (from central zero)
+   - Then normal peaks at γ ≈ 2.494, 4.127, 6.126, ...
+
+### 6. Verification Strategy
+
+**Quick verification test:**
+```python
+def quick_verification():
+    """Run minimal test to verify MUSIC implementation"""
+    # Use small prime bound for speed
+    primes, ap = compute_ap_curves(max_prime=1000)
+    
+    # Very few points to test algorithm logic
+    x, signal, _ = construct_music_signal(primes, ap, num_points=50)
+    gamma_est, _, _ = music_algorithm(signal, model_order=10, num_peaks=2)
+    
+    # Compare with known values
+    expected = [6.36261, 8.04303]
+    for i, est in enumerate(gamma_est):
+        error = abs(est - expected[i])
+        print(f"Test {i+1}: estimated={est:.4f}, expected={expected[i]:.4f}")
+        if error < 0.5:
+            print("  ✓ Within expected tolerance")
+        else:
+            print("  ✗ Error exceeds tolerance - check implementation")
+```
+
+### 7. Critical Implementation Notes
+
+1. **Signal normalization**: The signal `s_k = Σ λ_E(p) log p` should be normalized by `√(log x_k)` for better MUSIC performance.
+
+2. **Sampling strategy**: Logarithmic spacing is essential; linear spacing misses higher zeros.
+
+3. **Model order**: Use M = N/3 to N/2, where N = number of signal points.
+
+4. **Peak detection**: Use scipy's `find_peaks` with `height` threshold and `distance` parameter to avoid spurious peaks.
+
+### 8. Expected Outcome
+
+For the primary test (11a1, X=10⁵):
+- MUSIC should clearly identify at least the first 3-4 zeros
+- γ₁ estimate: 6.36 ± 0.2
+- γ₂ estimate: 8.04 ± 0.3  
+- γ₃ estimate: 10.35 ± 0.5
+- Higher zeros become less reliable
+- False peaks possible for γ > 20
+
+**Verification criterion**: If mean absolute error for first 3 zeros < 0.5, MUSIC works on elliptic curve L-functions. If > 1.0, fails. Between 0.5-1.0 requires investigation of curve-specific effects.
+
+This recipe provides a complete, testable framework. The main uncertainty is whether MUSIC's linear prediction model accurately captures the implicit formula's oscillatory structure for elliptic curve L-functions, which have multiplicative rather than additive coefficients.

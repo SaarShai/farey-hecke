@@ -1,0 +1,140 @@
+## Assessment of Proposed Applications
+
+---
+
+### A. Cryptanalysis via Prime-Count Tomography
+
+**Use case:** Passively extract L-zero phases from prime-count tallies published as a "cryptographic seal" on some secret content.
+
+**Technical feasibility:** Fundamentally limited by the fact that L-zeros of $L(u,\chi)$ are **deterministic functions of public data** (the conductor $M$ and the character $\chi$). Anyone who knows $M$ and $\chi$ can compute the L-polynomial via Kedlaya's algorithm in polynomial time, then factor it. There is no "secret" to extract. You could imagine a contrived scheme where $M$ itself is hidden and only prime-count tallies are published, but then the attacker is just doing system identification (recover $M$ from zeros), which is a different problem entirely.
+
+**Comparison to existing techniques:** Standard L-function computation already recovers zeros faster than sieving up to large $X$. The tomography is strictly dominated by direct computation in this context.
+
+**Verdict: Vaporware.** L-zeros are not a viable cryptographic secret because they are computable from public parameters. The tomography is a different algorithm for computing public information, not an attack.
+
+---
+
+### B. L-Zero Commitment Scheme for Verifiable Computation
+
+**Use case:** Commit to L-zero phases by publishing $O(d)$ prime-count tallies; a verifier checks by independently sieving and running MUSIC.
+
+**Technical feasibility:** The verifier would need to recompute $\pi(X, A)$ for several values of $X$ — each requiring sieving up to $X$, costing $O(X/\log X)$ at minimum. But a verifier who already knows $M$ could simply compute the L-polynomial and find its roots directly, which for a degree-$d$ polynomial costs $O(d^3)$ arithmetic operations. This is dramatically cheaper than sieving. The only scenario where the tally-based scheme wins is if $M$ is **not** revealed — the commitment is to zeros without revealing the conductor. This is a zero-knowledge-style property, but it's unclear who benefits from hiding $M$ while revealing its zeros.
+
+**Comparison to existing techniques:** Direct L-polynomial computation via Kedlaya's algorithm: $O(d^2 \cdot \deg(M)^3)$ or better. Tomography verification: $O(d \cdot X_{\max})$ where $X_{\max} \sim d$, which is exponentially worse in $\deg(M)$. There is a fundamental asymmetry: the commitment is cheap ($O(d)$ tallies to publish), but verification via tomography is expensive.
+
+**Verdict: Speculation.** The asymmetry between cheap commitment and expensive verification is the opposite of what you want for a commitment scheme. A more promising framing: use the tallies as a **proof-of-knowledge** in a protocol where the prover has already computed the prime counts for other reasons.
+
+---
+
+### C. Quantum-Chaotic System Diagnostics
+
+**Use case:** Apply MUSIC/Prony to period-orbit data from microwave billiard experiments to extract scattering resonances, which in the semiclassical limit correspond to arithmetic L-zeros.
+
+**Technical feasibility:** This is the most **mathematically grounded** application because the trace formula (Selberg, Gutzwiller) is exactly the same explicit formula connecting closed geodesics (the "primes") to quantum resonances (the "zeros"). In function fields, this equivalence is a theorem; in the physical setting, it holds asymptotically in the semiclassical limit. Existing microwave billiard experiments (e.g., at the Technion, Maryland) already measure spectral statistics of quantum chaotic systems. The innovation would be using **period-orbit sums** as the input signal to MUSIC instead of direct spectral measurement.
+
+The technical question is whether the semiclassical error terms (analogous to the error in the prime-counting bias) are small enough for MUSIC to work. For hyperbolic systems (Sinai billiards), the trace formula converges rapidly, and the dominant contributions come from short periodic orbits, which are exactly the "low-prime" measurements. This suggests the method could work with practical data.
+
+**Comparison to existing techniques:** Current spectral extraction in microwave cavities uses Fourier analysis of the scattering matrix. MUSIC provides super-resolution (resolving closely-spaced resonances) beyond the Fourier limit, which could be genuinely useful for dense spectra. This is a known advantage of MUSIC in signal processing; the novelty is applying it specifically to the arithmetic/trace-formula structure.
+
+**Verdict: Useful with more work.** This has the strongest claim to being a genuine contribution. A concrete experiment: take existing microwave billiard data, form the period-orbit sum (the analog of $\Delta_n(A)$), and apply MUSIC. Compare the extracted resonance frequencies to those from direct spectral analysis. This could be done with existing experimental data.
+
+---
+
+### D. Optimal Sampling for L-Zero Phase Recovery
+
+**Use case:** Show that $O(d)$ prime-count measurements achieve the information-theoretic minimum for recovering $d$ L-zero phases, making this optimally sample-efficient.
+
+**Technical feasibility:** This is **mathematically provable**. The signal model is:
+$$\Delta_n(A) = \sum_{j=1}^{d} c_j e^{2\pi i n \theta_j}$$
+This is a sum of $d$ complex sinusoids with unknown amplitudes $c_j$ and frequencies $\theta_j$. Prony's method recovers all $d$ frequencies from exactly $2d$ samples (in the noiseless case). The Cramér-Rao lower bound for frequency estimation shows that $O(d)$ samples is the fundamental limit — no method can do better, regardless of computational resources. This matches the Nyquist criterion: $d$ real frequencies in $[0,1)$ require sampling rate $\geq 2d$.
+
+For the **noisy** case (finite $X$ introduces statistical fluctuations), the noise in $\pi(X, A)$ is $O(\sqrt{X})$ by the explicit formula, and MUSIC degrades gracefully with noise. The resolution limit for distinguishing two zeros with phase separation $\delta$ is approximately $\delta_{\min} \sim N^{-1}$ where $N$ is the number of measurements, independent of the noise level (in the asymptotic regime).
+
+The connection to compressed sensing is interesting but needs care: standard CS achieves $O(d \log N)$ measurements for $d$-sparse signals in an $N$-dimensional space. Prony achieves $O(d)$ measurements by exploiting the **exact sinusoidal structure** (not just sparsity), beating CS by a logarithmic factor. This is because the signal lives in a $d$-dimensional subspace of the $N$-dimensional space of all signals, and Prony exploits this low-dimensional structure directly.
+
+**Comparison to existing techniques:** Direct L-function computation: compute the full L-polynomial (cost depends on $d$ and $\deg(M)$), then find roots (cost $O(d^3)$ or better). Tomography: compute $O(d)$ prime counts (each costing $O(X/\log X)$), then apply MUSIC (cost $O(d^3)$). The tomography is **sample-optimal** but not necessarily computationally cheaper. The genuine advantage is when prime-count data is **already available** (e.g., from a precomputed database of prime distributions).
+
+**Verdict: Usable today as a theorem, useful as a framework.** The optimality claim is precise, testable, and (I believe) correct. The practical value depends on whether sample efficiency matters more than per-sample cost in a given application. For the specific task of "compute L-zero phases given a budget of prime-count measurements," this is the optimal strategy. As a contribution to computational number theory, this reframing of L-zero computation as a spectral estimation problem is genuinely new.
+
+---
+
+### E. Distinguishing Primitive vs. Imprimitive Characters
+
+**Use case:** Automatically detect the conductor of a character by identifying trivial zeros in the prime-count tomography.
+
+**Technical feasibility:** For a character $\chi$ modulo $M$ with conductor $d \mid M$, $d < M$, the L-function $L(s, \chi)$ has additional trivial zeros at $s = 0$ or $s = 1$ (depending on parity) that are artifacts of the imprimitivity. These trivial zeros appear as **low-frequency components** in the prime-count bias, which Prony would detect as zeros near $u = 1$ (the trivial zero of the L-function in the function field normalization).
+
+The challenge is distinguishing a genuine trivial zero from noise or from a nontrivial zero that happens to be near $u = 1$. In the test case (q=2, M=T^3), this worked because the conductor was small enough that the trivial and nontrivial zeros were well-separated. For large conductors where the zeros are dense near $u = 1$, this becomes harder.
+
+A more robust approach: the trivial zeros have **known exact locations** (determined by the character's conductor), so you can check for their presence by looking at the specific phases predicted by the conductor drop. If MUSIC finds zeros at these exact phases, the character is imprimitive.
+
+**Comparison to existing techniques:** For function fields, Kedlaya's algorithm computes the L-polynomial directly, and factoring it reveals trivial zeros (they show up as linear factors of the characteristic polynomial). For number fields, computing the conductor of a Dirichlet character is straightforward (it's the smallest $d$ such that $\chi$ factors through $(\mathbb{Z}/d\mathbb{Z})^*$), and trivial zeros are well-understood theoretically.
+
+**Verdict: Useful with more work** for function fields where direct L-function computation is expensive and you only have access to prime-count data (e.g., from a large database of prime counts in function fields). For number fields, this is unnecessary since conductor computation is cheap.
+
+---
+
+### F. Cross-Application to Time Series with Arithmetic Structure
+
+**Use case:** Apply MUSIC to time series generated by multiplicative number-theoretic processes to reveal hidden L-function structure.
+
+**Technical feasibility:** A time series $f(n)$ with multiplicative structure (i.e., $f(mn) = f(m)f(n)$ for coprime $m,n$) can be decomposed via the Ramanujan expansion:
+$$f(n) = \sum_{\chi} \hat{f}(\chi) \chi(n)$$
+The "phases" in this expansion are the zeros of $L(s, f \times \bar{\chi})$, which are exactly the L-zeros that tomography would extract. So the connection is mathematically rigorous.
+
+For real-world time series, the question is whether any naturally occurring signal has genuine multiplicative structure. Candidates:
+- **Dirichlet character sums** in coding theory (e.g., Gold/Sidelnikov sequences in spread-spectrum communications)
+- **Möbius-random signals** in network analysis
+- **Prime-indexed subsequences** of financial or biological time series (speculative)
+
+The key insight: MUSIC applied to a time series with **implicit** multiplicative structure could reveal the underlying L-function without the analyst knowing that multiplicative structure exists. This is a form of "blind source separation" where the sources are L-function zeros.
+
+**Comparison to existing techniques:** Standard spectral analysis (Welch periodogram, FFT) has resolution limited by the window length. MUSIC provides super-resolution. The additional value of the L-function interpretation is that it provides **constraints** on the spectral content (conjugate symmetry, functional equation, spacing statistics), which can be used to regularize the estimation.
+
+**Verdict: Speculation** for the L-function interpretation specifically, but **yes this works** for the general spectral estimation technique. The novelty of framing it as "hidden L-functions" is that it provides mathematical structure to guide the analysis. This is most likely to be useful in number-theoretic signal processing (analyzing signals that are known to be arithmetically structured) rather than in general signal processing.
+
+---
+
+### G. Independent Verification of GRH-Conditional Results
+
+**Use case:** Empirically estimate L-zero locations from prime-count data without assuming GRH, providing a consistency check on conjectural results.
+
+**Technical feasibility:** This is where the method is most **genuinely different** from existing approaches. Standard numerical verification of GRH (e.g., Odlyzko-Schönhage, LMFDB computations) computes zeros by evaluating the L-function on the critical line and counting sign changes. This approach ASSUMES the functional equation (which is equivalent to the symmetry of zeros) and tests for zeros on the line. Tomography makes **no assumption** about where the zeros are — it extracts their actual phases from raw prime-count data.
+
+However, the numerical precision is far inferior. The error in $\pi(x, \chi)$ is $O(x^{1/2})$, which means the signal-to-noise ratio for each measurement is $O(x^{1/2} / x) = O(x^{-1/2})$. To resolve individual zeros with separation $\delta$, you need measurements up to $X \sim \delta^{-2}$, which for closely-spaced zeros near the critical line (where $\delta \sim 1/\log T$) requires $X \sim T^2$. This is prohibitively expensive.
+
+For **function fields**, GRH is a theorem (Weil, Deligne), so this is moot. For **number fields**, the method could provide a "GRH-free" consistency check, but only for low-lying zeros (which are easiest to compute directly anyway).
+
+**Comparison to existing techniques:** Direct zero-finding via the Odlyzko-Schönhage algorithm: $O(T^{1+\epsilon})$ operations to find all zeros up to height $T$, with high precision. Tomography: $O(T^2)$ operations to achieve comparable (but worse) precision. Direct methods are orders of magnitude more efficient.
+
+**Verdict: Vaporware** for its stated purpose. The computational cost is too high to compete with direct zero-finding methods, and the precision is insufficient to make meaningful GRH-free statements for zeros where GRH is nontrivial. The one niche: providing an **independent methodology** that uses completely different data (prime counts vs. L-function values) as a sanity check. If both methods agree, this increases confidence; if they disagree, it flags a potential bug. But this is a quality-assurance use, not a primary research tool.
+
+---
+
+## Summary and Killer Application
+
+| Application | Verdict |
+|---|---|
+| A. Cryptanalysis | Vaporware — zeros are not secrets |
+| B. Verifiable computation | Speculation — verification is more expensive than direct computation |
+| C. Quantum chaos diagnostics | **Useful with more work** — mathematically grounded, experimentally testable |
+| D. Optimal sampling | **Usable today as a theorem** — sample-optimality is provable and precise |
+| E. Primitive vs imprimitive | Useful with more work — niche value in function field databases |
+| F. Time series | Speculation for L-functions, yes for general MUSIC |
+| G. GRH verification | Vaporware — far too imprecise compared to existing methods |
+
+**The killer application is D**, but reframed: **The prime-count tomography framework establishes that L-zero phase estimation is a frequency estimation problem with provably optimal sample complexity, and this reframing has consequences.** Specifically:
+
+1. **It provides a lower bound**: No method that uses only prime-count data can recover $d$ L-zero phases with fewer than $O(d)$ measurements. This is a theorem, not speculation.
+
+2. **It connects computational number theory to signal processing theory**: The Cramér-Rao bound, super-resolution limits, and compressed sensing guarantees all apply directly to L-zero estimation. This gives a new set of tools for analyzing the fundamental limits of L-function computation.
+
+3. **It suggests a hybrid algorithm**: Use $O(d)$ prime-count measurements (cheap per-measurement but many needed) to get a rough estimate of zero locations, then refine using a few high-precision direct L-function evaluations (expensive per-evaluation but few needed). This hybrid approach could be optimal for parameter regimes where neither method alone is ideal.
+
+4. **It is the most testable**: The optimality claim can be verified numerically (as the user has already done for the test case) and proven analytically. This is not vaporware — it's a mathematical result with a clear statement.
+
+The practical impact: this framework will matter most when someone needs to compute L-zeros in a setting where direct L-function computation is expensive but prime-count data is cheap or pre-existing. The most likely such setting is **large-scale computational surveys** of L-functions (like the LMFDB), where prime-count data for many characters could be precomputed and then reused for zero estimation via tomography, amortizing the sieving cost across many L-function computations.
+
+### Final Honest Assessment
+
+This is a **genuinely interesting mathematical observation** that connects two fields (analytic number theory and spectral estimation) in a non-obvious way. The forward direction is classical; the inverse direction is novel. But the practical value is limited by the fact that in most arithmetic settings, the direct methods are more efficient. The real value is **conceptual**: it provides a new way to think about L-zeros, new tools for analyzing the limits of L-function computation, and a bridge to the experimental quantum chaos community. I would not call any of these a "killer application" in the sense of displacing existing methods, but **D (optimal sampling) is a genuine theorem** and **C (quantum chaos) is a genuine cross-domain opportunity** that could lead to publishable results in experimental physics.

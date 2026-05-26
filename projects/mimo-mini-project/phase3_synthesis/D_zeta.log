@@ -1,0 +1,58 @@
+=== Phase D-zeta: MUSIC on Riemann ψ(x) − x bias ===
+Target γ: [14.1347, 21.022, 25.0109, 30.4249, 32.9351, 37.5862, 40.9187, 43.3271]
+
+  ψ computed in 2.3s
+  Signal range: [-0.6227, 0.6383], Δn=0.0144
+  Nyquist γ = 218.30
+
+--- n_sources=5 (top 12) ---
+  γ= 14.146  truth=14.135  err= 0.08%  P=1.17e+00  ← MATCH
+  γ= 21.068  truth=21.022  err= 0.22%  P=6.94e-01  ← MATCH
+  γ= 25.047  truth=25.011  err= 0.14%  P=2.40e-01  ← MATCH
+  γ= 37.695  truth=37.586  err= 0.29%  P=3.18e-02  ← MATCH
+  γ= 30.421  truth=30.425  err= 0.01%  P=1.05e-02  ← MATCH
+  γ= 33.023  truth=32.935  err= 0.27%  P=3.73e-03  ← MATCH
+  γ= 40.872  truth=40.919  err= 0.11%  P=2.71e-03  ← MATCH
+  γ= 23.526  P=2.66e-03  (no match within 3%)
+  γ= 26.631  P=2.66e-03  (no match within 3%)
+  γ= 22.572  P=2.65e-03  (no match within 3%)
+  γ= 28.936  P=2.65e-03  (no match within 3%)
+  γ= 19.466  P=2.64e-03  (no match within 3%)
+
+--- n_sources=7 (top 12) ---
+  γ= 14.146  truth=14.135  err= 0.08%  P=1.23e+00  ← MATCH
+  γ= 21.068  truth=21.022  err= 0.22%  P=7.75e-01  ← MATCH
+  γ= 30.466  truth=30.425  err= 0.14%  P=5.89e-01  ← MATCH
+  γ= 25.047  truth=25.011  err= 0.14%  P=4.76e-01  ← MATCH
+  γ= 37.686  truth=37.586  err= 0.26%  P=3.67e-01  ← MATCH
+  γ= 32.960  truth=32.935  err= 0.07%  P=2.01e-01  ← MATCH
+  γ= 40.917  truth=40.919  err= 0.00%  P=1.68e-02  ← MATCH
+  γ= 43.519  truth=43.327  err= 0.44%  P=3.12e-03  ← MATCH
+  γ= 39.324  P=2.73e-03  (no match within 3%)
+  γ= 34.526  P=2.67e-03  (no match within 3%)
+  γ= 23.526  P=2.66e-03  (no match within 3%)
+  γ= 26.631  P=2.66e-03  (no match within 3%)
+
+--- n_sources=10 (top 12) ---
+  γ= 30.466  truth=30.425  err= 0.14%  P=1.60e+00  ← MATCH
+  γ= 14.146  truth=14.135  err= 0.08%  P=1.24e+00  ← MATCH
+  γ= 21.068  truth=21.022  err= 0.22%  P=7.89e-01  ← MATCH
+  γ= 25.047  truth=25.011  err= 0.14%  P=5.24e-01  ← MATCH
+  γ= 37.686  truth=37.586  err= 0.26%  P=4.27e-01  ← MATCH
+  γ= 32.960  truth=32.935  err= 0.07%  P=3.07e-01  ← MATCH
+  γ= 40.935  truth=40.919  err= 0.04%  P=2.16e-01  ← MATCH
+  γ= 43.393  truth=43.327  err= 0.15%  P=1.14e-01  ← MATCH
+  γ= 48.119  truth=48.005  err= 0.24%  P=8.10e-03  ← MATCH
+  γ= 49.694  truth=49.774  err= 0.16%  P=4.60e-03  ← MATCH
+
+--- n_sources=15 (top 12) ---
+  γ= 30.466  truth=30.425  err= 0.14%  P=2.23e+00  ← MATCH
+  γ= 14.146  truth=14.135  err= 0.08%  P=1.32e+00  ← MATCH
+  γ= 21.068  truth=21.022  err= 0.22%  P=8.17e-01  ← MATCH
+  γ= 25.047  truth=25.011  err= 0.14%  P=5.56e-01  ← MATCH
+  γ= 37.686  truth=37.586  err= 0.26%  P=4.96e-01  ← MATCH
+  γ= 43.393  truth=43.327  err= 0.15%  P=3.82e-01  ← MATCH
+  γ= 32.960  truth=32.935  err= 0.07%  P=3.52e-01  ← MATCH
+  γ= 40.944  truth=40.919  err= 0.06%  P=2.42e-01  ← MATCH
+  γ= 48.119  truth=48.005  err= 0.24%  P=9.39e-03  ← MATCH
+  γ= 49.721  truth=49.774  err= 0.11%  P=5.25e-03  ← MATCH

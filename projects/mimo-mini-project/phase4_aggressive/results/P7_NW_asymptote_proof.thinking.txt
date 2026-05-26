@@ -1,0 +1,299 @@
+We are given a problem about the limit of NW(Q) as Q approaches infinity. We have empirical data suggesting NW(Q) → about 0.671, and a closed form candidate C = (1/2)·Π_p (1 + 1/(p²(p−1))) ≈ 0.66989. There is a small discrepancy (0.671 vs 0.66989). We need to either prove the limit equals C, identify the obstruction, or provide a roadmap.
+
+First, we need to understand what NW(Q) and J(Q) are. From context, it seems to be related to some arithmetic function, possibly coming from the study of Dirichlet series or the Mertens function? There is mention of Codecá-Perelli, Mikolás Fourier-side, Mertens function M(Q). Also, there is J(Q) and Φ(Q). Possibly, Φ(Q) is the Euler totient? But then J(Q) is something else.
+
+Let's parse: "Mikolás formula gives J(Q) = (1/2π²) Σ_m |1 + Σ_{d|m, d≤Q} d·M(Q/d)|² / m²." This looks like an expression for something like an average of a Dirichlet series squared? M(Q) is probably the Mertens function: M(x) = Σ_{n≤x} μ(n), where μ is the Möbius function. Then J(Q) is defined by that sum. And then NW(Q) = Q·J(Q)/Φ(Q) maybe? Actually, the problem says: "Convert the empirical observation NW(Q) → ~0.671 (with spikes) into a proven statement." And then later: "If the average behavior gives J(Q)/Φ(Q) ~ const/Q, then NW(Q) → const." So it seems NW(Q) is defined as Q·J(Q)/Φ(Q). So we want to prove that lim_{Q→∞} Q·J(Q)/Φ(Q) = C.
+
+Now, Φ(Q) might be something like the number of primitive characters? Or maybe it's the Euler totient function? But in the formula for C, we see a product over primes, reminiscent of constants in analytic number theory. C = (1/2)·Π_p (1 + 1/(p²(p−1))). That product converges because the terms are 1 + O(1/p^3). So it's a convergent infinite product.
+
+The Mikolás formula likely relates to the study of the Riemann zeta function or Dirichlet L-functions. Possibly, J(Q) is an average related to the number of zeros? Alternatively, it could be related to the number of zeros of the zeta function with imaginary part ≤ Q? But then NW(Q) might be the normalized number of zeros? That might be plausible: NW(Q) = N(Q)/Q·log(Q/(2πe))? But that's not it.
+
+Wait: The problem statement: "Closed form candidate: C = (1/2)·Π_p (1 + 1/(p²(p−1)))". That looks like a constant that appears in the context of the pair correlation of zeros of the zeta function or something similar? Actually, I recall that the pair correlation constant is 1, but here it's a product. Alternatively, it might be related to the distribution of squarefree numbers or something.
+
+Given the names Codecá-Perelli, they are known for work on the Mertens function and its oscillations. There is a result by Codecá and Perelli that under RH, the Mertens function M(x) = o(x^{1/2+ε}) but they might have given precise averages. Also, Mikolás is known for a formula relating the Riemann zeta function to sums over Möbius function.
+
+I need to reconstruct what J(Q) and Φ(Q) are. Possibly, J(Q) is an integral or sum related to the Mertens function. The formula given: J(Q) = (1/2π²) Σ_m |1 + Σ_{d|m, d≤Q} d·M(Q/d)|² / m². That looks like a double sum. Let's denote S_Q(m) = Σ_{d|m, d≤Q} d·M(Q/d). Then J(Q) = (1/2π²) Σ_m |1+S_Q(m)|^2 / m^2.
+
+Maybe this arises from considering the Dirichlet series for the Möbius function? Alternatively, it might be related to the explicit formula for the number of zeros of the zeta function.
+
+Given the empirical drift and spikes, it might be that NW(Q) is something like the number of sign changes of Mertens function? But the constant is close to 0.67.
+
+Let's try to interpret: NW(Q) = Q·J(Q)/Φ(Q). If Φ(Q) is something like the number of integers up to Q? Or maybe Φ(Q) is the summatory function of something? Possibly, Φ(Q) is the sum of the Möbius function over something? Alternatively, it could be the number of squarefree numbers up to Q? But that is about 6/π^2 Q, so that constant is about 0.6079, not 0.67.
+
+Maybe Φ(Q) is the Euler totient summatory: Σ_{n≤Q} φ(n) ~ (3/π^2) Q^2, so Q·J(Q)/Φ(Q) would be something like J(Q) / ( (3/π^2) Q )? That would go to zero if J(Q) is bounded? Not sure.
+
+Another idea: In the context of the Mertens function, there is a known constant related to the average of |M(x)|^2. For example, assuming RH, one has ∫_1^X M(x)^2 dx ~ (1/π^2) X log X? Actually, there are results on the mean square of M(x). But here we have a sum over m.
+
+Maybe J(Q) is something like an average of (1+S_Q(m))^2. And S_Q(m) involves M(Q/d). If we take Q large, then M(Q/d) is roughly something? Under RH, M(x) is O(x^{1/2+ε}), so d·M(Q/d) is O(d (Q/d)^{1/2+ε}) = O(Q^{1/2+ε} d^{1/2-ε}). Summing over d|m, d≤Q, we get at most τ(m) m^{1/2} Q^{1/2+ε}. That's messy.
+
+Maybe there is a probabilistic interpretation: The Möbius function behaves like a random sequence with mean 0. Then M(x) is like a random walk with step ±1, so M(x) is typically of size √x. Then d·M(Q/d) is like d√(Q/d) = √(Qd). For fixed m, as Q→∞, the number of divisors d of m that are ≤Q grows, but m is fixed in the sum over m? Actually, the sum over m goes to infinity. So we need to average over m.
+
+Maybe we can try to compute the expected value of |1+S_Q(m)|^2 assuming random signs for μ(n). That might yield a constant. And that constant might be the product over primes of some local factors. That is typical in probabilistic number theory.
+
+Specifically, if we model μ(n) as independent random variables with mean 0 and variance 1 (subject to being supported on squarefree numbers), then the Mertens function M(x) is a sum of these. But then S_Q(m) = Σ_{d|m, d≤Q} d·M(Q/d). Under the random model, we can compute the expectation of |1+S_Q(m)|^2, then average over m with weight 1/m^2. And then take Q→∞. That might give a constant.
+
+Maybe that's the approach: Heuristically, assuming the Möbius function behaves randomly, we can compute the limit. But to prove it, we need to show that the actual Mertens function satisfies the same averages as the random model. That would be a hard problem, related to the Mertens conjecture and the Riemann hypothesis.
+
+But the problem asks for a proof sketch or identification of the obstruction. Possibly, under the assumption of the Riemann Hypothesis and maybe some additional hypothesis (like the simplicity of zeros or the pair correlation conjecture), one can prove the limit.
+
+Alternatively, the constant C might be exactly (1/2) Π_p (1+1/(p^2(p-1))). Let's compute that product more accurately. I can compute it numerically to high precision. But first, let's denote:
+
+C = (1/2) ∏_p (1 + 1/(p^2(p-1))).
+
+We can compute it:
+
+p=2: 1 + 1/(4*1) = 1 + 1/4 = 1.25
+p=3: 1 + 1/(9*2) = 1 + 1/18 ≈ 1.0555556
+p=5: 1 + 1/(25*4) = 1 + 1/100 = 1.01
+p=7: 1 + 1/(49*6) ≈ 1 + 1/294 ≈ 1.00340136
+p=11: 1 + 1/(121*10) ≈ 1 + 1/1210 ≈ 1.00082645
+So product over primes: 1.25 * 1.0555556 ≈ 1.3194445, times 1.01 ≈ 1.332639, times 1.00340136 ≈ 1.337161, times 1.00082645 ≈ 1.338267, and then further primes contribute very little. So product ≈ 1.338. Half of that is 0.669. So indeed C ≈ 0.669.
+
+The empirical limit seems to be about 0.671, which is slightly higher. Could it be that the true constant is something else? Maybe it's (1/2) Π_p (1 + 1/(p^2(p-1))) but with an additional factor? Alternatively, maybe the product is over p of (1 + 1/(p(p-1)^2))? That would be different.
+
+Maybe the closed form candidate is not exactly correct. But the problem says "Probably right but not quite matching the empirical drift (which goes to ≈ 0.671)." So we need to determine if the discrepancy is due to finite Q corrections (like a 1/log Q term) or if the closed form is wrong.
+
+The data: NW(50k)=0.66423, NW(100k)=0.66812, NW(200k)=0.66911, then around 0.671, and NW(400k)=0.67115. So it is increasing slowly. If the limit were 0.66989, then at 400k it's already above that (0.67115 > 0.66989). So maybe the limit is actually higher. But there is an elevation between 290k-310k to 0.68-0.70, which suggests there might be spikes. So the average might settle around 0.671. Could the true constant be something like 0.671...? Let's compute more accurately the product. I'll compute the product to high precision.
+
+Let me compute log C = log(1/2) + Σ_p log(1 + 1/(p^2(p-1))).
+
+We can sum over primes up to a large value. For p large, 1/(p^2(p-1)) ~ 1/p^3, so the sum converges quickly. I'll compute using known primes.
+
+I'll do a quick computation in Python mentally? Alternatively, I can recall that ∏_p (1 + 1/(p^2(p-1))) is known as a constant related to the Mertens function? Actually, I recall that the average value of the squarefree counting function involves a similar product. But let's compute numerically.
+
+Take primes up to, say, 100. I'll list primes and compute log(1+ε) ≈ ε - ε^2/2 + ... but since ε is small, we can just compute directly.
+
+I'll compute the product P = ∏_p (1 + a_p) where a_p = 1/(p^2(p-1)).
+
+For p=2: a=1/(4*1)=0.25
+p=3: 1/(9*2)=1/18≈0.0555556
+p=5: 1/(25*4)=1/100=0.01
+p=7: 1/(49*6)=1/294≈0.00340136
+p=11: 1/(121*10)=1/1210≈0.00082645
+p=13: 1/(169*12)=1/2028≈0.00049309
+p=17: 1/(289*16)=1/4624≈0.00021626
+p=19: 1/(361*18)=1/6498≈0.00015389
+p=23: 1/(529*22)=1/11638≈0.00008593
+p=29: 1/(841*28)=1/23548≈0.00004246
+p=31: 1/(961*30)=1/28830≈0.00003469
+p=37: 1/(1369*36)=1/49284≈0.00002029
+p=41: 1/(1681*40)=1/67240≈0.00001487
+p=43: 1/(1849*42)=1/77658≈0.00001288
+p=47: 1/(2209*46)=1/101614≈0.00000984
+p=53: 1/(2809*52)=1/146068≈0.00000685
+p=59: 1/(3481*58)=1/201898≈0.00000495
+p=61: 1/(3721*60)=1/223260≈0.00000448
+p=67: 1/(4489*66)=1/296274≈0.00000338
+p=71: 1/(5041*70)=1/352870≈0.00000283
+p=73: 1/(5329*72)=1/383688≈0.00000261
+p=79: 1/(6241*78)=1/486798≈0.00000205
+p=83: 1/(6889*82)=1/564898≈0.00000177
+p=89: 1/(7921*88)=1/697048≈0.00000143
+p=97: 1/(9409*96)=1/903264≈0.00000111
+
+Now compute the product of (1+a_p) for these primes. I'll do step by step:
+
+Start with 1.
+p=2: *1.25 = 1.25
+p=3: *1.0555556 ≈ 1.25*1.0555556 = 1.3194445
+p=5: *1.01 = 1.3194445*1.01 = 1.332638945
+p=7: *1.00340136 ≈ 1.332638945*1.00340136 = 1.337161 (approx: 1.332638945*1.00340136 = 1.332638945 + 1.332638945*0.00340136 ≈ 1.332638945 + 0.004533 ≈ 1.3371719, let's compute more precisely: 1.332638945*0.00340136 = 0.004533, so 1.3371719)
+p=11: *1.00082645 ≈ 1.3371719*1.00082645 ≈ 1.3371719 + 1.3371719*0.00082645 ≈ 1.3371719 + 0.001105 ≈ 1.3382769
+p=13: *1.00049309 ≈ 1.3382769*1.00049309 ≈ 1.3382769 + 0.000659 ≈ 1.3389359
+p=17: *1.00021626 ≈ 1.3389359*1.00021626 ≈ 1.3389359 + 0.0002896 ≈ 1.3392255
+p=19: *1.00015389 ≈ 1.3392255*1.00015389 ≈ 1.3392255 + 0.0002061 ≈ 1.3394316
+p=23: *1.00008593 ≈ 1.3394316*1.00008593 ≈ 1.3394316 + 0.0001151 ≈ 1.3395467
+p=29: *1.00004246 ≈ 1.3395467*1.00004246 ≈ 1.3395467 + 0.0000569 ≈ 1.3396036
+p=31: *1.00003469 ≈ 1.3396036*1.00003469 ≈ 1.3396036 + 0.0000465 ≈ 1.3396501
+p=37: *1.00002029 ≈ 1.3396501*1.00002029 ≈ 1.3396501 + 0.0000272 ≈ 1.3396773
+p=41: *1.00001487 ≈ 1.3396773*1.00001487 ≈ 1.3396773 + 0.0000199 ≈ 1.3396972
+p=43: *1.00001288 ≈ 1.3396972*1.00001288 ≈ 1.3396972 + 0.0000173 ≈ 1.3397145
+p=47: *1.00000984 ≈ 1.3397145*1.00000984 ≈ 1.3397145 + 0.0000132 ≈ 1.3397277
+p=53: *1.00000685 ≈ 1.3397277*1.00000685 ≈ 1.3397277 + 0.0000092 ≈ 1.3397369
+p=59: *1.00000495 ≈ 1.3397369*1.00000495 ≈ 1.3397369 + 0.0000066 ≈ 1.3397435
+p=61: *1.00000448 ≈ 1.3397435*1.00000448 ≈ 1.3397435 + 0.0000060 ≈ 1.3397495
+p=67: *1.00000338 ≈ 1.3397495*1.00000338 ≈ 1.3397495 + 0.0000045 ≈ 1.3397540
+p=71: *1.00000283 ≈ 1.3397540*1.00000283 ≈ 1.3397540 + 0.0000038 ≈ 1.3397578
+p=73: *1.00000261 ≈ 1.3397578*1.00000261 ≈ 1.3397578 + 0.0000035 ≈ 1.3397613
+p=79: *1.00000205 ≈ 1.3397613*1.00000205 ≈ 1.3397613 + 0.0000027 ≈ 1.3397640
+p=83: *1.00000177 ≈ 1.3397640*1.00000177 ≈ 1.3397640 + 0.0000024 ≈ 1.3397664
+p=89: *1.00000143 ≈ 1.3397664*1.00000143 ≈ 1.3397664 + 0.0000019 ≈ 1.3397683
+p=97: *1.00000111 ≈ 1.3397683*1.00000111 ≈ 1.3397683 + 0.0000015 ≈ 1.3397698
+
+So the product over primes up to 97 is about 1.33977. Half of that is 0.669885. So C ≈ 0.669885. If we include primes above 97, the product increases slightly. The tail contribution: For p>97, we have Σ_{p>97} log(1+a_p) ≈ Σ_{p>97} a_p, and a_p < 1/p^3. The sum over p>97 of 1/p^3 is less than ∑_{n>97} 1/n^3 ≈ ∫_{97}∞ dx/x^3 = 1/(2*97^2) ≈ 1/(2*9409) ≈ 0.0000531. Actually, more precisely, ∑_{n>97} 1/n^3 ≈ 1/(2*97^2) = 1/18818 ≈ 5.31e-5. But since a_p ≈ 1/p^3, the tail sum is about that. So log(product tail) ≈ 5e-5, so product tail ≈ 1.00005. Thus total product ≈ 1.33977*1.00005 ≈ 1.33984, half is 0.66992. So C is about 0.66992. The empirical values at 200k and 400k are around 0.66911 and 0.67115, which straddle this value. So maybe the limit is indeed around 0.6699, and the empirical fluctuations are due to a slow convergence with a 1/log Q term? The data shows an increase from 0.66423 at 50k to 0.67115 at 400k. That's an increase of about 0.0069 over a factor of 8 in Q. If the approach were like C + a/log Q, then at Q=50k, log(50000)≈10.82, so a/10.82 ≈ -0.00566 if a is negative? Actually, NW(50k) is lower than C, so maybe C + a/log Q with a negative a. Then at Q=400k, log(400000)≈12.90, so a/12.90 ≈ -0.00125. That would mean a ≈ -0.061. But then at Q=50k, a/10.82 ≈ -0.00564, so C -0.00564 = 0.66428, close to 0.66423. At Q=100k, log(100000)=11.51, a/11.51 ≈ -0.00530, so NW ≈ 0.66992 -0.00530 = 0.66462, but empirical is 0.66812, which is higher. So that doesn't match well. Maybe it's C + a/√Q? That would drop faster. Alternatively, maybe the convergence is oscillatory due to zeros of zeta function.
+
+Given the mention of "spikes" and the elevation at 290k-310k, it might be that NW(Q) has an oscillatory component related to the imaginary parts of zeros. So the average might be C, but with fluctuations of size O(1/log Q) or something.
+
+Now, the problem asks for a proof sketch that lim NW(Q) = C. We have the Mikolás formula. We want to compute the limit of Q·J(Q)/Φ(Q). Possibly, Φ(Q) is something like the number of primitive characters of conductor ≤ Q? Or maybe it's the number of Dirichlet characters? Alternatively, Φ(Q) could be the summatory function of the Euler totient, but that is ~ (3/π^2) Q^2. Then Q·J(Q)/Φ(Q) would be like J(Q)/ ( (3/π^2) Q ). If J(Q) is of order Q, then NW(Q) would be of order constant. So maybe J(Q) ~ (3/π^2) C Q? That could be.
+
+Maybe we can derive the closed form from the Mikolás formula by averaging. Let's attempt a heuristic derivation.
+
+We have J(Q) = (1/2π²) Σ_{m=1}^∞ |1 + Σ_{d|m, d≤Q} d·M(Q/d)|² / m².
+
+Consider the term 1 + S_Q(m). For fixed m and large Q, the sum over d|m, d≤Q includes all divisors of m (since eventually Q > m, so all d|m satisfy d≤Q). So for Q > m, S_Q(m) = Σ_{d|m} d·M(Q/d). And M(Q/d) is the Mertens function at argument Q/d. Under RH, M(x) = O(x^{1/2+ε}), so d·M(Q/d) = O(d (Q/d)^{1/2+ε}) = O(Q^{1/2+ε} d^{1/2-ε}). So S_Q(m) is not necessarily small compared to 1. But we are going to average over m with weight 1/m².
+
+Maybe we can use the fact that M(x) has mean square of order x^{1/2}? Actually, assuming RH, ∫_1^X M(t)^2 dt ~ X log X? I'm not sure. There is a conjecture that M(x) = O(x^{1/2+ε}) but the average might be smaller. Actually, under the Mertens conjecture (which is false), M(x) = O(x^{1/2}). But it's known that limsup |M(x)|/√x is > something. But maybe on average, M(x) behaves like a random walk, so the mean square is ~ x / ζ(2)? That would be if μ(n) were independent random variables with variance 1 for squarefree numbers. Actually, the variance of M(x) would be Σ_{n≤x} μ(n)^2 ~ (6/π^2)x, so the mean square is ~ (6/π^2)x. So under a random model, M(x) typically has size √x. Then d·M(Q/d) typically has size d√(Q/d) = √(Qd). So S_Q(m) = Σ_{d|m} √(Qd) · (something like a random sign). The sum over d|m of √d is not too large. For a given m, the number of divisors is τ(m), and the sum of √d is ≤ τ(m)√m. So S_Q(m) is typically of size √Q times something like √m τ(m). That grows with Q, so |1+S_Q(m)|² is of order Q m τ(m)^2. Then summing over m with weight 1/m² gives a sum over m of Q τ(m)^2 / m, which diverges? That would be a problem.
+
+Maybe I'm misunderstanding: Perhaps the sum over m is not over all m, but only over m up to something? Or maybe there is a cancellation because M(Q/d) has random signs? Actually, if we treat M(Q/d) as independent random variables with mean 0 and variance ~ Q/d, then S_Q(m) is a sum of independent random variables with variances d² Var(M(Q/d)) ~ d² * (Q/d) = dQ. So Var(S_Q(m)) = Σ_{d|m} dQ = Q Σ_{d|m} d = Q σ(m), where σ(m) is the sum of divisors. That is huge: typically σ(m) is about m log log m. So the variance of S_Q(m) is of order Q m log log m. That suggests that S_Q(m) is typically of size √(Q m log log m). So |1+S_Q(m)|² is of order Q m log log m. Then summing over m with weight 1/m² gives ∑_m Q log log m / m, which diverges like Q log Q? That would mean J(Q) diverges as Q log Q, and then NW(Q) = Q J(Q)/Φ(Q) would also diverge if Φ(Q) is of order Q^2? Possibly not.
+
+Maybe Φ(Q) is also of order Q log Q? That could balance. Alternatively, maybe the sum over m is not over all m, but over m that are bounded by something like Q? In many such formulas, the sum is over m up to Q. I need to look up Mikolás formula. I recall that Mikolás gave a formula for the number of zeros of the Riemann zeta function in terms of the Mertens function. Possibly, J(Q) is related to N(T), the number of zeros with imaginary part ≤ T. And Φ(Q) might be something like T log T/(2π). That is the leading term of N(T). So NW(Q) might be N(Q)/ (Q log Q/(2π))? That would tend to 1, not 0.67. So no.
+
+Alternatively, maybe J(Q) is an integral related to the explicit formula for log ζ(s). There is a formula by Mikolás: ∫_1^Q |∑_{n≤x} μ(n)/n|^2 dx = something. Actually, I recall that the Mertens function M(x) appears in the explicit formula for the number of zeros: N(T) = (T/2π) log(T/2πe) + (7/8) + S(T) + o(1), where S(T) involves the argument of ζ(s). And there is a formula linking S(T) to the Möbius function. Possibly, J(Q) is something like ∫_1^Q S(t)^2 dt? That would be known to be ~ (1/2π²) log Q, so then NW(Q) might be something like Q times that divided by something.
+
+Wait: There is a known result: ∫_0^T |S(t)|^2 dt ~ (1/2π²) log T, where S(t) is the argument of the zeta function. And there is a formula by Mikolás linking S(t) to sums over the Möbius function. So maybe J(Q) = ∫_1^Q S(t)^2 dt, and Φ(Q) is something like Q log Q? Then NW(Q) = Q J(Q)/Φ(Q) would be like Q * (1/2π²) log Q / (Q log Q) = 1/(2π²) ≈ 0.05066, not 0.67.
+
+So that's not it.
+
+Maybe NW(Q) is the normalized number of zeros of the zeta function on the critical line? That is, the proportion of zeros on the critical line up to height T. It is known that a positive proportion lie on the line, and under RH it's 100%. But the empirical constant 0.671 is reminiscent of the proportion of zeros on the critical line for moderate heights? Actually, it's known that at least 40% of zeros are on the line, and more recent results give over 41%, but not 67%. And the constant 0.671 is close to 2/3, maybe related to something else.
+
+Alternatively, maybe it's related to the distribution of squarefree numbers. The density of squarefree numbers is 6/π^2 ≈ 0.6079. That's not 0.671.
+
+Maybe it's related to the average order of the Euler totient? φ(n) ~ n/ζ(2) on average, but that constant is 6/π^2 again.
+
+Given the product form, it looks like an Euler product that appears in the mean value of a multiplicative function. Possibly, the function f(n) such that ∑_{n≤x} f(n) ~ C x. For example, if f(n) = |μ(n)| (squarefree indicator), the constant is 6/π^2. If f(n) = μ(n)^2 * something, maybe we get such a product.
+
+Maybe J(Q) is an average of something like ∑_{d|m} d M(Q/d). That sum resembles a convolution. In fact, if we define g(m) = ∑_{d|m} d μ(Q/d)? But M(x) = ∑_{n≤x} μ(n), so M(Q/d) is not exactly a multiplicative function of m.
+
+Let's try to rewrite the sum inside: S_Q(m) = ∑_{d|m, d≤Q} d M(Q/d). Consider the Dirichlet convolution: (id * M)(m) where id(n)=n, but M is a function of a real argument. For fixed Q, define a function on integers: F_Q(n) = n M(Q/n). Then S_Q(m) = ∑_{d|m} F_Q(d). So S_Q = F_Q * 1, the convolution with the constant function 1. So 1+S_Q(m) = 1 + (F_Q * 1)(m). Then |1+S_Q(m)|^2 = (1+S_Q(m))^2 if it's real (probably it is). So J(Q) = (1/2π²) ∑_{m=1}^∞ (1 + (F_Q * 1)(m))^2 / m^2.
+
+This looks like the square of an L2 norm of a Dirichlet series. In fact, if we consider the Dirichlet series D(s) = ∑_{n=1}^∞ a_n n^{-s}, then the sum ∑ |a_n|^2 n^{-2σ} appears in the mean square on vertical lines. Here, if we set a_n = 1 for n=1? Actually, we have 1 + (F_Q * 1)(m) which could be the m-th coefficient of some Dirichlet series. Maybe it's related to the Dirichlet series for 1/ζ(s) or something.
+
+Recall that M(x) = ∑_{n≤x} μ(n), and ∑_{n=1}^∞ μ(n) n^{-s} = 1/ζ(s). So maybe we can express ∑_{m} (1 + (F_Q * 1)(m)) m^{-s} in terms of ζ(s) and an integral of M. Let's try:
+
+F_Q(n) = n M(Q/n). Then the Dirichlet series ∑_{n=1}^∞ F_Q(n) n^{-s} = ∑_{n=1}^∞ n M(Q/n) n^{-s} = ∑_{n=1}^∞ M(Q/n) n^{1-s}. Write m = Q/n, then n = Q/m, but n integer implies m divides Q? That's messy. Alternatively, treat Q as large and use integral representation.
+
+Maybe it's better to consider the generating function: For fixed Q, define A(s) = ∑_{m=1}^∞ (1 + (F_Q * 1)(m)) m^{-s}. Then 1 corresponds to ζ(s). And (F_Q * 1)(m) = ∑_{d|m} F_Q(d), so its Dirichlet series is (∑_{d=1}^∞ F_Q(d) d^{-s}) ζ(s). So A(s) = ζ(s) + ζ(s) ∑_{d=1}^∞ F_Q(d) d^{-s} = ζ(s) (1 + ∑_{d=1}^∞ F_Q(d) d^{-s}). Now ∑_{d=1}^∞ F_Q(d) d^{-s} = ∑_{d=1}^∞ d M(Q/d) d^{-s} = ∑_{d=1}^∞ M(Q/d) d^{1-s}. This sum is over d such that Q/d ≥ 1, i.e., d ≤ Q. So it's a finite sum: ∑_{d≤Q} M(Q/d) d^{1-s}. Write t = Q/d, then d = Q/t, and as d runs over integers ≤ Q, t runs over rational numbers Q/d. But if we sum over t such that t = Q/d, then t takes values that are divisors of Q? Actually, if d is integer, t = Q/d is not necessarily integer. So it's not a simple Dirichlet series.
+
+Maybe we can approximate by an integral: ∑_{d≤Q} M(Q/d) d^{1-s} ≈ ∫_{1}^{Q} M(Q/x) x^{1-s} dx. Change variable u=Q/x, x=Q/u, dx = -Q/u^2 du, then integral becomes ∫_{u=Q}^{1} M(u) (Q/u)^{1-s} (-Q/u^2) du = ∫_{1}^{Q} M(u) Q^{1-s} u^{s-1} Q/u^2 du = Q^{2-s} ∫_{1}^{Q} M(u) u^{s-3} du. So that's messy.
+
+Maybe there is a known identity: Mikolás (1957) proved a formula linking the Riemann zeta function to the Mertens function. Possibly, J(Q) is actually an integral that appears in the explicit formula for the number of zeros. I recall that there is a formula: ∫_1^T |ζ(1/2+it)|^2 dt ~ T log T, and also connections to the Möbius function.
+
+Given the difficulty, perhaps the problem is from a specific context where NW(Q) is defined as something like the normalized number of zeros of the zeta function on the critical line? But the constant 0.671 is not a known constant there.
+
+Another idea: The constant C = (1/2)∏_p (1+1/(p^2(p-1))) appears in the study of the number of abelian groups of order n, or something like that. Actually, the number of non-isomorphic abelian groups of order n is a function a(n). Its average order is something like ∏_{k≥1} ζ(2k+1) maybe? Not sure.
+
+Wait: There is a known constant: The average number of squarefree divisors of n is something like ∏_p (1+1/p^2) = ζ(2)/ζ(4) = (π^2/6)/(π^4/90) = 15/π^2 ≈ 1.519, not our constant.
+
+Maybe it's related to the number of solutions to some equation. Let's compute the product more precisely. Perhaps C is actually equal to 6/π^2 * something? 6/π^2 ≈ 0.6079. 0.6699/0.6079 ≈ 1.102, so maybe C = 6/π^2 * ∏_p (1+1/(p^3-p^2))? That product is ∏_p (1+1/(p^2(p-1))) indeed.
+
+Given the lack of context, I need to focus on the problem statement. It says: "Convert the empirical observation NW(Q) → ~0.671 (with spikes) into a proven statement." And then: "What I want: A proof sketch (or full proof) of: lim_{Q→∞} Q · J(Q)/Φ(Q) = C = (1/2)·Π_p (1 + 1/(p²(p−1)))"
+
+So the goal is to prove that limit. The problem also mentions: "Possible attack via Codecá-Perelli / Mikolás Fourier-side." So there are known results by Codecá and Perelli on the Mertens function and the zeta function. Possibly, they have asymptotic formulas for sums involving M(x). Also, Mikolás has a Fourier expansion.
+
+Maybe the Mikolás formula is: J(Q) = (1/2π²) ∫_1^∞ |1 + ∫_1^Q x M(Q/x) e^{-2π i x t} dx|^2 dt? That is a Fourier transform. Actually, the formula given: J(Q) = (1/2π²) Σ_m |1 + Σ_{d|m, d≤Q} d·M(Q/d)|² / m² looks like a discrete sum over m, which could be interpreted as a sum over integers, maybe coming from a Fourier series on the circle.
+
+Maybe we can interpret it as follows: Consider the function f(x) = 1 + Σ_{d≤Q} d M(Q/d) e^{2π i d x}? Then its L2 norm on [0,1] would be Σ |coefficient|^2. But here we have coefficients for frequencies m, but with weight 1/m²? That suggests a Sobolev norm.
+
+Alternatively, maybe it's related to the Mellin transform. The presence of 1/m² suggests the L2 norm of a Dirichlet series on the line Re(s)=1. Actually, if we consider ∑ a_n n^{-s}, then on the line Re(s)=1, the L2 norm over t is ∑ |a_n|^2 n^{-2}. So J(Q) looks like (1/2π²) times the L2 norm on the line Re(s)=1 of the Dirichlet series with coefficients a_m = 1 + Σ_{d|m, d≤Q} d M(Q/d). So J(Q) = (1/2π²) ∫_{1-i∞}^{1+i∞} |A(s)|^2 ds? Actually, by Parseval, ∫_{-∞}^{∞} |A(1+it)|^2 dt = 2π ∑ |a_n|^2 n^{-2}. So J(Q) = (1/(4π^3)) ∫ |A(1+it)|^2 dt? Not exactly.
+
+If we set A(s) = ∑_{m=1}^∞ (1 + S_Q(m)) m^{-s}, then on the line Re(s)=1, we have ∫_{-∞}^{∞} |A(1+it)|^2 dt = 2π ∑_{m} |1+S_Q(m)|^2 m^{-2}. So J(Q) = (1/(4π^3)) ∫ |A(1+it)|^2 dt. So J(Q) is proportional to the integral of |A(1+it)|^2.
+
+Maybe A(s) can be expressed in terms of ζ(s) and M. As we had, A(s) = ζ(s) (1 + ∑_{d≤Q} M(Q/d) d^{1-s}). Write B(s) = 1 + ∑_{d≤Q} M(Q/d) d^{1-s}. Then A(s) = ζ(s) B(s). So |A(1+it)|^2 = |ζ(1+it)|^2 |B(1+it)|^2. And ζ(1+it) has a pole at t=0, but on Re(s)=1 it is not bounded? Actually, ζ(1+it) is bounded away from t=0? It has a simple pole at s=1, so on Re(s)=1, |ζ(1+it)| ~ 1/|t| for small t, and otherwise it's bounded. So the integral might be dominated near t=0.
+
+Maybe we can approximate B(s). For large Q, and s=1+it with t small, d^{1-s} = d^{-it}. So B(1+it) = 1 + ∑_{d≤Q} M(Q/d) d^{-it}. If we assume that M(x) behaves like a random walk, then this sum might be approximated by an integral. But we need an exact limit.
+
+Given the complexity, I think the best approach is to provide a roadmap that outlines the steps needed to prove the limit, identifying the key analytic ingredients and potential obstructions.
+
+**Roadmap for proving lim_{Q→∞} Q·J(Q)/Φ(Q) = C:**
+
+1. **Define the quantities clearly.** We need precise definitions of J(Q), Φ(Q), and NW(Q). Likely:
+   - M(x) = ∑_{n≤x} μ(n) is the Mertens function.
+   - J(Q) = (1/2π²) ∑_{m=1}^∞ |1 + ∑_{d|m, d≤Q} d M(Q/d)|^2 / m^2.
+   - Φ(Q) is perhaps the summatory function of Euler's totient: Φ(Q) = ∑_{n≤Q} φ(n) ~ (3/π²) Q². Or maybe it's something else. But from the form of NW(Q) = Q·J(Q)/Φ(Q), if Φ(Q) ~ c Q², then NW(Q) ~ (1/c) J(Q)/Q. For NW(Q) to tend to a constant, J(Q) must be ~ c C Q. So we need to show J(Q) ~ c C Q, where c is the constant in the asymptotic of Φ(Q).
+
+   Assume Φ(Q) = ∑_{n≤Q} φ(n) ∼ (3/π²) Q². Then c = 3/π². So we need to prove J(Q) ∼ (3/π²) C Q.
+
+2. **Use the Mikolás formula to express J(Q) as a sum over m.** The sum is over all positive integers m. However, note that for fixed m, as Q→∞, the condition d≤Q becomes irrelevant for all divisors d of m (since eventually Q > m). So for each fixed m, for sufficiently large Q, the sum over d|m, d≤Q is actually over all divisors of m. Thus we can write:
+   S_Q(m) = ∑_{d|m} d M(Q/d) for Q > m.
+   Then 1+S_Q(m) = 1 + ∑_{d|m} d M(Q/d).
+
+   However, the contribution from m > Q may be significant. We need to handle the tail m > Q carefully. Possibly, for m > Q, the sum over d|m, d≤Q only includes divisors up to Q, but since m > Q, not all divisors are included. This could contribute to the main term as well.
+
+3. **Split the sum in J(Q) into two parts: m ≤ Q and m > Q.** For m ≤ Q, we have the full divisor sum. For m > Q, we have only partial divisor sum. We need to estimate both parts.
+
+4. **Analyze the main term for m ≤ Q.** For m ≤ Q, write:
+   1 + ∑_{d|m} d M(Q/d) = 1 + ∑_{d|m} d M(Q/d).
+   We need to understand the behavior of M(Q/d) for large Q. Under the Riemann Hypothesis (RH), M(x) = O(x^{1/2+ε}). However, for an average result, we might need more precise information about the distribution of M(x). Perhaps we can use the known asymptotic for the mean square of M(x) or use results from Codecá and Perelli on the summatory function of the Möbius function in short intervals.
+
+   A key observation: The sum over d|m of d M(Q/d) resembles a convolution. Consider the Dirichlet series associated with M. Let F(s) = ∑_{n=1}^∞ μ(n) n^{-s} = 1/ζ(s). Then M(x) is its summatory function. The sum ∑_{d|m} d M(Q/d) might be related to the coefficient of some Dirichlet series evaluated at s=0? Not sure.
+
+5. **Use a probabilistic model or random matrix theory heuristics.** Heuristically, treat μ(n) as independent random variables with mean 0 and variance 1 for squarefree n. Then M(x) is like a random walk. Under this model, we can compute the expected value of |1+S_Q(m)|^2 and average over m. This yields the constant C. To make this rigorous, one would need to show that the correlations of μ(n) are sufficiently small on average. This is related to proving that the Möbius function is orthogonal to deterministic sequences, which is equivalent to the Prime Number Theorem and more.
+
+   Possibly, one can use the method of moments: compute the limit of Q^{-1} ∑_{m≤Q} |1+S_Q(m)|^2 / m^2? But our sum is over all m, and weight 1/m^2, so it's like an average over m with weight 1/m^2, which is a convergent series. So the main contribution might come from m of moderate size, not too large compared to Q.
+
+6. **Connect to known asymptotics.** The constant C = (1/2) ∏_p (1+1/(p^2(p-1))) suggests an Euler product. Such constants often appear in mean values of multiplicative functions. For example, if we consider the multiplicative function f(n) defined by f(p^a) = something, then the average ∑_{n≤x} f(n) ~ C x. So perhaps J(Q) is related to ∑_{m≤Q} g(m) for some multiplicative function g. We need to identify g.
+
+   Let's try to compute the expected value of |1+S_Q(m)|^2 under the random model. Assume μ(n) are independent with mean 0, Var(μ(n)) = 1 if n is squarefree, and 0 otherwise? Actually, μ(n) is supported on squarefree numbers, and μ(n) = ±1. Under independence, E[μ(n)μ(m)] = 0 for n≠m. Then M(x) = ∑_{n≤x} μ(n) has variance ∑_{n≤x} μ(n)^2 = ∑_{n≤x, squarefree} 1 ∼ (6/π²)x. So E[M(x)^2] ∼ (6/π²)x.
+
+   For a fixed m, S_Q(m) = ∑_{d|m} d M(Q/d). Under the model, M(Q/d) are independent for different d? Not exactly, because they involve overlapping sums of μ(n). However, if we assume that the values M(Q/d) are approximately independent with variance ∼ (6/π²)(Q/d), then we can compute:
+   E[S_Q(m)] = 0.
+   E[S_Q(m)^2] = ∑_{d|m} d^2 E[M(Q/d)^2] ∼ (6/π²) Q ∑_{d|m} d.
+   So E[|1+S_Q(m)|^2] = 1 + E[S_Q(m)^2] ∼ 1 + (6/π²) Q σ(m), where σ(m) = ∑_{d|m} d.
+
+   Then J(Q) ∼ (1/2π²) ∑_{m=1}^∞ (1 + (6/π²) Q σ(m)) / m^2.
+   But this diverges because ∑ σ(m)/m^2 diverges? Let's check: σ(m) is about m log log m on average, so σ(m)/m^2 ~ (log log m)/m, and ∑ (log log m)/m diverges (like ∫ (log log x)/x dx diverges). So this heuristic gives a divergence, which is not good. That suggests that our independence assumption is too crude, or that there are cancellations making E[S_Q(m)^2] smaller. Indeed, M(Q/d) for different d are not independent; they are correlated because they involve the same μ(n) for n up to Q. In fact, M(Q/d1) and M(Q/d2) both sum μ(n) up to Q/d1 and Q/d2 respectively, and these sums share many terms if Q/d1 and Q/d2 are close. So we need to account for covariances.
+
+7. **Use the covariance structure.** Compute E[S_Q(m)^2] more carefully. S_Q(m) = ∑_{d|m} d M(Q/d). Write M(x) = ∑_{n≤x} μ(n). Then S_Q(m) = ∑_{d|m} d ∑_{n≤Q/d} μ(n) = ∑_{n=1}^Q μ(n) ∑_{d|m, d≤Q/n} d. Let’s denote A(m, n) = ∑_{d|m, d≤Q/n} d. Then S_Q(m) = ∑_{n=1}^Q μ(n) A(m, n). Under the model where μ(n) are independent with mean 0 and variance 1 (for squarefree n), we have:
+   E[S_Q(m)^2] = ∑_{n=1}^Q A(m, n)^2 E[μ(n)^2] = ∑_{n=1}^Q A(m, n)^2, since E[μ(n)^2]=1 if n is squarefree, but on average over n, the proportion of squarefree numbers is 6/π², so we might need to adjust. Actually, if we treat μ(n) as independent random variables with variance 1 for all n (ignoring squarefree condition), then E[μ(n)^2]=1. But then μ(n) would not be mean zero for non-squarefree? Actually, μ(n)=0 for non-squarefree, so the variance is 0 for those. So better to only sum over squarefree n. But for heuristic, we can approximate by assuming all n are squarefree with density 6/π². However, the condition d≤Q/n means A(m, n) depends on n.
+
+   This looks complicated.
+
+8. **Consider the limit as Q→∞ with m fixed.** For fixed m and Q→∞, Q/d is large, so M(Q/d) is of size about √(Q/d) in typical size. But its average square is (6/π²)(Q/d). However, in the sum S_Q(m), we sum over d|m, and these terms may be correlated. The correlation between M(Q/d1) and M(Q/d2) for two divisors d1 and d2 of m is essentially the covariance between the sums up to Q/d1 and Q/d2. That covariance is the sum over n up to min(Q/d1, Q/d2) of Var(μ(n)) = ∑_{n≤min(Q/d1, Q/d2)} 1 (for squarefree n) ≈ (6/π²) min(Q/d1, Q/d2). So if we assume μ(n) are independent, then Cov(M(a), M(b)) = ∑_{n≤min(a,b)} Var(μ(n)) ≈ (6/π²) min(a,b). So for a = Q/d1, b = Q/d2, min(a,b) = Q / max(d1,d2). So Cov(M(Q/d1), M(Q/d2)) ≈ (6/π²) Q / max(d1,d2).
+
+   Then we can compute E[S_Q(m)^2] = ∑_{d1,d2|m} d1 d2 Cov(M(Q/d1), M(Q/d2)) ≈ (6/π²) Q ∑_{d1,d2|m} d1 d2 / max(d1,d2). This sum is multiplicative. Let's compute for prime powers. For m = p^a, the divisors are p^i for i=0,...,a. Then ∑_{i,j} p^i p^j / max(p^i, p^j) = ∑_{i,j} p^{i+j} / p^{max(i,j)} = ∑_{i,j} p^{min(i,j)}. This sum can be computed. For a=0, m=1, divisors: only 1, so sum = 1.
+   For a=1, divisors: 1 and p. Sum: i,j=0,0: min=0 => p^0=1; (0,1): min=0 =>1; (1,0):1; (1,1): min=1 => p^1=p. So total = 1+1+1+p = 3+p.
+   For a=2: divisors: 1, p, p^2. Compute sum over i,j=0,1,2 of p^{min(i,j)}. This is symmetric. We can compute: sum_{i,j} p^{min(i,j)} = ∑_{k=0}^2 p^k * (number of pairs (i,j) with min(i,j)=k). For k=0: pairs where both i,j ≥0 and min=0: that means at least one is 0. Total pairs = 3^2=9, minus pairs where both ≥1: (i,j with i≥1,j≥1) = 2^2=4, so 5 pairs. But careful: min(i,j)=0 if i=0 or j=0. Number of pairs with i=0 or j=0 = 3+3-1=5. So contribution 5*1=5.
+   For k=1: min(i,j)=1 means i≥1, j≥1, and not both ≥2. So i,j ∈ {1,2} but not both 2. Number of pairs with i≥1,j≥1 = 2^2=4, minus pairs with both ≥2: (2,2) only, so 3 pairs. Contribution 3*p.
+   For k=2: min(i,j)=2 means both i≥2, so only (2,2): 1 pair. Contribution 1*p^2.
+   Total = 5 + 3p + p^2.
+   In general, for m = p^a, ∑_{i,j=0}^a p^{min(i,j)} = ∑_{k=0}^a p^k * ( (a-k+1)^2 - (a-k)^2? ) Actually, number of pairs with min(i,j)=k: i,j ∈ {k,...,a} and at least one equals k. Total with i≥k,j≥k: (a-k+1)^2. Subtract those with i≥k+1,j≥k+1: (a-k)^2. So number = (a-k+1)^2 - (a-k)^2 = 2(a-k)+1. So sum = ∑_{k=0}^a p^k (2(a-k)+1) = ∑_{k=0}^a p^k (2a-2k+1). This can be summed.
+
+   Then E[S_Q(m)^2] ≈ (6/π²) Q * S(m), where S(m) = ∑_{d1,d2|m} d1 d2 / max(d1,d2) = ∏_{p^a||m} S_p(a), with S_p(a) as above.
+
+   Then E[|1+S_Q(m)|^2] = 1 + E[S_Q(m)^2] (since mean zero). So J(Q) ∼ (1/2π²) ∑_{m=1}^∞ (1 + (6/π²) Q S(m)) / m^2.
+
+   Now, the sum over m of 1/m^2 converges to ζ(2)=π²/6. So the first part gives (1/2π²) * ζ(2) = 1/12. That's a constant, not growing with Q. The second part is (1/2π²) * (6/π²) Q ∑_{m=1}^∞ S(m)/m^2. So J(Q) ∼ (3/π^4) Q ∑_{m=1}^∞ S(m)/m^2, provided the sum converges.
+
+   Now we need to compute ∑_{m=1}^∞ S(m)/m^2. Since S(m) is multiplicative, we have ∑_{m=1}^∞ S(m)/m^2 = ∏_p (∑_{a=0}^∞ S_p(a) / p^{2a}). Then we can compute the Euler product. Let's compute for a prime p:
+
+   ∑_{a=0}^∞ S_p(a) / p^{2a}, where S_p(a) = ∑_{k=0}^a p^k (2(a-k)+1). We can compute this generating function.
+
+   Let’s denote F_p(x) = ∑_{a=0}^∞ S_p(a) x^a, with x = 1/p^2. We want F_p(1/p^2). Compute S_p(a) explicitly:
+
+   S_p(a) = ∑_{k=0}^a p^k (2(a-k)+1) = ∑_{k=0}^a p^k (2a-2k+1) = (2a+1)∑_{k=0}^a p^k - 2∑_{k=0}^a k p^k.
+   ∑_{k=0}^a p^k = (p^{a+1}-1)/(p-1).
+   ∑_{k=0}^a k p^k = p (1 - (a+1)p^a + a p^{a+1})/(p-1)^2 (standard formula).
+   So S_p(a) = (2a+1)(p^{a+1}-1)/(p-1) - 2p (1 - (a+1)p^a + a p^{a+1})/(p-1)^2.
+
+   This is messy. Maybe we can find a closed form for the generating function. Alternatively, we can compute the sum ∑_{a=0}^∞ S_p(a) / p^{2a} directly by summing over a.
+
+   Another approach: Interchange sums. Note that S(m) = ∑_{d1,d2|m} d1 d2 / max(d1,d2). We can write this as ∑_{d|m} d * ∑_{e|m, e≤d} e/d? Not sure.
+
+   Maybe we can compute the Dirichlet series ∑_{m=1}^∞ S(m) m^{-s} in terms of ζ(s). Since S(m) is multiplicative, we can compute the Euler factors. For a prime p, consider the local factor: ∑_{a=0}^∞ S_p(a) p^{-as}. We want at s=2. Let's compute for small a to guess a pattern.
+
+   For a=0: m=1, S(1)=? Divisors of 1: only 1. Then ∑_{d1,d2|1} d1 d2 / max(d1,d2) = 1*1/1=1. So S(1)=1.
+   For a=1: m=p, S(p)=? Divisors: 1 and p. Sum over d1,d2: as computed, 3+p.
+   For a=2: m=p^2, S(p^2)=5+3p+p^2.
+
+   Now compute the local factor L_p(s) = ∑_{a=0}^∞ S_p(a) p^{-as}. For s=2, we want L_p(2) = ∑_{a=0}^∞ S_p(a) p^{-2a}.
+
+   Let's compute numerically for p=2:
+   a=0: S=1, term=1.
+   a=1: S=3+2=5, term=5/4=1.25.
+   a=2: S=5+3*2+4=5+6+4=15, term=15/16=0.9375.
+   a=3: We need S_p(3). Compute S_p(3) = ∑_{k=0}^3 p^k (2(3-k)+1) = for p=2:
+   k=0: 2^0*(7)=7
+   k=1: 2^1*(5)=10
+   k=2: 2^2*(3)=12
+   k=3: 2^3*(1)=8
+   Sum=7+10+12+8=37. Term=37/64≈0.578125.
+   a=4: S_p(4)= ∑_{k=0}^4 2^k (2(4-k)+1)= 
+   k=0:1*(9)=9
+   k=1:2*(7)=14
+   k=2:4*(5)=20
+   k=3:8*(3)=24
+   k=4:16*(1)=16
+   Sum=9+14+20+24+16=83. Term=83/256≈0.32421875.
+   So L_2(2) = 1 + 1.25 + 0.9375 + 0.578125 + 0.32421875 + ... ≈ 4.09... and it likely converges to some value.
+
+   Now, the Euler product ∏_p L_p(2) would give ∑_{m} S(m)/m^2. We want this product to equal something like (π^4/18) C? Because from J(Q) ∼ (3/π^4) Q * (∑ S(m)/m^2), and we want this to be ∼ (3/π^2) C Q (since Φ(Q)∼ (3/π^2) Q^2, so NW(Q)=Q J/Φ ∼ (Q * (3/π^4) Q ∑ S(m)/m^2) / ((3/π^2) Q^2) = (1/π^2) ∑ S(m)/m^2). So NW(Q) ∼ (1/π^2) ∑_{m} S(m)/m^2. Therefore, we need ∑_{m} S(m)/m^2 = π^2 C = (π^2/2) ∏_p (1+1/(p^2(p-1))). So our heuristic suggests that under the random model, the constant is (1/π^2) ∑ S(m)/m^2. So if we can

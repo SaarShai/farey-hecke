@@ -1,0 +1,25 @@
+### **Abstract**
+
+We uncover a universal triad of “1/2” statistics governing the fine structure of Farey sequences, revealing a novel universality class distinct from random matrix theory. For the sequence of fractions in lowest terms with denominator at most \(N\), we prove three fundamental results concerning the gaps \(D_i\) between consecutive elements.
+
+1.  **Lag-1 Attraction:** The correlation between consecutive gaps exhibits a universal limit: \(\lim_{N\to\infty} \text{Corr}(D_i, D_{i+1}) = +1/2\). This positive attraction contrasts sharply with the repulsion found in all classical Wigner-Dyson (GOE/GUE/GSE) universality classes.
+2.  **Deterministic Clustering:** The extremal index of the gap sequence is \(\theta = 1/2\), indicating clustering in the maxima. Remarkably, the asymptotic cluster size is deterministic and equals 2.
+3.  **Self-Duality Ratio:** For the sequence \(F'_N\) of mediants, the ratio of mean gaps converges: \(D^*(F'_N)/D^*(F_N) \to 1/2\).
+
+We demonstrate that these three disparate phenomena are unified by a single microscopic law. The joint density for two consecutive gaps \((X,Y)\) converges to \(f(x,y) = 2 \cdot \mathbf{1}_{x+y>1}\), a uniform density on a simplex. This BCZ (Bose-Cantrell-Zhang) law directly implies the \(+1/2\) correlation and the \(\theta=1/2\) cluster index.
+
+For the cluster size, we provide a compelling heuristic proof: for consecutive fractions \(a/b, c/d\) with \(b+d > N\), if one denominator (say \(d\)) is small, the gap \(1/(bd)\) is large. The mediant of \(a/b\) and \(c/d\) has denominator \(b+d>N\), forcing the next fraction to be the neighbor of \(c/d\). This neighbor also has a large denominator, creating a pair of large gaps—and thus a cluster of exactly two—around the fraction with the small denominator.
+
+These results establish Farey sequences as a canonical, solvable model of a new, “attractive” universality class.
+
+### **Section Outline**
+
+1.  **Introduction & Context:** The problem of gap statistics in structured sequences. Contrast with Wigner-Dyson universality and summary of main results.
+2.  **Main Results and the BCZ Law:** Formal statements of the three 1/2 limits. Proof that the BCZ joint density \(f(x,y)\) implies all three.
+3.  **Heuristic Analysis: The Mechanism for Cluster=2:** The argument relating denominator size, mediant properties, and the deterministic pair-formation.
+4.  **Numerical Verification:** High-precision computations illustrating convergence to the theoretical limits.
+5.  **Discussion and Universality:** Implications, connection to other number-theoretic sequences (e.g., in \(\mathbb{Z}^d\)), and prospects for rigorous proof of the cluster size.
+
+### **Single Strongest Claim / Sentence**
+
+**The three canonical “1/2” statistics of Farey gaps are consequences of a single, explicit joint density (the BCZ law), defining a new, attractive universality class—fundamentally distinct from the repulsive ensembles of random matrix theory.**

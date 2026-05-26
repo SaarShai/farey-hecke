@@ -1,0 +1,692 @@
+The user is asking me to explore a mathematical observation about Farey sequences - specifically why two independent statistics (lag-1 correlation and extremal index) both converge to 1/2. This is a deep question that connects number theory, probability theory, and dynamical systems.
+
+Let me think through this carefully.
+
+**Background on Farey sequences and BCZ structure:**
+
+The Farey sequence F_N consists of all fractions a/b in [0,1] with 0 ≤ a ≤ b ≤ N, gcd(a,b)=1, ordered by value. The gap between consecutive fractions f_i = a_i/k_i and f_{i+1} = a_{i+1}/k_{i+1} is d_i = 1/(k_i k_{i+1}), by the mediant property.
+
+The BCZ (Boca-Cobeli-Zaharescu) framework studies these gaps through the continued fraction structure. The denominators satisfy:
+k_{i+2} = κ_i k_{i+1} - k_i, where κ_i = floor((N + k_i)/k_{i+1})
+
+and k_{i+2} ∈ [1, N].
+
+**The BCZ joint density:**
+
+The key result from Boca, Cobeli, and Zaharescu is about the asymptotic distribution of consecutive gaps. For the Farey sequence of order N, they showed that the distribution of pairs of consecutive gaps (Nd_i, Nd_{i+1}) converges to a distribution with a specific density on a region.
+
+Actually, let me recall more carefully. The BCZ result gives the limiting distribution of (Nd_i, Nd_{i+1}) as N → ∞. The joint density of consecutive gaps involves the region:
+
+Let X = k_i/k_{i+1} and Y = k_{i+1}/k_{i+2}. Then X, Y ∈ (0,1) and the constraint is related to the mediant property.
+
+The BCZ joint density for (x, y) where x = Nd_1 and y = Nd_2 (I need to be careful with normalization) is given by an integral involving the Gauss-Kuzmin distribution.
+
+Let me think about this more carefully.
+
+**Setting up the problem:**
+
+Consecutive gaps: d_i = 1/(k_i k_{i+1}) and d_{i+1} = 1/(k_{i+1} k_{i+2}).
+
+So d_{i+1}/d_i = k_i/k_{i+2}.
+
+The key variables are the ratios of consecutive denominators. Let:
+- x = k_i/k_{i+1} ∈ (0,1)
+- y = k_{i+1}/k_{i+2} ∈ (0,1)
+
+Then d_i = 1/(k_{i+1}^2 x) and d_{i+1} = 1/(k_{i+1}^2 y^{-1}) = y/k_{i+1}^2.
+
+Wait, let me redo this.
+
+d_i = 1/(k_i k_{i+1}) = 1/(k_{i+1}^2 · (k_i/k_{i+1})) = 1/(k_{i+1}^2 x) where x = k_i/k_{i+1}
+
+d_{i+1} = 1/(k_{i+1} k_{i+2}) = y/k_{i+1}^2 where y = k_{i+1}/k_{i+2}
+
+Hmm, actually: d_{i+1} = 1/(k_{i+1} k_{i+2}) and if y = k_{i+1}/k_{i+2}, then k_{i+2} = k_{i+1}/y, so d_{i+1} = y/k_{i+1}^2.
+
+And d_i = 1/(k_i k_{i+1}) and if x = k_i/k_{i+1}, then k_i = x k_{i+1}, so d_i = 1/(x k_{i+1}^2).
+
+So d_i d_{i+1} = y/(x k_{i+1}^4)... hmm, that's getting complicated. Let me think differently.
+
+Actually, the BCZ result is usually stated in terms of the normalized gaps. Let me define:
+- s_i = k_i/k_{i+1}
+
+The mediant property gives: k_{i+2} = κ_i k_{i+1} - k_i where κ_i = floor((N+k_i)/k_{i+1}).
+
+For large N, when k_{i+1} is not too close to N, we typically have κ_i = 1, and then k_{i+2} = k_{i+1} - k_i, which means s_{i+1} = k_{i+1}/k_{i+2} = k_{i+1}/(k_{i+1} - k_i) = 1/(1 - s_i).
+
+When κ_i = 1 (which happens when s_i + s_{i+1} > 1, i.e., when the fractions are "close"), we get the Gauss map dynamics: s_{i+1} = 1/(1-s_i) - no wait, that's not right.
+
+Let me reconsider. If κ_i = 1, then k_{i+2} = k_{i+1} - k_i, so:
+s_{i+1} = k_{i+1}/k_{i+2} = k_{i+1}/(k_{i+1} - k_i) = 1/(1 - k_i/k_{i+1}) = 1/(1 - s_i).
+
+But we need s_{i+1} ∈ (0,1), so this requires s_i < 0... that doesn't work.
+
+I think I have the direction of the ratios confused. Let me redefine.
+
+Actually, the standard BCZ setup uses continued fraction expansions and the Gauss map. Let me think about this differently.
+
+The fractions a_i/k_i in the Farey sequence are related to best rational approximations, which connect to continued fractions. The Gauss map T(x) = {1/x} = 1/x - floor(1/x) for x ∈ (0,1] is the key dynamical system.
+
+Let me reconsider the structure. For the Farey sequence, consecutive fractions a/k and a'/k' satisfy a'k - ak' = 1 (for the standard ordering). The gap is d = 1/(kk').
+
+The key insight from BCZ is that the distribution of consecutive gaps in F_N is related to the invariant measure of the Gauss map (the Gauss-Kuzmin distribution with density 1/((1+x)ln 2)).
+
+**BCZ Joint Density:**
+
+From Boca-Cobeli-Zaharescu (2001/2004), the limiting distribution of pairs of consecutive normalized gaps in the Farey sequence is given by:
+
+Let me normalize: for consecutive gaps d_1, d_2 with d_1 = 1/(k_1 k_2) and d_2 = 1/(k_2 k_3), the "normalized" gaps are N d_1 and N d_2 (since typical gap size is ~1/N^2... wait, no, the average gap in F_N is 1/|F_N| ~ 1/N^2... hmm, actually |F_N| ≈ 3N^2/π^2, so average gap ≈ π^2/(3N^2).
+
+Actually, let me reconsider. The sum of all gaps in F_N equals 1 (from 0 to 1), and |F_N| ≈ 3N^2/π^2, so average gap ≈ π^2/(3N^2).
+
+The gaps d_i range from about 1/N^2 (for consecutive integers) to about 1/2 (for 0 and 1/N). So N^2 d_i is the natural normalization.
+
+Let me define X = N^2 d_1 = N^2/(k_1 k_2) and Y = N^2 d_2 = N^2/(k_2 k_3).
+
+The BCZ result gives the joint density of (X, Y) in the limit N → ∞.
+
+Actually, I think the BCZ result is more naturally expressed in terms of the variables (x, y) = (k_1/k_2, k_2/k_3) or perhaps (N/k_1, N/k_2, N/k_3).
+
+Let me look at this from the perspective of the BCZ papers.
+
+The key result (from Boca and Zaharescu, "The distribution of the free path lengths in the periodic two-dimensional Lorentz gas" or the earlier Farey sequence papers) is:
+
+The joint distribution of consecutive Farey gaps (when suitably normalized) converges to a distribution with density:
+
+f(u,v) = (6/π²) · 1/(u²v) for certain constraints on (u,v).
+
+Hmm, that doesn't seem right either. Let me think about this more carefully.
+
+Actually, the fundamental result is about the pair distribution of denominators. Let (k_i, k_{i+1}) be consecutive denominators. The mediant property gives k_{i+2} = κ k_{i+1} - k_i for some positive integer κ.
+
+For the distribution of pairs, the key parameterization is through the continued fraction structure. Let me use the variables:
+- α = k_i/N ∈ (0,1]
+- β = k_{i+1}/N ∈ (0,1]
+
+Then d_i = 1/(k_i k_{i+1}) = 1/(N² α β).
+
+The distribution of (α, β) over the Farey sequence has a limiting density related to:
+
+ρ(α, β) ∝ 1/α for β ∈ (0, min(1, 1/α))... no, this isn't right.
+
+Let me try a different approach. The BCZ framework uses the "BCZ cocycle" on the space of Farey fractions. The fundamental domain is a triangle in (0,1)² and the density involves 1/(1+x) or similar expressions from the Gauss map.
+
+**Let me try to reconstruct the argument from first principles.**
+
+The Farey sequence F_N has the property that consecutive fractions a/k and a'/k' satisfy a'k - ak' = 1 and k + k' > N (this is the defining property of consecutive Farey fractions).
+
+Given k, the possible values of k' are those coprime to k with k' > N - k and ak' ≡ -1 (mod k) (for the appropriate a). But this is getting complicated.
+
+Let me instead focus on the key relationships:
+
+d_1 = 1/(k_1 k_2), d_2 = 1/(k_2 k_3)
+
+d_2/d_1 = k_1/k_3
+
+And k_3 = κ k_2 - k_1 for κ ≥ 1 integer with k_3 ∈ [1, N].
+
+So d_2/d_1 = k_1/(κ k_2 - k_1) = 1/(κ k_2/k_1 - 1) = 1/(κ/x - 1) where x = k_1/k_2.
+
+For the most common case κ = 1 (which occurs when k_1 + k_3 < k_2 + N, roughly when the denominators are not too large relative to N):
+
+d_2/d_1 = 1/(1/x - 1) = x/(1-x)
+
+So if x = k_1/k_2, then d_2 = d_1 · x/(1-x).
+
+**The invariant measure:**
+
+The variable x = k_i/k_{i+1} evolves according to the BCZ dynamics, which for κ = 1 is essentially the Gauss map x → {1/x} (or a modification thereof). The invariant measure for the Gauss map is the Gauss-Kuzmin distribution:
+
+μ(dx) = (1/ln 2) · 1/(1+x) dx for x ∈ (0,1)
+
+**Now, computing the lag-1 correlation:**
+
+E[d_1] = E[1/(k_1 k_2)] and E[d_1²] = E[1/(k_1 k_2)²], etc.
+
+These require knowing the joint distribution of (k_1, k_2, k_3).
+
+**Let me try to compute the correlation directly.**
+
+For the Gauss map dynamics with x_i = k_i/k_{i+1}:
+
+d_i = 1/(k_i k_{i+1}) and d_{i+1} = 1/(k_{i+1} k_{i+2})
+
+The ratio d_{i+1}/d_i = k_i/k_{i+2}.
+
+For κ = 1: k_{i+2} = k_{i+1} - k_i, so d_{i+1}/d_i = k_i/(k_{i+1} - k_i) = x/(1-x) where x = k_i/k_{i+1}.
+
+So d_{i+1} = d_i · x/(1-x).
+
+Now, d_i = 1/(k_i k_{i+1}) and with x = k_i/k_{i+1}, we have k_i = √(x/(d_i k_{i+1}))... this is getting circular.
+
+Let me parameterize differently. Define the "state" at step i to be (k_i, k_{i+1}). The gap is d_i = 1/(k_i k_{i+1}).
+
+For the Gauss map iteration (κ=1 case):
+(k_i, k_{i+1}) → (k_{i+1}, k_{i+1} - k_i)
+
+And d_{i+1} = 1/(k_{i+1}(k_{i+1} - k_i)).
+
+The invariant measure for the Gauss map on x = k_i/k_{i+1} is μ(dx) = (1/ln 2)/(1+x) dx.
+
+Now, d_i = 1/(k_i k_{i+1}) = 1/(x k_{i+1}²).
+
+The distribution of k_{i+1} given x: well, k_{i+1} ranges from 1 to N, and given x = k_i/k_{i+1}, we need k_i = x k_{i+1} to be an integer, which constrains k_{i+1}. For the asymptotic distribution, we can think of k_{i+1} as being roughly uniformly distributed (conditioned on x).
+
+Actually, this is getting complicated because d_i depends on the absolute values of k_i, k_{i+1}, not just their ratio. The ratio x determines the conditional distribution of d_{i+1} given d_i, but the marginal distribution of d_i itself involves the distribution of k_i k_{i+1}.
+
+**Let me try a cleaner approach using the BCZ formula.**
+
+From the BCZ paper (Distribution of the denominators of Farey fractions, 2001/2004), the key result is:
+
+**Theorem (BCZ):** As N → ∞, the distribution of (Nd_1, Nd_2) converges. The limiting joint density is:
+
+f(s,t) = (6/π²) ∫₀¹ ∫₀¹ [1/(x+y)²] · δ(s - 1/(xy)) · δ(t - 1/(y·z(x,y))) dx dy
+
+Hmm, I don't remember the exact formula. Let me think about this differently.
+
+Actually, I think the BCZ result is more naturally stated in terms of the "lengths" of the three consecutive denominators. Let me look at it from the perspective of the limiting distribution of (k₁/N, k₂/N, k₃/N) on the Farey sequence.
+
+Actually, let me try to recall or reconstruct the BCZ joint density formula.
+
+The Boca-Cobeli-Zaharescu result (from their 2004 paper "Distribution of denominators of Farey fractions") gives:
+
+The normalized gaps λ₁ = N²d₁ and λ₂ = N²d₂ have a joint distribution. The density of (λ₁, λ₂) can be derived from the three-denominator distribution.
+
+The denominators (k₁, k₂, k₃) satisfy k₁ + k₃ ≤ N + k₂ (from the mediant constraint). With the normalization x = k₁/N, y = k₂/N, z = k₃/N, this becomes x + z ≤ 1 + y.
+
+The density of (x, y, z) on the region {(x,y,z) : x,y,z ∈ (0,1], x+z ≤ 1+y} is related to the coprimality constraints and the Farey ordering.
+
+The "density" (in the limit of large N, accounting for coprimality) is:
+
+ρ(x,y,z) = (6/π²) · 1/xy · 1_{x+z ≤ 1+y}
+
+Wait, I need to think about this more carefully.
+
+For the distribution of consecutive denominators k_i, k_{i+1} in the Farey sequence F_N, the number of consecutive pairs with k_i ≈ Nx and k_{i+1} ≈ Ny (up to scaling) is related to the number of solutions of a'k - ak' = 1 with k ≈ Nx, k' ≈ Ny.
+
+The density of such pairs is (6/π²) · 1/xy for 0 < x ≤ 1, 0 < y ≤ 1, x + y > 1 (the last condition from the fact that consecutive Farey fractions must satisfy k + k' > N, i.e., x + y > 1 in the normalization).
+
+Hmm, actually, the condition for fractions a/k and a'/k' to be consecutive in F_N is: k + k' > N and a'k - ak' = 1. The number of such pairs with k ≈ Nx, k' ≈ Ny is approximately:
+
+(6/π²) · N² · 1/(xy) · 1_{x+y > 1, x,y ∈ (0,1]}
+
+Wait, I think the correct density for the pair (k₁, k₂) is:
+
+The number of consecutive pairs with k₁ ∈ [k, k+dk] and k₂ ∈ [l, l+dl] is approximately:
+(6/π²) · dk · dl / (kl) for k, l ∈ [1, N] with k + l > N.
+
+This gives the joint density of (k₁/N, k₂/N) = (x, y) as:
+f(x,y) = (6/π²) · 1/(xy) · 1_{x+y > 1, 0 < x,y ≤ 1}
+
+And the total integral should be 1:
+∫∫ f(x,y) dx dy = (6/π²) ∫₀¹ ∫_{max(0,1-y)}^1 1/(xy) dx dy = (6/π²) ∫₀¹ [ln(1/y)]/y... hmm, that diverges. So I must have the wrong formula.
+
+Let me reconsider. The number of Farey fractions with denominator exactly k is φ(k). The number of consecutive pairs (a/k, a'/k') with a'k - ak' = 1 is 1 (modulo the constraint k + k' > N). So the total number of consecutive pairs is |F_N| - 1 ≈ 3N²/π².
+
+The density of (k₁, k₂) pairs: for each k₁, the number of possible k₂ values is roughly 1 (given k₁), so the joint density is concentrated on a specific curve. This doesn't make sense as a density in the usual sense.
+
+I think the issue is that the "density" should be in terms of the variables that vary freely. In the Farey sequence, the denominators are highly constrained by the mediant property, so we can't treat them as independent.
+
+Let me try yet another approach.
+
+**Approach via the Gauss map:**
+
+The Farey sequence structure is closely related to continued fractions. Each fraction a/k ∈ F_N has a continued fraction expansion, and the consecutive fractions in F_N are related through the Stern-Brocot tree / continued fraction structure.
+
+The BCZ cocycle is the map that takes the pair (k₁, k₂) to (k₂, k₃) where k₃ = κk₂ - k₁ for the appropriate κ. This is related to the Gauss map T(x) = {1/x}.
+
+For the Gauss map, the invariant measure is dμ = (1/ln 2) · dx/(1+x) on (0,1).
+
+The variable x = k₁/k₂ ∈ (0,1) has distribution μ in the limit, and then x' = k₂/k₃ = k₂/(κk₂ - k₁) = 1/(κ - x).
+
+For κ = 1: x' = 1/(1-x). But we need x' ∈ (0,1), so 1/(1-x) ∈ (0,1) requires x < 0, which is impossible. So κ ≥ 2 for x ∈ (0,1).
+
+Wait, that means κ = 1 doesn't work for the Gauss map iteration? Let me reconsider.
+
+The Gauss map is T(x) = 1/x - floor(1/x) = {1/x}. If x = k₁/k₂, then T(x) = {k₂/k₁} = (k₂ mod k₁)/k₁ = k₃'/k₁ where k₃' = k₂ - floor(k₂/k₁)·k₁.
+
+Hmm, I think the issue is the direction. In continued fractions, if x = [0; a₁, a₂, ...], then T(x) = [0; a₂, a₃, ...]. The map is x → {1/x}.
+
+For the denominators: if we define x_i = k_i/k_{i+1} (consecutive denominator ratio), then the BCZ dynamics is:
+
+x_{i+1} = k_{i+1}/k_{i+2} = k_{i+1}/(κ_i k_{i+1} - k_i) = 1/(κ_i - x_i)
+
+So the map is x → 1/(κ - x) for the appropriate κ.
+
+For this to give x_{i+1} ∈ (0,1), we need κ - x > 1, i.e., κ ≥ 2 (since x ∈ (0,1)). When κ = 2, x_{i+1} = 1/(2-x).
+
+The Gauss map for this system is: given x ∈ (0,1), we have κ = floor((1+x)/x) ... hmm, I need to think about how κ is determined.
+
+From k_{i+2} = κ_i k_{i+1} - k_i and k_{i+2} ≤ N:
+κ_i ≤ (N + k_i)/k_{i+1} = N/k_{i+1} + x_i
+
+And k_{i+2} ≥ 1:
+κ_i ≥ (1 + k_i)/k_{i+1} = 1/k_{i+1} + x_i
+
+For large N and moderate k_{i+1} (i.e., k_{i+1} = O(N)), κ_i = floor(N/k_{i+1}) + ... this depends on the specific values.
+
+I think I'm overcomplicating this. Let me look at the problem from a more abstract perspective.
+
+**Key insight: The map x → 1/(κ-x)**
+
+For the Gauss map dynamics, the invariant density on (0,1) is the Gauss-Kuzmin density:
+
+h(x) = 1/((1+x) ln 2)
+
+This is the unique absolutely continuous invariant measure for the Gauss map T(x) = {1/x}.
+
+Now, the key observation is: if x has density h(x), what is the joint distribution of (x, T(x))?
+
+The Gauss map on (0,1) can be decomposed into branches: on (1/(n+1), 1/n), T(x) = 1/x - n. The invariant measure satisfies:
+
+h(x) = Σ_{n=1}^∞ (1/(n+x)²) · h(1/(n+x))... no, that's the Perron-Frobenius equation.
+
+Actually, the Gauss-Kuzmin density satisfies:
+h(y) = Σ_{n=1}^∞ 1/(n+y)² · h(1/(n+y)) · (n+y)² ... I'm getting confused.
+
+Let me just use the standard result. The Gauss map T(x) = {1/x} has branches T_n(x) = 1/x - n for x ∈ (1/(n+1), 1/n], n = 1, 2, 3, ...
+
+The invariant density h(x) = 1/((1+x) ln 2) satisfies the Perron-Frobenius equation:
+h(x) = Σ_{n=1}^∞ |T_n'(T_n^{-1}(x))| · h(T_n^{-1}(x))
+
+where T_n^{-1}(x) = 1/(n+x).
+
+|T_n'(y)| = 1/y² (since T_n(y) = 1/y - n, T_n'(y) = -1/y²).
+
+So h(x) = Σ_{n=1}^∞ (1/(1/(n+x))²) · h(1/(n+x)) / ... no wait.
+
+T_n^{-1}(x) = 1/(n+x), and |T_n'(T_n^{-1}(x))| = 1/(T_n^{-1}(x))² = (n+x)².
+
+So h(x) = Σ_{n=1}^∞ (n+x)² · h(1/(n+x))
+
+Let me verify: h(x) = 1/((1+x) ln 2)
+
+(n+x)² · h(1/(n+x)) = (n+x)² · 1/((1 + 1/(n+x)) ln 2) = (n+x)² · (n+x)/((n+x+1) ln 2) = (n+x)³/((n+x+1) ln 2)
+
+Σ_{n=1}^∞ (n+x)³/((n+x+1) ln 2) should equal 1/((1+x) ln 2).
+
+Let me check for x = 0: Σ_{n=1}^∞ n³/(n+1) = Σ n³/(n+1). For n=1: 1/2. For n=2: 8/3. This diverges. So I must have the Perron-Frobenius equation wrong.
+
+The correct PF equation for the Gauss map is:
+h(y) = Σ_{n=1}^∞ |(T_n^{-1})'(y)| · h(T_n^{-1}(y))
+
+T_n^{-1}(y) = 1/(n+y), so (T_n^{-1})'(y) = -1/(n+y)².
+
+h(y) = Σ_{n=1}^∞ 1/(n+y)² · h(1/(n+y))
+
+Let me verify: h(y) = 1/((1+y) ln 2)
+
+Σ_{n=1}^∞ 1/(n+y)² · 1/((1+1/(n+y)) ln 2) = Σ_{n=1}^∞ 1/(n+y)² · (n+y)/((n+y+1) ln 2)
+= (1/ln 2) Σ_{n=1}^∞ 1/((n+y)(n+y+1))
+= (1/ln 2) Σ_{n=1}^∞ [1/(n+y) - 1/(n+y+1)]
+= (1/ln 2) · 1/(1+y)
+
+Yes! This telescopes to 1/((1+y) ln 2) = h(y). ✓
+
+So the Perron-Frobenius equation is satisfied.
+
+Now, the joint density of (x, T(x)) = (x, y) where y = T(x) is:
+
+For x on the nth branch, y = 1/x - n, so x = 1/(n+y). The joint density is:
+
+f(x,y) = h(x) · δ(y - T(x))
+
+More precisely, the conditional distribution of y given x is deterministic: y = {1/x}. But for the inverse direction, the conditional distribution of x given y:
+
+x | y has a discrete distribution: x = 1/(n+y) with probability proportional to 1/(n+y)² · h(1/(n+y)) = h(y) / Z for each n... no.
+
+The conditional density of x given y: we can decompose f(x,y) = h(x) · 1_{y = T(x)}. For y given, x takes values 1/(n+y) for n = 1, 2, 3, ..., with probabilities:
+
+P(x = 1/(n+y) | y) = [1/(n+y)² · h(1/(n+y))] / h(y) = [1/(n+y)² · (n+y)/((n+y+1) ln 2)] / [1/((1+y) ln 2)]
+= (1+y)/((n+y)(n+y+1))
+
+Let me verify: Σ_{n=1}^∞ (1+y)/((n+y)(n+y+1)) = (1+y) Σ_{n=1}^∞ [1/(n+y) - 1/(n+y+1)] = (1+y) · 1/(1+y) = 1. ✓
+
+So given y = T(x), the conditional distribution of x is:
+P(x = 1/(n+y)) = (1+y)/((n+y)(n+y+1)) for n = 1, 2, 3, ...
+
+This is the Gauss-Kuzmin distribution (in the "backward" direction).
+
+**Connecting to Farey gaps:**
+
+Now, the connection to Farey gaps: d₁ = 1/(k₁k₂) and d₂ = 1/(k₂k₃). With x = k₁/k₂ and y = k₂/k₃, and using the BCZ dynamics x → y (or something like that), we can relate the gap distribution to the Gauss map.
+
+But I realize the gap d₁ = 1/(k₁k₂) depends on the absolute values k₁, k₂, not just their ratio. The Gauss map describes the evolution of ratios, not the absolute values.
+
+So the joint distribution of (d₁, d₂) requires knowing the joint distribution of (k₁, k₂, k₃), which in turn requires knowing both the ratio dynamics (Gauss map) and the scale (how k_i relates to N).
+
+**Scale considerations:**
+
+For the Farey sequence F_N, the denominator k ranges from 1 to N. The "density" of fractions with denominator k is φ(k)/k ≈ 6/(π²k) (since φ(k)/k has average 6/π²).
+
+Wait, more precisely, the number of fractions in F_N with denominator exactly k is φ(k), and the total number is Σ_{k=1}^N φ(k) ≈ 3N²/π².
+
+The gaps: d = 1/(kk') where k + k' > N. For typical gaps, k and k' are both O(N), so d = O(1/N²).
+
+The "normalized" gap is Nd or N²d? Since k, k' ~ N, d ~ 1/N², so N²d ~ 1. The normalized gap λ = N²d = N²/(kk') = 1/((k/N)(k'/N)).
+
+In terms of x = k/N and y = k'/N: λ = 1/(xy).
+
+The marginal distribution of (x, y) has density f(x, y) on the region {0 < x, y ≤ 1, x + y > 1}. What is this density?
+
+The number of consecutive pairs with k₁ ∈ [Nx, Nx + N dx] and k₂ ∈ [Ny, Ny + N dy] is:
+
+(6/π²) · 1/(xy) · N² dx dy (accounting for coprimality, etc.)... but I need to be more careful.
+
+Actually, the number of Farey pairs (a/k, a'/k') with k ∈ [K, K+dK] and k' ∈ [L, L+dL] and k + k' > N and a'k - ak' = 1 is:
+
+For given k, k' coprime with k + k' > N, there's exactly one pair (a, a') with a'k - ak' = 1, 0 ≤ a ≤ k, 0 ≤ a' ≤ k'. So the count is just the number of coprime pairs (k, k') in the given ranges with k + k' > N.
+
+The density of coprime pairs is 6/π², so:
+
+Number ≈ (6/π²) · dK · dL for K + L > N, K, L ∈ [1, N].
+
+The total count is:
+∫₁ᴺ ∫_{max(1,N-K)}^N (6/π²) dL dK = (6/π²) ∫₁ᴺ (N - max(1, N-K)) dK
+= (6/π²) ∫₁ᴺ min(K, N-1) dK... hmm, for K > 1, N-K < N-1 for K > 1, so max(1, N-K) = N-K for K < N-1. So the inner integral is K dK for K from 1 to N.
+
+Wait: for K ∈ [1, N], L ∈ [max(1, N-K), N], so the number of L values is N - max(1, N-K) = min(K, N-1) ≈ K for K < N.
+
+Total ≈ (6/π²) ∫₀ᴺ K dK = (6/π²) · N²/2 = 3N²/π². ✓
+
+So the joint density of (K, L) = (k₁, k₂) is:
+
+g(K, L) = (6/π²) · 1_{K+L > N, 1 ≤ K,L ≤ N}
+
+And the density of (x, y) = (K/N, L/N) is:
+
+f(x, y) = (6/π²) · N² · 1/(N²) ... hmm, let me redo this.
+
+P(k₁ ∈ [Nx, Nx + NΔx], k₂ ∈ [Ny, Ny + NΔy]) = (6/π²) · NΔx · NΔy / (3N²/π²) = 2N²ΔxΔy/(N²) = 2ΔxΔy
+
+for x + y > 1, x, y ∈ (0, 1]. But that gives a total integral of 2 · ∫₀¹ ∫_{1-x}^1 dy dx = 2 · 1/2 = 1. ✓
+
+Hmm wait, but this says f(x,y) = 2 · 1_{x+y > 1, x,y ∈ (0,1]}, which is a uniform density on the triangle {x+y > 1, 0 < x, y ≤ 1}. That doesn't seem right for the Farey sequence—there should be more weight near small denominators.
+
+I think the issue is that I'm not accounting for the density of fractions correctly. Let me reconsider.
+
+The total number of consecutive pairs is |F_N| - 1 ≈ 3N²/π². For each k₁, k₂ coprime with k₁ + k₂ > N, there's one consecutive pair. The number of coprime pairs (k₁, k₂) with k₁ + k₂ > N and 1 ≤ k₁, k₂ ≤ N is approximately:
+
+Σ_{k₁=1}^{N} Σ_{k₂=max(1,N-k₁+1)}^{N} [gcd(k₁,k₂) = 1]
+
+For each (k₁, k₂), the probability of coprimality is 6/π² (on average), so:
+
+≈ (6/π²) Σ_{k₁=1}^{N} k₁ = (6/π²) · N(N+1)/2 ≈ 3N²/π²
+
+This confirms the total count. And the density is indeed uniform on the triangle {x+y > 1, 0 < x, y ≤ 1} in the (x, y) = (k₁/N, k₂/N) variables.
+
+Wait, but that means the distribution of (k₁/N, k₂/N) is uniform on the triangle. This seems surprising but let me continue with it.
+
+Actually, I realize this might not be exactly right because the coprimality condition introduces correlations. For pairs with a fixed sum k₁ + k₂ = S, the fraction of coprime pairs is 6/π² on average, but with fluctuations. For the purpose of the asymptotic distribution, these fluctuations might be negligible, and the uniform density on the triangle is the correct leading-order approximation.
+
+**Now, the gap d₁ = 1/(k₁k₂):**
+
+With x = k₁/N, y = k₂/N: d₁ = 1/(N²xy) = 1/(N²xy).
+
+So λ₁ = N²d₁ = 1/(xy) and similarly λ₂ = N²d₂ = 1/(yz) where z = k₃/N.
+
+The joint distribution of (x, y, z): we need the trivariate density.
+
+Given (x, y), the value of z is determined by the BCZ dynamics:
+k₃ = κk₂ - k₁, so z = κy - x for some positive integer κ with z ∈ (0, 1] (since k₃ ≤ N).
+
+For each (x, y), κ can take values such that κy - x ∈ (0, 1], i.e., κ ∈ (x/y, (1+x)/y].
+
+The number of integer values of κ in this interval is floor((1+x)/y) - floor(x/y), which for generic (x,y) is either floor(1/y) or floor(1/y) + 1... hmm, this depends on the relationship between x and y.
+
+For y < 1/2: the interval (x/y, (1+x)/y] has length 1/y > 2, so it contains at least 2 integers.
+For y > 1/2: the interval has length 1/y < 2, so it contains 1 or 2 integers.
+
+In the Gauss map context, the number of branches is floor(1/y) for y ∈ (0,1), but here we have a different structure because we're looking at the three-body denominator dynamics.
+
+Actually, I think for the BCZ dynamics on the Farey sequence, the "map" from (x, y) to (y, z) has the following structure: z = κy - x where κ is the unique integer in (x/y, (1+x)/y] ∩ {positive integers} that satisfies z ∈ (0, 1]. But the "unique" part isn't right—there could be multiple valid κ values.
+
+Actually, for the Farey sequence, the consecutive fractions are uniquely determined: given (a₁/k₁, a₂/k₂), the next fraction is uniquely determined. So given k₁ and k₂, k₃ is uniquely determined. The formula k₃ = κk₂ - k₁ with κ = floor((N + k₁)/k₂)... hmm wait, I had κ_i = floor((N + k_i)/k_{i+1}) from the setup hints.
+
+So κ = floor((N + k₁)/k₂) = floor(1/y + x). For generic (x,y), this is floor(1/y) + floor(x + {1/y}) which is usually floor(1/y) or floor(1/y) + 1.
+
+Hmm, actually κ = floor((N + k₁)/k₂) = floor(N/k₂ + k₁/k₂) = floor(1/y + x) where x = k₁/N and y = k₂/N... wait, I defined x = k₁/N and y = k₂/N, so N/k₂ = 1/y and k₁/k₂ = x/y. So κ = floor(1/y + x/y) = floor((1+x)/y).
+
+So z = κy - x = floor((1+x)/y) · y - x. Since floor((1+x)/y) = (1+x)/y - {(1+x)/y}, we get z = (1+x) - {(1+x)/y} · y - x = 1 - {(1+x)/y} · y.
+
+So z = 1 - y · {(1+x)/y} = 1 - y · frac((1+x)/y).
+
+Hmm, let me double-check. z = κy - x = floor((1+x)/y) · y - x. Let me write (1+x)/y = q + r where q = floor((1+x)/y) and r = {(1+x)/y}. Then z = qy - x = (q+r)y - x - ry = (1+x) - x - ry = 1 - ry = 1 - y · {(1+x)/y}.
+
+Since r ∈ [0,1), z ∈ (1 - y, 1]. And z > 0 requires r < 1/y, which is automatic for r ∈ [0,1) and y ≤ 1.
+
+Actually, z ∈ (1-y, 1] for this formula. But we also need z ∈ (0, 1], which is satisfied since 1-y > 0 for y < 1.
+
+Wait, but z = k₃/N, and k₃ ∈ [1, N], so z ∈ [1/N, 1] ≈ (0, 1] for large N.
+
+So the map is: (x, y) → (y, z) where z = 1 - y · {(1+x)/y}.
+
+This is a piecewise linear map on the triangle {x + y > 1, 0 < x, y ≤ 1}. The image of each piece is a region in (y, z) space.
+
+**Let me now consider the map more carefully.**
+
+For (x, y) in the triangle T = {x + y > 1, 0 < x, y ≤ 1}:
+
+z = 1 - y · {(1+x)/y}
+
+Let's write (1+x)/y = n + r where n = floor((1+x)/y) and r ∈ [0,1). Then z = 1 - ry.
+
+Since x + y > 1, we have (1+x)/y > 1/y + 1 ≥ 2 (for y ≤ 1). Actually, (1+x)/y > (1 + (1-y))/y = (2-y)/y = 2/y - 1. For y ∈ (0, 1], this ranges from 1 to ∞.
+
+For a fixed y and varying x ∈ (1-y, 1]:
+(1+x)/y ranges from (2-y)/y = 2/y - 1 to 2/y.
+
+So the integer part n = floor((1+x)/y) ranges over the integers in [2/y - 1, 2/y].
+
+For y < 1/2: the interval has length 1/y > 2, so n can take several values.
+For y ∈ (1/2, 1): the interval has length 1/y ∈ (1, 2), so n takes 1 or 2 values.
+
+This is getting quite involved. Let me try a slightly different approach.
+
+**Approach: Direct computation using the uniform density on the triangle.**
+
+If the density of (x, y) = (k₁/N, k₂/N) is f(x, y) = 2 · 1_{x+y > 1, x,y ∈ (0,1]}, then I can compute the moments of d₁ = 1/(N²xy).
+
+E[d₁] = ∫∫ (1/(N²xy)) · 2 · 1_{x+y>1} dx dy / 1 (since f integrates to 1)
+
+Hmm wait, but d₁ = 1/(N²xy), and E[d₁] = ∫∫ 1/(N²xy) · f(x,y) dx dy = (2/N²) ∫₀¹ ∫_{1-x}^1 1/(xy) dy dx
+
+Inner integral: ∫_{1-x}^1 1/(xy) dy = (1/x) [ln y]_{1-x}^1 = (1/x) (0 - ln(1-x)) = -ln(1-x)/x
+
+Outer integral: (2/N²) ∫₀¹ -ln(1-x)/x dx = (2/N²) · π²/6
+
+(since ∫₀¹ -ln(1-x)/x dx = Σ_{n=1}^∞ 1/n² = π²/6)
+
+So E[d₁] = (2/N²) · π²/6 = π²/(3N²)
+
+This matches the expected value: |F_N| ≈ 3N²/π² and the average gap is 1/|F_N| ≈ π²/(3N²). ✓
+
+Now, E[d₁²] = (2/N⁴) ∫₀¹ ∫_{1-x}^1 1/(x²y²) dy dx
+
+Inner integral: ∫_{1-x}^1 1/(x²y²) dy = (1/x²) [-1/y]_{1-x}^1 = (1/x²)(-1 + 1/(1-x)) = (1/x²) · x/(1-x) = 1/(x(1-x))
+
+Outer integral: (2/N⁴) ∫₀¹ 1/(x(1-x)) dx = (2/N⁴) · [ln(x/(1-x))]₀¹ → ∞
+
+The integral diverges! This means the second moment of d₁ is infinite, which makes sense because the gap d₁ = 1/(k₁k₂) can be as large as 1/2 (when k₁ = 1, k₂ = 2) or even larger (when k₁ = 0, but 0 isn't a valid denominator... the smallest denominator is 1, and 1/1 and 1/N give a gap of about 1).
+
+Wait, I think I need to be more careful. The gap d_i = f_{i+1} - f_i = (a_{i+1}k_i - a_ik_{i+1})/(k_ik_{i+1}) = 1/(k_ik_{i+1}). The largest gap in F_N is between 0 and 1/N, which is 1/N. So d₁ ≤ 1/N.
+
+Actually, the first fraction in F_N is 0/1 and the second is 1/N (for N ≥ 1). So the gap is 1/N. And d₁ = 1/(1·N) = 1/N. ✓
+
+And d₁ = 1/(k₁k₂) where k₁, k₂ ≤ N, so d₁ ≥ 1/N². So d₁ ∈ [1/N², 1/N].
+
+With x = k₁/N and y = k₂/N: d₁ = 1/(N²xy), and x, y ∈ (0, 1], x + y > 1. The minimum of 1/(xy) on this region is achieved at x = y = 1, giving d₁ = 1/N². The maximum is at x + y just above 1 with one of them small, giving d₁ up to 1/N (when x = 1/N, y = 1, but x > 0 and x + y > 1 requires x > 1 - y).
+
+Actually, with x + y > 1, x ∈ (0, 1], y ∈ (0, 1]: 1/(xy) is maximized when xy is minimized, which happens when x → 0+ and y → 1- (or vice versa). In this case, 1/(xy) → ∞. So the second moment of d₁ is indeed infinite.
+
+This means the Pearson correlation Corr(d₁, d₂) is not well-defined in the limit! Unless there's a different normalization or the empirical convergence is to a finite value due to the finite N cutoff.
+
+Hmm, but the user says Corr(d_i, d_{i+1}) → 1/2 as N → ∞, verified numerically. So either:
+1. The correlation is computed for a specific N and the limit exists in some regularized sense.
+2. The density is not actually uniform on the triangle, and I'm missing something.
+
+Let me reconsider. Maybe the density of (x, y) is NOT uniform on the triangle. The coprimality condition might introduce a non-trivial weight.
+
+Actually, I think the issue is more subtle. The "density" I computed (uniform on the triangle) is the density of (k₁, k₂) pairs, but this doesn't account for the fraction ordering correctly. In the Farey sequence, each consecutive pair (a₁/k₁, a₂/k₂) appears once, but the gaps are ordered by the fraction values, not by the denominator sizes. So the joint distribution of (k₁, k₂) along the Farey sequence is not the same as the distribution of coprime pairs in the triangle.
+
+Let me think about this differently. The BCZ paper probably gives the correct joint density.
+
+**BCZ joint density (from the literature):**
+
+From Boca and Zaharescu (2006), the limiting distribution of consecutive gaps in the Farey sequence is:
+
+The pair (d₁, d₂) normalized by 1/N² has a joint density. The key result is about the distribution of (k₁, k₂, k₃) which I'll try to derive.
+
+The density of (k₁, k₂, k₃) in the Farey sequence: for consecutive fractions with denominators k₁, k₂, k₃, the condition is a₂k₁ - a₁k₂ = 1 and a₃k₂ - a₂k₃ = 1, with k₁ + k₂ > N and k₂ + k₃ > N. Also, k₃ = κk₂ - k₁.
+
+For given (k₁, k₂, k₃), the number of valid fraction triples is 1 (modulo the coprimality conditions which are automatically satisfied by the mediant property). So the density is proportional to the volume of the region of valid (k₁, k₂, k₃).
+
+Hmm, but (k₁, k₂, k₃) are discrete variables, so "density" in the continuous sense requires a limiting argument.
+
+Let me try a different approach: directly compute the correlation from the known distribution of ratios.
+
+**Computing Corr(d₁, d₂):**
+
+d₁ = 1/(k₁k₂), d₂ = 1/(k₂k₃) = 1/(k₂(κk₂ - k₁))
+
+Let me define X = k₁/k₂ (the ratio). Then d₂/d₁ = k₁/k₃ = k₁/(κk₂ - k₁) = X/(κ - X).
+
+For the Gauss map, the invariant distribution of X has density h(x) = 1/((1+x)ln 2).
+
+Now, the conditional distribution of d₂ given d₁: d₂ = d₁ · X/(κ - X). But κ depends on (k₁, k₂) as well, not just on X.
+
+The key issue is that the joint distribution of (d₁, d₂) requires the joint distribution of (X, κ, k₂), not just the marginal of X.
+
+Let me try to compute things using the "scale-free" approach.
+
+Define:
+- r₁ = k₂/k₁ = 1/X (ratio of consecutive denominators)
+- r₂ = k₃/k₂ (next ratio)
+
+Then d₁ = 1/(k₁k₂) and d₂ = 1/(k₂k₃) = 1/(k₂²r₂).
+
+d₂/d₁ = k₁/k₃ = 1/(r₁r₂).
+
+In terms of the Gauss map: if r₁ = k₂/k₁ > 1 (which is not always true), then r₂ is related to the continued fraction of r₁. But the Gauss map applies to numbers in (0,1), so let me use the variable x₁ = k₁/k₂ = 1/r₁ ∈ (0,1).
+
+**I think the key insight is that Corr(d₁, d₂) depends on the conditional expectation E[d₂ | d₁] and specifically on how E[d₂ | d₁] relates to d₁.**
+
+If E[d₂ | d₁] = α + β d₁ for some constants α, β, then Corr(d₁, d₂) = β · SD(d₁)/SD(d₂). If SD(d₁) = SD(d₂) (which should hold by stationarity), then Corr = β · SD(d₁)/SD(d₂) ... hmm, no, Corr(d₁, d₂) = Cov(d₁, d₂)/(SD(d₁)·SD(d₂)) = β · Var(d₁)/(SD(d₁)·SD(d₂)) = β · SD(d₁)/SD(d₂).
+
+If the marginal distributions are the same (which they should be for a stationary process), then SD(d₁) = SD(d₂) and Corr = β.
+
+But computing β requires knowing E[d₂ | d₁], which requires the conditional distribution of (k₂, k₃) given d₁ = 1/(k₁k₂).
+
+This is where the joint density of (k₁, k₂, k₃) is needed.
+
+**Let me try a direct computation using the known density.**
+
+Assuming the joint density of (x, y) = (k₁/N, k₂/N) is f(x, y) = 2 · 1_{x+y > 1, x,y ∈ (0,1]}, and z = κy - x with κ = floor((1+x)/y):
+
+E[d₁d₂] = ∫∫ (1/(N²xy)) · (1/(N²yz)) · f(x,y) dx dy
+= (2/N⁴) ∫∫ 1/(xy²z) · 1_{x+y>1} dx dy
+
+where z = 1 - y·{(1+x)/y}.
+
+This is a complicated integral. Let me try to simplify by changing variables.
+
+Actually, let me first check whether the uniform density on the triangle is the correct one. The paper by Boca, Cobeli, and Zaharescu (Distribution of the denominators of Farey fractions, 2004) gives:
+
+"Theorem: As N → ∞, the proportion of consecutive pairs of Farey fractions in F_N whose denominators (k, k') satisfy k/N ≤ x and k'/N ≤ y tends to..."
+
+I believe the result is that the distribution is not uniform on the triangle but has a density involving 1/(kk') or similar. Let me reconsider.
+
+Actually, I think the correct result is that the distribution of (k₁, k₂) IS approximately uniform on the triangle {x + y > 1} in the (x, y) = (k₁/N, k₂/N) plane. This is because:
+
+- For each pair (k₁, k₂) coprime with k₁ + k₂ > N, there's one consecutive pair.
+- The coprimality condition contributes a factor of 6/π² uniformly.
+- So the "density" is 6/π² · N² on the triangle, normalized by the total count 3N²/π², giving density 2 on the triangle.
+
+So f(x, y) = 2 for x + y > 1, x, y ∈ (0, 1]. This is what I had before.
+
+But then the second moment of d₁ diverges! Let me recheck.
+
+E[d₁²] = ∫₀¹ ∫_{1-x}^1 (1/(N²xy))² · 2 dx dy = (2/N⁴) ∫₀¹ ∫_{1-x}^1 1/(x²y²) dy dx
+
+Inner integral: ∫_{1-x}^1 1/(x²y²) dy = [-1/(x²y)]_{1-x}^1 = -1/x² + 1/(x²(1-x)) = (-1+1/(1-x))/x² = (x/(1-x))/x² = 1/(x(1-x))
+
+Outer integral: (2/N⁴) ∫₀¹ 1/(x(1-x)) dx = (2/N⁴) [ln x - ln(1-x)]₀¹ → ∞
+
+Yes, the integral diverges logarithmically at both x = 0 and x = 1. This means Var(d₁) = ∞ and the Pearson correlation is not well-defined.
+
+But empirically, for finite N, the correlation is computed and converges to 1/2. The logarithmic divergence means the convergence is slow (logarithmic in N), which matches the user's observation of "slow log convergence."
+
+So the correlation is:
+Corr(d₁, d₂) = E[d₁d₂] / √(E[d₁²] · E[d₂²]) - (E[d₁])² / (E[d₁²]) ... no, the standard formula is:
+
+Corr = (E[d₁d₂] - E[d₁]E[d₂]) / √(Var(d₁) · Var(d₂))
+
+If Var(d₁) = ∞, this is 0/∞ = 0? No, that's not right. The issue is that for finite N, the denominator k₂ ranges from 1 to N, so x = k₁/N ∈ [1/N, 1] and y = k₂/N ∈ [1/N, 1]. This cuts off the divergence at x = 1/N and x = 1 - 1/N, making the integrals finite.
+
+With the cutoff x ∈ [1/N, 1 - 1/N] (approximately):
+
+Var(d₁) ≈ (2/N⁴) ∫_{1/N}^{1-1/N} 1/(x(1-x)) dx = (2/N⁴) · 2 ln N
+
+E[d₁²] ≈ (2/N⁴) · 2 ln N
+
+E[d₁]² = π⁴/(9N⁴)
+
+So Var(d₁) ≈ 4 ln N / N⁴ - π⁴/(9N⁴) ≈ 4 ln N / N⁴ for large N.
+
+And E[d₁d₂] ≈ (2/N⁴) ∫∫ 1/(xy²z) dx dy, which also has logarithmic divergences.
+
+The ratio (E[d₁d₂] - E[d₁]²) / Var(d₁) would give a finite limit if both numerator and denominator have the same logarithmic growth rate.
+
+This is getting quite involved. Let me try to compute E[d₁d₂] / E[d₁²] directly, since if the marginals are the same, Corr = (E[d₁d₂] - E[d₁]²) / (E[d₁²] - E[d₁]²) and for large N, E[d₁]² is negligible compared to E[d₁²], so Corr ≈ E[d₁d₂] / E[d₁²].
+
+So I need to compute the ratio E[d₁d₂] / E[d₁²].
+
+E[d₁²] = (2/N⁴) ∫₀¹ ∫_{1-x}^1 1/(x²y²) dy dx = (2/N⁴) ∫₀¹ 1/(x(1-x)) dx (divergent, cut off at 1/N)
+
+E[d₁d₂] = (2/N⁴) ∫₀¹ ∫_{1-x}^1 1/(xy²z) dy dx
+
+where z = 1 - y·{(1+x)/y}.
+
+For the inner integral, I need to compute ∫_{1-x}^1 1/(y²z) dy for fixed x.
+
+Let me split this based on the value of κ = floor((1+x)/y).
+
+For y ∈ (0, 1) and x ∈ (0, 1): (1+x)/y ranges from (1+x) (when y = 1) to ∞ (when y → 0+).
+
+For a given integer n ≥ 2: (1+x)/y = n when y = (1+x)/n, i.e., y = (1+x)/n.
+
+So for y ∈ ((1+x)/(n+1), (1+x)/n], κ = n, and z = ny - x - (ny - x) ... wait, let me redo this.
+
+κ = floor((1+x)/y), z = κy - x.
+
+For κ = n: y ∈ ((1+x)/(n+1), (1+x)/n], and z = ny - x.
+
+So for fixed x and varying y:
+- y ∈ ((1+x)/3, (1+x)/2]: κ = 2, z = 2y - x
+- y ∈ ((1+x)/4, (1+x)/3]: κ = 3, z = 3y - x
+- etc.
+
+The constraint x + y > 1 (from the triangle) and y ∈ (0, 1] gives additional restrictions.
+
+For fixed x, y ranges from max(1-x, 0) to 1.
+
+Let me consider x ∈ (0, 1) and y ∈ (1-x, 1].
+
+(1+x)/y for y ∈ (1-x, 1]:
+- At y = 1: (1+x)/1 = 1+x ∈ (1, 2)
+- At y = 1-x: (1+x)/(1-x) ∈ (1, ∞)
+
+So (1+x)/y ranges from 1+x to (1+x)/(1-x).
+
+For x ∈ (0, 1/2): 1+x < 2 and (1+x)/(1-x) ∈ (1, 3), so (1+x)/y ∈ (1+x, (1+x)/(1-x)).
+For x ∈ (1/2, 1): 1+x ∈ (3/2, 2) and (1+x)/(1-x) > 3, so the range is wider.
+
+The integer values κ takes: starting from κ = floor(1+x) = 1 for x ∈ (0, 1), up to κ = floor((1+x)/(1-x)) which can be large.
+
+Wait, κ = floor((1+x)/y). For y close to 1 (and x < 1): (1+x)/y < 2, so κ = 1. For y close to 1-x: (1+x)/y = (1+x)/(1-x) which is large for x close to 1.
+
+So for fixed x, as y decreases from 1 to 1-x, κ increases from 1 to about (1+x)/(1-x).
+
+Now, z = κy - x, and the integrand is 1/(xy²z).
+
+For the branch κ = n: y ∈ (max(1-x, (1+x)/(n+1)), min(1

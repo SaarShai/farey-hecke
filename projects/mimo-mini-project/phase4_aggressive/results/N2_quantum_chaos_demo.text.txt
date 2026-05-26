@@ -1,0 +1,47 @@
+### Experimental Proposal
+
+**Billiard Geometry & Setup:**
+- **Geometry:** Desymmetrized stadium billiard (quarter stadium) with straight segment length \(L = 1\) and semicircular cap radius \(R = 0.5\). Desymmetry is enforced via Dirichlet conditions on symmetry axes to avoid degeneracies.
+- **Materials:** Copper cavity of height 5 mm (ensures single-mode propagation up to ~20 GHz). Antennas (monopoles) inserted through the top plate.
+- **Measurement:** Vector network analyzer (VNA) measuring \(S_{21}\) between two antennas over 1–20 GHz, with ~10⁵ frequency points. Inverse Fourier transform yields time-domain response. Apply **MUSIC** (Multiple Signal Classification) to extract resonance frequencies \(f_n\), then convert to eigenvalues \(E_n = (2\pi f_n / c)^2\).
+
+**Comparison:** Extracted \(E_n\) can be compared to:
+- Direct numerical diagonalization (finite element/boundary integral).
+- GOE/GUE statistics (level spacing, spectral rigidity).
+- Trace formula predictions using periodic orbit data.
+
+### Numerical Simulation Design
+
+**System:** Desymmetrized stadium as above.
+
+**Steps:**
+1. **Eigenvalue Computation:** Use scaling method with boundary integral equations or finite elements (e.g., with Nédélec elements) to compute first 100 eigenvalues \(E_n\) with high accuracy (~10⁻⁸ relative error).
+2. **Periodic Orbit Enumeration:** Employ algorithm of Bäcker (2003) to find all primitive periodic orbits up to maximum length \(L_{\text{max}} = 20\) (number of orbits grows exponentially, expect ~10⁴ orbits). For each orbit, compute length \(L_\gamma\), stability matrix, amplitude \(A_\gamma\), and Maslov index \(\nu_\gamma\).
+3. **Signal Construction:** Define the time-domain trace of the propagator from periodic orbits:
+   \[
+   \text{Tr} K(t) = \sum_\gamma T_\gamma \sum_{k=1}^\infty e^{i k (L_\gamma k_0 - \pi \nu_\gamma/2)} \delta(t - k T_\gamma),
+   \]
+   where \(T_\gamma = L_\gamma / v\) (set \(v=1\)) and \(k_0\) is a reference wavenumber. Smooth delta functions to Gaussians of width \(\Delta t\) for discretization.
+4. **MUSIC Application:** Treat \(\text{Tr} K(t)\) as a signal sampled at many \(t\) points. Apply MUSIC to extract frequencies \(\omega_n\), which correspond to eigenvalues \(E_n = \omega_n^2\).
+5. **Validation:** Compare MUSIC-extracted eigenvalues with direct diagonalization results. Assess accuracy as function of \(L_{\text{max}}\) and signal length.
+
+**Alternative approach using dynamical zeta function:**
+- Compute the Selberg-like zeta function:
+  \[
+  Z(k) = \prod_\gamma \prod_{m=0}^\infty \left(1 - e^{i (L_\gamma k - \pi \nu_\gamma/2)} e^{-\lambda_\gamma (m+1/2)}\right),
+  \]
+  where \(\lambda_\gamma\) is the stability exponent. Find zeros of \(Z(k)\) along real \(k\) axis using root-finding; these correspond to \(\sqrt{E_n}\). This method is competitive with diagonalization for chaotic systems with hyperbolic dynamics.
+
+### Conjectural Payoff & Competitiveness
+
+- In arithmetic, \(\gamma_n\) recovery to ~0.5% from prime counts up to \(X=10^8\) (≈ 10⁷ primes) demonstrates the power of MUSIC on discrete spectra.
+- In physics, for a billiard with ~10⁴ periodic orbits up to \(L_{\text{max}}=20\), we can expect similar accuracy (~1%) for low-lying eigenvalues (\(n \lesssim 100\)). The trace formula converges conditionally; using smoothed sums or zeta regularization improves convergence.
+- **Competitiveness:** For moderate numbers of eigenvalues, direct methods (FEM, scaling) are faster and more accurate. However, periodic orbit methods excel when:
+  - The billiard is complex (e.g., coupled cavities) where direct diagonalization scales poorly.
+  - Only long-range spectral statistics are needed.
+  - Experimental data are limited to periodic orbits (e.g., from short-time quantum measurements).
+- **Existing Experiments:** The group of Ulrich Kuhl (University of Nice) has published extensive data on microwave billiards, including scattering tomography in chaotic cavities (e.g., *Phys. Rev. E* **75**, 035204 (2007)). Their data could be re-analyzed with MUSIC. The group of Hans-Jürgen Stöckmann (Marburg) has similar experimental datasets.
+
+### Summary
+
+The arithmetic MUSIC approach for L-zero extraction maps directly to resonance extraction in chaotic microwave billiards. Experimentally, a desymmetrized stadium cavity with S21 measurements and MUSIC post-processing yields resonance frequencies comparable to GOE/GUE predictions. Numerically, constructing the time-domain propagator trace from periodic orbits and applying MUSIC recovers eigenvalues with ~1% accuracy for low-lying states, though direct methods are typically superior. The dynamical zeta function route offers a more robust connection to periodic orbits. Existing experimental data from groups like Kuhl’s provide a ready testbed for this cross-disciplinary bridge.

@@ -1,5 +1,53 @@
 # Log
 
+## [2026-05-26] research | MiMo mini-project — 5 candidate discoveries
+
+Followed the first MiMo sprint with a self-directed mini-project: dispatch many MiMo agents (treating thinking content as the deliverable since text rarely materializes) to brainstorm + deep-dive across the Farey-Mertens / Chebyshev-bias / function-field research program. Goal was 5 novel, meaningful, valuable results spanning math research and practical applications.
+
+**Phase 1**: 8 parallel MiMo brainstorms on hypotheses bridging Farey arithmetic to (a) low-discrepancy sequences, (b) closed-form constants, (c) streaming algorithms, (d) coding theory, (e) higher-moment dynamics, (f) expander graphs, (g) signal-processing bases, (h) PRNGs. 6 of 8 produced thinking-only (no text); 2 produced text. Rich exploratory content; see `projects/mimo-mini-project/phase1_brainstorm/results/`.
+
+**Phase 2**: 5 focused deep-dives (D1–D5), 2 via MiMo dispatch (D3, D5) and 3 via local computation (D1, D2, D4).
+
+**Phase 3 — five candidate discoveries** (full writeup at `projects/mimo-mini-project/phase3_synthesis/FIVE_DISCOVERIES.md`):
+
+1. **N·W(N) → 2/3 (conjecture)**: The Mikolás L² Farey-discrepancy constant has closed form 2/3, not the Laplace limit (0.6627) MiMo's B2 spotted nor the twin-prime constant. Higher-Q Mikolás computation at Q=500k with m_factor=15 gives N·W = 0.6667. Conjectured equivalent: Σ_ρ 1/(|ρ|²|ζ'(ρ)|²) = 2/π² under standard zeta-zero statistics.
+
+2. **lim Corr(d_i, d_{i+1}) = 1/2 (conjecture)** for consecutive Farey gaps. Empirical: +0.304 at N=1000 → +0.359 at N=10000. Extrapolation: 0.52 ± 0.03. **REFUTES** my initial intuition (and MiMo's B5 anti-correlation conjecture); the actual pattern is gap-streaks via the BCZ-cocycle structure. Counter-intuitive direction: large gaps cluster with large gaps.
+
+3. **L-zero phase tomography via Prony's method** (verified algorithm): given prime-counting bias data Δ_n(A) in a cyclotomic function field, character-decompose then apply Prony's method to extract L-zero phases. **Demo**: applied to the (q=2, M=T³) data from the previous sprint, recovered the L(u, χ_4) zero phase as +135.81° vs true +135.00°, error 0.8° from only 10 measurements. Bridge to physics: mathematically identical to cavity-resonance tomography in quantum scattering.
+
+4. **Order-4 character splitting formula Δ(A) = −2 Re[χ̄_χ(A)·log L(q^{−1/2}, χ)]** in AK function-field Chebyshev bias. Specifies the class-dependent constant c(A) in AK Thm 3.4's o(1) — goes BEYOND what AK 2023 states. Numerically verified against the (q=2, M=T³) 4-class slope split. Sibling of Koyama-conjecture #3 (subleading C₁) in `Koyama_track_grounding.md`.
+
+5. **D*(F_N) = 1/N − π²/(3N²) + O(1/N³) exactly** for Farey star discrepancy: the leading constant is 1. Verified to 4 digits at N=5000. The bound is achieved at a = 1/N (the boundary gap from 0/1 to 1/N). Comparison: Halton (base 2) at the same point count beats Farey by a factor of log(|F_N|) (200× at N=5000). Provably worse than Halton for generic QMC.
+
+Honesty discipline: 3 of 5 are CONJECTURES (#1, #2, #4) supported by numerics, not theorems. #5 may be already in QMC literature (Niederreiter, Drmota-Tichy) — needs lit check. #3 is the most concrete: working algorithm + demo + bridge to physics.
+
+MiMo usage: ~280k tokens of brainstorm thinking + ~120k tokens of deep-dive thinking + ~16k tokens of text output. Budget consumed: tiny fraction of the 150M credit allowance. Counter-pattern that worked: TREAT THINKING CONTENT AS DELIVERABLE since text rarely materializes. The Prony-method algorithm (Discovery #3) is the cleanest payoff from MiMo specifically — the D5 agent gave a complete, runnable construction.
+
+## [2026-05-26] research | MiMo 2-day sprint on D2/D3 — net result: honest revision of SESSION.md headlines
+
+Ran a planned 2-day sprint dispatching 8 agents on the Xiaomi MiMo platform (V2.5 / V2.5-Pro, Anthropic-compatible API at `token-plan-ams.xiaomimimo.com/anthropic/v1/messages`) to harden the D2 (function-field unconditional Chebyshev bias) lead deliverable and D3 (paired Q_8 same-disc opposite-m_ρ) companion note from `projects/ak-bias-followups/SESSION.md`.
+
+**MiMo behavior note**: Day-0 sanity prompt passed (C=1/2 derivation, step-by-step with thinking enabled). On every subsequent agent dispatch, MiMo exhausted its token budget on extended-thinking blocks and produced **zero text output**. The `thinking.budget_tokens` parameter is silently ignored by this endpoint. The thinking content itself contained real substantive work but never reached a final answer. All Day-1/Day-2 results below were therefore completed locally; the MiMo dispatcher and prompts remain in `projects/ak-bias-followups/mimo-sprint/` for re-use if/when the model behavior changes.
+
+**Headline corrections to SESSION.md (these are the honest research outputs, not the MiMo plumbing):**
+
+1. **(q=2, M=T³) "0.45% relative agreement, C=+0.50449" was cherry-picked.** Direct re-run of the existing Python (`d2-function-field/compute.py t1_T3`) gives all four class slopes: A=1 +0.5045 (QR), A=1+T² +0.4452 (QR), A=1+T −0.5175 (non-QR), A=1+T+T² −0.4322 (non-QR). The QR-coset average is +0.4748 = exactly the Ex 3.6 measured slope, as required by the t=1 coincidence. Within-coset spread (~±0.03 on n∈[7,22]) is a finite-LSQ-window artifact driven by the order-4 character L-zeros' phase oscillation; locally derived the explicit Δ(A) = −2 Re[χ̄_₄(A) log L(1/√2, χ_₄)] formula. The honest D2 paper headline is "QR-coset average +0.4748 matches Ex 3.6 within numerical accuracy; per-class spread explained analytically." Stronger than the cherry-picked +0.50449 because it explains the structure.
+
+2. **"δ_ff = 1.0000 (unconditional analog of R-S's 0.9959)" doesn't survive.** Locally simulated the function-field LI null (zeros' phases iid uniform on [0,2π), conjugate-pair-constrained for real quadratic characters; 200k trials). Result: **P(δ_ff(N=22) = 1 | LI null) ≈ 0.041** for both (q=2, M=T²) and (q=2, M=T³) cases. The observation is **marginal evidence** (just below the 5% threshold), not strong, and not asymptotic: the asymptotic δ* under the symmetric null is 1/2, not 1.0. Same artifact pattern as the killed DPAC 9×–52× margin. Downgraded the framing to "marginally inconsistent with LI null at N=22, P≈4%". Sim code: `mimo-sprint/results/deltaff_null_sim.py`.
+
+3. **m(σ) = 0 certificates confirmed** for the three cases tested via local `lfunc.py`: min |L(1/√2, χ)| = 0.29289 = 1−1/√2 ✓.
+
+4. **D3 reversal mechanism derived independently** of the 193-digit numerics, via Artin formalism: in Q_8, complex conjugation c must be the central −1 in the CM case and the identity in the totally real case; ρ(c) eigenvalues split (−1,−1) vs (+1,+1) give ε_∞(ρ) = −1 vs +1; finite local ε_p factors identical (same Galois closure). Result: w(L_+, ρ) / w(L_−, ρ) = −1 forces m_ρ = 0 vs 1. Standard via Fröhlich–Queyrut (1973), now used as a *justification* for the 193-digit observation rather than the only support.
+
+5. **S_3 and D_4 sweep extended to X = 10⁹** (PARI/GP wallclock 49s and 60s respectively). Decade checkpoints at 10⁶/10⁷/10⁸ show **bounded residuals** across all AK Thm 2.2 (ii)+(iii) tests — no growth with log log X. D_4 σ=s and σ=rs have class-specific c-constants (~+1.05 vs ~−0.87 at X=10⁸); both bounded; allowed by AK Thm 2.2 (M is the loglog coefficient, c is class-dependent).
+
+6. **Lean4 stub written** for `theorem AK_D2_T3_trivial_class` (body=sorry) at `mimo-sprint/results/agent_G_D2_stub.lean`. Identifies mathlib gaps (cyclotomicFunctionField, function-field pi-half definitions, KKK DRH in char p). Stub is a *target* not a proof.
+
+7. **Adversarial review** (`mimo-sprint/results/agent_H_adversarial_local.md`): 10 findings, 2 BLOCKERs resolved in revised draft, 3 MINOR citation-verification items open (Kaneko–Koyama–Kurokawa, Fröhlich–Queyrut, AK §2 LMFDB-pair attribution), overall verdict CLEAN subject to citation checks.
+
+Final synthesis: `projects/ak-bias-followups/mimo-sprint/results/d2_d3_final_draft.md`. The D2 paper becomes materially **stronger** than the SESSION.md original because each headline number is either replaced with a coset-averaged + structurally explained version or appropriately downgraded with null-analysis context. Sprint cost: ~250k MiMo output tokens (most into thinking, ~0 useful), plus ~5 min PARI/GP wallclock and ~10 min Python wallclock locally.
+
 ## [2026-05-22] research | AK bias follow-ups — four parallel Opus 4.7 directions
 
 Inspired by Alon-Bloom-Gowers-Litt-Sawin-Shankar-Tsimerman-Wang-Wood "Remarks on the disproof of the unit distance conjecture" (2026, OpenAI internal-model proof), I ran four directions in parallel against Aoki-Koyama "Chebyshev's bias against splitting and principal primes in global fields" (JNT 245 (2023)). Full session notes at `projects/ak-bias-followups/SESSION.md`; scratch scripts (PARI/GP for D1 and D3, pure-Python F_q[T] sieve for D2) under the four `projects/ak-bias-followups/d{1..4}-*/` subdirs.

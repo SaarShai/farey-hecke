@@ -1,0 +1,176 @@
+# Top 3 Actionable Applications
+
+## 1. First Zeros of L-functions Where No Direct Method Exists
+
+**Why this is #1:** For symmetric-power, Rankin-Selberg, and GL(n) L-functions, the analytic infrastructure (gamma factors, functional equation, conductor computation) is genuinely painful to set up. MUSIC bypasses all of it—you only need Dirichlet coefficients.
+
+### Pipeline
+
+```
+INPUT: automorphic form f (e.g., SAGE newform object), symmetric power k
+  │
+  ├─ Step 1: Extract Hecke eigenvalues a_p(f) for primes p ≤ X
+  │          (SAGE: f.eigenvalue(p); ~40 primes suffice for 20 zeros)
+  │
+  ├─ Step 2: Compute symmetric power coefficients
+  │          a_p(sym^k f) via Newton's identities from traces
+  │          (degree k+1, so k+1 eigenvalues per prime)
+  │
+  ├─ Step 3: Form prime-bias signal
+  │          B(t_j) = Σ_{p≤X} a_p(sym^k f) · log(p) · p^{-it_j}
+  │          at 2d sampling frequencies {t_1,...,t_{2d}}
+  │
+  ├─ Step 4: MUSIC/Prony on {B(t_j)} → d zero locations {γ_1,...,γ_d}
+  │          O((2d)³) ≈ O(8000) for d=10
+  │
+  └─ Step 5: (Optional) Refine via Newton iteration
+             using approximate functional equation for final precision
+
+OUTPUT: first d zeros on critical line
+```
+
+### Concrete first target
+
+**L(sym²Δ, s)** — symmetric square of the Ramanujan Delta function. Degree 3, conductor 1⁶·τ-form. The first few zeros are known from computational number theory but the full analytic setup is nontrivial. Your pipeline would:
+
+1. Get `a_p(Δ)` from SAGE for p ≤ 100 (~25 primes)
+2. Compute `a_p(sym²Δ) = a_p(Δ)² − p^{11}` (weight 12)
+3. MUSIC on 20-point prime-bias signal
+4. Output: 10 zeros of L(sym²Δ, s)
+
+### Performance claim
+
+> For symmetric-power L-functions of degree ≤ 5 with conductor ≤ 10⁴: first 10 zeros from ~30 prime coefficients, wall-clock < 0.1s. **Compare:** Dokchitser's `computeL` requires explicit gamma factors, conductor, and ~T evaluations of the approximate functional equation per zero at height T. For a degree-4 symmetric cube where the user must compute `Γ_R` factors and the root number, setup time alone is ~30 min of human effort. MUSIC requires only the eigenvalues—**zero analytic setup**.
+
+### Feasibility: HIGH
+The MUSIC code exists. Coefficient computation is in SAGE. Main gap: systematic comparison with known zeros to validate accuracy. Estimated effort: **2 weeks** for a working prototype on sym² and sym³.
+
+**Caveat:** MUSIC resolves closely-spaced zeros via the spectral gap of the data matrix. For high-lying zeros (|γ| > 100), spacing can be ~0.5, requiring higher precision arithmetic. Prony with multi-precision may be needed for zeros deep in the critical strip.
+
+---
+
+## 2. Independent Audit of LMFDB Zero Tables
+
+**Why this matters:** LMFDB is the de facto repository, but independent verification is standard scientific practice. An algorithmically independent method (MUSIC vs. approximate functional equation) is the strongest kind of cross-check.
+
+### Pipeline
+
+```
+INPUT: LMFDB L-function URL or label
+  │
+  ├─ Step 1: Download Dirichlet coefficients via LMFDB API
+  │          GET lmfdb.org/L/.../coefficients
+  │          Returns a(1),...,a(N) for N typically ~1000
+  │
+  ├─ Step 2: Convert to prime-only coefficients
+  │          Extract a(p) for primes p | a_p known
+  │
+  ├─ Step 3: MUSIC reconstruction of zeros
+  │          N=2d samples → d zeros
+  │
+  ├─ Step 4: Load LMFDB tabulated zeros for same L-function
+  │
+  └─ Step 5: Match MUSIC output to LMFDB table
+             Flag: |γ_MUSIC − γ_LMFDB| > tolerance
+             Tolerance: 10^{-3} for initial screen, 10^{-6} after refinement
+
+OUTPUT: verification report per L-function
+        ✓ verified (all zeros match)
+        ✗ discrepancy (zero mismatch, with details)
+        ? inconclusive (insufficient coefficients)
+```
+
+### Performance claim
+
+> Process **1000 L-functions/hour** on a laptop, verifying first 20 zeros each. Total LMFDB L-functions with tabulated zeros: ~50,000. **Full audit in ~2 days** of compute time. Accuracy: < 10⁻³ relative error for zeros with |γ| < 50 using N = 2d samples.
+
+### Feasibility: VERY HIGH
+All components exist. LMFDB API is well-documented. The main deliverable is a Python script + report. Estimated effort: **1 week**.
+
+**Realistic outcome:** Most zeros will verify fine. The value is in the rare case where MUSIC disagrees with LMFDB—this could catch transcription errors, off-by-one indexing bugs, or (very rarely) genuine computational errors.
+
+**Bonus:** You can also check for **missing zeros**. If MUSIC detects d zeros in a range where LMFDB lists d−1, that's a table gap.
+
+---
+
+## 3. Rigorous Benchmark Suite for Line-Spectral Estimation
+
+**Why this is the sleeper hit:** Signal processing has no standard benchmark with **known ground truth, infinite data, and well-characterized spectral properties**. L-function zeros provide all three. This is a genuine contribution to the SP community and makes your method the reference point.
+
+### Pipeline
+
+```
+PHASE 1: Data collection (1 week)
+  │
+  ├─ Pull zeros for 100+ L-functions from LMFDB:
+  │   - 20 Riemann zeta zeros (various heights)
+  │   - 20 Dirichlet L-functions (various conductors)  
+  │   - 20 elliptic curve L-functions (various ranks)
+  │   - 20 modular form L-functions (various weights/levels)
+  │   - 20 higher-degree L-functions (sym², sym³)
+  │   Store: zero locations, coefficients, conductor, degree
+  │
+  ├─ For each: generate prime-bias signals at sampling rates
+  │   N = {2d, 3d, 4d, 6d, 8d} samples for d zeros
+  │   Add controlled Gaussian noise: σ = {0, 10⁻³, 10⁻², 10⁻¹}
+  │
+PHASE 2: Algorithm benchmarking (1 week)
+  │
+  ├─ Implement/compare:
+  │   - MUSIC (your method)
+  │   - Prony's method  
+  │   - ESPRIT
+  │   - Matrix Pencil Method
+  │   - Cadzow iterative denoising + MUSIC
+  │
+  ├─ Metrics per (L-function, algorithm, noise level, sample count):
+  │   - Zero location error: max|γ̂_i − γ_i|
+  │   - Missed zeros count
+  │   - False zeros count  
+  │   - Wall-clock time
+  │   - Conditioning of data matrix
+  │
+PHASE 3: Package (1 week)
+  │
+  ├─ "arith-spectral-bench" — pip-installable Python package
+  ├─ Includes: data generator, algorithm implementations, plotting
+  └─ Publish: GitHub + arXiv technical report
+
+OUTPUT: open-source benchmark + comparison paper
+```
+
+### Performance claim
+
+> **First rigorous benchmark with exact ground truth for line-spectral estimation.** Standard synthetic benchmarks (random frequencies on [0,1]) lack the **number-theoretic structure** of L-zero distributions (pair correlation, Montgomery-Odlyzko statistics, GUE spacing). This structure creates realistic challenges: zeros are NOT uniformly spaced, have known clustering near low heights, and obey specific gap statistics. Any spectral method that works well on L-data is provably robust.
+
+### Feasibility: VERY HIGH
+Pure packaging work. Estimated effort: **3 weeks** for a polished release.
+
+**Audience:** IEEE Signal Processing, ICASSP, SPARS workshops. The "number theory meets signal processing" angle is novel enough for a conference paper.
+
+**Why this helps YOU:** By positioning MUSIC as the benchmark alongside competitors, you establish it as the default method. The benchmark also reveals exactly where MUSIC fails (closely-spaced zeros, high noise, insufficient samples), giving you a research agenda.
+
+---
+
+## What NOT to Pursue (and why)
+
+| Application | Verdict | Reason |
+|---|---|---|
+| #4 Crypto/RNG (Farey) | **Drop** | D* = 1/N − π²/(3N²) is a nice result about Farey sequences, but connecting it to crypto requires a separate paper. Not related to MUSIC. |
+| #5 BSD via null-space | **Park** | Detecting order of vanishing requires recovering multiplicities, not just locations. MUSIC's null-space dimension tracks the *number of distinct frequencies*, not the *multiplicity* at s=1. Would need a variant (e.g., rank-revealing QR with tolerance analysis). Too speculative right now. |
+| #6 Spectral inversion | **Already known** | MUSIC for DOA/radar is textbook. Using L-zeros as test data is covered by #3. |
+| #8 Educational | **Too easy** | Nice homework problem, not a research contribution. |
+
+---
+
+## Summary
+
+| Rank | Application | Effort | Impact | First milestone |
+|---|---|---|---|---|
+| **#1** | Zeros of hard L-families | 2 weeks | High (new zeros where none existed) | First 10 zeros of L(sym²Δ, s) |
+| **#2** | LMFDB audit | 1 week | High (scientific reliability) | Audit first 100 L-functions |
+| **#3** | SP benchmark suite | 3 weeks | Medium-high (cross-disciplinary) | arXiv + GitHub release |
+
+**My recommended order:** Start with **#2** (LMFDB audit) because it's the fastest path to a concrete result, validates your method against known data, and builds the infrastructure (#1 uses the same pipeline). Then **#1** for the scientific payoff. Then **#3** as the longer-term community contribution.
+
+**The key question only you can answer:** What is the actual numerical accuracy of MUSIC for L-zeros? If you can demonstrate < 10⁻³ relative error for the first 20 zeros across multiple L-function families, all three applications become immediately publishable.

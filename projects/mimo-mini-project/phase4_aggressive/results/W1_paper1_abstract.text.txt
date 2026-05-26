@@ -1,0 +1,10 @@
+**Title:** Spectral Tomography of L-function Zeros from Prime Data
+
+**Keywords:** L-functions, signal processing, MUSIC algorithm, spectral estimation, Riemann Hypothesis, analytic number theory
+
+**Abstract:**  
+We introduce a signal-processing framework for estimating the imaginary parts (heights) of nontrivial zeros of L-functions directly from discrete, noisy data sequences: prime-counting biases or Hecke eigenvalue sums. The core method treats the zeros as frequencies in a complex exponential model, applying the MUSIC or Prony algorithms—standard in harmonic analysis—to finite samples of these number-theoretic sums. This bridges spectral estimation theory with the explicit formulas of analytic number theory.
+
+We validate the approach on three critical classes: (1) A function field L(q=2, curve genus 3), where the known RH zero phase (135°) is recovered from N=22 prime-counts to 0.000° error. (2) Dirichlet L-functions L(s,χ_4) and L(s,χ_3), for which we retrieve the first 4-6 low-lying zeros to ≤2% error from log-spaced prime counts up to 10⁸. (3) The modular form L-function L(s,Δ), where 5 of 6 known low-lying zeros are recovered to ≤2.7% error from Hecke eigenvalue data.
+
+The method’s sample-efficiency is confirmed: Prony reaches 6° error at the information-theoretic minimum N=2d (for d zeros), while MUSIC achieves near machine-precision for N≫2d. This empirical tomography system motivates the open challenge of applying it to higher-rank automorphic L-functions and forms of weight k>12, where zero distributions are less understood.

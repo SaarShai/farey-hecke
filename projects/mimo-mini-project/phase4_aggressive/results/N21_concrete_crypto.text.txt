@@ -1,0 +1,134 @@
+This is an excellent selection of potential pipelines. The challenge is bridging the highly deterministic, analytic nature of the Farey sequence and the Riemann Zeta zeros with the probabilistic or iterative nature of modern signal-processing and QMC algorithms.
+
+Based on a 1-month engineering sprint, here are the **top 2 actionable pipelines**. They are selected because they take "known weaknesses" (determinism, $O(1/\sqrt{N})$ raw convergence rates) and turn them into highly specific, testable "killer features" (auditability, trace-formula inversion) in unsaturated niches.
+
+---
+
+## Pipeline 1: The "Auditable" QMC Integrator (Option A)
+
+### The "Non-Obvious" Insight
+Standard QMC (Sobol, Halton) is optimized for *asymptotic convergence rate* (e.g., $O(\log^d N / N)$). However, these sequences are notoriously difficult to audit. Their discrepancy bounds are often asymptotic or rely on empirical "scrambling." 
+
+The Farey sequence $F_N$ (and its prime-denominator subset $F'_N$) has a **provable, analytic discrepancy bound**: $D^*(F_N) \approx 1/N$. 
+*Wait—is $1/N$ better than Sobol?* No. Since the number of points $M \approx N^2$, the rate is $O(1/\sqrt{M})$, which is theoretically worse than Monte Carlo's $O(1/\sqrt{M})$ constant. 
+**However**, by the **Koksma-Hlawka inequality**, the integration error is bounded by $|I - I_{approx}| \le V(f) D^*$, where $V(f)$ is the variation of the function. Because $D^*$ is known *exactly* and is *halved* for $F'_N$, this pipeline offers **provable, auditable error guarantees** that no base-2 sequence can match. This is critical for "Zero-Knowledge" verifiable computing or formal verification in finance.
+
+### Actionable 1-Month Engineering Plan
+
+1.  **Target Benchmark Integral:**
+    *   $I_1 = \int_0^1 \sqrt{x} dx = 2/3$ (Singularity at 0).
+    *   $I_2 = \int_0^1 \frac{1}{1+x^2} dx = \pi/4$ (Standard benchmark).
+    *   $I_3 = \int_0^1 e^{-x^2} dx$ (Gaussian error function).
+
+2.  **Baselines to Compete Against:**
+    *   `scipy.stats.qmc.Sobol` (Scrambled).
+    *   `scipy.stats.qmc.Halton`.
+    *   Standard Monte Carlo (`numpy.random`).
+
+3.  **Evaluation Metrics:**
+    *   **Metric 1: Absolute Error** vs. $M$ (number of points). Plot log-log.
+    *   **Metric 2: Auditability Gap.** Calculate the *actual* error vs the *provable* Koksma-Hlawka bound. We want to show that the Farey bound is tighter and more reliable than the Sobol empirical bound.
+
+4.  **Specific Code Path (Python):**
+    *   Generate $F_N$ and $F'_N$ using the Stern-Brocot tree or `sympy`'s `farey_sequence`.
+    *   Apply Koksma-Hlawka using the $L^\infty$ norm of the derivative of the test functions.
+
+```python
+# Example Pipeline 1 Logic (Farey QMC)
+import numpy as np
+from sympy.ntheory.generate import farey_sequence
+
+def get_farey_points(N, prime_only=False):
+    # Generates the Farey sequence of order N
+    points = list(farey_sequence(N))
+    if prime_only:
+        points = [p for p in points if sympy.isprime(p.q)] # p is a Rational
+    return np.array([float(p) for p in points])
+
+def integrate_farey(func, N, prime_only=False):
+    points = get_farey_points(N, prime_only)
+    # Standard Riemann sum / average
+    return np.mean(func(points))
+
+def audit_bound(N, variation_of_func):
+    # The analytic discrepancy bound for F_N is exactly 1/N
+    # For F'_N it is ~0.5/N
+    discrepancy = 1.0 / N
+    if prime_only: discrepancy *= 0.5
+    return variation_of_func * discrepancy
+```
+
+---
+
+## Pipeline 2: Zeta-Zero Line-Spectral Estimation (Option C)
+
+### The "Non-Obvious" Insight
+Most signal processing benchmarks use random noise or periodic signals. The imaginary parts of the Riemann Zeta zeros ($\gamma_n$) are a **deterministic, yet pseudo-random** sequence that obeys GUE (Gaussian Unitary Ensemble) statistics. 
+In physics, these zeros are the "eigenvalues" of an unknown chaotic Hamiltonian (the Berry-Keating conjecture). 
+**The Missed Opportunity:** Instead of using them as a *test signal*, we use MUSIC/ESPRIT/Atomic Norm Minimization to solve the **Inverse Problem**. Given the first $N$ zeros, can a signal processing algorithm "learn" the underlying structure and predict the $(N+1)$-th zero? This is a rigorous test of how well an algorithm can model a chaotic, deterministic system.
+
+### Actionable 1-Month Engineering Plan
+
+1.  **Dataset Structure:**
+    *   Use `mpmath.zetazero(n)` to generate the first 10,000 imaginary parts $\gamma_1, \dots, \gamma_{10000}$.
+    *   Store as a CSV: `index, gamma_value`.
+
+2.  **Baseline Algorithms:**
+    *   **ESPRIT (Estimation of Signal Parameters via Rotational Invariance):** A standard, fast algorithm for line-spectral estimation.
+    *   **Atomic Norm Minimization (L-zero tomography):** Mentioned in your prompt, this is a convex relaxation of the L0 norm used for super-resolution. We will use the `cvxpy` library to implement this.
+
+3.  **Evaluation Metrics:**
+    *   **Metric 1: Predictive Accuracy.** Given $\gamma_1 \dots \gamma_N$, estimate $\gamma_{N+1}$. Measure the absolute error $|\gamma_{N+1} - \hat{\gamma}_{N+1}|$.
+    *   **Metric 2: Stability.** How sensitive is the algorithm to the choice of $N$? (Chaotic systems are notoriously sensitive).
+
+4.  **Specific Code Path (Python):**
+    *   We treat the zeros as a sum of Dirac deltas: $x(t) = \sum \delta(t - \gamma_n)$.
+    *   We construct a Hankel/Toeplitz covariance matrix from the first $N$ zeros.
+    *   We extract the principal components (MUSIC) or use a matrix pencil (ESPRIT) to estimate the "frequencies."
+
+```python
+# Example Pipeline 2 Logic (Zeta-Zero Tomography)
+import numpy as np
+from mpmath import zetazero
+from scipy.linalg import hankel
+
+def get_zeros(k_start, k_end):
+    return [float(zetazero(k).imag) for k in range(k_start, k_end + 1)]
+
+def esprit_predict_next_zeros(zeros, num_predict=5, subspace_dim=20):
+    N = len(zeros)
+    # Construct a Hankel matrix (snapshot matrix)
+    # Note: This is a "Dirac comb" interpretation. 
+    # A more advanced approach uses the zeros as the *frequencies* themselves.
+    # For the inverse problem, we treat the sequence of gaps as a signal.
+    gaps = np.diff(zeros) 
+    L = N // 2 
+    H = hankel(gaps[:L], gaps[L-1:-1])
+    
+    # SVD for subspace decomposition
+    U, S, Vh = np.linalg.svd(H)
+    Us = U[:, :subspace_dim] # Signal subspace
+    
+    # ESPRIT shift-invariance
+    Us1 = Us[:-1, :]
+    Us2 = Us[1:, :]
+    Phi = np.linalg.pinv(Us1) @ Us2
+    eigenvalues = np.linalg.eigvals(Phi)
+    
+    # Convert eigenvalues (phase shifts) back to "frequencies" (gaps)
+    estimated_gaps = np.angle(eigenvalues) / (2 * np.pi) 
+    # (Note: This requires normalization/scaling relative to the mean gap)
+    
+    last_zero = zeros[-1]
+    predicted_zeros = [last_zero + np.mean(estimated_gaps)] # Simplified prediction
+    return predicted_zeros
+```
+
+---
+
+## Summary of Deliverables
+
+1.  **Verifiable QMC (Option A):** You will deliver a Python library that provides an integration result *plus* a mathematical certificate of maximum error. This beats Sobol in *trust*, not speed. It directly uses the analytic discrepancy bounds of $F_N$ and $F'_N$.
+2.  **Zeta-Zero Tomography (Option C):** You will deliver a benchmark dataset of Zeta zeros and a script that shows whether modern SP algorithms (MUSIC/ESPRIT) can capture the GUE statistics of the gaps well enough to predict the next zero. This is a unique "math-to-SP" bridge. 
+
+Both projects are entirely deterministic, leverage the specific mathematical properties you discovered (gap statistics, prime-denominator discrepancy), and can be completed in a focused month of Python/C++ engineering.

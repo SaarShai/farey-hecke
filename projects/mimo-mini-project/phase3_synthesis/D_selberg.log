@@ -1,0 +1,44 @@
+=== Phase D-Selberg: MUSIC on modular surface SL(2,Z)\H eigenvalues ===
+Target r_n: 9.534, 12.173, 14.333, 16.151, 16.886, 18.446, ...
+
+Found 1094 closed geodesics up to L = 14.0 in 4.3s
+  Shortest L = 1.9248, longest L = 13.9988
+  First 10: [(1.925, 1), (2.634, 2), (3.134, 2), (3.525, 3), (3.85, 3), (4.127, 4), (4.369, 2), (4.585, 8), (4.779, 3), (4.956, 4)]
+  Signal range: [-696.2291, 4859.5904], Δn = 0.0450
+  Nyquist r = π/Δn = 69.81
+
+--- n_sources=5 (top 10) ---
+  r= 17.678  truth=18.446  err= 4.16%  P=9.07e-03  ← MATCH
+  r= 19.764  truth=19.261  err= 2.61%  P=8.75e-03  ← MATCH
+  r= 27.394  P=8.27e-03  (no match)
+  r= 16.497  truth=16.151  err= 2.14%  P=8.16e-03  ← MATCH
+  r=  3.034  P=7.10e-03  (no match)
+  r=  9.563  truth= 9.534  err= 0.30%  P=6.97e-03  ← MATCH
+  r= 14.410  truth=14.333  err= 0.54%  P=6.93e-03  ← MATCH
+  r=  4.040  P=6.92e-03  (no match)
+  r= 21.635  truth=21.554  err= 0.37%  P=6.89e-03  ← MATCH
+  r= 23.323  truth=22.240  err= 4.87%  P=6.89e-03  ← MATCH
+
+--- n_sources=7 (top 10) ---
+  r=  9.650  truth= 9.534  err= 1.22%  P=2.93e-02  ← MATCH
+  r= 27.279  P=1.47e-02  (no match)
+  r= 17.678  truth=18.446  err= 4.16%  P=9.65e-03  ← MATCH
+  r= 19.771  truth=19.261  err= 2.65%  P=9.09e-03  ← MATCH
+  r= 16.483  truth=16.151  err= 2.06%  P=8.77e-03  ← MATCH
+  r=  3.034  P=7.10e-03  (no match)
+  r= 11.014  P=7.05e-03  (no match)
+  r= 23.498  P=7.02e-03  (no match)
+  r= 14.316  truth=14.333  err= 0.12%  P=7.00e-03  ← MATCH
+  r=  4.047  P=6.92e-03  (no match)
+
+--- n_sources=10 (top 10) ---
+  r=  9.644  truth= 9.534  err= 1.15%  P=1.17e-01  ← MATCH
+  r= 27.232  P=2.40e-02  (no match)
+  r= 19.704  truth=19.261  err= 2.30%  P=1.86e-02  ← MATCH
+  r= 17.766  truth=18.446  err= 3.69%  P=1.22e-02  ← MATCH
+  r= 16.362  truth=16.151  err= 1.30%  P=1.21e-02  ← MATCH
+  r= 23.545  P=8.31e-03  (no match)
+  r= 14.545  truth=14.333  err= 1.48%  P=7.89e-03  ← MATCH
+  r= 11.021  P=7.12e-03  (no match)
+  r=  3.061  P=7.11e-03  (no match)
+  r= 25.780  P=7.03e-03  (no match)

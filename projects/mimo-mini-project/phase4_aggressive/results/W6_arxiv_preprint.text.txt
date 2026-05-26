@@ -1,0 +1,56 @@
+**Title Suggestion:** *Sparse Spectral Tomography and Farey Universality: An Algorithmic-Number-Theoretic Correspondence*
+
+**Outline Structure (Target: 25-30 pages)**
+
+**1. Introduction & Motivation (3-4 pages)**
+   - Problem Statement: High-resolution source localization using the MUSIC algorithm.
+   - Central Challenge: How to estimate the number of sources (model order) under sparsity constraints (L-zero penalty).
+   - Thesis: We demonstrate that the core algorithmic problem (MUSIC L-zero tomography) necessitates and reveals profound, previously unnoticed universal structures in prime arithmetic progressions and Farey sequences.
+   - Roadmap of the preprint.
+
+**2. The Algorithmic Problem: MUSIC L-zero Tomography (5-6 pages)**
+   - **2.1 MUSIC Algorithm Review:** Standard formulation, subspace decomposition.
+   - **2.2 Formulation of L-zero Sparse Estimation:** Introducing the L-zero norm penalty into the model order selection framework. Definition of the estimator for the number of sources, \( \hat{k} \).
+   - **2.3 The Cramér-Rao Bound (CRB) as a Theoretical Centerpiece:**
+      - **Theorem 2.1 (CRB for L-zero Model Order):** Statement: \( \text{Var}(\hat{k}) \geq \frac{12 \sigma^2 k^2}{T^3} \) for a signal model with \( k \) sources, noise variance \( \sigma^2 \), and \( T \) snapshots. Proof sketch: Fisher information calculation under the sparse parameterization. *This is the key theorem of the applied section.*
+   - **2.4 The 10-Setting MUSIC Simulation Suite:** Description of the synthetic environment (parameters, geometry, SNR levels). Presentation of results showing consistent performance bounds aligning with the CRB.
+
+**3. Discovery #1: The Universal Constant C (3-4 pages)**
+   - Context: Emergence of the constant \( C = \frac{1}{2} \prod_p \left(1 + \frac{1}{p^2(p-1)}\right) \approx 0.66989 \) in the asymptotic analysis of the MUSIC cost function's minima distribution.
+   - **Theorem 3.1 (Closed Form for C):** Rigorous derivation via analytic number theory, connecting the product to the density of certain coprime pairs. Heuristic motivation from the MUSIC subspace intersection problem.
+   - Discussion: The constant \( C \) appears unrelated to standard signal processing constants, hinting at a deeper arithmetic structure.
+
+**4. The Spike Rule and Discovery #4: Structure in Prime Tuples (4-5 pages)**
+   - **4.1 The Spike Rule:**
+      - **Observation 4.1:** In the MUSIC spectrum, significant spurious peaks ("spikes") occur at frequencies whose indices have prime factorizations of the form \( Q = 2^a \cdot 5^5 \cdot m \), where \( m \) is squarefree and odd. Data-driven discovery from the 10 simulations.
+   - **4.2 Discovery #4: Closed Form for the Peak Density Δ(A):**
+      - **Heuristic Theorem 4.2:** The density of spike indices \( \leq A \) follows \( \Delta(A) \sim C' \cdot \frac{A}{\log A} \cdot f(\log\log A) \), with \( C' \) related to \( C \) and \( f \) a known arithmetic function. Argument via the Weil exponential sum heuristic and the Hardy-Littlewood conjectures. *This section bridges the algorithmic spike phenomenon to the arithmetic of prime tuples.*
+
+**5. Discovery #7 & N10: Farey Universality (5-6 pages)**
+   - **5.1 Context:** Analysis of the pseudospectrum near false singularities.
+   - **5.2 Discovery #7: Universal Cluster Size 2:**
+      - **Theorem 5.1:** For the eigenvalue problem embedded in MUSIC, near false zeros of the cost function, the non-trivial zeros cluster in pairs, independent of system parameters. Proof via saddle-point analysis on the characteristic polynomial.
+   - **5.3 N10: Farey Gaps Outside Wigner-Dyson:**
+      - **Observation 5.2:** The distribution of gap sizes between these clustered zero-pairs, when indexed by their position along the real line, does not follow random matrix theory (GUE/GOE). Instead, it is isomorphic to the distribution of gaps between Farey fractions of order \( N \) as \( N \to \infty \).
+      - **Conjecture 5.3 (Farey Universality):** The statistical structure of spurious singularities in any high-dimensional sparse estimation problem based on a harmonic model (like MUSIC) is governed by the arithmetic of Farey sequences, not by eigenvalue repulsion of random matrices. *This is the grand unifying mathematical conjecture.*
+
+**6. Synthesis and Implications (2-3 pages)**
+   - How the arithmetic discoveries (C, Spike Rule, Farey gaps) directly explain the empirical performance of the MUSIC L-zero tomography algorithm (e.g., sources of failure, performance limits).
+   - Discussion: The "why" behind the connection. Hypothesis: The MUSIC cost function's denominator is a product over prime-indexed spatial frequencies, injecting multiplicative number theory directly into the analytic landscape.
+
+**7. Conclusion and Future Work (1 page)**
+   - Summary of the dual contribution: (1) A new, performance-guaranteed sparse MUSIC estimator; (2) Discovery of a "Farey universality" in the errors of harmonic-based estimation.
+   - Clear paths to formal separate papers:
+      - *Paper A:* Full rigorous proof of the CRB and L-zero MUSIC algorithm.
+      - *Paper B:* Complete analytic number theory treatment of the constant C and the spike rule, elevating Heuristic Theorem 4.2 to a theorem.
+      - *Paper C:* Proof of the Farey gap universality (Theorem 5.1 is the key lemma) and exploration of its consequences in other inverse problems (e.g., compressed sensing).
+
+**Bibliography Draft (Minimum ~20-25 entries)**
+   - **Core Algorithm:** Schmidt 1986 (MUSIC), Wax & Kailath 1985 (Detection), Stoica & Nehorai 1989 (MUSIC CRB).
+   - **Sparse Estimation & L-zero:** Tropp 2006 (Greed is Good), Candes & Tao 2005 (Decoding by LP), some key non-convex optimization references (e.g., Blumensath).
+   - **Analytic Number Theory:** Hardy & Wright (Intro to Number Theory), Tenenbaum (Intro to Probabilistic Number Theory), Granville (Surveys on Prime Tuples/Weil sums).
+   - **Random Matrix Theory & Zeros:** Mehta (Random Matrices), Odlyzko (Zeros of L-functions), Montgomery (Pair Correlation).
+   - **Farey Sequences & Applications:** Series references (e.g., Hall 1970, Niederreiter 1973), some modern applications in Diophantine approximation or dynamical systems.
+
+---
+**Final Summary:** This preprint outline positions the work as a **foundational bridge**. The first half (Sections 2-3) provides the **algorithmic payoff** (L-zero MUSIC with a solid theoretical limit). The second half (Sections 4-5) presents the **mathematical surprises** (the constant C, the spike rule, and Farey universality). The synthesis (Section 6) argues they are inseparable. The structure allows for natural expansion: the arXiv version is the integrated story, while the "Future Work" section already sketches the three standalone papers. The title explicitly couples the two realms, signaling both the algorithmic and number-theoretic nature of the contribution.

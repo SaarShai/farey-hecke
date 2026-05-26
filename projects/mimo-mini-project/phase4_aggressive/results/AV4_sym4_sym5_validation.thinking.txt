@@ -1,0 +1,618 @@
+The user wants me to audit MUSIC algorithm results for symmetric powers of the modular form Δ. Let me work through this systematically.
+
+## Background
+
+Δ is the weight-12 cusp form for SL₂(ℤ). Its Fourier coefficients τ(n) (Ramanujan tau) satisfy |τ(p)| ≤ 2p^(11/2), so the normalized eigenvalue is λ_p(Δ) = τ(p)/p^(11/2), with |λ_p(Δ)| ≤ 2.
+
+The L-function L(s, Sym^k Δ) has degree d = k+1, conductor 1 (since Δ is level 1), and its zeros in the critical strip are the quantities we're trying to locate.
+
+## Task 1: Are the peaks real L-zeros?
+
+Let me think about each potential artifact:
+
+### Windowing / prime bias
+MUSIC applied to prime-indexed sequences has a known subtlety: the primes are irregularly spaced, and the "frequencies" (zeros) are being detected against a background that includes the prime density variation. The standard approach is to use the explicit formula:
+
+ψ_Sym^k(x) = Σ_{p≤x} λ_p(Sym^k Δ) log(p) = -Σ_ρ x^ρ/ρ + (smooth terms)
+
+where the sum is over nontrivial zeros ρ = 1/2 + iγ of L(s, Sym^k Δ).
+
+The MUSIC algorithm treats this as a superposition of sinusoids e^{iγ·t} where t = log(x), and tries to find the frequencies γ. The question is whether MUSIC can reliably extract these frequencies.
+
+### N_tau = 15000
+With primes up to 15000, we have about π(15000) ≈ 1754 primes. The spacing between consecutive log-primes is roughly 1/log(p) ≈ 0.08-0.15 for the primes used. This means the "Nyquist frequency" is roughly 1/(2·Δt) ≈ 5, but we're looking at frequencies γ up to ~30. 
+
+Wait, that's a problem. Let me reconsider. If we're sampling at log-spaced x values, the variable t = log(x) ranges from some minimum to log(15000) ≈ 9.6. The "time span" is about 9.6. The MUSIC algorithm's frequency resolution is roughly 2π/T where T is the total time span, giving resolution about 0.65. For frequencies γ ~ 30, we need at least γ·T/(2π) ≈ 46 wavelengths in the window, which we might barely have.
+
+Actually wait - the MUSIC algorithm doesn't work on the primes directly. The signal ψ(x) = Σ λ_p log(p) for p ≤ x is evaluated at 400 log-spaced points. The "time" variable is log(x), ranging from log(2) to log(15000). 
+
+If the signal is ψ(t) ≈ -Σ_ρ e^{ρt}/ρ where t = log(x) and ρ = 1/2 + iγ, then ψ(t) ≈ -e^{t/2} Σ_ρ e^{iγt}/ρ.
+
+So the oscillatory part has frequencies γ in the variable t = log(x). The time span is T = log(15000) - log(2) ≈ 9.6 - 0.7 ≈ 8.9. With 400 samples, the sampling rate is 8.9/399 ≈ 0.022 in t, giving Nyquist frequency π/0.022 ≈ 140, so that's fine.
+
+The frequency resolution of MUSIC is approximately 2π/T ≈ 0.71. So we can distinguish frequencies that differ by more than about 0.7. For the first few zeros of Sym^4 and Sym^5, which are spaced roughly 0.5-1 apart, this is marginal.
+
+Actually, the resolution depends on the model order and SNR. MUSIC with high model order can resolve finer details, but at the risk of fitting noise.
+
+### Log-spaced sampling
+Log-spaced in x means uniformly spaced in t = log(x), which is exactly what we want for the sinusoidal model. So this is fine.
+
+## Task 2: Expected zeros from LMFDB
+
+LMFDB stores L-functions. Let me think about what's known.
+
+For the symmetric powers of Δ (the modular form 1.12.a.a in LMFDB notation), the situation is:
+
+- Sym^0 = trivial (Riemann zeta)
+- Sym^1 = L(s, Δ) - well known, first few zeros: γ ≈ 7.25, 9.80, 12.47, ...
+  Wait, actually the first zero of L(s, Δ): The Ramanujan tau L-function L(s, Δ) = Σ τ(n)/n^s. The conductor is 1, weight is 12. The functional equation relates s to 13-s (since the weight determines the shift). Wait, more precisely, the completed L-function Λ(s, Δ) = (2π)^{-s} Γ(s) L(s, Δ) satisfies Λ(s, Δ) = i^k Λ(k-s, Δ) where k=12, so Λ(s) = Λ(13-s) (up to sign). The critical strip is 0 < Re(s) < 13, and the central point is s = 13/2 = 6.5. The zeros on the critical line Re(s) = 13/2 would be at s = 13/2 + iγ, so γ measures the imaginary part relative to the center.
+
+Hmm wait, but when people talk about zeros of L-functions, they often use the convention where the functional equation is s ↔ 1-s, achieved by the change of variable. For a weight k modular form of level N, the standard L-function has the functional equation relating s to k-1-s. So for Δ with k=12, the functional equation relates s to 11-s, and the critical line is Re(s) = 11/2 = 5.5. Wait, let me be more careful.
+
+Actually, the standard normalization for Hecke eigenforms: if f is a normalized eigenform of weight k and level N, then
+
+L(s,f) = Σ a_n n^{-s}
+
+has an analytic continuation and functional equation relating s to k-1-s. For Δ (k=12, N=1), the completed L-function is:
+
+Λ(s, Δ) = (2π)^{-s} Γ(s) L(s, Δ)
+
+and the functional equation is Λ(s, Δ) = (-1)^{k/2} Λ(k-1-s, Δ) = Λ(11-s, Δ).
+
+So the critical line is Re(s) = (k-1)/2 = 11/2, and zeros are at s = 11/2 + iγ.
+
+For Sym^k(Δ), the degree is k+1, and the functional equation for L(s, Sym^k Δ) relates s to (k·12/2 + 1)/2... hmm, actually the weight of Sym^k(Δ) is k·12/2... let me think differently.
+
+Actually, for L(s, Sym^k f) where f has weight κ, the L-function has degree d = k+1, conductor depending on the level, and the functional equation relates s to w+1-s where w is related to the weight. For a self-dual form of weight κ, the motivic weight of Sym^k(f) is kκ, and the critical strip has center at (kκ+1)/2... no, that's not right either.
+
+Let me approach this differently. The L-function L(s, Sym^k Δ) has the property that it can be written as:
+
+L(s, Sym^k Δ) = ∏_p ∏_{j=0}^{k} (1 - α_p^{k-j} β_p^j p^{-s})^{-1}
+
+where α_p, β_p are the Satake parameters of Δ at p, with α_p β_p = p^{11} and α_p + β_p = τ(p) p^{-11/2}... no wait.
+
+Actually for Δ of weight 12, the Hecke eigenvalue at p is τ(p), and the local factor of L(s, Δ) at p is:
+
+(1 - τ(p) p^{-s} + p^{11-2s})^{-1} = ((1 - α_p p^{-s})(1 - β_p p^{-s}))^{-1}
+
+where α_p + β_p = τ(p) and α_p β_p = p^{11}. 
+
+So the "normalized" eigenvalues are α̃_p = α_p/p^{11/2} and β̃_p = β_p/p^{11/2}, with α̃_p + β̃_p = τ(p)/p^{11/2} = λ_p and α̃_p β̃_p = 1.
+
+Then L(s, Sym^k Δ) has local factors involving α̃_p^{k-j} β̃_p^j for j = 0,...,k, giving degree k+1.
+
+The L-function is normalized so that the critical strip is 0 < Re(s) < 1 and the functional equation relates s to 1-s. In this normalization, the "completed" L-function involves Γ factors adapted to the archimedean place.
+
+In the unit-normalized convention (critical line at Re(s) = 1/2), the zeros are at s = 1/2 + iγ, and these are the γ values we're looking for.
+
+Now, what are the actual zero locations? This is what LMFDB would store if they have the data.
+
+LMFDB has the L-functions of symmetric powers of Δ. Let me think about what they have:
+
+For Sym^2(Δ), this is the symmetric square of Δ, which is a degree-3 L-function. LMFDB should have this.
+
+For Sym^3(Δ), degree 4.
+
+For Sym^4(Δ), degree 5. 
+
+For Sym^5(Δ), degree 6.
+
+I believe LMFDB has computed these. The first few zeros:
+
+For Sym^4(Δ) (degree 5, d=5):
+The density of zeros near height t is (d/(2π)) log(t/2π + ...). The first zero height... for degree d L-functions with conductor 1, the first zero is typically quite small. Let me estimate.
+
+The average spacing between zeros at height t for a degree d L-function with conductor N is approximately 2π/(d · log((t + c)/(2πe)) + log(N)) where c involves the gamma parameters. For the first zero, we need a more careful estimate.
+
+From the n-level density conjectures and random matrix theory, for L-functions of degree d with conductor N, the expected location of the first zero on the critical line is approximately:
+
+γ_1 ~ 1/(d · log(X))
+
+where X is some appropriate scale... actually this isn't quite right. Let me think again.
+
+For the Riemann zeta function (d=1, conductor 1), the first zero is at γ ≈ 14.13. The density of zeros at height t is (1/(2π)) log(t/(2π)). At t = 14.13, this is about (1/(2π)) log(14.13/(2π)) ≈ 0.33, so the average spacing is about 3.
+
+For a degree d L-function with conductor N, the density of zeros at height t is approximately:
+(d/(2π)) log(t·(something involving Γ factors)·√N / (2π))
+
+The analogue of the first zero being at 14.13 for the Riemann zeta function... For higher degree L-functions, the first zeros tend to be lower. 
+
+Actually, the "1-level density" results suggest that for families of L-functions, the first zero scales inversely with the log of the conductor times degree. For conductor 1 and degree d, the first zero should be around:
+
+γ_1 ≈ 2π/(d · log(1)) 
+
+But log(1) = 0, so this doesn't work. The conductor being 1 means there's no conductor-dependent damping.
+
+For the Ramanujan tau function L(s, Δ), degree 1 (well, it's a GL(2) L-function, degree 2 if we count both archimedean parameters... actually no, L(s, Δ) as defined by the Fourier coefficients is degree 2: the Euler factor at each prime is quadratic). 
+
+Wait, I need to be careful about degrees. 
+
+L(s, Δ) = Σ τ(n)/n^s. The Euler product is ∏_p (1 - τ(p)p^{-s} + p^{11-2s})^{-1}, which is degree 2 over each prime. So L(s, Δ) is degree 2.
+
+Sym^k(Δ) has degree k+1.
+
+So Sym^4(Δ) has degree 5 and Sym^5(Δ) has degree 6.
+
+For L(s, Δ) (degree 2, conductor 1), the known zeros have γ values starting at about γ ≈ 7.25 (in the unit-normalized convention). 
+
+Actually, I recall that for the classical modular forms, the first zero of L(s, Δ) on the critical line is at approximately t ≈ 7.25 in the "analytic" normalization where the critical strip is 0 < Re(s) < 1. Let me verify: the functional equation is s ↔ 1-s in the unit normalization, and L(s, Δ) corresponds to (2π)^{-s-5.5} Γ(s+5.5) L(s+5.5, Δ) being the completed L-function... no, this is getting confused with conventions.
+
+Let me just use the standard LMFDB convention. In LMFDB, for a modular form of weight k, the L-function is normalized so the critical strip is 0 < Re(s) < 1. The completed L-function involves Γ_ℂ(s + (k-1)/2) or similar.
+
+For Δ (weight 12), in the unit normalization, the first few zeros are known. I believe:
+
+γ_1 ≈ 7.25, γ_2 ≈ 9.80, γ_3 ≈ 12.47, γ_4 ≈ 14.60, γ_5 ≈ 16.69
+
+(This is from computations by various people, and these values should be in LMFDB.)
+
+Wait, actually let me reconsider. The LMFDB stores L-functions in a normalized form. For the modular form 1.12.a.a (Δ), the L-function zeros are stored with the critical line at Re(s) = 1/2.
+
+I'm not confident in the exact numerical values for Δ, let alone its symmetric powers. Let me move on to what I can derive.
+
+### Estimating the first zero
+
+For a degree d self-dual L-function with conductor N and gamma factors, the first zero location can be estimated from the argument principle. The number of zeros with imaginary part between 0 and T is approximately:
+
+N(T) ≈ (d/(2π)) T log(T/(2πe)) + (T/(2π)) log(N) + lower order terms
+
+For the first zero, we set N(T) ≈ 1/2 (since typically the first zero is near where the count reaches 1):
+
+1/2 ≈ (d/(2π)) T log(T/(2πe))
+
+For Sym^4 (d=5, N=1):
+1/2 ≈ (5/(2π)) T log(T/(2πe))
+
+This is a transcendental equation. Let me guess T ≈ 1:
+(5/(2π)) · 1 · log(1/(2πe)) = (5/(2π)) · log(1/(2πe))
+log(1/(2πe)) = -log(2πe) = -(1 + log(2π)) ≈ -(1 + 1.838) ≈ -2.838
+So (5/(2π)) · 1 · (-2.838) ≈ -2.26
+
+That's negative, which means at T=1, the zero count formula gives a negative number, suggesting the actual first zero is at a different height.
+
+The issue is that for conductor 1 L-functions, the argument counting formula is more subtle because there's no log(conductor) term to help push zeros to positive height.
+
+Actually, for L-functions attached to modular forms, the Archimedean gamma factors contribute significantly. Let me be more precise.
+
+For Sym^k(Δ) with Δ of weight 12, the Archimedean L-factor involves Γ_ℂ factors. In the unit normalization (s ↔ 1-s), the completed L-function is:
+
+Λ(s, Sym^k Δ) = L_∞(s, Sym^k Δ) · L(s, Sym^k Δ)
+
+where L_∞ involves products of Γ_ℝ(s + μ_j) for certain shifts μ_j determined by the weight and the representation.
+
+For Sym^k(Δ), the Archimedean parameters are... The form Δ has weight 12, so the Archimedean type involves representations of GL₂(ℝ) corresponding to weight 12. The symmetric k-th power representation of GL₂ gives a representation of GL_{k+1}(ℝ), and the Archimedean factors involve Γ_ℂ(s + j · (12-1)/2) for j = 0,...,k... no, that's not right.
+
+Let me think about this differently. For a weight κ eigenform on GL₂, the archimedean Langlands parameters are μ₁ = (κ-1)/2, μ₂ = -(κ-1)/2 (or sometimes μ₁ = (κ-1)/2 - 1/2, depending on convention). For Δ, κ = 12, so μ = ±(11/2).
+
+The Sym^k of a 2-dimensional representation has k+1 dimensional weights. If the original weights are μ₁, μ₂, then Sym^k has weights k·μ₁, (k-1)·μ₁ + μ₂, ..., k·μ₂.
+
+So for Sym^k(Δ), the archimedean parameters are:
+(k-j)·(11/2) + j·(-11/2) = (k-2j)·(11/2) for j = 0, 1, ..., k
+
+So the parameters are: k·(11/2), (k-2)·(11/2), ..., -k·(11/2)
+
+For Sym^4 (k=4): 22, 11, 0, -11, -22
+For Sym^5 (k=5): 55/2, 33/2, 11/2, -11/2, -33/2, -55/2
+
+The Γ_ℝ factors are Γ_ℝ(s + μ_j) = π^{-(s+μ_j)/2} Γ((s+μ_j)/2).
+
+For self-dual L-functions, the completed L-function satisfies Λ(s) = ε Λ(1-s). The number of zeros up to height T is:
+
+N(T) = (1/π) Δ arg Λ(1/2 + iT)
+
+which involves the Γ-factors.
+
+The standard formula gives:
+
+N(T) = (d/(2π)) T log(T/(2πe)) + (1/(2π)) T · log(N) + (1/(2π)) Σ_j Im(ψ((1/2 + μ_j + iT)/2)) + ...
+
+where ψ is the digamma function, and for large T:
+
+Im(ψ((a + iT)/2)) ≈ log(T/2)
+
+So each Γ_ℝ factor contributes approximately (1/(2π)) T log(T/2) to the zero count... hmm, this is getting complicated. Let me try a different approach.
+
+For a degree d L-function with Γ_ℝ(s + μ_j) factors (j=1,...,d), the number of zeros up to height T is approximately:
+
+N(T) ≈ (d/(2π)) T log(T/(2π)) + (T/(2π)) [Σ μ_j / d · (something)]
+
+Actually, I think the standard formula for the zeros of L-functions of modular forms, in the unit normalization, is:
+
+N(T) ≈ (d/(4π)) T log(T²/(4π²)) + ... 
+
+Hmm, I keep getting confused with the Γ_ℝ vs Γ_ℂ conventions. Let me just use the fact that for a degree d L-function from a motive of weight w, the functional equation relates s to 1-s in the unit normalization, and the completed L-function has gamma factors Γ_ℝ(s - a_j) for real parameters a_j.
+
+Let me try yet another approach. The "analytic conductor" at height T is:
+
+q(T) = N · ∏_j (|μ_j + iT| + 1)
+
+For Sym^4(Δ) at height T with the parameters 22, 11, 0, -11, -22:
+q(T) = 1 · (T+22)(T+11)(T)(T+11)(T+22) ≈ (T² + 22²)(T² + 11²)·T for large T
+For small T, q(T) ≈ 22² · 11² · T = 484 · 121 · T ≈ 58564T
+
+Hmm wait, the μ_j include negative values, so I should use |μ_j + iT| = sqrt(μ_j² + T²).
+
+For T near 0: q(T) ≈ 22·11·0·11·22 = 0. But that can't be right for the zero-counting formula. Actually, for the Γ_ℝ(s+μ) factor, the "archimedean conductor" at s = 1/2 + iT involves |1/2 + μ + iT|.
+
+OK I think I'm overcomplicating this. Let me just try to find numerical data.
+
+### What's actually known computationally
+
+For the symmetric powers of Δ:
+
+**Sym^0(Δ) = ζ(s)**: First zero at γ ≈ 14.13
+
+**Sym^1(Δ) = L(s, Δ)**: This is a degree 2 L-function. The first zero is at γ ≈ 7.25 (I think, in the standard normalization). Actually, the LMFDB entry for this is L-function 2.0.1.a (since conductor 1, trivial character, etc.)
+
+Wait, in LMFDB notation, Δ corresponds to the modular form 1.12.a.a (level 1, weight 12, orbit a). Its L-function is listed as "L-function of modular form 1.12.a.a".
+
+For L(s, Δ), I believe the first zero in the standard normalization (critical line at Re(s) = 1/2) is at approximately γ ≈ 7.25.
+
+Actually, I need to double check. The theta function of the Leech lattice is related to Δ, and the zeros of L(s, Δ) have been computed. Let me think...
+
+From computations (e.g., by V. A. Liskovets or others, or from LMFDB), the zeros of L(s, Δ) on the critical line:
+
+γ₁ ≈ 7.25, γ₂ ≈ 9.80, γ₃ ≈ 12.47
+
+But I'm not confident in these numbers. Let me look at this from the explicit formula perspective.
+
+For a weight 12 form of level 1, in the "arithmetic" normalization where L(s) = Σ τ(n)/n^s, the functional equation is Λ(s) = Λ(13-s) where Λ(s) = (2π)^{-s} Γ(s) L(s). Wait, no, the standard completed L-function for a weight k modular form is:
+
+Λ(s, f) = (2π)^{-s} Γ(s + (k-2)/2) L(s, f)
+
+Hmm, I keep going back and forth on conventions. Let me just use the fact that for any L-function, the number of zeros with imaginary part between 0 and T (in the unit-normalized convention) is approximately:
+
+N(T) = (d/(2π)) T log(A T^d / (2π e)^d)
+
+where A involves the conductor and gamma parameters.
+
+Actually, the standard zero-counting formula for L(s, π) a degree d L-function of automorphic representation π of GL(d) with analytic conductor Q is:
+
+N(T, π) = (d/(2π)) T [log(Q) + d log((T + d)/(2π e))] / ... 
+
+This is getting too complicated without a reference. Let me just estimate.
+
+### Random matrix theory estimate for first zero
+
+For the GUE ensemble (which models zeros of L-functions with real coefficients / orthogonal symmetry type for self-dual forms), the expected first zero spacing is known.
+
+For the Sym^k(Δ) L-functions, since Δ has real Fourier coefficients, these are self-dual and the symmetry type is:
+- Sym^even → orthogonal type (O or SO(even) or SO(odd))
+- Sym^odd → symplectic type (Sp)
+
+For orthogonal type, the first zero can be very close to the central point (the Katz-Sarnak philosophy predicts an excess of zeros near the central point for orthogonal families). For symplectic type, there's a "repulsion" from the central point.
+
+Sym^4 (k=4, even) → Orthogonal
+Sym^5 (k=5, odd) → Symplectic
+
+For symplectic symmetry, the first zero should be pushed away from the center, and the expected first zero location for a single L-function (not a family) with conductor 1 is... 
+
+Actually, for a single L-function with conductor Q and degree d, the first zero is approximately at:
+
+γ₁ ≈ 2π/(d · log(Q_star))
+
+where Q_star involves the analytic conductor. For Q = 1, this doesn't work because log(1) = 0.
+
+Hmm, for conductor 1 L-functions, the first zero is determined by the archimedean factors. The "effective log conductor" at height T is approximately:
+
+log(Q(T)) ≈ d · log((T + c)/(2π)) + log(N)
+
+where c involves the archimedean parameters. For N=1 and small T, this is approximately d · log(c/(2π)) where c is the typical archimedean parameter.
+
+For Sym^4(Δ), the archimedean parameters are approximately 22, 11, 0, -11, -22 (as I computed above). The average is 0, but the relevant quantity is the average of the shifts. Actually, for the zero density, what matters is:
+
+The density of zeros at height T is approximately:
+(d/(2π)) log(|T + average shift|/(2π))
+
+For the first zero, we need the integrated density from 0 to reach about 1:
+
+∫₀^{γ₁} (d/(2π)) log(c/(2π)) dt ≈ 1
+
+where c is some characteristic scale from the archimedean factors.
+
+The "effective conductor" at the central point (T=0) for Sym^4(Δ) involves the gamma factors:
+
+∏_{j=0}^{4} Γ_ℝ(1/2 + μ_j)
+
+where μ_j = (4-2j)·(11/2) = 22, 11, 0, -11, -22.
+
+Actually, the log of the "archimedean conductor" at T is:
+
+c_∞(T) = Σ_{j=0}^{k} log(1 + |μ_j + iT|)
+
+For T=0, c_∞(0) = Σ log(1 + |μ_j|) = log(1+22) + log(1+11) + log(1) + log(1+11) + log(1+22) = 2·log(23) + 2·log(12) = 2·(3.135 + 2.485) = 11.24
+
+So the "effective log conductor" at T=0 is about 11.24 (since N=1 contributes nothing).
+
+The zero density at height T ≈ 0 is approximately:
+d/(2π) · log(c_∞(0)/(2π)) ≈ 5/(2π) · log(11.24/(2π)) ≈ 0.796 · log(0.895) ≈ 0.796 · (-0.111) ≈ -0.088
+
+Hmm, that's negative, which doesn't make sense for a zero density. Let me reconsider.
+
+The zero density for a degree d L-function at height T is:
+
+n(T) = (d/(2π)) log(T/(2π)) + (1/(2π)) log(N · ∏|μ_j/(2π)|) + lower terms
+
+Wait, I think the issue is that the zero density is:
+
+n(T) = (1/(2π)) Im(Λ'/Λ(1/2 + iT))
+
+For large T, this is approximately:
+(d/(2π)) log(T/(2π)) + (1/(2π)) Σ Im(ψ((1/2 + μ_j + iT)/2)) + (log N)/(2π)
+
+where ψ is the digamma function. For T small, Im(ψ((a + iT)/2)) ≈ 0 if a > 0, so the archimedean contributions don't help much.
+
+Actually, for T = 0, the formula involves the derivative of the argument of the completed L-function along the critical line, which starts at s = 1/2. The initial rate of change of the argument is:
+
+n(0+) = (1/(2π)) · Im(Λ'/Λ(1/2))
+
+This depends on the specific L-function. For L-functions with large archimedean parameters (like our Sym^k Δ with large μ_j), the initial zero density can be substantial.
+
+Actually, let me think about this more carefully. The function Λ'/Λ(s) for a completed L-function with Γ_ℝ factors involves:
+
+Λ'/Λ(s) = L'/L(s) + Σ (1/2)ψ((s + μ_j)/2) + (log N)/2
+
+The digamma function ψ(z) for z real and positive satisfies ψ(z) ≈ log(z) for large z and ψ(z) ≈ -1/z - γ for z near 0 (where γ is Euler's constant).
+
+For s = 1/2 + iε (near the central point), with μ_j being the archimedean parameters:
+
+(1/2)ψ((1/2 + iε + μ_j)/2) 
+
+The imaginary part is approximately:
+
+Im[(1/2)ψ((1/2 + μ_j)/2 + iε/2)] ≈ (ε/2) · (1/2) · ψ'((1/2 + μ_j)/2)
+
+For μ_j = 22 (the largest parameter for Sym^4):
+(1/2 + 22)/2 = 11.25
+ψ'(11.25) ≈ 1/11.25 + 1/(11.25)² + ... ≈ 0.089
+
+So the contribution to n(0+) from this factor is approximately (ε/2) · (1/2) · 0.089, which is small.
+
+This suggests the zero density near the central point is small, which would mean the first zero is relatively far from the center. But this seems to contradict the Katz-Sarnak prediction for orthogonal families...
+
+Actually, I think I'm confusing two things. The Katz-Sarnak predictions are for *families* of L-functions, not for individual ones. For an individual L-function, the first zero can be anywhere.
+
+Let me try a completely different approach: just look up or estimate the first zeros from known computational results.
+
+### Known computational results
+
+I'll work from what I know about computational number theory:
+
+1. **L(s, Δ)** (Sym^1, degree 2): The zeros are well-known. In the standard normalization with critical line at Re(s) = 1/2:
+   γ₁ ≈ 7.25 (I'll assume this is roughly correct)
+
+2. **L(s, Sym² Δ)** (degree 3): Has been computed. First zero around γ ≈ 4-5 maybe?
+
+3. Higher symmetric powers get progressively harder to compute.
+
+For comparison, for the Dedekind zeta function of Q(i) (degree 2, conductor...), the first zero is at γ ≈ 6.02.
+
+For the L-function of a weight 2 newform of level 11 (degree 2, conductor 11), the first zero is at γ ≈ 1.47.
+
+The key insight is that the first zero depends heavily on the conductor-to-degree ratio. For conductor 1 and degree d, the first zero is typically higher because there's no "small conductor" to push zeros toward the center.
+
+Hmm wait, actually I have this backwards. Small conductor means zeros tend to be further from the center (larger first zero), and large conductor means zeros cluster near the center.
+
+For the Riemann zeta function (degree 1 effectively, "conductor" 1), the first zero is at γ ≈ 14.13.
+
+For L(s, Δ) (degree 2, conductor 1), the first zero should be at roughly... well, the average spacing at height T is 2π/(2 log(T/(2π))). At T = 7, this is π/log(7/(2π)) ≈ π/log(1.11) ≈ π/0.105 ≈ 30. So the spacing at height 7 is about 30. This means having the first zero at 7 means there are fewer zeros than expected from the main term, which is unusual but possible.
+
+Wait, this doesn't sound right. For degree 2, the zero density at height T is (1/π) log(T/(2π)) plus lower terms. At T = 7, this is (1/π) log(7/(2π)) ≈ (1/π)(-0.105) ≈ -0.033. Negative! That means the formula gives negative zero density, which indicates the first zero hasn't been reached yet at T = 7 in the main term approximation.
+
+But we know L(s, Δ) has zeros. The resolution is that the lower-order terms (from the archimedean factors and the specific coefficients) contribute significantly. For low-lying zeros of L-functions, the main term approximation for the zero density is inadequate; one needs the full argument calculation.
+
+This makes it very difficult to estimate first zero locations a priori for conductor 1 L-functions.
+
+### Let me try a different approach: use LMFDB data directly
+
+I know LMFDB stores L-functions. Let me try to recall or derive what they have for Sym^k Δ.
+
+LMFDB L-function label for Δ: I believe it's labeled by its modular form label. For the symmetric power L-functions, LMFDB might have them under "Symmetric powers" or through the motive database.
+
+From my knowledge of LMFDB and computational number theory:
+
+For L(s, Sym² Δ), which is the symmetric square of the Ramanujan delta function:
+- This is a GL(3) L-function with trivial character
+- Conductor 1
+- The first few zeros have been computed, and I believe γ₁ ≈ 3.89, γ₂ ≈ 5.82, ...
+
+Actually, I'm not confident in these numbers. Let me try to find another way.
+
+### Using the explicit formula to estimate
+
+The explicit formula for ψ_Sym^k(x) = Σ_{p≤x} λ_p(Sym^k Δ) log(p) involves:
+
+ψ(x) ≈ -Σ_ρ x^ρ/ρ + (smooth)
+
+where ρ = 1/2 + iγ are the nontrivial zeros.
+
+MUSIC is trying to decompose ψ(x) (or rather ψ evaluated at log-spaced points) into a sum of terms x^ρ = e^{(1/2+iγ)log(x)} = x^{1/2} e^{iγ log(x)}.
+
+After dividing by x^{1/2}, the oscillatory signal is:
+
+e^{-iγ₁ t} + e^{-iγ₂ t} + ... where t = log(x)
+
+MUSIC identifies these frequencies.
+
+### Question: what should the zeros of Sym^4 Δ and Sym^5 Δ look like?
+
+Let me think about the zeros from the perspective of the Weyl law for L-functions.
+
+The Weyl law for L(s, Sym^k Δ) (degree d = k+1, conductor N=1) gives:
+
+N(T) = #{γ: 0 < γ < T} ≈ (d/(4π)) T log²(... )
+
+Hmm, actually the standard Weyl law for the Riemann zeta function is:
+
+N(T) = (T/(2π)) log(T/(2πe)) + 7/8 + S(T) + O(1/T)
+
+For a degree d L-function, the analogous formula is:
+
+N(T) = (d/(2π)) T [log(T/(2π)) - 1] + ... + archimedean terms
+
+Wait, I think for Γ_ℂ factors (which is what modular form L-functions have), the formula involves different constants.
+
+For a GL(d) L-function with Γ_ℂ(s + μ_j) factors (j=1,...,d), the standard zero-counting formula is:
+
+N(T) = (d/(2π)) T log(T/(2π)) - (dT/(2π)) + (T/(2π)) Σ Re(μ_j) + ... 
+
+Hmm, for Sym^4(Δ), the Γ_ℂ factors would be Γ_ℂ(s + μ_j) where the μ_j come from the archimedean Langlands parameters.
+
+For Δ of weight 12, the archimedean parameter is ν = 11/2 (in some normalization). The Sym^k representation has parameters:
+
+For Sym^4: the parameters are ν·(4-2j)/1 = (11/2)(4-2j) for j=0,...,4
+= 22, 11, 0, -11, -22
+
+But actually, for Γ_ℂ(s + a), the formula gives contributions of (1/(2π)) T log(T/(2π)) per factor, plus (1/(2π)) a T. No wait...
+
+I think for GL(d) L-functions arising from automorphic representations, with Γ_ℝ factors Γ_ℝ(s + μ_j) for j=1,...,d, the zero-counting formula at height T is:
+
+N(T) = (1/(4π)) T Σ log((T + μ_j)²/(4π²)) + lower terms
+
+For the Riemann zeta function with d=2 (two Γ_ℝ factors with μ₁ = μ₂ = 0 in the standard convention, or equivalently one Γ_ℂ factor with μ = 0):
+
+N(T) = (1/(4π)) T · 2 · log(T²/(4π²)) = (T/(2π)) log(T/(2π)) 
+
+which gives N(T) ≈ (T/(2π)) log(T/(2π)) which matches the standard result.
+
+OK so for Sym^4(Δ) with parameters μ₁,...,μ₅:
+
+N(T) = (1/(4π)) T Σ_{j=1}^{5} log((T² + μ_j²)/(4π²)) + lower terms
+
+At small T (T << min|μ_j| = 0... well, one of the parameters is 0):
+
+N(T) = (1/(4π)) T [log(T²/(4π²)) + 2·log((T² + 121)/(4π²)) + 2·log((T² + 484)/(4π²))] + lower
+
+For T small:
+= (1/(4π)) T [log(T²/(4π²)) + 2·log(121/(4π²)) + 2·log(484/(4π²))] + ...
+= (1/(4π)) T [2·log(T/(2π)) + 2·log(11/(2π)) + 2·log(22/(2π))] + ...
+= (1/(4π)) T · 2 [log(T/(2π)) + log(11/(2π)) + log(22/(2π))]
+= (T/(2π)) [log(T/(2π)) + log(11/(2π)) + log(22/(2π))]
+= (T/(2π)) log(T · 11 · 22 / (2π)³)
+
+For the first zero, set N(T) ≈ 1/2:
+
+1/2 ≈ (T/(2π)) log(T · 11 · 22 / (2π)³)
+
+Let's denote C = 11 · 22 / (2π)³ = 242 / (248.05) ≈ 0.976
+
+So 1/2 ≈ (T/(2π)) log(C·T) = (T/(2π)) [log(C) + log(T)]
+
+For C ≈ 1: 1/2 ≈ (T/(2π)) log(T)
+
+Let me try T = 2π ≈ 6.28: (6.28/(2π)) log(6.28) = 1 · 1.837 = 1.837. That's too big.
+
+T = 1: (1/(2π)) log(1) = 0. Too small (and log of something slightly less than 1 is negative).
+
+T = π: (π/(2π)) log(π · 0.976) = 0.5 · log(3.066) = 0.5 · 1.120 = 0.560. Close to 0.5!
+
+So T ≈ 3 might give N(T) ≈ 0.5. Let me check: T = 3, C·T = 0.976 · 3 = 2.928.
+(3/(2π)) log(2.928) = 0.477 · 1.074 = 0.512. Very close to 0.5!
+
+So for Sym^4(Δ), the first zero should be around γ₁ ≈ 3.
+
+But wait, I should be more careful. For small T, the lower-order terms in the zero-counting formula can be significant. The constant term in N(T) is related to the argument of the completed L-function at the central point, which for self-dual L-functions is related to the sign of the functional equation.
+
+If the sign is +1, there tends to be an excess of low zeros (orthogonal type with +1 corresponds to SO(even)), and if -1, there's a deficit.
+
+For Sym^4(Δ), being an even symmetric power of a form with real coefficients, the sign of the functional equation should be +1 (this needs verification but is standard).
+
+So the first zero of Sym^4(Δ) is plausibly around γ ≈ 3.
+
+Similarly for Sym^5(Δ) (degree 6, parameters 55/2, 33/2, 11/2, -11/2, -33/2, -55/2):
+
+N(T) = (1/(4π)) T Σ log((T² + μ_j²)/(4π²))
+
+= (1/(4π)) T [2·log((T² + (55/2)²)/(4π²)) + 2·log((T² + (33/2)²)/(4π²)) + 2·log((T² + (11/2)²)/(4π²))]
+
+For small T:
+= (1/(4π)) T · 2 [log((55/2)²/(4π²)) + log((33/2)²/(4π²)) + log((11/2)²/(4π²))]
+= (T/(2π)) [log(55/(4π)) + log(33/(4π)) + log(11/(4π))]
+
+Wait, I need to be careful. μ_j = (55/2, 33/2, 11/2, -11/2, -33/2, -55/2), so μ_j² = (55/2)², (33/2)², (11/2)², (11/2)², (33/2)², (55/2)²
+
+(55/2)² = 756.25, (33/2)² = 272.25, (11/2)² = 30.25
+
+N(T) = (1/(4π)) T [2·log(756.25/(4π²)) + 2·log(272.25/(4π²)) + 2·log(30.25/(4π²))]
+
+4π² ≈ 39.48
+
+= (1/(4π)) T · 2 [log(756.25/39.48) + log(272.25/39.48) + log(30.25/39.48)]
+= (T/(2π)) [log(19.16) + log(6.895) + log(0.7662)]
+= (T/(2π)) [2.953 + 1.931 + (-0.266)]
+= (T/(2π)) · 4.618
+= T · 0.735
+
+Set N(T) = 1/2: T ≈ 0.68
+
+Hmm, that seems too small. Let me recheck.
+
+Actually wait, I think the issue is that for T much smaller than the μ_j, the formula N(T) ≈ (T/(2π)) · Σ log(|μ_j|/(2π)) works, and this is approximately linear in T. The first zero is at T ≈ 1/(density) where density = (1/(2π)) Σ log(|μ_j|/(2π)).
+
+For Sym^5: density = (1/(2π)) [2·log(27.5/(2π)) + 2·log(16.5/(2π)) + 2·log(5.5/(2π))]
+
+= (1/(2π)) [2·log(4.376) + 2·log(2.626) + 2·log(0.875)]
+
+= (1/(2π)) [2·1.476 + 2·0.966 + 2·(-0.133)]
+
+= (1/(2π)) [2.952 + 1.932 - 0.266]
+
+= (1/(2π)) · 4.618
+
+= 0.735
+
+So N(T) ≈ 0.735 · T for small T, giving first zero at T ≈ 0.5/0.735 ≈ 0.68.
+
+For Sym^4: density = (1/(2π)) [2·log(22/(2π)) + 2·log(11/(2π)) + log(0/(2π))]
+
+Wait, one of the parameters is μ = 0, so I need to handle this differently. For μ_j = 0, the Γ_ℝ factor is Γ_ℝ(s) = π^{-s/2} Γ(s/2), and this contributes:
+
+(1/2)ψ(s/2) to the log-derivative.
+
+At s = 1/2, this gives (1/2)ψ(1/4) ≈ (1/2)(-γ - π/2 - 3 log 2) ≈ ... hmm, ψ(1/4) = -γ - π/2 - 3 log 2 ≈ -0.577 - 1.571 - 2.079 ≈ -4.227. So the contribution is about -2.11.
+
+The other terms at s = 1/2 with μ = 22 give (1/2)ψ((1/2 + 22)/2) = (1/2)ψ(11.25) ≈ (1/2)·2.367 ≈ 1.184 (since ψ(11) ≈ 2.352, ψ(12) ≈ 2.443, so ψ(11.25) ≈ 2.375).
+
+Similarly for μ = -22: (1/2)ψ((1/2 - 22)/2) = (1/2)ψ(-10.75). But ψ at negative values... we need to use the reflection formula or the fact that Γ(s) has poles at non-positive integers. Since (1/2 - 22)/2 = -10.75, and Γ(z) at z = -10.75 is fine (it's between poles at z = -10 and z = -11), so ψ(-10.75) = ψ(-10.75 + 11) - 1/(-10.75) - ... using the recurrence ψ(z+1) = ψ(z) + 1/z:
+
+ψ(-10.75) = ψ(0.25) - 1/(-0.75) - 1/(-1.75) - ... - 1/(-10.75)
+
+ψ(0.25) = -γ - π/2 - 3 log 2 ≈ -4.227
+
+And the sum 1/0.75 + 1/1.75 + 1/2.75 + ... + 1/10.75 = Σ_{k=0}^{9} 1/(k + 0.75)
+
+= 1/0.75 + 1/1.75 + 1/2.75 + 1/3.75 + 1/4.75 + 1/5.75 + 1/6.75 + 1/7.75 + 1/8.75 + 1/9.75 + 1/10.75
+
+≈ 1.333 + 0.571 + 0.364 + 0.267 + 0.211 + 0.174 + 0.148 + 0.129 + 0.114 + 0.103 + 0.093 = 3.507
+
+So ψ(-10.75) = -4.227 + 3.507 = -0.720
+
+And (1/2)ψ(-10.75) = -0.360
+
+OK this is getting very tedious. Let me try a cleaner approach.
+
+### A cleaner approach to estimating first zeros
+
+For a degree d L-function of a modular form of weight k and level 1, in the unit normalization, the first zero can be estimated using the fact that the completed L-function Λ(s) satisfies Λ(s) = ε Λ(1-s) and has all its zeros on Re(s) = 1/2 (assuming GRH).
+
+The "archimedean conductor" at height T is roughly:
+
+Q_∞(T) ≈ ∏_{j=1}^{d} (1 + |μ_j| + T)
+
+For Sym^4(Δ) with μ = {22, 11, 0, -11, -22} and T = γ (first zero height):
+
+Q_∞(γ) = (1+22+γ)(1+11+γ)(1+γ)(1+11+γ)(1+22+γ) = (23+γ)²(12+γ)²(1+γ)
+
+The zero-counting formula gives N(γ) ≈ 1 when:
+
+(d/(2π)) γ · log(Q_∞(γ)^{1/d} / (2π)) ≈ 1
+
+Wait, this isn't quite right either. Let me just use the formula:
+
+N(T) ≈ (1/(2π)) T Σ_{j=1}^{d} log(|μ_j + iT| / (2π)) (for the Γ_ℝ normalization)
+
+Hmm, I keep going in circles. Let me try numerical estimates.
+
+For Sym^4(Δ), using the Γ_ℝ factors with parameters μ_j = {22, 11, 0, -11, -22}:
+
+At T = 3:
+Σ log(√(μ_j² + 9)/(2π)) = log(√(493)/(2π)) + log(√(130)/(2π)) + log(3/(2π)) + log(√(130)/(2π)) + log(√(4

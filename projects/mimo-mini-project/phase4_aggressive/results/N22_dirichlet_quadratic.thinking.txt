@@ -1,0 +1,468 @@
+The user is asking about Dirichlet L-functions over imaginary quadratic fields, specifically Hecke L-functions for nontrivial characters of the class group. I need to provide concrete information for test cases A-E.
+
+Let me recall the setup: For an imaginary quadratic field K = Q(√-d), the class group Cl(K) has characters ψ: Cl(K) → ℂ×, and for each character we get a Hecke L-function L(s, ψ). These are degree 2 L-functions (over Q) when ψ is nontrivial.
+
+The LMFDB should have these. Let me think through each case systematically.
+
+For K = Q(√-d), the L-function L(s, ψ) for a nontrivial class group character ψ has:
+- Functional equation relating s to 1-s
+- Gamma factor Γ_ℂ(s) = (2π)^{-s} Γ(s) (which is Γ_ℝ(s)Γ_ℝ(s+1) in some conventions, but actually for weight 0 modular forms it's Γ_ℝ(s+1) Γ_ℝ(s) which is the same)
+- Actually, for Hecke characters of finite order on an imaginary quadratic field, the L-function is the L-function of a CM modular form (or weight 1 modular form with complex multiplication by K).
+
+Let me think about the LMFDB labels. These would be in the L-function database as "2.0.8.1" type labels or "EllipticCurve" style labels.
+
+Actually, Hecke L-functions for class group characters of imaginary quadratic fields are weight 1 modular forms with CM by K. They should be in LMFDB.
+
+Let me go through each case:
+
+**A. K = Q(i), h = 1**
+Only the trivial character. ζ_K(s) = ζ(s)L(s, χ_{-4}).
+LMFDB: The Dedekind zeta function, or equivalently ζ(s) and L(s, χ_{-4}) separately.
+χ_{-4} = χ_4 is the Legendre symbol (−4/·), i.e., the nontrivial Dirichlet character mod 4.
+L(s, χ_4) label in LMFDB: 1.37023... — no, the label format is like "1-37023-1.1" or something.
+
+Actually, for Dirichlet characters mod q, LMFDB labels are like "DirichletCharacter/q/n" or "1.q.n". For χ_4 (the nontrivial character mod 4), the LMFDB label for the L-function is "1-4-1.1" or similar.
+
+Wait, I should think about this differently. The user wants:
+1. LMFDB label
+2. First 5 imaginary parts γ_n
+3. Formula for a_p
+4. Predicted MUSIC accuracy
+
+For case A (K = Q(i), h = 1), the nontrivial Hecke character doesn't exist (h=1, so only trivial). The L-function L(s, ψ_triv) = ζ_K(s) = ζ(s) L(s, χ_4). This isn't a new primitive L-function; it splits. So really there's nothing new here.
+
+**B. K = Q(√-2), h = 1** — same situation, ζ_K(s) = ζ(s) L(s, χ_{-8}).
+
+**C. K = Q(√-5), h = 2** — this is the interesting one.
+Class group Cl(K) ≅ ℤ/2ℤ. Two characters: trivial and nontrivial.
+L(s, ψ_nontrivial) is a new primitive degree 2 L-function.
+
+The LMFDB label: These Hecke L-functions are L-functions of weight 1 modular forms. For K = Q(√-5), h = 2, the nontrivial Hecke character gives an L-function associated to a CM form.
+
+Let me think about what the coefficients a_p are.
+
+For a Hecke L-function over K with character ψ of the class group:
+- If p splits in K: p = 𝔭 𝔭̄, then a_p = ψ(𝔭) + ψ(𝔭̄) = ψ(𝔭) + ψ̄(𝔭) = 2 Re(ψ(𝔭))
+- If p is inert in K: then a_p = 0
+- If p ramifies: p = 𝔭², then a_p = ψ(𝔭) + ψ(𝔭̄)... actually I need to be more careful.
+
+Wait, for the class group character ψ, the ideal class [𝔭] of a prime 𝔭 above p determines ψ(𝔭).
+
+For K = Q(√-5):
+- p splits iff (-5/p) = 1, i.e., (-5/p) = 1 (Legendre symbol), iff (−5/p) = 1 iff p ≡ 1, 3, 7, 9 mod 20
+- p is inert iff (-5/p) = -1, i.e., p ≡ 11, 13, 17, 19 mod 20
+- p = 2, 5 ramify
+
+Actually, the splitting behavior is determined by the Kronecker symbol (-5/p):
+- (-5/p) = 1: p splits
+- (-5/p) = -1: p is inert
+- p | 10: ramifies
+
+For K = Q(√-5), the ring of integers is ℤ[√-5] (since -5 ≡ 3 mod 4, wait, actually d = 5 and 5 ≡ 1 mod 4, so O_K = ℤ[(1+√-5)/2]).
+
+Wait, let me reconsider. For K = Q(√-d):
+- If d ≡ 3 mod 4: O_K = ℤ[√-d]... no.
+- If -d ≡ 1 mod 4, i.e., d ≡ 3 mod 4: O_K = ℤ[(1+√-d)/2]
+- If -d ≡ 2, 3 mod 4, i.e., d ≡ 1, 2 mod 4: O_K = ℤ[√-d]
+
+For d = 5: -5 ≡ 3 mod 4, so -5 ≡ 3 mod 4... hmm, let me be more careful.
+
+K = Q(√-5). The discriminant: since -5 ≡ 3 mod 4, we have disc(K) = -20.
+
+Wait, no. The standard rule: K = Q(√m) where m is squarefree. Then:
+- If m ≡ 1 mod 4: disc(K) = m, O_K = ℤ[(1+√m)/2]
+- If m ≡ 2, 3 mod 4: disc(K) = 4m, O_K = ℤ[√m]
+
+Here m = -5, and -5 ≡ 3 mod 4. So disc(K) = 4(-5) = -20, and O_K = ℤ[√-5].
+
+For K = Q(√-5), the class number is 2. The class group is ℤ/2ℤ.
+
+The nontrivial ideal class: The ideal (2, 1+√-5) is non-principal (it lies above 2), and (3, 1+√-5) lies above 3, both in the nontrivial class.
+
+For the Hecke character ψ of order 2 (the nontrivial character of Cl(K)):
+
+a_p for L(s, ψ):
+- If p splits in K: pO_K = 𝔭 𝔭̄, with 𝔭 and 𝔭̄ in possibly different classes. Since ψ has order 2, ψ(𝔭̄) = ψ(𝔭)^{-1} = ψ(𝔭) (since ψ has order 2). So a_p = ψ(𝔭) + ψ(𝔭̄) = 2ψ(𝔭) = ±2. Wait, that's not right either.
+
+Hmm, actually for Hecke characters on ideal class groups: ψ is a character on Cl(K). If p splits as 𝔭𝔭̄, then [𝔭] and [𝔭̄] = [𝔭]^{-1} in Cl(K). Since Cl(K) ≅ ℤ/2ℤ, [𝔭] = [𝔭]^{-1}, so ψ(𝔭̄) = ψ(𝔭).
+
+So a_p = ψ(𝔭) + ψ(𝔭̄) = 2ψ(𝔭) ∈ {+2, -2}.
+
+If 𝔭 is principal, ψ(𝔭) = 1, so a_p = 2.
+If 𝔭 is non-principal, ψ(𝔭) = -1, so a_p = -2.
+
+If p is inert: a_p = 0.
+If p ramifies: a_p = 0 (or just ψ(𝔭) where 𝔭² = pO_K... for ramified primes, ψ(𝔭) is related to the character value on the ramified prime).
+
+Actually wait, for ramified primes, the Euler factor is (1 - ψ(𝔭) Np^{-s})^{-1} where pO_K = 𝔭², so Np = p. But 𝔭² = pO_K, so [𝔭]² = [pO_K] which is principal, so [𝔭] has order dividing 2. For K = Q(√-5), the ramified primes are 2 and 5.
+
+p = 2: (2) = (2, 1+√-5)². The ideal (2, 1+√-5) is non-principal, so [𝔭₂] is the nontrivial class. ψ(𝔭₂) = -1. So a_2 = -1.
+
+Hmm, actually for the L-function of a Hecke character, at ramified primes the local factor might be different. Let me think again.
+
+For a Hecke L-function:
+L(s, ψ) = Σ_{𝔞} ψ(𝔞) N(𝔞)^{-s}
+
+where the sum is over nonzero ideals of O_K. The Euler product is:
+L(s, ψ) = Π_p Π_{𝔭|p} (1 - ψ(𝔭) N𝔭^{-s})^{-1}
+
+For unramified p:
+- Split: p = 𝔭𝔭̄, local factor = (1 - ψ(𝔭) p^{-s})^{-1} (1 - ψ(𝔭̄) p^{-s})^{-1}. Since N𝔭 = p.
+  But wait, for the L-function viewed over Q (as a degree 2 L-function), we want to express this as a product over rational primes with Euler factors of degree 2:
+  Π_p (1 - a_p p^{-s} + ε(p) p^{1-2s})^{-1}
+
+  For split p: (1 - ψ(𝔭) p^{-s})^{-1}(1 - ψ(𝔭̄) p^{-s})^{-1} = (1 - (ψ(𝔭)+ψ(𝔭̄)) p^{-s} + ψ(𝔭)ψ(𝔭̄) p^{-2s})^{-1}
+  = (1 - a_p p^{-s} + p^{-2s})^{-1} where a_p = ψ(𝔭) + ψ(𝔭̄).
+
+  For the nontrivial ψ (order 2), a_p = ±2.
+
+- Inert: 𝔭 with N𝔭 = p², local factor = (1 - ψ(𝔭) p^{-2s})^{-1}. As a degree 2 factor over Q: (1 - 0·p^{-s} + ψ(𝔭) p^{1-2s})^{-1}... hmm, that's not quite right either.
+
+Actually, I think for the Hecke L-function viewed as an automorphic L-function over Q, the relationship is:
+- L(s, ψ) = L(s, π_ψ) where π_ψ is an automorphic representation of GL(2)/Q
+
+For a Hecke character of finite order on an imaginary quadratic field, the automorphic induction gives a GL(2) form over Q. The L-function coefficients are:
+
+a_p = ψ(𝔭) + ψ(𝔭̄) for p split in K
+a_p = 0 for p inert in K  
+a_p = ±1 for p ramified (depending on the ramification and the character)
+
+For K = Q(√-5), h = 2, ψ the nontrivial character:
+- The sign of ψ(𝔭) for p split depends on whether 𝔭 is in the principal or nontrivial class.
+
+Let me compute some a_p values:
+
+p = 3: (-5/3) = (-5 mod 3)/... hmm. Actually (-5/3) = (1/3) = 1 since -5 ≡ 1 mod 3. So p=3 splits.
+
+3O_K = (3, 1+√-5)(3, 1-√-5) in ℤ[√-5].
+
+Is (3, 1+√-5) principal? We need to check if there's an element α = a + b√-5 with N(α) = 3. a² + 5b² = 3: no solution (b=0 gives a²=3, no; b=1 gives a²=-2, no). So (3, 1+√-5) is non-principal. ψ(𝔭) = -1. a_3 = -2.
+
+p = 7: (-5/7) = (2/7) = ... hmm, let me compute (-5 mod 7) = 2. (2/7) = 2^{(7-1)/2} mod 7 = 2³ mod 7 = 8 mod 7 = 1. So (-5/7) = 1, p=7 splits.
+
+α with N(α) = 7: a² + 5b² = 7: b=1, a²=2, no. So no element of norm 7 exists. Wait, actually in O_K = ℤ[√-5], N(a+b√-5) = a²+5b². For norm 7: no solution. So all primes above 7 are non-principal. a_7 = -2.
+
+p = 11: (-5/11). -5 ≡ 6 mod 11. (6/11) = (2/11)(3/11). (2/11) = (-1)^{(121-1)/8} = (-1)^{15} = -1. Hmm, (2/11): 2^5 = 32 ≡ 10 ≡ -1 mod 11, so (2/11) = -1. (3/11): 3^5 = 243 = 22·11 + 1, so 3^5 ≡ 1 mod 11, so (3/11) = 1. So (6/11) = -1. p=11 is inert. a_11 = 0.
+
+p = 19: (-5/19). -5 ≡ 14 mod 19. Hmm. Or (-5/19) = (-1/19)(5/19). (-1/19) = (-1)^9 = -1. (5/19) = (19/5) by QR (both odd primes, 5 ≡ 19 ≡ 1 mod 4... wait 19 ≡ 3 mod 4 and 5 ≡ 1 mod 4, so (5/19)(19/5) = (-1)^{(4)(18)/4} = (-1)^{18} = 1. So (5/19) = (19/5) = (4/5) = 1. So (-5/19) = -1. Inert. a_19 = 0.
+
+p = 29: (-5/29). (-1/29) = (-1)^{14} = 1. (5/29) = (29/5) = (4/5) = 1. So (-5/29) = 1. Splits.
+
+N(α) = 29: a² + 5b² = 29. b=1: a² = 24, no. b=2: a² = 9, a = 3. So 3 + 2√-5 has norm 29. So (29) = (3+2√-5)(3-2√-5). Both are principal! So a_29 = +2.
+
+p = 29: a_29 = 2 ✓ (since 3² + 5·2² = 29, so the ideals above 29 are principal)
+
+Let me check a few more:
+
+p = 23: (-5/23). -5 ≡ 18 mod 23. (18/23) = (2/23)(9/23) = (2/23)·1 = (2/23). 2^{(23-1)/2} = 2^{11} = 2048 = 89·23 + 1, so 2^{11} ≡ 1 mod 23. So (2/23) = 1. (-5/23) = 1. Splits.
+
+N(α) = 23: a² + 5b² = 23. b=1: a²=18, no. b=2: a²=3, no. No solution. So ideals above 23 are non-principal. a_23 = -2.
+
+So the pattern: a_p = 2 when p splits and there exists (a,b) with a²+5b² = p; a_p = -2 when p splits but a²+5b² = p has no solution; a_p = 0 when p is inert.
+
+This makes sense: the form x² + 5y² represents exactly the norms of principal ideals. When p splits and is represented by x²+5y², the prime above p is principal, so ψ = 1 and a_p = 2. When p splits but isn't represented (so p = 2x² + 2xy + 3y², the other class), a_p = -2.
+
+Now for the LMFDB label. The L-function of this Hecke character should correspond to a weight 1 modular form with CM by Q(√-5).
+
+In LMFDB, this would be labeled as something like "2.0.20.1-..." or as a modular form.
+
+Actually, let me think about the LMFDB labeling for Hecke L-functions. They might be under "L-function" or "Modular forms" or "Hecke characters."
+
+The L-function of the nontrivial Hecke character of Q(√-5) is the L-function of an elliptic curve... no, weight 1 forms aren't elliptic curves. It's a CM form of weight 1.
+
+In LMFDB, weight 1 forms are found under "Modular forms" > "Classical modular forms" and then filtering by weight 1. The character would be... hmm.
+
+Actually, the automorphic induction of the Hecke character ψ of Q(√-5) gives a GL(2) automorphic form over Q. The conductor of this induced form is related to the discriminant of Q(√-5) and the conductor of ψ.
+
+For Q(√-5), disc = -20. The Hecke character ψ has conductor dividing... well, for the class group character, the conductor can be computed. For class group characters of imaginary quadratic fields, the conductor of the Hecke character (as a grossencharacter) involves the discriminant and ramification.
+
+Actually, for a class group character ψ of an imaginary quadratic field K with discriminant d_K, the induced GL(2) form over Q has:
+- Level N = |d_K| = 20 for K = Q(√-5)
+- Weight 1
+
+So I should look for a weight 1 modular form of level 20 in LMFDB.
+
+LMFDB label for this form: "20.1.b.a" or similar (convention varies).
+
+Actually, I think the convention is "Level.Weight.Character.OrbitLabel" but for trivial nebentypus, it would be "20.1.1.a" or "20.1.a.a".
+
+Wait, I think for weight 1 forms with CM, the nebentypus is the quadratic character associated to K. For K = Q(√-5), this is χ_{-20} (the Kronecker symbol (-20/·)).
+
+So the form would be at level 20 with nebentypus χ_{-20}. In LMFDB notation, this might be "20.1.b.a" where b denotes the character.
+
+Hmm, I'm not 100% sure of the exact LMFDB label. Let me think about what LMFDB would have.
+
+For the Hecke L-function L(s, ψ) where ψ is a nontrivial class group character of K = Q(√-5):
+
+The L-function in LMFDB should be labeled as a degree 2 L-function. It could be labeled as:
+- "2.0.20.1-20.1-a" (the automorphic induction notation)
+- Or "ModularForm/GL2/Q/holomorphic/20/1/b/a"
+
+I think in practice, for weight 1 forms, LMFDB uses labels like "20.1.d.a" or "20.1.b.a". Let me try to recall or compute.
+
+Actually, I think I should just note that I can look this up. Let me try to be concrete about what I know.
+
+The L-function of the nontrivial Hecke character of Q(√-5) has:
+- Conductor: 20 (= |disc(K)| = 20)
+- Degree: 2
+- Weight: 1 (since ψ has finite order)
+- The zeros should start around the same range as other conductor-20 degree-2 L-functions
+
+Wait, actually for L-functions of weight 1 forms, the "analytic conductor" at s=1/2 is N·(1/4) (from the gamma factor Γ_ℂ(s)), so the first zero is at height approximately... hmm, actually for Γ_ℂ(s) = (2π)^{-s} Γ(s), the Stirling approximation for the argument gives the first zero at height around log(N)/(2π) or similar.
+
+For weight 1 forms with level N = 20: the first zero should be at height roughly (1/2π) log(N/4π²) ≈ small, so the first zero is very low, maybe around γ₁ ≈ 0.5 or so.
+
+Hmm wait, I need to be more careful. The completed L-function for a weight 1 modular form f of level N with character ε is:
+
+Λ(s, f) = (N/(2π))^{s} Γ(s) L(s, f)
+
+and Λ(s, f) = ε̄(-1) Λ(1-s, f̄) where f̄ has character ε̄.
+
+Wait, I think for weight k, the gamma factor is Γ_ℂ(s + (k-1)/2) = (2π)^{-(s+(k-1)/2)} Γ(s + (k-1)/2).
+
+For k = 1: Γ_ℂ(s) = (2π)^{-s} Γ(s).
+
+The completed L-function: Λ(s) = N^{s/2} Γ_ℂ(s) L(s) = N^{s/2} (2π)^{-s} Γ(s) L(s).
+
+The functional equation: Λ(s) = ε Λ(1-s) where |ε| = 1.
+
+For the argument of the gamma factor: arg Γ_ℂ(1/2 + it) = Im(log Γ(1/2 + it) - (1/2+it) log(2π)).
+
+Using Stirling: Im(log Γ(1/2+it)) ≈ t log(t/e) + π/4 + ... and Im(-(1/2+it)log(2π)) = -t log(2π).
+
+So arg Γ_ℂ(1/2+it) ≈ t(log(t/e) - log(2π)) + π/4 = t log(t/(2πe)) + π/4.
+
+Plus the conductor contribution: arg(N^{(1/2+it)/2}) = (t/2) log N.
+
+Total argument: t log(t/(2πe)) + (t/2) log N + π/4 + arg(ε) = t log(tN^{1/2}/(2πe)) + ... 
+
+The nth zero is approximately where this equals nπ. For small n, the first zero height γ₁ is approximately:
+
+For N = 20: log(N^{1/2}/(2π)) = log(√20/(2π)) = log(2π√5/(2π))... wait. N^{1/2}/(2π) = √20/(2π) ≈ 4.47/6.28 ≈ 0.712. So log(0.712) ≈ -0.34.
+
+So the gamma argument at height t is approximately t log(t) + t(-1 - 0.34) = t(log(t) - 1.34).
+
+For the first zero, set this ≈ π (roughly). So t(log(t) - 1.34) ≈ π ≈ 3.14.
+
+If t ≈ 2: 2(0.69 - 1.34) = 2(-0.65) = -1.3. Too negative.
+If t ≈ 4: 4(1.39 - 1.34) = 4(0.05) = 0.2. Still too small.
+If t ≈ 5: 5(1.61 - 1.34) = 5(0.27) = 1.35. Hmm.
+If t ≈ 6: 6(1.79 - 1.34) = 6(0.45) = 2.7.
+If t ≈ 7: 7(1.95 - 1.34) = 7(0.61) = 4.27.
+
+So the first zero is around t ≈ 6-7. But this is a very rough estimate. For low conductor, the zeros can be much lower.
+
+Actually, for a degree 2 L-function with small conductor, the first few zeros of L(1/2+it) can be at surprisingly low heights. Let me look at this differently.
+
+For the specific L-function of the nontrivial Hecke character of Q(√-5):
+
+The coefficients are:
+a_2 = -1 (ramified, as discussed)
+a_3 = -2 (split, non-principal ideals)
+a_5 = 0 or something (ramified, 5 ramifies in Q(√-5))
+
+Wait, for p = 5: 5O_K = (√-5)². The ideal (√-5) is principal (generated by √-5), so [𝔭₅] is the principal class. ψ(𝔭₅) = 1. But wait, (5) = (√-5)² and (√-5) is principal, so... the local factor at p=5 is (1 - ψ(√-5) · 5^{-s})^{-1} = (1 - 5^{-s})^{-1}.
+
+Hmm, but for the L-function viewed as a degree-2 Euler product over Q, at a ramified prime we might have: the local factor is (1 - ψ(𝔭) p^{-s})^{-1} which is degree 1 in p^{-s}. But for the "standard" normalization of degree 2 L-functions, we'd want all local factors to be degree 2... 
+
+Actually, for an L-function of a weight 1 newform, the local factor at a prime dividing the level might be just 1 (if p² | N, newform theory gives a_p = 0) or (1 - a_p p^{-s})^{-1} with a_p = ±1.
+
+For level N = 20 = 4·5, the form is new at both 4 and 5. At p = 2 (where 2² | 20 since 4|20), we'd have a_2 determined by the root number. At p = 5 (where 5 || 20), the local factor is degree 1.
+
+Hmm, I think I'm overcomplicating this. Let me just look at it from the Hecke L-function perspective.
+
+L(s, ψ) = Π_p Π_{𝔭|p} (1 - ψ(𝔭) N𝔭^{-s})^{-1}
+
+For p split: Π = (1 - ψ(𝔭)p^{-s})^{-1}(1 - ψ(𝔭̄)p^{-s})^{-1}. This is a degree-2 factor.
+For p inert: Π = (1 - ψ(𝔭)p^{-2s})^{-1}. This is a degree-1 factor in p^{-2s}, which we can write as degree-2 in p^{-s} but with a_p = 0 and ε(p) = ψ(𝔭). Hmm.
+
+Actually for inert p with N𝔭 = p²: (1 - ψ(𝔭)p^{-2s})^{-1}. In the standard normalization of GL(2) L-functions, this would be written as (1 - αp^{-s})^{-1}(1 - βp^{-s})^{-1} where α = 0 and β = ... no. Let me think again.
+
+If p is inert in K, then the local L-factor of the induced representation at p is:
+(1 - ψ(𝔭) p^{-2s})^{-1}
+
+But this can be factored as:
+(1 - √ψ(𝔭) p^{-s})^{-1} · (1 + √ψ(𝔭) p^{-s})^{-1}
+
+Hmm, that doesn't factor nicely in general. Let me reconsider.
+
+Actually, for the automorphic induction from K to Q, the local component at an inert prime p of the induced representation π = AI_K^Q(ψ) is:
+
+If p is inert in K:
+The local L-factor of π at p is (1 - ψ(𝔭) N𝔭^{-s})^{-1} = (1 - ψ(𝔭) p^{-2s})^{-1}.
+
+In terms of the GL(2) L-factor: L_p(s, π) = (1 - a_p p^{-s} + ω(p) p^{k-1-2s})^{-1}
+
+For weight k=1 and p unramified in π: a_p = 0, ω(p) = ψ(𝔭) = ψ(pO_K)... 
+
+Actually, ω(p) should be the central character, which for the induction is ψ|_{ℚ^×} · χ_{K/ℚ}, where χ_{K/ℚ} is the quadratic character of K/Q. For a class group character ψ (which is trivial on principal ideals, hence trivial on the norms from K to Q), the central character is just χ_{K/ℚ} restricted to... hmm, this is getting complicated.
+
+Let me try a different approach. Let me just look at the first few a_p from the data I computed:
+
+a_2 = -1 (ramified, ψ(𝔭₂) = -1 since 𝔭₂ is non-principal)
+a_3 = -2 (split, non-principal class)
+a_5: 5 ramifies as 𝔭₅² = (√-5)², and 𝔭₅ = (√-5) is principal, so ψ(𝔭₅) = 1, a_5 = 1 (or maybe this should be 0 for the L-function as an automorphic form?)
+
+Hmm, I think for the induced representation, at a ramified prime p:
+- If 𝔭 is principal (in the class of 1), then ψ(𝔭) = 1
+- If 𝔭 is non-principal, then ψ(𝔭) = -1
+
+And the local L-factor at a ramified prime p is (1 - ψ(𝔭)p^{-s})^{-1}.
+
+But actually, in the automorphic induction, the ramification of p in K and the conductor of ψ can interact. For class group characters, the conductor is the product of ramified primes times... hmm.
+
+I think for the class group character ψ of K, the "conductor" of ψ (as a Hecke character / grossencharacter) is the trivial ideal (since ψ is trivial on all ideals coprime to any fixed ideal). Wait, no—the conductor of ψ relates to the "modulus" of the character.
+
+Actually, for the Hecke L-function of a character of the ideal class group, the character is defined on all fractional ideals coprime to... well, actually on all ideals, with ψ(𝔞) depending only on the class of 𝔄. So the conductor in the idele class sense involves the ramified primes.
+
+I think I'm overanalyzing the local factors. Let me focus on what's practically needed for MUSIC: the Euler product coefficients a_p for the L-function viewed as a degree-2 L-function over Q.
+
+Let me try to identify this L-function in LMFDB directly. The L-function of the nontrivial Hecke character of Q(√-5) should be in LMFDB.
+
+Looking at it as a weight 1 newform: it would be a weight 1 cusp form with CM by Q(√-5). The level should be |disc(K)| = 20, and the character should be the Kronecker symbol χ_{-20} (the quadratic character associated to Q(√-5)/Q).
+
+Wait, actually the character of the automorphic induction depends on ψ and K. For ψ trivial, the induction gives the Eisenstein series (or the sum of trivial and quadratic character L-functions). For ψ nontrivial, the induction gives a cusp form of weight 1.
+
+For a class group character ψ of order 2 on K = Q(√-5), the induced form has:
+- Level N = |disc(K)| · Nm(f_ψ) where f_ψ is the conductor of ψ
+- Character: ψ restricted to ℤ^×, times the quadratic character of K/Q
+
+For the class group character, the conductor f_ψ = O_K (trivial conductor, since the character is defined on all ideals). Wait, but class group characters can be considered as grossencharacters with some conductor...
+
+Actually, I think for the Hecke character of an imaginary quadratic field associated to the class group, the conductor in the "class field theory" sense is the discriminant. The induced automorphic form over Q has level |d_K| = 20.
+
+Let me just look this up. In LMFDB, searching for weight 1 newforms at level 20:
+
+The LMFDB URL would be something like: https://www.lmfdb.org/ModularForm/GL2/Q/holomorphic/?level=20&weight=1
+
+From my knowledge, there should be a weight 1 newform at level 20 with CM by Q(√-5). Its LMFDB label would be "20.1.b.a" or similar (where "b" refers to a nontrivial character of (ℤ/20ℤ)^×).
+
+Hmm, I actually think the nebentypus character has conductor 5 (or 20), which would be χ_{-20} (the Kronecker symbol).
+
+Let me think about (ℤ/20ℤ)^×: this has elements {1, 3, 7, 9, 11, 13, 17, 19}, order φ(20) = 8.
+
+The Dirichlet character mod 20 corresponding to the quadratic field Q(√-5) is... the Kronecker symbol (-5/·) or equivalently (-20/·). Let me compute:
+
+(-20/1) = 1, (-20/3) = (-20 mod 3) = (-2 mod 3) = ... (−20/3) = (−5/3) · (4/3) = (−5/3) · 1 = (−5 mod 3) = (1 mod 3) = 1. Wait, I need to be more careful.
+
+Using Kronecker symbol: (-20/n) for n odd and coprime to 20:
+(-20/3) = (-1/3)(4/3)(5/3) = (-1)(1)(5/3). (5/3) = (2/3) = -1. So (-20/3) = (-1)(1)(-1) = 1.
+
+Hmm wait, that's not right. The Kronecker symbol (-20/·) is a character mod 20. Let me compute directly:
+
+Actually, -20 = -4 · 5. So (-20/n) = (-4/n)(5/n) = (-1/n)(4/n)(5/n) = (-1/n)(5/n) since (4/n) = (2/n)² = 1.
+
+For n = 3: (-1/3) = -1, (5/3) = (2/3) = -1 (since 5 ≡ 2 mod 3 and (2/3) = -1). So (-20/3) = (-1)(-1) = 1.
+
+For n = 7: (-1/7) = -1, (5/7) = ... 5^3 = 125 ≡ 125 - 17·7 = 125 - 119 = 6 ≡ -1 mod 7. So (5/7) = -1. (-20/7) = (-1)(-1) = 1.
+
+For n = 9: (-20/9) = (-20/3)² = 1. Hmm, but 9 = 3², so the Kronecker symbol is multiplicative in the bottom when the bottom is factored into prime powers. (-20/9) = (-20/3)² = 1.
+
+For n = 11: (-1/11) = -1, (5/11) = (11/5) by QR (both ≡ ... hmm, 5 ≡ 1 mod 4, so (5/11) = (11/5) = (1/5) = 1). So (-20/11) = (-1)(1) = -1.
+
+For n = 13: (-1/13) = 1, (5/13) = (13/5) = (3/5) = ... 3² = 9 ≡ 4 mod 5, so (3/5) = (3^(5-1)/2 mod 5) = 3² mod 5 = 9 mod 5 = 4 ≡ -1 mod 5. So (3/5) = -1, (5/13) = -1. (-20/13) = (1)(-1) = -1.
+
+For n = 17: (-1/17) = 1, (5/17) = (17/5) = (2/5) = -1. (-20/17) = (1)(-1) = -1.
+
+For n = 19: (-1/19) = -1, (5/19) = (19/5) = (4/5) = 1. (-20/19) = (-1)(1) = -1.
+
+So the character χ_{-20} on (ℤ/20ℤ)^× is:
+1 → 1, 3 → 1, 7 → 1, 9 → 1, 11 → -1, 13 → -1, 17 → -1, 19 → -1.
+
+This is a quadratic character mod 20. In LMFDB's labeling of Dirichlet characters mod 20, this would be... the characters mod 20 are indexed. The group (ℤ/20ℤ)^× ≅ ℤ/2 × ℤ/4 (since φ(20) = 8 = 2 × 4). The quadratic characters are those of order dividing 2, of which there should be 3 (trivial, and two nontrivial quadratic characters).
+
+In LMFDB labeling, Dirichlet characters mod 20 are labeled 20.n for n in {1, 3, 7, 9, 11, 13, 17, 19} (the elements coprime to 20). The character 20.11 corresponds to... hmm, the convention is that 20.n maps k → e^{2πi·n·k/20}... no, that's not right either. LMFDB uses the convention where the character χ_q(a) for the label "q.a" is defined as χ_q(a) = (some specific choice).
+
+I think for LMFDB, the character 20.11 is the one where χ(3) = i, χ(7) = -i, etc. This might not be the quadratic character.
+
+Let me approach this differently. The quadratic characters mod 20 have order 2. Looking at the values I computed for χ_{-20}: it's 1 on {1,3,7,9} and -1 on {11,13,17,19}.
+
+Actually, 3 is a generator of... let's see. 3^1 = 3, 3^2 = 9, 3^3 = 27 ≡ 7, 3^4 = 81 ≡ 1 mod 20. So 3 has order 4 in (ℤ/20ℤ)^×. And 11 has order 2 (11² = 121 ≡ 1 mod 20).
+
+(ℤ/20ℤ)^× = {1, 3, 9, 7} × {1, 11} ≅ ℤ/4 × ℤ/2.
+
+χ_{-20}(3) = 1, χ_{-20}(11) = -1. So χ_{-20} is trivial on the ℤ/4 factor and nontrivial on the ℤ/2 factor. This means it's the quadratic character corresponding to the ℤ/2 factor.
+
+In LMFDB labeling, I believe this would be the character "20.j" or "20.11" or something. Let me see... in some conventions, 20.11 corresponds to the generator evaluation: the character labeled "n.m" has χ_m(g) = e^{2πi m/φ(n)} where g is a generator of (ℤ/nℤ)^×... no, that's not quite right.
+
+Actually, in LMFDB, Dirichlet characters are labeled as "q.j" where q is the conductor and j is an index. For conductor 20, the characters would be labeled 20.1, 20.3, 20.7, 20.9, 20.11, 20.13, 20.17, 20.19. The labeling follows: χ_{q,j}(n) = e^{2πi j n / q}... no, that would be for additive characters.
+
+For LMFDB, the Dirichlet character with label q.j is defined by its values on generators of (ℤ/qℤ)^×. The specific labeling: for q = 20, a generator is not available since the group isn't cyclic. Instead, we need generators of each factor.
+
+This is getting complicated. Let me just try to identify the form directly.
+
+For the L-function in LMFDB: I think the degree 2 L-function for the Hecke character of Q(√-5) might be listed as "2.0.20.1-20.1.b" or something similar. Or it could be under "ModularForm/GL2/Q/holomorphic" as "20.1.b.a".
+
+Actually, looking at this from the modular forms side: weight 1 cusp forms of level 20 with character χ_{-20}. In LMFDB's database of modular forms, these would be listed. The character χ_{-20} has conductor 20, so the forms would be at level 20 with nebentypus χ_{-20}.
+
+LMFDB label: I'll guess "20.1.b.a" where:
+- 20 = level
+- 1 = weight
+- b = orbit label for the character (or the character label)
+- a = orbit label for the form within that character
+
+But I'm not certain. Let me look at this from the LMFDB's L-function database perspective. L-functions in LMFDB for weight 1 forms would be under the "ModularForm" section.
+
+I recall that in LMFDB, there's a specific labeling: for a modular form f of level N, weight k, character index χ (by LMFDB's ordering), the label is "N.k.χ.a" where a distinguishes forms with the same level, weight, and character. The character index χ is a letter (a, b, c, ...).
+
+For level 20, weight 1, the possible characters are the Dirichlet characters mod 20. In LMFDB, the characters are ordered, and the character χ_{-20} would have some specific letter. Looking at the structure: there are 8 characters mod 20. If they're labeled a through h (or a through something), the quadratic character χ_{-20} might be labeled 'e' or 'b' or similar.
+
+Hmm, I realize I'm going in circles trying to guess the exact LMFDB label. Let me just provide what I can compute and note the uncertainty.
+
+Actually, I just recalled: for weight 1 newforms, the LMFDB labels them as "Level.Weight.OrbitLabel.CharOrbitLabel" or something. For the specific case:
+
+The LMFDB page for Hecke characters of Q(√-5) should be at:
+https://www.lmfdb.org/NumberField/2.0.20.1 (the label for Q(√-5) with discriminant -20)
+
+Wait, the LMFDB label for K = Q(√-5) as a number field is "2.0.20.1" where 2 is the degree, 0 is... hmm. Actually number fields in LMFDB are labeled by degree and discriminant: "2.-20.1" or "2.0.20.1".
+
+OK I think I should stop guessing labels and focus on what I can compute concretely.
+
+Let me approach this more practically. I'll compute what I can for each case and be honest about what I'm uncertain about.
+
+**Case C: K = Q(√-5), h = 2**
+
+The nontrivial Hecke character ψ gives an L-function L(s, ψ). The first few a_p:
+
+p = 2: Ramifies. 𝔭₂ = (2, 1+√-5), which is non-principal. ψ(𝔭₂) = -1. a_2 = -1.
+p = 3: Splits. 3O_K = (3, 1+√-5)(3, 1-√-5). Both ideals are non-principal (no element of norm 3). ψ(𝔭) = -1. a_3 = -2.
+p = 5: Ramifies. 𝔭₅ = (√-5), which is principal. ψ(𝔭₅) = 1. a_5 = 1.
+
+Wait, but for the induced form, at ramified primes, the a_p might be 0. Let me reconsider.
+
+For a newform f of weight 1 and level N = 20 = 4 · 5:
+- At p = 2 (where 4 | N): if f is new at 2, then depending on the Atkin-Lehner involution, a_2 might be ±1 or 0. Since 4 || N... actually 4 | 20 but 8 ∤ 20. For a newform at level 20, the local representation at p=2 depends on the specific form.
+
+Actually, the local factor of the automorphic induction at a prime p that ramifies in K depends on the local character. Let me think about this differently.
+
+For the Hecke L-function directly:
+L(s, ψ) = Π_{p split} (1 - ψ(𝔭)p^{-s})^{-1}(1 - ψ(𝔭̄)p^{-s})^{-1} · Π_{p inert} (1 - ψ(𝔭)p^{-2s})^{-1} · Π_{p ramified} (1 - ψ(𝔭)p^{-s})^{-1}
+
+Wait, for inert primes, 𝔭 has norm p², and ψ(𝔭) is determined by the class of 𝔭. For K = Q(√-5) with h = 2, an inert prime p has pO_K = 𝔭 with N𝔭 = p². The ideal 𝔭 is principal (since it's generated by p, and p is in ℤ, so [𝔭] = [pO_K] which is the trivial class). Wait, no! If p is inert, pO_K = 𝔭, so 𝔭 = pO_K which is a principal ideal! So [𝔭] is the trivial class, and ψ(𝔭) = 1.
+
+So for inert p: the Euler factor is (1 - p^{-2s})^{-1}.
+
+For the induced L-function as a degree-2 product over Q:
+(1 - p^{-2s})^{-1} = (1 - 0 · p^{-s} + p^{-2s}·something)^{-1}... Hmm.
+
+Actually: (1 - p^{-2s})^{-1} can be written as:
+(1 + p^{-s})^{-1} · (1 - p^{-s})^{-1}... no that's (1-p^{-2s})^{-1} = (1-p^{-s})^{-1}(1+p^{-s})^{-1}.
+
+Hmm wait. 1-p^{-2s} = (1-p^{-s})(1+p^{-s}). So (1-p^{-2s})^{-1} = (1-p^{-s})^{-1}(1+p^{-s})^{-1}. 
+
+But this factors as two degree-1 factors, which means the degree-2 L-factor for inert p is:
+(1 - p^{-s})^{-1}(1 + p^{-s})^{-1} = (1 - p^{-2s})^{-1}.
+
+In the standard GL(2) format: (1 - a_p p^{-s} + ε(p) p^{k-1-2s})^{-1}, for weight k=1 and trivial central character restricted... hmm. Let me think about this in terms of a_p.
+
+For inert p with ψ(𝔭) = 1: The local factor is (1 - p^{-2s})^{-1}. This equals (1 - 0 · p^{-s} - (-1) p^{-2s})^{-1} = (1 - a_p p^{-s} - ω(p) p^{-2s})^{-1} with a_p = 0 and ω(p) = -1. So a_p = 0.
+
+For split p with ψ(𝔭) = ψ(𝔭̄) = ±1: The local factor is (1 - ψ(𝔭)p^{-s})^{-2} = (1 - 2ψ(𝔭)p^{-s} + p^{-2s})^{-1}. So a_p = 2ψ(𝔭) = ±2.
+
+For ramified p: The local factor is (1 - ψ(𝔭)p^{-s})^{-1}. For the degree-2 Euler product, this is... hmm, this is degree 1, not degree 2. In the automorphic induction, at a ramified prime the local factor might be different.
+
+Actually, I think at ramified primes for the induced representation, the local factor is degree 1 in p^{-s}. For the standard L-function of the automorphic form, we'd have:
+- p = 2 (ramified in K): L_2(s) = (1 - a_2 p^{-s})^{-1} with a_2 = ψ(𝔭₂)·(something related to the type of ramification)
+
+Hmm, I think for the automorphic induction, at a prime p that ramifies in K:
+- If p ||

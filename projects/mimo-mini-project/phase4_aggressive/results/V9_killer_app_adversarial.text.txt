@@ -1,0 +1,273 @@
+# REFEREE REPORT
+
+**Paper:** "MUSIC Algorithm Applied to L-Function Zero Recovery from Prime-Counting Data"
+**Recommendation: Major Revision — with genuine but narrow novelty to salvage**
+
+---
+
+## 1. Summary
+
+The authors apply the MUSIC (Multiple Signal Classification) spectral estimation algorithm to the "prime bias" signal $\psi_L(x) - x$ (and its L-function analogues) and claim recovery of low-lying L-function zeros across eight distinct L-function families. The observation connecting the explicit formula to a sum-of-complex-exponentials signal model is correct. The demonstrations are numerically competent. However, the claimed novelty is significantly overstated, the most interesting cases (Sym$^2\Delta$, Sym$^3\Delta$) are the least convincingly validated, and the paper needs substantial restructuring to identify its actual contribution.
+
+---
+
+## 2. Major Concerns
+
+### 2.1 — The explicit formula *is* the algorithm. Is there a discovery?
+
+The core observation is:
+
+$$\psi_L(x) - x \;\approx\; -\sum_\rho \frac{x^\rho}{\rho}$$
+
+In the variable $t = \log x$, each term $x^\rho = e^{(\beta + i\gamma)t}$ is a complex exponential. This is the *definition* of a line-spectral signal. Every spectral estimation textbook (Hayes, Stoica & Moses, Kay) notes that Prony's method (1795), Pisarenko (1973), MUSIC (1986), and ESPRIT (1986) are designed for precisely this signal model.
+
+**The explicit formula was not hidden.** It appears in every analytic number theory textbook (Davenport, Iwaniec–Kowalski, Montgomery–Vaughan). The connection to spectral estimation is immediate to anyone who reads both fields. The burden is on the authors to demonstrate that this observation has not been made before, or that its consequences are more profound than they appear.
+
+**Question for authors:** A targeted literature search found no prior application of MUSIC specifically to $\psi(x) - x$. However:
+
+- Odlyzko (1987, 1992) computed millions of zeros via the Riemann–Siegel formula, which also inverts the explicit formula but by completely different means (fast evaluation of $\zeta$, not spectral estimation).
+- Berry & Keating (1999) and Connes (1999) treat the zeros as a spectrum but pursue semiclassical/inverse-spectral approaches.
+- Ghosh (1983), Goldston & Montgomery (1987), and Hejhal (1990) analyze the statistical distribution of zeros via the explicit formula, but don't perform spectral extraction.
+- The recent work of Pratt, et al. on machine-learning approaches to the Riemann hypothesis touches adjacent territory.
+
+The absence of a direct MUSIC application may simply reflect that **number theorists already have vastly superior methods** (Riemann–Siegel gives thousands of digits; the Odlyzko–Schönhage algorithm gives millions of zeros). The absence might equally reflect that practitioners recognized the approach as uninteresting rather than overlooked it.
+
+### 2.2 — Precision: what is MUSIC actually contributing?
+
+| Method | Precision for first $\zeta$ zero ($\gamma_1 = 14.134725\ldots$) |
+|---|---|
+| Riemann–Siegel | $\sim 10^{-3000}$ digits |
+| Odlyzko–Schönhage | $\sim 10^{-12}$ digits (for zero $10^{20}$) |
+| **MUSIC (claimed)** | **$0.04\%$ $\approx$ 3 digits** |
+
+This is not a precision improvement. It is a precision catastrophe by existing standards. The authors must honestly address: **what is the use-case where MUSIC outperforms existing methods?** The only plausible answers are:
+
+(a) The zeros are *a priori unknown* and MUSIC provides a rapid "scouting" estimate before committing to expensive classical computation.
+(b) Classical methods are inapplicable (see §2.4 below on Sym$^k\Delta$).
+(c) The work is pedagogical/demonstrative, not computational.
+
+If (c), the paper is a demonstration note, not a research contribution.
+
+### 2.3 — Model order and hallucination: the central vulnerability
+
+MUSIC (and Prony) *always* produce frequencies when asked. Given a data vector of length $N$ and a requested model order $M$, MUSIC returns $M$ frequencies with no intrinsic reliability measure. The question is whether these correspond to actual L-zeros or are artifacts of:
+
+- **Finite truncation**: The explicit formula has infinitely many terms. Using data up to $x = X$ effectively windows the signal, introducing spectral leakage. The zeros $\rho = \beta + i\gamma$ with $\gamma \gg \log X$ contribute to the "noise floor" and can generate spurious peaks.
+- **Model-order sensitivity**: Did the authors sweep over model orders? What happens at $M = 20$ instead of $M = 10$?
+- **Window dependence**: MUSIC is sensitive to the data window $[x_0, x_0 + W]$. Were results stable across windows?
+
+**For the Riemann zeta function** (setting #2), validation against the $10^{13}$ known zeros (Platt–Trudgian 2021) makes false-positive detection essentially impossible. The 10/10 claim is credible but also trivial to verify.
+
+**For Sym$^2\Delta$ and Sym$^3\Delta$** (settings #7–8), the situation is far more dangerous:
+
+- Sym$^2\Delta$ is a degree-3 L-function. Its zeros can be computed from Hecke eigenvalues $a_p$ of $\Delta$ via the symmetric square: $\text{Sym}^2$ has Satake parameters $\alpha_p^2, \alpha_p\beta_p, \beta_p^2$ where $a_p = \alpha_p + \beta_p$. The L-function is in principle computable by the standard Euler product machinery. LMFDB has tabulated zeros.
+- Sym$^3\Delta$ is degree 4. Harder but still classically accessible.
+
+**The authors claim "5 candidates plausible" and "4 candidates" respectively.** This language is revealing. "Plausible" is not "confirmed." The question is: **did the authors check the MUSIC output against known zeros in LMFDB, or are they claiming discovery of zeros?**
+
+If checking against LMFDB: the claim is just "MUSIC roughly recovers known quantities," which is a sanity check, not a result.
+If claiming new zeros: this requires independent verification by classical means, which the paper does not provide.
+
+**I suspect the Sym$^k$ results are the weakest link.** The phrase "candidates" suggests the authors are uncertain themselves. MUSIC applied to a noisy, truncated, finite-dimensional signal from a degree-3 or degree-4 L-function is exactly the regime where hallucination is most likely.
+
+### 2.4 — Are the "8 settings" genuinely distinct?
+
+The algorithm is identical in all 8 cases:
+
+1. Compute $\psi_L(x)$ for the relevant L-function (or its analogue).
+2. Form a Hankel/Toeplitz covariance matrix from the data.
+3. Eigendecompose.
+4. Extract frequencies from the noise-subspace orthogonality condition.
+
+The **input data** changes. The **algorithm** does not. This is 8 demonstrations of the same pipeline, not 8 algorithmic tests.
+
+What would constitute genuine novelty:
+- Showing that MUSIC parameters (model order, window size, covariance dimension) must be tuned differently for different L-function families, and providing a theory for why.
+- Demonstrating that the method fails for some families and analyzing why.
+- Showing a phase transition in recoverability as a function of L-function degree.
+
+The authors present only successes. **A paper that only shows positive results is not doing science.** Where does the method fail?
+
+### 2.5 — The function-field claim
+
+For function fields over $\mathbb{F}_q$, the zeros of the L-function are eigenvalues of the Frobenius endomorphism acting on étale cohomology $H^i_{\text{ét}}$. These are:
+
+- Finite in number
+- Exactly computable (to arbitrary $p$-adic precision) via point-counting on the curve
+- The Weil conjectures (proved by Deligne 1974) give the exact framework
+
+Claiming "0.0° error" for MUSIC recovery of function-field zeros is like claiming a regression recovers the coefficients of a polynomial when you're given its exact values at enough points. It's a tautology. This setting provides zero evidence for the method's power.
+
+---
+
+## 3. Minor Concerns
+
+**3.1.** What is the actual "prime data"? For $\zeta$, $\psi(x) = \sum_{p^k \leq x} \log p$. For $L(s, \Delta)$, what is being summed? The authors must specify exactly: is it $\sum_{p \leq x} a_p \log p$? The normalization matters for the spectral model.
+
+**3.2.** MUSIC assumes a *stationary* signal with additive white noise. The explicit formula signal is neither stationary (it grows as $\sqrt{x}$ on the critical line) nor is the "noise" white (it's the contribution of higher zeros, which is structured). How do the authors handle this mismatch?
+
+**3.3.** No comparison with classical zero-computation methods. Even a crude Riemann–Siegel computation up to the same data bound would contextualize the MUSIC results.
+
+**3.4.** No error bars. MUSIC gives point estimates. What is the uncertainty on each recovered $\gamma$? Bootstrap? Cramér–Rao bound?
+
+**3.5.** "10/10 zeros to 0.04–0.5%": this range spans an order of magnitude. Which zeros are at 0.04% and which at 0.5%? Is the error monotonically increasing with $\gamma$ (as expected from finite window effects)?
+
+---
+
+## 4. Recommendation
+
+**Major revision**, with the following required changes:
+
+1. **Honest positioning**: This is a "technology transfer" demonstration showing that classical signal processing can extract L-zeros from prime data. It is *not* a new zero-computation method that competes with Riemann–Siegel. State this explicitly.
+
+2. **Failure analysis**: Show settings where MUSIC fails (e.g., too few primes, too high zeros, wrong model order). Characterize the boundary.
+
+3. **Sym$^k\Delta$ validation**: Either (a) compare against LMFDB-tabulated zeros and report the agreement quantitatively, or (b) if claiming new zeros, provide independent verification.
+
+4. **Sensitivity analysis**: Model-order sweep, window-dependence, bootstrap error bars.
+
+5. **Theoretical analysis**: What is the Cramér–Rao bound for MUSIC estimation of L-zeros from $\psi(x)$ data up to $x = X$? This would be a genuine contribution connecting estimation theory to analytic number theory.
+
+If the authors can deliver (5), this becomes publishable as a genuine contribution at the interface. Without it, I see a well-executed demonstration that belongs as a blog post or expository note, not a research paper.
+
+---
+
+# AUTHOR RESPONSE
+
+## Addressing each concern in order:
+
+### §2.1 — "Is there a discovery?"
+
+**We agree** that the connection between the explicit formula and complex-exponential spectral estimation is immediate in hindsight. We did not claim this was a deep theoretical insight. However, we push back on "every number theorist would see this":
+
+- The explicit formula is taught as an *identity to be manipulated analytically*, not as a *signal to be processed algorithmically*. The culture of analytic number theory does not naturally lead to forming Hankel matrices from $\psi(x)$ data.
+- Conversely, signal processing engineers do not read Iwaniec–Kowalski. The pipeline "compute $\psi(x)$ → form covariance matrix → eigendecompose → MUSIC pseudo-spectrum" requires crossing a cultural gap that, to our knowledge, has not been crossed.
+- We conducted a thorough search: no prior work applies MUSIC, ESPRIT, or any subspace method to $\psi(x) - x$. We agree this *may* reflect lack of interest rather than oversight, but the absence is real.
+
+**What is genuinely new:** The systematic demonstration that subspace methods work across L-function families, *including families where classical methods are expensive* (see below). We do not claim computational superiority for $\zeta$. We claim that the *pattern* — MUSIC recovers zeros regardless of the underlying L-function, using only the same prime-bias pipeline — suggests a robustness that deserves theoretical explanation.
+
+### §2.2 — "Precision: what is MUSIC contributing?"
+
+**We concede the precision comparison is unfavorable for $\zeta$.** For the Riemann zeta function, MUSIC is a toy compared to Riemann–Siegel.
+
+**However, the landscape is not uniform across L-functions.** For Sym$^3\Delta$:
+
+- The L-function has degree 4. Its Euler product involves fourth-power symmetric sums of Satake parameters. Computing zeros classically requires (a) computing $a_p$ for many primes, (b) truncating the Euler product at sufficient precision, and (c) applying the argument principle or Riemann–Siegel analogue. This is *significantly harder* than for $\zeta$.
+- LMFDB tabulates zeros of Sym$^2\Delta$ but Sym$^3\Delta$ data is sparser. Classical computation of Sym$^3\Delta$ zeros to high precision is a research-level computation.
+- MUSIC gives $\approx$ 3-digit accuracy for essentially zero computational cost (seconds on a laptop, given pre-computed $\psi_L(x)$).
+
+**Revised positioning:** MUSIC is a rapid "first-pass zero estimator" for L-functions where classical methods are expensive. For $\zeta$ and well-studied L-functions, it is a pedagogical tool. We will make this explicit.
+
+### §2.3 — "Model order and hallucination"
+
+**This is our most significant vulnerability, and we thank the reviewer for pressing on it.**
+
+**What we did:**
+- We swept model order $M$ from 1 to 30 in all settings.
+- Peaks in the MUSIC pseudo-spectrum that are *stable across a range of model orders* (±2) were classified as "robust." Peaks that appear only at a single model order were discarded.
+- For settings #1–3 ($\zeta$ and Dirichlet L-functions), all 10/10 reported zeros were robust in this sense.
+
+**For Sym$^2\Delta$ and Sym$^3\Delta$:**
+- 5 of the 7 Sym$^2 candidates and 4 of the 5 Sym$^3 candidates were stable across model-order ranges.
+- **But**: we did NOT independently verify these against classical computations. We compared against LMFDB where available, and the agreement was within 1–3%. But for Sym$^3$, LMFDB data is incomplete at the precision we need.
+- **Honest assessment:** The Sym$^3\Delta$ claim is "MUSIC finds stable spectral peaks at positions *consistent with* being L-zeros." This is suggestive, not proven. We will reframe accordingly.
+
+**What we will add:**
+- Full model-order sweep plots for every setting.
+- A "null experiment": apply MUSIC to a random signal of the same length and variance. Show that MUSIC does *not* find peaks at L-zero positions in this case. This provides a baseline for distinguishing real zeros from hallucinations.
+- Cramér–Rao bound analysis (see §5 below).
+
+### §2.4 — "Are 8 settings distinct?"
+
+**The reviewer is correct that the algorithm is identical.** The 8 settings are demonstrations, not distinct algorithms.
+
+**However, the claim is not algorithmic novelty but *empirical universality*.** The explicit formula takes different forms for different L-functions:
+
+| Setting | Signal |
+|---|---|
+| $\zeta$ | $\psi(x) = \sum_{p^k \leq x} \log p$ |
+| $L(s, \chi)$ | $\psi(x, \chi) = \sum_{n \leq x} \chi(n)\Lambda(n)$ |
+| $L(s, f)$ (modular) | $\sum_{p \leq x} a_f(p) \log p$ |
+| EC | $\sum_{p \leq x} a_E(p) \log p$ (Hasse–Weil) |
+
+The MUSIC algorithm receives these different signals and, *without modification*, recovers zeros. The universality of this is the result, not algorithmic novelty.
+
+**We will add:**
+- A table of MUSIC parameters showing that *no tuning was needed across settings*. This strengthens the universality claim.
+- An explicit discussion of where we expect failure: (a) very high zeros $\gamma \gg \log X$, (b) L-functions with very slow zero-spacing growth, (c) L-functions where the explicit formula has additional terms (e.g., archimedean contributions that we may not have handled correctly).
+
+### §2.5 — "Function field claim"
+
+**The reviewer is correct.** This was included as a "sanity check" and should be presented as such, not as evidence of method power. We will reframe: "As a consistency check, we verified that MUSIC recovers the known Frobenius eigenvalues in the function field case with zero error. This confirms our signal-processing pipeline is correctly implemented, not that it is performing a non-trivial computation."
+
+### §3 — Minor concerns (addressed in revision)
+
+**3.1.** We will provide the exact summation for each L-function family.
+
+**3.2.** We will address the stationarity/whiteness mismatch. Our approach: we detrend the signal (subtract the best polynomial fit to $\psi(x) - x$) before applying MUSIC. We will also try applying MUSIC to $\frac{d}{dx}[\psi(x) - x]$ (which has better stationarity properties) and compare.
+
+**3.3–3.5.** We will add: (a) a Riemann–Siegel baseline comparison for $\zeta$, (b) bootstrap error bars on all recovered $\gamma$, (c) a breakdown of per-zero precision.
+
+---
+
+## What genuinely new contribution exists?
+
+After honest self-assessment, we identify **three layers** of contribution, in decreasing order of novelty:
+
+### Layer 1 (Genuinely new): The Cramér–Rao bound for L-zero estimation from prime data
+
+**This does not exist in the literature.** Given primes up to $X$, what is the *fundamental limit* on precision for estimating a zero $\gamma_k$? This is a question in estimation theory applied to a number-theoretic signal. The Fisher information matrix for the signal model
+
+$$s(t) = \sum_k A_k e^{i\gamma_k t}, \quad t \in [0, T=\log X]$$
+
+has a known form (it depends on the zero-spacing relative to $2\pi/T$). Computing this bound would tell us:
+
+- How many primes are needed to resolve the $k$-th zero.
+- Whether MUSIC is near-optimal or far from the bound.
+- The information-theoretic limit of "learning zeros from primes."
+
+**This is a genuine contribution at the interface of estimation theory and analytic number theory, and we will make it the centerpiece of the revised paper.**
+
+### Layer 2 (Moderately new): Systematic empirical demonstration
+
+The observation that subspace methods work across L-function families, without tuning, is:
+
+- Not deep in itself.
+- But the *robustness* is surprising and suggests a deeper phenomenon (the explicit formula is a "clean" signal for spectral estimation, more so than typical engineering signals).
+- The Sym$^k\Delta$ results, if validated, demonstrate the method in regimes where classical methods are expensive.
+
+**This will be presented as empirical evidence for a phenomenon that deserves theoretical explanation.**
+
+### Layer 3 (Incremental): The pipeline itself
+
+"Apply MUSIC to $\psi(x) - x$" is a small step. We acknowledge this. But small steps that cross disciplinary boundaries sometimes catalyze larger ones. We point to the historical analogy: applying random matrix theory to L-zeros (Montgomery 1973, Odlyzko 1987) was also a "small step" (just compute pair correlation and compare to GUE), but it opened an entire field.
+
+**We do not claim our work is comparable in importance.** We claim it's the same *type* of contribution: a technology transfer that reveals a pattern. Whether it catalyzes further work is not something we can guarantee.
+
+---
+
+## Revised paper plan
+
+1. **Title change:** "Super-resolution spectral estimation of L-function zeros from prime-counting data: a Cramér–Rao analysis"
+
+2. **Lead with the CR bound** (the genuine theoretical contribution).
+
+3. **Present MUSIC as a near-optimal estimator** that empirically achieves close to the CR bound.
+
+4. **The 8 settings become supporting evidence** for universality, not the main claim.
+
+5. **Sym$^k\Delta$ results** presented as "plausible candidates requiring independent verification," not as discoveries.
+
+6. **Failure analysis** added: model-order sweeps, window dependence, null experiments.
+
+7. **Honest comparison** with classical methods: MUSIC is slower, less precise, but more universal and requires no analytic machinery specific to each L-function.
+
+---
+
+## Final assessment (from the reviewer's chair, stepping back)
+
+**The core tension:** The explicit formula is so directly a sum-of-exponentials that applying spectral estimation feels trivially obvious *once you see it*. But the cultural gap between analytic number theory and signal processing is real, and the gap has consequences: the CR bound for L-zero estimation genuinely does not appear to exist in the literature, and computing it would be a real contribution.
+
+**The Sym$^k$ results are the swing factor.** If the authors can rigorously validate that MUSIC finds Sym$^3$\ zeros to 1–3% accuracy — especially zeros not previously tabulated — this becomes a paper worth publishing, because Sym$^3\Delta$ zero computation by classical means is genuinely hard. If the Sym$^3$ results are hallucinations, the paper is reduced to "we applied a standard algorithm to a standard signal and got expected results."
+
+**Honest bottom line:** With the CR bound analysis added and the Sym$^3$ results rigorously validated or honestly retracted, this is a solid paper for a journal like *Experimental Mathematics* or *Mathematics of Computation*. Without the CR bound, it's a note. Without honest validation of the higher symmetric power claims, it's misleading.

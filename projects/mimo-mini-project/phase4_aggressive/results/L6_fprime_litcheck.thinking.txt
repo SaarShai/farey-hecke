@@ -1,0 +1,473 @@
+Let me think carefully about this problem. The user is asking about a Farey subsequence where denominators are restricted to primes, denoted $F'_N = \{p/q : q \text{ prime} \leq N, 0 \leq p < q\} \cup \{0\}$.
+
+They claim several empirical properties:
+1. The star discrepancy ratio $D^*(F'_N) / D^*(F_N) \to 1/2$ (where $F_N$ is the full Farey sequence of order $N$)
+2. Lag-1 gap correlation collapses to ~0 (compared to ~0.5 for regular Farey)
+3. Cardinality is $\approx N^2/(2\ln N)$ by PNT
+
+And they're asking whether this has been studied before.
+
+Let me think about each question:
+
+**1. Has $F'_N$ been studied in QMC?**
+
+I'm not aware of this specific construction being studied in quasi-Monte Carlo literature. The standard Farey sequence has been studied extensively (it's related to the Stern-Brocot tree, continued fractions, etc.), and there are many variations studied. But restricting denominators to primes specifically for low-discrepancy purposes - I don't recall this.
+
+**2. Is $D^*(F'_N)/D^*(F_N) \to 1/2$ known?**
+
+The star discrepancy of the full Farey sequence $F_N$ is known. The discrepancy $D^*(F_N) \sim \frac{3}{2\pi^2} \cdot \frac{1}{N}$ (I need to check the exact asymptotics).
+
+Actually, let me reconsider. The Farey sequence $F_N$ has $\sum_{q=1}^{N} \phi(q) \approx \frac{3}{N^2/\pi^2} = \frac{3N^2}{\pi^2}$ elements (by Gauss's estimate $|\text{Farey}(N)| \approx \frac{3N^2}{\pi^2}$).
+
+The discrepancy of $F_N$ - let me think about what's known. The classic result is related to the Franel-Weyl theorem: if $D(N)$ denotes the discrepancy of $\{1/N, 2/N, \ldots, N/N\}$, then $D(N) \sim \frac{1}{2\sqrt{N}}$... no wait, that's not quite right either.
+
+For the Farey sequence of order $N$, the star discrepancy satisfies:
+$$D^*(F_N) = \frac{1}{2N} + O\left(\frac{1}{N}\right)$$
+
+Actually, I think the exact result is more subtle. The star discrepancy of $F_N$ is known to be:
+$$D^*(F_N) = \frac{1}{2N} + O\left(\frac{\log N}{N}\right)$$
+
+or something along those lines. Let me think more carefully.
+
+Actually, I recall that for Farey sequences, there's a classical result. The maximum gap in $F_N$ is $\frac{1}{N}$ (between $0$ and $\frac{1}{N}$, and by symmetry). But the typical gap is $\frac{1}{N \phi(q)}$ for fractions with denominator $q$... no, the gaps are $\frac{1}{qq'}$ where $q, q'$ are consecutive denominators.
+
+For star discrepancy, I think the result is:
+$$D^*(F_N) \sim \frac{c}{N}$$
+for some constant $c$.
+
+Actually, I need to be more precise. The star discrepancy measures:
+$$D^*(F_N) = \sup_{0 \leq a < b \leq 1} \left| \frac{|F_N \cap [a,b)|}{|F_N|} - (b-a) \right|$$
+
+For a set of $M$ points, the best possible discrepancy is $O(\frac{1}{M})$ for structured sequences, and $O(\frac{1}{\sqrt{M}})$ for random sequences. The Farey sequence $F_N$ has $M \approx \frac{3N^2}{\pi^2}$ points, so a discrepancy of $O(\frac{1}{N}) = O(\frac{1}{\sqrt{M}})$ is what we'd expect for a "random-like" distribution (though $F_N$ is much more structured).
+
+Wait, but the claim is that $D^*(F'_N)/D^*(F_N) \to 1/2$. If $D^*(F_N) \sim \frac{c}{N}$, then $D^*(F'_N) \sim \frac{c}{2N}$.
+
+But $|F'_N| \approx \frac{N^2}{2\ln N}$ while $|F_N| \approx \frac{3N^2}{\pi^2}$. So comparing at the same $N$ (not same point count), the ratio is $1/2$.
+
+Now if we compare at matched point count, say $|F'_N| \approx |F_M|$ for some $M < N$, then the question is about the effective spacing.
+
+Hmm, let me re-read the claim. They say "D*(F'_N) / D*(F_N) → 1/2 at matched point count". So they're comparing sequences with the same number of points.
+
+If $|F'_N| \approx \frac{N^2}{2\ln N}$ and $|F_M| \approx \frac{3M^2}{\pi^2}$, then matching point counts gives $N \approx M\sqrt{3\pi^{-2} \cdot 2\ln N}$... this is getting complicated.
+
+Actually, wait. Let me re-read. Maybe they mean at the same $N$, the discrepancy ratio tends to $1/2$?
+
+Let me think about this differently. The regular Farey sequence has the property that the gaps are related to the mediants and continued fraction convergents. The prime-denominator restriction breaks the regular structure of Farey sequences.
+
+For the prime-denominator Farey sequence, the key insight might be that primes are "pseudorandom" enough to break the lattice-like structure of $F_N$ while maintaining reasonable density.
+
+**Now let me think about whether this is really new.**
+
+In discrepancy theory, there's extensive work on:
+- Kronecker sequences $\{n\alpha\}$
+- Halton sequences (based on prime bases)
+- Niederreiter sequences
+- Sobol sequences
+
+The Halton sequence uses all prime bases in different dimensions, but in 1D it's just a Van der Corput sequence for a single prime base. The 1D Van der Corput sequence in base $p$ is $\sum a_k p^{-k}$ where $n = \sum a_k p^k$. This is related to but different from the Farey sequence with prime denominators.
+
+In the Farey sequence $F_N$, fractions $p/q$ with $q \leq N$ are arranged in order. The discrepancy measures how uniformly they're distributed. The full $F_N$ is actually known to have relatively poor discrepancy for its size - it's not a good low-discrepancy sequence despite having many points.
+
+The user's observation that $D^*(F'_N)/D^*(F_N) \to 1/2$ could mean:
+1. The prime-restricted Farey sequence is more uniformly distributed per point
+2. This is because primes avoid the arithmetic progression structure that creates the worst-case intervals in $F_N$
+
+**Is this related to anything in the literature?**
+
+Let me think about Selberg sieve and related work. In sieve theory, one studies sums like $\sum_{q \leq N, q \text{ prime}} \mu(q) f(q)$ or similar. These are related to the distribution of primes in arithmetic progressions.
+
+The equidistribution of $p/q$ for prime $q$ is related to Vinogradov's theorem on equidistribution of primes, and more generally to the theory of exponential sums over primes. Vinogradov's estimate gives bounds on $\sum_{p \leq N} e^{2\pi i \alpha p}$ which is directly relevant to discrepancy.
+
+Specifically, the discrepancy of $\{p/q : p \in [0, q)\}$ for prime $q$ is related to bounds on character sums:
+$$D\left(\frac{1}{q}, \ldots, \frac{q-1}{q}\right)$$
+
+Actually, for a fixed prime $q$, the set $\{0, 1/q, 2/q, \ldots, (q-1)/q\}$ is a complete residue system and has discrepancy exactly $\frac{1}{q}$ (maximum gap is $\frac{1}{q}$). But the prime-denominator Farey sequence takes one element from each such set.
+
+Hmm wait, I think I'm confusing myself. Let me reconsider.
+
+$F'_N = \{p/q : q \text{ prime} \leq N, 0 \leq p < q\} \cup \{0\}$
+
+This includes ALL fractions with prime denominators up to $N$. So for each prime $q \leq N$, it includes $0/q, 1/q, 2/q, \ldots, (q-1)/q$. This is quite different from picking one fraction per prime.
+
+So $|F'_N| = 1 + \sum_{q \leq N, q \text{ prime}} q \approx 1 + \sum_{q \leq N} q \approx 1 + \frac{N^2}{2\ln N}$ (by PNT, since $\sum_{p \leq N} p \approx \frac{N^2}{2\ln N}$).
+
+The full Farey sequence $F_N$ has $|F_N| = 1 + \sum_{q=1}^{N} \phi(q) \approx \frac{3N^2}{\pi^2}$.
+
+The ratio $|F'_N|/|F_N| \approx \frac{\pi^2}{6\ln N} \to 0$, so the prime-denominator Farey sequence is much sparser.
+
+Now, for the star discrepancy comparison: if both have similar spacing structure, we'd expect $D^*(F'_N)/D^*(F_N)$ to scale like $|F_N|/|F'_N| \sim \frac{6\ln N}{\pi^2} \to \infty$. But the claim is that the ratio goes to $1/2$, which is much better than what we'd get from a naive analysis.
+
+Wait, the user says "at matched point count". So they're comparing $F'_N$ with $F_M$ where $|F'_N| \approx |F_M|$. If $|F'_N| \approx \frac{N^2}{2\ln N}$ and $|F_M| \approx \frac{3M^2}{\pi^2}$, then $\frac{N^2}{2\ln N} \approx \frac{3M^2}{\pi^2}$, giving $M \approx \frac{\pi N}{\sqrt{6\ln N}}$.
+
+Then $D^*(F_N) \sim \frac{c}{N}$ for some constant, and $D^*(F_M) \sim \frac{c}{M} \sim \frac{c\sqrt{6\ln N}}{\pi N}$.
+
+If $D^*(F'_N) \sim \frac{c'}{N}$ for some constant $c'$, then the ratio would be:
+$$\frac{D^*(F'_N)}{D^*(F_M)} \sim \frac{c'}{N} \cdot \frac{\pi N}{c\sqrt{6\ln N}} = \frac{\pi c'}{c\sqrt{6\ln N}} \to 0$$
+
+That doesn't match the claim either.
+
+OK, I think I need to be more careful about what "at matched point count" means. Let me re-read.
+
+Actually, maybe the user means they compare $F'_N$ and $F_N$ at the same $N$ and claim the ratio of discrepancies is $1/2$. But then the "at matched point count" part is confusing.
+
+Hmm, or maybe they mean: at the same effective point count $Q$ (where $Q$ is a parameter), the discrepancy of $F'_Q$ (using primes up to $Q$) vs $F_Q$ (using all denominators up to $Q$) has ratio $1/2$. In this case, $|F'_Q| \approx \frac{Q^2}{2\ln Q}$ while $|F_Q| \approx \frac{3Q^2}{\pi^2}$. They have different point counts but are indexed by the same $Q$.
+
+Let me reconsider. If $D^*(F_N) \sim \frac{a}{N}$ and $D^*(F'_N) \sim \frac{b}{N}$, then the claim $D^*(F'_N)/D^*(F_N) \to 1/2$ means $b/a = 1/2$, or $D^*(F'_N) \sim \frac{a}{2N}$.
+
+This could make sense if the dominant contribution to $D^*(F_N)$ comes from intervals containing many consecutive Farey fractions with smooth denominators, and removing non-prime denominators halves the worst-case deviation.
+
+Alternatively, the "matched point count" might mean they scale $N$ differently for $F$ and $F'$ to get the same number of points. For example, $F'_{N}$ has about $\frac{N^2}{2\ln N}$ points, while $F_M$ has about $\frac{3M^2}{\pi^2}$ points. Matching these: $M \approx \frac{\pi N}{\sqrt{6\ln N}}$. Then they compare $D^*(F'_N)$ to $D^*(F_M)$ and find the ratio is $1/2$.
+
+I realize I'm going in circles without knowing the exact empirical data. Let me focus on the literature questions instead.
+
+**Regarding Niederreiter's work:**
+
+Niederreiter's book "Random Number Generation and Quasi-Monte Carlo Methods" discusses various low-discrepancy sequences. The standard 1D low-discrepancy sequences are:
+- van der Corput sequence
+- Kronecker sequence $\{n\alpha\}$ for badly approximable $\alpha$
+
+Farey sequences appear in the context of continued fractions and best approximations. I don't recall Niederreiter studying prime-restricted Farey sequences.
+
+**Regarding Drmota-Tichy:**
+
+Their book "Sequences of Discrepancy 1" discusses sequences arising from number-theoretic constructions. They analyze discrepancy of various subsequences but I don't recall specific prime-denominator results.
+
+**Regarding Owen's work:**
+
+Owen works on scrambled nets and randomization of low-discrepancy sequences. I don't think he's studied Farey subsequences.
+
+**Regarding Hickernell:**
+
+Hickernell works on effective error bounds for QMC. I don't think he's studied this specific construction.
+
+**On the theoretical side:**
+
+The discrepancy of $F_N$ is a well-studied object. The exact asymptotics are:
+$$D^*(F_N) = \frac{1}{2N} + O\left(\frac{\log N}{N}\right)$$
+
+Wait, I don't think this is right. Let me reconsider.
+
+For the Farey sequence $F_N$, the star discrepancy has been studied by several authors. I believe the result is:
+$$D^*(F_N) = \frac{1}{4N} + O\left(\frac{1}{N^{2/3}}\right)$$
+
+or something similar. The key point is that it's $O(1/N)$.
+
+For $F'_N$, if it's sparser by a factor of $\ln N$, but the discrepancy only improves by a factor of $2$ (when compared at the same $N$), that's interesting.
+
+But wait, the user says "at matched point count". Let me think about this more carefully.
+
+If $|F'_N| \approx \frac{N^2}{2\ln N}$ and $D^*(F'_N) \approx \frac{a}{N}$, then per point, the discrepancy scales as $\frac{a\sqrt{2\ln N}}{N\sqrt{|F'_N|}} = \frac{a\sqrt{2\ln N}}{N \cdot N/\sqrt{2\ln N}} = \frac{a \cdot 2\ln N}{N^2}$. 
+
+Hmm, I'm not sure this is the right way to think about it. Let me approach differently.
+
+For a set of $M$ points in $[0,1]$, the star discrepancy is at least $\frac{1}{2M}$ and at most $1$. Good low-discrepancy sequences achieve $D^* = O(\frac{\log M}{M})$ or $O(\frac{1}{M})$.
+
+The full Farey sequence $F_N$ with $M \approx \frac{3N^2}{\pi^2}$ points has $D^*(F_N) \sim \frac{c}{N} \sim \frac{c\pi}{\sqrt{3}\sqrt{M}}$. This is $O(1/\sqrt{M})$, which is actually worse than random! This makes sense because Farey sequences have structural regularities that create bad intervals.
+
+Wait, no. For $M$ points, random sequences have $D^* \sim O(\frac{1}{\sqrt{M}})$, and good low-discrepancy sequences have $D^* = O(\frac{\log M}{M})$. The Farey sequence with $D^* \sim \frac{c}{N} = \frac{c\pi}{\sqrt{3M}}$ is indeed $O(1/\sqrt{M})$, so it's not a great low-discrepancy sequence. That's because of the regular structure.
+
+For $F'_N$, the claim is $D^*(F'_N)/D^*(F_N) \to 1/2$ at matched point count. If we use $M$ points:
+- $F_N$: $M = \frac{3N^2}{\pi^2}$, $D^*(F_N) \sim \frac{c}{N} = \frac{c\pi}{\sqrt{3M}}$
+- $F'_N$: same $M$ points means we need $N' \approx \sqrt{2M\ln N'}$, and $D^*(F'_{N'}) \sim \frac{c}{N'}$
+
+Hmm, this still doesn't give me the $1/2$ ratio clearly. Let me just focus on what the user is actually asking: literature check.
+
+Actually, you know what, let me reconsider the whole thing. Maybe the user is saying that when you compute $D^*(F'_N)$ and $D^*(F_N)$ at the same value of $N$, the ratio tends to $1/2$. This is a clean observation that could be explained as follows:
+
+The star discrepancy of $F_N$ is determined by the largest local deviation from uniformity. In the full Farey sequence, consecutive terms $a/b, c/d$ with $bc - ad = 1$ have gap $\frac{1}{bd}$. The worst-case intervals for the full $F_N$ might be dominated by contributions from composite denominators that create cluster-like behavior.
+
+Actually, let me think about this differently. The Farey sequence $F_N$ has a very specific structure related to the Stern-Brocot tree. The "gaps" in $F_N$ are $\frac{1}{bq}$ where $a/b$ and $c/q$ are consecutive Farey fractions. For the prime-denominator restriction, many of these gaps are removed, which could lead to better equidistribution.
+
+OK here is another angle. The Farey sequence $F_N$ has a known discrepancy behavior related to the Riemann zeta function. Specifically, the number of Farey fractions in $[0, x]$ satisfies:
+$$\Phi(x, N) = \sum_{q \leq N} \sum_{\substack{0 \leq p \leq qx \\ \gcd(p,q)=1}} 1$$
+
+This is related to $\frac{3}{\pi^2} x N^2 + O(N\log N)$.
+
+For the prime-denominator version:
+$$\Phi'(x, N) = \sum_{q \leq N, q \text{ prime}} \sum_{\substack{0 \leq p \leq qx \\ \gcd(p,q)=1}} 1 = \sum_{q \leq N, q \text{ prime}} \sum_{p=0}^{\lfloor qx \rfloor} 1$$
+
+Wait, if $q$ is prime, then $\gcd(p,q) = 1$ iff $q \nmid p$, so we need to count $p \in [0, qx]$ with $q \nmid p$, which gives approximately $\lfloor qx \rfloor \cdot (1 - 1/q)$.
+
+Hmm, but I think the user's definition includes all $p/q$ with $0 \leq p < q$ (without the gcd restriction), so for prime $q$, this is just all fractions $0/q, 1/q, \ldots, (q-1)/q$. Since $q$ is prime, $\gcd(p,q) = 1$ for $p \neq 0$, and $\gcd(0,q) = q$, but the fraction $0/q = 0$ is included anyway.
+
+Actually, in the standard Farey sequence $F_N$, we include fractions $p/q$ with $\gcd(p,q) = 1$ and $0 \leq p \leq q \leq N$. In the user's definition, they include $p/q$ with $0 \leq p < q$ (no gcd restriction) and $q$ prime. Since $q$ is prime, $\gcd(p,q) = 1$ for $1 \leq p < q$, so the only difference from the Farey-like condition is at $p = 0$ (where $\gcd(0,q) = q$). But $0/q = 0$ for all $q$, so there's no issue.
+
+So for the prime-denominator case, every fraction $p/q$ with $q$ prime and $1 \leq p \leq q-1$ is in lowest terms. This means there's no "missing" fractions due to the gcd condition.
+
+Now, let's think about what's different between $F_N$ and $F'_N$. In $F_N$:
+- Denominators are all integers $1 \leq q \leq N$
+- Fractions with smaller denominators are less frequent
+- The distribution has arithmetic regularity
+
+In $F'_N$:
+- Denominators are only primes
+- Larger denominators contribute more points (each prime $q$ contributes $q$ fractions vs. $\phi(q)$ for Farey)
+- The primes are distributed according to the PNT, with "randomness" in their distribution
+
+The fact that primes are distributed somewhat randomly (Riemann Hypothesis essentially says they're maximally uniformly distributed mod any integer) could lead to better discrepancy properties.
+
+**Regarding the specific claim about $D^*/D^* \to 1/2$:**
+
+This is a clean asymptotic result. If it holds, it suggests that:
+1. The worst-case deviation in $F_N$ comes from intervals where many fractions align
+2. Removing composite denominators halves this worst-case deviation
+3. This might be related to the fact that composite denominators create "extra" fractions at specific locations
+
+I don't recall seeing this exact result in the literature. It's possible it's been observed empirically without being published, or it's new.
+
+**Regarding equidistribution of $p/q$ for prime $q$:**
+
+This is related to the study of equidistribution of $\{p/q\}$ for fixed prime $q$ and varying $p$. But here, we're looking at all $p/q$ simultaneously for all primes $q \leq N$.
+
+Vinogradov's theorem on equidistribution of primes gives bounds on exponential sums:
+$$\sum_{p \leq N} e^{2\pi i k p} = o(\pi(N))$$
+for $k \neq 0$, which is related to the equidistribution of the sequence of primes modulo 1 (or equivalently, their fractional parts).
+
+But this is about the sequence $p_1, p_2, p_3, \ldots$ of primes, not about $p/q$ for prime $q$.
+
+**Regarding sieve theory:**
+
+The Selberg sieve and Brun sieve involve sums over primes of various arithmetic functions. For example:
+$$\sum_{q \leq N, q \text{ prime}} \frac{\mu^2(q)}{\phi(q)} = \sum_{q \leq N, q \text{ prime}} \frac{1}{q-1}$$
+
+These sums appear in the analysis of primes in arithmetic progressions. I don't think they have a direct discrepancy interpretation, but there might be indirect connections.
+
+**Now, for the specific literature search questions:**
+
+I don't believe $F'_N$ has been explicitly studied as a low-discrepancy sequence in the QMC literature. The closest related work might be:
+
+1. **Farey sequences and discrepancy**: There's work by Franel, Weyl, and others on the discrepancy of Farey sequences. The classical result is that $D^*(F_N) = O(1/N)$, but I don't think the prime-denominator restriction has been studied.
+
+2. **Halton sequences**: The Halton sequence in base $p$ (prime) generates points using base-$p$ expansions, which is related to but different from the Farey sequence with prime denominators.
+
+3. **Niederreiter sequences**: These are multidimensional low-discrepancy sequences based on number fields, not directly related to prime denominators.
+
+4. **Drmota-Tichy**: Their book discusses various number-theoretic sequences and their discrepancy, including subsequences of arithmetic progressions. They might discuss Farey-related sequences, but I don't recall specific results on prime-denominator Farey sequences.
+
+Let me now think about whether the $1/2$ ratio makes theoretical sense.
+
+**Theoretical analysis:**
+
+The star discrepancy of a set $S = \{x_1, \ldots, x_M\} \subset [0,1]$ is:
+$$D^*(S) = \sup_{0 \leq a \leq b \leq 1} \left| \frac{|S \cap [a,b)|}{M} - (b-a) \right|$$
+
+For $F_N$, the key insight is that the "worst" intervals for discrepancy are related to the continued fraction expansion of the endpoints. Specifically, the Farey fractions of order $N$ are related to the convergents of continued fractions, and the discrepancy is maximized at intervals $[0, a/b]$ where $a/b$ is a Farey fraction of order close to $N$.
+
+For the prime-denominator Farey sequence, the analysis would be different because the denominators are restricted to primes. The "worst" intervals would be those where a disproportionate number of fractions with prime denominators accumulate.
+
+Actually, I think there might be a connection to the Pólya-Vinogradov inequality or similar character sum bounds. The Pólya-Vinogradov inequality gives:
+$$\left| \sum_{p \leq N} \chi(p) \right| = O(\sqrt{q} \log q \log N)$$
+for a non-principal Dirichlet character $\chi \mod q$. This bounds the discrepancy of primes in arithmetic progressions.
+
+But for our problem, we need to bound the discrepancy of $\{p/q : q \text{ prime} \leq N\}$. This is a different kind of set.
+
+Let me think about this from first principles. The number of elements of $F'_N$ in $[0, x]$ is:
+$$N'(x) = \sum_{q \leq N, q \text{ prime}} (1 + \lfloor qx \rfloor) = \pi(N) + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor$$
+
+where $\pi(N)$ is the prime counting function (each prime $q$ contributes the fraction $0$ and the fractions $p/q$ for $p = 1, \ldots, \lfloor qx \rfloor$).
+
+Wait, I need to be more careful. The fraction $0$ is included once (as $0/2 = 0/3 = \ldots = 0$), but in the user's definition $F'_N = \{p/q : q \text{ prime} \leq N, 0 \leq p < q\} \cup \{0\}$, the fraction $0$ is added separately. But $0/q = 0$ for all $q$, so it appears $|\{\text{primes} \leq N\}| + 1$ times if we're not careful. But since $F'_N$ is a SET, not a multiset, $0$ appears only once.
+
+Actually, re-reading the definition: $F'_N = \{p/q : q \text{ prime} \leq N, 0 \leq p < q\} \cup \{0\}$. For $p = 0$ and $q$ prime, $0/q = 0$. So $\{p/q : q \text{ prime} \leq N, 0 \leq p < q\}$ already contains $0$ (as $0/q$ for any prime $q$). The explicit $\cup \{0\}$ is redundant. So:
+
+$F'_N = \{p/q : q \text{ prime} \leq N, 0 \leq p < q\}$
+
+Each prime $q$ contributes the fractions $0, 1/q, 2/q, \ldots, (q-1)/q$.
+
+Total count: $|F'_N| = |\{0\}| + |\bigcup_{q \leq N, q \text{ prime}} \{p/q : 1 \leq p < q\}|$
+
+Since $q$ is prime, all fractions $p/q$ for $1 \leq p \leq q-1$ are distinct (in lowest terms) and distinct from $p/q'$ for $q' \neq q$ (since $p/q = p'/q'$ with $\gcd(p', q') = 1$ implies $q | q'$ by uniqueness of reduced form, and if both $q, q'$ are prime, then $q = q'$). Wait, actually, could we have $p/q = p'/q'$ with $q \neq q'$ both prime? We'd need $pq' = p'q$, so $q | pq'$ and since $q$ is prime, $q | p$ or $q | q'$. Since $1 \leq p < q$, $q \nmid p$, so $q | q'$, meaning $q = q'$ (both prime). So yes, all fractions from different primes are distinct.
+
+Therefore $|F'_N| = 1 + \sum_{q \leq N, q \text{ prime}} (q-1) = 1 + \sum_{q \leq N, q \text{ prime}} q - \pi(N)$
+
+By PNT, $\sum_{q \leq N, q \text{ prime}} q \approx \frac{N^2}{2\ln N}$ (using $\pi(N) \approx N/\ln N$ and partial summation: $\sum_{p \leq N} p \approx \int_2^N t \, d\pi(t) \approx \int_2^N t \cdot \frac{dt}{\ln t} \approx \frac{N^2}{2\ln N}$).
+
+So $|F'_N| \approx \frac{N^2}{2\ln N}$ (the $\pi(N)$ correction is lower order).
+
+And $|F_N| = 1 + \sum_{q=1}^{N} \phi(q) \approx \frac{3N^2}{\pi^2}$.
+
+Now, let me think about the discrepancy. For $F'_N$:
+
+The number of elements in $[0, x]$ for $0 \leq x \leq 1$ is:
+$$N'(x) = \sum_{q \leq N, q \text{ prime}} \#\{p/q \in [0, x] : 0 \leq p < q\} = \sum_{q \leq N, q \text{ prime}} \lfloor qx + 1 \rfloor - 1$$
+
+Wait, I need to be careful. For prime $q$, the fractions in $[0, x]$ are $0/q, 1/q, \ldots, \lfloor qx \rfloor / q$ (assuming $x < 1$). So there are $1 + \lfloor qx \rfloor$ fractions. But we count $0$ only once (not once for each prime). So:
+
+$$N'(x) = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor$$
+
+(The $+1$ for $0$, and $\lfloor qx \rfloor$ fractions $p/q$ for $1 \leq p \leq \lfloor qx \rfloor$.)
+
+Wait, that's not right either. $0/q = 0$ for all $q$, so $0$ is counted $\pi(N)$ times if we naively sum. But $F'_N$ is a set, so $0$ appears once.
+
+So the correct count is:
+$$N'(x) = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor$$
+
+Hmm, that counts $0$ once (the $+1$) and then for each prime $q$, counts $\lfloor qx \rfloor$ positive fractions $p/q$ for $1 \leq p \leq \lfloor qx \rfloor$. But $1/q \leq \lfloor qx \rfloor / q \leq x$, so these are all in $[0, x]$. And there are no positive fractions $p/q$ with $p/q \leq x$ other than $p = 1, 2, \ldots, \lfloor qx \rfloor$. So:
+
+$$N'(x) = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor$$
+
+Wait, but $0$ is already included in the sum as $0/q$ for each prime $q$. The issue is that $\lfloor q \cdot 0 \rfloor = 0$, so the sum doesn't count $0$ at all. So the count of elements in $[0, x]$ is actually:
+
+For $x \geq 0$: elements are $0$ and $p/q$ with $q$ prime, $1 \leq p < q$, $p/q \leq x$. For each prime $q$, the number of such $p$ is $\min(q-1, \lfloor qx \rfloor)$.
+
+If $x < 1$ (which is the case of interest), then for $q > 1/x$, $\lfloor qx \rfloor \geq 1$ and we need $p < q$, so the count is $\min(q-1, \lfloor qx \rfloor)$. For $x < 1$, $\lfloor qx \rfloor \leq q-1$ iff $qx < q$, i.e., $x < 1$, which is true. So the count is $\lfloor qx \rfloor$ for each prime $q$ (when $x < 1$, $\lfloor qx \rfloor < q$).
+
+Actually wait. $\lfloor qx \rfloor$ can equal $q-1$ when $(q-1)/q \leq x < 1$, i.e., $x \geq 1 - 1/q$. In this case, $\lfloor qx \rfloor = q-1$ which is the maximum. So for $x < 1$, we always have $\lfloor qx \rfloor \leq q-1$, so the count for each prime $q$ is exactly $\lfloor qx \rfloor$.
+
+Therefore:
+$$N'(x) = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor \quad \text{for } 0 \leq x < 1$$
+
+Hmm wait, I think I miscounted. Let me redo this.
+
+For a single prime $q$, the fractions $p/q$ with $0 \leq p < q$ in $[0, x)$ are:
+- $0/q = 0$ (only if $x > 0$, and we count it once across all primes)
+- $1/q, 2/q, \ldots, \lfloor qx \rfloor / q$ (if $\lfloor qx \rfloor \geq 1$)
+
+For $x = 0$: only $0$ is in $[0, 0)$, but $[0, 0)$ is empty. So $N'(0) = 0$.
+For $x > 0$: $0 \in [0, x)$, and for each prime $q$, $p/q \in [0, x)$ for $p = 1, \ldots, \lfloor qx \rfloor$ (but only if $\lfloor qx \rfloor \leq q - 1$, which holds for $x < 1$).
+
+So for $0 < x < 1$:
+$$N'(x) = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor$$
+
+And for $x = 1$: $N'(1) = |F'_N| = 1 + \sum_{q \leq N, q \text{ prime}} (q-1) \approx \frac{N^2}{2\ln N}$.
+
+The "expected" count for uniformity is $N'(x) \approx x \cdot |F'_N|$. So the discrepancy involves:
+$$D^*(F'_N) = \sup_{0 \leq x \leq 1} \left| \frac{N'(x)}{|F'_N|} - x \right|$$
+
+We need:
+$$N'(x) - x \cdot |F'_N| = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor - x\left(1 + \sum_{q \leq N, q \text{ prime}} (q-1)\right)$$
+$$= 1 - x + \sum_{q \leq N, q \text{ prime}} (\lfloor qx \rfloor - x(q-1))$$
+$$= (1-x) + \sum_{q \leq N, q \text{ prime}} (\lfloor qx \rfloor - qx + x)$$
+$$= (1-x) + \sum_{q \leq N, q \text{ prime}} \{qx\} + \pi(N) \cdot x - \sum_{q \leq N, q \text{ prime}} x$$
+
+Hmm wait, $\lfloor qx \rfloor - x(q-1) = \lfloor qx \rfloor - qx + x = -\{qx\} + x$ where $\{qx\}$ is the fractional part.
+
+So:
+$$N'(x) - x \cdot |F'_N| = (1-x) + \sum_{q \leq N, q \text{ prime}} (x - \{qx\}) = (1-x) + \pi(N) x - \sum_{q \leq N, q \text{ prime}} \{qx\}$$
+
+Wait let me redo this more carefully.
+
+$N'(x) = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor$
+
+$|F'_N| = 1 + \sum_{q \leq N, q \text{ prime}} (q-1) = 1 + \sum_{q \leq N, q \text{ prime}} q - \pi(N)$
+
+For large $N$, $|F'_N| \approx \frac{N^2}{2\ln N}$.
+
+The expected value of $N'(x)$ under uniformity is $x \cdot |F'_N|$.
+
+The discrepancy is:
+$$\frac{N'(x)}{|F'_N|} - x = \frac{N'(x) - x|F'_N|}{|F'_N|}$$
+
+$N'(x) - x|F'_N| = 1 + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor - x(1 + \sum_{q \leq N, q \text{ prime}} q - \pi(N))$
+$= (1-x) + \sum_{q \leq N, q \text{ prime}} \lfloor qx \rfloor - x\sum_{q \leq N, q \text{ prime}} q + x\pi(N)$
+$= (1-x) + \sum_{q \leq N, q \text{ prime}} (\lfloor qx \rfloor - xq) + x\pi(N)$
+$= (1-x) - \sum_{q \leq N, q \text{ prime}} \{qx\} + x\pi(N)$
+
+So the "error" is dominated by $\sum_{q \leq N, q \text{ prime}} \{qx\}$, which is a sum of fractional parts over primes.
+
+For the full Farey sequence, we have a similar expression but with a sum over all integers $q \leq N$ (weighted by $\phi(q)/q$ or something similar). The key difference is:
+- $F_N$: sum over all $q \leq N$
+- $F'_N$: sum over primes $q \leq N$
+
+The discrepancy is essentially:
+$$D^*(F'_N) \approx \frac{1}{|F'_N|} \sup_x \left| \sum_{q \leq N, q \text{ prime}} \{qx\} - x\pi(N) \right|$$
+
+(since the $(1-x)$ term is small for most $x$)
+
+Now, $\{qx\} - x$ has mean zero (with respect to uniform $x$), so $\sum_{q} (\{qx\} - x) = \sum_q \{qx\} - \pi(N) x$. The supremum over $x$ of this sum determines the discrepancy.
+
+For a single $q$, $\sup_x |\{qx\} - x| = (q-1)/q \approx 1$. But the sum over $q$ of these has cancellations.
+
+The key tool for bounding such sums is the Erdős–Turán inequality or direct exponential sum estimates:
+$$\sum_{q \leq N, q \text{ prime}} \{qx\} = \frac{\pi(N)}{2} - \frac{1}{\pi} \sum_{k=1}^{\infty} \frac{1}{k} \text{Im} \sum_{q \leq N, q \text{ prime}} e^{2\pi i kqx}$$
+
+Wait, the Erdős–Turán inequality is for the discrepancy of $\{n\alpha\}$, not quite what we need here.
+
+Actually, let me think about this differently. We have:
+$$\sum_{q \leq N, q \text{ prime}} \{qx\}$$
+
+and we want to understand the discrepancy of this sum. Using $\{t\} = \frac{1}{2} - \frac{1}{\pi} \sum_{k=1}^{\infty} \frac{\sin(2\pi kt)}{k}$:
+
+$$\sum_{q \leq N, q \text{ prime}} \{qx\} = \frac{\pi(N)}{2} - \frac{1}{\pi} \sum_{k=1}^{\infty} \frac{1}{k} \sum_{q \leq N, q \text{ prime}} \sin(2\pi kqx)$$
+
+So:
+$$\sum_{q \leq N, q \text{ prime}} \{qx\} - x\pi(N) = \left(\frac{1}{2} - x\right)\pi(N) - \frac{1}{\pi} \sum_{k=1}^{\infty} \frac{1}{k} \sum_{q \leq N, q \text{ prime}} \sin(2\pi kqx)$$
+
+The discrepancy is then related to:
+$$\sup_x \left| \left(\frac{1}{2} - x\right)\pi(N) - \frac{1}{\pi} \sum_{k=1}^{\infty} \frac{1}{k} S_k(x) \right|$$
+
+where $S_k(x) = \sum_{q \leq N, q \text{ prime}} \sin(2\pi kqx)$.
+
+Now, $|S_k(x)| \leq |S_k^{(c)}(x)|$ where $S_k^{(c)}(x) = \sum_{q \leq N, q \text{ prime}} e^{2\pi i kqx}$. The exponential sum over primes is bounded by various results:
+
+- Without any conjectures: $|S_k^{(c)}(x)| \ll N e^{-c\sqrt{\log N}}$ for "most" $x$ (Vinogradov-type estimates)
+- Under GRH: $|S_k^{(c)}(x)| \ll \sqrt{N} \log(kN)$
+
+So the contribution of the exponential sum terms to the discrepancy is bounded, and the dominant term is $\frac{\pi(N)}{2} - x\pi(N) \approx \pi(N)(1/2 - x)$.
+
+For the full Farey sequence, the analogous analysis gives:
+$$\sum_{q \leq N} \phi(q)\{qx\} \text{ or similar}$$
+
+and the discrepancy is related to $\sum_{q \leq N} \{qx\}$ (with appropriate weights).
+
+Hmm, I realize this analysis is getting complicated and I'm not sure I can derive the exact $1/2$ ratio from first principles here. But the key insight is that the discrepancy is related to exponential sums over primes, which are bounded by Vinogradov-type estimates.
+
+**Let me now address the specific literature questions:**
+
+I don't believe the prime-denominator Farey sequence $F'_N$ has been explicitly studied as a low-discrepancy sequence. Here are my assessments:
+
+1. **Niederreiter**: His book on random number generation discusses Farey sequences in the context of continued fractions and lattice rules. I don't recall him studying prime-denominator restrictions. However, the related concept of Halton sequences uses prime bases, which is a different but somewhat related idea.
+
+2. **Drmota-Tichy**: Their work on sequences of discrepancy 1/2 covers many number-theoretic sequences. I don't recall a specific study of prime-denominator Farey sequences, but it's possible this falls under their general framework. The "discrepancy 1/2" in their title refers to the fact that certain sequences achieve discrepancy exactly $1/(2N)$, not to the ratio $1/2$ mentioned by the user.
+
+3. **Owen**: His work on scrambled nets and QMC focuses on randomization of low-discrepancy sequences, not on constructing new sequences from prime restrictions.
+
+4. **Hickernell**: His work on effective error bounds focuses on practical QMC methods and wouldn't typically study theoretical sequences like $F'_N$.
+
+5. **Number theory / Vinogradov**: The equidistribution of $p/q$ for prime $q$ is related to exponential sums over primes, which is the subject of Vinogradov's work. However, the specific question of star discrepancy of the set $\{p/q : q \text{ prime}, 0 \leq p < q\}$ as a 1D point set is not typically asked in that context.
+
+6. **Sieve theory**: The Selberg sieve and Brun sieve involve sums over primes, but these are typically for counting purposes (how many primes in an interval, how many primes in an arithmetic progression) rather than for discrepancy analysis. However, there might be indirect connections.
+
+**Is the $1/2$ ratio known?**
+
+I believe this is likely new, or at least not widely known. The clean $1/2$ ratio is striking and could have been observed empirically by others but not published because it was seen as a curiosity rather than a fundamental result. However, I should be careful — it's possible that someone has studied this in the context of uniform distribution theory (Weyl's theorem and its refinements).
+
+**Extensions worth pursuing:**
+
+1. **Prime-denominator Farey sequences in arithmetic progressions**: $F'_{N,a,b} = \{p/q : q \text{ prime} \leq N, q \equiv a \pmod{b}, 0 \leq p < q\}$. This would connect to Dirichlet's theorem on primes in arithmetic progressions and could have interesting discrepancy properties.
+
+2. **2D analog**: Consider the 2D Stern-Brocot tree restricted to prime denominators. The 2D Farey sequence has applications in computational geometry. A prime-restricted version might have improved discrepancy.
+
+3. **Connections to Halton sequences**: The Halton sequence in base $p$ generates the $n$-th point as $\phi_p(n)$ (the radical inverse function). The set of Halton sequence points for different primes forms a multidimensional low-discrepancy sequence. The prime-denominator Farey sequence is a 1D set, so it's different, but there might be connections.
+
+4. **Connection to Riemann hypothesis**: The distribution of primes modulo 1 is related to the Riemann hypothesis. If the star discrepancy of $F'_N$ has a specific asymptotic form, it could potentially be related to zeros of the Riemann zeta function.
+
+5. **Multidimensional generalization**: Consider $F'_{N,d} = \{(p_1/q, \ldots, p_d/q) : q \text{ prime} \leq N, 0 \leq p_i < q\}$ in $[0,1]^d$. This could be a new multidimensional low-discrepancy sequence.
+
+**Summary assessment:**
+
+I believe the prime-denominator Farey sequence $F'_N$ is a novel construction in the context of QMC, and the $1/2$ ratio is likely a new observation. However, I want to be honest about my uncertainty: it's possible that this has been studied in a specialized paper that I'm not aware of, particularly in the Russian or Eastern European literature on uniform distribution theory (where there's a rich tradition of studying Farey sequences and their variants).
+
+The key novelty seems to be:
+1. The explicit construction of a Farey subsequence based on prime denominators
+2. The empirical observation of the $1/2$ ratio in star discrepancy
+3. The collapse of lag-1 gap correlation
+4. The connection between prime distribution and low-discrepancy properties
+
+If these results hold up, this could indeed be a clean contribution to the QMC literature, providing a new family of low-discrepancy sequences with interesting theoretical properties.
+
+Let me also note that the asymptotic cardinality $|F'_N| \approx \frac{N^2}{2\ln N}$ makes $F'_N$ sparser than $F_N$ (which has $\approx \frac{3N^2}{\pi^2}$ points). The density ratio is $\frac{\pi^2}{6\ln N}$, which goes to 0. So $F'_N$ is much sparser, yet its discrepancy (per point) might be better.
+
+Actually, comparing discrepancies at the same $N$ (not same point count), if $D^*(F_N) \sim \frac{a}{N}$ and $D^*(F'_N) \sim \frac{a}{2N}$, then the prime-denominator restriction improves discrepancy by a factor of 2 while using about $\frac{\pi^2}{6\ln N}$ fraction of the points. This is a significant improvement in "efficiency".
+
+If we compare at matched point count $M$, then $F_N$ with $|F_N| = M$ uses denominators up to $N \sim \frac{\pi\sqrt{M}}{\sqrt{3}}$, and $F'_N$ with $|F'_N| = M$ uses denominators up to $N' \sim \sqrt{2M\ln N'} \sim \sqrt{2M\ln M}$.
+
+Then $D^*(F_N) \sim \frac{a}{N} = \frac{a\sqrt{3}}{\pi\sqrt{M}}$ and $D^*(F'_N) \sim \frac{a}{2N'} = \frac{a}{2\sqrt{2M\ln M}}$.
+
+The ratio $D^*(F'_N)/D^*(F_N) \sim \frac{\pi\sqrt{3}}{2\sqrt{2\ln M}} \to 0$ as $M \to \infty$.
+
+So at matched point count, the discrepancy of $F'_N$ is actually much better than $F_N$ (by a factor of $\sqrt{\ln M}$). This makes sense because the prime-denominator sequence is more "random" in a sense.
+
+Wait, but the user says the ratio is $1/2$ at matched point count. Maybe I'm wrong about the exact asymptotics. Let me reconsider.
+
+Perhaps $D^*(F_N)$ is not $\sim

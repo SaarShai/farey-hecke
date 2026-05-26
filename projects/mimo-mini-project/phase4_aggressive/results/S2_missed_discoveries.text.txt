@@ -1,0 +1,51 @@
+**Proposed Missing Discoveries**
+
+1. **Geometric decay of Farey gap correlations**  
+   *Statement:* For the Farey sequence of order \(N\), the lag-\(k\) autocorrelation of consecutive gaps satisfies  
+   \[
+   \operatorname{Corr}(d_i, d_{i+k}) = 2^{-k} \quad \text{for all } k \geq 1,
+   \]  
+   in the limit \(N \to \infty\).  
+   *Rationale:* The known \(\operatorname{Corr}(d_i, d_{i+1}) = 1/2\) suggests an autoregressive structure; geometric decay is the simplest extension.  
+   *Testability:* Compute empirical correlations for large \(N\) and \(k\) and check exponential decay.
+
+2. **Closed form for the Farey-Mertens constant**  
+   *Statement:* The constant \(C \approx 0.66\) from discovery 1 is exactly  
+   \[
+   C = 1 - \gamma + \log(2/\pi),
+   \]  
+   where \(\gamma\) is Euler’s constant.  
+   *Rationale:* Constants arising from Farey sequence statistics often involve \(\gamma\), \(\pi\), and logarithms.  
+   *Testability:* Compute \(C\) to high precision (e.g., \(10^6\) terms) and compare with the closed form.
+
+3. **Wavelet variance peaks at prime powers**  
+   *Statement:* The variance of the Haar wavelet transform of the prime indicator function (1 if prime, 0 otherwise) at scale \(2^k\) decays as \(1/k^2\), but exhibits peaks at scales \(2^k\) where \(k\) is a prime number, revealing a hierarchical structure tied to prime powers.  
+   *Rationale:* Wavelets are sensitive to singularities at multiple scales; primes may induce resonances at scales related to their own powers.  
+   *Testability:* Compute the wavelet transform for primes up to \(10^7\) and examine the variance spectrum.
+
+4. **Persistent homology of Farey points**  
+   *Statement:* The persistence diagram of the Farey fractions (as points on the circle, using the Rips filtration) shows a second persistent cycle (beyond the fundamental one) with a birth-death ratio approximately 3, corresponding to triple clustering of primes.  
+   *Rationale:* The known cluster size 2 suggests that topology might detect larger clustering patterns.  
+   *Testability:* Compute persistent homology for large \(N\) and look for cycles with ratios near 3.
+
+5. **p-adic BCZ cocycle Lyapunov exponent**  
+   *Statement:* The p-adic analog of the BCZ cocycle on \(\mathrm{GL}(2, \mathbb{Q}_p)/\mathrm{GL}(2, \mathbb{Z}_p)\) has Lyapunov exponent \(\log p\), with respect to the Haar measure.  
+   *Rationale:* The real case gives exponent related to \(\log \lambda_{\text{golden}}\); the p-adic case might be simpler due to ultrametricity.  
+   *Testability:* Simulate the p-adic Gauss map and estimate the exponent via random matrix products.
+
+6. **Angular gap correlation in 2D Farey sequence**  
+   *Statement:* For primitive vectors in \(\mathbb{Z}^2\) ordered by increasing angle, the consecutive angular gaps have correlation \(1/3\).  
+   *Rationale:* The 1D Farey gap correlation is \(1/2\); in 2D, the geometry of rational angles might yield a different rational constant.  
+   *Testability:* Enumerate primitive vectors in a large disk, order by angle, and compute correlations.
+
+7. **Pseudorandomness of prime gaps mod 4**  
+   *Statement:* The binary sequence obtained from prime gaps \(g_p\) (between consecutive primes) reduced modulo 4 (e.g., \(g_p \equiv 0 \pmod{4}\) maps to 1, else 0) passes the NIST suite of statistical tests for pseudorandomness for segments of length \(\geq 10^6\).  
+   *Rationale:* Prime races show biases but may still be pseudorandom in a cryptographic sense.  
+   *Testability:* Generate the sequence for primes up to \(10^7\) and run NIST tests.
+
+8. **Universal gap distribution for zeta zeros and Farey sequences**  
+   *Statement:* The normalized consecutive differences of the non-trivial zeros of the Riemann zeta function and those of quadratic Dirichlet L-functions, after scaling by their mean spacing, follow the same limiting distribution as the normalized gaps in the Farey sequence.  
+   *Rationale:* Both are conjectured to exhibit GUE statistics, but the exact match of distributions could indicate a deeper universality.  
+   *Testability:* Compute high zeros and large Farey gaps, compare histograms, and perform Kolmogorov-Smirnov tests.
+
+These discoveries are specific, testable, and directly extend the existing program’s themes: Farey sequence statistics, dynamical systems on homogeneous spaces, signal processing, and connections to prime distribution. Each could be pursued computationally within a week, with potential for revealing new structure in number theory.

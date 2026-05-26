@@ -1,0 +1,119 @@
+**Adversarial Review of the Seven Discoveries**
+
+---
+
+### **Claim 1: N·W(N) → C ∈ [0.66, 0.67]**
+
+**Strongest counter-argument:**  
+The apparent convergence could be a slow finite-𝑁 artifact. The linear-in-1/log fit assumes a specific asymptotic form; if the true convergence includes higher-order terms (e.g., 1/log²𝑁), the limit could be outside the observed interval. Extrapolation from 𝑁 ≤ 10⁶ is risky for a constant claimed to two decimal places.
+
+**Killing experiment:**  
+Compute 𝑁·𝑊(𝑁) for 𝑁 up to 10⁸ (or at least 10⁷) and apply robust curve-fitting (e.g., including 1/log² terms) to test stability. If the value drifts outside [0.66, 0.67] by more than 0.01, the claim is false.
+
+**Honest assessment:**  
+This is the **most likely to wobble**. The precision is high given the data range, and without a closed form, the extrapolation is speculative. Survival probability: **low to medium**.
+
+---
+
+### **Claim 2: Corr(𝑑ᵢ, 𝑑ᵢ₊₁) → 1/2**
+
+**Strongest counter-argument:**  
+Could be a finite-𝑁 effect: the correlation might converge to a different limit, e.g., 0.4 or 0.6, at higher 𝑁. The mechanism via BCZ pairs is heuristic; if Farey gaps have longer-range dependencies, consecutive correlation might not settle at 1/2.
+
+**Killing experiment:**  
+Compute the correlation for 𝑁 = 10⁷ and test for drift. Also, compute lag-2, lag-3 correlations to see if the 1/2 is part of a larger pattern (e.g., exponential decay with half-life 1).
+
+**Honest assessment:**  
+Plausible but not robust. The 1/2 is suggestive of independence conditioned on BCZ structure, but if the structure is more complex, the limit could differ. Survival probability: **medium**.
+
+---
+
+### **Claim 3: L-zero tomography via MUSIC works for function fields, Dirichlet L, modular form L**
+
+**Strongest counter-argument:**  
+MUSIC is a high-resolution spectral estimation method; its success depends on the signal being well-approximated by a sum of sinusoids. The zeros of L-functions have subtle correlations (e.g., Montgomery’s pair correlation) that may not fit this model exactly. Incomplete literature check: there may be prior work applying MUSIC or similar methods to L-functions in inverse problems or quantum chaos.
+
+**Killing experiment:**  
+Apply MUSIC to a known L-function with a computed zero set (e.g., Riemann zeta up to height 10⁶) and compare with direct zero computation. If MUSIC fails to recover zeros with high accuracy, the method is flawed.
+
+**Honest assessment:**  
+**High potential for survival** if the method works empirically and is novel. But must verify that MUSIC’s assumptions hold for the specific structure of L-function zeros. Survival probability: **medium-high** if validated.
+
+---
+
+### **Claim 4: Δ(𝐴) = -2 Re[χ̄_χ(𝐴) log 𝐿(𝑞^{-1/2}, χ)] order-character splitting**
+
+**Strongest counter-argument:**  
+Heuristic derivation; no proof that the main term is exactly this. Could miss lower-order terms or additional characters. The formula is suggestive but may only hold for specific families (e.g., prime moduli).
+
+**Killing experiment:**  
+Test the formula for a broader set of characters (e.g., composite moduli, higher-order characters) and see if the identity holds exactly. If deviations appear, the formula is incomplete.
+
+**Honest assessment:**  
+**Could wobble** if the heuristic misses key elements. But if it matches data well, it might point to a true identity. Survival probability: **medium**.
+
+---
+
+### **Claim 5: 𝐷*(𝐹_𝑁) = 1/𝑁 exactly at leading order**
+
+**Strongest counter-argument:**  
+“Exactly at leading order” is ambiguous: if the next term is, say, 1/𝑁², then the leading term is 1/𝑁, but the claim might be interpreted as the full expression. Could be a coincidence for small 𝑁.
+
+**Killing experiment:**  
+Compute 𝐷*(𝐹_𝑁) for very large 𝑁 (e.g., 10⁶) and fit to 1/𝑁 + 𝛼/𝑁². If 𝛼 is significantly non-zero, the exactness is only leading order.
+
+**Honest assessment:**  
+**Likely to survive** if the leading term is indeed 1/𝑁. But “exactly” is strong; likely means asymptotically. Survival probability: **high** if asymptotic.
+
+---
+
+### **Claim 6: 𝐷*(𝐹′_𝑁)/𝐷*(𝐹_𝑁) → 1/2 at matched point count**
+
+**Strongest counter-argument:**  
+Could be a finite-𝑁 effect; the ratio might converge to something else (e.g., 1/√2) at higher 𝑁. The mechanism (BCZ pairs) might not fully explain the ratio.
+
+**Killing experiment:**  
+Compute the ratio for 𝑁 up to 10⁷ and test for convergence. If the ratio stabilizes at 1/2 within error bars, the claim holds; otherwise, it’s false.
+
+**Honest assessment:**  
+**Plausible but needs verification**. The 1/2 is suggestive of a symmetry, but could be coincidental. Survival probability: **medium**.
+
+---
+
+### **Claim 7: Farey gap clusters of size exactly 2 (>99% mass at high quantile)**
+
+**Strongest counter-argument:**  
+At extreme quantiles, larger clusters might emerge. The BCZ pair structure might break down for very small gaps. In extreme value theory, cluster sizes can vary with the threshold.
+
+**Killing experiment:**  
+Analyze clusters at the 0.9999 quantile for large 𝑁 (e.g., 10⁶) and see if clusters of size 3 or more appear. If they do, the claim is false.
+
+**Honest assessment:**  
+**Likely to survive** if the BCZ structure is indeed dominant. But extreme quantiles can behave differently. Survival probability: **high** if the 99% mass claim holds.
+
+---
+
+### **N10 Finding: Farey gaps outside Wigner-Dyson universality**
+
+**Strongest counter-argument:**  
+Could be a misinterpretation of the data; Wigner-Dyson is a broad class, and maybe Farey gaps fit a variant (e.g., 2D Coulomb gas). Literature check: random matrix theory often appears in number theory; could be a known result.
+
+**Killing experiment:**  
+Compare the nearest-neighbor spacing distribution of Farey gaps with Wigner-Dyson (GOE/GUE) using a statistical test (e.g., Kolmogorov-Smirnov). If the p-value is high, they are in the universality class.
+
+**Honest assessment:**  
+**Could be a key insight** if true. But must rule out that the gaps follow a different random matrix ensemble. Survival probability: **medium-high** if rigorously tested.
+
+---
+
+### **Overall Assessment**
+
+**Most likely to survive deep scrutiny:**  
+Claim 7 (cluster size 2) and Claim 3 (MUSIC for L-functions) have strong empirical backing and clear mechanisms.
+
+**Most likely to wobble:**  
+Claim 1 (constant 𝐶) and Claim 5 (exact 1/𝑁) are sensitive to extrapolation and higher-order terms.
+
+**Killing experiments** are crucial: large-𝑁 computations can settle most claims. Prioritize computing for 𝑁 ≥ 10⁷ to test convergence.
+
+**Final note:** Several claims hinge on BCZ pair structure; if that structure is not universal (e.g., for non-prime moduli), multiple claims could fail together. Test beyond prime cases.

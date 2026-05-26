@@ -1,0 +1,17 @@
+=== Phase D: Number-field MUSIC on Chebyshev's bias ===
+Target: low-lying zeros of L(s, χ_4) — γ_1 ≈ 6.02, γ_2 ≈ 10.24
+Computing bias π(x;4,3) - π(x;4,1) at 100 log-spaced x in [100, 10000000]...
+  Sieve+counting wallclock: 1.9s
+  bias[0] (small x) = 2, bias[-1] (large x) = 218
+  Normalized signal head: [-0.26521511 -0.29529777 -0.75558494  0.06206467 -0.38261777]
+  Normalized signal range: [-0.9140, 0.9249]
+  Δn = 0.1151
+
+MUSIC peaks (top 5, gamma scaled by 1/Δn = 8.6859):
+  step-freq g = 6.9827, actual γ = 60.6506  P = 2.0805e+00
+  step-freq g = 5.5847, actual γ = 48.5080  P = 2.0320e+00
+  step-freq g = 11.8658, actual γ = 103.0649  P = 2.0271e+00
+  step-freq g = 0.7016, actual γ = 6.0937  P = 1.8962e+00
+  step-freq g = 13.2638, actual γ = 115.2075  P = 1.8847e+00
+
+Truth: γ_1 = 6.0209, γ_2 = 10.2437, γ_3 = 12.9889

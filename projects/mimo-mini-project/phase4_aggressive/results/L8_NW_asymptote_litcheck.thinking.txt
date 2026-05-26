@@ -1,0 +1,773 @@
+The user is asking about the asymptotic behavior of NW(Q) related to Farey fractions and their discrepancy. Let me carefully work through what's known.
+
+## Definitions
+- F_Q is the Farey sequence of order Q
+- E_Q(x) = #{α ∈ F_Q : α ≤ x} - Φ(Q)·x is the discrepancy function
+- J(Q) = ∫₀¹ E_Q²(x) dx (the mean square discrepancy)
+- NW(Q) = Q·J(Q)/Φ(Q)
+
+## The classical result
+
+The key result about the second moment of the Farey discrepancy is due to **Franel (1924)**, who showed that the Riemann Hypothesis is equivalent to E_Q(x) = O(Q^{1/2+ε}) for all ε > 0.
+
+The integral J(Q) = ∫₀¹ E_Q²(x) dx has been studied extensively.
+
+**Franel (1924)**: Landau proved (in the same series) that if RH holds, then the discrepancy bound follows. The exact connection involves the Möbius function.
+
+**Mikolás (1957, not 1949)**: Mikolás studied the mean square of the Riemann zeta function and Farey fractions. Actually, let me be more careful.
+
+The formula for J(Q) was given by Franel. Let me recall:
+
+Franel showed that for the Farey sequence of order Q:
+
+J(Q) = ∫₀¹ E_Q²(x) dx
+
+and related this to sums of the Möbius function.
+
+The key formula is:
+
+J(Q) = (1/12) · (Q/Φ(Q)) + (1/12) · Σ_{d|Q} μ(d)²φ(d)/d - something...
+
+Actually, let me reconsider. The standard result:
+
+For the Farey sequence of order N, let's denote A(N) = Σ_{n=1}^{N} φ(n), the total count of Farey fractions up to order N is A(N) = Σ_{n=1}^{N} φ(n) + 1.
+
+The discrepancy D_N(x) = F_N(x) - A(N)·x (sometimes normalized differently).
+
+The integral ∫₀¹ D_N²(x) dx was computed by Franel (1924) and involves:
+
+∫₀¹ D_N²(x) dx = Σ_{k=1}^{N} (μ(k)/k)² · something...
+
+Actually, let me think about this more carefully.
+
+The standard result: Let F_N be the Farey sequence of order N. Let Φ(N) = Σ_{n=1}^N φ(n). Then:
+
+E_N(x) = #{α ∈ F_N : α ≤ x} - Φ(N)·x
+
+The mean square:
+
+J(N) = ∫₀¹ E_N²(x) dx
+
+By a calculation involving the Möbius function and Euler's totient:
+
+J(N) = (1/12) · Φ(N)/N + (some lower order terms)
+
+So NW(N) = N·J(N)/Φ(N) → 1/12 as N → ∞?
+
+Wait, that gives NW → 1/12 ≈ 0.0833... which is way too small.
+
+Let me reconsider. Maybe the normalization is different.
+
+Actually, I think the user's definitions might use a different normalization. Let me re-examine.
+
+If Φ(Q) = Σ_{n=1}^Q φ(n), then Φ(Q) ~ 3Q²/π². The number of terms in the Farey sequence of order Q is Φ(Q) + 1 ~ Φ(Q).
+
+So E_Q(x) = #{α ∈ F_Q : α ≤ x} - Φ(Q)·x.
+
+Now J(Q) = ∫₀¹ E_Q²(x) dx.
+
+Franel (1924) showed:
+
+J(N) = Σ_{k=1}^{N} μ(k)² · Σ ... 
+
+Hmm, let me think about the explicit formula differently.
+
+The key formula from Franel's work (and elaborated by others):
+
+Let's denote the Farey fractions of order Q as 0 = x_0 < x_1 < ... < x_M = 1 where M = Φ(Q) + 1 ≈ 3Q²/π².
+
+The discrepancy function E_Q(x) is a step function that increases by 1 at each x_i and decreases linearly with slope Φ(Q).
+
+The integral J(Q) can be computed as:
+
+J(Q) = Σ_i ∫_{x_i}^{x_{i+1}} (i - Φ(Q)·x)² dx
+
+This gets complicated. Let me look at the problem from the side of what's known about the constant.
+
+**Codecá and Perelli** worked on the second moment of the Riemann zeta function and related exponential sums. In their 1988 paper "On the mean square of the Riemann zeta-function" or similar.
+
+Actually, I think the most relevant result is from **Hall (1969)** or **Hall (1970s)**:
+
+R.R. Hall studied the discrepancy of Farey fractions and showed:
+
+∫₀¹ D_N²(x) dx = C₁N + O(log N) (or similar)
+
+where C₁ is an explicit constant.
+
+Hmm wait, I need to be more careful about the normalization.
+
+Let me reconsider the problem. The user defines:
+- Φ(Q) = Σ_{n≤Q} φ(n) (this is standard)
+- E_Q(x) = #{α ≤ x in F_Q} - Φ(Q)·x
+- J(Q) = ∫₀¹ E_Q² dx
+- NW(Q) = Q·J(Q)/Φ(Q)
+
+Now, if we use the classical normalization where the discrepancy is:
+
+D_N(x) = #{α ≤ x in F_N} - Φ(N)·x
+
+then the mean square is:
+
+J(N) = ∫₀¹ D_N²(x) dx
+
+A key formula: Using the identity involving the Möbius function:
+
+The "classical" result gives J(N) in terms of a sum over squarefree numbers.
+
+Actually, I recall now. The result from **Franel-Landau** theorem concerns the bound:
+
+D_N(x) = O(N^{1/2+ε}) ⟺ RH
+
+For the mean square specifically:
+
+∫₀¹ D_N²(x) dx
+
+I think the result is:
+
+J(N) = N/(12·π²) · (3N/π²) + lower order = ... 
+
+No wait. Let me think about scaling.
+
+Φ(N) ~ 3N²/(π²), so the "average gap" between consecutive Farey fractions is about π²/(3N²).
+
+The discrepancy is a piecewise linear function. On the interval [a_n, a_{n+1}] where a_n, a_{n+1} are consecutive Farey fractions, the discrepancy goes from n - Φ(N)·a_n to (n+1) - Φ(N)·a_{n+1}. If the gap is Δ = a_{n+1} - a_n, then the discrepancy at the midpoint of this gap is about n + 1/2 - Φ(N)·(a_n + Δ/2).
+
+This is related to the distribution of Farey fractions and their spacing.
+
+The key result I think is:
+
+**Mikolás (1957)**: In his paper "On the mean square of the Riemann zeta-function on the critical line and on Farey series" (not exactly 1949), he connected the mean square of ζ(1/2+it) to the Farey series discrepancy.
+
+Actually, I think the most directly relevant result is:
+
+**The Franel-Landau theorem** (1926):
+
+∫₀¹ D_N²(x) dx = Σ_{q≤N} (μ²(q)/q²) · Σ_{a∈(Z/qZ)*} ... 
+
+Hmm, this is getting complicated. Let me approach this differently.
+
+The formula for J(N) in terms of multiplicative functions:
+
+By expanding E_Q(x)² and integrating, one gets:
+
+J(Q) = Σ_{q₁,q₂ ≤ Q} Σ_{a₁∈(Z/q₁)*, a₂∈(Z/q₂)*} ∫₀¹ [1_{a₁/q₁ ≤ x} - 1_{a₂/q₂ ≤ x}]² · (something) dx
+
+Wait, let me use a cleaner approach.
+
+E_Q(x) = Σ_{q≤Q} Σ_{(a,q)=1, 0<a≤q} 1_{a/q ≤ x} - Φ(Q)·x
+
+So E_Q(x)² = [Σ_{q≤Q} Σ_{(a,q)=1} 1_{a/q ≤ x}]² - 2Φ(Q)·x·[Σ...] + Φ(Q)²·x²
+
+Integrating over [0,1]:
+
+J(Q) = ∫₀¹ [Σ_{q≤Q} Σ_{(a,q)=1} 1_{a/q ≤ x}]² dx - 2Φ(Q)·∫₀¹ x·[Σ...] dx + Φ(Q)²·(1/3)
+
+Now ∫₀¹ [Σ...]² dx = Σ_{q₁,q₂ ≤ Q} Σ_{(a₁,q₁)=1, (a₂,q₂)=1} ∫₀¹ 1_{a₁/q₁ ≤ x} · 1_{a₂/q₂ ≤ x} dx
+
+= Σ_{q₁,q₂} Σ_{a₁,a₂} (1 - max(a₁/q₁, a₂/q₂))
+
+And ∫₀¹ x·[Σ...] dx = Σ_{q≤Q} Σ_{(a,q)=1} ∫_{a/q}^1 x dx = Σ_{q,a} (1/2)(1 - a²/q²)
+
+This is getting very involved. The clean result involves:
+
+**Franel's formula** (1924, Crelle's Journal):
+
+If we define:
+- f_Q(k) = Σ_{q≤Q} (μ(k)/k) · Σ_{(a,q)=1, q|k} 1 or something similar...
+
+Actually, I think the cleanest statement is:
+
+By Franel (1924), with Φ(N) = Σ_{n≤N} φ(n):
+
+J(N) = ∫₀¹ D_N²(x) dx = (1/12) · (Φ(N)/N) - (1/(4π²)) · Σ_{k=1}^N (μ(k)/k)² · ... 
+
+Hmm, I'm getting confused with exact formulas. Let me try a different approach.
+
+**The key asymptotic result:**
+
+The expected result is that J(N) grows like (1/12)·Φ(N)/N plus a term related to Σ_{k≤N} μ(k)²/k².
+
+Actually, I recall now that there's a clean formula:
+
+J(N) = (Φ(N))/(12N) + R(N)
+
+where R(N) involves the Möbius function and is connected to the Riemann Hypothesis.
+
+Under RH, R(N) = O(N^{1/2+ε}).
+
+So NW(N) = N·J(N)/Φ(N) = N·[(Φ(N))/(12N) + R(N)]/Φ(N) = 1/12 + N·R(N)/Φ(N).
+
+With Φ(N) ~ 3N²/(π²):
+
+NW(N) ~ 1/12 + N·R(N)·π²/(3N²) = 1/12 + π²·R(N)/(3N).
+
+Hmm, but the user's values are around 0.67, which is much larger than 1/12 ≈ 0.0833. So something is off with my normalization.
+
+Let me reconsider. Maybe the discrepancy function is normalized differently.
+
+Perhaps the user uses E_Q(x) = #{α ≤ x in F_Q} - Φ(Q)·x where Φ(Q) is just φ(Q), not the summatory totient. But that doesn't make sense either because E_Q would not integrate to zero over [0,1].
+
+Actually, wait. Let me reconsider the definition. In some formulations:
+
+Φ(Q) = #{α ∈ F_Q} = 1 + Σ_{n=1}^Q φ(n) ≈ 3Q²/π²
+
+With this, E_Q(x) = #{α ≤ x in F_Q} - Φ(Q)·x is the discrepancy, and Φ(Q)·x is the expected number of points in [0,x] under uniform distribution.
+
+Now, the mean square discrepancy for n uniformly distributed points on [0,1] would be about 1/12 on average (the variance of a uniform distribution). But we have Φ(Q) points, not Q points. And the points are deterministic (Farey fractions), not random.
+
+For Q random points on [0,1], we'd expect J(Q) ≈ 1/12.
+
+But here we have ~3Q²/π² Farey fractions. If they were random, we'd expect J(Q) ≈ 1/(12·(3Q²/π²)) = π²/(36Q²).
+
+Then NW(Q) = Q·J(Q)/Φ(Q) ≈ Q·π²/(36Q²)/(3Q²/π²) = π⁴/(108Q³).
+
+That goes to 0, which contradicts the empirical values. So the normalization must be different from what I'm thinking.
+
+Let me re-examine. The user says NW(Q=50k) ≈ 0.664, NW(Q=200k) ≈ 0.669, NW(Q=400k) ≈ 0.671. These values are slowly increasing but bounded, suggesting a finite limit around 0.67.
+
+The user's candidate constant is C = (1/2)·∏_p (1 + 1/(p²(p-1))) ≈ 0.6699.
+
+Let me compute this product: ∏_p (1 + 1/(p²(p-1))).
+
+For p=2: 1 + 1/(4·1) = 1 + 1/4 = 5/4
+For p=3: 1 + 1/(9·2) = 1 + 1/18 = 19/18
+For p=5: 1 + 1/(25·4) = 1 + 1/100 = 101/100
+For p=7: 1 + 1/(49·6) = 1 + 1/294 = 295/294
+
+Product: (5/4)·(19/18)·(101/100)·(295/294)·...
+
+5/4 = 1.25
+19/18 ≈ 1.0556
+101/100 = 1.01
+295/294 ≈ 1.0034
+
+Product ≈ 1.25 · 1.0556 · 1.01 · 1.0034 · ... ≈ 1.3397
+
+So C = 1.25 · 1.3397/2 ≈ ... wait, C = (1/2) · ∏_p(...) = (1/2) · 1.3397 ≈ 0.6699. Yes, that matches.
+
+Now this product ∏_p (1 + 1/(p²(p-1))) has a nice form. Let me see:
+
+1 + 1/(p²(p-1)) = (p²(p-1) + 1)/(p²(p-1)) = (p³ - p² + 1)/(p²(p-1))
+
+Hmm, that's not a standard Euler product I immediately recognize. Let me check if it relates to known constants.
+
+Actually, let me compute ∏_p (1 + 1/(p²(p-1))) differently:
+
+1/(p²(p-1)) = 1/(p³ - p²) = (1/p²) · 1/(p-1)
+
+And 1/(p-1) = (1/p) · 1/(1-1/p) = (1/p) · Σ_{k=0}^∞ (1/p)^k
+
+So 1/(p²(p-1)) = (1/p³) · 1/(1-1/p) = (1/p³) + (1/p⁴) + (1/p⁵) + ...
+
+So ∏_p (1 + 1/(p²(p-1))) = ∏_p (1 + 1/p³ + 1/p⁴ + 1/p⁵ + ...)
+
+Hmm, that's ∏_p (1 + Σ_{k=3}^∞ 1/p^k) = ∏_p (1 + 1/(p³-p²)).
+
+Actually, 1 + 1/(p²(p-1)) = (p³ - p² + 1)/(p²(p-1)).
+
+Hmm, let me try to relate this to known Dirichlet series. 
+
+Note that Σ_{n=1}^∞ |μ(n)|/n^s = ζ(s)/ζ(2s) for s > 1.
+
+And Σ_{n=1}^∞ φ(n)/n^s = ζ(s-1)/ζ(s) for s > 2.
+
+The product ∏_p (1 + 1/(p²(p-1))) might relate to:
+
+∏_p (1 + 1/p² · 1/(p-1)) = ∏_p (1 + 1/p² · Σ_{k=0}^∞ 1/p^k) = ∏_p (1 + Σ_{k=2}^∞ 1/p^k)
+
+= ∏_p (1 + (1/p²)/(1-1/p)) = ∏_p (1 + 1/(p²-p)) = ∏_p (1 + 1/(p(p-1)))... 
+
+Wait, 1/(p²(p-1)) ≠ 1/(p(p-1)).
+
+Let me recompute: 1/(p²(p-1)) = 1/p · 1/(p(p-1)).
+
+Hmm, p(p-1) = p² - p, so 1/(p(p-1)) = 1/(p²-p).
+
+And Σ_{n=2}^∞ 1/(n(n-1)) = 1 by telescoping.
+
+But I'm not sure this helps directly.
+
+Let me look at this from the perspective of the Dirichlet series. The constant C = (1/2)·∏_p(1 + 1/(p²(p-1))) might be related to:
+
+(1/2) · ∏_p (1 + 1/(p³-p²))
+
+Let me factor: 1 + 1/(p³-p²) = (p³-p²+1)/(p³-p²) = (p³-p²+1)/(p²(p-1)).
+
+Alternatively, this product can be written as:
+
+∏_p (1 + 1/(p²(p-1))) = ∏_p Σ_{k=0}^∞ a_k(p)/p^k
+
+where a_k(p) depends on the specific form.
+
+Actually, let me try a direct calculation. Let:
+
+f(n) = Π_{p|n} 1/(p²(p-1)) for squarefree n, and some appropriate extension for non-squarefree.
+
+Then ∏_p (1 + 1/(p²(p-1))) = Σ_{n=1}^∞ f(n)/n^0... no, that's not right either.
+
+Let me try yet another approach. Consider:
+
+∏_p (1 + 1/(p²(p-1))) = ∏_p (1 + 1/p³ · 1/(1-1/p)) = ∏_p (1 + Σ_{k=3}^∞ 1/p^k)
+
+This equals Σ over squarefree numbers s of ∏_{p|s} (Σ_{k_p=3}^∞ 1/p^{k_p}) / ... hmm, this isn't leading anywhere clean.
+
+Actually, I think the product can be expressed as:
+
+∏_p (1 + 1/(p²(p-1))) = ζ(2) · ∏_p (1 + 1/(p²(p-1))) / ζ(2)
+
+But ζ(2) = ∏_p 1/(1-1/p²) = ∏_p p²/(p²-1). So this doesn't simplify directly.
+
+Let me just accept the constant C ≈ 0.6699 and look for it in the literature.
+
+Now, back to the main question. The formula J(Q) and its asymptotics.
+
+**The Franel-Landau theorem (1924-1926)**:
+
+Franel showed (in Math. Annalen, 1924):
+The discrepancy of the Farey sequence satisfies |D_N(x)| = O(N^{1/2+ε}) if and only if RH.
+
+Landau (1924) proved the converse direction.
+
+But the mean square J(Q) = ∫₀¹ D_N²(x) dx was also studied.
+
+**Explicit formula for J(Q)**:
+
+From a result that I believe goes back to Franel or possibly Folke Mikolás:
+
+J(N) = (1/12) · Σ_{n=1}^N μ(n)² · φ(n)/n² + R(N)
+
+where R(N) is a "correction" term.
+
+Wait, actually, I think the formula involves:
+
+∫₀¹ D_N²(x) dx = Σ_{d=1}^N (μ(d)/d)² · (1/12) · Φ(N/d) · (N/d) + (main term)
+
+Hmm, I'm getting confused. Let me think about this more carefully.
+
+Actually, the standard approach uses the Möbius inversion formula. The Farey fractions of order N can be written as:
+
+F_N = ∪_{d=1}^N {a/d : (a,d) = 1, 0 ≤ a ≤ d}
+
+But with deduplication (each fraction counted once).
+
+The discrepancy D_N(x) = |F_N ∩ [0,x]| - Φ(N)·x
+
+can be analyzed using the Möbius function to sieve out non-reduced fractions.
+
+The key identity is:
+
+D_N(x) = Σ_{d=1}^N μ(d)/d · Σ_{n=1}^{⌊Nd⌋/d} (1_{n/d ≤ x} - d·x/d)
+
+Hmm, this is getting complicated. Let me just look at the problem from the asymptotic perspective.
+
+**The asymptotic mean square result:**
+
+I believe the result is that:
+
+J(N) = ∫₀¹ D_N²(x) dx ~ C · N
+
+for some constant C as N → ∞, and then NW(N) = N·J(N)/Φ(N) ~ C·N/Φ(N) ~ C·π²/(3N) → 0.
+
+But that contradicts the user's empirical results. So either:
+1. The user's normalization is different, or
+2. J(N) grows faster than linearly.
+
+Actually, wait. Let me reconsider the growth rate.
+
+The Farey sequence of order Q has Φ(Q) ≈ 3Q²/π² elements. The discrepancy D_Q(x) is expected to be of order Q (or Q^{1+ε} under RH).
+
+If D_Q(x) ~ Q, then J(Q) = ∫₀¹ D_Q²(x) dx ~ Q².
+
+Then NW(Q) = Q·J(Q)/Φ(Q) ~ Q·Q²/Q² = Q → ∞. That can't be right either, since the empirical values are bounded.
+
+If D_Q(x) ~ Q^{1/2} (which is the RH bound), then J(Q) ~ Q.
+
+NW(Q) = Q·Q/Q² ~ 1/Q → 0. Still goes to zero.
+
+Hmm, neither makes sense with the empirical values around 0.67.
+
+Wait, maybe I should reconsider. Perhaps Φ(Q) in the user's notation means something different, like just φ(Q) (the Euler totient of Q), not the summatory totient.
+
+Let me re-read: "For Farey F_Q with E_Q(x) = #{α ≤ x} − Φ(Q)·x"
+
+If Φ(Q) is the summatory totient Σ_{n≤Q} φ(n), then Φ(Q) ≈ 3Q²/π², and E_Q(x) is the discrepancy from the uniform distribution of Φ(Q) points on [0,1].
+
+If instead Φ(Q) is used to denote Σ_{n≤Q} φ(n) (which is the number of elements in F_Q minus 1), then the mean square of the discrepancy for Φ(Q) uniformly random points would be:
+
+E[∫₀¹ (#{X_i ≤ x} - n·x)² dx] = ∫₀¹ E[(#{X_i ≤ x} - n·x)²] dx = ∫₀¹ n·x(1-x) dx = n/6
+
+where n = Φ(Q). So J_random(Q) = Φ(Q)/6.
+
+Then NW(Q) = Q·J(Q)/Φ(Q) = Q/6. For Q = 50000, that would be about 8333, not 0.664.
+
+So that's way off. Let me reconsider.
+
+Maybe the normalization factor Φ(Q) in E_Q(x) is different. Perhaps E_Q(x) = #{α ≤ x} / Φ(Q) − x, i.e., the empirical CDF minus x?
+
+In that case, J(Q) = ∫₀¹ (F_N(x) - x)² dx where F_N is the empirical CDF.
+
+For n random uniform points, E[J(Q)] = ∫₀¹ E[(F_n(x) - x)²] dx = ∫₀¹ x(1-x)/n dx = 1/(6n).
+
+Then NW(Q) = Q·J(Q)/Φ(Q) = Q/(6n·Φ(Q)) = Q/(6·Φ(Q)²).
+
+With Φ(Q) ≈ 3Q²/π², this gives NW(Q) ≈ Q·π⁴/(6·9Q⁴) = π⁴/(54Q³) → 0.
+
+Still doesn't work.
+
+OK, let me try yet another interpretation. Maybe:
+
+E_Q(x) = #{α ≤ x} − Φ(Q)·x
+
+where Φ(Q) is the number of Farey fractions (including 0), so Φ(Q) = 1 + Σ_{n≤Q} φ(n). And:
+
+J(Q) = ∫₀¹ E_Q² dx
+
+NW(Q) = Q · J(Q) / Φ(Q)
+
+For Q = 50000, Φ(50000) ≈ 3·(50000)²/π² ≈ 7.6·10⁸.
+
+If NW = 0.664, then J(Q) = 0.664·Φ(Q)/Q ≈ 0.664·7.6·10⁸/50000 ≈ 10093.
+
+The "expected" value for random points would be J_random = n/6 = Φ(Q)/6 ≈ 1.27·10⁸.
+
+So the actual J(Q) ≈ 10093 is much smaller than the random value 1.27·10⁸. The ratio is about 10093/(1.27·10⁸) ≈ 8·10⁻⁵. That seems very small.
+
+Hmm, maybe I should think about this differently. The factor Q/Φ(Q) in NW(Q) is roughly π²/(3Q) ≈ 3.3/Q. For Q = 50000, this is about 6.5·10⁻⁵.
+
+So NW(Q) = (Q/Φ(Q)) · J(Q). If J(Q) ≈ 10093, then NW = 6.5·10⁻⁵ · 10093 ≈ 0.656. Hmm, close to 0.664 if my estimates are slightly off.
+
+Actually, let me be more precise. Φ(50000) = Σ_{n=1}^{50000} φ(n). Using the formula Σ_{n≤x} φ(n) = 3x²/π² + O(x log x):
+
+Φ(50000) ≈ 3·(50000)²/π² ≈ 3·2.5·10⁹/9.87 ≈ 7.6·10⁸.
+
+NW(50000) = 50000·J(50000)/7.6·10⁸ = 0.664
+
+So J(50000) ≈ 0.664·7.6·10⁸/50000 ≈ 0.664·15200 ≈ 10093.
+
+Now, let me compute what ∫₀¹ D² dx should be where D(x) is the discrepancy. 
+
+D_Q(x) = #{a/q ≤ x : (a,q)=1, 1≤q≤Q} - Φ(Q)·x
+
+For x = a/q (a Farey fraction), D_Q has a jump of +1 from the counting function. Between consecutive Farey fractions at positions α_i and α_{i+1} with α_{i+1} - α_i = δ, D_Q decreases linearly by Φ(Q)·δ.
+
+The function D_Q(x) is a sawtooth-like function. The "amplitude" of D_Q can be estimated. The maximum of |D_Q| should be of order Q (this is the "trivial" bound for the discrepancy, better bounds require RH).
+
+If D_Q ~ Q in amplitude, then J(Q) = ∫₀¹ D_Q² dx ~ Q². Then NW(Q) = Q·Q²/Φ(Q) ~ Q³/Q² = Q → ∞. Not bounded.
+
+If D_Q ~ Q^{1/2} (the RH bound), then J(Q) ~ Q, and NW(Q) ~ Q·Q/Q² = 1. This is consistent with the empirical values being around 0.67!
+
+So the question becomes: assuming RH (which gives D_Q = O(Q^{1/2+ε})), what is the precise asymptotic of J(Q)?
+
+If J(Q) ~ c·Q for some constant c, then NW(Q) ~ c·Q²/Φ(Q) ~ c·π²/3 as Q → ∞.
+
+Wait: NW(Q) = Q·J(Q)/Φ(Q) ~ Q·c·Q/(3Q²/π²) = c·π²/3.
+
+If NW(Q) → C ≈ 0.67, then c = 3C/π² ≈ 3·0.67/9.87 ≈ 0.204.
+
+So J(Q) ~ 0.204·Q.
+
+Alternatively, the more standard result might be expressed as:
+
+J(Q) ~ (C·3/π²)·Q where C is the NW limit.
+
+Now, the result J(Q) ~ c·Q (assuming RH) — is this known?
+
+Yes! I believe this is related to **Mikolás's work**.
+
+**Mikolás (1957)**: "On the mean square of the Riemann zeta-function on the critical line and on the Farey series." 
+
+Actually, I think the key paper is: 
+
+**Mikolás, F.** "On certain sums generating the Dedekind sums, and their reciprocity laws." 
+
+No, more specifically:
+
+**F. Mikolás**, "An application of the Farey series to the analytic theory of numbers" or "Farey series and its application to the analytic theory of numbers" — these are from the 1950s.
+
+The connection between the Farey series discrepancy and the Riemann zeta function on the critical line is well-established:
+
+∫₀¹ D_N²(x) dx is related to |ζ(1/2+it)|² integrated in some sense.
+
+More precisely, the result (I believe from Franel, 1924, and elaborated by others) is:
+
+∫₀¹ D_N²(x) dx can be expressed as a sum involving the Möbius function:
+
+J(N) = Σ_{q≤N} Σ_{a∈(Z/qZ)*} (something)
+
+Let me try to be more precise. The standard identity is:
+
+D_N(x) = Σ_{q≤N} Σ_{(a,q)=1} [1_{a/q ≤ x} - x]
+
+And Σ_{(a,q)=1} 1_{a/q ≤ x} = Σ_{(a,q)=1} 1_{a ≤ qx} = Σ_{d|q} μ(d) · ⌊qx/d⌋
+
+So:
+
+D_N(x) = Σ_{q≤N} Σ_{d|q} μ(d) · ⌊qx/d⌋ - Φ(N)·x
+
+= Σ_{q≤N} Σ_{d|q} μ(d) · (qx/d - {qx/d}) - Φ(N)·x
+
+where {·} is the fractional part.
+
+= Σ_{q≤N} Σ_{d|q} μ(d) · qx/d - Σ_{q≤N} Σ_{d|q} μ(d) · {qx/d} - Φ(N)·x
+
+Now Σ_{q≤N} Σ_{d|q} μ(d) · q/d = Σ_{q≤N} φ(q) = Φ(N).
+
+So the first and third terms cancel:
+
+D_N(x) = - Σ_{q≤N} Σ_{d|q} μ(d) · {qx/d}
+
+Setting k = q/d:
+
+D_N(x) = - Σ_{d≤N} μ(d) · Σ_{k≤N/d} {kx}
+
+This is a key formula! Let me verify: Σ_{k≤M} {kx} can be computed using the formula:
+
+Σ_{k=1}^M {kx} = M/2 - (1/2) + (1/2)·(some Dirichlet-type sum involving cot or sin)
+
+Actually, Σ_{k=1}^M {kx} = M/2 - (M+1)·{Mx}/2 + ... no, this isn't quite right.
+
+The standard formula is:
+
+Σ_{k=1}^M {kx} = M/2 - (1/2)·Σ_{h≠0} (1/(2πih))·(e^{2πihMx} - 1)/(e^{2πihx} - 1)·...
+
+This is getting very complicated. Let me just note that:
+
+D_N(x) = - Σ_{d≤N} μ(d) · Σ_{k≤N/d} {kx}
+
+and the key point is that under RH, the cancellation in this sum gives D_N(x) = O(N^{1/2+ε}).
+
+Now, for the mean square:
+
+J(N) = ∫₀¹ D_N²(x) dx = ∫₀¹ [Σ_{d≤N} μ(d) · Σ_{k≤N/d} {kx}]² dx
+
+Since the μ(d) terms create significant cancellation, the dominant contribution comes from the "diagonal" terms.
+
+Now, ∫₀¹ {kx}{lx} dx = 1/12 if k=l, and (something involving gcd(k,l)) otherwise.
+
+Actually, for positive integers k, l:
+
+∫₀¹ {kx}{lx} dx
+
+Let me compute this. For k=l=1:
+∫₀¹ {x}² dx = ∫₀¹ x² dx = 1/3.
+
+Wait, {x} = x for x ∈ [0,1), so ∫₀¹ {x}² dx = 1/3.
+
+For k=1, l=2:
+∫₀¹ {x}{2x} dx = ∫₀^{1/2} x·2x dx + ∫_{1/2}^1 x·(2x-1) dx
+= 2∫₀^{1/2} x² dx + ∫_{1/2}^1 (2x²-x) dx
+= 2·[x³/3]₀^{1/2} + [2x³/3 - x²/2]_{1/2}^1
+= 2·(1/24) + (2/3 - 1/2) - (2/24 - 1/8)
+= 1/12 + 1/6 - (-1/24)
+= 1/12 + 1/6 + 1/24
+= 2/24 + 4/24 + 1/24
+= 7/24
+
+Hmm, that doesn't seem right. Let me recompute.
+
+∫₀¹ {x}{2x} dx:
+
+On [0, 1/2): {x} = x, {2x} = 2x
+On [1/2, 1): {x} = x, {2x} = 2x - 1
+
+∫₀^{1/2} x·2x dx = 2[x³/3]₀^{1/2} = 2·(1/24) = 1/12
+
+∫_{1/2}^1 x·(2x-1) dx = ∫_{1/2}^1 (2x² - x) dx = [2x³/3 - x²/2]_{1/2}^1
+= (2/3 - 1/2) - (2·1/24 - 1/8) = (4/6 - 3/6) - (1/12 - 1/8) = 1/6 - (2/24 - 3/24) = 1/6 + 1/24 = 5/24
+
+So ∫₀¹ {x}{2x} dx = 1/12 + 5/24 = 2/24 + 5/24 = 7/24.
+
+But there's a general formula: ∫₀¹ {kx}{lx} dx = 1/(12·lcm(k,l))·(something involving gcd(k,l)).
+
+Actually, the general formula is:
+
+∫₀¹ {kx}{lx} dx = (gcd(k,l)²)/(12·k·l) ... no, let me look this up properly.
+
+The Dedekind sum-like integral:
+
+∫₀¹ {nx}{mx} dx 
+
+has been computed. For positive integers n, m:
+
+∫₀¹ {nx}{mx} dx = (1/4) - (gcd(n,m)·(gcd(n,m) + 1))/(4·n·m) + ... 
+
+Actually, I recall that:
+
+∫₀¹ B₁({nx})B₁({mx}) dx = (gcd(n,m))/(12·n·m) + ... (where B₁(x) = x - 1/2)
+
+But for just the fractional part {nx} = B₁({nx}) + 1/2:
+
+∫₀¹ {nx}{mx} dx = ∫₀¹ (B₁(nx)+1/2)(B₁(mx)+1/2) dx
+
+= ∫₀¹ B₁(nx)B₁(mx) dx + (1/2)·∫₀¹ B₁(nx) dx + (1/2)·∫₀¹ B₁(mx) dx + 1/4
+
+Now ∫₀¹ B₁(nx) dx = 0 (since the Bernoulli polynomial has zero mean).
+
+So ∫₀¹ {nx}{mx} dx = ∫₀¹ B₁(nx)B₁(mx) dx + 1/4.
+
+The formula for ∫₀¹ B₁(nx)B₁(mx) dx is (I believe):
+
+∫₀¹ B₁(nx)B₁(mx) dx = (gcd(n,m))²/(12·n·m) - 1/12 ... hmm, I need to be more careful.
+
+Actually, I know that:
+
+∫₀¹ {nx}·{mx} dx = (m+n-gcd(m,n))/(4mn) ... no.
+
+Let me just compute it directly for the case n=m:
+
+∫₀¹ {nx}² dx
+
+Divide [0,1) into n intervals [k/n, (k+1)/n), k=0,...,n-1. On each interval, {nx} = nx - k.
+
+∫_{k/n}^{(k+1)/n} (nx-k)² dx = (1/n)∫₀¹ t² dt = 1/(3n) (substituting t = nx - k)
+
+So ∫₀¹ {nx}² dx = n·(1/(3n)) = 1/3.
+
+So ∫₀¹ {nx}² dx = 1/3 for all positive integers n. Good.
+
+For m ≠ n, let me try n=1, m=2:
+
+∫₀¹ {x}{2x} dx = 7/24 as I computed above.
+
+And 1/12·gcd(1,2)/(1·2) + 1/4 = 1/24 + 1/4 = 7/24. 
+
+So the formula is: ∫₀¹ {nx}{mx} dx = gcd(n,m)/(12nm) + 1/4.
+
+Let me verify: for n=m: 1/(12n²) + 1/4 ≠ 1/3 in general. For n=1: 1/12 + 1/4 = 4/12 = 1/3. ✓
+
+For n=2: 1/48 + 1/4 = 1/48 + 12/48 = 13/48. But ∫₀¹ {2x}² dx = 1/3. 
+
+13/48 ≠ 1/3 = 16/48. ✗
+
+So the formula gcd(n,m)/(12nm) + 1/4 doesn't work for n=m=2.
+
+Let me recompute. For n=m=2:
+
+∫₀¹ {2x}² dx = 1/3 (from above).
+
+With the formula gcd(2,2)/(12·2·2) + 1/4 = 2/48 + 1/4 = 1/24 + 1/4 = 7/24. That's 7/24, not 1/3 = 8/24.
+
+So the formula is wrong. Let me try: ∫₀¹ {nx}{mx} dx = gcd(n,m)²/(12nm) + 1/4.
+
+For n=m=1: 1/12 + 1/4 = 1/3. ✓
+For n=1, m=2: 1/24 + 1/4 = 7/24. ✓
+For n=m=2: 4/48 + 1/4 = 1/12 + 1/4 = 1/3. ✓
+For n=2, m=4: 4/96 + 1/4 = 1/24 + 1/4 = 7/24.
+
+Let me verify: ∫₀¹ {2x}{4x} dx.
+
+On [0, 1/4): {2x} = 2x, {4x} = 4x. ∫₀^{1/4} 8x² dx = 8·(1/192) = 1/24.
+
+On [1/4, 1/2): {2x} = 2x, {4x} = 4x-1. ∫_{1/4}^{1/2} 2x(4x-1) dx = ∫_{1/4}^{1/2} (8x²-2x) dx
+= [8x³/3 - x²]_{1/4}^{1/2} = (8/24 - 1/4) - (8/192 - 1/16) = (1/3 - 1/4) - (1/24 - 1/16)
+= 1/12 - (2/48 - 3/48) = 1/12 + 1/48 = 5/48.
+
+On [1/2, 3/4): {2x} = 2x-1, {4x} = 4x-2. ∫_{1/2}^{3/4} (2x-1)(4x-2) dx = ∫_{1/2}^{3/4} 2(2x-1)² dx
+= 2·[(2x-1)³/6]_{1/2}^{3/4} = (2·1/6)·[(1/2)³ - 0³] = (1/3)·(1/8) = 1/24.
+
+On [3/4, 1): {2x} = 2x-1, {4x} = 4x-3. ∫_{3/4}^1 (2x-1)(4x-3) dx = ∫_{3/4}^1 (8x²-10x+3) dx
+= [8x³/3 - 5x² + 3x]_{3/4}^1 = (8/3 - 5 + 3) - (8·(27/64)/3 - 5·(9/16) + 3·(3/4))
+= (8/3 - 2) - (27/24 - 45/16 + 9/4)
+
+Let me compute each term:
+8/3 - 2 = 2/3
+
+27/24 = 9/8
+45/16
+9/4 = 36/16
+
+9/8 - 45/16 + 36/16 = 9/8 - 9/16 = 18/16 - 9/16 = 9/16
+
+So ∫_{3/4}^1 = 2/3 - 9/16 = 32/48 - 27/48 = 5/48.
+
+Total: 1/24 + 5/48 + 1/24 + 5/48 = 2/24 + 10/48 = 4/48 + 10/48 = 14/48 = 7/24.
+
+So ∫₀¹ {2x}{4x} dx = 7/24.
+
+And with the formula gcd(2,4)²/(12·2·4) + 1/4 = 4/96 + 1/4 = 1/24 + 1/4 = 7/24. ✓
+
+So the formula is: **∫₀¹ {nx}{mx} dx = gcd(n,m)²/(12nm) + 1/4**.
+
+This can be rewritten as: gcd(n,m)²/(12nm) + 1/4 = gcd(n,m)/(12·lcm(n,m)) + 1/4.
+
+Since nm = gcd(n,m)·lcm(n,m), we have gcd(n,m)²/(12nm) = gcd(n,m)/(12·lcm(n,m)).
+
+Now, going back to the mean square computation:
+
+J(N) = ∫₀¹ D_N²(x) dx = ∫₀¹ [Σ_{d≤N} μ(d) · S_{⌊N/d⌋}(x)]² dx
+
+where S_M(x) = Σ_{k=1}^M {kx}.
+
+Now S_M(x) = Σ_{k=1}^M {kx} = Σ_{k=1}^M (kx - ⌊kx⌋) = x·M(M+1)/2 - Σ_{k=1}^M ⌊kx⌋.
+
+The Dedekind sum connection: Σ_{k=1}^M ⌊kx⌋ is related to the sawtooth function and Dedekind sums.
+
+Actually, this is getting very complicated. Let me take a step back and think about what's really being asked.
+
+The user is asking about the limit of NW(Q) = Q·J(Q)/Φ(Q). 
+
+**Key insight**: There's a classical result connecting J(Q) to sums involving the Möbius function:
+
+J(Q) = (1/12)·Σ_{d=1}^Q μ(d)²·d·(⌊Q/d⌋)²/... 
+
+Hmm, I'm not getting the right formula from memory. Let me try to derive it differently.
+
+Actually, the approach using the Möbius function gives:
+
+D_N(x) = Σ_{q≤N} Σ_{(a,q)=1} 1_{a/q ≤ x} - Φ(N)·x = Σ_{q≤N} Σ_{(a,q)=1} (1_{a/q ≤ x} - x)
+
+And then:
+
+J(N) = ∫₀¹ [Σ_{q≤N} Σ_{(a,q)=1} (1_{a/q ≤ x} - x)]² dx
+
+= Σ_{q₁,q₂≤N} Σ_{(a₁,q₁)=1} Σ_{(a₂,q₂)=1} ∫₀¹ (1_{a₁/q₁≤x} - x)(1_{a₂/q₂≤x} - x) dx
+
+Now, ∫₀¹ (1_{a/q≤x} - x)(1_{b/r≤x} - x) dx
+
+= ∫₀¹ 1_{a/q≤x}·1_{b/r≤x} dx - (1-a²/(2q²))·(1) - ... let me compute this properly.
+
+Let f(x) = 1_{c≤x} - x for some c ∈ [0,1].
+
+∫₀¹ f(x)g(x) dx where f(x) = 1_{c≤x} - x, g(x) = 1_{d≤x} - x.
+
+= ∫₀¹ 1_{c≤x}·1_{d≤x} dx - ∫₀¹ x·1_{c≤x} dx - ∫₀¹ x·1_{d≤x} dx + ∫₀¹ x² dx
+
+= (1-max(c,d)) - ∫_c^1 x dx - ∫_d^1 x dx + 1/3
+
+= (1-max(c,d)) - (1-c²)/2 - (1-d²)/2 + 1/3
+
+= 1 - max(c,d) - 1/2 + c²/2 - 1/2 + d²/2 + 1/3
+
+= c²/2 + d²/2 - max(c,d) + 1/3
+
+Hmm wait, let me recompute:
+
+(1-max(c,d)) - (1-c²)/2 - (1-d²)/2 + 1/3
+
+= 1 - max(c,d) - 1/2 + c²/2 - 1/2 + d²/2 + 1/3
+
+= 1/3 - max(c,d) + c²/2 + d²/2
+
+= 1/3 + (c² + d²)/2 - max(c,d)
+
+For c = d: 1/3 + c² - c = 1/3 + c(c-1) = 1/3 - c(1-c).
+
+∫₀¹ f(x)² dx where f(x) = 1_{c≤x} - x:
+= 1/3 - c(1-c).
+
+Check: ∫₀¹ (1_{c≤x} - x)² dx = ∫₀^c x² dx + ∫_c^1 (1-x)² dx = c³/3 + (1-c)³/3.
+
+Hmm: ∫_c^1 (1-x)² dx = [-(1-x)³/3]_c^1 = (1-c)³/3.
+
+So ∫₀¹ (1_{c≤x} - x)² dx = c³/3 + (1-c)³/3 = [c³ + (1-c)³]/3.
+
+But from my formula: 1/3 - c(1-c) = 1/3 - c + c².
+
+And c³/3 + (1-c)³/3 = (c³ + 1 - 3c + 3c² - c³)/3 = (1 - 3c + 3c²)/3 = 1/3 - c + c². ✓
+
+OK good. So:
+
+∫₀¹ (1_{c≤x} - x)(1_{d≤x} - x) dx = c²/2 + d²/2 - max(c,d) + 1/3
+
+Hmm wait, let me recompute for c ≠ d, say c < d:
+

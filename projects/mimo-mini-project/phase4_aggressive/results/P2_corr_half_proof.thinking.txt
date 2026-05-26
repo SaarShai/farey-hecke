@@ -1,0 +1,716 @@
+Let me work through this carefully.
+
+## Setting up the problem
+
+We have the Farey sequence $F_N = \{a/b : \gcd(a,b)=1, 0 \le a \le b \le N\}$, and consecutive gaps $d_i = k_{i+1}^{-1} - k_i^{-1}$ in terms of the modular inverses... actually let me reconsider the setup.
+
+The Farey sequence $F_N$ consists of fractions $a_i/b_i$ in order. The gap between consecutive Farey fractions is $d_i = a_{i+1}/b_{i+1} - a_i/b_i = 1/(b_i b_{i+1})$.
+
+Now, the "consecutive denominators" $k_i, k_{i+1}$ that appear - let me think about what these are. In the BCZ (Baladi–Vallée–Zarzycki? or maybe this refers to something else) framework, I think we're looking at the denominators of consecutive Farey fractions.
+
+Actually, I think the setup here is about the continued fraction / Farey tree structure. Let me re-read the problem.
+
+The problem states:
+- $d_i = 1/(k_i k_{i+1})$ where $k_i, k_{i+1}$ are consecutive denominators
+- Scaled coordinates: $x_i = k_i/N, x_{i+1} = k_{i+1}/N$
+- Joint density of consecutive denominators: $f(x,y) = 2$ on $\{x+y > 1, x,y \in (0,1]\}$
+
+So $d_i = 1/(N^2 xy)$ in scaled coordinates.
+
+We want to compute:
+$$\rho_N = \frac{\text{Cov}(d_i, d_{i+1})}{\text{Var}(d_i)}$$
+
+where the covariance and variance are over the sequence of consecutive gaps.
+
+Since $d_i = 1/(k_i k_{i+1})$ and $d_{i+1} = 1/(k_{i+1} k_{i+2})$, we need the joint distribution of $(k_i, k_{i+1}, k_{i+2})$ or equivalently $(x, y, z)$ where $z = k_{i+2}/N$.
+
+The BCZ recurrence gives $k_{i+2} = \kappa k_{i+1} - k_i$ where $\kappa = \lfloor (N + k_i)/k_{i+1} \rfloor$.
+
+In scaled coordinates: $z = \kappa y - x$ where $\kappa = \lfloor (1+x)/y \rfloor$.
+
+## Computing $E[d_i^2]$
+
+$$E[d_i^2] = \frac{1}{|F_N|} \sum_i d_i^2 = \frac{1}{|F_N|} \sum_i \frac{1}{k_i^2 k_{i+1}^2}$$
+
+In the integral approximation with the density $f(x,y) = 2$ on the region $\{x+y > 1, 0 < x,y \le 1\}$:
+
+$$E[d_i^2] \approx \int\!\!\int_{x+y>1} \frac{1}{N^4 x^2 y^2} \cdot 2 \, dx\, dy \cdot \frac{N^2}{\text{normalization}}$$
+
+Wait, I need to be more careful about the normalization. Let me think about this differently.
+
+The number of Farey fractions is $|F_N| \approx 3N^2/\pi^2$. The sum over $i$ is essentially an integral with respect to the counting measure on pairs of consecutive denominators.
+
+Actually, let me think of this more carefully. The empirical density of consecutive denominators $(k_i, k_{i+1})$ in scaled coordinates $(x, y) = (k_i/N, k_{i+1}/N)$ is given by $f(x,y) = 2$ on the region $\{x + y > 1, 0 < x, y \le 1\}$ (this is a known result).
+
+So $E[d_i] = \int\!\!\int \frac{1}{N^2 xy} \cdot 2 \, dx\, dy$ over the region.
+
+Wait, but we also need to account for the discrete nature. The number of pairs $(k_i, k_{i+1})$ with $k_i \approx Nx, k_{i+1} \approx Ny$ in an area element $dx\,dy$ is approximately $|F_N| \cdot f(x,y)\,dx\,dy = |F_N| \cdot 2\,dx\,dy$.
+
+Hmm, actually I think the normalization is such that $\int\!\!\int f(x,y)\,dx\,dy = 1$, so let me check: $\int_0^1 \int_{\max(0,1-x)}^1 2\,dy\,dx = \int_0^1 2\min(x,1)\,dx$...
+
+Actually: the region is $\{x + y > 1, 0 < x \le 1, 0 < y \le 1\}$. This is a triangle with vertices $(0,1), (1,0), (1,1)$. Its area is $1/2$. So $\int\!\!\int 2\,dx\,dy = 2 \cdot 1/2 = 1$. Good.
+
+So the expected value of $g(k_i/N, k_{i+1}/N)$ is $\int\!\!\int g(x,y) \cdot 2\,dx\,dy$ over the triangle.
+
+## Computing $E[d_i^2]$
+
+$$E[d_i^2] = \int\!\!\int_{x+y>1} \frac{1}{N^4 x^2 y^2} \cdot 2\,dx\,dy$$
+
+Let me compute this. By symmetry in $x$ and $y$ (the region and integrand are symmetric), 
+
+$$E[d_i^2] = \frac{2}{N^4} \cdot 2 \int_0^1 \int_{1-x}^1 \frac{1}{x^2 y^2}\,dy\,dx$$
+
+Wait, actually the region $\{x+y>1\}$ within $[0,1]^2$ is symmetric in $x,y$, and $1/(x^2y^2)$ is also symmetric. So:
+
+$$E[d_i^2] = \frac{4}{N^4} \int_0^1 \int_{1-x}^1 \frac{dy\,dx}{x^2 y^2}$$
+
+Hmm wait, I need to double-check. The density is $f(x,y) = 2$ on $\{x+y>1, 0<x,y\leq 1\}$.
+
+$$E[d_i^2] = \int_0^1 \int_{1-x}^1 \frac{1}{N^4 x^2 y^2} \cdot 2\,dy\,dx = \frac{2}{N^4} \int_0^1 \int_{1-x}^1 \frac{dy\,dx}{x^2 y^2}$$
+
+Let me compute the inner integral:
+$$\int_{1-x}^1 \frac{dy}{y^2} = \left[-\frac{1}{y}\right]_{1-x}^1 = -1 + \frac{1}{1-x} = \frac{x}{1-x}$$
+
+So:
+$$E[d_i^2] = \frac{2}{N^4} \int_0^1 \frac{1}{x^2} \cdot \frac{x}{1-x}\,dx = \frac{2}{N^4} \int_0^1 \frac{dx}{x(1-x)}$$
+
+This integral diverges! $\int_0^1 \frac{dx}{x(1-x)} = \int_0^1 \left(\frac{1}{x} + \frac{1}{1-x}\right)dx$, which diverges at both endpoints.
+
+The divergence is logarithmic and is cut off by the discreteness of the problem. Specifically, the smallest denominator is $k = 1$, so $x \ge 1/N$. Also, when $x$ is close to $0$, we need $y > 1 - x \approx 1$, so $y \approx 1$ and the gap $d \approx 1/(N^2 \cdot x \cdot 1) = 1/(N^2 x)$, which is large when $x$ is small.
+
+Actually, let me reconsider. The denominators $k_i$ range from $1$ to $N$, so $x = k_i/N$ ranges from $1/N$ to $1$. Similarly for $y$. But we also need $x + y > 1$, so $y > 1 - x \ge 0$.
+
+For the integral to be meaningful, we need $x \ge 1/N$ and $y \ge 1/N$, but also $y > 1-x$. If $x \ge 1/N$, then $y > 1 - 1/N$, so $y$ is close to $1$ when $x$ is small.
+
+Let me redo this more carefully. The integral is:
+
+$$\frac{2}{N^4} \int_{1/N}^1 \frac{dx}{x(1-x)}$$
+
+But wait, the constraint $y > 1-x$ combined with $y \le 1$ and $y \ge 1/N$ means $y$ ranges from $\max(1/N, 1-x)$ to $1$. When $x > 1 - 1/N$, the lower bound is $1/N$; when $x \le 1 - 1/N$, the lower bound is $1-x$.
+
+Hmm, actually I'm overcomplicating this. The key point is that the integral $\int \frac{dx}{x(1-x)}$ diverges logarithmically, and when cut off at $x \sim 1/N$ from below and $x \sim 1-1/N$ from above (or equivalently $1-x \sim 1/N$), we get:
+
+$$\int_{1/N}^{1-1/N} \frac{dx}{x(1-x)} \approx 2\log N$$
+
+So $E[d_i^2] \approx \frac{2}{N^4} \cdot 2\log N = \frac{4\log N}{N^4}$.
+
+Wait, I need to be more careful about the cutoffs. Let me think again.
+
+Actually, let me reconsider the meaning. $x$ ranges from $1/N$ (smallest denominator is 1) to $1$ (largest denominator is $N$). And similarly $y$ ranges from $1/N$ to $1$, with $x+y>1$.
+
+But the integral $\int_{1/N}^{1} \frac{dx}{x(1-x)}$ diverges at both $x=0$ and $x=1$. At $x=1$, $1-x = 0$, and $y > 1-x = 0$, which means $y$ ranges from nearly $0$ to $1$, and $1/(x^2 y^2)$ with $x \approx 1$ gives $\int_0^1 dy/y^2$ which also diverges.
+
+Hmm wait, I made an error. Let me redo.
+
+Actually, I computed $\int_{1-x}^1 \frac{dy}{y^2} = \frac{x}{1-x}$. This is correct.
+
+Then $E[d_i^2] = \frac{2}{N^4}\int \frac{x}{x^2(1-x)} dx = \frac{2}{N^4}\int \frac{dx}{x(1-x)}$.
+
+Now $\frac{1}{x(1-x)} = \frac{1}{x} + \frac{1}{1-x}$, so $\int_{\epsilon}^{1-\epsilon} \frac{dx}{x(1-x)} = 2\log(1/\epsilon) + O(1)$.
+
+With $\epsilon = 1/N$, we get $\int_{1/N}^{1-1/N} \frac{dx}{x(1-x)} = 2\log N + O(1)$.
+
+So $E[d_i^2] \sim \frac{4\log N}{N^4}$.
+
+The coefficient is $C_{xx} = 4$.
+
+## Computing $E[d_i d_{i+1}]$
+
+Now $d_i = 1/(N^2 xy)$ and $d_{i+1} = 1/(N^2 yz)$ where $z = \kappa y - x$ and $\kappa = \lfloor(1+x)/y\rfloor$.
+
+So:
+$$E[d_i d_{i+1}] = \int\!\!\int_{x+y>1} \frac{1}{N^4 xy^2 z} \cdot 2\,dx\,dy = \frac{2}{N^4}\int\!\!\int_{x+y>1} \frac{dx\,dy}{xy^2(\kappa y - x)}$$
+
+where $\kappa = \lfloor(1+x)/y\rfloor$.
+
+The value of $\kappa$ depends on $x$ and $y$. For fixed $y$, $\kappa = n$ when $ny - 1 \le x < (n+1)y - 1$... wait, let me be more careful.
+
+$\kappa = \lfloor(1+x)/y\rfloor = n$ when $n \le (1+x)/y < n+1$, i.e., $ny - 1 \le x < (n+1)y - 1$.
+
+Combined with $0 < x \le 1$ and $x + y > 1$ (i.e., $x > 1-y$), the range of $x$ for given $y$ and $\kappa = n$ is:
+
+$$x \in (\max(1-y, ny-1), \min(1, (n+1)y - 1))$$
+
+For $n = 1$: $x \in (\max(1-y, y-1), \min(1, 2y-1))$.
+Since $y \in (0,1]$, $y-1 \le 0 < 1-y$ for $y < 1$. So for $n=1$, $x \in (1-y, \min(1, 2y-1))$.
+This requires $2y-1 > 1-y$, i.e., $y > 2/3$.
+So for $y > 2/3$: $x \in (1-y, 2y-1)$ and $\kappa = 1$.
+
+For $n = 2$: $x \in (\max(1-y, 2y-1), \min(1, 3y-1))$.
+This requires $3y-1 > \max(1-y, 2y-1)$, i.e., $y > 1/2$.
+For $1/2 < y \le 2/3$: $x \in (1-y, 3y-1)$ since $2y-1 \le 1-y$ when $y \le 2/3$.
+For $y > 2/3$: $x \in (2y-1, 3y-1)$.
+
+Hmm, this is getting complicated. Let me try a different approach.
+
+For the integral:
+$$I = \int\!\!\int_{x+y>1} \frac{dx\,dy}{xy^2(\kappa y - x)}$$
+
+For fixed $y$, let's sum over branches $n$:
+
+$$I = \int_0^1 dy \sum_{n} \int_{x_{\min}(n,y)}^{x_{\max}(n,y)} \frac{dx}{xy^2(ny-x)}$$
+
+Using partial fractions: $\frac{1}{x(ny-x)} = \frac{1}{ny}\left(\frac{1}{x} + \frac{1}{ny-x}\right)$
+
+So:
+$$\int_{a}^{b} \frac{dx}{x(ny-x)} = \frac{1}{ny}\left[\log x - \log(ny-x)\right]_a^b = \frac{1}{ny}\log\frac{x(ny-a)}{a(ny-b)}\bigg|_{x=b}$$
+
+Wait, let me redo: $\frac{1}{ny}\left[\log x - \log(ny-x)\right]_a^b = \frac{1}{ny}\log\frac{x/(ny-x)}{a/(ny-a)}\bigg|_{x=b} = \frac{1}{ny}\log\frac{b(ny-a)}{a(ny-b)}$.
+
+OK this is getting messy. Let me try a cleaner approach.
+
+Let me change variables. In the integral over the region $\{x+y>1, 0<x,y\leq 1\}$, let me parameterize differently.
+
+Actually, let me try to directly compute the leading-order behavior.
+
+The key insight is that both $E[d_i^2]$ and $E[d_i d_{i+1}]$ diverge logarithmically, and we need to show their ratio tends to $1/2$.
+
+Let me think about what drives the divergence. The divergence in $E[d_i^2] = \frac{2}{N^4}\int \frac{dx}{x(1-x)}$ comes from:
+- $x \to 0$ (with $y \to 1$, so small $x$, $y \approx 1$): contribution $\int_{1/N}^{1/2} \frac{dx}{x} = \log N - \log 2$
+- $x \to 1$ (with $y \to 0$, but wait $y > 1-x > 0$, so $y \to 0^+$, but we also need $y \ge 1/N$): contribution $\int_{1/2}^{1-1/N} \frac{dx}{1-x} = \log N - \log 2$
+
+So $C_{xx} = 4$ and $E[d_i^2] \approx \frac{4\log N}{N^4}$.
+
+Hmm wait, I should double check. $\frac{2}{N^4}\int_{1/N}^{1-1/N}\frac{dx}{x(1-x)} = \frac{2}{N^4}\left(\int_{1/N}^{1/2}\frac{dx}{x} + \int_{1/N}^{1/2}\frac{dx}{1-x} + ...\right)$.
+
+Actually $\int_{1/N}^{1-1/N}\frac{dx}{x(1-x)} = \int_{1/N}^{1-1/N}\frac{dx}{x} + \int_{1/N}^{1-1/N}\frac{dx}{1-x} = [\log x]_{1/N}^{1-1/N} + [-\log(1-x)]_{1/N}^{1-1/N}$.
+
+$= \log(1-1/N) - \log(1/N) + (-\log(1/N) + \log(1-1/N)) = 2\log(1-1/N) + 2\log N \approx 2\log N$ for large $N$.
+
+So $E[d_i^2] \approx \frac{2}{N^4} \cdot 2\log N = \frac{4\log N}{N^4}$.
+
+So $C_{xx} = 4$.
+
+Now for $E[d_i d_{i+1}]$, I need to compute:
+$$I = \int\!\!\int_{x+y>1} \frac{2\,dx\,dy}{xy^2(\kappa y - x)}$$
+
+and $E[d_i d_{i+1}] = I / N^4$.
+
+Let me think about the structure of this integral more carefully. The divergence will come from the same regions: $x \to 0$ (with $y \to 1$) and $x \to 1$ (with $y \to 0$).
+
+**Region 1: $x \to 0$, $y \to 1$.**
+
+When $x$ is small and $y$ is close to 1, $\kappa = \lfloor(1+x)/y\rfloor$. Since $y \approx 1$ and $x \approx 0$, $(1+x)/y \approx 1$, so $\kappa = 1$ (when $(1+x)/y < 2$, i.e., $x < 2y-1 \approx 1$). So $\kappa = 1$ and $z = y - x \approx 1$.
+
+The integrand becomes $\frac{2}{x \cdot 1 \cdot (y-x)} \approx \frac{2}{x}$ (since $y \approx 1$).
+
+Contribution: $\int_{1/N}^{1/2} \frac{2\,dx}{x} \cdot (\text{integral over } y)$... 
+
+Hmm, but I need to be more careful about the $y$ integral. Let me think about this differently.
+
+Actually, let me try to compute $I$ directly by integrating over $x$ first for each branch $n$.
+
+For branch $n$, the integral is:
+$$I_n = \int dy \int \frac{2\,dx}{xy^2(ny-x)}$$
+
+over the appropriate region.
+
+Using partial fractions:
+$$\frac{1}{x(ny-x)} = \frac{1}{ny}\left(\frac{1}{x} + \frac{1}{ny-x}\right)$$
+
+So:
+$$\int_a^b \frac{dx}{x(ny-x)} = \frac{1}{ny}\left[\log x - \log(ny-x)\right]_a^b = \frac{1}{ny}\log\frac{b(ny-a)}{a(ny-b)}$$
+
+Then:
+$$I_n = \int dy \frac{2}{ny^3}\log\frac{b(ny-a)}{a(ny-b)}$$
+
+where $a = a(n,y)$ and $b = b(n,y)$ are the limits of $x$ integration.
+
+For each $n$, the limits are determined by $\max(1-y, ny-1) < x < \min(1, (n+1)y-1)$.
+
+This is complex. Let me try a substitution approach instead.
+
+**Change of variables for the full integral.**
+
+Let me substitute $u = 1/x$ and see what happens... actually this might not help.
+
+Let me try yet another approach. I'll compute the integral numerically to verify the ratio, and then try to prove it analytically.
+
+Actually, let me think about this problem differently using a symmetry argument.
+
+The key observation: $d_i = 1/(k_i k_{i+1})$ and $d_{i+1} = 1/(k_{i+1} k_{i+2})$. The "shared" variable is $k_{i+1}$ (or $y$ in scaled coords). The variables $k_i$ and $k_{i+2}$ are "conditionally independent" given $k_{i+1}$ in some sense.
+
+If $k_i$ and $k_{i+2}$ were independent given $k_{i+1}$, then:
+$$E[d_i d_{i+1}] = E\left[\frac{1}{k_i k_{i+1}^2 k_{i+2}}\right] = E\left[\frac{1}{k_{i+1}^2} E\left[\frac{1}{k_i} \bigg| k_{i+1}\right] E\left[\frac{1}{k_{i+2}} \bigg| k_{i+1}\right]\right]$$
+
+But this isn't quite right because the conditional distributions are different due to the asymmetric recurrence.
+
+Hmm, let me try to think about this differently.
+
+Actually, let me try a direct computation.
+
+For the $E[d_i^2]$ integral, we had:
+$$E[d_i^2] = \frac{2}{N^4}\int_0^1 \frac{dx}{x(1-x)}$$
+
+(cut off at $1/N$ and $1-1/N$).
+
+For $E[d_i d_{i+1}]$, the integral is:
+$$E[d_i d_{i+1}] = \frac{2}{N^4}\int\!\!\int_{x+y>1} \frac{dx\,dy}{xy^2(\kappa y - x)}$$
+
+Let me try to reduce this to a single integral over $x$ (or $y$) by integrating over $y$ (or $x$) first.
+
+Let me integrate over $y$ first for fixed $x$. This is hard because $\kappa$ depends on both $x$ and $y$.
+
+Actually, let me try a different substitution. Let $s = x/y$. Then $\kappa = \lfloor (1+x)/y \rfloor = \lfloor 1/y + x/y \rfloor = \lfloor 1/y + s \rfloor$.
+
+Hmm, that's also messy.
+
+Let me try to just brute-force the computation for the leading terms.
+
+**Branch $n = 1$:** $\kappa = 1$, so $(1+x)/y < 2$, i.e., $x < 2y - 1$, and $(1+x)/y \ge 1$, i.e., $x \ge y - 1$.
+
+Combined with $x + y > 1$: $x > 1 - y$. Also $y - 1 \le 0 < 1 - y$ for $y < 1$, and $y - 1 = 0 = 1 - y$ for $y = 1$. So the constraint is $x > 1-y$ and $x < 2y - 1$.
+
+For this to have a nonempty interval: $1-y < 2y-1$, i.e., $y > 2/3$. Also $2y - 1 \le 1$ iff $y \le 1$.
+
+So for $y \in (2/3, 1]$: $x \in (1-y, 2y-1)$, $\kappa = 1$, $z = y - x$.
+
+$$I_1 = \int_{2/3}^1 \frac{2\,dy}{y^3} \int_{1-y}^{2y-1} \frac{dx}{x(y-x)}$$
+
+Using partial fractions: $\frac{1}{x(y-x)} = \frac{1}{y}\left(\frac{1}{x} + \frac{1}{y-x}\right)$.
+
+$$\int_{1-y}^{2y-1} \frac{dx}{x(y-x)} = \frac{1}{y}\left[\log x - \log(y-x)\right]_{1-y}^{2y-1}$$
+
+At $x = 2y-1$: $\log(2y-1) - \log(y-(2y-1)) = \log(2y-1) - \log(1-y)$.
+At $x = 1-y$: $\log(1-y) - \log(y-(1-y)) = \log(1-y) - \log(2y-1)$.
+
+So the integral is:
+$$\frac{1}{y}\left[\log(2y-1) - \log(1-y) - \log(1-y) + \log(2y-1)\right] = \frac{2}{y}\log\frac{2y-1}{1-y}$$
+
+Therefore:
+$$I_1 = \int_{2/3}^1 \frac{2}{y^3} \cdot \frac{2}{y}\log\frac{2y-1}{1-y}\,dy = \int_{2/3}^1 \frac{4}{y^4}\log\frac{2y-1}{1-y}\,dy$$
+
+As $y \to 1^-$: $\log\frac{2y-1}{1-y} \to \log\frac{1}{0^+} = +\infty$. Specifically, $2y-1 \to 1$ and $1-y \to 0$, so $\frac{2y-1}{1-y} \to \frac{1}{1-y} \to \infty$, and $\log \to \log\frac{1}{1-y}$.
+
+So near $y = 1$: $\frac{4}{y^4}\log\frac{2y-1}{1-y} \approx 4\log\frac{1}{1-y}$.
+
+This gives a logarithmic divergence: $\int_{1-\epsilon}^1 4\log\frac{1}{1-y}\,dy = 4\epsilon\log\frac{1}{\epsilon} + 4\epsilon \to 0$ as $\epsilon \to 0$.
+
+Wait, that converges! $\int_0^\epsilon \log(1/t)\,dt = \epsilon\log(1/\epsilon) + \epsilon$ is finite.
+
+Hmm, so does $I_1$ converge? Let me re-examine.
+
+Actually, I think I may have the cutoff wrong. Let me reconsider where the divergence in $E[d_i d_{i+1}]$ comes from.
+
+Wait, I think the divergence in $E[d_i d_{i+1}]$ is of the same type as in $E[d_i^2]$, i.e., it's logarithmic in $N$. Let me reconsider.
+
+The integral $I_1$ above is an integral over $y$ from $2/3$ to $1$, and the integrand near $y=1$ behaves like $4\log\frac{1}{1-y}$, which is integrable. So $I_1$ is actually finite!
+
+What about other branches? Let me check $n = 2$.
+
+**Branch $n = 2$:** $\kappa = 2$, so $1 \le (1+x)/y < 2$... wait, $2 \le (1+x)/y < 3$, i.e., $2y - 1 \le x < 3y - 1$.
+
+Combined with $x + y > 1$: $x > 1-y$. Also $0 < x \le 1$.
+
+For $2y - 1 > 1-y$: $y > 2/3$. For $3y - 1 > 1-y$: $y > 1/2$.
+
+Case $y \in (1/2, 2/3]$: $x \in (1-y, 3y-1)$ (since $2y-1 \le 1-y$).
+But also need $3y - 1 \le 1$, i.e., $y \le 2/3$.
+
+So for $y \in (1/2, 2/3]$: $x \in (1-y, 3y-1)$, $\kappa = 2$, $z = 2y - x$.
+
+Case $y \in (2/3, 1]$: $x \in (2y-1, \min(1, 3y-1))$.
+For $y \le 2/3$: already handled. For $y > 2/3$: $3y-1 > 1$ when $y > 2/3$, so $x \in (2y-1, 1)$.
+
+Actually wait, for $y > 2/3$: $3y - 1 > 1$, so the upper limit is $\min(1, 3y-1) = 1$.
+
+So for $y \in (2/3, 1]$: $x \in (2y-1, 1)$, $\kappa = 2$.
+
+Now let's compute $I_2$:
+
+For $y \in (1/2, 2/3]$: $z = 2y - x$, and
+$$\int_{1-y}^{3y-1} \frac{dx}{x(2y-x)} = \frac{1}{2y}\left[\log x - \log(2y-x)\right]_{1-y}^{3y-1}$$
+
+At $x = 3y-1$: $\log(3y-1) - \log(2y-(3y-1)) = \log(3y-1) - \log(1-y)$.
+At $x = 1-y$: $\log(1-y) - \log(2y-(1-y)) = \log(1-y) - \log(3y-1)$.
+
+So the integral = $\frac{1}{2y}\left[\log(3y-1) - \log(1-y) - \log(1-y) + \log(3y-1)\right] = \frac{1}{y}\log\frac{3y-1}{1-y}$.
+
+For $y \in (2/3, 1]$: $z = 2y - x$, and
+$$\int_{2y-1}^{1} \frac{dx}{x(2y-x)} = \frac{1}{2y}\left[\log x - \log(2y-x)\right]_{2y-1}^{1}$$
+
+At $x = 1$: $\log 1 - \log(2y-1) = -\log(2y-1)$.
+At $x = 2y-1$: $\log(2y-1) - \log(2y-(2y-1)) = \log(2y-1) - \log 1 = \log(2y-1)$.
+
+So the integral = $\frac{1}{2y}[-\log(2y-1) - \log(2y-1)] = \frac{-1}{y}\log(2y-1) = \frac{1}{y}\log\frac{1}{2y-1}$.
+
+Wait, that gives a negative integral? Let me recheck.
+
+Hmm, $\int_{2y-1}^1 \frac{dx}{x(2y-x)}$ should be positive since the integrand is positive (both $x > 0$ and $2y - x > 0$ in the range $x \in (2y-1, 1)$ when $y > 2/3$). Wait, is $2y - x > 0$? When $x < 2y$, yes. Since $x \le 1$ and $y > 2/3$, $2y > 4/3 > 1 \ge x$. Yes, so the integrand is positive.
+
+Let me recompute: at $x = 1$: $\log(1) - \log(2y - 1) = -\log(2y-1)$.
+At $x = 2y-1$: $\log(2y-1) - \log(2y - (2y-1)) = \log(2y-1) - \log(1) = \log(2y-1)$.
+
+So $\frac{1}{2y}[\text{value at }b - \text{value at }a] = \frac{1}{2y}[-\log(2y-1) - \log(2y-1)] = -\frac{1}{y}\log(2y-1)$.
+
+Since $y > 2/3$, $2y - 1 > 1/3 > 0$, so $\log(2y-1)$ is real. For $y < 1$: $2y - 1 < 1$, so $\log(2y-1) < 0$, and $-\frac{1}{y}\log(2y-1) > 0$. Good.
+
+So for $y \in (2/3, 1)$: the inner integral is $\frac{1}{y}\log\frac{1}{2y-1}$.
+
+Therefore:
+$$I_2 = \int_{1/2}^{2/3} \frac{2}{y^3} \cdot \frac{1}{y}\log\frac{3y-1}{1-y}\,dy + \int_{2/3}^1 \frac{2}{y^3} \cdot \frac{1}{y}\log\frac{1}{2y-1}\,dy$$
+
+$$= \int_{1/2}^{2/3} \frac{2}{y^4}\log\frac{3y-1}{1-y}\,dy + \int_{2/3}^1 \frac{2}{y^4}\log\frac{1}{2y-1}\,dy$$
+
+Let me examine the behavior near the boundaries.
+
+Near $y = 1/2^+$: $3y-1 \to 1/2$, $1-y \to 1/2$, so $\log\frac{3y-1}{1-y} \to 0$. The integrand is bounded.
+
+Near $y = 2/3$: $3y-1 = 1$, $1-y = 1/3$, $\log(3)$. Also $\frac{1}{2y-1} = \frac{1}{1/3} = 3$, $\log 3$. So the two pieces match.
+
+Near $y = 1^-$: $\log\frac{1}{2y-1} \to \log\frac{1}{1} = 0$. So the integrand goes to $0$.
+
+So $I_2$ is also finite!
+
+This suggests that $E[d_i d_{i+1}]$ might be finite (or at least not logarithmically divergent). But that can't be right if the correlation is supposed to converge to $1/2$, because $E[d_i^2]$ diverges.
+
+Wait, I think I'm confusing myself. Let me reconsider.
+
+$E[d_i d_{i+1}] = \frac{2}{N^4} I$ where $I = \iint \frac{dx\,dy}{xy^2(\kappa y - x)}$.
+
+If $I$ is a finite constant (independent of $N$), then $E[d_i d_{i+1}] \sim \text{const}/N^4$.
+
+And $E[d_i]^2 \sim \text{const}/N^4$ (since $E[d_i] = \mu_N \sim \text{const}/N^2$).
+
+Then $\text{Cov}(d_i, d_{i+1}) = E[d_i d_{i+1}] - E[d_i]^2 \sim \text{const}/N^4$.
+
+And $\text{Var}(d_i) = E[d_i^2] - E[d_i]^2 \sim C_{xx}\log N/N^4 - \text{const}/N^4 \sim C_{xx}\log N/N^4$.
+
+Then $\rho_N \sim \frac{\text{const}/N^4}{C_{xx}\log N/N^4} = \frac{\text{const}}{C_{xx}\log N} \to 0$.
+
+That contradicts the empirical observation! So I must be making an error somewhere.
+
+Let me reconsider the integral. Maybe I need to include the cutoff at finite $N$ more carefully.
+
+Oh wait, I think the issue is that the integral $I$ is NOT finite. Let me reconsider.
+
+When $x$ is very small and $y$ is close to $1$, $\kappa = 1$, and $z = y - x \approx 1$. The integrand is $\frac{2}{x \cdot 1 \cdot 1} = 2/x$, and the integral over $x$ from $1/N$ to some value gives $\log N$.
+
+But in my computation of $I_1$, I found that the $x$ integral gave $\frac{2}{y}\log\frac{2y-1}{1-y}$, and integrating this over $y$ from $2/3$ to $1$ gave a finite result. But this is because I was only looking at the $n=1$ branch, where $x < 2y-1$.
+
+When $x$ is very small and $y$ is close to $1$, $2y-1$ is close to $1$, and the $x$ range is $(1-y, 2y-1)$. The lower limit $1-y$ is close to $0$, so $x$ ranges from nearly $0$ to nearly $1$.
+
+Let me redo the computation for $I_1$ near $y = 1$.
+
+Near $y = 1$: $\frac{2}{y}\log\frac{2y-1}{1-y} \approx 2\log\frac{1}{1-y}$. This is integrable over $y$ near $1$.
+
+Hmm, so the $n=1$ branch gives a finite contribution. But what about branches with large $n$?
+
+For large $n$, the branch $n$ contributes for $y$ near $1/n$. As $n \to \infty$, $y \to 0$, and the contribution from each branch is:
+
+For $\kappa = n$, $y \sim 1/n$, $x \in (\max(1-y, ny-1), \min(1, (n+1)y-1))$.
+
+For $y$ small (near $1/n$): $1-y \approx 1$, $ny - 1 \approx 0$. So $x \in (1-y, (n+1)y-1) \approx (1, 1)$ for $y = 1/(n+1)$... this is getting confusing.
+
+Wait, I think the issue might be different. Let me reconsider the constraint $x + y > 1$.
+
+When $y$ is small (close to $0$), we need $x > 1-y \approx 1$. So $x$ is close to $1$.
+
+In this regime, $\kappa = \lfloor (1+x)/y \rfloor \approx \lfloor 2/y \rfloor$, which is large.
+
+$z = \kappa y - x \approx \kappa y - 1$.
+
+If $\kappa = \lfloor 2/y \rfloor = n$, then $ny \approx 2$ (or close to 2), so $z \approx ny - 1 \approx 1$.
+
+The integrand: $\frac{2}{x \cdot y^2 \cdot z} \approx \frac{2}{1 \cdot y^2 \cdot 1} = 2/y^2$.
+
+The $x$ integration gives a range of width... let me think. $x \in (1-y, (n+1)y - 1)$. 
+
+Hmm, let me think about this differently. For $y$ small and $x$ close to 1:
+
+$\kappa = \lfloor (1+x)/y \rfloor$. Since $x \approx 1$, $(1+x)/y \approx 2/y$. Let $n = \lfloor 2/y \rfloor$.
+
+Then $ny \le 2 < (n+1)y$, so $x \in [\max(1-y, ny-1), (n+1)y - 1)$.
+
+For small $y$: $ny - 1 \approx 2 - 1 = 1$ and $(n+1)y - 1 \approx 2 + y - 1 = 1 + y$. So $x$ ranges in an interval of width approximately $y$ near $x = 1$.
+
+So the contribution from this region is approximately:
+$$\int \frac{2\,dy}{y^3} \int_{1-y/2}^{1+y/2} \frac{dx}{x(y \cdot n - x)} \approx \int \frac{2\,dy}{y^3} \cdot \frac{y}{1 \cdot 1} = \int \frac{2\,dy}{y^2}$$
+
+Hmm, that diverges as $y \to 0$, like $1/y$. But that's not logarithmic.
+
+Wait, I need to be more careful. Let me reconsider.
+
+For small $y$, the relevant values of $x$ are near $1$. In the integral:
+$$\frac{2}{N^4}\iint \frac{dx\,dy}{xy^2(\kappa y - x)}$$
+
+with $x \approx 1$ and $y \approx 1/n$ for large $n$:
+
+$\kappa = n$ and $z = ny - x \approx ny - 1$.
+
+The inner integral over $x$ for fixed $y$ and $\kappa = n$:
+$$\int_{\max(1-y, ny-1)}^{\min(1, (n+1)y-1)} \frac{dx}{x(ny-x)}$$
+
+For $y$ in the range where $ny-1 < 1 < (n+1)y - 1$, i.e., $1/(n+1) < y < 2/n$ (roughly):
+
+If $ny - 1 < 1 - y$, i.e., $y(n+1) < 2$, i.e., $y < 2/(n+1)$: the lower limit is $1-y$.
+If $ny - 1 > 1 - y$, i.e., $y > 2/(n+1)$: the lower limit is $ny - 1$.
+
+This is getting really complicated. Let me try a completely different approach.
+
+**Alternative approach: Direct computation using the substitution $s = 1-x, t = 1-y$.**
+
+In the region $\{x+y>1, 0<x,y\leq 1\}$, let $s = 1-x, t = 1-y$ with $s, t \ge 0$ and $s + t < 1$.
+
+$dx\,dy = ds\,dt$, $x = 1-s$, $y = 1-t$.
+
+$\kappa = \lfloor (1+x)/y \rfloor = \lfloor (2-s)/(1-t) \rfloor$.
+
+For small $s$ and $t$: $(2-s)/(1-t) \approx 2 + 2t - s$, so $\kappa = 2$ for $s$ and $t$ small enough (specifically when $1 \le (2-s)/(1-t) < 3$, which is roughly $s < 1+t$ and $s > -1+2t$... for small $s,t > 0$ this gives $\kappa = 2$).
+
+Hmm wait, for $s = t = 0$ (i.e., $x = y = 1$): $(2-0)/(1-0) = 2$, $\kappa = 2$.
+
+For $s = 0, t$ slightly positive: $(2)/(1-t) \approx 2 + 2t$, so $\kappa = 2$ for $t < 1/2$.
+
+For $t = 0, s$ slightly positive: $(2-s)/1 = 2-s$, so $\kappa = 1$ for $s > 1$... but $s < 1$, so $\kappa = 2$ for $s < 1$ and $\kappa = 1$ for $s > 1$, but $s < 1$ always (since $x > 0$). So $\kappa = 2$ when $s < 1$ and $t = 0$? Let me double-check: $(2-s)/1 = 2-s$. For $0 < s < 1$: $1 < 2-s < 2$, so $\kappa = 1$!
+
+Wait, I think I had an error. $\kappa = \lfloor (1+x)/y \rfloor = \lfloor (2-s)/(1-t) \rfloor$. For $s = 0, t = 0$: $(2)/(1) = 2$, $\kappa = 2$. For $s = 0.5, t = 0$: $1.5/1 = 1.5$, $\kappa = 1$.
+
+So for $x$ slightly less than 1 and $y$ slightly less than 1, $\kappa$ can be either 1 or 2 depending on the exact values. The transition is at $(1+x)/y = 2$, i.e., $x = 2y - 1$.
+
+OK this is getting nowhere with direct computation. Let me try yet another approach.
+
+**Approach: Use the fact that the divergence comes from the "boundary" of the triangle.**
+
+The divergence in $E[d_i^2] = \frac{2}{N^4}\iint \frac{dx\,dy}{x^2 y^2}$ over $\{x+y>1\}$ comes from the vertices $(0,1)$ and $(1,0)$ of the triangle. Near $(0,1)$: $x \to 0, y \to 1$, $1/(x^2 y^2) \approx 1/x^2$... wait, but the triangle near $(0,1)$ has $y > 1-x$, so $y \in (1-x, 1)$, a strip of width $x$. The integral near $(0,1)$ is:
+
+$$\int_0^{\epsilon} \frac{dx}{x^2} \int_{1-x}^{1} \frac{dy}{y^2} \approx \int_0^{\epsilon} \frac{dx}{x^2} \cdot \frac{x}{1} = \int_0^{\epsilon} \frac{dx}{x}$$
+
+which diverges logarithmically. OK good, this matches.
+
+Now for $E[d_i d_{i+1}]$, near $(0,1)$: $x \to 0, y \to 1$, $\kappa = 1$, $z = y - x \approx 1$.
+
+$$\frac{2}{N^4} \int_0^{\epsilon} \frac{dx}{x} \int_{1-x}^{1} \frac{dy}{y^2 \cdot 1} \approx \frac{2}{N^4}\int_0^{\epsilon} \frac{dx}{x} \cdot x = \frac{2}{N^4}\int_0^{\epsilon} dx$$
+
+Hmm, that gives a finite contribution. So the divergence doesn't come from the $(0,1)$ corner!
+
+Let me check the $(1,0)$ corner: $x \to 1, y \to 0$, $\kappa = \lfloor(1+x)/y\rfloor = \lfloor 2/y \rfloor \approx 2/y$.
+
+$z = \kappa y - x \approx 2 - 1 = 1$.
+
+$$\frac{2}{N^4} \int_0^{\epsilon} \frac{dy}{y^2} \int_{1-y}^{1} \frac{dx}{x \cdot (\kappa y - x)}$$
+
+$\kappa y \approx 2$, so $\kappa y - x \approx 2 - x \approx 1$ for $x \approx 1$.
+
+$$\approx \frac{2}{N^4} \int_0^{\epsilon} \frac{dy}{y^2} \cdot y \cdot \frac{1}{1 \cdot 1} = \frac{2}{N^4}\int_0^{\epsilon} \frac{dy}{y}$$
+
+This diverges logarithmically!
+
+So the divergence in $E[d_i d_{i+1}]$ comes from the $(1,0)$ corner (where $y \to 0$, $x \to 1$), which corresponds to $k_{i+1}$ being small and $k_i$ being large.
+
+And the divergence in $E[d_i^2]$ comes from both the $(0,1)$ and $(1,0)$ corners equally.
+
+Wait, but by the symmetry of the problem (the triangle is symmetric under $(x,y) \to (y,x)$), shouldn't the divergence of $E[d_i^2]$ come equally from both corners? And for $E[d_i d_{i+1}]$, only from one corner?
+
+If so, the ratio of the leading divergent terms would be $1/2$! This is the key insight.
+
+Let me make this more precise.
+
+**Divergence of $E[d_i^2]$:**
+
+$$E[d_i^2] = \frac{2}{N^4} \iint_{x+y>1} \frac{dx\,dy}{x^2 y^2}$$
+
+Near $(0,1)$: contribution $\approx \frac{2}{N^4} \log N$ (from the computation above: $\int_{1/N}^{...} dx/x$).
+
+Near $(1,0)$: by symmetry $(x,y) \to (y,x)$, also $\approx \frac{2}{N^4} \log N$.
+
+Total: $E[d_i^2] \approx \frac{4\log N}{N^4}$, so $C_{xx} = 4$.
+
+**Divergence of $E[d_i d_{i+1}]$:**
+
+$$E[d_i d_{i+1}] = \frac{2}{N^4} \iint_{x+y>1} \frac{dx\,dy}{x y^2 (\kappa y - x)}$$
+
+Near $(0,1)$: $x \to 0, y \to 1$, $\kappa = 1$, $z = y - x$.
+Integrand $\approx \frac{1}{x \cdot 1 \cdot 1} = 1/x$. But $y$ range is $(1-x, 1)$, width $x$.
+Contribution: $\int_{1/N} \frac{dx}{x} \cdot x = \int dx$, which is $O(1)$.
+
+Near $(1,0)$: $x \to 1, y \to 0$, $\kappa \approx 2/y$, $z = \kappa y - x \approx 2 - 1 = 1$.
+But we need to be more careful. Let me think about the $x$ range for given small $y$.
+
+For small $y$, $\kappa = n$ where $n = \lfloor(1+x)/y\rfloor$ and $x$ is close to $1$.
+
+$(1+x)/y \approx 2/y$. So $n \approx 2/y$.
+
+The $x$ range for $\kappa = n$: $x \in (ny - 1, (n+1)y - 1)$ if $ny - 1 > 1 - y$ (i.e., $y(n+1) > 2$, i.e., $y > 2/(n+1)$).
+
+For $y$ small: $n \approx 2/y$ is large, and the range of $x$ is approximately $(ny-1, (n+1)y-1)$ of width $y$.
+
+The integrand: $\frac{1}{x y^2 (ny - x)}$. With $x \approx 1$ and $ny \approx 2$: $\frac{1}{1 \cdot y^2 \cdot 1} = 1/y^2$.
+
+Integration over $x$ (width $y$): $\sim 1/y$.
+
+Integration over $y$: $\int \frac{dy}{y}$, which diverges logarithmically.
+
+So: near $(1,0)$, contribution $\approx \frac{2}{N^4} \log N$.
+
+**But the $(0,1)$ corner does NOT contribute to the divergence of $E[d_i d_{i+1}]$.**
+
+Therefore: $E[d_i d_{i+1}] \approx \frac{2\log N}{N^4}$, so $C_{xy} = 2$.
+
+And the ratio $C_{xy}/C_{xx} = 2/4 = 1/2$.
+
+This would give $\rho_N \to 1/2$.
+
+**The key asymmetry:** $E[d_i^2]$ involves $1/(x^2 y^2)$ which is symmetric and diverges at both corners. $E[d_i d_{i+1}]$ involves $1/(xy^2 z)$ where $z$ depends on $x,y$ through the recurrence, and the recurrence breaks the symmetry: near $(0,1)$, $z \approx y - x \approx 1$, which "kills" the divergence; near $(1,0)$, $z \approx \kappa y - x \approx 1$, which also gives $z \approx 1$, but the divergence structure is different.
+
+Wait, I need to be more careful. Let me recheck the $(0,1)$ corner for $E[d_i d_{i+1}]$.
+
+Near $(0,1)$: $x$ small, $y \approx 1$. The triangle constraint: $y > 1-x$, so $y \in (1-x, 1)$.
+
+$\kappa = \lfloor(1+x)/y\rfloor$. For $y \approx 1$ and $x$ small: $(1+x)/y \approx 1+x$. So $\kappa = 1$ (for $x < 1$).
+
+$z = y - x$.
+
+Integrand: $\frac{2}{x y^2 (y-x)}$.
+
+Inner integral over $y \in (1-x, 1)$:
+$$\int_{1-x}^1 \frac{dy}{y^2(y-x)} \approx \int_{1-x}^1 \frac{dy}{1 \cdot (y-x)} = [\log(y-x)]_{1-x}^1 = \log(1-x) - \log(1-2x)$$
+
+For small $x$: $\log(1-x) - \log(1-2x) \approx -x - (-2x) = x$.
+
+Outer integral: $\int_0^{\epsilon} \frac{2}{x} \cdot x \, dx = 2\epsilon$. Finite!
+
+Now the $(1,0)$ corner for $E[d_i d_{i+1}]$:
+
+$x$ near $1$, $y$ small. Triangle constraint: $y > 1-x$, i.e., $x > 1-y$.
+
+$\kappa = \lfloor(1+x)/y\rfloor$ with $x \approx 1$: $\kappa = \lfloor 2/y \rfloor = n$ (large).
+
+$z = ny - x$.
+
+For $x \in (1-y, 1)$ and $\kappa = n$: the constraint $\kappa = n$ means $n \le (1+x)/y < n+1$, i.e., $ny - 1 \le x < (n+1)y - 1$.
+
+So the overlap of $(1-y, 1)$ and $(ny-1, (n+1)y-1)$:
+
+For small $y$ and $n = \lfloor 2/y \rfloor$: $ny \approx 2$, $(n+1)y \approx 2 + y$.
+
+$ny - 1 \approx 1$ and $(n+1)y - 1 \approx 1 + y$.
+
+So $x$ ranges in approximately $(ny-1, 1)$, a range of width $\approx 1 - (ny-1) = 2 - ny$.
+
+If $n = \lfloor 2/y \rfloor$, then $ny = 2 - \{2/y\} \cdot y$ where $\{2/y\}$ is the fractional part. So $2 - ny = \{2/y\} \cdot y$, and the width is $\{2/y\} \cdot y$.
+
+Hmm, this is oscillating. Let me think about the average behavior.
+
+Actually, I realize the integral should be computed not for a specific branch but summed over all branches. Let me try a cleaner approach.
+
+**Cleaner approach for the $(1,0)$ corner:**
+
+Let $y$ be small and integrate over $x \in (1-y, 1)$. The key quantity is:
+
+$$J(y) = \int_{1-y}^{1} \frac{dx}{x \cdot (\kappa y - x)}$$
+
+where $\kappa = \lfloor(1+x)/y\rfloor$.
+
+Note that $\frac{1}{x(\kappa y - x)} \ge \frac{1}{(\kappa y)^2 / 4}$ by AM-GM (the minimum of $x(\kappa y - x)$ on its range is at the boundary). But this might not help directly.
+
+Actually, let me use partial fractions:
+$$\frac{1}{x(ny - x)} = \frac{1}{ny}\left(\frac{1}{x} + \frac{1}{ny - x}\right)$$
+
+So for each branch $n$ with $x \in (a_n, b_n)$:
+$$\int_{a_n}^{b_n} \frac{dx}{x(ny-x)} = \frac{1}{ny}\left[\log\frac{x}{ny-x}\right]_{a_n}^{b_n} = \frac{1}{ny}\log\frac{b_n(ny-a_n)}{a_n(ny-b_n)}$$
+
+Hmm, I think the cleanest approach is to realize the following:
+
+The integral for $E[d_i d_{i+1}]$ involves a sum over branches. The leading divergence comes from the $(1,0)$ corner. Let me focus on that.
+
+Near $y = 0, x = 1$: the dominant contribution comes from large $\kappa$. Let $n = \kappa$ and let's focus on a single branch.
+
+For branch $n$ with $y \in (1/(n+1), 2/n)$ (approximately, this is where the branch exists near $x = 1$):
+
+$x \in (\max(1-y, ny-1), \min(1, (n+1)y-1))$
+
+For $y$ near $2/(n+1)$: $ny - 1 \approx 2n/(n+1) - 1 = (n-1)/(n+1)$ and $(n+1)y - 1 \approx 1$.
+
+This is still complicated. Let me try a different substitution.
+
+**Substitution:** Let $u = 1 - x$ (distance from the $x = 1$ boundary) and keep $y$.
+
+For small $y$ and small $u$: $x = 1 - u$, $\kappa = \lfloor (2-u)/y \rfloor$.
+
+$z = \kappa y - x = \kappa y - 1 + u$.
+
+Let $m = \kappa y - 1$ (note $m \in [0, y)$ since $\kappa = \lfloor(2-u)/y\rfloor$ and... hmm, let me think).
+
+$\kappa = \lfloor (2-u)/y \rfloor$. Let $q = (2-u)/y$. Then $\kappa = \lfloor q \rfloor$ and $\kappa y = qy - \{q\}y = (2-u) - \{q\}y$.
+
+So $z = (2-u) - \{q\}y - 1 + u = 1 - \{q\}y$.
+
+And $\{q\} = \{(2-u)/y\}$. For "generic" $y$, $\{q\}$ is equidistributed in $[0,1)$ as $u$ varies... but $u$ ranges from $0$ to $y$ (roughly), so $(2-u)/y$ ranges over an interval of length $1$, meaning $\{q\}$ ranges over all of $[0,1)$.
+
+The integrand is $\frac{1}{(1-u) y^2 (1 - \{q\}y)} \approx \frac{1}{y^2}$ for small $y$.
+
+Integrating over $u \in (0, y)$: $\sim 1/y$.
+
+Integrating over $y$: $\int dy/y$, logarithmic divergence.
+
+But let me be more precise. The inner integral over $x$ for fixed $y$:
+
+$$J(y) = \int_{1-y}^1 \frac{dx}{x \cdot (\kappa y - x)}$$
+
+I claim that $J(y) \approx 1/y$ for small $y$. Let me verify.
+
+$J(y) = \sum_n \int_{a_n}^{b_n} \frac{dx}{x(ny - x)}$
+
+where the sum is over all branches $n$ with $a_n < b_n$.
+
+Using partial fractions:
+$$\int_{a_n}^{b_n} \frac{dx}{x(ny - x)} = \frac{1}{ny}\log\frac{b_n(ny - a_n)}{a_n(ny - b_n)}$$
+
+For small $y$ and $x$ near $1$: $a_n = \max(1-y, ny-1)$ and $b_n = \min(1, (n+1)y - 1)$.
+
+The relevant branches have $ny \approx 2$ (since $x \approx 1$ and $\kappa y - x > 0$ requires $\kappa y > x$, and also $\kappa \le (1+x)/y \approx 2/y$).
+
+Let me instead think of the total integral $J(y) = \int_{1-y}^1 \frac{dx}{x(\kappa y - x)}$ where $\kappa$ is a function of $x,y$.
+
+Actually, let me try a substitution that might simplify things. Let $t = (1+x)/y$, so $x = ty - 1$ and $dx = y\,dt$. Then $\kappa = \lfloor t \rfloor$ and $z = \kappa y - x = \lfloor t \rfloor y - ty + 1 = 1 - \{t\}y$.
+
+The limits: $x = 1-y$ corresponds to $t = (2-y)/y = 2/y - 1$, and $x = 1$ corresponds to $t = 2/y$.
+
+So $t$ ranges from $2/y - 1$ to $2/y$, an interval of length $1$.
+
+$$J(y) = \int_{2/y - 1}^{2/y} \frac{y\,dt}{(ty-1)(1 - \{t\}y)}$$
+
+For small $y$: $ty - 1 \approx 1$ (since $t \approx 2/y$ and $ty \approx 2$). Also $\{t\}$ ranges over $[0, 1)$ as $t$ ranges over an interval of length $1$.
+
+Wait, but $t$ ranges from $2/y - 1$ to $2/y$. If $2/y$ is not an integer, then $\{t\}$ ranges from $\{2/y - 1\}$ to $\{2/y\} = \{2/y\}$... this wraps around if $\{2/y\} < 1$.
+
+Actually, as $t$ increases from $2/y - 1$ to $2/y$, $\{t\}$ ranges from $\{2/y - 1\} = \{2/y\}$ to $\{2/y\}$... wait, $\{t\}$ increases from $0$ to $\{2/y\}$ and then jumps from $1^-$ to $0$ at the integer, then increases to $\{2/y\}$ again? No, $t$ only spans an interval of length 1.
+
+Let me think of it differently. Let $t = T - s$ where $T = 2/y$ and $s$ ranges from $0$ to $1$. Then $\{t\} = \{T - s\} = \{T\} - s$ if $\{T\} \ge s$, and $= 1 + \{T\} - s$ if $\{T\} < s$.
+
+Also, $ty - 1 = (T-s)y - 1 = 2 - sy - 1 = 1 - sy$.
+
+So:
+$$J(y) = \int_0^1 \frac{y\,ds}{(1-sy)(1 - \{T-s\}y)}$$
+
+For small $y$: $1 - sy \approx 1$ and $1 - \{T-s\}y \approx 1$. So $J(y) \approx \int_0^1 y\,ds / 1 = y$. Hmm, that gives $J(y) \sim y$, not $1/y$.
+
+Wait, that can't be right. Let me recheck.
+
+$J(y) = \int_{1-y}^1 \frac{dx}{x(\kappa y - x)}$. For $x$ near $1$ and $\kappa y$ near $2$: the integrand is approximately $\frac{1}{1 \cdot (2-1)} = 1$ over an interval of length $y$. So $J(y) \approx y$.
+
+But then $\frac{2}{N^4}\int_0^\epsilon \frac{J(y)}{y^2}\,dy = \frac{2}{N^4}\int_0^\epsilon \frac{y}{y^2}\,dy = \frac{2}{N^4}\int_0^\epsilon \frac{dy}{y}$, which diverges!
+
+OK so I was wrong before. $J(y) \sim y$ for small $y$, and $\frac{J(y)}{y^2} \sim 1/y$.
+
+Great, so the integral for $E[d_i d_{i+1}]$ near the $(1,0)$ corner is:
+$$\frac{2}{N^4}\int_{1/N}^{\epsilon} \frac{J(y)}{y^2}\,dy \approx \frac{2}{N^4}\int_{1/N}^{\epsilon} \frac{c\,dy}{y} \approx \frac{2c\log N}{N^4}$$
+
+where $c$ is the asymptotic ratio $J(y)/y$ for small $y$.
+
+I need to compute $c = \lim_{y \to 0} J(y)/y$.
+
+$$J(y)/y = \int_0^1 \frac{ds}{(1-sy)(1 - \{T-s\}y)}$$
+
+As $y \to 0$: $J(y)/y \to \int_0^1 ds = 1$.
+
+So $c = 1$ and the $(1,0)$ contribution to $E[d_i d_{i+1}]$ is $\frac{2\log N}{N^4}$.
+
+For $E[d_i^2]$, the contribution from the $(1,0)$ corner:
+
+Near $(1,0)$: $x$ near $1$, $y$ small. The integrand $\frac{2}{x^2 y^2} \approx \frac{2}{y^2}$.
+
+Inner integral over $x \in (1-y, 1)$: $\frac{2}{y^2} \cdot y = \frac{2}{y}$.
+
+Outer integral: $\int_{1/N} \frac{2\,dy}{y} =

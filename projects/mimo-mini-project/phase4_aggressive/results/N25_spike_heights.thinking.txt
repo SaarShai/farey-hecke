@@ -1,0 +1,665 @@
+Let me carefully work through this problem. We have NW(Q) = Q·J(Q)/Φ(Q), and we need to understand the spike structure.
+
+## Understanding the structure
+
+The spikes occur at Q = 2^a · 5^5 · m where m is squarefree odd ≥ 3 and coprime to 5. Let me note that 5^5 = 3125.
+
+So Q values:
+- 300000 = 2^5 · 3 · 5^5 = 32 · 3 · 3125 = 300000 ✓
+- 350000 = 2^4 · 7 · 5^5 = 16 · 7 · 3125 = 350000 ✓
+- 600000 = 2^6 · 3 · 5^5 = 64 · 3 · 3125 = 600000 ✓
+- 700000 = 2^5 · 7 · 5^5 = 32 · 7 · 3125 = 700000 ✓
+
+The baseline C ≈ 0.66989208.
+
+## Spike heights
+
+Let me use more precise values. The spike heights are:
+- Q=300000: 0.6987 - 0.6699 = 0.0288
+- Q=350000: 0.6915 - 0.6699 = 0.0216
+- Q=600000: 0.6882 - 0.6699 = 0.0183
+- Q=700000: 0.6843 - 0.6699 = 0.0144
+
+## The Mikolás formula approach
+
+The Mikolás formula relates the Dedekind zeta function to a sum involving Möbius-type sums. Let me recall the context.
+
+For the Riemann zeta function, the formula is:
+$$\zeta(s) = \frac{1}{s-1} + \frac{1}{2} + \sum_{n=1}^{\infty} \frac{1}{n^s} \left( \{n\} - \frac{1}{2} \right)$$
+
+Wait, actually let me think about what NW(Q) and J(Q) are in the context of the Mikolás formula for ζ(2).
+
+Actually, let me reconsider. The Mikolás formula for ζ(2) involves:
+
+$$\frac{1}{\zeta(2)} = \frac{6}{\pi^2} = \sum_{q=1}^{\infty} \frac{\mu(q)}{q^2}$$
+
+And the approximation involves:
+$$J(Q) = \sum_{\substack{n=1 \\ \gcd(n,q)=1 \\ \text{for appropriate conditions}}}^{Q} \frac{\mu(n)}{n^2}$$
+
+Hmm, I need to think more carefully about what J(Q) actually is.
+
+Given NW(Q) = Q · J(Q) / Φ(Q), and the baseline is C = 0.66989208... Let me note that 6/π² ≈ 0.607927..., which is not our baseline.
+
+What about 1/ζ(2) = 6/π²? No, that's ~0.6079.
+
+What's C = 0.66989208? Let me think... 
+
+Actually, 2/3 ≈ 0.6667. Close but not exact.
+
+What about ln(2) ≈ 0.6931? No.
+
+Let me try: φ(2)/2 · something? φ(2)/2 = 1/2.
+
+What about φ(10)/10 = 4/10 = 0.4? No.
+
+Hmm, let me think about what function produces this baseline. In many number-theoretic contexts, the natural density of integers coprime to k is φ(k)/k.
+
+For Q large, if J(Q) is something like the partial sum of a Dirichlet series, and Φ(Q) is the sum φ(1) + φ(2) + ... + φ(Q), then:
+
+Φ(Q) = Σ_{n≤Q} φ(n) ≈ 3Q²/π²
+
+And Q·J(Q)/Φ(Q) ≈ Q·J(Q)·π²/(3Q²) = π²·J(Q)/(3Q)
+
+For this to approach a constant, J(Q) must be proportional to Q.
+
+Actually, I realize I may be overthinking the setup. Let me focus on what the user is asking.
+
+The user has observed spikes at specific Q values and wants a closed form for the spike height. The spikes occur at Q = 2^a · 5^5 · m.
+
+## Key observation: why 5^5?
+
+5^5 = 3125 = 5^5. The fact that the spike pattern involves exactly 5^5 is very specific. This must relate to the arithmetic of the underlying sum.
+
+In the Mikolás formula context, the Dedekind zeta function of Q involves:
+$$\zeta_K(s) = \sum_{\mathfrak{a}} \frac{1}{N(\mathfrak{a})^s}$$
+
+But actually, for the Riemann zeta function, the relevant Mikolás formula gives:
+$$\frac{1}{\zeta(2)} = \frac{6}{\pi^2}$$
+
+and the approximation error involves sums over Farey-like structures.
+
+Let me try a different approach. Let me look at the formula:
+$$J(Q) = \frac{1}{2\pi^2} \sum_m \frac{|1 + \sum_{d|m, d \leq Q} d \cdot M(Q/d)|^2}{m^2}$$
+
+where M is presumably some Möbius-like function or a sum involving Möbius.
+
+If M(n) = Σ_{k≤n} μ(k), then M(Q/d) is the Mertens function evaluated at Q/d.
+
+For the spike at Q = 2^a · 5^5 · m, the dominant contribution would come from terms in the sum where the inner sum $\sum_{d|m', d \leq Q} d \cdot M(Q/d)$ is large.
+
+Actually, I think I need to be more careful about the exact formula. Let me try to reason from the data.
+
+## Empirical analysis
+
+Let me look at the spike heights more carefully:
+
+| Q | a | m | Δ = NW(Q) - C |
+|---|---|---|---|
+| 300000 | 5 | 3 | 0.0288 |
+| 350000 | 4 | 7 | 0.0216 |
+| 600000 | 6 | 3 | 0.0183 |
+| 700000 | 5 | 7 | 0.0144 |
+
+Let me check if Δ · Q / (5^5) has any pattern:
+- 300000: 0.0288 · 300000 / 3125 = 0.0288 · 96 = 2.765
+- 350000: 0.0216 · 350000 / 3125 = 0.0216 · 112 = 2.419
+- 600000: 0.0183 · 600000 / 3125 = 0.0183 · 192 = 3.514
+- 700000: 0.0144 · 700000 / 3125 = 0.0144 · 224 = 3.226
+
+So Δ · Q / 5^5 ranges from 2.4 to 3.5. Not constant.
+
+Let me try Δ · 2^a · m:
+- 300000: 0.0288 · 32 · 3 = 0.0288 · 96 = 2.765
+- 350000: 0.0216 · 16 · 7 = 0.0216 · 112 = 2.419
+- 600000: 0.0183 · 64 · 3 = 0.0183 · 192 = 3.514
+- 700000: 0.0144 · 32 · 7 = 0.0144 · 224 = 3.226
+
+Same thing since Q = 2^a · 5^5 · m. So Δ · Q / 5^5 ≈ 2.4-3.5. 
+
+Let me try Δ · Q:
+- 300000: 8640
+- 350000: 7560
+- 600000: 10980
+- 700000: 10080
+
+Hmm. Let me try a power law: Δ = K / Q^θ.
+
+Taking log ratios:
+Between 300k and 600k (both m=3): Δ decreases by factor 0.0183/0.0288 = 0.635
+Q ratio: 2. So 0.635 = 2^{-θ} → θ = log(1/0.635)/log(2) = log(1.575)/log(2) = 0.654
+
+Between 350k and 700k (both m=7): Δ decreases by factor 0.0144/0.0216 = 0.667
+Q ratio: 2. So 0.667 = 2^{-θ} → θ = log(1.5)/log(2) = 0.585
+
+So θ ≈ 0.6 roughly. Not exactly 1.
+
+Hmm, but we should be more careful. When a increases by 1, Q doubles but m stays the same.
+
+For m=3: Δ(5)/Δ(6) = 0.0288/0.0183 = 1.574
+For m=7: Δ(4)/Δ(5) = 0.0216/0.0144 = 1.5
+
+So Δ decreases by roughly factor 1.5-1.57 when Q doubles (a increases by 1). 
+
+This means Δ ∝ 2^{-a · θ} where 2^θ ≈ 1.54, so θ ≈ 0.62.
+
+Alternatively, Δ ∝ 2^{-a/√2}? No, that doesn't quite work.
+
+Let me try: Δ = K / (2^a)^α / m^β for some α, β.
+
+From m=3 data: Δ(5)/Δ(6) = 0.0288/0.0183 = 1.574 = 2^α, so α = 0.651
+From m=7 data: Δ(4)/Δ(5) = 0.0216/0.0144 = 1.5 = 2^α, so α = 0.585
+
+These aren't equal, which means the power of 2 alone doesn't capture the dependence.
+
+From a=5 data: Δ(m=3)/Δ(m=7) = 0.0288/0.0144 = 2.0, and m ratio = 7/3 = 2.333
+So 2.0 = (7/3)^β → β = log(2)/log(7/3) = 0.693/0.847 = 0.818
+
+From a=4 vs a=6 (no direct comparison with same m).
+
+Hmm wait, I can also look at a=4,m=7 vs a=6,m=3: 
+Δ ratio = 0.0216/0.0183 = 1.18
+But this mixes both a and m changes, so it's harder to disentangle.
+
+Let me try a 2-parameter fit: Δ = K · 2^{-aα} · m^{-β}
+
+From a=5,m=3: 0.0288 = K · 2^{-5α} · 3^{-β}
+From a=4,m=7: 0.0216 = K · 2^{-4α} · 7^{-β}
+From a=6,m=3: 0.0183 = K · 2^{-6α} · 3^{-β}
+From a=5,m=7: 0.0144 = K · 2^{-5α} · 7^{-β}
+
+From equations 1 and 3 (same m=3):
+0.0288/0.0183 = 2^{-5α}/2^{-6α} = 2^α
+2^α = 1.5738
+α = log(1.5738)/log(2) = 0.6536
+
+From equations 2 and 4 (same m=7):
+0.0216/0.0144 = 2^{-4α}/2^{-5α} = 2^α
+2^α = 1.5
+α = log(1.5)/log(2) = 0.58496
+
+These two values of α (0.654 vs 0.585) are inconsistent, so the model Δ = K · 2^{-aα} · m^{-β} is not a perfect fit.
+
+The discrepancy suggests that the dependence on a and m might not be cleanly separable, or there's a different functional form.
+
+Let me try Δ = K · f(a) · g(m) where f and g are not necessarily power laws.
+
+From the ratios:
+f(5)/f(6) = 1.574 (from m=3 data)
+f(4)/f(5) = 1.5 (from m=7 data)
+
+So f(4) = 1.5 · f(5), and f(6) = f(5)/1.574.
+
+Also g(3)/g(7) = 2.0 (from a=5 data: 0.0288/0.0144 = 2.0)
+
+From a=4,m=7: Δ = K · f(4) · g(7) = 0.0216
+From a=5,m=3: Δ = K · f(5) · g(3) = 0.0288
+
+K · f(5) · g(3) = 0.0288
+K · f(4) · g(7) = 0.0216
+
+From a=5,m=7: K · f(5) · g(7) = 0.0144
+
+So g(3)/g(7) = 0.0288/0.0144 = 2.0
+And f(4)/f(5) = (0.0216/g(7))/(0.0144/g(7)) = 0.0216/0.0144 = 1.5
+
+Wait, that's: [K·f(4)·g(7)] / [K·f(5)·g(7)] = f(4)/f(5) = 0.0216/0.0144 = 1.5
+
+And from the m=3 data: f(5)/f(6) = 0.0288/0.0183 = 1.574
+
+These are close but not equal. The ratio f(a)/f(a+1) is about 1.5-1.57 for these values.
+
+Hmm, 1.5 = 3/2 and 1.574 ≈ 11/7. Not obviously clean.
+
+Actually wait. Let me reconsider. Perhaps the formula involves something more fundamental.
+
+## Thinking about the Mikolás formula
+
+The formula given is:
+$$J(Q) = \frac{1}{2\pi^2} \sum_m \frac{|1 + \sum_{\substack{d | m \\ d \leq Q}} d \cdot M(Q/d)|^2}{m^2}$$
+
+This is a sum over all positive integers m. The spike at Q = 2^a · 5^5 · m comes from particular terms in this sum being larger.
+
+Actually, I realize the variable names are confusing. Let me use different letters. The Mikolás formula sum is over integers, say k:
+$$J(Q) = \frac{1}{2\pi^2} \sum_{k=1}^{\infty} \frac{|1 + \sum_{\substack{d | k \\ d \leq Q}} d \cdot M(Q/d)|^2}{k^2}$$
+
+where M(n) = Σ_{j≤n} μ(j) is the Mertens function.
+
+For a spike at Q = 2^a · 3125 · m (squarefree odd m coprime to 5), we need to understand which k values contribute most.
+
+Actually, wait. The formula involves $\sum_{d|k, d \leq Q} d \cdot M(Q/d)$. This inner sum is over divisors d of k that are at most Q.
+
+For the term $d \cdot M(Q/d)$ to be significantly nonzero, we need Q/d to be in a range where M(x) is not too close to 0. The Mertens function M(x) = Σ_{n≤x} μ(n) fluctuates around 0 with |M(x)| = O(x) trivially.
+
+The key insight about spikes at Q = 2^a · 5^5 · m: these Q values have specific factorization properties that cause certain divisor sums to behave unusually.
+
+## Alternative approach: looking at the arithmetic structure
+
+Let me think about this differently. 5^5 = 3125. The number 3125 = 5^5 is notable because it's a pure prime power.
+
+If the underlying sum involves something like $\sum_{n \leq Q} \mu(n) / n$ or similar, the partial sums of the Möbius function would create spikes when Q is highly composite (or has a specific factorization).
+
+Actually, I wonder if the relevant function is:
+$$J(Q) = \sum_{n=1}^{Q} \frac{\mu(n)}{n}$$
+
+Note that $\sum_{n=1}^{\infty} \mu(n)/n = 0$ (equivalent to the Prime Number Theorem), and the partial sums:
+$$\sum_{n=1}^{Q} \frac{\mu(n)}{n} = \frac{1}{\zeta(1)} = 0$$ 
+
+In the limit, but the partial sums approach 0 from below (typically).
+
+Actually, $\sum_{n \leq Q} \mu(n)/n = M(Q)/Q + \int_1^Q M(t)/t^2 \ dt$, and this relates to 1/ζ(s) near s=1.
+
+Hmm, this is getting complicated without knowing the exact definitions. Let me try another approach.
+
+## Trying to identify the constant C
+
+C = 0.66989208... Let me see if this is a recognizable constant.
+
+$\pi^2/6 \cdot (1 - 1/25) \cdot ...$? That gives something related to the Euler product.
+
+Actually, C might be $\prod_p (1 - 1/p^2) \cdot \text{something}$ or related to a Euler product.
+
+$\prod_{p \text{ prime}} (1 - 1/p^2) = 1/\zeta(2) = 6/\pi^2 \approx 0.607927$
+
+$\prod_{p \neq 2,5} (1 - 1/p^2) = \frac{6/\pi^2}{(1-1/4)(1-1/25)} = \frac{6/\pi^2}{3/4 \cdot 24/25} = \frac{6/\pi^2}{18/25} = \frac{6 \cdot 25}{\pi^2 \cdot 18} = \frac{25}{3\pi^2} \approx 0.843845$
+
+That's too big. 
+
+Hmm, what about $\frac{1}{2} \cdot \frac{6}{\pi^2} \cdot \frac{1}{(1-1/4)} = \frac{1}{2} \cdot \frac{6}{\pi^2} \cdot \frac{4}{3} = \frac{4}{\pi^2} \approx 0.4053$
+
+No.
+
+What about $2/\pi \approx 0.6366$? Close but not matching.
+
+$3/(2\pi) \approx 0.4775$? No.
+
+$\log 2 \approx 0.6931$? Close to C but not exact.
+
+$12/\pi^2 \approx 1.2159$? No.
+
+$3/\pi^2 \approx 0.3040$? No.
+
+$\pi^2/12 \approx 0.8225$? No.
+
+Hmm, what about C = 1 - 6/(π²·something)?
+
+1 - C = 1 - 0.66989 = 0.33011
+
+3/π² ≈ 0.3040
+1/3 ≈ 0.3333
+
+So 1 - C ≈ 0.330 ≈ 1/3? But not exact.
+
+What about the Euler-Mascheroni constant? γ ≈ 0.5772. No.
+
+OK, without knowing the exact definition of J(Q), Φ(Q), I can't identify C analytically. Let me move on.
+
+## Let me try a different functional form
+
+Looking at the data again:
+
+| (a, m) | Q/5^5 = 2^a · m | Δ |
+|--------|-----------------|---|
+| (5, 3) | 96 | 0.0288 |
+| (4, 7) | 112 | 0.0216 |
+| (6, 3) | 192 | 0.0183 |
+| (5, 7) | 224 | 0.0144 |
+
+Let me plot Δ vs Q/5^5:
+- 96 → 0.0288
+- 112 → 0.0216
+- 192 → 0.0183
+- 224 → 0.0144
+
+If Δ ∝ 1/(Q/5^5):
+- 96 → 1/96 = 0.01042, need 0.0288/0.01042 = 2.764
+- 112 → 1/112 = 0.00893, need 0.0216/0.00893 = 2.419
+- 192 → 1/192 = 0.00521, need 0.0183/0.00521 = 3.514
+- 224 → 1/224 = 0.00446, need 0.0144/0.00446 = 3.226
+
+Not constant. The ratio is increasing as Q/5^5 increases.
+
+If Δ ∝ 1/(Q/5^5)^{1.5}:
+- 96^{1.5} = 941.2, Δ · 941.2/1000 = 0.0288 · 0.941 = 0.0271
+- 112^{1.5} = 1188.6, Δ · 1.189 = 0.0257
+- 192^{1.5} = 2659.6, Δ · 2.660 = 0.0487
+- 224^{1.5} = 3353.2, Δ · 3.353 = 0.0483
+
+Still not constant.
+
+What if Δ is not a simple power of Q/5^5 but depends on 2^a and m separately?
+
+Let me try Δ = K · 2^{-a} / m^β:
+
+From a=5,m=3: K · 2^{-5} · 3^{-β} = 0.0288
+From a=5,m=7: K · 2^{-5} · 7^{-β} = 0.0144
+Dividing: 3^{-β}/7^{-β} = (7/3)^β = 0.0288/0.0144 = 2
+β = log(2)/log(7/3) = 0.6931/0.8473 = 0.818
+
+From a=4,m=7: K · 2^{-4} · 7^{-0.818} = 0.0216
+K = 0.0216 · 16 · 7^{0.818} = 0.0216 · 16 · 5.224 = 1.805
+
+From a=5,m=3: K = 0.0288 · 32 · 3^{0.818} = 0.0288 · 32 · 2.487 = 2.293
+
+K values: 1.805 and 2.293. Still not constant, but closer than before.
+
+From a=6,m=3: K = 0.0183 · 64 · 2.487 = 2.915
+From a=5,m=7: K = 0.0144 · 32 · 5.224 = 2.410
+
+So K ≈ 2.0-2.9, varying with a.
+
+The remaining variation suggests either a more complex power law or a non-power-law form.
+
+## What about Δ ∝ 1/(2^a · m · something)?
+
+Let me try Δ = K / (2^a · m · log(2^a · m)):
+
+- (5,3): 32·3·log(96) = 96 · 4.564 = 438.2 → K = 0.0288 · 438.2 = 12.62
+- (4,7): 16·7·log(112) = 112 · 4.718 = 528.4 → K = 0.0216 · 528.4 = 11.41
+- (6,3): 64·3·log(192) = 192 · 5.257 = 1009.4 → K = 0.0183 · 1009.4 = 18.47
+- (5,7): 32·7·log(224) = 224 · 5.412 = 1212.3 → K = 0.0144 · 1212.3 = 17.46
+
+Not constant (12-18).
+
+What about Δ = K / (2^a · m^{1/2}):
+- (5,3): 32 · 1.732 = 55.43 → K = 0.0288 · 55.43 = 1.596
+- (4,7): 16 · 2.646 = 42.33 → K = 0.0216 · 42.33 = 0.914
+- (6,3): 64 · 1.732 = 110.85 → K = 0.0183 · 110.85 = 2.029
+- (5,7): 32 · 2.646 = 84.66 → K = 0.0144 · 84.66 = 1.219
+
+Worse.
+
+Let me try Δ = K · 2^{-a} · φ(m)/m:
+For squarefree m, φ(m)/m = ∏_{p|m} (1-1/p).
+- m=3: φ(3)/3 = 2/3
+- m=7: φ(7)/7 = 6/7
+
+- (5,3): 2^{-5} · 2/3 = 0.03125 · 0.6667 = 0.02083 → K = 0.0288/0.02083 = 1.383
+- (4,7): 2^{-4} · 6/7 = 0.0625 · 0.8571 = 0.05357 → K = 0.0216/0.05357 = 0.403
+- (6,3): 2^{-6} · 2/3 = 0.015625 · 0.6667 = 0.01042 → K = 0.0183/0.01042 = 1.757
+- (5,7): 2^{-5} · 6/7 = 0.03125 · 0.8571 = 0.02679 → K = 0.0144/0.02679 = 0.537
+
+Not constant. Worse.
+
+## Let me try a fundamentally different approach
+
+Maybe the spike height relates to a specific arithmetic function evaluated at Q.
+
+Q = 2^a · 5^5 · m.
+
+Consider the function: σ(Q)/Q = Σ_{d|Q} 1/d. 
+
+For Q = 2^a · 5^5 · m (m squarefree):
+σ(Q)/Q = (2^{a+1}-1)/(2^a) · (5^6-1)/(5^5·4) · ∏_{p|m}(1+1/p)
+
+Hmm, this gets complicated. Let me think differently.
+
+Actually, maybe I should think about the contribution from the Euler product.
+
+The function NW(Q) might involve the truncated Euler product $\prod_{p \leq Q} (1 - 1/p^2)$ or similar.
+
+$\prod_{p \leq Q} (1 - 1/p^2) \to 6/\pi^2$ as Q → ∞.
+
+But C = 0.6699 ≠ 6/π² = 0.6079.
+
+What about $\prod_{p \leq Q} (1 + 1/p^2)$? This converges to $\zeta(2)/\zeta(4) = (\pi^2/6)/(\pi^4/90) = 15/\pi^2 \approx 1.5198$. Not C.
+
+Hmm. What if C = 1/Φ(Q)/Q · Σ_{n≤Q, (n,Q)=1} 1?
+
+That would be a count of integers coprime to Q up to Q, divided by Q·Φ(Q). For large Q, Σ_{n≤Q} 1_{(n,Q)=1} ≈ Q · φ(Q)/Q = φ(Q). So the ratio would be φ(Q)/Φ(Q), where Φ(Q) = Σ_{n≤Q} φ(n) ≈ 3Q²/π². Then NW(Q) → φ(Q)·π²/(3Q²)... no, that goes to 0.
+
+OK, I'm going in circles without knowing the exact definitions. Let me try to approach this more carefully from what's given.
+
+## Back to the data
+
+The user says NW(Q) = Q · J(Q) / Φ(Q). Let me assume Φ(Q) = Σ_{n≤Q} φ(n) ≈ 3Q²/π².
+
+Then NW(Q) = Q · J(Q) · π² / (3Q²) = π² · J(Q) / (3Q).
+
+For NW(Q) → C ≈ 0.6699, we need J(Q) → 3CQ/π² ≈ 0.2036 · Q.
+
+Hmm, that's reasonable if J(Q) is some sort of partial sum that grows linearly.
+
+Actually, maybe J(Q) is related to $\sum_{n=1}^{Q} \text{something}$.
+
+## Let me try to think about what the "spike" mechanism is
+
+The key claim is that NW(Q) spikes at Q = 2^a · 5^5 · m. Why specifically 5^5?
+
+In the theory of Riemann zeta function approximations, the Euler-Maclaurin formula and related techniques involve Bernoulli numbers and periodic functions. The fractional part {Q/p} for primes p is periodic with period p, and for Q to cause a "resonance," Q needs to be close to a multiple of specific numbers.
+
+5^5 = 3125 is a very specific structure. If there's a sum involving $\{Q/p^k\}$ for small primes p, then Q being divisible by 5^5 would cause $\{Q/5^k\} = 0$ for k = 1, 2, 3, 4, 5. This eliminates certain fractional part terms for the prime 5.
+
+Similarly, Q being divisible by 2^a eliminates fractional parts for the prime 2.
+
+And Q being divisible by m (squarefree, odd, coprime to 5) eliminates fractional parts for primes dividing m.
+
+So the spike condition Q = 2^a · 5^5 · m means: the fractional parts {Q/p} vanish for p = 2, 5, and all primes dividing m.
+
+But wait, m is "squarefree odd ≥ 3 coprime to 5." So m could be 3, 7, 11, 3·7, etc. The specific m values observed are 3 and 7.
+
+If the spike is maximal when {Q/p} = 0 for the most "important" primes (small primes contribute more to the sum), then 2^a · 5^5 already covers p = 2, 5. Adding m = 3 covers p = 3. Adding m = 7 covers p = 7. 
+
+The spike height should then depend on which primes are "activated" by m. Including more small primes should give taller spikes.
+
+For m = 3: primes covered = {2, 5, 3} (three primes)
+For m = 7: primes covered = {2, 5, 7} (three primes, but 3 not covered)
+
+Since 3 is a smaller prime than 7, covering p=3 should give a larger contribution than covering p=7. This explains why m=3 gives a larger spike than m=7!
+
+So we might expect:
+- m = 3: spike from "resonance" at p=3
+- m = 7: spike from "resonance" at p=7
+- m = 3·7 = 21: spike from both, possibly taller
+- m = 11: spike from p=11, smaller
+
+This suggests the spike height decomposes as a sum of contributions from each prime p dividing 2^a · 5^5 · m.
+
+## Reframing: local factors
+
+Let me hypothesize that the spike height has the form:
+$$\Delta(Q) = \sum_{p | Q} \delta_p(v_p(Q))$$
+
+where $\delta_p(k)$ is the contribution from prime p with p-adic valuation k, and the sum is over primes dividing Q.
+
+For the "non-spike" baseline, most primes contribute their average value. The spike comes from primes where the p-adic valuation is specifically large.
+
+For the observed spikes, the key primes are 2, 5, and the primes in m.
+
+If we model the spike as additive contributions:
+$$\Delta = \delta_2(a) + \delta_5(5) + \sum_{p | m} \delta_p(1)$$
+
+where $\delta_p(k)$ is the contribution from having $p^k \| Q$.
+
+From the data:
+- (a=5, m=3): Δ = 0.0288 = δ₂(5) + δ₅(5) + δ₃(1)
+- (a=4, m=7): Δ = 0.0216 = δ₂(4) + δ₅(5) + δ₇(1)
+- (a=6, m=3): Δ = 0.0183 = δ₂(6) + δ₅(5) + δ₃(1)
+- (a=5, m=7): Δ = 0.0144 = δ₂(5) + δ₅(5) + δ₇(1)
+
+From equations 1 and 3: δ₂(5) - δ₂(6) = 0.0288 - 0.0183 = 0.0105
+From equations 2 and 4: δ₂(4) - δ₂(5) = 0.0216 - 0.0144 = 0.0072
+
+So δ₂(4) - δ₂(5) = 0.0072 and δ₂(5) - δ₂(6) = 0.0105.
+
+If δ₂ is decreasing (as expected), these are positive, which is consistent. But the ratios aren't equal: 0.0072 vs 0.0105.
+
+From equations 1 and 4: 
+δ₂(5) + δ₅(5) + δ₃(1) - δ₂(5) - δ₅(5) - δ₇(1) = 0.0288 - 0.0144
+δ₃(1) - δ₇(1) = 0.0144
+
+From equations 2 and 3:
+δ₂(4) + δ₅(5) + δ₇(1) - δ₂(6) - δ₅(5) - δ₃(1) = 0.0216 - 0.0183
+[δ₂(4) - δ₂(6)] - [δ₃(1) - δ₇(1)] = 0.0033
+[δ₂(4) - δ₂(6)] - 0.0144 = 0.0033
+δ₂(4) - δ₂(6) = 0.0177
+
+But δ₂(4) - δ₂(6) = [δ₂(4) - δ₂(5)] + [δ₂(5) - δ₂(6)] = 0.0072 + 0.0105 = 0.0177 ✓
+
+This is consistent! So the additive model works perfectly with the data.
+
+Let me set δ₅(5) = c (a constant contribution from 5^5).
+
+Let me call:
+- A = δ₂(a) + c (the combined 2 and 5 contribution)
+- B₃ = δ₃(1)
+- B₇ = δ₇(1)
+
+Then:
+A(5) + B₃ = 0.0288
+A(4) + B₇ = 0.0216
+A(6) + B₃ = 0.0183
+A(5) + B₇ = 0.0144
+
+From 1 and 3: A(5) - A(6) = 0.0105
+From 2 and 4: A(4) - A(5) = 0.0072
+From 1 and 4: B₃ - B₇ = 0.0144
+From 1: B₃ = 0.0288 - A(5)
+From 4: B₇ = 0.0144 - A(5)
+So B₃ - B₇ = 0.0144 ✓
+
+This is consistent but underdetermined. We have 4 equations and effectively 4 unknowns (A(4), A(5), A(6), B₃, B₇), but only 3 independent differences. We need a constraint to pin down the absolute values.
+
+Let me try: if the spike goes to 0 when there's no special arithmetic condition (i.e., the baseline C), then the "spike height" is entirely due to the resonance. But the spike must be relative to some reference.
+
+Actually, the model says that NW(Q) = C + δ₂(a) + δ₅(5) + δ_m(1) for Q = 2^a · 5^5 · m. The fact that the model is additive and consistent is already a strong result!
+
+But we need one more piece of information to determine individual values. Let me hypothesize that the contribution from each prime p is related to the local factor of the Euler product.
+
+## Local factor hypothesis
+
+In the Euler product for ζ(2): $\zeta(2) = \prod_p (1 - 1/p^2)^{-1}$
+
+The local factor at p is $(1 - 1/p^2)^{-1}$.
+
+For the spike contribution, the "resonance" at prime p with p-adic valuation k might contribute:
+$$\delta_p(k) = \frac{A}{p^{2k}} \text{ or } \frac{A}{p^k}$$
+
+If $\delta_p(k) = C_p \cdot p^{-k}$ for some prime-dependent constant $C_p$, then:
+
+δ₃(1) = C₃/3
+δ₇(1) = C₇/7
+δ₂(k) = C₂/2^k
+
+From the ratios:
+A(4) - A(5) = 0.0072 → C₂/16 - C₂/32 = C₂/32 = 0.0072 → C₂ = 0.2304
+A(5) - A(6) = 0.0105 → C₂/32 - C₂/64 = C₂/64 = 0.0105 → C₂ = 0.672
+
+These give different C₂ values! 0.230 vs 0.672. So the simple 1/2^k model doesn't work.
+
+What about δ₂(k) = C₂/k?
+A(4) - A(5) = C₂(1/4 - 1/5) = C₂/20 = 0.0072 → C₂ = 0.144
+A(5) - A(6) = C₂(1/5 - 1/6) = C₂/30 = 0.0105 → C₂ = 0.315
+
+Different again.
+
+What about δ₂(k) = C₂ · 2^{-k/2}?
+A(4) - A(5) = C₂(2^{-2} - 2^{-2.5}) = C₂(0.25 - 0.1768) = 0.0732 C₂ = 0.0072 → C₂ = 0.0984
+A(5) - A(6) = C₂(2^{-2.5} - 2^{-3}) = C₂(0.1768 - 0.125) = 0.0518 C₂ = 0.0105 → C₂ = 0.2027
+
+Still inconsistent.
+
+What if δ₂(k) = C₂ · (1/2)^{αk} for some α?
+A(k) = c + C₂ · 2^{-αk} (where c = δ₅(5))
+
+A(4) - A(5) = C₂ · 2^{-4α}(1 - 2^{-α}) = 0.0072
+A(5) - A(6) = C₂ · 2^{-5α}(1 - 2^{-α}) = 0.0105
+
+Dividing: 2^α = 0.0105/0.0072 = 1.4583
+
+Hmm wait, that gives: [A(5)-A(6)]/[A(4)-A(5)] = 2^{-α}
+
+So 2^{-α} = 0.0105/0.0072 = 1.4583
+
+But 2^{-α} should be ≤ 1 for α ≥ 0. We get 2^{-α} > 1, which means α < 0!
+
+So A(k) = c + C₂ · 2^{βk} where β = -α > 0. This means A(k) increases with k, which means δ₂(k) increases with k. That's counterintuitive for a "spike" contribution.
+
+Wait, but the spike height decreases as a increases (more factors of 2). Let me reconsider.
+
+Actually, the spike height Δ = A(a) + Bₘ where A(a) = δ₂(a) + c.
+
+We have:
+A(5) - A(6) = 0.0105 (positive, so A decreases)
+A(4) - A(5) = 0.0072 (positive, so A decreases)
+
+Ratio: (A(5)-A(6))/(A(4)-A(5)) = 0.0105/0.0072 = 1.458
+
+If A(a) = C · r^a, then A(a) - A(a+1) = C · r^a(1-r), and the ratio of consecutive differences is 1/r.
+
+So 1/r = 1.458, r = 0.686.
+
+A(a) = C · 0.686^a + c
+
+Hmm, but that gives A decreasing geometrically, which is plausible.
+
+Let me check: if A(a) = C₂ · r^a + c₅:
+A(4) = C₂ · r⁴ + c₅
+A(5) = C₂ · r⁵ + c₅
+A(6) = C₂ · r⁶ + c₅
+
+A(4) - A(5) = C₂ · r⁴(1-r) = 0.0072
+A(5) - A(6) = C₂ · r⁵(1-r) = 0.0105
+
+Wait, r⁵(1-r)/[r⁴(1-r)] = r. But 0.0105/0.0072 = 1.458 > 1, so r > 1.
+
+But then A(a) increases with a? That contradicts the fact that the spike height decreases with a.
+
+Let me recheck. Δ = A(a) + Bₘ.
+Δ(a=5,m=3) = A(5) + B₃ = 0.0288
+Δ(a=6,m=3) = A(6) + B₃ = 0.0183
+
+A(5) - A(6) = 0.0105, so A(5) > A(6). A is decreasing. ✓
+
+Δ(a=4,m=7) = A(4) + B₇ = 0.0216
+Δ(a=5,m=7) = A(5) + B₇ = 0.0144
+
+A(4) - A(5) = 0.0072, so A(4) > A(5). A is decreasing. ✓
+
+But the successive differences increase: A(4)-A(5) = 0.0072, A(5)-A(6) = 0.0105. This means A is decreasing and concave down (convex). 
+
+If A(a) = C₂ · r^{-a} + c₅ with 0 < r < 1 (so r^{-a} increases with a), that doesn't work.
+
+If A(a) = C₂ · (1 + a/r)^{-1} or A(a) = C₂/(a + d):
+
+A(4) - A(5) = C₂(1/(4+d) - 1/(5+d)) = C₂/((4+d)(5+d)) = 0.0072
+A(5) - A(6) = C₂(1/(5+d) - 1/(6+d)) = C₂/((5+d)(6+d)) = 0.0105
+
+Ratio: ((5+d)(6+d))/((4+d)(5+d)) = (6+d)/(4+d) = 0.0105/0.0072 = 1.458
+
+So (6+d)/(4+d) = 1.458
+6+d = 1.458(4+d) = 5.833 + 1.458d
+6 - 5.833 = 1.458d - d
+0.167 = 0.458d
+d = 0.364
+
+So A(a) = C₂/(a + 0.364) + c₅
+
+From A(4) - A(5) = C₂/((4.364)(5.364)) = C₂/23.41 = 0.0072
+C₂ = 0.1685
+
+Then:
+A(4) = 0.1685/4.364 + c₅ = 0.03861 + c₅
+A(5) = 0.1685/5.364 + c₅ = 0.03142 + c₅
+A(6) = 0.1685/6.364 + c₅ = 0.02648 + c₅
+
+B₃ = 0.0288 - A(5) = 0.0288 - 0.03142 - c₅ = -0.00262 - c₅
+B₇ = 0.0144 - A(5) = 0.0144 - 0.03142 - c₅ = -0.01702 - c₅
+
+B₃ - B₇ = 0.0144 ✓
+
+We still have one free parameter c₅.
+
+## Insight: what if the spike has a universal form?
+
+Let me think about this differently. The spike at Q = 2^a · 5^5 · m suggests a specific mechanism. 
+
+If the underlying function involves a sum like $\sum_{d|Q} f(d)$, then the factorization of Q affects the sum through multiplicativity.
+
+Let's think about what happens when Q has 5^5 as a factor. In many arithmetic sums, the contribution from 5-adic terms would involve:
+
+$\sum_{k=0}^{5} f(5^k)$ for the 5-part.
+
+And the difference from the generic case (where Q is not highly divisible by 5) is:
+$\sum_{k=0}^{5} f(5^k) - \sum_{k=0}^{v_5(Q)} f(5^k)$ for typical Q with small $v_5(Q)$.
+
+Wait, actually, maybe the spike comes from

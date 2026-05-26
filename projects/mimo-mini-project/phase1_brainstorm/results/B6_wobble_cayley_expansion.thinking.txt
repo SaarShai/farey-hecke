@@ -1,0 +1,331 @@
+This is a rich and well-thought-out question. Let me work through it carefully, combining theoretical analysis with concrete numerical predictions.
+
+## Setting up the construction precisely
+
+Let me first nail down the graph construction. At step $q$, we add vertices for the primitive $q$-th roots of unity: $\{e^{2\pi i k/q} : \gcd(k,q)=1\}$. These are $\phi(q)$ new points on the unit circle.
+
+**Key geometric fact**: The primitive $q$-th roots are points $\{k/q \mod 1 : \gcd(k,q)=1\}$ on $\mathbb{R}/\mathbb{Z}$. At step $q$, the "old" vertices on the circle come from all primitive $m$-th roots for $m < q$. The new primitive $q$-th roots that are NOT already on the circle are exactly those $k/q$ where $k/q$ is not already represented as $j/m$ for some $m < q, \gcd(j,m)=1$. But wait — any rational number $k/q$ with $\gcd(k,q)=1$ is already on the circle if $q$ is not the denominator in lowest terms... but $k/q$ IS in lowest terms. So $k/q = j/m$ with $\gcd(j,m)=1$ implies $m = q$ and $k = j$. So every primitive $q$-th root IS genuinely new when $q$ appears for the first time.
+
+Wait, that's not right either. The issue is that we're inserting by ORDER of $q$. So at step $q$, we add the primitive $q$-th roots. These are genuinely new points (no primitive $m$-th root equals a primitive $q$-th root for $m \neq q$). The total number of vertices at step $N$ is $\sum_{q=1}^{N} \phi(q) \approx 3N^2/\pi^2$.
+
+Actually, I need to reconsider. The primitive $q$-th roots of unity for different $q$ are indeed distinct points on the unit circle (they correspond to fractions $k/q$ in lowest terms with different denominators). So the graph grows and all vertices are distinct.
+
+Now, at step $q$, each new primitive $q$-th root $e^{2\pi i k/q}$ connects to its nearest OLD neighbor on the circle. Since the old vertices are all the primitive $m$-th roots for $m < q$, the nearest old neighbor is the fraction $j/m$ (with $m < q$, $\gcd(j,m)=1$) closest to $k/q$ on $\mathbb{R}/\mathbb{Z}$.
+
+**Planarity**: This graph, embedded on the circle with edges as chords (or arcs), is indeed a tree (each new vertex has exactly one edge to an old vertex). So it's a tree, hence planar, hence by the planarity bound, the Cheeger constant is $O(1/V)$ where $V$ is the number of vertices, and the spectral gap is $O(1/V)$.
+
+More precisely, for a path on $n$ vertices, the spectral gap is $\Theta(1/n^2)$. For a balanced binary tree on $n$ vertices, the spectral gap is $\Theta(1/n)$. Since our graph is a tree on $V_N = \sum_{q \leq N} \phi(q) \approx 3N^2/\pi^2$ vertices, the spectral gap will be at most $O(1/V_N) = O(1/N^2)$.
+
+But the question is: how does the ACTUAL spectral gap compare? Is it closer to $1/V$ (tree-like) or $1/V^2$ (path-like)?
+
+## Numerical experiment design
+
+Let me think about how to actually compute this. For the graph $G_N$:
+
+1. Enumerate all points: fractions $k/q$ with $\gcd(k,q)=1$, $1 \leq q \leq N$, $0 \leq k < q$.
+2. Sort them on $[0,1)$.
+3. At step $q$ (in order $q = 1, 2, \ldots, N$), add each primitive $q$-th root and connect it to its nearest predecessor.
+
+Wait, I need to think about this more carefully. The construction says "connect each new vertex to its nearest OLD neighbor on the circle." Since we're inserting in order of $q$, when we add the primitive $q$-th roots, the "old" vertices are all the points inserted at steps $1, 2, \ldots, q-1$.
+
+For a new point $k/q$ (with $\gcd(k,q)=1$), its nearest old neighbor on the circle $\mathbb{R}/\mathbb{Z}$ is the fraction $j/m$ with $m < q$ closest to $k/q$.
+
+**Connection to Farey sequences**: The Farey sequence of order $n$ is the set of fractions $a/b$ with $0 \leq a \leq b \leq n$ and $\gcd(a,b)=1$, sorted in order. The key property of Farey sequences is the "mediant" property: if $a/b$ and $c/d$ are consecutive in a Farey sequence, then $bc - ad = 1$.
+
+When we insert the primitive $q$-th roots, each one $k/q$ is inserted between two consecutive elements of the Farey sequence of order $q-1$. In fact, $k/q$ is the mediant of its two Farey neighbors of order $q-1$ (or close to it).
+
+Hmm, actually that's exactly right. The Farey sequence of order $q-1$ consists of all fractions with denominator $\leq q-1$. The primitive $q$-th roots $k/q$ with $\gcd(k,q)=1$ are exactly the fractions with denominator exactly $q$ in lowest terms. Each such fraction falls between two consecutive elements of the Farey sequence of order $q-1$, and its nearest neighbors in the Farey sequence of order $q-1$ are those two consecutive elements.
+
+So the "Farey insertion graph" has a beautiful structure related to the Stern-Brocot tree and mediants!
+
+Actually, this is essentially the **Stern-Brocot tree** or the **Farey graph**! Let me think about this.
+
+The Stern-Brocot tree: starting with 0/1 and 1/1, at each level, insert mediants. The resulting tree is a binary tree whose vertices are all non-negative rationals.
+
+The Farey graph (in the sense of Thurston/Conway): vertices are rational numbers (including $\infty$), and edges connect $a/b$ to $c/d$ when $ad - bc = \pm 1$. This is the 1-skeleton of the Farey tessellation of the hyperbolic plane.
+
+Our construction is somewhat different but related. In our graph:
+- Vertices are $k/q$ with $\gcd(k,q)=1$, $0 \leq k < q$, $1 \leq q \leq N$.
+- At step $q$, each new vertex $k/q$ connects to its nearest OLD neighbor (nearest in terms of distance on $\mathbb{R}/\mathbb{Z}$, among all points inserted at earlier steps).
+
+Since the set of "old" points at step $q$ is exactly the set of fractions with denominator $\leq q-1$ in lowest terms, the nearest old neighbor of $k/q$ is one of the two fractions adjacent to $k/q$ in the Farey sequence of order $q-1$.
+
+Actually, I should be more precise. The "nearest old neighbor" could be on either side of $k/q$. Let me say $k/q$ falls between $a/b$ and $c/d$ in the Farey sequence of order $q-1$ (so $a/b < k/q < c/d$), then the nearest neighbor is whichever of $a/b, c/d$ is closer.
+
+In the Farey sequence, consecutive fractions $a/b, c/d$ satisfy $bc - ad = 1$. And $k/q$ is the mediant $(a+c)/(b+d)$ if $b+d = q$, but this isn't always the case. Actually, $k/q$ falls between $a/b$ and $c/d$ in the Farey sequence of order $q-1$ where $a/b$ and $c/d$ are the best rational approximations to $k/q$ with denominator $\leq q-1$.
+
+Let me think about the structure of this graph. Each new vertex connects to exactly one old vertex. So $G_N$ is a rooted tree (rooted at the vertex for $q=1$, i.e., the point $0/1 = 0$ on the circle... actually, there's a subtlety about $q=1$).
+
+Wait, for $q=1$: the primitive 1st root of unity is just $e^0 = 1$, which is the point $0$ on $\mathbb{R}/\mathbb{Z}$. So $G_1$ is a single vertex.
+
+For $q=2$: the primitive 2nd root is $e^{i\pi} = -1$, which is the point $1/2$ on $\mathbb{R}/\mathbb{Z}$. Connect it to the nearest old vertex, which is $0$. So we get an edge from $0$ to $1/2$.
+
+For $q=3$: primitive 3rd roots are $1/3$ and $2/3$. The nearest old neighbor of $1/3$ is either $0$ (distance $1/3$) or $1/2$ (distance $1/6$). So $1/3$ connects to $1/2$. Similarly, $2/3$ connects to $1/2$ (distance $1/6$) or $0$ (distance $1/3$). So $2/3$ connects to $1/2$.
+
+Hmm wait, distance on $\mathbb{R}/\mathbb{Z}$: distance from $1/3$ to $0$ is $1/3$, from $1/3$ to $1/2$ is $1/6$. From $2/3$ to $1/2$ is $1/6$, from $2/3$ to $0$ is $1/3$ (going the short way around, $2/3$ to $0$ is $1/3$). So yes, both connect to $1/2$.
+
+For $q=4$: primitive 4th roots are $1/4$ and $3/4$. Nearest old neighbors: $1/4$ is closest to $0$ (distance $1/4$) or $1/3$ (distance $1/12$). So $1/4$ connects to $1/3$. $3/4$ is closest to $2/3$ (distance $1/12$) or $1/2$ (distance $1/4$). So $3/4$ connects to $2/3$.
+
+For $q=5$: primitive 5th roots are $1/5, 2/5, 3/5, 4/5$.
+- $1/5$: nearest among $\{0, 1/4, 1/3, 1/2, 2/3, 3/4\}$... $1/4$ is distance $1/20$, $0$ is distance $1/5$, $1/3$ is distance $2/15$. So $1/5$ connects to $1/4$.
+- $2/5$: $1/3$ is distance $1/15$, $1/2$ is distance $1/10$. So $2/5$ connects to $1/3$.
+- $3/5$: $1/2$ is distance $1/10$, $2/3$ is distance $1/15$. So $3/5$ connects to $2/3$.
+- $4/5$: $3/4$ is distance $1/20$. So $4/5$ connects to $3/4$.
+
+Interesting. So the tree structure is starting to emerge. Let me draw this:
+
+```
+        0
+        |
+       1/2
+      / | \
+    1/3  |  2/3
+   /|    |   |\
+ 1/4 2/5 | 3/5 3/4
+ |       |       |
+1/5      |      4/5
+```
+
+Wait, that's not right. Let me redo:
+- $0$ (root, $q=1$)
+- $1/2$ connected to $0$ ($q=2$)
+- $1/3$ connected to $1/2$ ($q=3$)
+- $2/3$ connected to $1/2$ ($q=3$)
+- $1/4$ connected to $1/3$ ($q=4$)
+- $3/4$ connected to $2/3$ ($q=4$)
+- $1/5$ connected to $1/4$ ($q=5$)
+- $2/5$ connected to $1/3$ ($q=5$)
+- $3/5$ connected to $2/3$ ($q=5$)
+- $4/5$ connected to $3/4$ ($q=5$)
+
+So the tree looks like:
+
+```
+         0
+         |
+        1/2
+       /   \
+     1/3   2/3
+    / |     | \
+  1/4 2/5 3/5 3/4
+  |             |
+ 1/5           4/5
+```
+
+This has a nice recursive structure related to mediants! The children of $a/b$ tend to be fractions near $a/b$.
+
+## Theoretical analysis of the spectral gap
+
+For a tree, the spectral gap of the normalized Laplacian depends on the tree structure. For a path on $n$ vertices, $\lambda_1 = 1 - \cos(\pi/n) \approx \pi^2/(2n^2)$. For a balanced binary tree, $\lambda_1 = \Theta(1/n)$ where $n$ is the number of vertices.
+
+Our graph $G_N$ has $V_N = \sum_{q=1}^N \phi(q) \approx 3N^2/\pi^2$ vertices. The graph is a tree. The question is: how "balanced" is this tree?
+
+Looking at the structure, the tree is somewhat balanced but not perfectly so. The vertex $1/2$ has children $1/3$ and $2/3$ (from $q=3$), and $1/3$ has children $1/4$ and $2/5$ (from $q=4,5$), etc. The tree grows outward from the center.
+
+Actually, I think this tree is closely related to the **Stern-Brocot tree**. In the Stern-Brocot tree, every rational $p/q$ with $0 < p/q < 1$ appears exactly once, and the tree is built by the mediant operation. The parent of $p/q$ in the Stern-Brocot tree is determined by the continued fraction expansion of $p/q$.
+
+In our construction, the parent of $k/q$ (for $q \geq 2$) is the nearest old neighbor. Since "old" means all fractions with denominator $< q$ in lowest terms, and the nearest such fraction to $k/q$ is determined by the best rational approximation with denominator $< q$, this is indeed closely related to the continued fraction structure.
+
+Specifically, the best rational approximation to $k/q$ with denominator $< q$ from below (or above) is given by the convergents of the continued fraction of $k/q$. The nearest old neighbor is the best approximation from either direction, which is one of the penultimate convergents or intermediate convergents.
+
+This means the tree structure of $G_N$ is essentially the Stern-Brocot tree (or a close relative), restricted to fractions with denominator $\leq N$.
+
+## Spectral gap of the Stern-Brocot-like tree
+
+The Stern-Brocot tree on $\{p/q : \gcd(p,q)=1, 1 \leq q \leq N\}$ restricted to $[0,1]$ has $V_N \sim 3N^2/\pi^2$ vertices. The key question for the spectral gap is the diameter and expansion properties.
+
+**Diameter**: The depth of $k/q$ in the Stern-Brocot tree is related to the sum of the partial quotients in its continued fraction expansion. For a typical fraction $k/q$ with $q \leq N$, the depth is $O(\log N)$ (since partial quotients are on average $O(1)$ and the continued fraction has $O(\log q)$ terms). The maximum depth is $O(N)$ (for fractions like $1/N$ which have continued fraction $[0; N]$).
+
+Wait, but in our graph, $1/N$ connects to its nearest old neighbor. The nearest old neighbor of $1/N$ is $0$ (distance $1/N$) or some fraction very close to $0$. Let's check: the fraction closest to $0$ with denominator $< N$ is $1/(N-1)$ (if $N-1 \geq 2$). Distance from $1/N$ to $0$ is $1/N$, distance to $1/(N-1)$ is $1/(N-1) - 1/N = 1/(N(N-1))$. So $1/N$ connects to $1/(N-1)$.
+
+Similarly, $1/(N-1)$ connects to $1/(N-2)$, and so on. So the chain $1/N \to 1/(N-1) \to \cdots \to 1/2 \to 0$ forms a path of length $N-1$ in the tree. This means the tree has diameter $\Omega(N)$.
+
+Since $V_N = \Theta(N^2)$, the diameter is $\Omega(\sqrt{V_N})$. For a tree with $n$ vertices and diameter $d$, the spectral gap is at most $O(1/d^2)$ (by comparison with a path). Wait, actually for a tree the Cheeger constant can be as small as $1/n$ (take a path), and the spectral gap is $\Theta(1/n^2)$ for a path.
+
+But more precisely, the chain $1/N \to 1/(N-1) \to \cdots \to 1/2 \to 0$ has $N$ vertices and forms a "spine" of the tree. Other branches come off this spine. The longest path in the tree is from $1/N$ (or some deep leaf) to another deep leaf, passing through $0$ or $1/2$.
+
+For the spectral gap, we need to think about the bottleneck ratio. The tree has a path-like substructure of length $\Theta(N)$, which means the spectral gap is at most $O(1/N^2)$. But can we get a lower bound?
+
+For a tree with $n$ vertices, the spectral gap satisfies $\lambda_1 \geq 1/(n \cdot d_{\max}^2)$ or something... actually let me think more carefully.
+
+For a path graph on $n$ vertices, the spectral gap of the normalized Laplacian is $\Theta(1/n^2)$. For a star graph, the spectral gap is $\Theta(1/n)$. For a balanced binary tree, the spectral gap is $\Theta(1/n)$.
+
+Our tree has both path-like and branching-like features. The chain $0 \to 1/2 \to 1/3 \to 1/4 \to \cdots \to 1/N$ is a path-like part. But also $1/3$ has two children ($1/4$ and $2/5$), $2/3$ has two children ($3/5$ and $3/4$), etc.
+
+I think the diameter of $G_N$ is $\Theta(N)$ because of the chain $0, 1/2, 1/3, \ldots, 1/N$. Actually wait, is $1/q$ connected to $1/(q-1)$ for all $q$? Let me verify.
+
+$1/4$ connects to $1/3$? The nearest old neighbor of $1/4$ is the fraction closest to $1/4$ among $\{0, 1/3, 1/2, 2/3\}$ (at step $q=4$). Distance to $0$: $1/4$. Distance to $1/3$: $1/3 - 1/4 = 1/12$. So yes, $1/4$ connects to $1/3$.
+
+$1/5$ connects to $1/4$? Among $\{0, 1/4, 1/3, 1/2, 2/3, 3/4\}$. Distance to $1/4$: $1/4 - 1/5 = 1/20$. Distance to $0$: $1/5$. So yes, $1/5$ connects to $1/4$.
+
+$1/6$: Among all fractions with denominator $\leq 5$. The fraction closest to $1/6$ is $1/5$ (distance $1/5 - 1/6 = 1/30$). Distance to $0$: $1/6$. So $1/6$ connects to $1/5$.
+
+In general, $1/q$ connects to $1/(q-1)$ because $|1/q - 1/(q-1)| = 1/(q(q-1))$ which is very small, while the next closest fraction is $0$ at distance $1/q$ or $2/(2q-1)$ or similar at larger distance.
+
+Actually wait, for $q$ even, $1/q$ might be close to some other fraction. Like $1/6$: is there a fraction closer than $1/5$? We need $\gcd(k,m) = 1$, $m < 6$, $k/m$ close to $1/6$. $k/m = 1/5$ gives distance $1/30$. $k/m = 1/6$ is not allowed (denominator 6). $k/m = 0$ gives distance $1/6$. So yes, $1/6$ connects to $1/5$.
+
+More generally, for $q \geq 3$, the nearest old neighbor of $1/q$ is $1/(q-1)$, giving a path $0, 1/2, 1/3, 1/4, \ldots, 1/N$. This path has length $N-1$.
+
+The diameter of $G_N$ is at least $N-1$ (the length of this path from $0$ to $1/N$). But actually there's also a symmetric chain on the other side: $N$ connects to $1$ (on the circle), $1/(N-1)$ is distance $1/(N(N-1))$ from $1/N$... wait, I'm conflating things.
+
+The point $1 - 1/N = (N-1)/N$. Its nearest old neighbor is $(N-2)/(N-1)$ (distance $1/(N(N-1))$). So there's also a chain $(N-1)/N \to (N-2)/(N-1) \to \cdots \to 1/2$. The longest path is from $1/N$ through $1/2$ to $(N-1)/N$, which has length $2(N-2)$.
+
+So the diameter is $\Theta(N)$ and $V_N = \Theta(N^2)$. The spectral gap for a tree is at most $O(1/V)$ (by the planarity/expansion bound for trees) but also at least... hmm, for a tree with $n$ vertices, the spectral gap can be as small as $\Theta(1/n^2)$ (path graph) and as large as $\Theta(1/n)$ (star graph or balanced binary tree).
+
+I think for our tree, the spectral gap should be $\Theta(1/N^2) = \Theta(1/V)$ because the tree has a long path of length $\Theta(N) = \Theta(\sqrt{V})$. Actually, for a tree with $n$ vertices and diameter $d$, the spectral gap is $\Theta(1/(nd))$ in many cases... no that's not quite right.
+
+Let me think about this differently. For a tree $T$ on $n$ vertices, let $\rho$ be the tree's "bottleneck" — the minimum of $|S|/d(S)$ over all cuts $S$ (where $d(S)$ is the edge boundary). For a tree, any cut removes exactly one edge, so $|S|/d(S) = |S|$ or $|S^c|$. The minimum is achieved by cutting the smallest subtree, so $h(T) = \min_{S} |S|/1$ over all cuts... wait, the Cheeger constant for a graph is $h(G) = \min_{S \subseteq V, |S| \leq |V|/2} |\partial S| / |S|$ where $\partial S$ is the set of edges from $S$ to $V \setminus S$.
+
+For a tree, $|\partial S| \geq 1$ for any non-trivial cut. So $h(T) \geq 1/|S| \geq 2/n$. And this is achieved (up to constants) by cutting off a single leaf, giving $h(T) = 1/1 = 1$... no wait.
+
+Let me be more careful. The Cheeger constant is:
+$$h(G) = \min_{\emptyset \neq S \subset V, |S| \leq |V|/2} \frac{|\partial S|}{|S|}$$
+
+For a tree, any cut $(S, V \setminus S)$ with both parts non-empty has $|\partial S| \geq 1$ (since the tree is connected). To minimize $|\partial S|/|S|$, we want $|S|$ as large as possible with $|\partial S|$ as small as possible.
+
+If the tree has a "bottleneck" — an edge whose removal creates two components, one of size $\alpha n$ and the other $(1-\alpha)n$ with $\alpha \leq 1/2$ — then $h \leq 1/(\alpha n)$.
+
+For our tree, the edge between $1/q$ and $1/(q-1)$ is a bridge (as in any tree). Removing it splits the tree into a subtree containing $1/q, 1/(q+1), \ldots, 1/N$ and their descendants, and the rest. The subtree containing $1/N$ (and the chain $1/N \to 1/(N-1) \to \cdots \to 1/q$ plus their side branches) has size roughly $\sum_{m=q}^{N} \phi(m)$.
+
+If we cut the edge between $1/(N/2)$ and $1/(N/2-1)$... hmm, the subtree containing $1/N$ has roughly $\sum_{m=N/2}^{N} \phi(m) \approx 3(N^2 - (N/2)^2)/(2\pi^2) = 3 \cdot 3N^2/4 / (2\pi^2) = 9N^2/(8\pi^2) \approx 0.38 N^2$. And the other side has $V_N - 0.38 N^2 \approx (3/\pi^2 - 9/(8\pi^2)) N^2 = (24-9)/(8\pi^2) N^2 = 15N^2/(8\pi^2) \approx 0.62 N^2$. So the cut gives $|\partial S|/|S| = 1/0.38 N^2$, which is $\Theta(1/N^2) = \Theta(1/V)$.
+
+But can we find a worse cut? We want to find a set $S$ with $|S| \leq V/2$ and $|\partial S| = 1$ (a single edge) and $|S|$ as large as possible. The maximum size of $S$ is $V/2$ (by cutting any edge that splits the tree roughly in half), giving $h = 2/V$. So $h(G_N) = \Theta(1/V_N) = \Theta(1/N^2)$.
+
+And for trees, the Cheeger inequality gives $\lambda_1 \geq h^2/(2d_{\max})$. The maximum degree in our tree... let me think. Each vertex $k/q$ can be the parent of at most $\phi(m)$ children (from step $m > q$). But in practice, the degree of $1/2$ is large: it's the parent of $1/3$ and $2/3$ (from $q=3$), but also $1/2$ is the nearest old neighbor of many points. Hmm wait, let me reconsider.
+
+Actually, the degree of a vertex $v = k/q$ in $G_N$ is: 1 (for its parent) plus the number of its children (new vertices that connect to $v$ as their nearest old neighbor). The number of children of $v$ at step $m > q$ is the number of primitive $m$-th roots $j/m$ whose nearest old neighbor (among all fractions with denominator $< m$) is $k/q$.
+
+For $1/2$: which $j/m$ has $1/2$ as its nearest old neighbor? We need $|j/m - 1/2| < |j/m - a/b|$ for all other old fractions $a/b$. The fractions closest to $1/2$ are the mediants involving $1/2$ and its neighbors.
+
+In the Stern-Brocot tree, $1/2$ is a root-level node, and its subtree contains many fractions. But in our graph, $1/2$ doesn't have THAT many direct children. At step $q=3$, $1/3$ and $2/3$ both connect to $1/2$ (since they're equidistant). At step $q=4$, $1/4$ connects to $1/3$, $3/4$ connects to $2/3$. At step $q=5$, $1/5$ connects to $1/4$, $2/5$ connects to $1/3$, $3/5$ connects to $2/3$, $4/5$ connects to $3/4$.
+
+So $1/2$ has children: $1/3$ (step 3), $2/3$ (step 3), and then no more direct children (all subsequent steps connect to other vertices). So $1/2$ has degree 3 (parent = $0$, children = $1/3, 2/3$).
+
+Actually, wait. Can some later primitive root have $1/2$ as its nearest old neighbor? Like, is there some $j/m$ with $m > 3$ that is closer to $1/2$ than to any other old fraction?
+
+$1/3$ is at distance $1/6$ from $1/2$. So any fraction within distance $1/6$ of $1/2$ would have $1/2$ as its nearest neighbor. The fractions $j/m$ closest to $1/2$ are: $(m/2)/m = 1/2$ (but that's already a vertex for $m$ even), $(m-1)/(2m)$ (but that might not be a primitive root). For odd $m$, the closest primitive $m$-th roots to $1/2$ are $(m \pm 1)/2 / m = (m \pm 1)/(2m)$. For $m=5$: $2/5$ and $3/5$, at distance $1/10$ from $1/2$. But $2/5$ is closer to $1/3$ (distance $1/15$) than to $1/2$ (distance $1/10$). So $2/5$ connects to $1/3$, not $1/2$.
+
+For $m=7$: $3/7$ and $4/7$. $3/7$ is at distance $1/14$ from $1/2$. Is there a closer old fraction? $3/7$'s nearest neighbor: we need to check among $\{0, 1/6, 1/5, 1/4, 2/7, 1/3, \ldots\}$... hmm, $2/7$ was inserted at step 7 too. At step 7, the old fractions are those with denominator $\leq 6$. The fraction closest to $3/7 \approx 0.429$ is... $1/3 \approx 0.333$ (distance $0.095$), $2/5 = 0.4$ (distance $0.029$), $1/2 = 0.5$ (distance $0.071$). So $3/7$ connects to $2/5$ (distance $|3/7 - 2/5| = 1/35 \approx 0.029$). Similarly $4/7$ connects to $3/5$.
+
+So $1/2$ doesn't get many direct children after step 3. The degree of $1/2$ in $G_N$ is at most 3 (parent $0$ and children $1/3, 2/3$).
+
+In general, the maximum degree of the Farey insertion tree is bounded. Each vertex $k/q$ is the nearest old neighbor of at most a few new primitive roots. The degree is $O(1)$ in practice (maybe $O(\log N)$ in worst case due to highly composite numbers... actually I'm not sure).
+
+Let me think about the worst case. Consider $1/6$: at step 7, $1/7$ connects to $1/6$ (distance $1/42$). At step 11, $1/11$ connects to $1/10$ (distance $1/110$), not to $1/6$. So $1/6$ gets child $1/7$.
+
+What about a vertex like $1/p$ for large prime $p$? It would get child $1/(p+1)$ (from step $p+1$). Also $2/(2p+1)$ might connect to $1/p$... $2/(2p+1)$ at distance $1/(p(2p+1))$. And $1/(p-1)$ was already inserted earlier. The fraction closest to $1/p$ with denominator $< p$ is $1/(p-1)$ at distance $1/(p(p-1))$. So at step $p$, $1/p$ connects to $1/(p-1)$. At step $p+1$, $1/(p+1)$ connects to $1/p$ at distance $1/(p(p+1))$, which is smaller than $1/(p+1) - 1/(p-1)$... wait, $1/(p-1)$ is at distance $1/(p(p-1))$ from $1/p$, and $1/(p+1)$ is at distance $1/(p(p+1))$ from $1/p$. So $1/(p+1)$ connects to $1/p$.
+
+For step $p+2$... $1/(p+2)$ connects to $1/(p+1)$ (distance $1/((p+1)(p+2))$), not to $1/p$ (distance $2/(p(p+2))$).
+
+So the chain $1/N \to 1/(N-1) \to \cdots \to 1/2 \to 0$ is a long path, and each vertex $1/q$ typically has just one or two additional side branches.
+
+**Conclusion for Q1**: The spectral gap $\lambda(G_N)$ should scale like $\Theta(1/N^2) = \Theta(1/V_N)$, because the tree has diameter $\Theta(N) = \Theta(\sqrt{V_N})$ and the bottleneck is $\Theta(1/V_N)$.
+
+For a tree with Cheeger constant $h = \Theta(1/n)$ and bounded degree $d = O(1)$, the spectral gap satisfies:
+$$\frac{h^2}{2d} \leq \lambda_1 \leq 2h$$
+So $\lambda_1 = \Theta(1/n^2)$.
+
+Hmm wait, that's $\Theta(1/n^2)$ for the spectral gap when $h = \Theta(1/n)$. And indeed for a path graph, $h = 2/n$ and $\lambda_1 = \Theta(1/n^2)$. So our tree has spectral gap $\Theta(1/N^2) = \Theta(1/V_N)$.
+
+Wait, I should double-check the Cheeger inequality. The Cheeger inequality for the normalized Laplacian states:
+$$\frac{\lambda_1}{2} \leq h_G \leq \sqrt{2 \lambda_1 d_{\max}}$$
+where $h_G$ is the Cheeger constant and $d_{\max}$ is the maximum degree.
+
+Actually, the precise form depends on the convention. Let me use the standard form for the normalized Laplacian:
+
+$$\frac{\lambda_1}{2} \leq h_{\text{vol}} \leq \sqrt{2\lambda_1}$$
+
+where $h_{\text{vol}} = \min_{S} \frac{|\partial S|}{\text{vol}(S)}$ and $\text{vol}(S) = \sum_{v \in S} d(v)$.
+
+For a bounded-degree tree with $n$ vertices, $h_{\text{vol}} = \Theta(1/n)$ (by the argument above: cutting an edge gives $|\partial S| = 1$ and $\text{vol}(S) = \Theta(n)$). So $\lambda_1 = \Theta(h_{\text{vol}}^2) = \Theta(1/n^2)$.
+
+Hmm, but actually for a tree with bounded degree, $h_{\text{vol}} = \Theta(1/n)$ implies $\lambda_1 \leq 2 h_{\text{vol}} = \Theta(1/n)$. But also $\lambda_1 \geq h_{\text{vol}}^2 / 2 = \Theta(1/n^2)$.
+
+For a path, $\lambda_1 = \Theta(1/n^2)$ and $h_{\text{vol}} = \Theta(1/n)$, which matches. For a balanced binary tree, $\lambda_1 = \Theta(1/n)$ (I think) and $h_{\text{vol}} = \Theta(1/\sqrt{n})$... hmm, no.
+
+Actually, for a balanced binary tree on $n = 2^k - 1$ vertices, the Cheeger constant: cutting the root's edge to one child gives $|\partial S| = 1$ and $|S| = 2^{k-1} - 1 \approx n/2$. So $h = 1/(n/2) = 2/n$. And $\lambda_1 = \Theta(1/n)$... wait, is that right?
+
+For a complete binary tree, the spectral gap... let me think. The tree has $n$ vertices, depth $k = \log_2(n+1) - 1$. The spectral gap of a complete binary tree is $\Theta(1/n)$ (since it's not a path and has good expansion within levels).
+
+Hmm, actually I recall that for a complete $d$-ary tree on $n$ vertices, $\lambda_1 = \Theta(d/(dn))$ for constant $d$... no. Let me think about this differently.
+
+For the star graph $K_{1,n-1}$ on $n$ vertices, $\lambda_1 = n/(n-1) \to 1$ (very good expansion). For the path $P_n$, $\lambda_1 = 1 - \cos(\pi/n) \approx \pi^2/(2n^2)$ (poor expansion). The complete binary tree is somewhere in between.
+
+I think for the complete binary tree on $n$ vertices, $\lambda_1 = \Theta(1/n)$. The reason is that removing the edge from the root to one subtree gives a cut of size $\approx n/2$ with $|\partial S| = 1$, giving $h = 2/n$, and the spectral gap achieves $\lambda_1 \approx h$ (not $h^2$).
+
+For our tree, the structure is more path-like (the long chain $1/N \to \cdots \to 1/2 \to 0$ dominates). The tree has a "spine" of length $\Theta(N)$ with small side branches. This is more like a "caterpillar" or "lobster" tree. For such trees, the spectral gap is dominated by the path-like structure, giving $\lambda_1 = \Theta(1/N^2)$.
+
+Actually, let me reconsider. The chain $1/N \to 1/(N-1) \to \cdots \to 1/2 \to 0$ has $N$ vertices but there are also $V_N - N \approx 3N^2/\pi^2 - N \approx 3N^2/\pi^2$ other vertices attached as side branches. The total tree has $\Theta(N^2)$ vertices and diameter $\Theta(N)$. For the spectral gap, the question is whether the long path or the many side branches dominate.
+
+Consider the test function $f(k/q) = k/q$ (the position on the unit circle). The Dirichlet form is:
+$$\mathcal{E}(f,f) = \sum_{(u,v) \in E} (f(u) - f(v))^2$$
+
+For the edge $1/(q+1) \to 1/q$: $(1/(q+1) - 1/q)^2 = 1/(q^2(q+1)^2)$. Summing over $q$ from $1$ to $N-1$:
+$$\sum_{q=1}^{N-1} \frac{1}{q^2(q+1)^2} = \sum_{q=1}^{N-1} \left(\frac{1}{q} - \frac{1}{q+1}\right)^2 = \sum_{q=1}^{N-1} \frac{1}{q^2(q+1)^2}$$
+
+This telescopes nicely: $\frac{1}{q^2(q+1)^2} = \frac{1}{q^2} + \frac{1}{(q+1)^2} - \frac{2}{q(q+1)}$... actually let me just compute:
+$$\sum_{q=1}^{N-1} \frac{1}{q^2(q+1)^2}$$
+Since $\frac{1}{q(q+1)} = \frac{1}{q} - \frac{1}{q+1}$, we get $\frac{1}{q^2(q+1)^2} = \left(\frac{1}{q} - \frac{1}{q+1}\right)^2 \leq \frac{1}{q^4}$ for large $q$.
+
+So $\sum_{q=1}^{N-1} 1/(q^2(q+1)^2) = O(1)$ (converges).
+
+But this is just the edges along the spine. There are also side branches. The variance of $f$ is:
+$$\text{Var}(f) = \frac{1}{V_N} \sum_{v} f(v)^2 - \left(\frac{1}{V_N} \sum_v f(v)\right)^2$$
+
+The fractions $k/q$ for $q \leq N$ are roughly uniformly distributed on $[0,1]$ (by Weyl's equidistribution), so $\text{Var}(f) \approx 1/12$.
+
+The spectral gap satisfies $\lambda_1 \leq \mathcal{E}(f,f) / \text{Var}(f)$ (for the unnormalized Laplacian version... I need to be careful about conventions).
+
+Hmm, I think I'm overcomplicating this. Let me just state the key structural facts and make a prediction.
+
+**Key structural fact**: $G_N$ is a tree on $V_N \sim 3N^2/\pi^2$ vertices, with diameter $\Theta(N)$ and bounded degree $O(1)$ (or at most $O(\log N)$).
+
+For bounded-degree trees, the spectral gap is determined by the tree's shape. Trees that are "more balanced" (like complete binary trees) have $\lambda_1 = \Theta(1/V)$, while "more path-like" trees have $\lambda_1 = \Theta(1/V^2)$ (when $V$ is the number of vertices and the diameter is $\Theta(V)$). For a tree with $V$ vertices and diameter $D$, we typically have $\lambda_1 = \Theta(D/V^2)$... no, that's not a standard formula.
+
+Let me use a different approach. For a tree with $n$ vertices and maximum degree $\Delta$, the spectral gap of the random walk Laplacian satisfies:
+
+$$\lambda_1 \geq \frac{1}{n \cdot \text{diam}(T)}$$
+
+This is because the resistance distance between the endpoints of the diameter is at most $\text{diam}(T)$ (each edge has resistance $1/w_e$ in some sense), and... actually, for unweighted graphs, the commute time between two vertices is $2m \cdot R_{uv}$ where $m$ is the number of edges and $R_{uv}$ is the effective resistance. For a tree, $R_{uv} = d(u,v)$ (the graph distance). So the commute time between the diameter endpoints is $2(n-1) \cdot D$.
+
+For the random walk on a tree with $n$ vertices and maximum degree $\Delta$, the mixing time is at most $O(n \cdot D)$ (by the commute time bound). The spectral gap is $\lambda_1 = \Omega(1/(n \cdot D))$.
+
+With $n = V_N = \Theta(N^2)$ and $D = \Theta(N)$, we get $\lambda_1 = \Omega(1/N^3)$.
+
+For the upper bound, consider the test function that is $+1$ on the "left" half of the spine and $-1$ on the "right" half. The Dirichlet form is dominated by the single edge that separates the two halves, giving $\mathcal{E}(f,f) = O(1)$ and $\text{Var}(f) = \Theta(V)$, so $\lambda_1 = O(1/V) = O(1/N^2)$.
+
+Hmm wait, the test function should be chosen more carefully. For the upper bound, we want a function with small Rayleigh quotient. Consider the function $f$ that equals the depth of the vertex in the tree (i.e., the graph distance from the root $0$). The variance of $f$ is $\Theta(N^2 \cdot N^2) / N^2 = \Theta(N^2)$... hmm, this isn't right.
+
+Let me reconsider. The tree has depth $\Theta(N)$ (the chain $0 \to 1/2 \to 1/3 \to \cdots \to 1/N$). But most vertices are at depth $\Theta(N)$ (since most fractions $k/q$ with $q \sim N$ are at depth $\sim N$... actually no, the depth of $k/q$ in the tree is related to the continued fraction expansion of $k/q$, not just to $q$).
+
+Hmm, let me reconsider the tree structure. The parent of $k/q$ in our tree is its nearest old neighbor. For a "generic" fraction $k/q$ (where the continued fraction $[0; a_1, a_2, \ldots, a_r]$ has bounded partial quotients), the depth is $O(\log q)$ because each step of the continued fraction traversal reduces the denominator significantly. But for fractions like $1/q$ (continued fraction $[0; q]$), the depth is $O(q)$ because we trace the chain $1/q \to 1/(q-1) \to \cdots \to 1/2 \to 0$.
+
+So the depth distribution is quite uneven. Most vertices (by count) have depth $\Theta(\log N)$, but there exist vertices at depth $\Theta(N)$.
+
+For the spectral gap, the key is the bottleneck. The edge $1/q \leftrightarrow 1/(q-1)$ separates $1/q, 1/(q+1), \ldots, 1/N$ (and their side branches) from the rest. The size of the subtree containing $1/N$ is $\sum_{m=q}^{N} (\text{number of descendants of depth } m \text{ in subtree})$. Hmm, this is getting complicated.
+
+Let me just estimate. The subtree containing $1/N$ after cutting edge $(1/q, 1/(q-1))$ contains the chain $1/q \to 1/(q+1) \to \cdots \to 1/N$ plus all their descendants. The number of vertices in this subtree is $\sum_{m=q}^{N} \phi(m) + (\text{descendants in side branches})$.
+
+Actually, the side branches from $1/q$ are: $1/(q+1)$ (the chain continues), plus any fraction $j/m$ with $m > q$ that has $1/q$ as its nearest old neighbor. These are typically fractions very close to $1/q$, so there are only a few. Similarly for $1/(q+1)$, etc.
+
+I think the subtree rooted at $1/q$ (containing $1/q, 1/(q+1), \ldots, 1/N$ and all their descendants) has size approximately $\sum_{m=q}^{N} \phi(m) \approx 3(N^2 - q^2)/(2\pi^2)$. For $q = N/2$, this is $\approx 3 \cdot 3N^2/4 / (2\pi^2) = 9N^2/(8\pi^2) \approx 0.38 N^2$. The other side has $V_N - 0.38 N^2 \approx 0.62 N^2$. So the Cheeger constant is $h \leq 1/(0.38 N^2) = O(1/N^2)$.
+
+And the lower bound: for any edge, the smaller side has at most $V_N/2$ vertices. For edges along the spine, the smaller side has $\Theta(\sum_{m=1}^{q} \phi(m)) = \Theta(q^2)$ vertices (for the edge between $1/(q+1)$ and $1/q$, the smaller side is the subtree containing $1/(q+1), \ldots, 1/N$ which has size $\sum_{m=q+1}^{N} \phi(m) \approx 3(N^2 - q^2)/(2\pi^2)$; or the other side which has size $\approx 3q^2/(2\pi^2)$).
+
+Wait, the two sides of the edge $(1/(q+1), 1/q)$ are:
+- Side A: everything connected to $1/(q+1)$ without using this edge. This includes $1/(q+1)$ and all its descendants (the chain $1/(q+1) \to 1/(q+2) \to \cdots \to 1/N$ plus side branches).
+- Side B: everything connected to $1/q$ without using this edge. This includes $1/q$ and all other vertices in the tree.
+
+Side A has size $\approx \sum_{m=q+1}^{N} \phi(m) \approx 3(N^2 - q^2)/(2\pi^2)$. Side B has size $\approx 3q^2/(2\pi^2)$. 
+
+If $q \approx N/\sqrt{2}$, both sides are $\approx V_N/2$. Then $h \leq 1/(V_N/2) = 2/V_N = O(1/N^2)$.
+
+But we also need to check edges in the side branches. For edges in side branches, one side might be very small (just a subtree of $O(1)$ vertices), giving $h \geq 1/O(1) = O(1)$. So the bottleneck is indeed along the spine.
+
+Therefore, $h(G_N) = \Theta(1/N^2) = \Theta(1/V_N)$.
+
+And the spectral gap $\lambda_1 = \Theta(h^2) = \Theta(1/N^4)$? No, for the Cheeger inequality: $h^2/(2d_{\max}) \leq \lambda_1 \leq 2h$.
+
+With $h = \Theta(1/N^2)$ and $d_{\max} = O(1)$: $\lambda_1 = \Omega(1/N^4)$ and $\lambda_1 = O(1/N^2)$.
+
+The tighter bound depends on the actual tree structure. For a path, $\lambda_1 = \Theta(1/n^2)$ and $h = \Theta(1/n)$, so $\lambda_1 = \Theta(h^2)$, meaning the lower bound is tight. For a complete binary tree, $h = \Theta(1/n)$ and $\lambda_1 = \Theta(1/n)$, so $\lambda_1 = \Theta(h)$, meaning the upper

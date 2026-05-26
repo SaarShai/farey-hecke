@@ -1,0 +1,153 @@
+# Adversarial Audit: FINAL_DISCOVERIES_v7
+
+---
+
+## Claim-by-Claim Analysis
+
+### Claim 1: C = (½)·∏_p(1 + 1/(p²(p−1))) ≈ 0.66989 is asymptote of NW(Q)
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 1 | NW(Q) asymptote via Euler product | **MEDIUM** | Single verification point (Q=500000) ≠ asymptotic convergence. Need log-log plot of |NW(Q)−C| vs Q to establish rate, plus at least 5–10 values of Q spanning orders of magnitude. A hostile referee: "You've shown NW(500000) ≈ C, not that NW(Q) → C." | **Insufficient** — need convergence-rate evidence across multiple Q | **Insufficient** — need derivation from first principles (sieve/local density argument) showing why each prime contributes the stated factor | **Not ready** — needs multi-Q convergence study + proof sketch |
+
+The Euler product itself is well-defined and converges. The structure ∏_p(1 + 1/(p²(p−1))) is reminiscent of sieve correction factors (cf. square-free density 6/π² = ∏_p(1−1/p²)), and the ½ prefactor likely arises from a symmetry argument. The constant is plausible but unverified as an *asymptote*.
+
+---
+
+### Claim 2: MUSIC recovers L-zeros from prime data in 10 settings
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 2 | MUSIC spectral method across 10 L-function families | **MEDIUM** | Circularity: the explicit formula *already* encodes zeros in prime data; MUSIC is solving a known inverse problem, not discovering structure. For ζ and function fields, zeros are independently known — you're validating against known answers. For Sym⁵(Δ), you *can't* independently verify, so the strongest claim is also the weakest-supported. | **Partially** — needs (a) head-to-head comparison with Odlyzko–Schönhage/Dokchitser, (b) blind tests where zeros are withheld, (c) failure-mode analysis for closely-spaced zeros | **Insufficient** — no analysis of when/why MUSIC succeeds, no convergence guarantees, no model-order selection theory | **Not ready** — compelling concept demo, not yet a robust result |
+
+**Novelty assessment**: Using spectral estimation for L-zeros is not entirely new in spirit — Odlyzko's early work used Fourier methods, and there's scattered signal-processing-adjacent work in computational number theory. However, a systematic MUSIC-based pipeline validated across this breadth of L-function families (especially Sym²–Sym⁵) appears to be genuinely novel. The **concept bridge** (MUSIC + explicit formula) is the contribution, not any individual computation.
+
+**On the 10 settings**: This is a *concept demonstration*, not a robust result in its current form. Here's why:
+
+| Setting | Verification quality | Notes |
+|---------|---------------------|-------|
+| ζ (Riemann) | Trivial — zeros known to 10¹³ | No information gained |
+| Function field | Easy — Weil bounds constrain zeros algebraically | Constrained problem |
+| Dirichlet L | Moderate — zeros computed by others | Standard benchmark |
+| Δ (modular) | Good — Dokchitser-type methods available | Genuine test |
+| EC | Good — Birch–Swinnerton-Dyer framework | Genuine test |
+| Selberg | Moderate | Less standard |
+| Sym² Δ | Hard — fewer independent computations | Strongest claim |
+| Sym³ Δ | Very hard | Strongest claim |
+| Sym⁴ Δ | Very hard | Strongest claim |
+| Sym⁵ Δ | Extremely hard — possibly no independent verification | Claim weakest here |
+
+The hierarchy is clear: the settings where MUSIC is most needed (Sym⁴, Sym⁵) are precisely those where validation is hardest.
+
+---
+
+### Claim 3: Cramér-Rao bound Var(γ̂_k) ≥ 12σ²γ_k²/T³
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 3 | New CR bound for L-zero estimation | **MEDIUM** | This is a *straightforward application* of classical CR theory (Kay 1993, Stoica & Nehorai 1989) to the explicit formula signal model. The T³ dependence is the standard frequency-estimation CR scaling with data length. The γ_k² factor likely arises from amplitude scaling (x^{ρ_k}/ρ_k has amplitude ~T^{1/2}/γ_k). A hostile referee: "This is Exercise 7.3 in a graduate signal processing textbook, rephrased for L-functions." | N/A — theoretical claim | **Partially** — needs (a) explicit derivation showing all steps, (b) identification of σ² as a precise number-theoretic quantity, (c) comparison with any existing uncertainty estimates for zero computation | **Borderline** — the bridge result has value if properly contextualized, but novelty claims must be modest |
+
+**Novelty assessment**: The CR bound for sinusoidal frequency estimation is classical:
+$$\text{Var}(\hat{f}) \geq \frac{12\sigma^2}{4\pi^2 A^2 N^3}$$
+for N samples of a sinusoid with amplitude A in noise σ². Adapting this to the explicit formula model — where zeros contribute terms x^{iγ_k}/(½+iγ_k) — is mathematically routine but **may not have been explicitly written down** in the L-function literature. The question is whether "known result from field A, applied in field B" constitutes novelty. In an information-theoretic or applied-math venue, possibly yes. In a number theory venue, this needs to be sold very carefully.
+
+**What would make this publishable**: If σ² has a clean interpretation (e.g., σ² relates to the contribution of primes p > X for cutoff X, giving a prime-sum remainder), and the bound implies concrete limitations on zero computation from finite prime data, this becomes a useful *tool* rather than a curiosity.
+
+---
+
+### Claim 4: Cluster size = 2 universality for top-quantile Farey gaps
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 4 | Top-quantile Farey gaps cluster in pairs | **MEDIUM-LOW** | "Universality" across what? All Q? The claim needs: (a) a precise definition of "top-quantile" (top 1%? top 0.1%?), (b) evidence that the cluster size doesn't drift with Q, (c) a mechanism. The three-distance theorem constrains gap structure, but "cluster size = 2" seems to require a specific coupling argument that isn't provided. | **Insufficient** — need systematic study across Q values and quantile thresholds | **Insufficient** — no mechanism proposed; the three-distance theorem is relevant but doesn't immediately explain cluster=2 | **Not ready** |
+
+---
+
+### Claim 5: NW(Q) spikes — real phenomenon, partial rule m∈{3,7}
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 5 | Sporadic spikes in NW(Q) | **LOW** | After the m=11 refutation, you have exactly **two** data points (m=3, m=7) supporting the "partial rule." Two data points can fit any pattern. The "spikes" might be: (a) genuine number-theoretic signal, (b) numerical artifacts, (c) selection bias from searching for patterns. Without a mechanism linking m∈{3,7} to spike structure, this is post-hoc storytelling. | **Insufficient** — need to catalog ALL spikes (not just m∈{3,7}), test for enrichment vs. null model, and explain the m=11 failure | **Insufficient** — no mechanism | **Not publishable** |
+
+**Harsh but fair assessment**: After m=11 fails, the residual claim is: "There exist sporadic spikes in NW(Q), and two of them happen to correspond to m=3 and m=7." This is observation, not discovery. To publish this, you would need:
+1. A precise, non-adaptive definition of "spike" (defined *before* looking at the data)
+2. A null model for spike frequency under random perturbation
+3. A statistical test showing the observed rate exceeds the null
+4. Ideally, a structural explanation
+
+Without (1)–(4), this is numerology.
+
+---
+
+### Claim 6: lag-1 Corr(d_i, d_{i+1}) → 1/2 in Farey gaps
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 6 | Consecutive Farey gap correlation → ½ | **MEDIUM** | The shared denominator structure (consecutive gaps 1/(bd) and 1/(de) share factor d) naturally creates positive correlation. But ½ is a *specific* value — a hostile referee demands: "Derive it." The claim also needs: exact statement (pointwise? averaged over interior of [0,1]?), convergence rate, and dependence on Q. | **Partially** — if verified across many Q with convergence rate plotted | **Insufficient** — needs derivation, even heuristic | **Borderline** — the observation is clean and testable; needs a proof or at least a compelling heuristic |
+
+This is actually one of the more *publishable* observations, IF the ½ can be derived. The structure of the argument would go: consecutive Farey fractions a/b, c/d, e/f have gaps 1/(bd) and 1/(de). The denominator d creates coupling. Under the Gauss–Kuzmin distribution for Farey denominators, E[1/(bd·de)] / E[1/(bd)²] can potentially be computed, yielding ½.
+
+---
+
+### Claim 7: D*(F^prime_N)/D*(F_N) → 1/2 at large N
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 7 | Prime-restricted Farey discrepancy ratio → ½ | **LOW** | What is F^prime_N precisely? Fractions with prime denominators? Numerators? The factor ½ needs explanation. If it's a density effect (primes have density ~1/log N), the factor shouldn't be ½ — it should vanish. If it's a cancellation effect, where does ½ come from? Without definitions and derivation, this is a naked number. | **Insufficient** — not enough context to evaluate | **Insufficient** — no derivation | **Not ready** |
+
+---
+
+### Claim 8: D*(F_N) = 1/N − π²/(3N²) + O(1/N³)
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 8 | Farey discrepancy expansion | **MEDIUM** | The leading term 1/N is plausible for a normalized discrepancy. The π²/3 coefficient is suspiciously clean (it's 2ζ(2)), suggesting a derivation exists. A hostile referee: "What is D*? If it's the classical star-discrepancy, this is known or follows from Franel–Landau. If it's something else, define it." The O(1/N³) error term needs justification. | **Partially** — fit expansion coefficients numerically with multiple N values | **Insufficient** — needs derivation from definition of D* | **Potentially publishable** if D* is precisely defined and the expansion is derived |
+
+Note: The Franel–Landau formula connects Farey discrepancy to the Riemann Hypothesis. If this expansion is related, it could be significant. But the connection must be made explicit.
+
+---
+
+### Claim 9: Δ(A) = −2 Re[χ̄(A) log L(q^{−1/2}, χ)]
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 9 | Character sum / L-function identity | **LOW** | "Heuristic, near-rigorous" is not a mathematical status. Either prove it or label it a conjecture. A hostile referee: "I see no proof. I see no definition of 'near-rigorous.' This is a conjecture sold as a near-result." | Could support heuristic | **Insufficient** — needs proof or explicit conjecture status | **Not publishable as stated** — rewrite as Conjecture with evidence |
+
+---
+
+### Claim 10: 2D Farey predicts cluster = 3
+
+| # | Claim | Confidence | Strongest objection | Empirical sufficient? | Theoretical sufficient? | Verdict |
+|---|-------|-----------|-------------------|----------------------|------------------------|---------|
+| 10 | 2D Farey cluster prediction | **UNCERTAIN** | Untested. A prediction is not a result. | **No** — explicitly untested | **No** — just a prediction | **Not applicable** — test it first |
+
+---
+
+## Summary Verdict Table
+
+| # | Claim | Confidence | Verdict |
+|---|-------|-----------|---------|
+| 1 | NW asymptote | MEDIUM | **Needs multi-Q convergence study + proof sketch** |
+| 2 | MUSIC 10-settings | MEDIUM | **Concept demo, not yet robust; Sym⁴/⁵ validation is the key** |
+| 3 | CR bound | MEDIUM | **Modest novelty as bridge result; needs careful contextualization** |
+| 4 | Cluster = 2 | MEDIUM-LOW | **Needs mechanism + systematic quantile study** |
+| 5 | NW spikes | LOW | **Not publishable after m=11 failure; two data points ≠ pattern** |
+| 6 | Corr → 1/2 | MEDIUM | **Cleanest observational claim; publishable IF derived** |
+| 7 | D*/D* → 1/2 | LOW | **Needs definitions + derivation** |
+| 8 | D* expansion | MEDIUM | **Potentially publishable with proper definitions** |
+| 9 | Δ(A) formula | LOW | **Rewrite as conjecture or prove it** |
+| 10 | 2D cluster = 3 | UNCERTAIN | **Untested; not a result** |
+
+---
+
+## Bottom Line
+
+**Publishable now (with polish)**: **Claim 6** (Corr → ½) — it's clean, testable, specific, and the shared-denominator structure provides a plausible path to proof. **Claim 8** (D* expansion) — if D* is precisely defined and the expansion verified numerically.
+
+**Publishable with significant additional work (6–12 months)**: **Claim 1** (needs convergence rate study + proof sketch), **Claim 2** (needs blind validation protocol + failure analysis + Dokchitser comparison), **Claim 3** (needs careful derivation + number-theoretic interpretation of σ²).
+
+**Not publishable in current form**: **Claims 5, 7, 9** — each has a fatal flaw (insufficient evidence / missing definitions / heuristic status).
+
+**Premature**: **Claims 4, 10** — interesting directions but underdeveloped.
+
+**The single strongest recommendation**: Prioritize **Claim 6** (proof of Corr → ½) as the quickest path to a clean publication. It combines an elegant observation with a tractable proof strategy via Gauss–Kuzmin statistics. Then pursue **Claim 2** as a longer-term project with rigorous validation protocols.

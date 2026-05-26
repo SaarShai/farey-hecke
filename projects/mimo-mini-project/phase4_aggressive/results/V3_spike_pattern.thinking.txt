@@ -1,0 +1,233 @@
+This is a fascinating question about the discrepancy of Farey sequences and the normalized quantity NW(Q). Let me think carefully about what's known and what might be happening here.
+
+## What I know about this topic
+
+### The Franel-Landau identity and Farey discrepancy
+
+The discrepancy of Farey sequences is a classical topic. The key object is E_Q(x), the error term in the counting function of the Farey sequence of order Q.
+
+The second moment of the discrepancy, J(Q) = ∫₀¹ E_Q(x)² dx, has been studied. 
+
+Let me recall the Mikolás formula. The key identity connects the integral J(Q) to exponential sums over the Farey sequence. Through Möbius inversion and Fourier analysis, J(Q) relates to sums involving |Σ_{d|gcd(m,n)} μ(d)|² and divisor-like sums. For normalized discrepancy W(Q) = J(Q)/Φ(Q), I need to recall what the asymptotic behavior is. The key result from Franel (1924) and Landau is that ∫₀¹ E_Q(x)² dx should grow like (1/2π²) log Q asymptotically, which means W(Q) grows logarithmically.
+
+Let me work through the definition more carefully. The discrepancy E_Q(x) is bounded by O(log Q) from classical results, and Hall showed that this bound is achieved at infinitely many points but also drops to O(1) infinitely often. The second moment J(Q) involves integrating E_Q(x)² over [0,1], and the asymptotic analysis suggests J(Q) grows as c · Q · log Q for some constant c, though I'm uncertain about the exact coefficient.
+
+Looking at the numerical data the user provided—where NW(Q) stabilizes around 0.67 for large Q values—this suggests the limit exists and is approximately 0.66989208, which matches the closed-form candidate they're showing.
+
+I'm trying to work through what Franel's result actually says. The discrepancy E_Q(x) itself is bounded by O(log Q), so J(Q) = ∫ E_Q(x)² dx would be O(log² Q) at most. But if NW(Q) = Q · J(Q) / Φ(Q) converges to a constant, that would mean J(Q) scales like Φ(Q)/Q, which doesn't quite match the logarithmic bound I'm thinking of. I need to reconsider whether I'm applying the right bound or if there's a different scaling at play here. Now I'm wondering whether the limit actually exists, since the numerical data shows these spikes appearing at specific values of Q rather than settling down. This connects to a classical question in number theory—how uniformly the Farey sequence distributes and what its second moment behavior looks like asymptotically.
+
+Looking at recent work, I found that Boca and Zaharescu established precise asymptotic expansions for the discrepancy between the actual distribution and uniform distribution, showing that the error term involves subtle arithmetic structure through a product over primes involving p⁻²(1 + p⁻²(p-1)⁻¹). This matches the Euler product we've been working with. When you normalize by multiplying by Q², the leading term gives a constant coefficient, which aligns with what we're seeing numerically.
+
+The real insight is that NW(Q) isn't just a simple limit—it has fluctuations that reflect the arithmetic properties of Q itself. These oscillations are multiplicative, arising from the prime factorization of Q, which explains why the convergence is so slow and why there are characteristic patterns in the error terms.
+
+Now I'm examining the specific Q values that show spikes. I notice that 300001 is squarefree and prime to 30, which is a distinctive property. But when I check 300000, it has a rich factorization with many prime powers. Since we're tracking NW(Q) = Q · W(Q), the jumps in W(Q) as we increment Q are governed by how the discrepancy integral changes, which depends on which fractions get added to the Farey sequence at each step.
+
+The key insight is that the integral J(Q) decomposes as Σ_{α ∈ F_Q} Σ_{β ∈ F_Q} m(α,β), where m is the minimum of α and β minus their product. When a new fraction with a large denominator d enters the sequence, it can create localized effects on the discrepancy.
+
+Now I'm considering how the Farey fractions relate to the Euler totient function. A fraction a/d with gcd(a,d) = 1 appears in F_Q when d ≤ Q, and the distribution of these fractions is heavily influenced by the arithmetic structure of d. For composite d with many small factors, the φ(d) fractions cluster differently than when d is prime. I'm wondering whether certain Q values that make fractions with arithmetic structure particularly prominent might explain the observed spikes in the discrepancy.
+
+The Möbius sum for d|Q is what I need to think about here, but I'm getting tangled up. Let me step back and consider the concept of totient summatory excess instead. The sum Σ_{n≤Q} φ(n) approximates 3Q²/π², and the error term Ψ(Q) = Σ_{n≤Q} φ(n) - 3Q²/π² has well-studied oscillations connected to the zeros of the Riemann zeta function. Piltz first proved that Σ φ(n) = 3Q²/π² + O(Q log Q), and the Dirichlet series Σ φ(n)/n^s can be expressed as ζ(s-1)/ζ(s), which connects this to deep properties of the zeta function.
+
+The error term Ψ(Q) is known to exhibit significant fluctuations—it's O(Q log Q) but can get as large as cQ log log log Q on average and drops to O(Q) under the Riemann Hypothesis. Under RH, the strong form gives Ψ(Q) = O(Q^{1/2+ε}), which would be dramatically better. Now I'm reconsidering how these fluctuations relate to the discrepancy in the Farey sequence.
+
+The quantity NW(Q) involves Φ(Q) = 1 + Σ_{n≤Q} φ(n) in the denominator, and the discrepancy E_Q(x) depends on which fractions appear in F_Q, so the prime factorization of Q influences both. For the spikes, I'm looking at specific factorizations: Q=290000 has a relatively large prime factor p=29, Q=300001 is squarefree with three primes, Q=350000 includes the factor 7, while Q=320000 is highly composite with many powers of 2 and 5.
+
+What's striking is that the spike values appear to be increasing—0.67849 at Q=290000, then 0.69835 at Q=300001, then 0.69149 at Q=350000—which is surprising if NW(Q) converges to a constant. This suggests either non-monotonic convergence with infinitely many such spikes at special Q values, or possibly the user's observations are capturing transient behavior rather than true asymptotic convergence.
+
+Now I'm examining the theory behind this discrepancy. The second moment of the Farey sequence discrepancy has a conjectured asymptotic form, and I'm looking at the Euler product that appears in the constant, which involves primes p and factors of p²(p-1) in the denominator. This product converges and should give us the limiting value NW(Q) approaches.
+
+The numerical evidence shows NW(Q) stabilizing around 0.6699, which aligns perfectly with this Euler product evaluated at roughly 0.66989208. But what's actually interesting is the fluctuation pattern—the function doesn't converge smoothly, and there are anomalous spikes appearing at specific values of Q, like 300001. I'm wondering whether these spikes follow a predictable pattern based on the prime factorization of Q, or if they're more erratic.
+
+Now I'm reconsidering what drives these fluctuations. They likely stem from how the prime factors of Q interact with the Farey fraction construction—the smoothness properties and how p-adic contributions build up. There's a classical perspective here involving the Farey sequence as a modular arithmetic object. When Q jumps from Q-1 to Q, new fractions appear corresponding to the reduced forms a/Q with 1 ≤ a ≤ Q and gcd(a,Q)=1. The key is understanding how these new fractions distribute across the interval and whether they cluster in particular regions, which would create local spikes in the discrepancy.
+
+The real complication is that inserting new fractions doesn't just add them uniformly—it shifts the error function locally, and these shifts interact with the existing structure in complex ways. Looking at the specific values where spikes occur, I notice Q=300001 and Q=350000 stand out, while Q=320000 doesn't spike. This suggests the arithmetic properties of Q itself might be determining which values produce spikes.
+
+Let me examine the divisors and factorizations of these Q values more carefully. When I add a new denominator d to the Farey sequence, it contributes φ(d) new fractions, and for smooth numbers like d=290000, there are many denominators that become newly admissible. But actually, I need to reconsider what "admissible" means here—when we move from F_{Q-1} to F_Q, we're not adding all fractions with denominator Q, we're adding exactly the fractions a/Q where gcd(a,Q)=1, since smaller denominators already had their fractions included.
+
+The key insight is that the effect of these new fractions depends heavily on their distribution across [0,1]. For Q=p prime, the φ(p)=p-1 new fractions are nearly evenly spaced with gaps of roughly 1/p. But when Q is composite with small prime factors like 2 and 5, the φ(Q) fractions cluster in specific patterns determined by the Chinese Remainder Theorem. Looking at the specific cases: at Q=300001 (squarefree), the fractions avoid positions divisible by 13, 47, or 491, creating a particular exclusion pattern across the interval. At Q=320000=2^9·5^4, the structure is quite different.
+
+Now examining the raw W(Q) values from the data: W(Q) stays relatively stable around 0.00000268 for Q=250000 and Q=270000, but then jumps noticeably to 0.00000234 at Q=290000, suggesting something fundamental shifts in how the Farey fractions distribute at this threshold.
+
+Looking more closely at the normalization, NW(Q) = Q · W(Q) should approximate the constant C ≈ 0.66989, which means W(Q) ≈ C/Q. The spike at Q=300001 pushes NW(Q) up to 0.69835, about 4.2% above C, which is a surprisingly significant deviation.
+
+What's interesting is that 300001 is squarefree, yet this property doesn't seem to consistently produce spikes across other squarefree numbers, so there's likely something specific about how this particular factorization interacts with the Farey fraction structure.
+
+I'm now shifting to think about this more directly through the discrepancy function. The classical result is that the mean square of the discrepancy satisfies ∫₀¹ E_Q(x)² dx = Θ(log Q / Q), which means W(Q) ≈ c · log Q / Q. But the data seems to contradict this—the NW(Q) values appear to stabilize around 0.67 rather than growing with log Q, which suggests either my asymptotic estimate is off or the normalization is handling this differently than I initially thought. I need to verify what Franel's classical result actually says about this discrepancy.
+
+Let me work through the asymptotics more carefully using the standard approximation Σ_{n≤Q} φ(n) ≈ 3Q²/π². This gives me Φ(Q) ≈ 3Q²/π², and if the discrepancy E_Q(x) behaves like O(log Q) in the worst case but O(√log Q) on average, then J(Q) = ∫ E_Q² dx would be roughly O(log Q). That would make W(Q) ≈ π² log Q / (3Q²), but this still doesn't match the apparent convergence in the numerical data.
+
+Let me check the actual numbers to see what's happening. The computed values show NW(Q) stabilizing around 0.67 for large Q, which would mean W(Q) ≈ 0.67/Q. Plugging this back in gives J(Q) ≈ 0.67 Φ(Q)/Q ≈ 2.01 Q/π², and taking the square root suggests E_Q is roughly O(√Q) in root-mean-square sense.
+
+But I'm second-guessing myself here. The classical Franel-Landau result bounds the discrepancy at each point x, which would make J(Q) logarithmic. If that were true, NW(Q) would vanish asymptotically. Yet the numerical data clearly shows it approaching 0.67, so either my discrepancy bound is too loose or I'm conflating two different quantities. Let me reconsider what E_Q actually measures in this context.
+
+The discrepancy is counting Farey fractions up to x and comparing against the uniform measure Φ(Q)x. The maximum deviation is known to be O(log Q), achieved at points like 1/Q. Since Farey fractions cluster around rationals with small denominators, the RMS discrepancy could potentially reach O(√(log Q)), though I need to be careful about whether that's the right scaling.
+
+If the RMS is O(√(log Q)), then J(Q) would scale like log Q, making W(Q) ≈ C log Q / Q² and NW(Q) ≈ C log Q / Q, which would shrink to zero—contradicting the numerical evidence. This suggests the true RMS might be larger, maybe O(√Q), which would give J(Q) ≈ Q and align with what the data shows.
+
+Actually, I should think about this differently. The second moment of the discrepancy can be computed exactly: J(Q) = ∫₀¹ E_Q(x)² dx. If I express E_Q as a sum over Farey fractions with step functions, I can expand the square and compute the integral directly, which gives a sum over pairs of fractions weighted by their minimum value minus their product.
+
+Working through the algebra, this simplifies to Σ_{a,b} min(a,b) - Σ aΣ b = Σ_{a,b} min(a,b) - (Σa)². I need to evaluate this for Farey fractions, where I can index them in increasing order and use the known properties of their partial sums.
+
+Let me reconsider the structure more carefully. Expanding the square and using the fact that min(α,β) equals α·β plus a correction term involving their squared difference, I get that J(Q) = Φ(Q)/12 - (1/4) times the sum of squared differences between consecutive Farey fractions. This connects J(Q) directly to how the fractions are distributed—tighter clustering means larger J(Q), while more uniform spacing makes it smaller.
+
+For truly uniform points on [0,1], I'd expect Σ(αᵢ - αⱼ)² ≈ 2Φ²/3 on average, which would give J(Q) ≈ Φ(Q)/12 - Φ²/6. Since Φ grows like Q², this expression turns negative for large Q, suggesting my analysis is missing something fundamental about the structure here.
+
+Let me recalculate by expanding the squared difference sum more carefully. I can separate this into the diagonal terms and the cross terms, which gives me Σᵢ Σⱼ(αᵢ - αⱼ)² = 2Φ Σᵢ αᵢ² - 2(Σᵢ αᵢ)². For points uniformly distributed on [0,1], the first sum approaches Φ/3 while the second approaches Φ/4, so the ratio Σᵢ αᵢ²/Φ should approach 1/3 as Φ grows.
+
+Plugging this into the formula for J(Q), I get Φ/12 - 1/6(2Φ · Φ/3 - 2Φ²/4) = Φ/12 - Φ/3 + Φ/6, which simplifies to Φ/12 + Φ/6 - Φ/3.
+
+This gives -Φ/12, a negative result that indicates my calculation is off. The issue might be that for a continuous uniform distribution on [0,1], the double integral ∫∫ min(x,y) dxdy evaluates to 1/3, which means J should equal 1/3 - (1/2)² = 1/12 > 0, so I need to reconsider how the discrete sum relates to the continuous case.
+
+The discrete version J(Q) = Σ Σ min(αᵢ, αⱼ)/Φ² - (Σ αᵢ/Φ)² represents the discrete second moment, and for uniform points the sums should approximate their integral counterparts. But the result -Φ/12 (which is negative and growing with Q) suggests my algebra has an error. Let me recalculate the sum of squared differences more carefully, starting with the case Q=1 where F_1 = {0, 1}.
+
+For Q=2, F_2 = {0, 1/2, 1} with Φ = 3, and I get J(2) = -3/4, which is clearly wrong since J should be non-negative. This tells me I've made a fundamental error somewhere in my derivation, likely in how I'm handling the sum of squared differences between all pairs of Farey fractions.
+
+Let me reconsider the formula. If I expand the sum of squared differences between consecutive fractions and work through the algebra, I get Σᵢ Σⱼ (αᵢ - αⱼ)² = 2Φ Σᵢ αᵢ² - 2(Σᵢ αᵢ)², which then gives me J = Φ/12 - (Φ/3 - 1/4). When Φ = 3, this yields -3/4 again, so something's definitely off with my approach.
+
+I'm going to step back and compute J(2) directly from scratch. With the three fractions 0, 1/2, and 1, I'm expanding the sum of min(αᵢ, αⱼ) over all pairs to get 2. Then I calculate the two correction terms: the sum of products equals 1/4, and the squared sum of fractions divided by 3 gives 1/6. So J(2) = 2 - 1/4 - 1/6 = 19/12. Now I'm checking this against the formula I derived to see where the mismatch is.
+
+The direct computation gives J(2) = 19/12, but my derived formula produces -1/3, so there's definitely an algebra error somewhere. Let me trace back through my expansion of Σᵢ Σⱼ (αᵢ - αⱼ)² to find where things went wrong.
+
+When I expand the cross terms, I get Σᵢ Σⱼ αᵢαⱼ = (Σᵢ αᵢ)², which is correct. But when I substitute this into my formula for J, I get 19/12 = 3/12 - (-1/4), which gives 4/3, not 19/12—so something still doesn't match up.
+
+Let me recalculate the sum of squared differences directly for the pair {0, 1/2, 1}: that's 0 + 1/4 + 1 + 1/4 + 0 + 1/4 = 7/4. Plugging this back in: 3/12 - 7/24 = 6/24 - 7/24 = -1/24, which doesn't equal 19/12 either. I need to figure out what's wrong with the formula itself.
+
+Now I'm wondering if the issue is with how the sum of min(αᵢ, αⱼ) relates to my expression. For symmetric distributions, Σᵢ Σⱼ min(αᵢ, αⱼ) should equal Σᵢ Σⱼ max(αᵢ, αⱼ), and since min + max = αᵢ + αⱼ, the sum of all mins plus all maxes should equal twice the sum of all αᵢ + αⱼ terms.
+
+That means the total across both should be 2Φ · Σᵢ αᵢ, which for Q=2 gives 2 · 3 · 1/2 = 3. So if min and max contribute equally, each sum should be 3/2, but I calculated the min sum as 2, which is a contradiction. Let me recompute this directly by enumerating all pairs from {0, 1/2, 1} to see where the discrepancy is. I'm summing all the pairwise values to get 2, but when I check the relationship min(αᵢ,αⱼ) + max(αᵢ,αⱼ) = αᵢ + αⱼ, I'm getting 2 ≠ 3, which means I made an error somewhere. Let me recalculate the pairwise maximums directly: (0,0) gives 0, (0,1/2) gives 1/2, (0,1) gives 1, and (1/2,0) gives 1/2.
+
+Continuing through the rest of the pairs—the (1/2,1/2) and (1/2,1) cases, then the (1,0), (1,1/2), and (1,1) cases—I get a total of 2 for the maximums as well. So both the minimum sum and maximum sum equal 2, which means min + max = 4, but αᵢ + αⱼ = 3. This doesn't match, so I'm checking my pair enumeration to see if I'm counting the 9 combinations correctly.
+
+Let me verify this identity holds: for each pair (αᵢ, αⱼ), min + max should equal αᵢ + αⱼ. I'm summing this over all 9 pairs, and the right side gives Σᵢ Σⱼ (αᵢ + αⱼ) = Σᵢ Σⱼ αᵢ + Σᵢ Σⱼ αⱼ = Φ Σᵢ αᵢ + Φ Σⱼ αⱼ = 2Φ Σᵢ αᵢ = 2 · 3 · (0 + 1/2 + 1) = 9. But the left side gives Σᵢ Σⱼ min(αᵢ, αⱼ) + Σᵢ Σⱼ max(αᵢ, αⱼ) = 2 + 2 = 4, which doesn't equal 9. So my direct calculation of the minimum sum is definitely wrong—let me recompute the minimum values for each pair.
+
+Continuing with the calculation...
+
+The minimum sum works out to 3, matching the expected value. So ∫₀¹ E_Q(x)² dx = 3 - 1/4 - 3/6 = 19/12.
+
+Now I'm reconsidering what J(Q) should actually represent. The quantity W(Q) = J(Q)/Φ(Q) should vanish as Q grows if J(Q) grows slower than Φ(Q), but the numerical data shows W(Q) staying around 0.67/Q rather than decaying, which suggests J(Q) is actually growing in proportion to Q itself.
+
+Let me work through this more carefully using the asymptotic approximations. If W(Q) ≈ C/Q and Φ(Q) ≈ 3Q²/π², then J(Q) should be roughly 3CQ/π². The discrepancy E_Q(x) has RMS values on the order of √Q, which means its second moment integral is indeed proportional to Q—this aligns perfectly with the numerical pattern I'm seeing.
+
+Now I'm checking whether this contradicts the classical Franel result that |E_Q(x)| ≤ O(log Q). The classical bound is pointwise, so it's possible for the function to concentrate its mass in narrow regions while keeping the second moment large. The key question is whether these two behaviors can coexist. Looking back at the Franel bounds, I see the limit actually fluctuates based on the distribution of Farey fractions—specifically how concentrated they are around each x. For most points the Farey fractions distribute evenly, giving an average ratio near 1/2, which would suggest the limit should be 1/2 rather than 0.67.
+
+The discrepancy arises because Farey fractions cluster near rational numbers with small denominators, creating a non-uniform distribution that boosts the sum beyond what you'd expect from true randomness. I'm now thinking this through with a simplified model: if Farey fractions act like uniform random points, the expected sum would be Φ/3, but the actual arrangement generates correlations that push the integral higher.
+
+The excess above this random baseline is what J(Q) captures, measuring how strongly the fractions cluster around simple rationals. I'm decomposing this into the random component of order Φ² and the structured clustering term of order Φ times Q. This connects to well-studied problems in discrepancy theory about how uniformly sequences can distribute.
+
+Now I'm thinking through the statistical properties more carefully. The key question is whether W(Q) converges as Q grows, and the numerical evidence suggests it does stabilize around 0.67/Q rather than fluctuating wildly, though there are occasional deviations at specific values of Q.
+
+Let me work through the Dirichlet series approach to pin down the exact constant. Using the identity φ(n) = Σ_{d|n} d·μ(n/d), I can express the double sum in terms of divisor sums and the Möbius function, which should help me extract the asymptotic behavior. Continuing to simplify the expression, I'm rewriting the sum over m and factoring out the common term, which gives me Σ_m m^{-s} · Σ_n (Σ_{d|gcd(m,n)} μ(d))² · n^{-s}. Now I'm decomposing the inner sum using the fact that gcd(m,n) depends only on the prime factors shared between m and n.
+
+Actually, I should step back—this is getting tangled up. Let me pivot and look for what Boca and Zaharescu actually proved about Farey sequence discrepancy back in 2005. They studied the distribution of Farey fractions and the error term E_Q(x), showing that the integral of E_Q(x)² grows like c · Q² log Q for some computable constant c. This would mean W(Q) behaves like c' · log Q / Q² and NW(Q) decays like c' · log Q / Q, approaching zero as Q increases. But the numerical evidence contradicts this—the data shows NW(Q) stabilizing around 0.67 for large Q, which means J(Q) must actually grow linearly in Q, not logarithmically.
+
+Reconsidering: if J(Q) ≈ C · Q with C ≈ 0.67π²/3 ≈ 2.2, then E_Q(x) has an RMS value of roughly √Q. But this clashes with the classical result that |E_Q(x)| is bounded by log Q. Let me check this bound against the actual data—for Q = 10^5, log Q ≈ 11.5, and if Φ ≈ 3 · 10^10 / π² ≈ 3 · 10^9, then E_Q(x) shouldn't exceed about 11.5, which seems inconsistent with needing an RMS of √Q ≈ 316. The classical O(log Q) bound might be too loose, or I'm conflating different error terms.
+
+I think I've been misinterpreting J(Q). Looking at the definition more carefully: E_Q(x) counts Farey fractions up to x and subtracts the expected count Φ(Q) · x. The classical discrepancy bound gives max |E_Q(x)| = O(log Q), so J(Q) = ∫ E_Q² dx is at most O(log² Q). This means W(Q) = J(Q)/Φ(Q) is bounded by O(log² Q / Φ), which for Q = 10^5 gives roughly 10^{-7}, not the scale I was getting before.
+
+But the numerical evidence shows W(250000) ≈ 2.68 · 10^{-6}, which is about 26 times larger. This suggests either the classical bound is much tighter than my calculation shows, or I'm missing something about how the discrepancy actually behaves. Let me recalculate more carefully with the concrete values: Q = 250000, Φ ≈ 1.9 · 10^{10}, and the observed W(250000) = 0.67050/250000 ≈ 2.682 · 10^{-6}, which means J(250000) is roughly 51 times larger than my O(log² Q) estimate would predict.
+
+If the average squared discrepancy is around 2.68 · 10^{-6}, then the RMS discrepancy works out to roughly 0.00164, which is much smaller than the theoretical bound of about 390. This is entirely plausible—the bound is just extremely loose. Now I'm checking whether J(Q) really does scale linearly with Q by testing the values at Q = 250000 and Q = 270000, which both give ratios around 2.17 when I multiply Φ by 0.67.
+
+But when I look at Q = 300001, the ratio jumps to about 2.30, showing a clear spike. This suggests J(Q) might not be strictly linear in Q after all—there's probably a leading term that's linear plus some fluctuating corrections. If J(Q) truly grows linearly, then the squared error E_Q(x)² must have an average value that doesn't vanish as Q increases, which would require E_Q(x) itself to grow like √Q. Yet the classical bound is O(log Q), and since log Q grows much slower than √Q, this seems contradictory unless the classical result I'm recalling is either incorrect or applies to a different quantity.
+
+Let me reconsider whether the discrepancy E_Q(x) is actually bounded by O(log Q). I'm second-guessing myself on the precise statement—maybe it's only for specific x values, or maybe the classical bound is different than I thought. The Erdős-Turán inequality connects discrepancy to exponential sums over Farey fractions, and for the Farey sequence the exponential sums satisfy |Σ_{α∈F_Q} e(αm)| = O(Q log Q / m), but I'm not confident in the exact exponent here. I need to be more careful about what the literature actually says rather than relying on uncertain recollections.
+
+Let me recalculate from the numbers directly. If J(Q) ≈ C · Q with C ≈ 2.2, then at Q = 250000 I get J ≈ 550000, and since E_Q(x)² is at most (log Q)² ≈ 1521, the integral would be at most 1521. That's only about 2.8 times larger than my estimate, which isn't a contradiction—the classical bound is just quite loose. Let me verify the bound itself: E_Q(x) = Σ_{α∈F_Q, α≤x} 1 - Φ · x, and since the sum is at most Φ and Φ · x is at most Φ, we have |E_Q(x)| ≤ Φ, which gives J(Q) ≤ Φ² ≈ 3.6 · 10^{20}. That's clearly too generous, so I need to reconsider the problem setup. I think E_Q(x) actually measures the discrepancy between the counting function of Farey fractions up to x and the linear function Φx, and the classical bound for this is |E_Q(x)| ≤ 1 + log Q (though I'm not entirely certain of the exact form).
+
+Now I'm working through the actual computation: for Q = 250000, the logarithmic bound gives |E_Q(x)| ≤ 12.4, so the integral J(Q) is at most 154. But the numerical estimate from the data gives J(250000) ≈ 536400, which is three orders of magnitude larger—something's definitely wrong with my classical bound estimate.
+
+This suggests the classical bound I'm recalling is off by a lot, or perhaps the maximum discrepancy for Farey sequences is actually O(√Q) rather than O(log Q). Let me work backward from the data: if E_Q(x) has an RMS value around 730 and that's proportional to √Q, then √250000 ≈ 500, which is close. If NW(Q) converges to some constant as Q grows, that would mean J(Q) scales like Q, and E_Q(x) would have RMS scaling like √Q—this pattern suggests the true discrepancy bound might be tighter than I initially thought, possibly O(√(Q log Q)).
+
+Now I'm reconsidering what E_Q(x) actually represents. It's defined as the count of Farey fractions up to x minus the expected count Φ·x, which is essentially a non-centered discrepancy. For large Q, the count of fractions up to x is roughly Φ·x plus fluctuations of order √Φ, so the standard deviation should be around √Φ ≈ Q, making the RMS of E_Q roughly Q. But that contradicts my √Q estimate, so I need to think more carefully about whether the Farey fractions are behaving like uniform random points or if there's a deterministic structure creating larger deviations.
+
+The Farey sequence has strong correlations that push the RMS much higher than uniform random sampling would produce—fractions cluster near rationals with small denominators, creating systematic structure. Looking at the numerical evidence, if the second moment J(Q) scales as c·Q with c ≈ 2.2, then the RMS of E_Q is roughly 1.5·√Q, which aligns with the discrepancy data.
+
+Now I'm working through the asymptotic behavior: this means W(Q) ≈ c·Q/Φ(Q) ≈ cπ²/(3Q), so the normalized second moment NW(Q) ≈ cπ²/3 ≈ 7.2. But this contradicts what the data shows—NW(Q) is hovering around 0.67, not 7.2. I need to reconcile this discrepancy by checking whether my formula for J(Q) in terms of the scaled discrepancy is actually correct.
+
+Let me recalculate more carefully using the specific values. If W(250000) ≈ 2.682×10⁻⁶ and Φ(250000) is around 19×10⁹, then multiplying these gives J(250000) ≈ 50957, which is much smaller than my earlier estimate. This tells me the mean squared discrepancy is roughly 50957, or about 226² in root mean square terms.
+
+Now I'm checking whether this aligns with E_Q having an RMS scaling like √Q, and also verifying that the Franel bound of 1 + log Q is consistent with the numbers I'm working with.
+
+Actually, looking back at the classical discrepancy bounds for Farey fractions—I need to be more careful here. Hall's results show that the maximum discrepancy max_{0≤x≤1} |E_Q(x)| can oscillate between O(log Q) and O(1) depending on Q, though I'm not entirely certain about the exact asymptotic statement. The key point is that the classical bound for the maximum discrepancy is at most Q, which is much larger than my estimates.
+
+If the maximum discrepancy is O(Q) rather than O(log Q), then J(Q) could potentially scale like Q³, but the data shows J(Q) ≈ Q, suggesting the true maximum is actually much smaller than Q. This is getting circular, so let me step back and work directly from what the data tells me: NW(Q) approaches approximately 0.6699, which comes from the Euler product formula.
+
+Now I need to figure out what's causing the fluctuations around this asymptotic value.
+
+For Q = 300001, the NW value is 0.69835, which is about 4.2% above the limiting constant. Since this Q is squarefree and factorizes as 13·47·491, it avoids many small prime powers, which means its totient is unusually large relative to Q itself—specifically, φ(300001)/300001 ≈ 0.8320, compared to what you'd expect from a random integer of similar size. This might explain why the discrepancy behaves differently at this particular Q.
+
+But here's what I'm realizing: the strong lower bound on φ(n)/n holds for all n ≥ 31, not just squarefree ones. What actually distinguishes 300001 isn't that φ(n)/n is large in absolute terms, but rather that it's large relative to the asymptotic average. The mean value of φ(n)/n is 6/π² ≈ 0.6079, so 300001's ratio of 0.8320 is substantially above this average—that's the real signal here.
+
+Yet this can't be the whole story either, since many non-squarefree numbers like 320000 also have φ/n ratios above the mean. The answer likely involves some combination of local arithmetic structure rather than a single factor.
+
+Now I'm thinking about this from the theory of Farey sequences and modular forms. The Farey discrepancy can be expressed through Dirichlet series, where the key object involves the sum of indicator functions over fractions with denominator up to Q. This connects to exponential sums and the theory of how these fractions distribute modulo 1.
+
+For the second moment, I'm looking at the squared discrepancy integrated over the interval, which relates to a double sum involving Möbius functions and divisor structure. The Fourier expansion of this discrepancy is what ties it all together—each Fourier coefficient captures how the Farey fractions cluster at different scales, and the Mikolás formula emerges from analyzing how these coefficients behave across all moduli.
+
+Now I'm working through the second moment by summing the squared Fourier coefficients. This gives me a double sum over m and n where I need to evaluate products of exponential sums weighted by the Farey counting function. The structure of this sum will depend on how the Farey fractions are distributed modulo different periods.
+
+Continuing with the analysis...
+
+I'm realizing this approach is getting unwieldy, so let me step back and consider what the literature actually says. For the normalized second moment of the discrepancy of Farey fractions, I think the asymptotic behavior converges to a constant, though I'm uncertain about the exact reference and the precise value. There's work by Boca and Zaharescu on Farey statistics and mod-1 distribution that might contain what I'm looking for, but I need to think through whether their results directly apply here.
+
+Let me work through the classical approach using the Franel identity for Farey sums and see if that gives me the second moment I need. The key quantity involves the Riemann zeta function evaluated at 2, which gives π²/6, and when I work through the algebra with the Möbius function, I get that the inner sum equals 1/ζ(2) = 6/π², leading to S₁ = π²/6.
+
+Now for the more complex double sum S₂ involving gcd constraints, I'm rewriting it by changing variables to k = gcd(m,n), which lets me factor the sum over divisors and reorganize the inner structure to separate out the dependency on the greatest common divisor. I'm realizing this approach is getting unwieldy, so I'm shifting to think about the problem more directly. Let me consider whether the spikes in NW(Q) might arise from how new Farey fractions appear as Q increases—at certain thresholds, the fractions cluster together in a way that amplifies the discrepancy. For Q around 300001, this could create a significant jump in the Farey discrepancy.
+
+Now I'm looking at what happens when Q is prime versus composite. When Q is prime, φ(Q) = Q - 1 and the new fractions are spread nearly uniformly across [0,1], but when Q is smooth with many small prime factors, the new fractions are clustered by the Chinese Remainder Theorem. This clustering effect could explain why NW(Q) spikes at particular Q values depending on their prime factorization. I'm noticing that 300001 has a relatively high ratio of φ(Q)/Q compared to other candidates, though 320000 has a slightly higher ratio yet doesn't spike, which suggests the relationship between smoothness and the NW spike isn't straightforward.
+
+The real pattern might be that NW(Q) spikes when Q has a specific prime factorization structure that causes the new fractions to cluster in a particular way, and this would involve both how many new fractions appear and how they distribute across the interval. But I'm realizing that the formula for NW(Q) doesn't actually change based on Q's factorization—it depends only on Q and Φ(Q), so the fluctuations must be coming from how these values interact with the structure of the Farey sequence itself.
+
+Let me consider the second-order terms in the asymptotic expansion. If Φ(Q) has oscillations of order √Q, then J(Q) would have oscillations of order √Q / Q = 1/√Q, which would cause NW(Q) to fluctuate around its limiting value with an amplitude that depends on these lower-order terms.
+
+But the observed spike at Q=300001 is much larger—about 0.0285—which suggests something more substantial is happening. I'm now thinking the fluctuations might come from the distribution of Farey fractions themselves. As Q increases, new fractions get added, and the discrepancies from the limiting distribution create oscillations in the integral J(Q). Each time we cross a boundary where new fractions appear, we get a jump, and since Φ(Q) changes at every Q, these jumps might be accumulating in a way that creates the spike I'm seeing.
+
+The key insight is that for most Q, the new fractions distribute roughly uniformly, so J(Q) stays smooth. But at special Q values like 300001, the new fractions concentrate in particular regions of [0,1], creating localized spikes in the discrepancy that push J(Q) higher than expected. The question is whether these concentrations are random or tied to the arithmetic structure of Q itself.
+
+Let me work through this more carefully. When we add the φ(Q) new fractions with denominator exactly Q, they follow a specific pattern determined by Q's prime factorization. For instance, if Q is prime, the fractions {1/Q, 2/Q, ..., (Q-1)/Q} are spaced exactly 1/Q apart—essentially uniform. But for composite Q, the spacing becomes irregular. When Q = 300001 = 13 · 47 · 491, the CRT structure means the fractions are uniformly spaced at 1/300001, since the denominator is squarefree. However, there are 13 · 47 · 491 = 299951 fractions that have been excluded—those where the numerator shares a factor with the denominator.
+
+The key insight is that the local density of Farey fractions near a point x depends heavily on the arithmetic properties of x. Near simple rationals like 1/2, the density is higher because denominators can be small (the Farey interval between 1/2 and (Q-1)/(2Q-1) has length 1/(Q(2Q-1))). Near irrational points, the density is lower since fractions must have larger denominators. For Q = 300001 with its specific prime factors, I'd expect certain regions to have anomalous density patterns, though without computing the exact distribution, I can't pinpoint where the spikes occur.
+
+This connects to the Duffin-Schaeffer conjecture (now theorem) and the Gauss-Kuzmin statistics for continued fractions—these give the expected distribution of Farey fractions based on continued fraction expansions. At Q = 300001, the "best rational approximations" with denominator ≤ 300001 might cluster differently than at nearby values, creating localized density variations that show up as spikes in the discrepancy.
+
+The clustering pattern depends on the continued fraction expansion of the point, which changes as Q grows. But here's the key insight: the spike at Q = 300001 isn't just about individual points—it's a global effect. For it to matter, something special must be happening across many points simultaneously, which suggests a number-theoretic mechanism related to Q's arithmetic structure, possibly involving multiplicative functions or divisor sums.
+
+I'm thinking about the discrepancy through a Fourier-analytic lens. Using the Erdős-Turán inequality, the discrepancy is controlled by the exponential sums over Farey fractions, and for each frequency m, these sums are bounded by roughly Q log Q / m. The second moment then becomes a weighted sum of these bounds across all frequencies.
+
+Now I'm working through the Fourier coefficient calculation more carefully. The sum over Farey fractions involves a Möbius function factor, so when I square it and sum over all frequencies, I get a double sum weighted by 1/m². After expanding the squared term and applying multiplicativity, this simplifies to Σ_{d=1}^∞ |μ(d)|² · d² / (d⁴ · s²) = (1/s²) Σ_{d=1}^∞ 1/d² = π²/(6s²), which gives a clean closed form.
+
+So the second moment works out to (π²/6) Σ_{s=1}^∞ 1/s² = π⁴/36. But this is computing J(∞) rather than J(Q), so I need to account for the finite truncation. The actual calculation involves a double sum over m and n of exponential sums evaluated at points from the Farey sequence, which is where the complication arises.
+
+For finite Q, the Fourier coefficients become |Σ_{α∈F_Q} e(αm)|² = Σ_{a/d, a'/d'∈F_Q} e(m(a/d - a'/d')). When I sum these over all m, I get Φ(Q) when d=d' and a=a', but I need to carefully track how the different denominators interact with the sum over m.
+
+The tricky part is handling the mixed terms where d≠d', which involve sums of the form Σ_{a/d∈F_Q} Σ_{a'/d'∈F_Q} Σ_{m=1}^M (1/m²) e(m(a/d - a'/d')). These converge due to the 1/m² decay, but the exponential phases depend on Q and the specific fractions in the Farey sequence.
+
+Let me reconsider the asymptotic behavior of J(Q) from first principles. The classical result is that J(Q) ~ (1/(2π²)) log Q as Q→∞, which would mean NW(Q) = Q·J(Q)/Φ(Q) ~ (π²/6)·(log Q)/Q → 0. But this contradicts the numerical observation that NW(Q) ≈ 0.67 for Q = 250000, so either my formula for NW(Q) is incorrect or the asymptotic formula needs reexamination.
+
+Let me compute this directly: if J(Q) ≈ (log 250000)/(2π²), that gives roughly 0.6, so W(Q) = J(Q)/Φ(Q) ≈ 0.6/(1.9×10¹⁰) ≈ 3×10⁻¹¹. Then NW(Q) = Q·W(Q) ≈ 250000 × 3×10⁻¹¹ ≈ 8×10⁻⁶, which is nowhere near 0.67. This massive discrepancy means either the classical asymptotic formula for J(Q) doesn't apply here, or the numerical values are being computed in a fundamentally different way. I need to reconsider what the actual definitions are.
+
+Rethinking the problem statement...
+
+the user is computing NW(Q) exactly using high-precision streaming arithmetic and cross-verifying with rational arithmetic for smaller values, so these numbers should be reliable. This makes me wonder if the classical asymptotic I'm thinking of applies to a different discrepancy measure or boundary condition.
+
+For the classical Farey discrepancy, the second moment is J₂(Q) = ∫₀¹ E_Q(x)² dx with E_Q defined using Φ(Q)x as the expected count, and Franel's result would give J₂(Q) ~ (C/(2π²)) log Q. But that would make NW(Q) vanish asymptotically, which contradicts what we're observing. So either my recollection of the classical result is wrong, or the NW(Q) convergence is actually to zero with very slow convergence, or the formula itself is different than I thought.
+
+Let me test this by working backward from the numerical data. At Q = 250000, I can compute J(250000) = NW(250000) × Φ(250000) / 250000, which gives J ≈ 50955. If the classical formula were J(Q) = C log Q, then C ≈ 50955 / 12.4 ≈ 4109. But checking against Q = 300001 where J ≈ 69809, the ratio changes to C ≈ 4308. These don't match, so the logarithmic form doesn't fit the data.
+
+The real issue is that the two J values have completely different orders of magnitude—50000 versus 69000—but log Q barely changes between these cases (only 0.02 difference). This suggests J must be scaling roughly linearly with Q, not logarithmically. If I write J(Q) ≈ C·Q where C ≈ 0.2, then at Q = 250000 I get exactly 50000, and at Q = 300001 I get 60000—both consistent with the numerical values I found.
+
+Now I'm working through what this means for the normalized discrepancy: if J scales linearly with Q, then the normalized version becomes W(Q) ≈ C·π²/3 divided by Q, which means the normalized value of Q·W(Q) should converge to C·π²/3 ≈ 0.658. This is tantalizingly close to the observed 0.67, suggesting the classical O(log Q) bound is far too loose—the true behavior is order Q.
+
+But I'm second-guessing myself on the classical result. The second moment of the discrepancy for Farey sequences of order Q is typically stated as O(log Q), and I'm fairly confident this comes from work by Franel in the 1920s, though I should verify whether I'm recalling the exact bound correctly.
+
+Let me work through a concrete example to test this: at Q=10, the Farey sequence has 33 fractions, and if the second moment J(10) actually equals about 4.68 rather than something much smaller, that would contradict the logarithmic scaling I'm expecting. I'm going to compute this directly by checking the discrepancy at various points in the sequence to see what the numerical evidence actually shows.
+
+For the uniform distribution model where fractions behave like independent random points, the expected value works out to about 10.91, but the observed J(10) ≈ 4.68 is less than half of that—suggesting the Farey sequence is less uniformly distributed than random points would be. But I should double-check this interpretation by verifying the calculation for Q=2 with the actual sequence {0, 1/2, 1} and Φ=3, which gives a discrepancy of 19/12 when I work through the integral directly.
+
+Now I'm computing the expected value E(2) for the discrete version, which gives 7/6 ≈ 1.167, and noticing that J(2) = 19/12 ≈ 1.583 is actually larger than this. Checking W(2) = 19/36 ≈ 0.528 and the normalized value NW(2) ≈ 1.056, I'm seeing that even at this small scale the normalized discrepancy exceeds 1, which is interesting for understanding how the pattern scales up to Q=10.
+
+Let me work through Q=10 more systematically. The Farey sequence F₁₀ has 33 terms spanning from 0 to 1, and I'm listing them out to count: {0, 1/10, 1/9, 1/8, 1/7, 1/6, 1/5, 2/9, 1/4, 2/7, 3/10, 1/3, 3/8, 2/5, 3/7, 4/9, 1/2, 5/9, 4/7, 3/5, 5/8, 2/3, 7/10, 5/7, 3/4, 7/9, 4/5, 5/6, 6/7, 7/8, 8/9, 9/10, 1}. The symmetry around 1/2 is a key structural property here.
+
+Now I'm computing the discrepancy integral directly using the trapezoidal rule, which is exact for piecewise linear functions. Between consecutive Farey fractions α_i and α_{i+1}, the discrepancy E_Q(x) follows a linear path, so I can integrate the squared discrepancy over each subinterval and sum them up.
+
+Actually, this approach is getting unwieldy. Let me step back and think about what the literature actually says about the asymptotic behavior of these discrepancy integrals. I'm trying to recall whether J(Q) grows like Q or like log Q, and working through small cases to see if the pattern becomes clear—but the calculations are becoming unwieldy, so let me step back and think about this more carefully. The user's data showing NW(Q) ≈ 0.67 for

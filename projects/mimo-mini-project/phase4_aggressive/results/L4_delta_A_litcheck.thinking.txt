@@ -1,0 +1,47 @@
+The user is asking me to perform a literature check on a specific formula involving a "class-dependent constant term" in an expansion related to the Aoki-Koyama theorem in the cyclotomic function field setting. They want to know if this formula (Δ(A) = −2 Re[χ̄_4(A) · log L(1/√2, χ_4)] for the case q=2, M=T³) appears in several specific papers or is known from standard texts, and they want me to connect it to a conjectured formula by Koyama.
+
+Let me analyze the context and the formula.
+
+First, the setup: We are in the function field F_q(T), with q=2, and we consider the cyclotomic extension adjoining roots of unity of M, where M is a polynomial T³. The Galois group G = (F_q[T]/M)* is isomorphic to Z/4Z for this choice. Characters χ of G are used, and the formula involves L-functions L(s, χ) evaluated at s = 1/√2 (which in the function field setting is like s = 1/2 in the number field case, but with q^{-s} so the point is s such that q^{-s} = 1/2, so s = log_q(2) which is not half; actually careful: In function field L-functions, we have L(s, χ) = product over irreducible polynomials not dividing M of (1 - χ(P) N(P)^{-s})^{-1}. The central point is often s=1/2 (for the Riemann hypothesis). But here they write L(q^{-1/2}, χ). This is a bit odd: They evaluate L at s such that the parameter is q^{-s} = 1/2? That would be s = log_q(2). In the function field, the usual "central point" for the L-function associated to a Dirichlet character is at s=1/2 (since the functional equation relates s to 1-s). So L(1/2, χ) is the central value. But they write q^{-1/2} inside the L? Possibly they mean L(1/2, χ) but using the notation where the L-function is considered as a function of the variable X = q^{-s}. So L(X, χ) is a polynomial in X, and they evaluate at X = q^{-1/2}? That would be L(q^{-1/2}, χ) which is the central value if we set X = q^{-s} and s=1/2. So it's consistent: They denote the L-function as a function of the parameter u = q^{-s}, so L(u, χ) is a polynomial, and at the central point u = q^{-1/2}. So that's fine.
+
+The formula says that the constant term c(A) in the expansion (presumably of some prime-counting or class number statistic) splits as a sum over characters, with contributions from each nontrivial character involving the logarithm of the central L-value. Specifically, Δ(A) = -2 Re[χ̄_4(A) log L(q^{-1/2}, χ_4)] for a specific character χ_4.
+
+Now, the user wants a literature check on several sources. I need to recall or infer whether such a formula appears.
+
+Since I am an AI without direct access to these specific papers (some of which are recent or even future-dated: Koyama 2026?), I must rely on my training data. However, the user's question is speculative and references "our project_d3_binfty_citation_lock memory", which seems to be from a private project. This suggests that this is part of ongoing research, and the user is checking if their derived formula is novel or known.
+
+Given that the Aoki-Koyama theorem likely deals with function field analogs of the Chebotarev density theorem or moments of L-functions, the subleading constant might be part of an asymptotic expansion for some average. The leading term is class-coset invariant, while the subleading term depends on the class A via characters.
+
+I should evaluate each source:
+
+1. Aoki-Koyama 2023: They prove the leading log coefficient. It is plausible that they do not state the subleading constant explicitly, as many such theorems focus on the main term. So likely not present.
+
+2. Koyama's correspondence (2026): This is referenced in the user's memory. Koyama proposed a formula for C_1 on the zeta side: C_1 = −L''(ρ)/(2 L'(ρ)²). The user asks if Δ(A) is related. In the number field case, such formulas often appear in the context of the moments of L-functions or the logarithmic derivative at the central point. The formula Δ(A) involves log L, not derivatives of L. So they are different. But maybe in the expansion, the constant term involves the second derivative of the L-function? Actually, if we expand log L(s) around s=1/2, we have log L(1/2+it) = log L(1/2) + (L'(1/2)/L(1/2)) it + ... but that's not directly. Alternatively, if we consider the expansion of some sum over primes, the constant term might involve the logarithm of the L-value at the central point. The Koyama conjecture might be for the Riemann zeta function in a different context. Possibly the connection is that both are subleading constants, but the forms are different. I need to think carefully.
+
+Perhaps the user's Δ(A) is the function-field analog of the subleading constant in the Aoki-Koyama expansion, and Koyama's conjecture is for the number field side. They might be analogous: In the number field case, the constant might involve L'(ρ)/L(ρ) or something like that. But the user's formula is explicit: -2 Re[χ̄ log L]. That is simpler.
+
+3. Cox-Ghosh-Sultanow 2021: They have an explicit formula for static Farey-Mertens. This might be about sums over Farey fractions or Mertens-type theorems. It's unclear if they have character-decomposed constants. Possibly not.
+
+4. Conrey-Snaith-Keating: Their work is on moments of L-functions and recipes using symmetry types. They have formulas for moments that involve derivatives of L-functions and ratios. The constant term in prime-counting biases might be related to the negative of the logarithmic derivative at the central point? Actually, the Chebyshev bias often involves the argument of L-functions. I'm not sure.
+
+5. Function-field analytic number theory texts: Rosen's "A Classical Introduction to Modern Number Theory" covers function fields but likely not this specific expansion. Murty-Esmonde might have the Prime Number Theorem for function fields. The subleading constant in AK-style theorems might not be discussed in standard texts, as such refined results are research-level.
+
+Given that the user seems to be working on this, and they are asking for a lit check, it's likely that this formula is new or not explicitly stated in the literature. However, I need to be cautious.
+
+I will try to reason about the possible connection to Koyama's conjecture.
+
+Koyama's conjecture (3) states: C_1 = −L''(ρ)/(2 L'(ρ)²). Here ρ likely denotes a zero of the L-function? Or maybe it's the central point? Usually, in expansions of moments, derivatives of L-functions at zeros appear. But the user's Δ(A) involves log L at the central point. That is a different type of quantity.
+
+Perhaps there is a misinterpretation: The user wrote: "he proposed 'subleading C_1 = −L''(ρ)/(2 L'(ρ)²)' for the zeta side." This could be from a paper on the distribution of zeros or something. Without more context, it's hard.
+
+Maybe the connection is that in the expansion of the logarithm of the L-function, the constant term is log L(ρ), and if we expand further, the subleading term might involve derivatives. But the user's Δ(A) is exactly that logarithm, so it might be the leading constant for each character, not the subleading. Actually, the user says: "This gives the class-dependent CONSTANT TERM in the Aoki-Koyama Theorem 3.4 expansion (the leading log-n coefficient is class-cosetinvariant; the SUBLEADING constant splits per class via χ-L-values at the central point)." So they claim that the constant term (the term independent of n, after factoring out the leading log n?) is given by that sum. So it's not the subleading in an asymptotic in n? Actually, "subleading constant" might refer to the constant term in an expansion where the leading term involves log n. So it's the next term.
+
+Given the complexity, I think the safest answer is to say that the explicit subleading constant formula is likely not present in the listed sources, and that it might be a new derivation for the function-field case. But I need to be more precise.
+
+I recall that in the number field case, there is a theorem by Aoki and Koyama on "Chebotarev sets" or "prime counting functions in cyclotomic fields"? Possibly their 2023 paper is about "Equidistribution of Frobenius and zeros of L-functions over function fields". The leading term might be something like (1/|G|) log q, and the next term involves character sums.
+
+Given the user's request, I will provide a structured response for each source.
+
+But since I am an AI, I must admit uncertainty. I'll state what I think is likely, and emphasize that without direct access, I cannot be sure.
+
+I will now write a response.

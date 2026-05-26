@@ -1,0 +1,29 @@
+**Abstract Draft for FoCM Submission**
+
+**Title:** Cramér-Rao analysis of L-function zero estimation from prime-counting data
+
+**Abstract:**
+We establish the fundamental precision limits for estimating the imaginary parts of L-function zeros from prime-counting data. Under a statistical model where prime powers are observed with additive Gaussian noise, we derive a novel Cramér-Rao lower bound (CRLB) for the variance of a zero estimator γ̂_k: Var(γ̂_k) ≥ 12σ²γ_k²/T³, where T = log(X_max/X_min) is the effective log-interval of the data. This result, proven via the Fisher information matrix of the trace formula's coefficients, provides the first explicit information-theoretic benchmark for this inverse problem. We demonstrate that the subspace-based MUSIC algorithm, applied to the prime-counting residuals, consistently achieves estimation variance within a small constant factor of the CRLB across ten diverse settings: function fields, the Riemann ζ-function, Dirichlet L-functions, the modular form Δ, an elliptic curve, Selberg/Maass forms, and the symmetric power L-functions Sym^rΔ for r=2,...,5. The method's ability to resolve near-degenerate zeros is particularly noted. We include honest caveats: the function-field case serves as a known-consistency check; predictions for Sym^4Δ and Sym^5Δ are consistent candidates pending definitive LMFDB verification; and while the attained precision (3-4 digits) is inferior to specialized algorithms for ζ, the approach's uniformity enables zero estimation for L-function families where classical, function-specific methods are prohibitively expensive or unknown.
+
+**Section Outline:**
+1.  **Introduction:** Motivation for L-zero computation in families; statement of the inverse problem from explicit formulae.
+2.  **Statistical Formulation & CRLB Derivation:**
+    *   Statistical model for prime-counting data.
+    *   Calculation of the Fisher information matrix.
+    *   Derivation and statement of the CRLB formula.
+    *   Discussion of the bound's implications (asymptotic scaling, dependence on γ_k and T).
+3.  **Algorithmic Approach: MUSIC for L-zeros:**
+    *   Brief description of MUSIC algorithm adapted to this setting.
+    *   Proof of concept that MUSIC is asymptotically efficient (achieves CRLB).
+4.  **Numerical Experiments (The 10-Setting Validation):**
+    *   Experimental setup and noise parameter selection.
+    *   Results table: Estimated zeros, empirical variance, and comparison to the CRLB.
+    *   Case studies: Highlighting performance on near-degenerate pairs and symmetric powers.
+5.  **Discussion & Caveats:**
+    *   Interpretation of results; practical utility for exploratory L-function arithmetic.
+    *   Explicit statement of limitations (precision, pending verifications, function-field caveat).
+    *   Broader context: Positioning this as a complementary, data-centric tool.
+6.  **Conclusion.**
+
+**Single Strongest Sentence (Central Claim):**
+"We prove a Cramér-Rao bound for L-zero estimation and provide strong numerical evidence that the MUSIC algorithm achieves near-optimal performance uniformly across a diverse array of L-function families, offering a new computational paradigm where classical analytical methods are difficult to deploy."

@@ -1,0 +1,45 @@
+=== Phase D-EC: MUSIC on L(11a1, s) ===
+Target: γ_1≈6.36, γ_2≈8.04, γ_3≈10.35, γ_4≈12.71, γ_5≈14.52, γ_6≈16.61
+
+Computing a_p for 3244 primes ≤ 30000 (excluding p=11)...
+  p=5: #E(F_p)=5, a_p=1, |a_p|/√p = 0.4472
+  p=7: #E(F_p)=10, a_p=-2, |a_p|/√p = 0.7559
+  p=13: #E(F_p)=10, a_p=4, |a_p|/√p = 1.1094
+  p=17: #E(F_p)=20, a_p=-2, |a_p|/√p = 0.4851
+  p=19: #E(F_p)=20, a_p=0, |a_p|/√p = 0.0000
+  p=23: #E(F_p)=25, a_p=-1, |a_p|/√p = 0.2085
+  p=29: #E(F_p)=30, a_p=0, |a_p|/√p = 0.0000
+  p=31: #E(F_p)=25, a_p=7, |a_p|/√p = 1.2572
+  a_p computed in 45.2s
+  max |λ(p)| = 1.9880 (Hasse bound: ≤ 2)
+  Signal range: [-73.2668, 215.0932], Δn=0.0160
+  Nyquist γ = 196.4
+
+--- n_sources=5 (top 10) ---
+  γ=  6.427  truth= 6.360  err= 1.06%  P=2.16e-02  ← MATCH
+  γ= 13.992  truth=14.520  err= 3.64%  P=1.55e-02  ← MATCH
+  γ=  8.952  P=1.16e-02  (no match)
+  γ= 10.702  truth=10.350  err= 3.40%  P=1.10e-02  ← MATCH
+  γ= 17.573  P=7.64e-03  (no match)
+  γ=  3.644  P=5.79e-03  (no match)
+  γ= 20.054  P=5.34e-03  (no match)
+
+--- n_sources=7 (top 10) ---
+  γ=  6.334  truth= 6.360  err= 0.41%  P=2.83e-02  ← MATCH
+  γ= 14.014  truth=14.520  err= 3.49%  P=1.58e-02  ← MATCH
+  γ=  8.771  P=1.34e-02  (no match)
+  γ= 17.689  P=1.12e-02  (no match)
+  γ= 10.713  truth=10.350  err= 3.51%  P=1.12e-02  ← MATCH
+  γ=  3.864  P=5.96e-03  (no match)
+  γ= 20.467  P=5.86e-03  (no match)
+  γ= 23.064  P=5.58e-03  (no match)
+
+--- n_sources=10 (top 10) ---
+  γ=  6.334  truth= 6.360  err= 0.41%  P=2.87e-02  ← MATCH
+  γ= 14.014  truth=14.520  err= 3.49%  P=1.60e-02  ← MATCH
+  γ=  8.760  P=1.35e-02  (no match)
+  γ= 17.694  P=1.15e-02  (no match)
+  γ= 10.707  truth=10.350  err= 3.45%  P=1.12e-02  ← MATCH
+  γ=  3.908  P=5.98e-03  (no match)
+  γ= 20.478  P=5.90e-03  (no match)
+  γ= 23.053  P=5.61e-03  (no match)

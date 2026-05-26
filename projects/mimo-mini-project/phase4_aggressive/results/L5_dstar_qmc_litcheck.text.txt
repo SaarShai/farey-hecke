@@ -1,0 +1,9 @@
+**Quick answer:**
+
+1. **No**, the exact asymptotic \( D^*(F_N) = \frac{1}{N} - \frac{\pi^2}{3N^2} + O\left(\frac{1}{N^3}\right) \) with leading constant exactly 1 is **not explicitly stated** in the classical QMC texts (Niederreiter 1992, Drmota–Tichy 1997) or standard number theory books (Hardy & Wright). These sources typically give only upper bounds like \( D^*(F_N) \leq \frac{1}{N} \) or \( D^*(F_N) = O\left(\frac{1}{N}\right) \), without the refined expansion.
+
+2. **Provenance**: The leading-order bound \( D^*(F_N) \leq \frac{1}{N} \) is folklore and likely appears implicitly in older discrepancy literature (e.g., Schmidt’s work on irregularities of distribution). The sharper expansion may be a more recent result in analytic number theory, possibly related to fine-scale distribution of Farey fractions (e.g., work by Boca, Zaharescu, or Frantzikinakis), but it is **not standard in QMC-focused texts**.
+
+3. **Bounds given**: Classical sources usually provide only \( D^*(F_N) \leq \frac{c}{N} \) with constant \( c = 1 \) or \( c = 2 \) (depending on the proof). The exact leading constant 1 is sharp asymptotically but not always explicitly highlighted.
+
+**Conclusion**: The leading term \( \frac{1}{N} \) is known as an upper bound and likely sharp, but the full expansion with the \( \pi^2 \) term appears to be a clean restatement that is not widely circulated in QMC literature. This suggests that Discovery #5 may be a valuable synthesis or a novel explicit derivation, even if the leading order is folklore.

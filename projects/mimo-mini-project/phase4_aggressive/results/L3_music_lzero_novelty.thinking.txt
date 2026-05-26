@@ -1,0 +1,27 @@
+Alright, I need to figure out if extracting L-function zeros from prime-count biases using signal processing techniques like Prony or MUSIC is already published. Let me start by recalling what I know about each area mentioned.
+
+First, L-function zeros are typically computed using analytic methods like the Riemann-Siegel formula or variations for general L-functions. The empirical result here uses MUSIC, a signal processing algorithm, on prime-count data. That seems unconventional compared to standard number theory approaches.
+
+Looking at Odlyzko's work: He computed many zeros of the Riemann zeta function and Dirichlet L-functions, but his methods are based on direct evaluation and functional equations. I don't recall him using signal processing techniques. Confirming this, his papers mention algorithms for high-precision zero computation, not line-spectral estimation.
+
+Bombieri-Hejhal: They worked on computational aspects of L-functions and zeros, again using analytic methods. Their approach involves solving for zeros via argument principle or similar, not signal processing. So no equivalence here.
+
+Voronin-Karatsuba: They studied explicit formulas connecting prime distributions to L-function zeros. Explicit formulas do involve sums over zeros, but they don't propose extracting zeros from prime data using algorithms like Prony. That's more about using zeros to understand prime counts, not the inverse problem.
+
+Tenenbaum's textbook: Focuses on analytic number theory methods, like Perron's formula and complex analysis. No mention of Prony or signal processing for zero extraction. So that's clear.
+
+Sarnak's quantum chaos reviews: He draws analogies between prime distributions and eigenvalues, but doesn't suggest using spectral estimation algorithms to find zeros. The connection is more conceptual than algorithmic.
+
+Candès-Fernandez-Granda super-resolution: Their work is on recovering signals from incomplete data using convex optimization. While compressed sensing has been applied to various fields, I haven't seen it applied to L-function zeros. Might be a stretch here.
+
+Boya-Tier: They worked on Prony's method for spectral data, but in physics contexts like quantum mechanics. Not in number theory.
+
+Lemke-Oliver-Soundararajan: They study Chebyshev bias and prime races, but focus on proving bias phenomena, not extracting zeros from data.
+
+LMFDB: Their algorithms use standard analytic number theory methods for computing L-function zeros. No signal processing mentioned.
+
+Inverse Problems journal: There might be papers applying compressed sensing to mathematical problems, but I'm not aware of any specifically for L-function zeros.
+
+Now, considering if this could be folklore: Experts in analytic number theory might know that explicit formulas imply zeros are encoded in prime counts, but using MUSIC to extract them is a computational trick that isn't standard. The novelty is in the method, not the underlying connection. So it's likely new.
+
+Therefore, the specific application of MUSIC to extract L-function zeros from prime counts isn't published in the literature I know. It's a clean novelty at the intersection of signal processing and number theory.

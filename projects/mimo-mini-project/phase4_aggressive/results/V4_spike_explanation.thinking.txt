@@ -1,0 +1,631 @@
+This is a really interesting question about the discrepancy of Farey sequences and spikes in the normalized L² discrepancy NW(Q) = Q·J(Q)/Φ(Q). Let me think carefully about what's going on.
+
+First, let me recall the key facts about Farey sequence discrepancies.
+
+The L² discrepancy J(Q) = ∫₀¹ E_Q(x)² dx where E_Q(x) counts Farey fractions up to x minus Φ(Q)·x.
+
+The Franel-Landau theorem gives us that J(Q) is related to the Riemann Hypothesis: RH is equivalent to J(Q) = O(Q^{-1+ε}) for all ε > 0, or more precisely, J(Q) ≪ Q^{-1+ε}.
+
+Now, the asymptotic formula. The classical result (I believe due to various people including Hall, and further refined) is that:
+
+J(Q) ~ (12/π⁴) · (1/Q) · Σ_{q≤Q} Φ(q)/q² · Σ_{d|q} μ(d)²·something...
+
+Actually, let me think more carefully. The exact formula for J(Q) involves:
+
+J(Q) = (1/12) · Φ(Q)/Q · (1 + 1/2² + ... + 1/Q² - π²/6) + ...
+
+No wait, that's not right either. Let me think from first principles.
+
+Actually, the key formula is due to Franel (1924) and Landau (1924):
+
+E_Q(x) relates to Riemann sums and the discrepancy is connected to:
+
+J(Q) = ∫₀¹ |E_Q(x)|² dx
+
+One standard approach: for the Farey sequence of order Q, the fractions are a/q with 0 ≤ a ≤ q, gcd(a,q) = 1, q ≤ Q. Including 0/1 and 1/1.
+
+Actually, let me think about this differently. The question is about why NW(Q) spikes at specific Q values.
+
+The key insight is about the *gap structure* of the Farey sequence. The discrepancy is dominated by the largest gaps in the Farey sequence. 
+
+The Farey sequence of order Q has Φ(Q) + 1 fractions (well, with 0/1 and 1/1 it's Φ(Q) + 1 fractions... actually, the number of Farey fractions of order Q is 1 + Σ_{q≤Q} Φ(q) ≈ 3Q²/π²).
+
+Wait, I need to be more careful. Let me reconsider.
+
+The Farey sequence F_Q consists of all fractions a/q with 0 ≤ a ≤ q, gcd(a,q) = 1, 1 ≤ q ≤ Q, plus 0/1. Listed in order. There are N_Q = 1 + Σ_{q=1}^{Q} Φ(q) ≈ 3Q²/π² fractions.
+
+Hmm, but the problem states Φ(Q)·x as the expected count. That seems like it might be using a different normalization. Let me re-read.
+
+"E_Q(x) = #{α ∈ F_Q : α ≤ x} − Φ(Q)·x"
+
+Wait, if there are ~3Q²/π² fractions, then E_Q(1) = #{α ∈ F_Q} - Φ(Q)·1. For this to be "small", we'd need #{α ∈ F_Q} ≈ Φ(Q). But #{α ∈ F_Q} = 1 + Σ_{q≤Q} Φ(q) ≈ 3Q²/π², while Φ(Q) ≈ Q·6/π² (on average). So these are very different quantities.
+
+Hmm, unless the problem means something different. Let me re-read the problem statement.
+
+Actually, maybe Φ(Q) here doesn't mean Euler's totient function but rather Σ_{q≤Q} Φ(q), which is approximately 3Q²/π². In many references on Farey sequences, Φ(Q) = Σ_{q≤Q} φ(q) where φ is Euler's totient. This makes more sense because then E_Q(1) = #{F_Q} - Φ(Q) = (1 + Σ_{q≤Q} φ(q)) - Σ_{q≤Q} φ(q) = 1, which is reasonable.
+
+Yes, I think that's the convention here: Φ(Q) = Σ_{q=1}^{Q} φ(q) ≈ 3Q²/π².
+
+OK so with that convention, NW(Q) = Q·J(Q)/Φ(Q).
+
+Now, let me think about what controls J(Q).
+
+The key result about Farey sequence discrepancy:
+
+For the L² discrepancy of the Farey sequence, there's a classical identity. Let me recall.
+
+If we define the discrepancy function E_Q(x) = #{a/q ∈ F_Q : a/q ≤ x} - Φ(Q)·x, then:
+
+J(Q) = ∫₀¹ E_Q(x)² dx
+
+Now, the connection to the Farey gaps is important. Consecutive Farey fractions α_k = a_k/q_k and α_{k+1} = a_{k+1}/q_{k+1} satisfy α_{k+1} - α_k = 1/(q_k · q_{k+1}). The discrepancy is closely related to the gaps between consecutive Farey fractions.
+
+A key formula (which I believe is standard): If the Farey fractions are 0 = x_0 < x_1 < ... < x_N = 1 with N = Φ(Q), then:
+
+J(Q) = Σ_{k=0}^{N-1} ∫_{x_k}^{x_{k+1}} (k+1 - Φ(Q)·x - [fractional part stuff])² dx...
+
+Actually this is getting complicated. Let me think about it differently.
+
+There's a well-known result that connects the discrepancy to the Riemann zeta function. Specifically:
+
+J(Q) = (1/12) · Σ_{q=1}^{Q} φ(q)/q² - (something involving π²)
+
+Hmm, let me try to recall or derive the exact formula.
+
+Actually, I recall that for the discrepancy of Farey sequences, there's a formula:
+
+Σ_{x_k, x_{k+1} consecutive in F_Q} (x_{k+1} - x_k)² = Σ 1/(q_k q_{k+1})² 
+
+This is related to but not the same as J(Q).
+
+Let me think about J(Q) more carefully.
+
+J(Q) = ∫₀¹ E_Q(x)² dx
+
+where E_Q(x) = #{α ∈ F_Q ∩ [0,x]} - Φ(Q)·x
+
+Let me write the Farey fractions as 0 = α_0 < α_1 < ... < α_N = 1 where N = Φ(Q).
+
+On the interval [α_k, α_{k+1}), we have #{α ∈ F_Q : α ≤ x} = k + 1 (counting from 0, so there are k+1 fractions ≤ x for x in [α_k, α_{k+1}), since we have α_0, ..., α_k).
+
+Wait, actually #{α ∈ F_Q : α ≤ x} for x ∈ [α_k, α_{k+1}) would be k+1 if we count α_0 = 0 through α_k. So E_Q(x) = k+1 - Φ(Q)·x for x ∈ [α_k, α_{k+1}).
+
+Then:
+J(Q) = Σ_{k=0}^{N-1} ∫_{α_k}^{α_{k+1}} (k+1 - Φ(Q)·x)² dx
+
+For each interval, let δ_k = α_{k+1} - α_k and let c_k = k+1 - Φ(Q)·(α_k + α_{k+1})/2 (the value at the midpoint). Then:
+
+∫_{α_k}^{α_{k+1}} (k+1 - Φ(Q)·x)² dx 
+
+Let u = x - α_k, so x = α_k + u, u ∈ [0, δ_k]:
+
+= ∫_0^{δ_k} (k+1 - Φ(Q)(α_k + u))² du
+= ∫_0^{δ_k} ((k+1 - Φ(Q)α_k) - Φ(Q)u)² du
+
+Let A_k = k+1 - Φ(Q)·α_k. Then:
+
+= ∫_0^{δ_k} (A_k - Φ(Q)u)² du
+= A_k² δ_k - A_k Φ(Q) δ_k² + Φ(Q)² δ_k³/3
+
+Hmm, this is getting complex. Let me just think qualitatively.
+
+The discrepancy E_Q(x) at the Farey fraction α_k is E_Q(α_k) = k+1 - Φ(Q)·α_k (from the right side). Actually, at x = α_k, #{α ∈ F_Q : α ≤ α_k} = k + 1 (including α_k itself). So E_Q(α_k) = k + 1 - Φ(Q)·α_k.
+
+Now, what's special about Q near 300000?
+
+Q = 300000 = 3 × 10⁵ = 3 × 2⁵ × 5⁵ × ... wait, 300000 = 3 × 100000 = 3 × 10⁵ = 3 × 2⁵ × 5⁵. So 300000 = 2⁵ × 3 × 5⁵.
+
+Hmm, I don't immediately see why this would be special. Let me think about what could cause spikes.
+
+The key observation about spikes in discrepancy of Farey sequences relates to the *gap structure*. The largest gaps in the Farey sequence are between consecutive fractions 0/1 and 1/Q (the gap near 0), and similarly near 1. But the gaps that contribute most to the L² discrepancy are the intermediate ones.
+
+A big gap between two consecutive Farey fractions a/q and a'/q' means there's a large interval where the discrepancy is building up (or down). The L² discrepancy is sensitive to the size and distribution of these gaps.
+
+Now, what creates unusually large gaps? If Q has a particular factorization that means certain fractions near a particular value x are missing from the Farey sequence, that creates a gap. 
+
+One important mechanism: consider two consecutive fractions a/q and (a+1)/q in the "parent" sequence (where we haven't reduced), but when we look at which fractions actually appear in F_Q, the gap between consecutive reduced fractions near a/q could be large if the nearby fractions with denominators near Q don't provide good approximations.
+
+Actually, let me think about this from the perspective of the Stern-Brocot tree or mediants. The Farey sequence F_Q consists of all fractions that appear at level ≤ Q in some sense. The gap between consecutive fractions a/b and c/d in F_Q is 1/(bd), and this gap is maximized when b and d are both as small as possible.
+
+For the L² discrepancy, the contribution from a gap depends on both the gap size and the cumulative discrepancy at that point.
+
+Let me think about what's special about Q near 300000.
+
+Q = 299997 = 3 × 99999 = 3 × 3 × 33333 = 9 × 33333. Hmm.
+Q = 299998 = 2 × 149999. Is 149999 prime? 149999/7 ≈ 21428.4, 149999/11 ≈ 13636, 149999/13 ≈ 11538, 149999/17 ≈ 8823, 149999/19 ≈ 7895, 149999/23 ≈ 6522, 149999/29 ≈ 5172, 149999/31 ≈ 4839, 149999/37 ≈ 4054, 149999/41 ≈ 3659, 149999/43 ≈ 3488, 149999/47 ≈ 3191, 149999/53 ≈ 2830, 149999/59 ≈ 2542, 149999/61 ≈ 2459, 149999/67 ≈ 2239, 149999/71 ≈ 2113, 149999/73 ≈ 2055, 149999/79 ≈ 1899, 149999/83 ≈ 1807, 149999/89 ≈ 1685, 149999/97 ≈ 1546, 149999/101 ≈ 1485, 149999/103 ≈ 1456, 149999/107 ≈ 1402, 149999/109 ≈ 1376, 149999/113 ≈ 1327, 149999/127 ≈ 1181, ... sqrt(149999) ≈ 387. So I need to check primes up to 387. This is tedious. Let me just note that 149999 might be prime.
+
+Q = 299999 is prime. 299999/7 ≈ 42857, 7 × 42857 = 299999? 7 × 42857 = 299999. Let me check: 42857 × 7 = 299999. 42857 × 7: 42000 × 7 = 294000, 857 × 7 = 5999, total = 299999. Yes! So 299999 = 7 × 42857. And 42857 = ? Let me check: 42857/7 = 6122.4..., 42857/11 = 3896, 11 × 3896 = 42856, so no. 42857/13 = 3296.7, 42857/17 = 2521, 17 × 2521 = 42857? 2500 × 17 = 42500, 21 × 17 = 357, total 42857. Yes! So 42857 = 17 × 2521. And 2521 = ? 2521/7 = 360.1, 2521/11 = 229.2, 2521/13 = 194, 13 × 194 = 2522, no. 2521/17 = 148.3, 2521/19 = 132.7, 2521/23 = 109.6, 2521/29 = 86.9, 2521/31 = 81.3, 2521/37 = 68.1, 2521/41 = 61.5, 2521/43 = 58.6, 2521/47 = 53.6, 2521/53 = 47.6, sqrt(2521) ≈ 50.2. So check up to 50: 2521/7 no, /11 no, /13 no, /17 no, /19 no, /23 no, /29 no, /31 no, /37 no, /41 no, /43 no, /47 no. So 2521 is prime. Thus 299999 = 7 × 17 × 2521.
+
+Q = 300000 = 2⁵ × 3 × 5⁵. Wait: 300000 = 3 × 10⁵ = 3 × 2⁵ × 5⁵. Let me verify: 2⁵ = 32, 5⁵ = 3125, 32 × 3125 = 100000, 3 × 100000 = 300000. Yes.
+
+Q = 300001. Is this prime? 300001/7 = 42857.3, 300001/11 = 27272.8, 300001/13 = 23077, 13 × 23077 = 300001? 23077 × 13: 23000 × 13 = 299000, 77 × 13 = 1001, total = 300001. Yes! So 300001 = 13 × 23077. And 23077 = ? 23077/7 = 3296.7, 23077/11 = 2097.9, 23077/13 = 1775.2, 23077/17 = 1357.5, 23077/19 = 1214.6, 23077/23 = 1003.3, 23077/29 = 795.8, 23077/31 = 744.4, 23077/37 = 623.7, 23077/41 = 562.9, 23077/43 = 536.7, 23077/47 = 491.0, 47 × 491 = 23077? 491 × 47: 500 × 47 = 23500, 9 × 47 = 423, 23500 - 423 = 23077. Yes! So 23077 = 47 × 491. And 491 is prime (491/7 ≈ 70.1, 491/11 ≈ 44.6, 491/13 ≈ 37.8, 491/17 ≈ 28.9, 491/19 ≈ 25.8, 491/23 ≈ 21.3, sqrt(491) ≈ 22.2, so check up to 22: 7, 11, 13, 17, 19 - none divide 491). So 300001 = 13 × 47 × 491.
+
+So the factorizations near 300000:
+- 299998 = 2 × 149999 (149999 likely prime)
+- 299999 = 7 × 17 × 2521
+- 300000 = 2⁵ × 3 × 5⁵
+- 300001 = 13 × 47 × 491
+
+I don't see an obvious pattern. But let me think about what causes spikes in a different way.
+
+Actually, I think the key issue might be related to the concept from the "three-distance theorem" (or Steinhaus problem). When you look at the fractional parts {nα} for n = 1, ..., N, the gaps between consecutive values take at most 3 distinct values. This is related to Farey sequences because the convergents of α in the continued fraction expansion determine the gap structure.
+
+But here we're looking at the whole Farey sequence, not a specific irrational rotation. So the connection is different.
+
+Let me think about this more carefully from the perspective of the formula for J(Q).
+
+Actually, there is a standard formula. Let me recall:
+
+For the Farey sequence F_Q, the L² discrepancy can be written in terms of Dedekind sums or more directly:
+
+J(Q) = (1/12) Σ_{q=1}^{Q} φ(q)/q² - π²/(12Q²) · (something)
+
+Hmm wait, let me think about this using the Euler-Maclaurin or direct computation approach.
+
+Actually, I think the relevant formula involves:
+
+E_Q(x) = -Φ(Q) · x + Σ_{q≤Q} Σ_{a≤q, gcd(a,q)=1} 1_{a/q ≤ x}
+
+The second term counts Farey fractions up to x. Using Möbius inversion or Fourier analysis:
+
+Σ_{a≤q, gcd(a,q)=1} 1_{a/q ≤ x} = Σ_{d|q} μ(d) · ⌊(q/d)·x⌋... no wait, that's not quite right either.
+
+The count of Farey fractions with denominator exactly q in [0,x] is:
+N_q(x) = #{a : 1 ≤ a ≤ qx, gcd(a,q) = 1} = Σ_{d|q} μ(d) · ⌊qx/d⌋... 
+
+Hmm, actually for a ≤ qx with gcd(a,q) = 1, we use:
+N_q(x) = Σ_{d|q} μ(d) ⌊qx/d⌋
+
+Wait, the number of a ≤ N with gcd(a,q) = 1 is Σ_{d|q} μ(d) ⌊N/d⌋. Here N = ⌊qx⌋ (if x < 1). 
+
+Actually, I realize the denominator q and the bound qx might not be integers, making this complicated. Let me just think about the problem qualitatively.
+
+The key point is: the discrepancy function E_Q(x) is a step function that changes at each Farey fraction. Its mean is 0 (well, approximately). The L² norm J(Q) measures the variance of this step function.
+
+The spikes at specific Q values could be caused by:
+
+1. **Resonance effects**: When Q is near a highly composite number or has a specific factorization, the arrangement of Farey fractions can create a configuration that happens to be maximally non-uniform in some local region.
+
+2. **Cumulative effect of a few large gaps**: If there happens to be a particularly large gap (or cluster of large gaps) in a region where the cumulative discrepancy is already nonzero, this can amplify J(Q).
+
+3. **Smooth number effects**: Q near 300000 = 2⁵ × 3 × 5⁵ is highly smooth. Smooth numbers have many divisors, which means the Möbius function μ(d) has many nonzero terms, potentially creating larger fluctuations in E_Q(x).
+
+Wait, actually, 300000 is very smooth. Let me think about why smooth Q might give larger discrepancy.
+
+For a highly smooth Q = 2^{a_1} × 3^{a_2} × 5^{a_3} × ..., the fractions with denominator Q have a very specific structure. In particular, a/Q for gcd(a,Q) = 1 means a is coprime to all the prime factors of Q. If Q has many small prime factors, then a/Q can't be too close to fractions with small denominators, because the denominators of nearby Farey fractions must also "avoid" those small primes.
+
+Hmm, but I don't think that's quite the right mechanism. Let me reconsider.
+
+Actually, I think the answer lies in the theory of Dedekind sums and the connection between Farey discrepancies and the Riemann zeta function. Let me recall a key formula.
+
+The classical result (attributed to various people including Franel, Landau, and later refined by Hall and others) is:
+
+J(Q) = (1/12π²) Σ_{n=1}^{∞} |Σ_{q=1}^{Q} c_q(n)|²/n²
+
+where c_q(n) is the Ramanujan sum c_q(n) = Σ_{d|(q,n)} d·μ(q/d).
+
+Or alternatively, using the Fourier expansion of the discrepancy function:
+
+E_Q(x) = Σ_{n≠0} (1/(2πin)) Σ_{q≤Q} c_q(n) e^{2πinx}
+
+So J(Q) = Σ_{n≠0} (1/(4π²n²)) |Σ_{q≤Q} c_q(n)|²
+
+= (1/2π²) Σ_{n=1}^{∞} (1/n²) |Σ_{q≤Q} c_q(n)|²
+
+Now, the key function is S_Q(n) = Σ_{q=1}^{Q} c_q(n). This has been studied extensively.
+
+For the Ramanujan sum c_q(n) = Σ_{d|(q,n)} d μ(q/d), the sum S_Q(n) = Σ_{q=1}^{Q} c_q(n).
+
+There's a formula: Σ_{q=1}^{Q} c_q(n) = ... let me recall. 
+
+c_q(n) = μ(q/(q,n)) · φ(q)/φ(q/(q,n))
+
+Hmm, that's complicated. Let me use a different approach.
+
+Σ_{q=1}^{Q} c_q(n) has been studied by various authors. For fixed n, as Q → ∞:
+
+Σ_{q≤Q} c_q(n) = Σ_{d|n} d · Σ_{q≤Q, d|q} μ(q/d) = Σ_{d|n} d · Σ_{m≤Q/d} μ(m) = Σ_{d|n, d≤Q} d · M(Q/d)
+
+where M(x) = Σ_{m≤x} μ(m) is the Mertens function.
+
+So J(Q) = (1/2π²) Σ_{n=1}^{∞} (1/n²) |Σ_{d|n, d≤Q} d · M(Q/d)|²
+
+This is the key formula! The spikes in J(Q) are caused by the behavior of the Mertens function M(x) at values x = Q/d for divisors d of small n.
+
+For the dominant term n = 1: S_Q(1) = Σ_{q≤Q} c_q(1) = Σ_{q≤Q} μ(q) = M(Q). So the n=1 term contributes (1/2π²) · M(Q)².
+
+For n = p (prime): S_Q(p) = Σ_{q≤Q} c_q(p). Now c_1(p) = 1, c_p(p) = -1+... wait. c_q(p) for prime p: if q = 1, c_1(p) = 1. If q = p, c_p(p) = μ(1)·p = p... no. c_q(n) = Σ_{d|(q,n)} d μ(q/d). For n = p prime: divisors of (q,p) depend on whether p|q.
+
+If p ∤ q, then (q,p) = 1, so c_q(p) = 1·μ(q) = μ(q).
+If p | q, then (q,p) = p, so c_q(p) = 1·μ(q) + p·μ(q/p) = μ(q) + p·μ(q/p).
+
+Hmm, this is getting complicated. Let me step back.
+
+The dominant term for J(Q) is the n=1 term:
+
+Contribution from n=1: (1/2π²) M(Q)²
+
+where M(Q) = Σ_{q≤Q} μ(q) is the Mertens function. Under RH, M(Q) = O(Q^{1/2+ε}), but the actual behavior is notoriously erratic.
+
+If M(Q) happens to be large at certain Q, that would cause J(Q) to spike. 
+
+Wait, but M(Q) is typically O(√Q) and the expected size is much smaller. The contribution (1/2π²) M(Q)² would be O(Q/π²) at most, while J(Q) is expected to be O(1/Q). So this contribution would be massive.
+
+Hmm, that can't be right. Let me reconsider.
+
+Actually, I think the issue is that the sum Σ_{q=1}^{Q} c_q(n) is not just M(Q) for n=1. Let me recompute.
+
+For n = 1: c_q(1) = Σ_{d|(q,1)} d μ(q/d) = 1·μ(q) = μ(q). So S_Q(1) = Σ_{q=1}^{Q} μ(q) = M(Q).
+
+Hmm, but then the n=1 contribution to J(Q) is (1/2π²) M(Q)², which under RH is O(Q^{1+ε}/π²). But J(Q) should be... well, the Franel-Landau result says J(Q) = O(Q^{-1+ε}) under RH. So something is off.
+
+Wait, I think I'm confusing the normalization. Let me recheck.
+
+E_Q(x) counts fractions in F_Q up to x. The total count is N_Q = Σ_{q≤Q} φ(q) ≈ 3Q²/π². The "expected" count is Φ(Q)·x where Φ(Q) = N_Q.
+
+So E_Q(1) = N_Q - Φ(Q) = 0 (if Φ(Q) = N_Q).
+
+Wait, I think the issue is that I have the wrong formula for the Fourier expansion. Let me redo this.
+
+The discrepancy function is:
+E_Q(x) = Σ_{q=1}^{Q} Σ_{\substack{a=1 \\ \gcd(a,q)=1}}^{q} \mathbf{1}_{[a/q,1]}(x) - Φ(Q) \cdot x
+
+Wait no: #{α ∈ F_Q : α ≤ x} = Σ_{q=1}^{Q} #{a : 1 ≤ a ≤ q, gcd(a,q)=1, a/q ≤ x} + 1 (for 0/1)
+
+= 1 + Σ_{q=1}^{Q} #{a : 1 ≤ a ≤ min(q, ⌊qx⌋), gcd(a,q)=1}
+
+For x ∈ [0,1], min(q, ⌊qx⌋) = ⌊qx⌋ when q ≥ 1.
+
+So #{α ∈ F_Q : α ≤ x} = 1 + Σ_{q=1}^{Q} Σ_{\substack{a=1 \\ \gcd(a,q)=1}}^{\lfloor qx \rfloor} 1
+
+Using the Möbius function: Σ_{\substack{a=1 \\ \gcd(a,q)=1}}^{N} 1 = Σ_{d|q} μ(d) ⌊N/d⌋
+
+So: #{α ∈ F_Q : α ≤ x} = 1 + Σ_{q=1}^{Q} Σ_{d|q} μ(d) ⌊qx/d⌋
+
+= 1 + Σ_{q=1}^{Q} Σ_{d|q} μ(d) (qx/d - {qx/d})
+
+where {y} is the fractional part.
+
+The "smooth" part (ignoring fractional parts) is:
+1 + Σ_{q=1}^{Q} Σ_{d|q} μ(d) qx/d = 1 + Σ_{q=1}^{Q} (qx/q) Σ_{d|q} d μ(q/d)... 
+
+Hmm, Σ_{d|q} μ(d)/d = φ(q)/q². Wait no.
+
+Σ_{d|q} μ(d)/d = Π_{p|q} (1 - 1/p)... no that's φ(q)/q.
+
+Let me redo: Σ_{d|q} μ(d) · (q/d) = Σ_{d|q} μ(d) · (q/d) = Σ_{e|q} (q/e) μ(e)... hmm.
+
+Actually, Σ_{d|q} μ(d) (qx/d) = x · Σ_{d|q} μ(d) q/d = x · (Σ_{d|q} μ(d) q/d)
+
+Now Σ_{d|q} μ(d) q/d = Σ_{e|q} μ(q/e) · e = Σ_{e|q} e μ(q/e) = φ(q) (this is a standard identity, since φ(q) = q Σ_{d|q} μ(d)/d = Σ_{d|q} μ(d) q/d).
+
+Wait: φ(q) = q · Π_{p|q}(1 - 1/p) = q · Σ_{d|q} μ(d)/d.
+
+So Σ_{d|q} μ(d) · q/d = φ(q). Yes.
+
+Therefore, the smooth part of #{α ∈ F_Q : α ≤ x} is:
+1 + x · Σ_{q=1}^{Q} φ(q) = 1 + x · Φ(Q)
+
+And we subtract Φ(Q)·x, so:
+
+E_Q(x) = 1 - Σ_{q=1}^{Q} Σ_{d|q} μ(d) {qx/d}
+
+OK so E_Q(x) = 1 - Σ_{q=1}^{Q} Σ_{d|q} μ(d) {qx/d}
+
+This is a sum of fractional parts, which is related to the Dedekind sum structure.
+
+Now, for the L² norm:
+
+J(Q) = ∫₀¹ E_Q(x)² dx
+
+The key observation is that this integral involves the correlation of fractional parts {qx/d} for various q,d.
+
+But actually, for the n=1 term in the Fourier expansion, I realize my earlier analysis was likely correct and the issue is that the formula J(Q) = (1/2π²) Σ (1/n²) |S_Q(n)|² might not be right.
+
+Let me reconsider. The discrepancy function E_Q(x) (after subtracting the mean, which is approximately 1 - Φ(Q)/2 or something... actually let me just be more careful).
+
+E_Q(x) = 1 - Σ_{q≤Q} Σ_{d|q} μ(d) {qx/d}
+
+The Fourier expansion of {y} is {y} = 1/2 - Σ_{n=1}^{∞} sin(2πny)/(πn)
+
+So {qx/d} = 1/2 - (1/π) Σ_{n=1}^{∞} sin(2πnqx/d)/n
+
+Therefore:
+Σ_{q≤Q} Σ_{d|q} μ(d) {qx/d} = (1/2) Σ_{q≤Q} Σ_{d|q} μ(d) - (1/π) Σ_{n=1}^{∞} (1/n) Σ_{q≤Q} Σ_{d|q} μ(d) sin(2πnqx/d)
+
+Now, Σ_{d|q} μ(d) = [q = 1] (it's 1 if q = 1, 0 otherwise). So the first term is 1/2.
+
+And the double sum in the second term: Σ_{q≤Q} Σ_{d|q} μ(d) sin(2πnqx/d). Let me substitute q = de:
+
+= Σ_{d≤Q} μ(d) Σ_{e≤Q/d} sin(2πnex)
+
+Hmm wait, q = de and d|q, so we sum over d and e = q/d. Then:
+
+= Σ_{d≤Q} μ(d) Σ_{e≤Q/d} sin(2πnex)
+
+= Σ_{d≤Q} μ(d) · Im(Σ_{e≤Q/d} e^{2πine·x})
+
+= Σ_{d≤Q} μ(d) · Im(Σ_{e≤Q/d} e^{2πinex})
+
+The inner sum is a geometric sum: Σ_{e=1}^{M} e^{2πine·x} where M = ⌊Q/d⌋.
+
+This doesn't simplify nicely in general.
+
+OK, I think the Fourier approach is getting complicated. Let me try a different tack.
+
+Let me go back to the direct computation:
+
+J(Q) = ∫₀¹ E_Q(x)² dx
+
+E_Q(x) is a step function that changes value at each Farey fraction. If the Farey fractions are 0 = x_0 < x_1 < ... < x_N = 1 with N = Φ(Q), then on the interval (x_{k-1}, x_k], E_Q(x) = k - Φ(Q)·x.
+
+So: J(Q) = Σ_{k=1}^{N} ∫_{x_{k-1}}^{x_k} (k - Φ(Q)x)² dx
+
+For each interval, let Δ_k = x_k - x_{k-1} = 1/(q_{k-1} q_k) (the gap between consecutive Farey fractions with denominators q_{k-1} and q_k).
+
+The integral over the k-th interval is:
+
+∫_{x_{k-1}}^{x_k} (k - Φ(Q)x)² dx
+
+Let f(x) = k - Φ(Q)x. At x = x_{k-1}, f = k - Φ(Q)x_{k-1}. At x = x_k, f = k - Φ(Q)x_k = f(x_{k-1}) - Φ(Q)Δ_k.
+
+So the integral of a quadratic function over a small interval. If Δ_k is small, this is approximately Δ_k · f(x_{k-1})² (to leading order, since f is approximately constant over a small interval).
+
+But for large gaps, the linear variation of f matters.
+
+The cumulative sum Σ_{k=1}^{m} Δ_k = x_m, so f at the left endpoint of interval k is:
+
+f(x_{k-1}) = k - Φ(Q) · x_{k-1} = k - Φ(Q) · Σ_{j=1}^{k-1} Δ_j
+
+This is essentially the running discrepancy: k fractions have been placed in [0, x_{k-1}], while the expected number is Φ(Q) · x_{k-1}.
+
+Now, the key insight: J(Q) is dominated by regions where the running discrepancy is large AND the gap is large. The worst case is when a large gap occurs in a region where the discrepancy has already built up.
+
+Now, I think I understand the spikes. Let me consider a specific mechanism.
+
+Suppose near x = 1/2, the Farey sequence has a large gap. This means that on one side of x = 1/2, there are too many (or too few) fractions, and the discrepancy E_Q(x) builds up linearly over the gap. The L² contribution is proportional to Δ_k times the squared discrepancy at that point.
+
+A large gap near x = 1/2 occurs when there are no fractions with small denominators near 1/2. For instance, if Q = 2M for some M, then 1/2 = M/Q is a Farey fraction, but what about the fractions immediately to the left and right?
+
+Actually, the consecutive fractions to 1/2 in F_Q are... Let me think. The fraction immediately before 1/2 is the largest fraction less than 1/2 with denominator ≤ Q. By the theory of Farey fractions, if a/b < 1/2 < c/d are consecutive in F_Q, then a/b and 1/2 are consecutive iff b·1 - a·2 = 1 (since 1/2 = 1/2), i.e., 2a = 2b - 1... hmm wait.
+
+For 1/2 = 1/2, the neighbors in F_Q: the fraction before 1/2 is the one with the largest denominator ≤ Q that is just below 1/2. By the mediant property, if a/b < 1/2 < c/d are consecutive in F_Q(Q), then c = a + ... no. For consecutive fractions a/b < c/d in F_Q, we have bc - ad = 1.
+
+For c/d = 1/2: the predecessor a/b satisfies 2a - b = -1, i.e., b = 2a + 1. So a/b = a/(2a+1). The predecessor of 1/2 in F_Q is a/(2a+1) where a is the largest integer with 2a+1 ≤ Q, i.e., a = (Q-1)/2 if Q is odd, or a = (Q-2)/2 if Q is even. So the predecessor is either (Q-1)/(2(Q-1)+1) = ... wait, that's not right.
+
+If Q is even, say Q = 2M, then 1/2 = M/(2M) and the predecessor is (M-1)/(2M-1) with denominator 2M-1 ≤ Q. The gap is 1/2 - (M-1)/(2M-1) = (2M-1 - 2M+2)/(2(2M-1)) = 1/(2(2M-1)) = 1/(2Q-2).
+
+Hmm, that's a gap of 1/(2Q-2), which is about 1/(2Q). The "typical" gap is about 1/N ≈ π²/(3Q²), so this gap is about 3Q/(2π²) times the typical gap. That's a large gap!
+
+But this gap near 1/2 is present for all Q, so it shouldn't cause spikes specific to certain Q values. However, the contribution of this gap to J(Q) depends on the value of E_Q(x) in this region, which depends on the cumulative discrepancy.
+
+The discrepancy E_Q(x) just before 1/2 (at x slightly less than 1/2) is:
+
+E_Q(1/2^-) = #{α ∈ F_Q : α < 1/2} - Φ(Q)/2
+
+By symmetry of the Farey sequence (if a/q ∈ F_Q then (q-a)/q ∈ F_Q), the count of fractions in [0, 1/2) should be approximately Φ(Q)/2. So E_Q(1/2^-) should be close to 0 for all Q.
+
+But "close to 0" might mean different things for different Q. The discrepancy at 1/2 is:
+
+E_Q(1/2^-) = #{α ∈ F_Q : α < 1/2} - Φ(Q)/2
+
+The number of fractions in [0, 1/2) can be computed exactly. For fractions a/q with a/q < 1/2, we need a < q/2, i.e., a ≤ (q-1)/2. So:
+
+#{a/q ∈ F_Q : a/q < 1/2} = Σ_{q=1}^{Q} #{a : 1 ≤ a ≤ (q-1)/2, gcd(a,q) = 1}
+
+By the symmetry a ↔ q-a for gcd(a,q) = 1:
+
+#{a : 1 ≤ a ≤ (q-1)/2, gcd(a,q) = 1} = φ(q)/2 for q ≥ 3 (since a and q-a are both coprime to q iff one of them is)
+
+Actually, for q ≥ 3, the number of integers a with 1 ≤ a ≤ q-1 and gcd(a,q) = 1 is φ(q). By symmetry (a ↔ q-a), exactly half are ≤ (q-1)/2 and half are ≥ (q+1)/2 (the map a → q-a is a bijection on {1,...,q-1} that swaps a with gcd(a,q)=1 to q-a with gcd(q-a,q)=1). But if q is even, a = q/2 is fixed by this map, but gcd(q/2, q) = q/2 ≠ 1 for q > 2, so a = q/2 is never coprime to q when q > 2. So for q ≥ 3:
+
+#{a : 1 ≤ a ≤ (q-1)/2, gcd(a,q) = 1} = φ(q)/2
+
+For q = 1: #{a : 1 ≤ a ≤ 0, ...} = 0 (since (q-1)/2 = 0)
+For q = 2: #{a : 1 ≤ a ≤ 1/2, ...} = 0 (since (q-1)/2 = 1/2, and a must be an integer ≤ 1/2, so no valid a)
+
+Hmm wait, for q = 1: a ranges from 1 to 0, which is empty. For q = 2: a ranges from 1 to 1/2, which is also empty. But 1/2 is in F_Q, so:
+
+#{α ∈ F_Q : α < 1/2} = 1 (for 0/1) + Σ_{q=1}^{Q} #{a : 1 ≤ a ≤ floor((q-1)/2), gcd(a,q)=1}
+
+Wait, I need to be more careful. #{α ∈ F_Q : α < 1/2} includes 0/1 plus all fractions a/q with 1 ≤ a < q/2 and gcd(a,q) = 1.
+
+For q = 1: no fractions (0/1 is already counted, and 1/1 > 1/2)
+For q = 2: no fractions with a/q < 1/2 (since 1/2 is not < 1/2)
+For q ≥ 3: #{a : 1 ≤ a ≤ floor((q-1)/2), gcd(a,q) = 1} = φ(q)/2
+
+So #{α ∈ F_Q : α < 1/2} = 1 + Σ_{q=3}^{Q} φ(q)/2 = 1 + (Φ(Q) - φ(1) - φ(2))/2 = 1 + (Φ(Q) - 1 - 1)/2 = Φ(Q)/2
+
+So E_Q(1/2^-) = Φ(Q)/2 - Φ(Q)/2 = 0! The discrepancy at 1/2 is exactly 0.
+
+So the gap near 1/2 contributes (to leading order) ∫₀^{1/(2Q-2)} (Φ(Q) · u)² du = Φ(Q)² · (1/(2Q-2))³/3 ≈ Φ(Q)²/(24Q³) ≈ 9Q⁴/(π⁴·24Q³) = 3Q/(8π⁴). 
+
+Wait but this would contribute ~3Q/(8π⁴) to J(Q), and NW(Q) = Q·J(Q)/Φ(Q) ≈ Q · 3Q/(8π⁴) · π²/(3Q²) = π²/(8π⁴) = 1/(8π²) ≈ 0.0127. That's a constant contribution from the gap near 1/2.
+
+But actually, this can't be the whole story because the discrepancy at 1/2 is exactly 0, so the discrepancy inside the gap near 1/2 starts at 0 and grows. The contribution is not as large as I computed above. Let me redo this more carefully.
+
+In the gap near 1/2, the discrepancy goes from E_Q(x_{k-1}) at the left endpoint to E_Q(x_k) at the right endpoint. Since E_Q(1/2^-) = 0, and the gap is Δ ≈ 1/(2Q), the discrepancy in the gap is approximately E_Q(x) ≈ -Φ(Q) · (x - x_{k-1}) + constant... hmm, it depends on the exact structure.
+
+OK I think I'm going down a rabbit hole. Let me step back and think about the big picture.
+
+The question is: why does NW(Q) spike at specific Q values?
+
+Let me consider the formula more carefully. We have:
+
+J(Q) = ∫₀¹ E_Q(x)² dx
+
+where E_Q(x) = #{F_Q ∩ [0,x]} - Φ(Q) · x.
+
+The L² discrepancy is related to the "energy" of the Farey sequence. The key insight from the theory of uniform distribution is that for well-distributed sequences, the discrepancy is small, and for poorly distributed ones, it's large.
+
+The Farey sequence is generally well-distributed (this is related to the Riemann Hypothesis), but there can be local deviations.
+
+Now, I think the key phenomenon might be related to what I'd call "resonance" between Q and nearby smooth numbers. Here's my thinking:
+
+When Q is near a highly smooth number like 300000 = 2⁵ × 3 × 5⁵, the factorization of Q creates a specific structure in the Farey sequence. The fractions with denominator Q contribute differently depending on the smoothness of Q.
+
+Actually, let me reconsider the structure. The L² discrepancy J(Q) can be decomposed as:
+
+J(Q) = J(Q-1) + (contribution of fractions with denominator Q)
+
+Wait, that's not quite right because when we go from F_{Q-1} to F_Q, we add new fractions (those with denominator exactly Q) and the counting function changes.
+
+Actually, E_Q(x) - E_{Q-1}(x) = #{a/Q : a/Q ≤ x, gcd(a,Q)=1} - φ(Q)·x
+
+No wait, E_Q(x) = #{F_Q ∩ [0,x]} - Φ(Q)·x and E_{Q-1}(x) = #{F_{Q-1} ∩ [0,x]} - Φ(Q-1)·x.
+
+So E_Q(x) - E_{Q-1}(x) = [#{F_Q ∩ [0,x]} - #{F_{Q-1} ∩ [0,x]}] - [Φ(Q) - Φ(Q-1)]·x = N_Q(x) - φ(Q)·x
+
+where N_Q(x) = #{a/Q : 1 ≤ a ≤ Qx, gcd(a,Q)=1}.
+
+So the "increment" in the discrepancy is the discrepancy of the fractions with denominator exactly Q.
+
+Now, J(Q) = ∫₀¹ E_Q(x)² dx = ∫₀¹ [E_{Q-1}(x) + N_Q(x) - φ(Q)x]² dx
+
+= J(Q-1) + 2∫₀¹ E_{Q-1}(x)(N_Q(x) - φ(Q)x)dx + ∫₀¹ (N_Q(x) - φ(Q)x)² dx
+
+The last term is the L² discrepancy of the φ(Q) fractions a/Q with gcd(a,Q)=1. This is related to how uniformly the reduced fractions mod Q are distributed in [0,1].
+
+For a random set of φ(Q) points in [0,1], the L² discrepancy is about φ(Q)/12 (from the classical Koksma-Hlawka type bounds). But for the specific set {a/Q : gcd(a,Q)=1}, the distribution might be more or less uniform depending on Q.
+
+The middle term 2∫ E_{Q-1}(x) · (N_Q(x) - φ(Q)x) dx represents the correlation between the existing discrepancy and the new fractions. This could be positive or negative.
+
+If E_{Q-1}(x) and N_Q(x) - φ(Q)x are correlated (have the same sign), then J(Q) > J(Q-1) + (last term). If anticorrelated, J(Q) could be smaller.
+
+The spikes in NW(Q) could occur when there's a positive correlation between E_{Q-1} and the new fractions, i.e., when the fractions with denominator Q happen to fall in regions where there are already too many fractions, amplifying the discrepancy.
+
+But this doesn't immediately explain why Q near 300000 is special.
+
+Let me think about another approach. Maybe the spikes are related to the behavior of the Möbius function and the Mertens function.
+
+From the formula J(Q) = (1/2π²) Σ_{n=1}^{∞} (1/n²) |S_Q(n)|² where S_Q(n) = Σ_{q=1}^{Q} c_q(n), the dominant contribution comes from small n.
+
+For n = 1: S_Q(1) = M(Q) (Mertens function). Its contribution is M(Q)²/(2π²).
+
+Hmm, but M(Q) is conjectured to be O(Q^{1/2+ε}) and is typically much smaller. The expected value of |M(Q)|² is about Q (by the conjecture M(Q) = O(Q^{1/2+ε})). So the n=1 contribution is about Q/(2π²).
+
+For n = 2: S_Q(2) = Σ_{q≤Q} c_q(2). Now c_q(2) = μ(q/2)·2 if 2|q, and μ(q)·(something) if... actually, c_q(2) = Σ_{d|(q,2)} d μ(q/d). If q is odd, (q,2) = 1, so c_q(2) = 1·μ(q) = μ(q). If q is even, (q,2) = 2, so c_q(2) = 1·μ(q) + 2·μ(q/2).
+
+So S_Q(2) = Σ_{q≤Q, q odd} μ(q) + Σ_{q≤Q, q even} [μ(q) + 2μ(q/2)]
+
+= Σ_{q≤Q} μ(q) + 2 Σ_{q≤Q, q even} μ(q/2)
+
+= M(Q) + 2 Σ_{m≤Q/2} μ(m)
+
+= M(Q) + 2M(⌊Q/2⌋)
+
+Similarly, for general n, S_Q(n) is a linear combination of M(Q/d) for d | n.
+
+The key point: J(Q) depends on M(Q), M(Q/2), M(Q/3), M(Q/5), etc. If several of these Mertens function values are simultaneously large, J(Q) spikes.
+
+Now, the Mertens function M(x) = Σ_{n≤x} μ(n) is known to be very erratic. Under RH, M(x) = O(x^{1/2+ε}), but the actual oscillations can be significant.
+
+The spike at Q ≈ 300000 could occur when M(Q/d) is simultaneously large for several small divisors d. This is a resonance effect: if Q is a multiple of several small numbers (like Q = 300000 = 2⁵ × 3 × 5⁵), then Q/2, Q/3, Q/5, Q/6, Q/10, Q/15, Q/30, etc. are all integers, and the Mertens function at all these points contributes to J(Q).
+
+When Q is not highly composite, many of the values Q/d are not integers (for the Ramanujan sums, d divides Q matters), and the contributions are smaller.
+
+Wait, but that's not quite right either. The formula involves M(Q/d) where d runs over divisors of n, and n runs from 1 to ∞. For a fixed Q, the key quantities are M(Q), M(⌊Q/2⌋), M(⌊Q/3⌋), M(⌊Q/5⌋), etc.
+
+Hmm, but the Ramanujan sum c_q(n) doesn't require d to divide Q. Let me reconsider.
+
+For S_Q(n) = Σ_{q=1}^{Q} c_q(n) where c_q(n) = Σ_{d|(q,n)} d μ(q/d):
+
+S_Q(n) = Σ_{q=1}^{Q} Σ_{d|(q,n)} d μ(q/d) = Σ_{d|n} d Σ_{q≤Q, d|q} μ(q/d) = Σ_{d|n} d Σ_{m≤Q/d} μ(m) = Σ_{d|n} d · M(Q/d)
+
+where d|n means d divides n, and Q/d means Q divided by d (with the floor implied for M).
+
+So S_Q(n) = Σ_{d|n} d · M(⌊Q/d⌋)
+
+And J(Q) = (1/2π²) Σ_{n=1}^{∞} (1/n²) |Σ_{d|n} d · M(⌊Q/d⌋)|²
+
+For the n = 1 term: |1 · M(Q)|² = M(Q)²
+For n = 2: |M(Q) + 2M(Q/2)|²
+For n = 3: |M(Q) + 3M(Q/3)|²
+For n = 4: |M(Q) + 2M(Q/2) + 4M(Q/4)|²
+For n = 6: |M(Q) + 2M(Q/2) + 3M(Q/3) + 6M(Q/6)|²
+etc.
+
+Now, the dominant contributions come from small n (because of the 1/n² factor). The n=1 term gives M(Q)²/(2π²). The n=2 term gives |M(Q) + 2M(Q/2)|²/(2π²·4). Etc.
+
+The asymptotic behavior: for smooth Q, many of the M(Q/d) values are evaluated at integers (when d | Q), which means they're evaluating the Mertens function at specific points. For non-smooth Q, many Q/d values are non-integers, and the floor function smooths things out.
+
+Hmm, but actually M(⌊Q/d⌋) is always well-defined since ⌊Q/d⌋ is always an integer. The question is whether the particular values are large or small.
+
+I think the key insight is this: the Mertens function M(x) has large deviations at certain x values. These deviations are well-known in analytic number theory (e.g., the Mertens conjecture was disproved by showing M(x)/√x can exceed 1 in absolute value). The spikes in J(Q) occur when M(Q), M(Q/2), M(Q/3), etc. are simultaneously large and constructively interfere in the formula above.
+
+But this doesn't immediately explain why Q near 300000 is special.
+
+Let me reconsider the data. The spike occurs at Q ∈ [299998, 300001], and Q = 300000 = 2⁵ × 3 × 5⁵ is highly smooth. The other spike mentioned is at Q = 350000.
+
+350000 = 2⁴ × 5⁵ × 7. Hmm wait: 350000 = 35 × 10000 = 35 × 10⁴ = 5 × 7 × 2⁴ × 5⁴ = 2⁴ × 5⁵ × 7. Also very smooth!
+
+So both spike locations correspond to highly smooth numbers. This supports the idea that smoothness of Q is related to spikes.
+
+Now, is there a pattern to the spikes? Let me think about what other highly smooth numbers exist in the range [50000, 400000]:
+
+- 60000 = 2⁵ × 3 × 5³ × ... hmm, 60000 = 2⁵ × 3 × 5³ = 32 × 3 × 125 = 12000 × 5. Wait, 60000 = 60 × 1000 = 2² × 3 × 5 × 2³ × 5³ = 2⁵ × 3 × 5⁴. Hmm: 2⁵ = 32, 3 × 5⁴ = 3 × 625 = 1875, 32 × 1875 = 60000. Yes.
+
+- 100000 = 2⁵ × 5⁵
+- 120000 = 2⁵ × 3 × 5³ = ... wait: 120000 = 12 × 10⁴ = 2² × 3 × 2⁴ × 5⁴ = 2⁶ × 3 × 5⁴. Hmm: 2⁶ = 64, 3 × 5⁴ = 1875, 64 × 1875 = 120000. Yes.
+- 150000 = 2 × 3 × 5⁵ = ... wait: 150000 = 15 × 10⁴ = 3 × 5 × 2⁴ × 5⁴ = 2⁴ × 3 × 5⁵.
+- 200000 = 2⁵ × 5⁵ × ... wait: 200000 = 2 × 10⁵ = 2 × 2⁵ × 5⁵ = 2⁶ × 5⁵.
+- 240000 = 2⁵ × 3 × 5³ = ... 240000 = 24 × 10⁴ = 2³ × 3 × 2⁴ × 5⁴ = 2⁷ × 3 × 5⁴.
+- 250000 = 2² × 5⁶ = 4 × 15625.
+- 300000 = 2⁵ × 3 × 5⁵
+- 320000 = 2¹⁰ × 5³ = ... 320000 = 32 × 10⁴ = 2⁵ × 2⁴ × 5⁴ = 2⁹ × 5⁴. Hmm wait: 2⁹ = 512, 5⁴ = 625, 512 × 625 = 320000. Yes.
+- 350000 = 2⁴ × 5⁵ × 7
+- 360000 = 2⁵ × 3² × 5³ × ... 360000 = 36 × 10⁴ = 2² × 3² × 2⁴ × 5⁴ = 2⁶ × 3² × 5⁴.
+- 384000 = 2⁸ × 3 × 5³ = ... 384000 = 384 × 1000 = 2⁷ × 3 × 2³ × 5³ = 2¹⁰ × 3 × 5³. Wait: 2¹⁰ = 1024, 3 × 5³ = 375, 1024 × 375 = 384000. Yes.
+- 400000 = 2⁵ × 5⁵ × ... 400000 = 4 × 10⁵ = 2² × 2⁵ × 5⁵ = 2⁷ × 5⁵.
+
+Hmm, from the data: Q = 250000 is "smooth (≈ baseline)", Q = 320000 is "back to baseline", and Q = 400000 is "smooth". So not all smooth numbers cause spikes. The spike requires something more specific.
+
+Let me reconsider. Maybe it's not just smoothness but the specific prime factorization pattern that matters.
+
+Q = 250000 = 2² × 5⁶ → baseline (NW ≈ 0.6705)
+Q = 300000 = 2⁵ × 3 × 5⁵ → SPIKE (NW ≈ 0.699)
+Q = 320000 = 2⁹ × 5⁴ → baseline (NW ≈ 0.672)
+Q = 350000 = 2⁴ × 5⁵ × 7 → SPIKE (NW ≈ 0.691)
+Q = 400000 = 2⁷ × 5⁵ → baseline (NW ≈ 0.671)
+
+So 300000 and 350000 are spikes but 250000, 320000, and 400000 are not. What's different?
+
+250000 = 2² × 5⁶
+300000 = 2⁵ × 3 × 5⁵
+320000 = 2⁹ × 5⁴
+350000 = 2⁴ × 5⁵ × 7
+400000 = 2⁷ × 5⁵
+
+The two spike values (300000 and 350000) both have a factor of 5⁵ and an additional prime (3 or 7). The baseline values (250000, 320000, 400000) are of the form 2^a × 5^b without an additional prime, or with a different exponent of 5.
+
+Hmm, but that might be a coincidence. Let me check: is 600000 = 2⁶ × 3 × 5⁵ a spike? And 700000 = 2⁵ × 5⁵ × 7 × ... wait, 700000 = 7 × 10⁵ = 2⁵ × 5⁵ × 7. So 700000 = 2⁵ × 5⁵ × 7. By the pattern, this might be a spike. And 600000 = 6 × 10⁵ = 2 × 3 × 2⁵ × 5⁵ = 2⁶ × 3 × 5⁵. Also potentially a spike.
+
+This is interesting but I'm not sure it's the right pattern. Let me think more fundamentally.
+
+Actually, I realize I should think about this from the perspective of the formula J(Q) = (1/2π²) Σ_{n=1}^{∞} (1/n²) |S_Q(n)|² more carefully.
+
+The contribution from n = 1: M(Q)²/(2π²)
+
+For Q = 300000, M(300000) is what? The Mertens function at 300000. I don't know its exact value, but it's typically O(√Q) ≈ 548. The contribution would be about 548²/(2π²) ≈ 15100.
+
+The total J(Q) at Q = 300000: NW(Q) ≈ 0.699, Φ(300000) ≈ 3 × 300000²/π² ≈ 2.74 × 10¹⁰, so J(300000) = NW(Q) × Φ(Q)/Q ≈ 0.699 × 2.74 × 10¹⁰ / 300000 ≈ 0.699 × 91333 ≈ 63842.
+
+So the n=1 term contributes about 15100 out of 63842, which is about 24%. That's significant but not dominant.
+
+The contributions from n = 2, 3, 4, 5, 6, ... add up. Each term is (1/n²) |S_Q(n)|² / (2π²).
+
+For n = p (prime), S_Q(p) = M(Q) + p · M(Q/p). If Q = 300000 and p = 2, S = M(300000) + 2M(150000). If p = 3, S = M(300000) + 3M(100000). If p = 5, S = M(300000) + 5M(60000).
+
+The magnitudes of S_Q(n) for small n depend on the specific values of the Mertens function at Q, Q/2, Q/3, Q/5, etc.
+
+For the spike at Q = 300000: we need |S_Q(n)|² to be large for several small n, which requires the Mertens function values at 300000, 150000, 100000, 75000, 60000, 50000, etc. to be correlated in a way that the sums S_Q(n) are large.
+
+This is possible if M(x) has a systematic trend or oscillation with a period that matches some of these values.
+
+But this is getting quite speculative. Let me think about what's really known about this problem.
+
+Actually, you know what, let me reconsider the whole problem from scratch. I think there might be a much simpler explanation.
+
+The L² discrepancy of the Farey sequence has been studied, and the asymptotic behavior of J(Q) is known. Specifically, there are results that express J(Q) in terms of Euler products and correction terms.
+
+The key result I'm thinking of is from the paper by Boca and Zaharescu (2005) or Codecá and Perelli (2001). They
