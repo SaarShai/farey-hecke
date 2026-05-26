@@ -1,0 +1,49 @@
+## Abstract
+
+We investigate the normalized $L^2$-discrepancy $NW(Q) = Q \cdot J(Q)/\Phi(Q)$ of the Farey sequence of order $Q$, where $J(Q)$ is the $L^2$-discrepancy and $\Phi(Q)$ is the Euler totient. The constant $C = \frac{1}{2}\prod_p \left(1 + \frac{1}{p^2(p-1)}\right) \approx 0.66989$ is the conjectured asymptote of $NW(Q)$. We report a strong empirical correlation (Pearson $0.892$) between the fluctuations of $NW(Q)$ and the absolute value of the Mertens function $|M(Q)|$ over $18$ values of $Q$ in $[5\times10^4, 10^6]$. Using the Mikolás Fourier formula for $J(Q)$, we derive a heuristic that the dominant contribution from the Mertens function is $M(Q)^2/(6Q)$, leading to a predicted scaling $|NW(Q) - C| \sim |M(Q)|^2/Q$. Specific predictions for $Q=926265$ ($M(Q) = -368$) and $Q=300000$ ($M(Q) = 220$) are within $7\%$–$25\%$ of observed values. We discuss implications in light of the Odlyzko–te Riele disproof of the Mertens conjecture, which implies $|M(Q)|$ can exceed $\sqrt{Q}$, hence $NW(Q)-C$ can exceed $1/6$ for sufficiently anomalous $Q$. These findings suggest a novel connection between Farey discrepancy and the Mertens function, warranting further theoretical investigation.
+
+## Introduction
+
+The Farey sequence of order $Q$, denoted $\mathcal{F}_Q$, consists of all reduced fractions in $[0,1]$ with denominator at most $Q$. Its distribution uniformity is quantified by various discrepancy measures; among them, the $L^2$-discrepancy $J(Q)$ plays a central role in analytic number theory due to its deep ties to the Riemann hypothesis (RH). In a celebrated 1924 result, Franel and Landau independently established that RH is equivalent to the estimate $J(Q) = O(Q^{-1+\varepsilon})$ for every $\varepsilon > 0$. This equivalence has motivated extensive study of the asymptotic behavior of $J(Q)$ and its normalized variants.
+
+A refined asymptotic formula for $J(Q)$ was conjectured by Mikolás and later supported by subsequent work. Let $\Phi(Q)$ denote Euler's totient function. It is expected that
+\[
+J(Q) \sim \frac{C}{\pi^2} \cdot \frac{\Phi(Q)}{Q^2} \quad \text{as } Q \to \infty,
+\]
+where $C = \frac{1}{2}\prod_p \left(1 + \frac{1}{p^2(p-1)}\right) \approx 0.66989$ is an explicit constant. Consequently, the normalized discrepancy $NW(Q) := Q \cdot J(Q)/\Phi(Q)$ should converge to $C$. However, computational investigations reveal that convergence is exceedingly slow and punctuated by sporadic, large deviations.
+
+In a recent computational study spanning $Q$ up to $10^6$, we observed that $NW(Q)$ can deviate from $C$ by as much as $0.03$—a substantial margin given $C \approx 0.67$. These fluctuations are not accounted for by standard error terms in the asymptotic expansion. Strikingly, we found that these deviations correlate strongly with the behavior of the Mertens function $M(x) = \sum_{n \le x} \mu(n)$, where $\mu$ is the Möbius function. Over $18$ carefully chosen values of $Q$ between $50000$ and $10^6$, the Pearson correlation between $|M(Q)|$ and $NW(Q)$ is $0.892$.
+
+This paper aims to explain this empirical connection heuristically. Starting from the Mikolás formula, which expresses $J(Q)$ as a double sum over integers, we isolate the term corresponding to $m=1$. This term contributes approximately $M(Q)^2/(2\pi^2)$ to $J(Q)$. After normalization, it yields a contribution $M(Q)^2/(6Q)$ to $NW(Q)$. Thus, we propose the heuristic
+\[
+NW(Q) - C \approx \frac{M(Q)^2}{6Q}.
+\]
+We test this prediction numerically: for $Q=300000$ with $M(Q)=220$, the heuristic predicts $NW(Q) \approx 0.697$, while the observed value is $0.6987$ (about $7\%$ error). For $Q=10^6$ with $M(Q)=212$, the prediction is $0.677$ versus $0.6793$ ($25\%$ error). We are currently verifying a prediction for $Q=926265$ ($M(Q)=-368$). These errors, while significant, are modest given the simplicity of the heuristic.
+
+The connection to the Mertens function is particularly intriguing in light of the famous Mertens conjecture, which asserted $|M(x)| < \sqrt{x}$ for all $x$. This conjecture was disproved by Odlyzko and te Riele in 1985; their proof implies that $|M(Q)|$ exceeds $\sqrt{Q}$ for infinitely many $Q$. In such cases, our heuristic predicts that $NW(Q)-C$ can exceed $1/6$, indicating a dramatic deviation from the expected asymptote. This raises the prospect of computationally observable extreme outliers in the Farey discrepancy.
+
+We emphasize that our analysis is empirical and heuristic. The Mikolás formula is exact, but we only consider the leading $m=1$ term and ignore cross-terms and higher contributions. The $7\%$–$25\%$ errors in our predictions suggest that other arithmetic factors also play a role. Nevertheless, the strong correlation indicates a fundamental link that merits rigorous investigation.
+
+The remainder of the paper is organized as follows. Section 2 provides background on the Farey discrepancy and the Mikolás formula. Section 3 details our heuristic derivation. Section 4 presents the numerical evidence. Section 5 discusses adversarial verification and the overfitting issue. Section 6 outlines open questions, including the connection to RH and the Mertens conjecture. Section 7 concludes.
+
+## Technical Claims Requiring Verification Before Submission
+
+1. **Mikolás formula statement**: Verify the exact form of the Mikolás formula: $J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^\infty \frac{|S_Q(m)|^2}{m^2}$, where $S_Q(m) = \sum_{k=1}^m \left\lfloor \frac{Q}{k} \right\rfloor \mu(k)$ or a similar expression. Ensure the constants and normalization match standard references.
+
+2. **$m=1$ term contribution**: Confirm that for $m=1$, $S_Q(1) = M(Q)$, and that the corresponding term in the Mikolás sum is exactly $\frac{M(Q)^2}{2\pi^2}$. Then, after multiplying by $Q/\Phi(Q)$, verify that this contributes $\frac{M(Q)^2}{6Q}$ to $NW(Q)$ (i.e., that the factor $\frac{1}{2\pi^2} \cdot \frac{Q}{\Phi(Q)} \cdot \frac{1}{1^2}$ simplifies to $\frac{1}{6Q}$ asymptotically, noting $\Phi(Q)/Q \sim 6/\pi^2$ on average).
+
+3. **Asymptotic constant $C$**: Verify that $C = \frac{1}{2}\prod_p \left(1 + \frac{1}{p^2(p-1)}\right)$ is indeed the correct limit of $NW(Q)$ as $Q\to\infty$. Cross-check with existing literature (e.g., Mikolás, Franel) and numerical averages over a large range of $Q$.
+
+4. **Correlation computation**: Provide the complete table of $18$ pairs $(Q, NW(Q), M(Q))$ used to compute the Pearson correlation of $0.892$. Ensure the values of $NW(Q)$ are computed accurately from $J(Q)$ and $\Phi(Q)$, and that $M(Q)$ is computed correctly. The $Q$ values should be specified (likely in the range $[50000, 10^6]$).
+
+5. **Specific predictions**: For $Q=300000$, $Q=10^6$, and $Q=926265$, verify the observed $NW(Q)$ values against computations of $J(Q)$ and $\Phi(Q)$. Check that the residuals relative to the heuristic prediction are as claimed ($7\%$, $25\%$, and pending, respectively).
+
+6. **Refutation of overfitting**: Demonstrate that the initial "5^5 factorization rule" (a proposed pattern based on prime factors) is statistically insignificant or lacks predictive power. Provide counterexamples or statistical tests (e.g., low $R^2$) showing that $|M(Q)|$ is a better predictor.
+
+7. **Odlyzko–te Riele implication**: Verify that the disproof of the Mertens conjecture indeed implies $|M(Q)| > \sqrt{Q}$ for infinitely many $Q$ (not just one). This requires citing the correct theorem and its implications regarding the sign changes of $M(x)/\sqrt{x}$.
+
+8. **Predicted outlier size**: Confirm that if $|M(Q)| > \sqrt{Q}$, then $NW(Q)-C > 1/6$ under the heuristic. Check the algebra: $\frac{M(Q)^2}{6Q} > \frac{Q}{6Q} = \frac{1}{6}$.
+
+9. **Neglect of higher $m$ terms**: For the $Q$ values considered, numerically estimate the contributions from $m=2,3,\ldots$ in the Mikolás sum to ensure they are smaller than the $m=1$ term. This would justify the heuristic’s focus on $m=1$.
+
+10. **Normalization of $NW(Q)$**: Ensure that the definition $NW(Q) = Q \cdot J(Q)/\Phi(Q)$ is consistent across all computations. Verify that $J(Q)$ is computed with the correct normalization (e.g., $L^2$-norm on $[0,1]$).

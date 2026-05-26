@@ -1,0 +1,649 @@
+Let me carefully work through this problem from scratch, being precise about definitions and normalizations.
+
+## Setting up the problem
+
+We're looking at the number of Farey fractions of order Q, which is:
+$$F(Q) = 1 + \sum_{n=1}^{Q} \phi(n) = \frac{3Q^2}{\pi^2} + O(Q \log Q)$$
+
+The "NW" function appears to be related to the discrepancy or distribution of Farey fractions. Let me think about what exactly NW(Q) is.
+
+From context, it seems like NW(Q) is some normalized quantity related to Farey fractions, with:
+- NW(Q) has mean C ≈ 0.66989
+- It's correlated with Mertens function M(Q)
+- The Mikolás formula involves $J(Q) = \frac{1}{2\pi^2} \sum_{m \geq 1} \frac{|S_Q(m)|^2}{m^2}$
+
+where $S_Q(m) = 1 + \sum_{\substack{d | m \\ d \leq Q}} d \cdot M(Q/d)$.
+
+Let me think about what J(Q) represents. The Mikolás formula is related to the discrepancy of Farey fractions. Specifically, if we look at the fractional parts $\{n/Q\}$ for $\gcd(n,Q)=1$, the discrepancy is related to exponential sums.
+
+Actually, let me recall: The "NW" function seems to be measuring something like the normalized discrepancy or some statistic of the Farey sequence. Let me look at this differently.
+
+From the Mikolás formula:
+$$J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+with $S_Q(m) = 1 + \sum_{\substack{d|m, d \leq Q}} d \cdot M(Q/d)$.
+
+Note that $M(x) = \sum_{n \leq x} \mu(n)$ is the Mertens function.
+
+For $m=1$: $S_Q(1) = 1 + 1 \cdot M(Q/1) = 1 + M(Q)$.
+
+For $m=p$ (prime): $S_Q(p) = 1 + 1 \cdot M(Q/p) + p \cdot M(Q/p) = 1 + (1+p)M(Q/p)$... wait, the divisors of $p$ are $1$ and $p$. So:
+$S_Q(p) = 1 + 1 \cdot M(Q/1) + p \cdot M(Q/p) = 1 + M(Q) + p \cdot M(Q/p)$.
+
+Hmm wait, but the sum is $\sum_{d|m, d \leq Q} d \cdot M(Q/d)$. For $m=1$, the only divisor is $d=1$, so $S_Q(1) = 1 + 1 \cdot M(Q/1) = 1 + M(Q)$. ✓
+
+Now, the relationship between NW(Q) and J(Q):
+
+From the user's notes:
+$$NW(Q) = \frac{Q}{\Phi(Q)} \cdot J(Q)$$
+
+where $\Phi(Q) = \sum_{n \leq Q} \phi(n) \approx \frac{3Q^2}{\pi^2}$.
+
+Wait, actually I need to be more careful. Let me re-read.
+
+The user says:
+$$NW(Q) - C = \frac{Q}{\Phi(Q)} \cdot \frac{1}{2\pi^2} \sum_m \frac{|S_Q(m)|^2 - \langle |S_Q(m)|^2 \rangle}{m^2}$$
+
+and $NW(Q) = Q \cdot J(Q) / \Phi(Q)$ approximately, where $J(Q) \sim Q/12$ on average.
+
+Actually wait, let me reconsider. The user says J(Q) ~ Q/12 on average. And Φ(Q) ≈ 3Q²/π². So:
+
+NW(Q) = Q · J(Q) / Φ(Q) ≈ Q · (Q/12) / (3Q²/π²) = Q² · π² / (12 · 3Q²) = π²/36 ≈ 0.274.
+
+But C ≈ 0.66989. That doesn't match.
+
+Hmm, maybe J(Q) ~ 0.2036 · Q on average? Let me re-read.
+
+The user says: "J(Q) ~ (Q/12) on average (verified at multiple Q in the smooth track ≈ 0.6699 × Φ(Q)/Q ≈ 0.6699 × 3Q/π²). So J(Q) ~ 0.2036 × Q on average."
+
+Wait, that's contradictory. J(Q) ~ Q/12 ≈ 0.0833Q, but also J(Q) ~ 0.2036Q? 
+
+Let me recalculate: 0.6699 × 3Q/π² = 0.6699 × 0.3040Q = 0.2036Q. So J(Q) ~ 0.2036Q, not Q/12.
+
+Then NW(Q) = Q · J(Q) / Φ(Q) ≈ Q · 0.2036Q / (3Q²/π²) = 0.2036π²/3 ≈ 0.669. ✓
+
+OK so J(Q) ~ 0.2036Q on average.
+
+Now for the fluctuation analysis. Let me write:
+$$NW(Q) = \frac{Q}{\Phi(Q)} \cdot J(Q) = \frac{Q}{\Phi(Q)} \cdot \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+The m=1 term contributes:
+$$\frac{Q}{\Phi(Q)} \cdot \frac{|S_Q(1)|^2}{2\pi^2} = \frac{Q}{\Phi(Q)} \cdot \frac{(1+M(Q))^2}{2\pi^2}$$
+
+Since $\Phi(Q) \approx 3Q^2/\pi^2$:
+$$\approx \frac{Q \cdot \pi^2}{3Q^2} \cdot \frac{(1+M(Q))^2}{2\pi^2} = \frac{(1+M(Q))^2}{6Q}$$
+
+So the m=1 contribution to NW(Q) is approximately $(1+M(Q))^2/(6Q)$.
+
+Now, this is the FULL m=1 contribution, not just the fluctuation. The average of this term is approximately:
+$$\frac{\langle(1+M(Q))^2\rangle}{6Q} \approx \frac{\langle M(Q)^2 \rangle}{6Q} + \frac{2\langle M(Q) \rangle}{6Q} + \frac{1}{6Q}$$
+
+Under RH, $\langle M(Q)^2 \rangle \sim Q \cdot c_2$ where $c_2$ is some constant (related to the second moment of $\sum \mu(n)$). 
+
+Actually, under the "random model" for $M(Q)$ (which is not quite right but gives intuition), $\text{Var}(M(Q)) \sim Q$ (more precisely, it's conjectured that $M(Q) = O(Q^{1/2+\epsilon})$ under RH, but the actual distribution is more complex).
+
+Hmm, let me think about this differently. The user observed that NW(Q) - C correlates with |M(Q)| with Pearson correlation +0.892. And the simple formula M(Q)²/(6Q) approximately matches at large Q.
+
+The key insight from the user's derivation: the m=1 term in the Mikolás sum contributes $(1+M(Q))^2/(6Q)$ to NW(Q). The "average" or "expected" contribution is something like $\langle M(Q)^2 \rangle / (6Q)$. The difference is $(M(Q)^2 - \langle M(Q)^2 \rangle)/(6Q)$.
+
+But wait, the user's C is defined as the average of NW(Q), which already includes ALL m terms. So:
+
+$$NW(Q) - C = \frac{1}{6Q} [M(Q)^2 - \langle M(Q)^2 \rangle] + \text{higher m terms}$$
+
+At Q=300k, M(Q) = 220, so M² = 48400. If $\langle M(Q)^2 \rangle \approx 300000$ (under naive RH random model where variance ~ Q), then $M^2 - \langle M^2 \rangle = 48400 - 300000 = -251600$, giving $-251600/1800000 = -0.140$. But observed is +0.029.
+
+This doesn't work. So either the "random model" for M is wrong, or the structure of the problem is different.
+
+Let me reconsider. Perhaps the "typical" M(Q)² is not ~Q. Let me think about what the typical value of M(Q)² is.
+
+Actually, I think the issue is more subtle. Under the Mertens conjecture (which is false but gives intuition), |M(Q)| < √Q. But actually, M(Q) often oscillates and its typical magnitude is much smaller than √Q.
+
+From known computations: M(10^6) ≈ 248, M(10^7) ≈ 2888, etc. So M(Q) is typically much smaller than √Q.
+
+Actually, I think the user's data might tell us more. At Q=300k, M=220. √300k ≈ 548. So M is about 40% of √Q. At Q=50k, M=23. √50k ≈ 224. M is about 10% of √Q.
+
+The formula M²/(6Q) gives:
+- Q=300k: 220²/1800000 = 0.0269 (observed NW-C ≈ +0.029) ✓
+- Q=10⁶: (let me guess M ≈ 248?) 248²/6000000 = 0.0103 (observed ≈ 0.0094) close ✓
+- Q=50k: 23²/300000 = 0.00176 (observed ≈ -0.0057) ✗
+
+So the formula M²/(6Q) works when M is relatively large (positive contribution to NW), but fails when M is small.
+
+This suggests that when M is small, the higher m terms dominate and are negative. Let me think about this.
+
+Actually, wait. Let me reconsider the problem setup. Maybe "NW(Q)" isn't exactly $Q \cdot J(Q)/\Phi(Q)$. Let me think about what NW could stand for.
+
+"NW" might be "Number Wall" or "Normalized Weyl" or something related to the distribution of Farey fractions. Actually, given the context of Farey fractions and Mikolás's formula, this might be related to the "next/previous gap" or the discrepancy of Farey sequences.
+
+Let me reconsider. The Mikolás formula (1953) states that the discrepancy of the Farey sequence $F_Q$ is:
+$$D(F_Q) = \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{1}{m^2} \left| 1 + \sum_{\substack{d | m \\ d \leq Q}} d \cdot M(Q/d) \right|^2$$
+
+Wait, no. The discrepancy $D_N$ of a sequence $x_1, \ldots, x_N$ in $[0,1)$ measures how far the empirical distribution is from uniform. For the Farey sequence of order Q, the number of elements is $|\mathcal{F}_Q| = 1 + \Phi(Q)$ where $\Phi(Q) = \sum_{n \leq Q} \phi(n) \approx 3Q^2/\pi^2$.
+
+But actually, the Mikolás formula might be for a different quantity. Let me think again.
+
+Actually, I recall that the Mikolás formula relates to the "Weyl sum" or the exponential sum characterizing the distribution of Farey fractions. The key result is about:
+
+$$\sum_{\substack{n=1 \\ \gcd(n,q)=1}}^{q} e^{2\pi i n / q} \cdot f(n/q)$$
+
+or something similar.
+
+Hmm, let me try a different approach. Let me just focus on the user's formulas and try to derive the correct expression.
+
+The user's setup:
+1. $J(Q) = \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$
+2. $S_Q(m) = 1 + \sum_{\substack{d|m \\ d \leq Q}} d \cdot M(Q/d)$
+3. $NW(Q) = \frac{Q}{\Phi(Q)} J(Q)$ (some normalization)
+4. $C = \lim_{Q \to \infty} NW(Q)$ (if it exists)
+
+The m=1 contribution to J(Q):
+$$J_1(Q) = \frac{|S_Q(1)|^2}{2\pi^2} = \frac{(1+M(Q))^2}{2\pi^2}$$
+
+Its contribution to NW(Q):
+$$NW_1(Q) = \frac{Q}{\Phi(Q)} \cdot \frac{(1+M(Q))^2}{2\pi^2}$$
+
+Since $\Phi(Q) = \frac{3Q^2}{\pi^2}(1 + O(1/Q))$:
+$$NW_1(Q) = \frac{Q \pi^2}{3Q^2} \cdot \frac{(1+M(Q))^2}{2\pi^2} = \frac{(1+M(Q))^2}{6Q}$$
+
+Now, the m=2 contribution:
+$S_Q(2) = 1 + 1 \cdot M(Q) + 2 \cdot M(Q/2)$ (divisors of 2 are 1 and 2)
+
+So $|S_Q(2)|^2 = |1 + M(Q) + 2M(Q/2)|^2$
+
+Its contribution to NW(Q):
+$$NW_2(Q) = \frac{Q}{\Phi(Q)} \cdot \frac{|S_Q(2)|^2}{4 \cdot 2\pi^2} = \frac{|1 + M(Q) + 2M(Q/2)|^2}{24Q}$$
+
+Similarly, the m=3 term:
+$S_Q(3) = 1 + M(Q) + 3M(Q/3)$
+$NW_3(Q) = \frac{|1 + M(Q) + 3M(Q/3)|^2}{54Q}$
+
+And the m=4 term:
+$S_Q(4) = 1 + M(Q) + 2M(Q/2) + 4M(Q/4)$ (divisors: 1, 2, 4)
+$NW_4(Q) = \frac{|S_Q(4)|^2}{96Q}$
+
+And m=5:
+$S_Q(5) = 1 + M(Q) + 5M(Q/5)$
+$NW_5(Q) = \frac{|S_Q(5)|^2}{150Q}$
+
+And m=6:
+$S_Q(6) = 1 + M(Q) + 2M(Q/2) + 3M(Q/3) + 6M(Q/6)$ (divisors: 1,2,3,6)
+$NW_6(Q) = \frac{|S_Q(6)|^2}{216Q}$
+
+So:
+$$NW(Q) = \frac{1}{6Q} \left[ (1+M(Q))^2 + \frac{|S_Q(2)|^2}{4} + \frac{|S_Q(3)|^2}{9} + \frac{|S_Q(4)|^2}{16} + \cdots \right]$$
+
+Wait, let me redo this more carefully.
+
+$$NW(Q) = \frac{Q}{\Phi(Q)} \cdot \frac{1}{2\pi^2} \sum_m \frac{|S_Q(m)|^2}{m^2}$$
+
+$$= \frac{1}{2\pi^2} \cdot \frac{Q}{\Phi(Q)} \sum_m \frac{|S_Q(m)|^2}{m^2}$$
+
+With $\frac{Q}{\Phi(Q)} \approx \frac{\pi^2}{3Q}$:
+
+$$\approx \frac{1}{2\pi^2} \cdot \frac{\pi^2}{3Q} \sum_m \frac{|S_Q(m)|^2}{m^2} = \frac{1}{6Q} \sum_m \frac{|S_Q(m)|^2}{m^2}$$
+
+So:
+$$NW(Q) \approx \frac{1}{6Q} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+Now, what's the "average" or "constant" part C? We need to understand the behavior of $|S_Q(m)|^2$ for "typical" Q.
+
+For a given m, as Q varies, the values $M(Q/d)$ for $d|m$ fluctuate. But the formula should have a well-defined average.
+
+Hmm, let me think about what $S_Q(m)$ looks like in terms of Ramanujan sums or similar.
+
+Actually, let me reconsider the Mikolás formula from scratch. 
+
+The discrepancy of the Farey sequence of order Q is related to the exponential sums:
+$$\sum_{\substack{a=1 \\ \gcd(a,q)=1}}^{q} e^{2\pi i h a / q}$$
+
+which equals the Ramanujan sum $c_q(h)$.
+
+The Mikolás formula gives the discrepancy as:
+$$D(F_Q) = \frac{1}{\pi^2} \sum_{m=1}^{\infty} \frac{1}{m^2} \left| \sum_{n=1}^{Q} \mu(n) \left\lfloor \frac{Q}{mn} \right\rfloor \right|^2$$
+
+Hmm wait, I'm not sure about the exact form. Let me try to think about it differently.
+
+Actually, I think the key formula relates to the "Weyl sum" for the Farey sequence. Let me denote:
+
+For the Farey sequence of order Q, the fractions are $\{a/q : 0 \leq a \leq q, \gcd(a,q)=1, 1 \leq q \leq Q\}$, sorted in order.
+
+The "NW" might be related to the nearest-neighbor spacing or gap distribution.
+
+OK, I think I'm going down a rabbit hole trying to figure out the exact definition. Let me focus on what we know from the formulas and try to derive the refined formula.
+
+## Key insight
+
+From the user's work, the main formula is:
+$$NW(Q) \approx \frac{1}{6Q} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+And C is the limiting average. So:
+$$NW(Q) - C \approx \frac{1}{6Q} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2 - \langle |S_Q(m)|^2 \rangle}{m^2}$$
+
+The m=1 term: $|S_Q(1)|^2 = (1+M(Q))^2 \approx M(Q)^2$ for large $M$.
+
+For "typical" Q, what is $\langle M(Q)^2 \rangle$? This is related to the second moment of the Mertens function.
+
+Under the Riemann Hypothesis (in a random model sense), $M(Q)$ behaves like a random walk with $\text{Var}(M(Q)) \sim Q \cdot c$ where $c$ is some constant. But the actual distribution of $M(Q)$ is complex.
+
+From Odlyzko and te Riele's disproof of the Mertens conjecture, and from computational data, we know:
+- $M(10^{16})$ is known to be around 1000 or so.
+- The "typical" scale of $|M(Q)|$ is much less than $\sqrt{Q}$.
+
+But actually, for the second moment, under the "random model" where $\mu(n)$ are independent random variables with $P(\mu(n) = -1) = P(\mu(n) = 1) = 3/\pi^2$ and $P(\mu(n) = 0) = 1 - 6/\pi^2$... no wait, that's not right. The Liouville function $\lambda(n) = (-1)^{\Omega(n)}$ is $\pm 1$ for all $n$, and $|\mu(n)|$ is 1 for squarefree $n$ and 0 otherwise.
+
+Actually, a simpler approach: under RH, $\sum_{n \leq Q} \mu(n) = O(Q^{1/2+\epsilon})$, and heuristically the variance is:
+$$\langle M(Q)^2 \rangle \sim c \cdot Q$$
+for some constant $c$. 
+
+From the identity $\sum_{n \leq Q} |\mu(n)| = \frac{6Q}{\pi^2} + O(\sqrt{Q})$, the number of squarefree numbers up to Q is $\sim 6Q/\pi^2$. If we model $\mu(n)$ on squarefree $n$ as independent $\pm 1$ variables, then:
+$$\langle M(Q)^2 \rangle \approx \frac{6Q}{\pi^2} \cdot 1 = \frac{6Q}{\pi^2}$$
+
+Hmm, but that's probably too crude. Let me think more carefully.
+
+Actually, $M(Q) = \sum_{n \leq Q} \mu(n)$. Under the "random model" for the Möbius function, the variance would be:
+$$\langle M(Q)^2 \rangle = \sum_{m,n \leq Q} \langle \mu(m) \mu(n) \rangle$$
+
+If we assume $\langle \mu(m) \mu(n) \rangle = \delta_{m,n}$ for squarefree $m,n$, then:
+$$\langle M(Q)^2 \rangle = \sum_{\substack{n \leq Q \\ n \text{ squarefree}}} 1 = \frac{6Q}{\pi^2} \approx 0.608 Q$$
+
+But this ignores correlations $\langle \mu(m) \mu(n) \rangle$ for $m \neq n$. In reality, $\mu$ is not independent; the correct correlations involve:
+$$\sum_{m,n \leq Q} \mu(m)\mu(n) = \sum_{d=1}^{Q} \mu(d)^2 \sum_{\substack{a,b \leq Q/d \\ \gcd(a,b)=1}} 1$$
+
+This is getting complicated. Let me try a different approach.
+
+Actually, the key issue might be simpler than I think. Let me re-examine the data.
+
+The user says:
+- NW(Q) - C is correlated with |M(Q)| at +0.892
+- Simple formula: NW(Q) - C ≈ M(Q)²/(6Q)
+- This works at Q=300k and Q=10⁶ but fails at Q=50k
+
+At Q=50k: M=23, M²/(6Q) = 529/300000 = +0.00176, but observed NW-C = -0.0057.
+
+So the formula OVER-predicts (gives excess when there's a deficit). The "typical" M² at Q=50k might be larger than 23², so the fluctuation is negative.
+
+Actually, I think the issue is that C already absorbs part of the m=1 contribution. Let me reconsider.
+
+The true formula is:
+$$NW(Q) = \frac{1}{6Q} \left[ (1+M(Q))^2 + \sum_{m=2}^{\infty} \frac{|S_Q(m)|^2}{m^2} \right]$$
+
+The "constant" C is the average value, so:
+$$C = \frac{1}{6Q} \left[ \langle (1+M(Q))^2 \rangle + \sum_{m=2}^{\infty} \frac{\langle |S_Q(m)|^2 \rangle}{m^2} \right]$$
+
+Wait, but this isn't quite right because C shouldn't depend on Q (it's supposed to be a constant). But $1/(6Q)$ does depend on Q. So the sum $\sum_m |S_Q(m)|^2/m^2$ must grow linearly in Q.
+
+Let me reconsider. If $J(Q) \sim 0.2036 Q$ on average, then $\sum_m |S_Q(m)|^2/m^2 \sim 2\pi^2 \cdot 0.2036 Q \approx 4.014 Q$. And $NW(Q) = Q J(Q)/\Phi(Q) \sim 0.2036 Q \cdot \pi^2/(3Q) = 0.2036 \pi^2/3 = 0.6698$. ✓
+
+Now, the m=1 term: $(1+M(Q))^2 / m^2 = (1+M(Q))^2$. Its average is $\langle (1+M)^2 \rangle = 1 + 2\langle M \rangle + \langle M^2 \rangle$. If $\langle M \rangle \approx 0$ (which is expected), this is $\approx 1 + \langle M^2 \rangle$.
+
+For the average to contribute a linear-in-Q term to $\sum_m |S_Q(m)|^2/m^2$, we need the m=1 term to be proportional to Q. But $(1+M(Q))^2$ is at most $O(Q)$ (under RH, $M(Q) = O(Q^{1/2+\epsilon})$, so $M^2 = O(Q^{1+2\epsilon})$).
+
+Actually, under RH, $M(Q) = O(Q^{1/2+\epsilon})$, so $(1+M(Q))^2 = O(Q^{1+2\epsilon})$. But the average $\langle M(Q)^2 \rangle$ should be $\Theta(Q)$ (since the "random walk" has step sizes ~1 and ~Q steps). So $\langle (1+M(Q))^2 \rangle = \Theta(Q)$.
+
+But the sum $\sum_m |S_Q(m)|^2/m^2$ should be $\Theta(Q)$ as well (since $J(Q) = \Theta(Q)$). The m=1 term contributes $\Theta(Q)$, and the higher m terms also contribute $\Theta(Q)$.
+
+OK so let me think about this more carefully. The total is:
+
+$$\sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2} = (1+M(Q))^2 + \sum_{m=2}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+And this sum is approximately $2\pi^2 \cdot J(Q) \approx 2\pi^2 \cdot 0.2036 Q \approx 4.014 Q$.
+
+Now, the m=1 term: $(1+M(Q))^2$. For Q=300k, M=220, so this is $221^2 = 48841$. And $4.014 \times 300000 = 1204200$. So the m=1 term is about 4% of the total. That's not the dominant term!
+
+Hmm, that changes the picture significantly. The m=1 term is NOT the dominant contributor. Let me reconsider.
+
+Wait, but the user says "the formula M(Q)²/(6Q) matches approximately". If the m=1 term contributes only 4% of the total, how can it dominate the fluctuations?
+
+The answer might be that the higher m terms have smaller FLUCTUATIONS relative to their means. The m=1 term might have larger relative fluctuations, making it the dominant contributor to fluctuations even though it's a small fraction of the total.
+
+Actually, let me reconsider. The m-th term in the sum is $|S_Q(m)|^2/m^2$. For large m, $S_Q(m)$ involves $M(Q/d)$ for $d|m, d \leq Q$. For m with large divisors $d$, $Q/d$ is small and $M(Q/d)$ is well-behaved (small). So higher m terms have more "averaged" contributions and smaller fluctuations.
+
+The m=1 term is $|1 + M(Q)|^2 = (1+M(Q))^2$, which fluctuates with the full $M(Q)$. This is the term with the largest relative fluctuation.
+
+So the refined formula should be:
+
+$$NW(Q) - C \approx \frac{1}{6Q} \left[ (1+M(Q))^2 - \langle (1+M(Q))^2 \rangle + \text{higher m terms} \right]$$
+
+If we ignore higher m terms:
+$$NW(Q) - C \approx \frac{(1+M(Q))^2 - \langle (1+M)^2 \rangle}{6Q} \approx \frac{M(Q)^2 - \langle M^2 \rangle}{6Q}$$
+
+(ignoring the linear term in M since $\langle M \rangle \approx 0$).
+
+Now, what is $\langle M(Q)^2 \rangle$? Under the standard heuristic (Sarnak's conjecture / Chowla's conjecture), we expect:
+$$\langle M(Q)^2 \rangle \sim C_M \cdot Q$$
+
+where $C_M$ is some constant. From the identity involving $1/\zeta(s)$, the second moment is:
+$$\sum_{n \leq Q} M(n)^2 / n \text{ or } \int_1^Q M(t)^2 / t^2 \, dt$$
+
+Hmm, let me try to use a different approach. From the Perron formula or direct computation:
+$$\sum_{n \leq Q} \mu(n)^2 = \frac{6Q}{\pi^2} + O(\sqrt{Q})$$
+
+And if we model $M(Q) = \sum_{n \leq Q} \mu(n)$ as a sum of "quasi-independent" random variables with $\langle \mu(n) \rangle = 0$ and $\langle \mu(n)^2 \rangle = 6/\pi^2$ for squarefree $n$ (and 0 otherwise), then:
+$$\langle M(Q)^2 \rangle = \sum_{n \leq Q} \langle \mu(n)^2 \rangle = \frac{6Q}{\pi^2}$$
+
+But this ignores correlations. The actual second moment involves:
+$$M(Q)^2 = \sum_{m,n \leq Q} \mu(m)\mu(n)$$
+
+And the "expected" value under appropriate model would be:
+$$\langle M(Q)^2 \rangle = \sum_{m,n \leq Q} \langle \mu(m)\mu(n) \rangle$$
+
+For the Möbius function, $\mu(m)\mu(n) = \mu(\text{lcm}(m,n))$ if $\gcd(m,n)=1$... no, that's not right either. Actually, $\mu(m)\mu(n) = \mu(mn)$ if $\gcd(m,n)=1$, but not in general.
+
+Hmm, I think the correct asymptotic for the second moment of $M$ is a delicate number-theoretic question. Under RH, we have:
+$$\int_1^T M(t)^2 dt \sim C \cdot T^2$$
+for some constant C. This means $M(T)^2 \sim C \cdot T$ "on average."
+
+From numerical evidence and the Selberg-Delange method, I believe:
+$$\frac{1}{T} \int_1^T M(t)^2 dt \sim \frac{6}{\pi^2} T$$
+
+Hmm, but that doesn't seem right dimensionally. Let me reconsider.
+
+Actually, from the Wiener-Ikehara theorem or direct computation:
+$$\sum_{n=1}^{\infty} \frac{M(n)^2}{n^s} \text{ has a pole at } s=1$$
+
+But I think the standard result is:
+$$\sum_{n \leq x} M(n)^2 \sim \frac{6}{\pi^2} \cdot \frac{x^2}{2}$$
+
+Wait no, I think the correct result involves the Dirichlet series $\sum M(n)^2/n^s$ and its behavior near $s=1$. 
+
+Let me try a completely different approach. Rather than trying to figure out the "average" M², let me focus on the CORRELATION structure.
+
+The observed correlation of NW(Q) - C with |M(Q)| is +0.892. This means that when |M(Q)| is large, NW(Q) tends to be above C, and when |M(Q)| is small, NW(Q) tends to be below C.
+
+Given the formula:
+$$NW(Q) \approx \frac{1}{6Q} \left[ (1+M(Q))^2 + R(Q) \right]$$
+
+where $R(Q) = \sum_{m=2}^{\infty} |S_Q(m)|^2/m^2$ contains the higher m terms.
+
+The fluctuation:
+$$NW(Q) - C = \frac{1}{6Q} \left[ (1+M)^2 + R(Q) - \langle (1+M)^2 + R(Q) \rangle \right]$$
+$$= \frac{1}{6Q} \left[ M^2 + 2M + 1 - \langle M^2 + 2M + 1 \rangle + R(Q) - \langle R(Q) \rangle \right]$$
+$$= \frac{1}{6Q} \left[ (M^2 - \langle M^2 \rangle) + 2(M - \langle M \rangle) + (R - \langle R \rangle) \right]$$
+
+Since $\langle M \rangle \approx 0$:
+$$NW(Q) - C \approx \frac{M^2 - \langle M^2 \rangle}{6Q} + \frac{R - \langle R \rangle}{6Q}$$
+
+For this to be positive when |M| is large, we need $M^2 > \langle M^2 \rangle$.
+
+At Q=300k, M=220, $M^2 = 48400$. If $\langle M^2 \rangle \approx \langle M(Q)^2 \rangle$ is, say, 15000 (about 30% of Q), then $M^2 - \langle M^2 \rangle = 33400$, and $33400/(6 \times 300000) = 0.0186$. The observed is 0.029. So the higher m terms contribute about 0.01.
+
+At Q=50k, M=23, $M^2 = 529$. If $\langle M^2 \rangle \approx 15000 \times (50/300) = 2500$, then $M^2 - \langle M^2 \rangle = -1971$, and $-1971/300000 = -0.0066$. Observed is -0.0057. This is actually close!
+
+Wait, that's interesting. Let me redo this more carefully.
+
+For the formula to work, I need to know $\langle M(Q)^2 \rangle$ as a function of Q.
+
+Actually, I realize I've been overthinking this. The user is asking me to derive the formula properly. Let me try to be more systematic.
+
+## Systematic derivation
+
+We have:
+$$NW(Q) = \frac{Q}{\Phi(Q)} J(Q) = \frac{Q}{\Phi(Q)} \cdot \frac{1}{2\pi^2} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+With $S_Q(m) = 1 + \sum_{d|m, d \leq Q} d \cdot M(Q/d)$.
+
+Now, $\Phi(Q) = \sum_{n \leq Q} \phi(n) = \frac{3Q^2}{\pi^2} + O(Q \log Q)$.
+
+Let's denote $P(Q) = \Phi(Q)/Q \approx 3Q/\pi^2$.
+
+So $NW(Q) = J(Q)/P(Q)$.
+
+And $C = \lim_{Q \to \infty} NW(Q)$ is the average value.
+
+Now, let me write $S_Q(m)$ more carefully. For a given m, the sum involves $M(Q/d)$ for $d|m, d \leq Q$. Note that $M(Q/d)$ for large d (i.e., $d$ close to Q) involves $M$ evaluated at small arguments, which is well-determined.
+
+The key observation is that $S_Q(m)$ is a "smoothed" version of $M$, weighted by the divisors of m.
+
+For the m=1 term: $S_Q(1) = 1 + M(Q)$. This is directly $M(Q)$.
+
+For m=p (prime): $S_Q(p) = 1 + M(Q) + p \cdot M(Q/p)$.
+For m=pq (distinct primes): $S_Q(pq) = 1 + M(Q) + p M(Q/p) + q M(Q/q) + pq M(Q/(pq))$.
+
+Now, I note that $S_Q(m)$ has a nice multiplicative structure. Let me write:
+$$S_Q(m) = \sum_{d|m, d \leq Q} d \cdot M(Q/d) + 1$$
+
+But actually, if we extend the sum to include $d$ up to $\infty$ (which means $M(Q/d) = 0$ for $d > Q$), we get:
+$$S_Q(m) = \sum_{d|m} d \cdot M(Q/d) + 1$$
+
+And using the identity $M(x) = \sum_{n \leq x} \mu(n)$, we can write:
+$$\sum_{d|m} d \cdot M(Q/d) = \sum_{d|m} d \sum_{n \leq Q/d} \mu(n) = \sum_{d|m} \sum_{k \leq Q} \mu(k/d) \cdot [d | k] \cdot d$$
+
+Hmm, this is getting complicated. Let me try yet another approach.
+
+Actually, I recall that for the Farey sequence, the key quantity is:
+$$\sum_{d|m, d \leq Q} \phi(d) = m \prod_{p|m} (1-1/p) = \phi(m)$$
+
+No wait, that's not right for partial sums. Let me think about the connection between $S_Q(m)$ and number-theoretic functions.
+
+Actually, there's a cleaner way to think about this. Let's define:
+$$A_Q(m) = \sum_{d|m, d \leq Q} d \cdot M(Q/d)$$
+
+Then $S_Q(m) = 1 + A_Q(m)$.
+
+Now, $A_Q(m) = \sum_{d|m} d \cdot M(Q/d)$ for $m \leq Q$ (since $d|m$ and $d \leq Q$ is automatically satisfied when $m \leq Q$). Wait, no: $d|m$ and $d \leq Q$. If $m \leq Q$, then all divisors of $m$ are $\leq m \leq Q$, so the condition is automatic. But if $m > Q$, then some divisors might be $> Q$.
+
+OK so for $m \leq Q$:
+$$A_Q(m) = \sum_{d|m} d \cdot M(Q/d)$$
+
+Using the convolution identity, if we define $f(n) = n \cdot \mu(n)$ (or something similar), we might be able to express $A_Q$ in terms of $f$.
+
+Actually, let me use the identity $\sum_{d|m} d \cdot M(Q/d) = \sum_{d|m} d \sum_{n \leq Q/d} \mu(n) = \sum_{d|m} \sum_{j=1}^{\lfloor Q/d \rfloor} d \cdot \mu(j)$.
+
+Let $k = jd$, then $j = k/d$, and we need $d | k$ and $d | m$:
+$$= \sum_{k=1}^{Q} \sum_{\substack{d | \gcd(m, k)}} d \cdot \mu(k/d)$$
+
+Hmm, this is still messy. Let me try a different approach.
+
+Actually, let me use the fact that $\sum_{d|m} d \cdot f(Q/d)$ is a convolution. We have:
+$$A_Q(m) = \sum_{d|m} d \cdot M(Q/d) = \sum_{d|m} d \sum_{n \leq Q/d} \mu(n)$$
+
+Let me define $g_Q(k) = \sum_{\substack{d | k \\ d | m}} d \cdot 1$. Wait, this is getting convoluted.
+
+Let me try to think about it differently. Consider the Dirichlet series perspective.
+
+For a fixed Q, define $h(n) = n \cdot M(Q/n)$ for $n \leq Q$ and 0 otherwise. Then:
+$$A_Q(m) = \sum_{d|m} h(d) = (h * \mathbf{1})(m)$$
+
+where $*$ is Dirichlet convolution and $\mathbf{1}$ is the constant function 1.
+
+So $A_Q = h * \mathbf{1}$, and in terms of Dirichlet series:
+$$\sum_m A_Q(m) m^{-s} = \left(\sum_n h(n) n^{-s}\right) \cdot \zeta(s)$$
+
+But this doesn't directly help with the sum $\sum_m |S_Q(m)|^2/m^2$.
+
+Let me try yet another approach. Let me go back to the empirical data and see if I can reverse-engineer the formula.
+
+From the data:
+- Q=300k, M=220, NW-C = +0.029
+- Q=10⁶, M≈248, NW-C = +0.0094
+- Q=50k, M=23, NW-C = -0.0057
+
+If the formula is $NW(Q) - C = \alpha \cdot M(Q)^2 / Q + \beta$, then:
+
+From Q=300k: $0.029 = \alpha \cdot 48400 / 300000 + \beta = 0.1613\alpha + \beta$
+From Q=10⁶: $0.0094 = \alpha \cdot 61504 / 1000000 + \beta = 0.0615\alpha + \beta$
+From Q=50k: $-0.0057 = \alpha \cdot 529 / 50000 + \beta = 0.01058\alpha + \beta$
+
+From equations 1 and 2: $0.0196 = 0.0998\alpha$, so $\alpha = 0.1964$.
+Then $\beta = 0.029 - 0.1613 \times 0.1964 = 0.029 - 0.03167 = -0.00267$.
+
+Check with equation 3: $0.1964 \times 0.01058 - 0.00267 = 0.002078 - 0.00267 = -0.000592$. Observed: -0.0057. Not great.
+
+So $\alpha M^2/Q + \beta$ doesn't fit well. Let me try $\alpha(M^2 - cQ)/Q$:
+
+$NW(Q) - C = \alpha(M^2 - cQ)/Q = \alpha M^2/Q - \alpha c$
+
+This is the same form with $\beta = -\alpha c$. With $\alpha = 0.1964$ and $\beta = -0.00267$, we get $c = 0.00267/0.1964 = 0.0136$.
+
+Check: For Q=50k: $0.1964 \times (529 - 680)/50000 = 0.1964 \times (-151)/50000 = -0.000593$. Still doesn't match -0.0057.
+
+So the simple $M^2/Q$ model doesn't work well across all three data points. There must be other terms.
+
+Let me think about what other terms could contribute.
+
+## Considering the m=2 term
+
+$S_Q(2) = 1 + M(Q) + 2M(Q/2)$
+
+For Q=300k: M(300k)=220. M(150k) ≈ ? I don't know this value, but it's probably on the order of 100-200 (typical scale √150k ≈ 387).
+
+$|S_Q(2)|^2 = |1 + 220 + 2 M(150k)|^2 = |221 + 2M(150k)|^2$
+
+This is a pretty large number, and its contribution to NW is $|S_Q(2)|^2 / (4 \times 6Q) = |S_Q(2)|^2 / (24Q)$.
+
+Hmm wait, let me redo the normalization. We have:
+$$NW(Q) = \frac{1}{6Q} \sum_m \frac{|S_Q(m)|^2}{m^2}$$
+
+Wait, I need to be more careful. Let me re-derive.
+
+$NW(Q) = \frac{Q}{\Phi(Q)} J(Q)$
+
+$J(Q) = \frac{1}{2\pi^2} \sum_m \frac{|S_Q(m)|^2}{m^2}$
+
+$\Phi(Q) \approx \frac{3Q^2}{\pi^2}$
+
+$NW(Q) = \frac{Q \pi^2}{3Q^2} \cdot \frac{1}{2\pi^2} \sum_m \frac{|S_Q(m)|^2}{m^2} = \frac{1}{6Q} \sum_m \frac{|S_Q(m)|^2}{m^2}$
+
+So $NW(Q) = \frac{1}{6Q} \left[ (1+M)^2 + \frac{|S_Q(2)|^2}{4} + \frac{|S_Q(3)|^2}{9} + \frac{|S_Q(4)|^2}{16} + \cdots \right]$
+
+This is a sum of positive terms divided by $6Q$. Each term is $O(Q)$ on average (I think), so the sum is $O(Q \cdot \sum 1/m^2) = O(Q)$, giving $NW(Q) = O(1)$. ✓
+
+Now, the m=1 term contributes $(1+M)^2/(6Q)$ to NW(Q). For Q=300k, M=220: $221^2/(6 \times 300000) = 48841/1800000 = 0.0271$.
+
+The m=2 term contributes $|S_Q(2)|^2/(24Q)$. $S_Q(2) = 1 + M(Q) + 2M(Q/2)$. If M(150k) ≈ 100, then $S_Q(2) ≈ 221 + 200 = 421$, and $|S_Q(2)|^2/(24 \times 300000) = 177241/7200000 = 0.0246$.
+
+So the m=2 term is comparable to the m=1 term! The higher m terms are NOT negligible.
+
+This changes the picture. The fluctuations in NW(Q) come from ALL the terms, not just m=1.
+
+Hmm, but then the strong correlation with M(Q) is surprising. Unless the higher m terms also correlate with M(Q).
+
+Actually, looking at $S_Q(m)$ for various m: each $S_Q(m)$ involves $M(Q)$ as the $d=1$ term, plus terms involving $M(Q/d)$ for other divisors $d$ of $m$. So $M(Q)$ appears in ALL terms with coefficient 1 (from the $d=1$ divisor), and then additional terms from other divisors.
+
+Specifically: $S_Q(m) = 1 + M(Q) + \sum_{d|m, d>1, d \leq Q} d \cdot M(Q/d)$
+
+So $S_Q(m) = (1 + M(Q)) + \sum_{d|m, d>1} d \cdot M(Q/d)$
+
+And $|S_Q(m)|^2 = |(1+M(Q)) + B_Q(m)|^2$ where $B_Q(m) = \sum_{d|m, d>1} d \cdot M(Q/d)$.
+
+If $B_Q(m)$ is "small" compared to $1+M(Q)$, then $|S_Q(m)|^2 \approx (1+M(Q))^2 + 2(1+M(Q)) B_Q(m) + B_Q(m)^2 \approx (1+M(Q))^2$.
+
+But this is not necessarily the case. For m=2, $B_Q(2) = 2M(Q/2)$, and if $M(Q/2)$ is comparable to $M(Q)$, then $B_Q$ is comparable to $1+M(Q)$.
+
+Hmm. So the higher m terms are NOT simply proportional to $(1+M(Q))^2$. The correlation with M(Q) in the total sum comes from a more complex mechanism.
+
+Wait, but the empirical correlation is +0.892 with |M(Q)| (not M(Q)²). So the formula $M^2/(6Q)$ is not the full story; the actual NW(Q) - C correlates linearly with |M(Q)|, which could come from a combination of terms.
+
+Actually, re-reading the user's note: "Pearson(NW(Q) − C, |M(Q)|) = +0.892". This is the Pearson correlation between NW(Q)-C and |M(Q)|. The formula $M^2/(6Q)$ is proposed as a rough approximation, and it's noted that it matches at large Q but not at small Q.
+
+Let me reconsider. Perhaps the correct formula involves a SUM over m, and the m=1 term alone gives a good approximation at large Q because the m=1 term is more dominant there (relatively).
+
+Actually, I think the key insight might be this: for "smooth" values of Q (where M(Q/d) are well-behaved for all $d|m$), the m=1 term dominates the fluctuations. For "irregular" Q values (like Q=50k where M is unusually small), the higher m terms can dominate.
+
+But this is getting very hand-wavy. Let me try to compute things more concretely.
+
+## Approach: compute the first few terms explicitly
+
+For the refined formula, let me compute contributions from m=1,2,3,4,5,6,... and see how they behave.
+
+But I don't have the actual values of $M(Q/d)$ for general Q. So let me think about this more theoretically.
+
+### Term structure
+
+The total contribution to NW(Q) is:
+$$NW(Q) = \frac{1}{6Q} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+Let me write $S_Q(m) = 1 + M(Q) + B_Q(m)$ where $B_Q(m) = \sum_{d|m, d>1} d \cdot M(Q/d)$.
+
+Note that $B_Q(1) = 0$ (no divisors > 1 of 1).
+
+Then:
+$$|S_Q(m)|^2 = (1+M)^2 + 2(1+M) B_Q(m) + B_Q(m)^2$$
+
+And:
+$$\sum_m \frac{|S_Q(m)|^2}{m^2} = (1+M)^2 \sum_m \frac{1}{m^2} + 2(1+M) \sum_m \frac{B_Q(m)}{m^2} + \sum_m \frac{B_Q(m)^2}{m^2}$$
+
+$$= (1+M)^2 \cdot \frac{\pi^2}{6} + 2(1+M) \sum_m \frac{B_Q(m)}{m^2} + \sum_m \frac{B_Q(m)^2}{m^2}$$
+
+So:
+$$NW(Q) = \frac{1}{6Q} \left[ (1+M)^2 \cdot \frac{\pi^2}{6} + 2(1+M) \Sigma_1 + \Sigma_2 \right]$$
+
+where $\Sigma_1 = \sum_m B_Q(m)/m^2$ and $\Sigma_2 = \sum_m B_Q(m)^2/m^2$.
+
+This is interesting. The first term gives $(1+M)^2 \pi^2/(36Q) \approx 0.274 \cdot (1+M)^2/Q$, which for Q=300k, M=220 gives $0.274 \times 48841/300000 = 0.0446$.
+
+But the average NW(Q) is about 0.670, and the m=1 term alone gives 0.0446. The rest comes from $\Sigma_1$ and $\Sigma_2$, which involve the higher m terms.
+
+Hmm wait, that doesn't seem right. The $\Sigma_1$ and $\Sigma_2$ terms should also be $O(Q)$ (times appropriate factors). Let me reconsider.
+
+Actually, $\Sigma_1$ and $\Sigma_2$ involve sums over all m. For each m, $B_Q(m) = \sum_{d|m, d>1} d \cdot M(Q/d)$. This is a sum over divisors of m, weighted by $d$ and $M(Q/d)$. For large m, the divisors can be large, and $M(Q/d)$ is evaluated at small arguments.
+
+Let me think about the "average" behavior of $\Sigma_1$ and $\Sigma_2$.
+
+$\Sigma_1 = \sum_m B_Q(m)/m^2 = \sum_m \frac{1}{m^2} \sum_{d|m, d>1} d \cdot M(Q/d)$
+
+$= \sum_{d=2}^{Q} d \cdot M(Q/d) \sum_{k=1}^{\lfloor \cdot \rfloor} \frac{1}{(dk)^2}$ (where the inner sum is over k with d|m, i.e., m=dk)
+
+Wait, let me be more careful. We sum over m, and for each m, we sum over $d|m, d>1$. Let me change the order:
+
+$\Sigma_1 = \sum_{d=2}^{Q} d \cdot M(Q/d) \sum_{\substack{m: d|m}} \frac{1}{m^2}$
+
+$= \sum_{d=2}^{Q} d \cdot M(Q/d) \cdot \frac{1}{d^2} \sum_{k=1}^{\infty} \frac{1}{k^2}$
+
+$= \sum_{d=2}^{Q} \frac{M(Q/d)}{d} \cdot \frac{\pi^2}{6}$
+
+$= \frac{\pi^2}{6} \sum_{d=2}^{Q} \frac{M(Q/d)}{d}$
+
+So $\Sigma_1 = \frac{\pi^2}{6} \sum_{d=2}^{Q} \frac{M(Q/d)}{d}$.
+
+Now, $\sum_{d=1}^{Q} \frac{M(Q/d)}{d} = \sum_{d=1}^{Q} \frac{1}{d} \sum_{n \leq Q/d} \mu(n) = \sum_{n=1}^{Q} \mu(n) \sum_{d=1}^{\lfloor Q/n \rfloor} \frac{1}{d}$
+
+$\approx \sum_{n=1}^{Q} \mu(n) [\log(Q/n) + \gamma]$
+
+$= (\log Q + \gamma) M(Q) - \sum_{n=1}^{Q} \mu(n) \log n$
+
+And $\sum_{n=1}^{Q} \mu(n) \log n = -\sum_{n=1}^{Q} \mu(n) \sum_{p|n} \log p = -\sum_{p \leq Q} \log p \sum_{\substack{n \leq Q \\ p|n}} \mu(n)$
+
+Hmm, this is getting complicated. Let me use the identity $\sum_{d=1}^{Q} M(Q/d)/d = \sum_{n \leq Q} \mu(n)/n \cdot H_{\lfloor Q/n \rfloor}$ where $H_k$ is the harmonic number.
+
+Actually, let me try a different approach. I know that:
+$$\sum_{n \leq x} \frac{\mu(n)}{n} = \frac{1}{\zeta(1)} + o(1)$$
+
+But $\zeta(1) = \infty$, so $\sum_{n \leq x} \mu(n)/n \to 0$. More precisely:
+$$\sum_{n \leq x} \frac{\mu(n)}{n} = O(1/\log x)$$
+
+under RH.
+
+And:
+$$\sum_{d=1}^{Q} \frac{M(Q/d)}{d} = \sum_{d=1}^{Q} \frac{1}{d} \sum_{n \leq Q/d} \mu(n) = \sum_{m=1}^{Q} \left(\sum_{\substack{d|m}} \frac{1}{d}\right) \mu(m/d') $$
+
+Hmm, this substitution is getting messy. Let me use partial summation instead.
+
+$$\sum_{d=2}^{Q} \frac{M(Q/d)}{d} = \int_{1.5}^{Q+0.5} \frac{M(Q/t)}{t} d[\text{counting function}]$$
+
+No, that's also not clean.
+
+OK let me try the direct approach. $\sum_{d=1}^{Q} M(Q/d)/d$. Substitute $k = \lfloor Q/d \rfloor$. As $d$ ranges from 1 to Q, $k$ ranges from Q down to 1. For a given $k$, $d$ ranges from $\lfloor Q/(k+1) \rfloor + 1$ to $\lfloor Q/k \rfloor$.
+
+This is the "hyperbola method" structure. Actually, let me use the identity:
+$$\sum_{d=1}^{Q} \frac{f(Q/d)}{d} = \sum_{k=1}^{Q} f(k) \sum_{\substack{d: \lfloor Q/d \rfloor = k}} \frac{1}{d}$$
+
+The inner sum is over $d$ with $Q/(k+1) < d \leq Q/k$, i.e., $d \in (\lfloor Q/(k+1) \rfloor, \lfloor Q/k \rfloor]$.
+
+Hmm, this is getting nowhere fast. Let me take a step back and think about what the user is really asking for.
+
+## Rethinking the problem
+
+The user wants:
+1. A correct derivation of the refined formula for NW(Q) - C
+2. Identification of which terms contribute
+3. A prediction for NW(926265)
+
+The key empirical observation is that NW(Q) - C ≈ M(Q)²/(6Q) works approximately. The question is why, and how to improve it.
+
+Let me reconsider the formula:
+$$NW(Q) = \frac{1}{6Q} \sum_{m=1}^{\infty} \frac{|S_Q(m)|^2}{m^2}$$
+
+And decompose $|S_Q(m)|^2 = (1 + M(Q) + B_Q(m))^2$ where $B_Q(m) = \sum_{d|m, d>1} d \cdot M(Q/d)$.
+
+Wait, actually I realize I should double-check: is $S_Q(m) = 1 + \sum_{d|m, d \leq Q} d \cdot M(Q/d)$, or is it $S_Q(m) = \sum_{d|m, d \leq Q} d \cdot M(Q/d)$? I.e., is the "+1
