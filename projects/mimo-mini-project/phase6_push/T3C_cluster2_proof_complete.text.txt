@@ -1,0 +1,68 @@
+## Theorem
+Let \(F_N\) denote the Farey sequence of order \(N\). Fix a sequence of quantiles \(q_N\) such that \(1 - q_N = \kappa / N\) for some constant \(\kappa > 0\). As \(N \to \infty\), the probability that an extreme gap (i.e., a gap in the top \(q_N\) quantile) belongs to a cluster of exactly two consecutive extreme gaps tends to \(1\). Moreover, the probability of a cluster of size three or more tends to \(0\).
+
+## Proof
+
+### 1. Setup and Scaling
+We rely on the Boca–Cobeli–Zaharescu (BCZ) equidistribution theorem: as \(N \to \infty\), the pairs of consecutive denominators \((b, d)\) in \(F_N\), normalized as \((x, y) = (b/N, d/N)\), become uniformly distributed on the triangle  
+\[
+T = \{(x, y) : 0 < x, y < 1,\ x + y > 1\}
+\]  
+with constant density \(2\).
+
+The gap size between fractions with denominators \(b\) and \(d\) is \(1/(bd) = 1/(N^2 xy)\). Let \(\tau_N\) be the \((1 - q_N)\)-quantile of the gap distribution. An extreme gap satisfies  
+\[
+\frac{1}{N^2 xy} > \tau_N \quad \iff \quad xy < \frac{1}{N^2 \tau_N}.
+\]  
+Set \(\delta_N = 1/(N^2 \tau_N)\). Since \(1 - q_N = \kappa / N\) and the probability that a random \((x, y) \in T\) satisfies \(xy < \delta\) is asymptotically \(2\delta\) for small \(\delta\), we have \(2\delta_N \sim \kappa / N\), so \(\delta_N \sim \kappa/(2N)\). Thus \(\delta_N = O(1/N)\).
+
+### 2. Structure of Extreme Gaps
+For \((x, y) \in T\) with \(xy < \delta_N\), the condition \(x + y > 1\) forces one of the coordinates to be \(O(1/N)\). Indeed, if both \(x, y \geq \sqrt{\delta_N}\), then \(xy \geq \delta_N\), a contradiction. Hence at least one of \(x, y\) is \(<\sqrt{\delta_N} = O(1/\sqrt{N})\). Moreover, if \(x\) is not \(O(1/N)\), say \(x \geq A/N\) for some large \(A\), then \(y < \delta_N/x \leq \delta_N N / A = O(1/A)\). But then \(x + y \leq O(1/\sqrt{N}) + O(1/A) < 1\) for large \(N\) and \(A\), contradicting \(x + y > 1\). Therefore, for sufficiently large \(N\), every extreme gap satisfies either:
+
+- **Type A:** \(x = O(1/N)\) and \(y = 1 - O(1/N)\) (i.e., \(y\) close to \(1\)),
+- **Type B:** \(y = O(1/N)\) and \(x = 1 - O(1/N)\) (i.e., \(x\) close to \(1\)).
+
+These two types are disjoint for large \(N\).
+
+### 3. Cluster of Size 2
+We analyze the neighbors of an extreme gap using the Stern–Brocot recurrences. Given a pair \((x, y)\), the next pair \((y, z)\) is determined by \(z = k y - x\) with \(k = \lfloor (1 + x)/y \rfloor\). The previous pair \((x', x)\) satisfies \(x' = k' x - y\) with \(k' = \lfloor (1 + y)/x \rfloor\).
+
+**Claim 1 (Type B).** If \((x, y)\) is of Type B, then the next gap (corresponding to \((y, z)\)) is also extreme, but the previous gap (corresponding to \((x', x)\)) is not.
+
+*Proof.* Write \(y = \beta/N\) with \(\beta = O(1)\) and \(x = 1 - \alpha/N\) with \(\alpha = O(1)\). Then  
+\[
+k = \left\lfloor \frac{1 + x}{y} \right\rfloor = \left\lfloor \frac{2 - \alpha/N}{\beta/N} \right\rfloor = \left\lfloor \frac{2N - \alpha}{\beta} \right\rfloor,
+\]  
+so \(k \sim 2N/\beta\). Hence  
+\[
+z = k y - x = \left( \frac{2N - \alpha}{\beta} + O(1) \right) \frac{\beta}{N} - (1 - \alpha/N) = 2 - \alpha/N + O(1/N) - 1 + \alpha/N = 1 + O(1/N).
+\]  
+Thus \(z \approx 1\). Consequently, \(y z \leq y = O(1/N)\), and since \(\delta_N = O(1/N)\), we have \(y z < \delta_N\) for large \(N\). Hence the next gap is extreme.
+
+For the previous gap: \(k' = \lfloor (1 + y)/x \rfloor\). Since \(y = O(1/N)\) and \(x \approx 1\), \((1 + y)/x \approx 1 + y\), so \(k' = 1\) for large \(N\). Then \(x' = x - y = 1 - (\alpha + \beta)/N\). Thus  
+\[
+x' x = \left(1 - \frac{\alpha + \beta}{N}\right) \left(1 - \frac{\alpha}{N}\right) = 1 - O(1/N) = \Omega(1).
+\]  
+So \(x' x > \delta_N\) for large \(N\), and the previous gap is not extreme. \(\square\)
+
+**Claim 2 (Type A).** If \((x, y)\) is of Type A, then the previous gap is extreme, but the next gap is not.
+
+*Proof.* Symmetric to Claim 1. \(\square\)
+
+Claims 1 and 2 show that every extreme gap is adjacent to exactly one other extreme gap, forming a pair. Thus the cluster size is at least 2.
+
+### 4. No Clusters of Size 3
+**Claim 3.** No three consecutive gaps can be extreme.
+
+*Proof.* Suppose gaps corresponding to \((x, y)\), \((y, z)\), and \((z, w)\) are all extreme: \(xy < \delta_N\), \(yz < \delta_N\), \(zw < \delta_N\), with all sums \(> 1\).
+
+- **Case 1:** \(y\) is small, i.e., \(y = O(1/N)\). Then as in Claim 1, \(x \approx 1\) and \(z \approx 1\). From \(zw < \delta_N\) and \(z \approx 1\), we get \(w = O(1/N)\). But the recurrence \(w = k' z - y\) with \(k' = \lfloor (1 + y)/z \rfloor \approx 1\) gives \(w = z - y \approx 1\), contradicting \(w = O(1/N)\).
+
+- **Case 2:** \(y\) is not small. Then from \(xy < \delta_N\) we deduce \(x = O(1/N)\), and from \(yz < \delta_N\) we deduce \(z = O(1/N)\). Since \(x + y > 1\) and \(x\) is small, \(y \approx 1\); similarly, \(z + w > 1\) and \(z\) small implies \(w \approx 1\). Now consider the recurrence \(z = k y - x\). Since \(y \approx 1\) and \(x\) small, \(k = \lfloor (1 + x)/y \rfloor \approx 1\), so \(z = y - x \approx 1\), contradicting \(z = O(1/N)\).
+
+Both cases lead to a contradiction, so three consecutive extreme gaps cannot occur. \(\square\)
+
+### 5. Conclusion
+Claims 1–3 show that with probability tending to \(1\) as \(N \to \infty\), an extreme gap is of Type A or Type B, and hence belongs to a cluster of exactly two consecutive extreme gaps. Clusters of size three or more have vanishing probability.
+
+The proof relies on the BCZ equidistribution theorem (a rigorous result) and the asymptotic analysis of the recurrences under the condition \(\delta_N = O(1/N)\). No unproven hypotheses are needed beyond BCZ. \(\blacksquare\)

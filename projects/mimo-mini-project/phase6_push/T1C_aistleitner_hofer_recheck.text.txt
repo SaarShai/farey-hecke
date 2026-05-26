@@ -1,0 +1,129 @@
+# Careful Re-verification of Aistleitner–Hofer and Related Questions
+
+## Task 1: Does arXiv:1405.6532 exist?
+
+**Honest answer: I cannot verify this with certainty from my training data alone.**
+
+I have general knowledge that Christoph Aistleitner (TU Graz) has published extensively on discrepancy of sequences, multiplicative function extremes, and metric number theory. I believe there may be a paper by Aistleitner and Hofer on generalized Farey discrepancy from around this period. However, I **cannot confirm** from memory alone that:
+
+- The specific arXiv identifier 1405.6532 resolves to this paper
+- The exact title and author list match Z2's claim
+- The JNT 147 (2015), 121–16 citation is correct
+- The specific asymptotic involving $\sum M(n)^2/n^3$ is proven therein
+
+**I must not confabulate.** If this paper is critical to your work, I recommend directly checking arXiv and the JNT table of contents. These are verifiable in minutes.
+
+---
+
+## Task 2: Closely related papers I *can* speak to
+
+These connections are based on mathematical content I can reason about:
+
+**Franel–Landau (1924):** The foundational result. Let $F_Q$ be the Farey sequence of order $Q$, and define the discrepancy:
+$$D(Q) = \sup_{0 \le \alpha \le \beta \le 1} \left|\#\{a/q \in F_Q : \alpha \le a/q \le \beta\} - J(Q)(\beta - \alpha)\right|$$
+
+Then Franel proved (and Landau reformulated) that $D(Q) = O(Q^{1/2+\varepsilon})$ is equivalent to RH. The proof goes through an explicit identity connecting the discrepancy to sums of $\mu(n)$.
+
+**Key identity (Franel):** For consecutive Farey fractions $a/q, a'/q'$ with $q' \le Q$,
+$$\frac{a'}{q'} - \frac{a}{q} = \frac{1}{qq'}$$
+and the "neighbor structure" of Farey fractions encodes the Möbius function via:
+$$\sum_{\substack{q \le Q \\ (a,q)=1}} e^{2\pi i a n / q} = \sum_{d | n, d \le Q} d \cdot \mu(n/d)$$
+
+This makes any statistic of consecutive Farey fractions intrinsically linked to $\mu$ and hence to $M(x) = \sum_{n \le x} \mu(n)$.
+
+**Hooley (1970s–):** Studied the distribution of Farey fractions in short intervals using the circle method. His work on the "additive divisor problem" and related sieves touches on sums involving $\mu$ and $\varphi$ over Farey-type sets.
+
+**Kanemitsu–Yoshimoto:** Studied weighted Farey discrepancy with the Riemann hypothesis connection, using explicit formulas. Their approach involves writing discrepancy-type sums as contour integrals involving $\zeta(s)$ and $\zeta(s)^{-1}$.
+
+**Soundararajan:** His work on extreme values of $M(x)$ (and $|\zeta(1/2+it)|$) is relevant because pointwise behavior of $M(n)$ governs the fluctuations around any asymptotic formula. His paper "Moments of the Riemann zeta function" (2009) and related work on $M(x)$ bounds establish that $M(x)/\sqrt{x}$ has a certain distribution with tails governed by a specific probabilistic model.
+
+---
+
+## Task 3: Best known asymptotic for $J(Q)$?
+
+Here I can speak with more confidence. The classical result is:
+
+$$\Phi(Q) := \sum_{q \le Q} \varphi(q) = \frac{3}{\pi^2} Q^2 + O(Q \log Q)$$
+
+This is unconditional and follows from elementary Möbius inversion. If $J(Q)$ is the number of terms in the Farey sequence of order $Q$ (i.e., $J(Q) = \Phi(Q) + 1$), then $J(Q) \sim \frac{3}{\pi^2} Q^2$.
+
+**For your setup:** If $\text{NW}(Q) = Q \cdot J(Q)/\Phi(Q) \to C$, and $J(Q)/\Phi(Q) \to$ constant, then this is saying something about a *specific weighted or derived quantity* from the Farey sequence — not the raw count. The question of whether a linear asymptotic $J(Q) \sim c \cdot Q$ for your specific $J(Q)$ is "already proven" depends entirely on what $J(Q)$ is.
+
+**If $J(Q)$ is a sum over consecutive Farey pairs of a specific weight** (e.g., $f(q,q') = \min(q,q')/(qq')$ or similar), then:
+- The linear growth $J(Q) \sim cQ$ would follow from standard techniques (partial summation + Möbius inversion) provided the relevant arithmetic sums converge.
+- The *constant* $c$ would be expressible as a product/sum involving zeta values and possibly Mertens-type quantities.
+
+**What I can say:** The linear asymptotic for various Farey-derived quantities is within the scope of classical analytic number theory (Franel–Landau + partial summation). Whether the *specific* constant $0.66989...$ and its decomposition in terms of $M(n)^2$ appears in the literature is the key question I cannot answer definitively.
+
+---
+
+## Task 4: The convergence of $\sum M(n)^2/n^3$ — a correction to your analysis
+
+**Your analysis in point 4 contains an error.** You wrote:
+
+> "Unconditionally, the bound is $M(n) = O(n)$ so $M^2/n^3 = O(1/n)$, divergent."
+
+The bound $M(n) = O(n)$ is the trivial bound ($|\mu(k)| \le 1$). The **non-trivial unconditional bound** from the zero-free region of $\zeta(s)$ (Vinogradov–Korobov type) is:
+
+$$M(n) = O\!\left(n \exp\!\left(-c \frac{(\log n)^{3/5}}{(\log\log n)^{1/5}}\right)\right)$$
+
+This gives:
+$$\frac{M(n)^2}{n^3} = O\!\left(n^{-1} \exp\!\left(-2c \frac{(\log n)^{3/5}}{(\log\log n)^{1/5}}\right)\right)$$
+
+**The series $\sum M(n)^2/n^3$ converges unconditionally.** Here's the proof:
+
+Substituting $u = \log n$ converts the sum to an integral:
+$$\sum_{n} \frac{M(n)^2}{n^3} \;\ll\; \int_0^\infty \exp\!\left(-2c\, u^{3/5}(\log u)^{-1/5}\right) du$$
+
+For large $u$, the integrand is bounded by $\exp(-c' u^{3/5})$, and:
+$$\int_0^\infty e^{-c' u^{3/5}}\, du = \frac{5}{3(c')^{5/3}}\, \Gamma(5/3) < \infty$$
+
+**Therefore:** $\sum M(n)^2/n^3$ converges absolutely and unconditionally. The convergence is not RH-equivalent; it follows from the zero-free region.
+
+**What IS true:**
+| Statement | Status |
+|-----------|--------|
+| $\sum M(n)^2/n^3$ converges | **Unconditionally true** |
+| $\sum M(n)^2/n^3$ converges *quickly* (partial sums bounded by const + $O(N^{-1+\varepsilon})$) | Requires RH |
+| $M(n) = O(n^{1/2+\varepsilon})$ | Equivalent to RH |
+| $\sum M(n)^2/n^s$ converges for all $s > 1$ | Equivalent to RH (since under RH, $M(n)^2/n^s = O(n^{1+\varepsilon}/n^s)$, convergent for $s > 2$, and actually for $s > 1$ using more refined arguments under RH) |
+
+Wait, let me be more precise: under RH, $M(n)^2 = O(n^{1+\varepsilon})$, so $\sum M(n)^2/n^s$ converges for $s > 2$. At $s = 2$, it's borderline. The unconditional convergence at $s = 3$ is solid.
+
+**This is a genuinely interesting observation:** The unconditional convergence of $\sum M(n)^2/n^3$ means that if Aistleitner–Hofer (or anyone) writes a constant involving this sum, that constant is **well-defined unconditionally**, even though its numerical evaluation requires understanding $M(n)$ deeply.
+
+---
+
+## Task 5: Average vs. pointwise — the key conceptual distinction
+
+You correctly identify the crucial distinction:
+
+| | Average result | Your pointwise result |
+|---|---|---|
+| **Statement** | $\text{NW}(Q) = C + o(1)$ on average | $\text{NW}(Q) = C + M(Q)^2/(6Q) + \ldots$ pointwise |
+| **Type** | Asymptotic formula for the mean | Asymptotic formula capturing fluctuations |
+| **What it requires** | Convergence of certain series (unconditional or conditional) | Pointwise knowledge of $M(Q)$ |
+| **Information content** | Determines the constant $C$ | Explains the *residual variance* around $C$ |
+
+These are **complementary**, not competing:
+
+- If someone proves $\text{NW}(Q) \to C$ (average), that establishes the baseline.
+- Your finding $\text{NW}(Q) \approx C + M(Q)^2/(6Q)$ explains why NW(Q) *doesn't* converge smoothly to $C$ — the fluctuations track $M(Q)^2$.
+
+**Analogy:** The prime number theorem says $\pi(x) \sim x/\log x$ (average). The Riemann formula $\pi(x) = \text{Li}(x) - \sum_\rho \text{Li}(x^\rho) + \ldots$ explains the fluctuations. Both are true; the second is strictly more informative.
+
+---
+
+## Summary and honest assessment
+
+1. **I cannot verify** arXiv:1405.6532 with certainty. Check arXiv directly.
+
+2. **The mathematical connections** between Farey discrepancy and Mertens function are deep and well-established (Franel–Landau since 1924). Various authors have explored specific manifestations.
+
+3. **Linear asymptotics** for Farey-derived quantities are within classical scope; whether the specific constant $0.66989...$ appears in the literature depends on the precise definition of NW(Q).
+
+4. **Correction:** $\sum M(n)^2/n^3$ converges *unconditionally* (not just under RH). Your analysis used the trivial bound $M(n) = O(n)$ rather than the zero-free region bound.
+
+5. **Your pointwise finding and any average-asymptotic result are complementary**, not overlapping. Even if Aistleitner–Hofer proves $\text{NW}(Q) \to C$, your $M(Q)^2/(6Q)$ correction term would be new.
+
+**Bottom line:** The *conceptual framework* (Farey sequences ↔ Möbius function ↔ Mertens function) is classical. The *specific pointwise formula* relating NW(Q) fluctuations to $M(Q)^2$ appears to be genuinely new, regardless of whether the average asymptotic is known. But I cannot rule out overlap without verifying the specific paper.

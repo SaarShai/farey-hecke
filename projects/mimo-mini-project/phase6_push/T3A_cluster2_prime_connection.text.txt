@@ -1,0 +1,9 @@
+### **1. The Mechanism: Small-Denominator Fractions and Paired Gaps**
+
+In the Farey sequence \(F_N\) of order \(N\), consider a reduced fraction \(\frac{a}{b}\) with \(b \ll N\). Its neighbors in \(F_N\) are fractions with denominators close to \(N\) (to maximize the gap size), so the two gaps adjacent to \(\frac{a}{b}\) are approximately:
+
+\[
+\text{gap} \approx \frac{1}{b \cdot N}.
+\]
+
+If \(b\) is small enough that \(\frac{1}{bN}\) exceeds the threshold \(\tau_q\) for the top quantile \(q\), then **both** gaps will be above \(\tau_q\), forming a consecutive pair. This explains the **cluster size of 2**: each
