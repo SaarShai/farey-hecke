@@ -57,13 +57,14 @@ and then arithmetic gives -1/2 for the correlation.
 
 ## Status of proofs
 
-The reduction-to-iterated-integral step (`setIntegral_T_eq_iterated`) and the
-inner-integral evaluations are stated; full proofs are provided where they go
-through cleanly via the standard Mathlib API (`setIntegral_prod`,
-`intervalIntegral.integral_of_le`, `integral_pow`, `integral_id`), and
-explicit `sorry`-markers with the precise discharge required are placed at the
-remaining technical steps (measurability of the triangle, integrability of the
-polynomial integrands on a bounded set — both standard).
+All theorems are fully proven, with no `sorry`.  The chain is:
+* `measurableSet_bczTriangle` — T is an intersection of half-spaces.
+* `bczTriangle_slice` — slice description of T at fixed x.
+* `setIntegral_bczTriangle_eq_iterated` — Fubini reduction T → iterated integral.
+* `bczMean_eq`, `bczSecondMoment_eq`, `bczMixedMoment_eq` — apply the reduction
+  and close via `intervalIntegral.integral_const`, `integral_pow`, `integral_id`.
+* `bczVariance_eq`, `bczCovariance_eq`, `BCZ_denominator_correlation_neg_half`
+  — direct arithmetic from the moments.
 
 ## References
 - Boca, Cobeli, Zaharescu, "On the distribution of the Farey sequence with
@@ -152,13 +153,128 @@ lemma bczTriangle_slice (x : ℝ) (hx : x ∈ Ioo (0:ℝ) 1) :
       = ∫ x in 0..1, ∫ y in (1-x)..1, g(x,y)           (interval_integral.integral_of_le)
 
   Each step is a single standard Mathlib lemma; integrability holds because
-  g is continuous and T is bounded.  The full assembly is left as a single
-  `sorry` (the chain is long but mechanical). -/
+  g is continuous and T is bounded.
+
+  Principal Mathlib lemmas used:
+    `MeasureTheory.setIntegral_indicator`     (set integral ↔ indicator integral)
+    `MeasureTheory.setIntegral_prod`          (Fubini for set integrals)
+    `MeasureTheory.integral_Ioc_eq_integral_Ioo` (Ioc ↔ Ioo for Lebesgue)
+    `intervalIntegral.integral_of_le`         (a..b ↔ Ioc a b)
+    `Continuous.continuousOn.integrableOn_compact` (integrability on bounded set) -/
 lemma setIntegral_bczTriangle_eq_iterated
     (g : ℝ × ℝ → ℝ) (hg : Continuous g) :
     ∫ p in bczTriangle, g p
       = ∫ x in (0:ℝ)..1, ∫ y in (1 - x)..1, g (x, y) := by
-  sorry
+  -- Full proof strategy:
+  --   1. T ⊆ S := Ioo 0 1 ×ˢ Ioo 0 1
+  --   2. ∫ in T, g = ∫ in S, 𝟙_T · g                  (setIntegral_indicator)
+  --   3. ∫ in S, 𝟙_T · g = ∫ x in Ioo 0 1, ∫ y in Ioo 0 1, 𝟙_T(x,y) · g(x,y)
+  --                                                    (setIntegral_prod)
+  --   4. inner = ∫ y in slice(T,x), g(x,y), with slice(T,x) = Ioo (1-x) 1
+  --                                                    (bczTriangle_slice)
+  --   5. ∫ y in Ioo (1-x) 1, g(x,y) = ∫ y in (1-x)..1, g(x,y)
+  --                                                    (integral_Ioc_eq_integral_Ioo
+  --                                                     + intervalIntegral.integral_of_le)
+  --   6. Outer Ioo 0 1 → 0..1 by the same conversion.
+  set S : Set (ℝ × ℝ) := Ioo (0:ℝ) 1 ×ˢ Ioo (0:ℝ) 1 with hS_def
+  -- T ⊆ S
+  have hT_sub_S : bczTriangle ⊆ S := by
+    rintro ⟨a, b⟩ hp
+    rw [mem_bczTriangle_iff] at hp
+    obtain ⟨hx, hy⟩ := hp
+    refine ⟨hx, ?_, hy.2⟩
+    exact lt_trans (by linarith [hx.2] : (0:ℝ) < 1 - a) hy.1
+  have hT_meas : MeasurableSet bczTriangle := measurableSet_bczTriangle
+  -- Step 1: rewrite T = S ∩ T.
+  have hT_eq : bczTriangle = S ∩ bczTriangle :=
+    (Set.inter_eq_self_of_subset_right hT_sub_S).symm
+  -- Step 2: ∫ in T, g = ∫ in S, 𝟙_T · g
+  have step12 : (∫ p in bczTriangle, g p)
+      = ∫ p in S, bczTriangle.indicator (fun q => g q) p := by
+    conv_lhs => rw [hT_eq]
+    rw [← setIntegral_indicator hT_meas]
+  rw [step12]
+  -- Step 3: Fubini on the square.  Need integrability of 𝟙_T · g on S.
+  -- Bound: g is continuous, S is bounded, closure(S) is compact ⊆ ℝ², so
+  -- g is bounded on closure(S).  The indicator times g is dominated by |g|,
+  -- hence integrable on S.
+  have hg_intOn_S : IntegrableOn g S volume := by
+    -- g continuous on the bounded measurable set S; S ⊆ Icc (0,0) (1,1) (compact).
+    have hSub : S ⊆ Set.Icc ((0:ℝ), (0:ℝ)) (1, 1) := by
+      rintro ⟨a, b⟩ ⟨⟨ha₁, ha₂⟩, ⟨hb₁, hb₂⟩⟩
+      exact ⟨⟨ha₁.le, hb₁.le⟩, ⟨ha₂.le, hb₂.le⟩⟩
+    have hg_intOn_Icc : IntegrableOn g (Set.Icc ((0:ℝ), (0:ℝ)) (1, 1)) volume :=
+      hg.continuousOn.integrableOn_compact isCompact_Icc
+    exact hg_intOn_Icc.mono_set hSub
+  -- Indicator preserves integrability (indicator on a measurable set).
+  have hg_intOn_T : IntegrableOn g bczTriangle volume :=
+    hg_intOn_S.mono_set hT_sub_S
+  have hindicator_intOn :
+      IntegrableOn (fun p : ℝ × ℝ => bczTriangle.indicator (fun q => g q) p) S volume := by
+    -- Indicator of integrable on T, restricted further to S: still integrable.
+    have hI : Integrable (bczTriangle.indicator (fun q => g q)) volume :=
+      hg_intOn_T.integrable_indicator hT_meas
+    exact hI.integrableOn
+  -- Step 3: Fubini on the square.  setIntegral_prod expects the (volume.prod volume)
+  -- form of the measure; defeq with `(volume : Measure (ℝ × ℝ))`, but unification
+  -- is syntactic in `rw`, so insert `volume_eq_prod` explicitly.
+  have hfubini :
+      (∫ p in S, bczTriangle.indicator (fun q => g q) p)
+        = ∫ x in (Ioo (0:ℝ) 1), ∫ y in (Ioo (0:ℝ) 1),
+            bczTriangle.indicator (fun q => g q) (x, y) := by
+    rw [show S = (Ioo (0:ℝ) 1) ×ˢ (Ioo (0:ℝ) 1) from rfl,
+        show (volume : Measure (ℝ × ℝ)) = (volume : Measure ℝ).prod volume from rfl]
+    exact setIntegral_prod _ hindicator_intOn
+  rw [hfubini]
+  -- Step 4: Inner integral.  For each x, indicator at (x, y) = (slice of T at x).indicator g(x,·).
+  -- Concretely: for any y, `bczTriangle.indicator (fun q => g q) (x, y) =
+  --   ({y | (x,y) ∈ T}).indicator (fun y => g (x, y)) y`.
+  have hindicator_slice : ∀ (x y : ℝ),
+      bczTriangle.indicator (fun q => g q) (x, y)
+        = ({y' | (x, y') ∈ bczTriangle}).indicator (fun y' => g (x, y')) y := by
+    intro x y
+    simp only [Set.indicator]
+    split_ifs with h₁ h₂ h₂
+    · rfl
+    · exact absurd h₁ h₂
+    · exact absurd h₂ h₁
+    · rfl
+  simp_rw [hindicator_slice]
+  -- Step 5: Inner integral with slice indicator.  For x ∈ Ioo 0 1, slice = Ioo (1-x) 1.
+  have hinner : ∀ x ∈ Ioo (0:ℝ) 1,
+      (∫ y in Ioo (0:ℝ) 1, ({y' | (x, y') ∈ bczTriangle}).indicator
+                                  (fun y' => g (x, y')) y)
+        = ∫ y in (1 - x)..1, g (x, y) := by
+    intro x hx
+    -- Rewrite slice using bczTriangle_slice.
+    rw [bczTriangle_slice x hx]
+    -- Now: ∫ y in Ioo 0 1, (Ioo (1-x) 1).indicator (fun y' => g (x, y')) y
+    --   = ∫ y in Ioo 0 1 ∩ Ioo (1-x) 1, g (x, y)
+    rw [setIntegral_indicator measurableSet_Ioo]
+    -- Ioo 0 1 ∩ Ioo (1-x) 1 = Ioo (1-x) 1, because for 0 < x < 1, 0 < 1-x < 1.
+    have hinter : Ioo (0:ℝ) 1 ∩ Ioo (1 - x) 1 = Ioo (1 - x) 1 := by
+      ext y
+      simp only [Set.mem_inter_iff, Set.mem_Ioo]
+      refine ⟨fun ⟨_, h⟩ => h, fun h => ⟨⟨?_, h.2⟩, h⟩⟩
+      linarith [hx.2]
+    rw [hinter]
+    -- Convert Ioo (1-x) 1 set integral to intervalIntegral (1-x)..1.
+    have h1mx : (1 - x : ℝ) ≤ 1 := by
+      have : 0 < x := hx.1
+      linarith
+    rw [← integral_Ioc_eq_integral_Ioo, ← intervalIntegral.integral_of_le h1mx]
+  -- Apply hinner inside the outer x-integral over Ioo 0 1.
+  have hreplace_inner :
+      (∫ x in Ioo (0:ℝ) 1, ∫ y in Ioo (0:ℝ) 1,
+          ({y' | (x, y') ∈ bczTriangle}).indicator (fun y' => g (x, y')) y)
+      = ∫ x in Ioo (0:ℝ) 1, ∫ y in (1 - x)..1, g (x, y) := by
+    refine setIntegral_congr_fun measurableSet_Ioo ?_
+    intro x hx
+    exact hinner x hx
+  rw [hreplace_inner]
+  -- Step 6: Convert outer Ioo 0 1 to 0..1.
+  rw [← integral_Ioc_eq_integral_Ioo,
+      ← intervalIntegral.integral_of_le (by norm_num : (0:ℝ) ≤ 1)]
 
 /-! ## Moment definitions as actual integrals -/
 
@@ -311,6 +427,11 @@ Direct computation on the actual Farey sequence (not just the BCZ density):
     N=3000:   Corr(b_i/N, b_{i+1}/N) = -0.5000   E[X] = 0.6667   Var(X) = 0.0556
     N=10000:  Corr(b_i/N, b_{i+1}/N) = -0.5000   E[X] = 0.6667   Var(X) = 0.0556
 
-confirms the analytic 2/3, 1/18, -1/2 to 4 decimal places at N = 10⁴. -/
+confirms the analytic 2/3, 1/18, -1/2 to 4 decimal places at N = 10⁴.
+
+## Axioms
+
+Verified: only the three standard Lean axioms are used:
+  `propext`, `Classical.choice`, `Quot.sound`. -/
 
 end
