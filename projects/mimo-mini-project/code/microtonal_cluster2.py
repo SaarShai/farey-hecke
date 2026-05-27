@@ -170,6 +170,52 @@ def best_rational_sb_cluster2(x: float, max_denom: int) -> tuple[int, int, float
     return best_p, best_q, best_err, iters
 
 
+def best_rational_sb_strict_pair(x: float, max_denom: int) -> tuple[int, int, float, int]:
+    """Stern-Brocot with runs capped at length 2 (strict cluster=2 hypothesis).
+
+    If cluster=2 were the right description of best-rational-approximation
+    refinement, capping each same-direction run at length 2 should still
+    find the optimum. We test this empirically: when CF coefficient a_i > 2
+    (e.g. a_i = 3, 4, 5, ...), the run-2-cap will MISS the convergent.
+    """
+    assert x > 0
+    a, b = math.floor(x), 1
+    c, d = math.floor(x) + 1, 1
+    best_p, best_q, best_err = a, b, abs(a / b - x)
+    if abs(c / d - x) < best_err:
+        best_p, best_q, best_err = c, d, abs(c / d - x)
+
+    iters = 0
+    while True:
+        iters += 1
+        p, q = a + c, b + d
+        if q > max_denom:
+            break
+        val = p / q
+        if val < x:
+            # cap run at length 2
+            p_new, q_new = p, q
+            p2, q2 = a + 2 * c, b + 2 * d
+            if q2 <= max_denom and p2 / q2 < x:
+                p_new, q_new = p2, q2
+            err_new = abs(p_new / q_new - x)
+            if err_new < best_err:
+                best_p, best_q, best_err = p_new, q_new, err_new
+            a, b = p_new, q_new
+        elif val > x:
+            p_new, q_new = p, q
+            p2, q2 = 2 * a + c, 2 * b + d
+            if q2 <= max_denom and p2 / q2 > x:
+                p_new, q_new = p2, q2
+            err_new = abs(p_new / q_new - x)
+            if err_new < best_err:
+                best_p, best_q, best_err = p_new, q_new, err_new
+            c, d = p_new, q_new
+        else:
+            return p, q, 0.0, iters
+    return best_p, best_q, best_err, iters
+
+
 # ---------------------------------------------------------------------------
 # 4. Microtonal-scale objective: given a set of target just-intonation
 #    intervals, find best n-EDO (equal divisions of octave) approximation.
@@ -383,11 +429,13 @@ def benchmark_single_rational(max_denoms=(100, 1000, 10_000, 100_000)):
         (bf_p, bf_q, bf_err), bf_t = time_call(best_rational_bruteforce, x, Q)
         (sb_p, sb_q, sb_err, sb_iters), sb_t = time_call(best_rational_sb, x, Q)
         (c2_p, c2_q, c2_err, c2_iters), c2_t = time_call(best_rational_sb_cluster2, x, Q)
+        (sp_p, sp_q, sp_err, sp_iters), sp_t = time_call(best_rational_sb_strict_pair, x, Q)
         rows.append({
             "Q": Q,
             "bruteforce": (bf_p, bf_q, bf_err, bf_t),
             "stern_brocot": (sb_p, sb_q, sb_err, sb_iters, sb_t),
             "cluster2": (c2_p, c2_q, c2_err, c2_iters, c2_t),
+            "strict_pair": (sp_p, sp_q, sp_err, sp_iters, sp_t),
         })
     return rows
 
@@ -417,6 +465,25 @@ def benchmark_31_edo():
     return r31, targets
 
 
+def benchmark_strict_pair_failure(max_denoms=(100, 1000, 10_000)):
+    """Demonstrate that the strict-pair (cluster=2) cap MISSES the optimum
+    when the continued-fraction expansion has coefficients > 2.
+
+    pi has CF [3; 7, 15, 1, 292, ...] -- the coefficient 15 will defeat
+    a strict run-2-cap; the coefficient 292 will obliterate it.
+    """
+    x = math.pi - 3  # use fractional part so result is < 1
+    print("\n[E] Strict cluster=2 cap on a HARD target: pi - 3 (CF [0;7,15,1,292,...])")
+    print(f"{'Q':>8} | bruteforce p/q (err)    | strict-pair p/q (err)       | match?")
+    print("-" * 80)
+    for Q in max_denoms:
+        bf_p, bf_q, bf_err = best_rational_bruteforce(x, Q)
+        sp_p, sp_q, sp_err, _ = best_rational_sb_strict_pair(x, Q)
+        ok = (bf_p, bf_q) == (sp_p, sp_q)
+        print(f"{Q:>8} | {bf_p}/{bf_q} ({bf_err:.2e})    | "
+              f"{sp_p}/{sp_q} ({sp_err:.2e})    | {'OK' if ok else 'MISS — strict pair FAILS'}")
+
+
 # ---------------------------------------------------------------------------
 
 def main():
@@ -426,18 +493,23 @@ def main():
 
     # --- Part A: single-rational best approximation ---
     print("\n[A] Best rational p/q approximating log2(3/2) = 0.58496...")
-    print(f"{'Q':>8} | {'brute t (s)':>10} | {'SB t (s)':>10} | {'C2 t (s)':>10} | "
-          f"{'SB iters':>9} | {'C2 iters':>9} | best p/q")
-    print("-" * 100)
+    print(f"{'Q':>8} | {'brute t':>9} | {'SB t':>9} | {'C2 t':>9} | {'SP t':>9} | "
+          f"{'SBi':>4} | {'C2i':>4} | {'SPi':>4} | bf p/q  | SB p/q  | SP p/q (strict pair)")
+    print("-" * 120)
     for row in benchmark_single_rational():
         Q = row["Q"]
         bf_p, bf_q, bf_err, bf_t = row["bruteforce"]
         sb_p, sb_q, sb_err, sb_iters, sb_t = row["stern_brocot"]
         c2_p, c2_q, c2_err, c2_iters, c2_t = row["cluster2"]
-        assert (sb_p, sb_q) == (bf_p, bf_q) == (c2_p, c2_q), \
-            f"Methods disagree at Q={Q}: bf={bf_p}/{bf_q}, sb={sb_p}/{sb_q}, c2={c2_p}/{c2_q}"
-        print(f"{Q:>8} | {bf_t:10.6f} | {sb_t:10.6f} | {c2_t:10.6f} | "
-              f"{sb_iters:>9} | {c2_iters:>9} | {bf_p}/{bf_q}")
+        sp_p, sp_q, sp_err, sp_iters, sp_t = row["strict_pair"]
+        # SB/C2 should match BF; SP may MISS for CF coefficients > 2
+        sb_ok = (sb_p, sb_q) == (bf_p, bf_q)
+        c2_ok = (c2_p, c2_q) == (bf_p, bf_q)
+        sp_ok = (sp_p, sp_q) == (bf_p, bf_q)
+        flag = ("ok" if sb_ok and c2_ok else "DISAGREE") + ("/SPok" if sp_ok else "/SPmiss")
+        print(f"{Q:>8} | {bf_t:9.5f} | {sb_t:9.5f} | {c2_t:9.5f} | {sp_t:9.5f} | "
+              f"{sb_iters:>4} | {c2_iters:>4} | {sp_iters:>4} | "
+              f"{bf_p}/{bf_q}  {sp_p}/{sp_q}  {flag}")
 
     # --- Part B: 31-EDO baseline for 5-limit JI ---
     print("\n[B] 31-EDO approximation to 5-limit JI (standard benchmark)")
