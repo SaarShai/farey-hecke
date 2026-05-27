@@ -136,30 +136,23 @@ def goe_gaps(N, M, rng):
 
 
 def gse_gaps(N, M, rng):
-    """GSE: 2N x 2N self-dual quaternion Hermitian.
-       Build self-dual via 2x2 complex-quaternion block structure.
-       Eigenvalues come in Kramers degenerate pairs -> keep every 2nd.
-       Effective spectrum has 'N' distinct eigenvalues spread over edge 2*sqrt(2N).
+    """GSE: 2N x 2N self-dual quaternion Hermitian -> Kramers pairs -> N distinct.
+       Use the GUE-style normalisation and Kramers-deduplicate, then unfold via semicircle.
     """
     all_gaps = []
     for _ in range(M):
-        A = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / 2.0
-        B = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / 2.0
-        A = (A + A.conj().T) / 2.0
-        B = (B - B.T) / 2.0
+        A = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / np.sqrt(2.0)
+        B = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / np.sqrt(2.0)
+        A = (A + A.conj().T) / np.sqrt(2.0)
+        B = (B - B.T) / np.sqrt(2.0)
         top = np.concatenate([A, B], axis=1)
         bot = np.concatenate([-B.conj(), A.conj()], axis=1)
         H = np.concatenate([top, bot], axis=0)
         H = (H + H.conj().T) / 2.0
         lam = np.sort(np.linalg.eigvalsh(H))
-        lam = lam[::2]  # Kramers
-        # rescale so edge=2 sqrt(N) for distinct eigenvalues
-        edge = 1.6 * np.sqrt(N)
-        bulk = lam[np.abs(lam) < edge]
-        s = np.clip(bulk / (2.0 * np.sqrt(N)), -1.0, 1.0)
-        N_unf = N * (0.5 + (s * np.sqrt(1 - s * s) + np.arcsin(s)) / np.pi)
-        gaps = np.diff(N_unf)
-        all_gaps.append(gaps)
+        lam = lam[::2]  # Kramers deduplicate -> N distinct
+        # the 2N spectrum spans [-2 sqrt(2N), 2 sqrt(2N)] effectively after dedup
+        all_gaps.append(_unfold_semicircle(lam, edge_scale_sigma=np.sqrt(2 * N)))
     return np.concatenate(all_gaps)
 
 
@@ -292,17 +285,12 @@ def main():
         family_tag="[L-functions w/ orthogonal symmetry: rank-0 ECs, Dirichlet L of real chi]")
 
     print("\nSimulating GUE (N=300, 500 mats) ...")
-    A = (RNG.standard_normal((1, 1)))  # warm
     gue_all = []
     for _ in range(500):
         a = (RNG.standard_normal((300, 300)) + 1j * RNG.standard_normal((300, 300))) / np.sqrt(2.0)
         h = (a + a.conj().T) / np.sqrt(2.0)
         lam = np.sort(np.linalg.eigvalsh(h))
-        edge = 1.6 * np.sqrt(300)
-        bulk = lam[np.abs(lam) < edge]
-        s = np.clip(bulk / (2.0 * np.sqrt(300)), -1.0, 1.0)
-        N_unf = 300 * (0.5 + (s * np.sqrt(1 - s * s) + np.arcsin(s)) / np.pi)
-        gue_all.append(np.diff(N_unf))
+        gue_all.append(_unfold_semicircle(lam, edge_scale_sigma=np.sqrt(300)))
     gue_g = np.concatenate(gue_all)
     summary['GUE_N300_x500'] = summarize("GUE eigenvalue gaps", gue_g, q_list,
         family_tag="[L-functions w/ unitary symmetry: generic Dirichlet L, modular L, zeta]")
