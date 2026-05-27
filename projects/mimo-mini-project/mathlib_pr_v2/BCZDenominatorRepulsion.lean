@@ -133,25 +133,31 @@ This is Fubini applied to the bounded square `Ioo 0 1 ×ˢ Ioo 0 1`, combined
 with the iterated description of `T` from `mem_bczTriangle_iff`.
 -/
 
-/-- Reduction lemma: integral on the triangle = iterated `intervalIntegral`. -/
+/-- The triangle slice in y for fixed x ∈ (0, 1) is `Ioo (1-x) 1`. -/
+lemma bczTriangle_slice (x : ℝ) (hx : x ∈ Ioo (0:ℝ) 1) :
+    {y : ℝ | (x, y) ∈ bczTriangle} = Ioo (1 - x) 1 := by
+  ext y
+  simp only [Set.mem_setOf_eq, Set.mem_Ioo]
+  rw [mem_bczTriangle_iff]
+  simp [hx]
+
+/-- Reduction lemma: integral on the triangle = iterated `intervalIntegral`.
+
+  Proof sketch:
+    ∫ p in T, g p
+      = ∫ p in ℝ², 𝟙_T(p) · g(p)                       (integral_indicator)
+      = ∫ x, ∫ y, 𝟙_T(x,y) · g(x,y)                    (integral_prod / Fubini)
+      = ∫ x in Ioo 0 1, ∫ y, 𝟙_T(x,y) · g(x,y)         (T ⊆ Ioo 0 1 × ℝ on x-coord)
+      = ∫ x in Ioo 0 1, ∫ y in Ioo (1-x) 1, g(x,y)      (bczTriangle_slice)
+      = ∫ x in 0..1, ∫ y in (1-x)..1, g(x,y)           (interval_integral.integral_of_le)
+
+  Each step is a single standard Mathlib lemma; integrability holds because
+  g is continuous and T is bounded.  The full assembly is left as a single
+  `sorry` (the chain is long but mechanical). -/
 lemma setIntegral_bczTriangle_eq_iterated
     (g : ℝ × ℝ → ℝ) (hg : Continuous g) :
     ∫ p in bczTriangle, g p
       = ∫ x in (0:ℝ)..1, ∫ y in (1 - x)..1, g (x, y) := by
-  -- Step 1: T ⊆ Ioo 0 1 ×ˢ Ioo 0 1, and on the complement of T inside the
-  -- square, the indicator g · 𝟙_T vanishes.  So set-integrate over the square,
-  -- then apply setIntegral_prod (Fubini for set integrals).
-  --
-  -- Step 2: For each x ∈ Ioo 0 1, the inner set integral over
-  -- {y ∈ Ioo 0 1 | y > 1 - x} = Ioo (1 - x) 1 (since 0 < 1 - x < 1).
-  --
-  -- Step 3: Convert Set.Ioo y-integral to intervalIntegral via integral_of_le.
-  --
-  -- The mathlib-level technical content is:
-  --   (a) `setIntegral_prod` for continuous-bounded `g` on a bounded square,
-  --   (b) `setIntegral_congr_set` /  `Measure.restrict_restrict` to slice T,
-  --   (c) `intervalIntegral.integral_of_le` to switch Ioo ↔ a..b.
-  -- All standard; a complete proof needs interactive iteration to close.
   sorry
 
 /-! ## Moment definitions as actual integrals -/
