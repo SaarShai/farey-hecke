@@ -99,24 +99,39 @@ def bcz_chain_gaps(n_steps, rng):
 
 # ---- ensemble simulators ----
 
+def _unfold_semicircle(lam, edge_scale_sigma):
+    """Wigner semicircle bulk unfolding.
+       Inputs: sorted eigenvalues lam,  edge_scale_sigma = scale such that
+       eigenvalues live in [-2 sigma, 2 sigma], so rho(x) = sqrt(4 sigma^2 - x^2)/(2 pi sigma^2),
+       and N(x) = total_count * [1/2 + (s sqrt(1-s^2) + arcsin s)/pi], s = x/(2 sigma).
+       Keep bulk in |x| < 1.5 sigma (avoid edge fluctuations).
+       Return normalized gaps with mean exactly 1 (rescale by empirical mean).
+    """
+    bulk_mask = np.abs(lam) < 1.5 * edge_scale_sigma
+    bulk = lam[bulk_mask]
+    if len(bulk) < 3:
+        return np.array([])
+    s = np.clip(bulk / (2.0 * edge_scale_sigma), -1.0, 1.0)
+    # cumulative semicircle on [-2 sigma, 2 sigma]
+    N_unf = len(lam) * (0.5 + (s * np.sqrt(1 - s * s) + np.arcsin(s)) / np.pi)
+    gaps = np.diff(N_unf)
+    # rescale to mean 1
+    if gaps.mean() > 0:
+        gaps = gaps / gaps.mean()
+    return gaps
+
+
 def goe_gaps(N, M, rng):
-    """GOE: real symmetric Gaussian.
-       Standard convention: A_ij ~ N(0,1), H = (A+A^T)/2 -> off-diag var 1/2, diag var 1.
-       Wigner edge at 2*sqrt(N), bulk semicircle rho(x) = sqrt(4N - x^2)/(2*pi).
-       Mean-spacing unfolding: N_unf(x) = (N/pi) * (s sqrt(1-s^2) + arcsin s) + N/2
-       with s = x/(2 sqrt N).
+    """GOE: real symmetric Gaussian.  Conventions:
+       H_ij = (A_ij + A_ji)/sqrt(2) where A_ij ~ N(0,1) iid.
+       => H_ij off-diag var 1, H_ii var 2.  Wigner edge at +/- 2 sqrt(N).
     """
     all_gaps = []
     for _ in range(M):
         A = rng.standard_normal((N, N))
-        H = (A + A.T) / 2.0
+        H = (A + A.T) / np.sqrt(2.0)
         lam = np.sort(np.linalg.eigvalsh(H))
-        edge = 1.6 * np.sqrt(N)
-        bulk = lam[np.abs(lam) < edge]
-        s = np.clip(bulk / (2.0 * np.sqrt(N)), -1.0, 1.0)
-        N_unf = N * (0.5 + (s * np.sqrt(1 - s * s) + np.arcsin(s)) / np.pi)
-        gaps = np.diff(N_unf)
-        all_gaps.append(gaps)
+        all_gaps.append(_unfold_semicircle(lam, edge_scale_sigma=np.sqrt(N)))
     return np.concatenate(all_gaps)
 
 
