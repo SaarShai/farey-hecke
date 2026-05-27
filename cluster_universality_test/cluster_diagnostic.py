@@ -77,27 +77,25 @@ def cluster_stats(gaps, q_list):
 # -------------------- 1. BCZ baseline (control) --------------------
 
 def bcz_chain_gaps(n_steps, rng):
-    """Sample BCZ pair-chain: (X_i, X_{i+1}) uniform on {X+Y>1, 0<X,Y<=1}.
-       Transition kernel: given X_i, X_{i+1} = Y, draw X_{i+2} via
-       BCZ renewal. We use the standard MS kernel: next state given Y is
-       uniform conditional on Y + X_{i+2} > 1.  This is a Markov chain on (0,1].
-       Gap is the BCZ-rescaled gap proxy g_i = X_i * X_{i+1}.
+    """BCZ cocycle on triangle {(x,y): 0<x,y<=1, x+y>1}.
+       Map: (x, y) -> (y,  floor((1+x)/y) * y - x).
+       Farey-gap proxy = 1/(x * y).  (Matches mimo bcz_50M.py.)
+       Burn 10000 steps first.
     """
-    # Markov chain: state s = X. Given s, draw Y uniform on (max(0,1-s), 1].
-    # But the joint stationary measure on (X,Y) is 1_{X+Y>1} * 2 dX dY (uniform on triangle).
-    # We sample stationary by direct (X,Y) on triangle then propagate.
-    # Simpler: marginal of X under stationary is f(x) = 2x for x in (0,1] (since triangle area 1/2,
-    # length of slice at X = x is x, so marginal density = 2x).
-    X = np.empty(n_steps + 1, dtype=np.float64)
-    # Sample X_0 from marginal 2x:  X = sqrt(U)
-    X[0] = np.sqrt(rng.uniform())
-    # Markov step: given X_i = x, X_{i+1} uniform on (1-x, 1].
-    # Verify stationarity:  pi(y) = integral pi(x) K(y|x) dx
-    #                        = integral_{1-y}^{1} 2x * (1/x) dx  = integral_{1-y}^{1} 2 dx = 2y  OK.
+    # Initialize uniform on triangle
+    while True:
+        x = float(rng.uniform()); y = float(rng.uniform())
+        if x + y > 1:
+            break
+    # burn-in
+    for _ in range(10_000):
+        nx, ny = y, np.floor((1.0 + x) / y) * y - x
+        x, y = nx, ny
+    gaps = np.empty(n_steps, dtype=np.float64)
     for i in range(n_steps):
-        x = X[i]
-        X[i + 1] = 1 - x + x * rng.uniform()  # uniform on (1-x, 1]
-    gaps = X[:-1] * X[1:]
+        gaps[i] = 1.0 / (x * y)
+        nx, ny = y, np.floor((1.0 + x) / y) * y - x
+        x, y = nx, ny
     return gaps
 
 
@@ -229,7 +227,9 @@ def summarize(name, gaps, q_list):
 
 def main():
     out_dir = os.path.dirname(os.path.abspath(__file__))
-    q_list = [0.95, 0.99]
+    # Sweep across q to see BCZ phase transition at q*_BCZ = 0.86181 vs
+    # GUE/CUE smooth decay.
+    q_list = [0.80, 0.85, 0.86181, 0.87, 0.90, 0.95, 0.99]
     summary = {}
 
     # ---- BCZ control ----
@@ -244,13 +244,13 @@ def main():
 
     # ---- GUE ----
     print("Simulating GUE eigenvalues ...")
-    gue_g = gue_eigenvalue_gaps(N_mat=300, n_matrices=400, rng=RNG)
-    summary['GUE_N300_x400'] = summarize("GUE eigenvalue gaps (N=300, 400 mats)", gue_g, q_list)
+    gue_g = gue_eigenvalue_gaps(N_mat=300, n_matrices=2000, rng=RNG)
+    summary['GUE_N300_x2000'] = summarize("GUE eigenvalue gaps (N=300, 2000 mats)", gue_g, q_list)
 
-    # ---- CUE ----
+    # ---- CUE (faster: no edge unfolding needed) ----
     print("Simulating CUE eigenvalues ...")
-    cue_g = cue_eigenvalue_gaps(N_mat=400, n_matrices=400, rng=RNG)
-    summary['CUE_N400_x400'] = summarize("CUE eigenphase gaps (N=400, 400 mats)", cue_g, q_list)
+    cue_g = cue_eigenvalue_gaps(N_mat=500, n_matrices=2000, rng=RNG)
+    summary['CUE_N500_x2000'] = summarize("CUE eigenphase gaps (N=500, 2000 mats)", cue_g, q_list)
 
     # ---- Riemann zeros: zeros1 (first 100k, low height) ----
     z1 = load_odlyzko_zeros1(os.path.join(out_dir, "zeros1.txt"))

@@ -216,6 +216,54 @@ def best_rational_sb_strict_pair(x: float, max_denom: int) -> tuple[int, int, fl
     return best_p, best_q, best_err, iters
 
 
+def best_rational_sb_truly_strict_pair(x: float, max_denom: int) -> tuple[int, int, float, int]:
+    """TRULY strict: forbid more than 2 consecutive same-direction moves.
+
+    This is the literal cluster=2 hypothesis applied to mediant refinement:
+    extreme close-gap exceedances come in pairs of size <=2. If we
+    interpret a same-direction SB run as a 'cluster', the cluster=2
+    hypothesis says runs should not exceed length 2.
+
+    We expect this to FAIL when CF coefficients > 2. Used to falsify
+    the naive cluster=2 -> scale-search hypothesis.
+    """
+    assert x > 0
+    a, b = math.floor(x), 1
+    c, d = math.floor(x) + 1, 1
+    best_p, best_q, best_err = a, b, abs(a / b - x)
+    if abs(c / d - x) < best_err:
+        best_p, best_q, best_err = c, d, abs(c / d - x)
+
+    iters = 0
+    last_dir = None
+    same_dir_count = 0
+    while True:
+        iters += 1
+        p, q = a + c, b + d
+        if q > max_denom:
+            break
+        val = p / q
+        if val == x:
+            return p, q, 0.0, iters
+        direction = "L" if val < x else "R"
+        # Cluster=2 enforcement: refuse a 3rd same-direction move
+        if direction == last_dir and same_dir_count >= 2:
+            break
+        err = abs(val - x)
+        if err < best_err:
+            best_p, best_q, best_err = p, q, err
+        if direction == "L":
+            a, b = p, q
+        else:
+            c, d = p, q
+        if direction == last_dir:
+            same_dir_count += 1
+        else:
+            same_dir_count = 1
+        last_dir = direction
+    return best_p, best_q, best_err, iters
+
+
 # ---------------------------------------------------------------------------
 # 4. Microtonal-scale objective: given a set of target just-intonation
 #    intervals, find best n-EDO (equal divisions of octave) approximation.
@@ -465,23 +513,58 @@ def benchmark_31_edo():
     return r31, targets
 
 
-def benchmark_strict_pair_failure(max_denoms=(100, 1000, 10_000)):
-    """Demonstrate that the strict-pair (cluster=2) cap MISSES the optimum
-    when the continued-fraction expansion has coefficients > 2.
+def benchmark_strict_pair_failure(max_denoms=(100, 1000, 10_000, 100_000)):
+    """Sweep through several real numbers; report the fraction of test
+    targets where the strict-pair (cap-2 run-length) misses the optimum.
 
-    pi has CF [3; 7, 15, 1, 292, ...] -- the coefficient 15 will defeat
-    a strict run-2-cap; the coefficient 292 will obliterate it.
+    A strict cluster=2 cap should fail systematically when CF coefficients
+    exceed 2. Random-uniform reals have Gauss-Kuzmin distribution where
+    P(a_i >= 3) ~ 0.42, so we expect frequent misses.
     """
-    x = math.pi - 3  # use fractional part so result is < 1
-    print("\n[E] Strict cluster=2 cap on a HARD target: pi - 3 (CF [0;7,15,1,292,...])")
-    print(f"{'Q':>8} | bruteforce p/q (err)    | strict-pair p/q (err)       | match?")
-    print("-" * 80)
+    import random
+    random.seed(20260527)
+    test_xs = [
+        ("pi-3",       math.pi - 3),
+        ("e-2",        math.e - 2),
+        ("log2(3/2)",  math.log2(3/2)),
+        ("log2(5/4)",  math.log2(5/4)),
+        ("sqrt(2)-1",  math.sqrt(2) - 1),
+        ("sqrt(3)-1",  math.sqrt(3) - 1),
+        ("3-phi",      3 - (1 + math.sqrt(5)) / 2),
+    ]
+    # Add some random reals
+    for i in range(20):
+        test_xs.append((f"rand{i}", random.random()))
+
+    print("\n[E] TRULY strict cluster=2 (refuse 3rd same-direction move)")
+    print("    Tests the LITERAL hypothesis that same-direction SB runs")
+    print("    behave like Farey-gap clusters and should not exceed size 2.")
+    print(f"{'Q':>8} | match rate | mean miss ratio | worst miss")
+    print("-" * 90)
     for Q in max_denoms:
-        bf_p, bf_q, bf_err = best_rational_bruteforce(x, Q)
-        sp_p, sp_q, sp_err, _ = best_rational_sb_strict_pair(x, Q)
-        ok = (bf_p, bf_q) == (sp_p, sp_q)
-        print(f"{Q:>8} | {bf_p}/{bf_q} ({bf_err:.2e})    | "
-              f"{sp_p}/{sp_q} ({sp_err:.2e})    | {'OK' if ok else 'MISS — strict pair FAILS'}")
+        misses = []
+        ratios = []
+        for name, x in test_xs:
+            if x <= 0:
+                continue
+            bf_p, bf_q, bf_err = best_rational_bruteforce(x, Q)
+            sp_p, sp_q, sp_err, _ = best_rational_sb_truly_strict_pair(x, Q)
+            if (bf_p, bf_q) != (sp_p, sp_q):
+                ratio = sp_err / bf_err if bf_err > 0 else float("inf")
+                ratios.append(ratio)
+                misses.append((name, bf_p, bf_q, bf_err, sp_p, sp_q, sp_err, ratio))
+        matched = len(test_xs) - len(misses)
+        rate = matched / len(test_xs)
+        mean_r = sum(ratios) / len(ratios) if ratios else 0.0
+        worst = max(misses, key=lambda m: m[7]) if misses else None
+        worst_str = ""
+        if worst:
+            name, bp, bq, be, sp, sq, se, r = worst
+            worst_str = f"{name}: BF {bp}/{bq} ({be:.1e}), C2 {sp}/{sq} ({se:.1e}, {r:.1f}x worse)"
+        print(f"{Q:>8} | {matched}/{len(test_xs)} ({rate:.0%})  | "
+              f"{mean_r:>12.1f}x  | {worst_str}")
+    print("  (Cluster=2 LITERAL: strict 3-move-cap should match BF if cluster=2")
+    print("   governs CF runs. Misses falsify this naive mapping.)")
 
 
 # ---------------------------------------------------------------------------
@@ -536,40 +619,55 @@ def main():
               f"{c2_n:>10} | {c2_e:>10.3f} | {c2_t:10.6f} | "
               f"{bf_evals:>9} | {c2_evals:>9} | {speedup:>5.1f}x  {match}")
 
+    benchmark_strict_pair_failure()
+
     # --- Part D: honesty analysis ---
     print("\n[D] Honest analysis")
     print("-" * 72)
     print("Q1: Does cluster=2 help for SINGLE best rational approximation?")
-    print("    Answer: No measurable benefit. Stern-Brocot mediant already")
-    print("    converges in O(log Q) steps. The cluster=2 'paired step' just")
-    print("    bundles two SB mediants per loop iteration, halving iteration")
-    print("    count but doing the same work. Brute force is O(Q) and only")
-    print("    looks worse asymptotically; for Q <= 10^4 it's microseconds.")
+    print("    No. Stern-Brocot run-length acceleration is the *classical*")
+    print("    continued-fraction algorithm (O(log Q) iterations). What we")
+    print("    labelled 'cluster2' is just SB run-length acceleration with")
+    print("    a relabelled name; runs of length 2 are common because")
+    print("    CF coefficients are i.i.d. Gauss-Kuzmin distributed with")
+    print("    P(a_i=1) ~ 0.41, P(a_i=2) ~ 0.17 — but a_i can be 100+.")
+    print()
+    print("    Part E surprise: the 'strict-pair' version (cap each loop")
+    print("    iteration at run-length 2) still matched BF on 27/27 hard")
+    print("    targets including pi (a_2=15, a_4=292) and e (a_5=4,a_8=6).")
+    print("    Why? My cap is per-iteration; consecutive iterations stack,")
+    print("    so a CF coefficient of 7 is realised as 4 iterations of")
+    print("    cap-2 (or 7 single steps) ending at the same SB lattice")
+    print("    point. The cap doesn't actually constrain total run length.")
+    print("    To genuinely test cluster=2's predictive value here, one")
+    print("    would need to forbid same-direction moves after 2 steps,")
+    print("    which deliberately breaks the algorithm.")
     print()
     print("Q2: Does cluster=2 help for n-EDO scale search?")
-    print("    Cluster=2 here is REPURPOSED as a heuristic: only evaluate n")
-    print("    at continued-fraction-convergent denominators of log2(r)")
-    print("    (the 'pair' is the convergent and its neighbours). This")
-    print("    cuts evaluations from Q-5 to O(log Q * |targets|).")
-    print()
-    print("    BUT: this is just the standard continued-fraction best-")
-    print("    rational-approximation theorem, NOT a new use of cluster=2.")
-    print("    The cluster=2 result (BCZ, q>=7/9) governs SMALL Farey gaps")
-    print("    in the bulk Farey sequence; convergents are about LARGE")
-    print("    isolated good approximations. Different regimes.")
+    print("    No: Part C shows the 'cluster2' heuristic MISSES the joint")
+    print("    optimum (BF finds n=171,441,1783,4296 with max-err 0.35,")
+    print("    0.09, 0.008, 0.001 cents; the convergent-restricted search")
+    print("    only finds n=53,422,665,3836 with max-err 1.4, 0.42, 0.15,")
+    print("    0.026 cents — 4-20x worse approximation). The 70x 'speedup'")
+    print("    is buying a WORSE answer.")
     print()
     print("Q3: Honest verdict")
-    print("    cluster=2 does NOT give a real algorithmic speedup for")
-    print("    microtonal scale search. The speedup we measure above")
-    print("    comes from using continued-fraction convergents (classical,")
-    print("    19th-century math), which we labelled 'cluster2' but")
-    print("    are not actually exploiting the BCZ-asymptotic result.")
+    print("    cluster=2 does NOT give a useful algorithmic speedup for")
+    print("    microtonal scale search. Two reasons:")
+    print("      (a) Wrong regime: cluster=2 is about extreme small Farey")
+    print("          gaps at quantile q>=7/9 of F_N. Best rational approx")
+    print("          and n-EDO search live in the convergent regime, which")
+    print("          obeys Gauss-Kuzmin (CF coefficient distribution),")
+    print("          not BCZ extreme-gap statistics.")
+    print("      (b) For joint approximation to several targets (the actual")
+    print("          n-EDO problem), the best n is NOT a CF convergent of")
+    print("          any single target — it's a compromise. Restricting")
+    print("          the search to single-target convergents systematically")
+    print("          misses the joint optimum.")
     print()
-    print("    If cluster=2 has algorithmic value, it would be in problems")
-    print("    where the relevant Farey gaps are at quantile >= 0.9 of a")
-    print("    fixed Farey sequence F_N -- e.g. enumerating ALL pairs of")
-    print("    close fractions (denominator-coprime), where knowing they")
-    print("    come in pairs of size 2 lets you skip half the search.")
+    print("    Where cluster=2 *might* help: enumerating extreme close")
+    print("    pairs in F_N (which IS what the result is about), e.g.")
+    print("    Selberg-class number-theoretic pair correlation. Not music.")
 
 
 if __name__ == "__main__":
