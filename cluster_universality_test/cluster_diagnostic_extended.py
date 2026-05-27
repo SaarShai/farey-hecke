@@ -100,20 +100,20 @@ def bcz_chain_gaps(n_steps, rng):
 # ---- ensemble simulators ----
 
 def goe_gaps(N, M, rng):
-    """GOE: real symmetric Gaussian.  H = (A + A.T) / sqrt(2), A ~ N(0,1)."""
+    """GOE: real symmetric Gaussian.
+       Standard convention: A_ij ~ N(0,1), H = (A+A^T)/2 -> off-diag var 1/2, diag var 1.
+       Wigner edge at 2*sqrt(N), bulk semicircle rho(x) = sqrt(4N - x^2)/(2*pi).
+       Mean-spacing unfolding: N_unf(x) = (N/pi) * (s sqrt(1-s^2) + arcsin s) + N/2
+       with s = x/(2 sqrt N).
+    """
     all_gaps = []
     for _ in range(M):
         A = rng.standard_normal((N, N))
-        H = (A + A.T) / np.sqrt(2.0)
+        H = (A + A.T) / 2.0
         lam = np.sort(np.linalg.eigvalsh(H))
-        # semicircle unfolding with this normalization: rho(x) = sqrt(4N - x^2)/(2*pi*N) ... wait
-        # for H_ij standard with diag var 2, the spectral edge is 2*sqrt(N).
-        # H here: off-diag var 1, diag var 2 (from (A+A.T) sqrt(2) normalization).
-        # Use same edge sqrt(4 N) scaling.
-        edge = 1.6 * np.sqrt(2 * N)
+        edge = 1.6 * np.sqrt(N)
         bulk = lam[np.abs(lam) < edge]
-        s = bulk / (2.0 * np.sqrt(2 * N))
-        s = np.clip(s, -1.0, 1.0)
+        s = np.clip(bulk / (2.0 * np.sqrt(N)), -1.0, 1.0)
         N_unf = N * (0.5 + (s * np.sqrt(1 - s * s) + np.arcsin(s)) / np.pi)
         gaps = np.diff(N_unf)
         all_gaps.append(gaps)
@@ -122,31 +122,26 @@ def goe_gaps(N, M, rng):
 
 def gse_gaps(N, M, rng):
     """GSE: 2N x 2N self-dual quaternion Hermitian.
-       Construct via H = (Q + Q^dagger)/sqrt(2) with quaternion structure
-       enforced as a 2x2 block representation.  Result: each eigenvalue
-       comes with multiplicity 2 (Kramers degeneracy); we take every other
-       sorted eigenvalue.  Edge ~ 2 sqrt(2N) for our normalization.
+       Build self-dual via 2x2 complex-quaternion block structure.
+       Eigenvalues come in Kramers degenerate pairs -> keep every 2nd.
+       Effective spectrum has 'N' distinct eigenvalues spread over edge 2*sqrt(2N).
     """
     all_gaps = []
     for _ in range(M):
-        # Build quaternionic self-dual via 2x2 complex blocks:
-        # H_ij = [[a, b], [-conj(b), conj(a)]] with Hermiticity
-        A = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / np.sqrt(2.0)
-        B = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / np.sqrt(2.0)
-        A = (A + A.conj().T) / np.sqrt(2.0)
-        B = (B - B.T) / np.sqrt(2.0)  # antisymmetric complex
+        A = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / 2.0
+        B = (rng.standard_normal((N, N)) + 1j * rng.standard_normal((N, N))) / 2.0
+        A = (A + A.conj().T) / 2.0
+        B = (B - B.T) / 2.0
         top = np.concatenate([A, B], axis=1)
         bot = np.concatenate([-B.conj(), A.conj()], axis=1)
         H = np.concatenate([top, bot], axis=0)
-        # ensure Hermitian
         H = (H + H.conj().T) / 2.0
         lam = np.sort(np.linalg.eigvalsh(H))
-        # de-duplicate the Kramers pair (every 2nd)
-        lam = lam[::2]
-        edge = 1.6 * np.sqrt(2 * N)
+        lam = lam[::2]  # Kramers
+        # rescale so edge=2 sqrt(N) for distinct eigenvalues
+        edge = 1.6 * np.sqrt(N)
         bulk = lam[np.abs(lam) < edge]
-        s = bulk / (2.0 * np.sqrt(2 * N))
-        s = np.clip(s, -1.0, 1.0)
+        s = np.clip(bulk / (2.0 * np.sqrt(N)), -1.0, 1.0)
         N_unf = N * (0.5 + (s * np.sqrt(1 - s * s) + np.arcsin(s)) / np.pi)
         gaps = np.diff(N_unf)
         all_gaps.append(gaps)
@@ -356,7 +351,10 @@ def main():
         if k not in summary:
             continue
         s = summary[k][0.99]
-        print(f"{k:28s} | {len(globals()):>9} | "  # placeholder
+        # find n_extreme as proxy for sample size
+        n_extr = s.get('n_extreme', 0)
+        n_clu = s.get('n_clusters', 0)
+        print(f"{k:28s} | {n_clu:>9d} | "
               f"{100*s['size2_frac']:7.3f} | {100*s['p_size_ge_3']:9.3f} | {family.get(k,'')}")
 
 
