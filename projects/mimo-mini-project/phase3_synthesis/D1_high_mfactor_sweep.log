@@ -1,0 +1,47 @@
+
+=== Q=1,000,000 m_factor=50.0 (m_max=50,000,000) ===
+  NW = 0.6782279108  wall = 145.3s
+    at m=   1,000,000: NW_partial=0.6293465971
+    at m=   2,000,000: NW_partial=0.6539753597
+    at m=   5,000,000: NW_partial=0.6691216596
+    at m=  10,000,000: NW_partial=0.6741820929
+    at m=  50,000,000: NW_partial=0.6782279108
+
+=== Q=1,000,000 m_factor=100.0 (m_max=100,000,000) ===
+  NW = 0.6787326288  wall = 285.6s
+    at m=   1,000,000: NW_partial=0.6293465971
+    at m=   2,000,000: NW_partial=0.6539753597
+    at m=   5,000,000: NW_partial=0.6691216596
+    at m=  10,000,000: NW_partial=0.6741820929
+    at m=  50,000,000: NW_partial=0.6782279108
+    at m= 100,000,000: NW_partial=0.6787326288
+
+=== Q=2,000,000 m_factor=20.0 (m_max=40,000,000) ===
+  NW = 0.6761496752  wall = 126.3s
+    at m=   2,000,000: NW_partial=0.6287804644
+    at m=   4,000,000: NW_partial=0.6534105776
+    at m=  10,000,000: NW_partial=0.6685585219
+    at m=  20,000,000: NW_partial=0.6736201244
+
+=== Q=2,000,000 m_factor=50.0 (m_max=100,000,000) ===
+  NW = 0.6776682518  wall = 352.6s
+    at m=   2,000,000: NW_partial=0.6287804644
+    at m=   4,000,000: NW_partial=0.6534105776
+    at m=  10,000,000: NW_partial=0.6685585219
+    at m=  20,000,000: NW_partial=0.6736201244
+    at m= 100,000,000: NW_partial=0.6776682518
+
+wrote /Users/za/Documents/Farey NOW/projects/mimo-mini-project/phase3_synthesis/D1_high_mfactor_sweep.json
+
+Final NW values vs candidates:
+  Q=1,000,000 mf=  50: NW=0.6782279108
+  Q=1,000,000 mf= 100: NW=0.6787326288
+  Q=2,000,000 mf=  20: NW=0.6761496752
+  Q=2,000,000 mf=  50: NW=0.6776682518
+
+Candidate offsets (from largest-Q largest-mf result):
+  best: Q=2,000,000, m_max=100,000,000, NW=0.6776682518
+    diff to (1/2)·Π_p(1+1/(p²(p−1))): +0.00777710
+    diff to 2/3: +0.01100159
+    diff to 12/π²·(prev): +0.00894844
+    diff to twin-prime-const: +0.01750644

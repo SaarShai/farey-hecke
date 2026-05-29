@@ -1,0 +1,54 @@
+q*_BCZ = 0.861809, t* = 2/9 = 0.222222
+
+Warmup numba...
+  warmup done
+
+=== eps = 1e-05, t = 0.2222322 (2 seeds × 500,000,000) ===
+  seed 142: max=2, mean3+=0.00, p90=0, p99=0, hill_α=N/A, n_3+=0, t=4s
+  seed 1151: max=2, mean3+=0.00, p90=0, p99=0, hill_α=N/A, n_3+=0, t=4s
+
+=== eps = 3e-05, t = 0.2222522 (2 seeds × 500,000,000) ===
+  seed 342: max=2, mean3+=0.00, p90=0, p99=0, hill_α=N/A, n_3+=0, t=4s
+  seed 1351: max=2, mean3+=0.00, p90=0, p99=0, hill_α=N/A, n_3+=0, t=4s
+
+=== eps = 1e-04, t = 0.2223222 (2 seeds × 500,000,000) ===
+  seed 1042: max=4, mean3+=3.40, p90=4, p99=4, hill_α=N/A, n_3+=5, t=4s
+  seed 2051: max=4, mean3+=3.40, p90=4, p99=4, hill_α=N/A, n_3+=5, t=4s
+
+=== eps = 3e-04, t = 0.2225222 (2 seeds × 500,000,000) ===
+  seed 3041: max=20, mean3+=5.19, p90=9, p99=20, hill_α=2.644, n_3+=31, t=4s
+  seed 4050: max=41, mean3+=5.76, p90=6, p99=41, hill_α=3.109, n_3+=37, t=4s
+
+=== eps = 1e-03, t = 0.2232222 (2 seeds × 500,000,000) ===
+  seed 10042: max=35, mean3+=4.94, p90=8, p99=32, hill_α=2.992, n_3+=386, t=4s
+  seed 11051: max=55, mean3+=4.92, p90=8, p99=35, hill_α=3.131, n_3+=386, t=4s
+
+=== eps = 3e-03, t = 0.2252222 (2 seeds × 500,000,000) ===
+  seed 30042: max=71, mean3+=4.96, p90=8, p99=25, hill_α=2.979, n_3+=3,409, t=4s
+  seed 31051: max=90, mean3+=4.99, p90=8, p99=26, hill_α=2.995, n_3+=3,381, t=4s
+
+=== eps = 1e-02, t = 0.2322222 (2 seeds × 500,000,000) ===
+  seed 100042: max=179, mean3+=4.97, p90=8, p99=25, hill_α=3.054, n_3+=37,270, t=4s
+  seed 101051: max=345, mean3+=4.98, p90=8, p99=24, hill_α=3.050, n_3+=37,147, t=4s
+
+=== eps = 3e-02, t = 0.2522222 (2 seeds × 500,000,000) ===
+  seed 300042: max=834, mean3+=4.97, p90=8, p99=24, hill_α=3.065, n_3+=323,080, t=4s
+  seed 301051: max=16435, mean3+=4.98, p90=8, p99=24, hill_α=3.083, n_3+=322,577, t=4s
+
+=== eps = 1e-01, t = 0.3222222 (2 seeds × 500,000,000) ===
+  seed 1000042: max=3358, mean3+=4.18, p90=6, p99=17, hill_α=4.646, n_3+=8,038,162, t=4s
+  seed 1001051: max=2109, mean3+=4.18, p90=6, p99=17, hill_α=4.645, n_3+=8,037,086, t=4s
+
+=== Fits (all ε) ===
+              max: α = +0.9159 (rmse=0.804)
+          mean_3p: α = +0.0131 (rmse=0.145)
+              p99: α = +0.1087 (rmse=0.627)
+             n_3p: α = +2.0405 (rmse=0.254)
+
+=== Fits (small ε ≤ 0.01) ===
+        max_small: α = +0.7580 (rmse=0.399)
+    mean_3p_small: α = +0.0570 (rmse=0.137)
+        p99_small: α = +0.2962 (rmse=0.626)
+       n_3p_small: α = +1.9490 (rmse=0.076)
+
+Total: 74s. Saved to /Users/za/Documents/Farey NOW/projects/mimo-mini-project/code/scaling_law_v2_m1_results.json

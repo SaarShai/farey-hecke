@@ -1,0 +1,95 @@
+======================================================================
+EXPERIMENT A — GKW operator spectrum
+======================================================================
+Nystrom/Chebyshev (N=60) top eigenvalues:
+  lambda_1 = +0.9992790922  (|.|=0.9992790922)
+  lambda_2 = -0.3033683510  (|.|=0.3033683510)
+  lambda_3 = +0.1007851186  (|.|=0.1007851186)
+  lambda_4 = -0.0354610579  (|.|=0.0354610579)
+  lambda_5 = +0.0161490887  (|.|=0.0161490887)
+  lambda_6 = +0.0128310241  (|.|=0.0128310241)
+  lambda_7 = -0.0047130626  (|.|=0.0047130626)
+  lambda_8 = +0.0017469240  (|.|=0.0017469240)
+
+  lambda_2 = -0.3033683510   reference -0.3036630029   err=2.95e-04
+
+Ulam check (coarser):
+  lambda_1 = +1.000000  (|.|=1.000000)
+  lambda_2 = +0.386535  (|.|=0.386535)
+  lambda_3 = -0.354125  (|.|=0.358265)
+  lambda_4 = -0.354125  (|.|=0.358265)
+  lambda_5 = -0.213997  (|.|=0.330125)
+  lambda_6 = -0.213997  (|.|=0.330125)
+
+======================================================================
+EXPERIMENT B1 — empirical chi_E autocorrelation
+======================================================================
+orbit length = 30000000,  <chi_E> (extreme fraction) = 0.13822
+raw-orbit MC noise floor (|C| at large lag) ~ 2.46e-05
+
+RAW BCZ orbit: log-log slope of |C| (poly tail) = -0.901
+  (prediction: ~ -1, polynomial decay, NO spectral gap)
+
+fraction of steps with k>=2 (accelerated returns) = 0.6667
+accelerated orbit length = 20000073, <chi_E|acc> = 0.10362
+accelerated MC noise floor ~ 2.08e-05
+  accelerated |C(tau)| vs GKW envelope 0.3037^tau:
+    tau= 1  |C|=1.074e-02  GKW-pred=1.074e-02  [signal]
+    tau= 2  |C|=8.783e-03  GKW-pred=3.261e-03  [signal]
+    tau= 3  |C|=5.396e-03  GKW-pred=9.904e-04  [signal]
+    tau= 4  |C|=3.718e-04  GKW-pred=3.008e-04  [signal]
+    tau= 5  |C|=6.552e-04  GKW-pred=9.134e-05  [signal]
+    tau= 6  |C|=2.561e-03  GKW-pred=2.774e-05  [signal]
+    tau= 7  |C|=2.933e-03  GKW-pred=8.425e-06  [signal]
+    tau= 8  |C|=4.863e-03  GKW-pred=2.559e-06  [signal]
+    tau= 9  |C|=5.224e-04  GKW-pred=7.771e-07  [signal]
+    tau=10  |C|=1.792e-03  GKW-pred=2.360e-07  [signal]
+
+ACCELERATED orbit: exp envelope fit |C(tau)| ~ r^tau,  r = 0.9402
+  (29 lags above 3x noise floor)
+  |lambda_GKW| = 0.3037   ratio r/0.3037 = 3.096
+
+======================================================================
+EXPERIMENT B2a — GKW-PREDICTED chi_E autocorrelation (spectral)
+======================================================================
+Ulam Gauss-map transfer-matrix top eigenvalues (the decay rates):
+  lambda_1 = +1.00000 (|.|=1.00000)
+  lambda_2 = -0.33178 (|.|=0.33705)
+  lambda_3 = -0.33178 (|.|=0.33705)
+  lambda_4 = +0.17993 (|.|=0.30590)
+  lambda_5 = +0.17993 (|.|=0.30590)
+  => leading nontrivial decay rate |lambda_2| = 0.33705
+     reference |lambda_GKW| = 0.30366
+
+======================================================================
+EXPERIMENT B1c — DIRECT Gauss-map orbit autocorrelation (control)
+======================================================================
+Gauss-map indicator <g>=0.1376, noise floor~1.99e-05
+  |C(tau)| vs 0.3037^tau:
+    tau=1  |C|=4.543e-03  ratio C[t]/C[t-1]=-0.0383
+    tau=2  |C|=1.821e-03  ratio C[t]/C[t-1]=-0.4009
+    tau=3  |C|=4.917e-04  ratio C[t]/C[t-1]=-0.2699
+    tau=4  |C|=1.698e-04  ratio C[t]/C[t-1]=-0.3453
+    tau=5  |C|=4.769e-05  ratio C[t]/C[t-1]=-0.2809
+    tau=6  |C|=4.664e-05  ratio C[t]/C[t-1]=-0.9780
+    tau=7  |C|=2.821e-05  ratio C[t]/C[t-1]=-0.6049
+    tau=8  |C|=3.907e-06  ratio C[t]/C[t-1]=+0.1385
+  exp-envelope rate r = 0.3272   vs |lambda_GKW|=0.3037   (4 lags above floor)
+
+======================================================================
+EXPERIMENT B2 — indicator-weighted GKW operator
+======================================================================
+chi(x) on Gauss coord: mean=0.1098 (extreme fraction among accel returns=0.1037)
+Indicator-weighted GKW operator top eigenvalues:
+  mu_1 = +0.109617 (|.|=0.109617)
+  mu_2 = -0.025346 (|.|=0.025346)
+  mu_3 = +0.016535 (|.|=0.016535)
+  mu_4 = -0.013950 (|.|=0.013950)
+  mu_5 = +0.003387 (|.|=0.013328)
+  mu_6 = +0.003387 (|.|=0.013328)
+
+2/9 = 0.222222
+  in GKW spectrum?           False
+  in weighted GKW spectrum?  False
+
+results -> T7_gkw_cluster_rate_results.json

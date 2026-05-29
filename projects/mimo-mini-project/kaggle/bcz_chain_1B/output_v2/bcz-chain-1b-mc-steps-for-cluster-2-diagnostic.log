@@ -1,0 +1,39 @@
+[{"stream_name":"stdout","time":3.264886297,"data":"Closed-form q*_BCZ = 0.861808792793\n"}
+,{"stream_name":"stdout","time":3.34980405,"data":"Pass 1: burn-in 200k + sample 50M gaps for quantile estimation...\n"}
+,{"stream_name":"stdout","time":7.319099721,"data":"  pass 1 sample done in 4s, array size = 200 MB\n"}
+,{"stream_name":"stdout","time":7.319141701,"data":"Sorting sample...\n"}
+,{"stream_name":"stdout","time":7.741884623,"data":"  sort done in 0s\n"}
+,{"stream_name":"stdout","time":7.741926103,"data":"  q=0.85000: threshold=4.362779e+00\n"}
+,{"stream_name":"stdout","time":7.741931453,"data":"  q=0.86000: threshold=4.477669e+00\n"}
+,{"stream_name":"stdout","time":7.741935793,"data":"  q=0.86150: threshold=4.496198e+00\n"}
+,{"stream_name":"stdout","time":7.741940283,"data":"  q=0.86181: threshold=4.500082e+00 ← q*_BCZ\n"}
+,{"stream_name":"stdout","time":7.741945183,"data":"  q=0.86200: threshold=4.502456e+00\n"}
+,{"stream_name":"stdout","time":7.741949583,"data":"  q=0.86500: threshold=4.540748e+00\n"}
+,{"stream_name":"stdout","time":7.741953763,"data":"  q=0.87000: threshold=4.607977e+00\n"}
+,{"stream_name":"stdout","time":7.741957893,"data":"  q=0.90000: threshold=5.121940e+00\n"}
+,{"stream_name":"stdout","time":7.741962223,"data":"  q=0.95000: threshold=6.916656e+00\n"}
+,{"stream_name":"stdout","time":7.741966333,"data":"  q=0.99000: threshold=1.467575e+01\n"}
+,{"stream_name":"stdout","time":7.741970923,"data":"  q=0.99900: threshold=4.522640e+01\n"}
+,{"stream_name":"stdout","time":7.754989639,"data":"\n"}
+,{"stream_name":"stdout","time":7.755032379,"data":"Pass 2: streaming 500M steps counting clusters...\n"}
+,{"stream_name":"stdout","time":17.140831616,"data":"  pass 2 done in 9s\n"}
+,{"stream_name":"stdout","time":17.140874936,"data":"  q=0.85000: clusters=42,580,045, size-2=75.958%, size-3+=0.04271% ← BELOW q*\n"}
+,{"stream_name":"stdout","time":17.140881526,"data":"  q=0.86000: clusters=39,535,068, size-2=77.051%, size-3+=0.00121% ← BELOW q*\n"}
+,{"stream_name":"stdout","time":17.140887046,"data":"  q=0.86150: clusters=39,072,187, size-2=77.228%, size-3+=0.00005% ← BELOW q*\n"}
+,{"stream_name":"stdout","time":17.140892506,"data":"  q=0.86181: clusters=38,976,338, size-2=77.265%, size-3+=0.00000% ← q*_BCZ closed form\n"}
+,{"stream_name":"stdout","time":17.140897506,"data":"  q=0.86200: clusters=38,917,834, size-2=77.288%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.140903456,"data":"  q=0.86500: clusters=37,995,000, size-2=77.643%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.140908716,"data":"  q=0.87000: clusters=36,464,305, size-2=78.231%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.140914076,"data":"  q=0.90000: clusters=27,513,137, size-2=81.725%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.140919076,"data":"  q=0.95000: clusters=13,293,399, size-2=88.067%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.140923946,"data":"  q=0.99000: clusters=2,564,215, size-2=95.046%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.140928606,"data":"  q=0.99900: clusters=251,994, size-2=98.478%, size-3+=0.00000% ← ABOVE q*\n"}
+,{"stream_name":"stdout","time":17.141502785,"data":"\n"}
+,{"stream_name":"stdout","time":17.141517776,"data":"Done in 14s. Results saved.\n"}
+,{"stream_name":"stderr","time":19.982707658,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":19.982764627999998,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":20.372532567,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":20.372571737,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":21.073980451,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":22.57927954,"data":"[NbConvertApp] Writing 303486 bytes to __results__.html\n"}
+]

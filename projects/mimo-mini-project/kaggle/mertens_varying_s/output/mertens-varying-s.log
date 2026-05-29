@@ -1,0 +1,36 @@
+[{"stream_name":"stdout","time":0.990690305,"data":"Sieving N=100000000...\n"}
+,{"stream_name":"stdout","time":58.497594728,"data":"  sieve done in 58s\n"}
+,{"stream_name":"stdout","time":58.49765231,"data":"Computing partial sums for multiple s simultaneously...\n"}
+,{"stream_name":"stdout","time":58.529826856,"data":"  N=     10000: s=2.5=1.3463087309, s=3=1.1361594639, s=4=1.0280684398  t=0s\n"}
+,{"stream_name":"stdout","time":58.822155591,"data":"  N=    100000: s=2.5=1.3467090776, s=3=1.1361620409, s=4=1.0280684399  t=0s\n"}
+,{"stream_name":"stdout","time":61.735709667,"data":"  N=   1000000: s=2.5=1.3468275307, s=3=1.1361622806, s=4=1.0280684399  t=3s\n"}
+,{"stream_name":"stdout","time":90.51442537,"data":"  N=  10000000: s=2.5=1.3468664191, s=3=1.1361623060, s=4=1.0280684399  t=32s\n"}
+,{"stream_name":"stdout","time":381.03780712,"data":"  N= 100000000: s=2.5=1.3468791737, s=3=1.1361623077, s=4=1.0280684399  t=323s\n"}
+,{"stream_name":"stdout","time":381.037867352,"data":"\n"}
+,{"stream_name":"stdout","time":381.037874504,"data":"FINAL Σ M(n)²/n^s at N=10⁸:\n"}
+,{"stream_name":"stdout","time":381.037880987,"data":"  s = 2.1: 1.93462810749042\n"}
+,{"stream_name":"stdout","time":381.037886196,"data":"  s = 2.25: 1.60665019627369\n"}
+,{"stream_name":"stdout","time":381.037891628,"data":"  s = 2.5: 1.34687917374398\n"}
+,{"stream_name":"stdout","time":381.03789704,"data":"  s = 2.75: 1.21321771199800\n"}
+,{"stream_name":"stdout","time":381.03790118,"data":"  s = 3.0: 1.13616230769082\n"}
+,{"stream_name":"stdout","time":381.037904894,"data":"  s = 3.5: 1.05977847943666\n"}
+,{"stream_name":"stdout","time":381.037908746,"data":"  s = 4.0: 1.02806843993754\n"}
+,{"stream_name":"stdout","time":381.037912319,"data":"  s = 5.0: 1.00702992757960\n"}
+,{"stream_name":"stdout","time":381.037915955,"data":"  s = 6.0: 1.00195805997760\n"}
+,{"stream_name":"stdout","time":381.037919506,"data":"\n"}
+,{"stream_name":"stdout","time":381.037923077,"data":"Closed form candidates:\n"}
+,{"stream_name":"stdout","time":381.037926685,"data":"  s=3.0 (value 1.136162):\n"}
+,{"stream_name":"stdout","time":381.037930437,"data":"    ζ(3)/2 = 0.601030  (diff -0.535132)\n"}
+,{"stream_name":"stdout","time":381.037934189,"data":"    12/π² = 1.215854  (diff +0.079692)\n"}
+,{"stream_name":"stdout","time":381.037937867,"data":"    1 + 1/π² + 1/12 = 1.184655  (diff +0.048492)\n"}
+,{"stream_name":"stdout","time":381.037941608,"data":"    36·C·ζ(3)/(4·π²) — Tauberian guess = 0.734298  (diff -0.401864)\n"}
+,{"stream_name":"stdout","time":381.03794554,"data":"  s=4.0 (value 1.028068):\n"}
+,{"stream_name":"stdout","time":381.037949234,"data":"    ζ(4)·ζ(2)/ζ(8) = 1.773121  (diff +0.745052)\n"}
+,{"stream_name":"stdout","time":381.037953151,"data":"    6/π² · ζ(3) = 0.730765  (diff -0.297304)\n"}
+,{"stream_name":"stderr","time":386.317109928,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":386.317162089,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":386.945622326,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":386.945658893,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":389.575430062,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":391.668872693,"data":"[NbConvertApp] Writing 289744 bytes to __results__.html\n"}
+]

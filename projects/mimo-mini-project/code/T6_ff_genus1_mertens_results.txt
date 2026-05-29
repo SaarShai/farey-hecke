@@ -1,0 +1,123 @@
+========================================================================
+T6 — Function-field Mertens, genus 1, UNCONDITIONAL
+========================================================================
+Curve  E : y^2 = x^3 + 1 x + 1  over F_5   (genus g = 1)
+
+#E(F_5)            = 9   (brute force)
+a1 = q + 1 - #E(F_q) = -3
+Hasse bound |a1| <= 2 sqrt(q) = 4.472136  -> |a1|=3 OK
+
+P(u) = 1 - a1 u + q u^2 = (1 - alpha1 u)(1 - alpha2 u)
+alpha1 = -1.500000+1.658312j   |alpha1| = 2.2360679775
+alpha2 = -1.500000-1.658312j   |alpha2| = 2.2360679775
+sqrt(q) = 2.2360679775   (Weil RH prediction for |alpha_i|)
+WEIL RH CHECK |alpha_i| = sqrt(q) : PASS
+
+#E(F_{q^n}) = q^n + 1 - (alpha1^n + alpha2^n):
+  n= 1:  #E(F_5^1) = 9
+  n= 2:  #E(F_5^2) = 27
+  n= 3:  #E(F_5^3) = 108
+  n= 4:  #E(F_5^4) = 675
+  n= 5:  #E(F_5^5) = 3069
+  n= 6:  #E(F_5^6) = 15552
+  n= 7:  #E(F_5^7) = 78633
+  n= 8:  #E(F_5^8) = 389475
+  n= 9:  #E(F_5^9) = 1954044
+  n=10:  #E(F_5^10) = 9768627
+  n=11:  #E(F_5^11) = 48814533
+  n=12:  #E(F_5^12) = 244166400
+
+CROSS-CHECK n=2: brute force over F_25 gives #E(F_25) = 27, alpha-formula gives 27  -> MATCH
+
+------------------------------------------------------------------------
+FF Mobius coefficients muhat_C(n) = [u^n] (1-u)(1-qu)/P(u)
+and Mertens M_C(X) = sum_{n<=X} muhat_C(n).
+Convention: 1/Z(C,u) = sum muhat(n) u^n  (Humphries / Cha setup).
+------------------------------------------------------------------------
+  n       muhat(n)    muhat/q^(n/2)     pred/q^(n/2)           M_C(n)    M_C/q^(n/2)
+  0              1          1.00000         -0.00000                1        1.00000
+  1             -9         -4.02492         -9.00000               -8       -3.57771
+  2             27          5.40000         27.00000               19        3.80000
+  3            -36         -3.21994        -36.00000              -17       -1.52053
+  4            -27         -1.08000        -27.00000              -44       -1.76000
+  5            261          4.66891        261.00000              217        3.88181
+  6           -648         -5.18400       -648.00000             -431       -3.44800
+  7            639          2.28616        639.00000              208        0.74416
+  8           1323          2.11680       1323.00000             1531        2.44960
+  9          -7164         -5.12614      -7164.00000            -5633       -4.03065
+ 10          14877          4.76064      14877.00000             9244        2.95808
+ 11          -8811         -1.26093      -8811.00000              433        0.06197
+ 12         -47952         -3.06893     -47952.00000           -47519       -3.04122
+ 13         187911          5.37833     187911.00000           140392        4.01825
+ 14        -323973         -4.14685    -323973.00000          -183581       -2.34984
+ 16        1522773          3.89830    1522773.00000          1371556        3.51118
+ 20      -44645877         -4.57174  -44645877.00000        -37506869       -3.84070
+ 24     1235914848          5.06231 1235914847.99999        980614081        4.01660
+ 28   -32656154427         -5.35038 -32656154426.99983     -24608296844       -4.03182
+ 32   827704786923          5.42445 827704786922.99536     592922744731        3.88578
+ 36 -20147438042352         -5.28153 -20147438042351.87500  -13673028964319       -3.58430
+ 40 469908972248373          4.92735 469908972248369.75000  299401703794756        3.13945
+
+max |M_C(X)/q^(X/2)| over X=0..40  = 4.03182
+min |M_C(X)/q^(X/2)| over X=0..40  = 0.06197
+=> ratio is BOUNDED and OSCILLATING (does not grow) => exponent EXACTLY 1/2.
+
+Humphries residue check: max RELATIVE |muhat(n) - residue_pred(n)| over n=2..40 = 8.061e-15  (abs error is float roundoff on ~1e14 integers)
+(exact agreement expected: 1/Z is rational with simple poles only at u=1/alpha_i,
+ plus a degree-0 polynomial part absorbed at n=0,1; so muhat(n) for n>=2 is
+ EXACTLY the residue sum. The 'Humphries constant' is the residue amplitude.)
+
+residue amplitudes  -g(1/alpha_i)/P'(1/alpha_i): 0.90000-0.81408j, 0.90000+0.81408j
+
+========================================================================
+PART 2 — Which conditional Q-statement becomes UNCONDITIONAL here
+========================================================================
+
+CHOSEN STATEMENT: the size bound  M(x) = O(x^{1/2 + eps}).
+
+(i) Q VERSION (CONDITIONAL). For the classical Mertens function
+    M(x) = sum_{n<=x} mu(n), the bound  M(x) = O(x^{1/2+eps})  for every eps>0
+    is LOGICALLY EQUIVALENT to the Riemann Hypothesis. The mechanism is the
+    explicit formula: 1/zeta(s) = sum mu(n) n^{-s}, and the growth of M(x) is
+    controlled by the real parts of the nontrivial zeros rho of zeta. RH says
+    Re(rho)=1/2 for ALL of the INFINITELY many zeros; that exact-1/2 location is
+    unproven. So in Q the square-root cancellation of M(x) is conjectural.
+
+(ii) FF VERSION (the analogue we just verified). For the curve E/F_5 above,
+    1/Z(E,u) = (1-u)(1-qu)/P(u) = sum_n muhat_E(n) u^n, and
+    M_E(X) = sum_{n<=X} muhat_E(n). We found, term by term and unconditionally:
+      muhat_E(n) = sum_i [ -g(1/a_i)/P'(1/a_i) ] * a_i^n   (EXACT, rel.err 8e-15),
+    with a_i the inverse Frobenius eigenvalues, |a_i| = sqrt(q) = sqrt5 (verified
+    numerically). Hence |muhat_E(n)| <= C * q^{n/2} and M_E(X)/q^{X/2} stays
+    BOUNDED and OSCILLATING (observed range ~ -4.03..+4.03 over X=0..40, never
+    growing). The FF analogue  M_E(X) = O(q^{X(1/2+eps)})  -- indeed the sharper
+    M_E(X) = O(q^{X/2}) -- is a THEOREM.
+
+(iii) WHY Weil RH makes it UNCONDITIONAL. The decisive difference is finite vs
+    infinite spectrum. In Q the zeros of zeta form an INFINITE set and RH is the
+    (open) claim that they all lie on Re(s)=1/2. Over a curve C/F_q, the role of
+    "zeros" is played by the inverse Frobenius eigenvalues a_1,...,a_{2g} -- a
+    FINITE list (here just 2g=2 of them), the reciprocal roots of the polynomial
+    P(u). Weil's Riemann Hypothesis for curves (a 1948 THEOREM, via the geometry/
+    intersection theory of C x C, later Deligne for higher dim.) states exactly
+    |a_i| = sqrt(q) for every i. Because the spectrum is finite and lives provably
+    on the circle |u|=q^{-1/2}, the "explicit formula" 1/Z = (1-u)(1-qu)/P(u) is a
+    FINITE partial-fraction sum with NO convergence subtleties: muhat_E(n) is a
+    closed finite combination of a_i^n, each of modulus exactly q^{n/2}. The
+    square-root law is therefore forced, with no hypothesis. The infinite, still-
+    open zero-location problem of zeta collapses to a proven finite eigenvalue
+    statement.
+
+(iv) WHAT DOES *NOT* TRANSFER BACK TO Q (stated plainly). This is a MODEL/sanity
+    check, NOT a proof of anything about classical M(x). The function-field
+    Mertens result does NOT prove RH, does NOT prove M(x)=O(x^{1/2+eps}), and does
+    NOT bound the real M(x) by even one unit. The reason it is unconditional over
+    F_q is precisely the reason it says nothing about Q: the curve's zeta has a
+    FINITE Frobenius spectrum provably on the critical circle, whereas zeta(s) has
+    an INFINITE zero set whose location is the open problem. There is no known
+    mechanism that lifts Weil's geometric proof (intersection theory on C x C /
+    Frobenius eigenvalues) to the number field; that lift IS the Riemann
+    Hypothesis. So: FF gives a rigorous, fully-worked illustration of the SHAPE of
+    the truth ("if the analogue of RH holds, square-root cancellation of Mertens
+    follows, exactly and unconditionally"), confirming the conditional Q-picture is
+    internally consistent -- and nothing stronger.

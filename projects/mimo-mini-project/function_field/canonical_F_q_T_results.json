@@ -1,0 +1,380 @@
+{
+  "description": "Canonical F_q(T) Farey cluster=2 diagnostic. Lex order on Laurent expansion in F_q((1/T)). Gap = q^{deg(ab'-a'b) - deg b - deg b'}.",
+  "methodology": {
+    "farey_level_N": "reduced (a,b) over F_q[T], b monic, deg(b) in [1, N], deg(a) < deg(b), gcd(a,b) = unit",
+    "ordering": "lex on (c_1, c_2, ...) where a/b = sum c_i T^{-i} in F_q((1/T))",
+    "gap": "q^d where d = deg(a1 b2 - a2 b1) - deg(b1) - deg(b2); SB-adjacent <=> d = -deg b1 - deg b2",
+    "cluster": "maximal run of consecutive gaps strictly exceeding the q_diag-quantile threshold (matching the Q BCZ-chain definition)"
+  },
+  "comparison_Q": "Q (BCZ chain) at q_diag=0.99: size-2 = 95%, size-3+ = 0%, max cluster = 2.",
+  "F_2_T": {
+    "description": "Canonical F_2[T] Farey cluster=2 diagnostic. Ordering = lex on Laurent expansion in F_2((1/T)). Gap = valuation |a/b - a'/b'| = 2^{deg(ab'-a'b) - deg b - deg b'}.",
+    "comparison_Q": "At q_diag=0.99 in Q (BCZ chain): size-2 \u2248 95%, size-3+ \u2248 0%, max = 2.",
+    "runs": {
+      "5": {
+        "N": 5,
+        "n_pairs": 682,
+        "n_gaps": 681,
+        "sb_adjacent_pct": 66.96035242290749,
+        "elapsed_s": 0.0060007572174072266,
+        "results": {
+          "0.9500": {
+            "threshold_log2": -6,
+            "total_clusters": 30,
+            "size_1": 30,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 30
+            }
+          },
+          "0.9900": {
+            "threshold_log2": -3,
+            "total_clusters": 3,
+            "size_1": 3,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 3
+            }
+          },
+          "0.9990": {
+            "threshold_log2": -1,
+            "total_clusters": 0,
+            "size_1": 0,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 0,
+            "hist": {}
+          }
+        }
+      },
+      "6": {
+        "N": 6,
+        "n_pairs": 2730,
+        "n_gaps": 2729,
+        "sb_adjacent_pct": 66.43459142543055,
+        "elapsed_s": 0.02712273597717285,
+        "results": {
+          "0.9500": {
+            "threshold_log2": -8,
+            "total_clusters": 124,
+            "size_1": 123,
+            "size_2": 1,
+            "size_3_plus": 0,
+            "pct_size_2": 0.8064516129032258,
+            "pct_size_3_plus": 0.0,
+            "max_size": 2,
+            "hist": {
+              "1": 123,
+              "2": 1
+            }
+          },
+          "0.9900": {
+            "threshold_log2": -5,
+            "total_clusters": 15,
+            "size_1": 15,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 15
+            }
+          },
+          "0.9990": {
+            "threshold_log2": -2,
+            "total_clusters": 1,
+            "size_1": 1,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 1
+            }
+          }
+        }
+      },
+      "7": {
+        "N": 7,
+        "n_pairs": 10922,
+        "n_gaps": 10921,
+        "sb_adjacent_pct": 66.68803223148063,
+        "elapsed_s": 0.12098217010498047,
+        "results": {
+          "0.9500": {
+            "threshold_log2": -10,
+            "total_clusters": 496,
+            "size_1": 488,
+            "size_2": 7,
+            "size_3_plus": 1,
+            "pct_size_2": 1.411290322580645,
+            "pct_size_3_plus": 0.20161290322580644,
+            "max_size": 3,
+            "hist": {
+              "1": 488,
+              "2": 7,
+              "3": 1
+            }
+          },
+          "0.9900": {
+            "threshold_log2": -7,
+            "total_clusters": 63,
+            "size_1": 63,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 63
+            }
+          },
+          "0.9990": {
+            "threshold_log2": -4,
+            "total_clusters": 7,
+            "size_1": 7,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 7
+            }
+          }
+        }
+      },
+      "8": {
+        "N": 8,
+        "n_pairs": 43690,
+        "n_gaps": 43689,
+        "sb_adjacent_pct": 66.67582228936345,
+        "elapsed_s": 0.5576109886169434,
+        "results": {
+          "0.9500": {
+            "threshold_log2": -12,
+            "total_clusters": 1984,
+            "size_1": 1946,
+            "size_2": 35,
+            "size_3_plus": 3,
+            "pct_size_2": 1.7641129032258067,
+            "pct_size_3_plus": 0.15120967741935484,
+            "max_size": 3,
+            "hist": {
+              "1": 1946,
+              "2": 35,
+              "3": 3
+            }
+          },
+          "0.9900": {
+            "threshold_log2": -9,
+            "total_clusters": 254,
+            "size_1": 254,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 254
+            }
+          },
+          "0.9990": {
+            "threshold_log2": -6,
+            "total_clusters": 31,
+            "size_1": 31,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 31
+            }
+          }
+        }
+      }
+    }
+  },
+  "F_3_T": {
+    "description": "Canonical F_3[T] Farey cluster=2 diagnostic. Lex order on Laurent expansion in F_3((1/T)).",
+    "comparison_Q": "At q_diag=0.99 in Q (BCZ chain): size-2 \u2248 95%, size-3+ \u2248 0%, max = 2.",
+    "runs": {
+      "3": {
+        "N": 3,
+        "n_pairs": 546,
+        "n_gaps": 545,
+        "sb_adjacent_pct": 74.6788990825688,
+        "elapsed_s": 0.013024568557739258,
+        "results": {
+          "0.9500": {
+            "threshold_log_q": -4,
+            "total_clusters": 25,
+            "size_1": 25,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 25
+            }
+          },
+          "0.9900": {
+            "threshold_log_q": -2,
+            "total_clusters": 2,
+            "size_1": 2,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 2
+            }
+          },
+          "0.9990": {
+            "threshold_log_q": -1,
+            "total_clusters": 0,
+            "size_1": 0,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 0,
+            "hist": {}
+          }
+        }
+      },
+      "4": {
+        "N": 4,
+        "n_pairs": 4920,
+        "n_gaps": 4919,
+        "sb_adjacent_pct": 75.07623500711527,
+        "elapsed_s": 0.14647293090820312,
+        "results": {
+          "0.9500": {
+            "threshold_log_q": -6,
+            "total_clusters": 234,
+            "size_1": 229,
+            "size_2": 5,
+            "size_3_plus": 0,
+            "pct_size_2": 2.1367521367521367,
+            "pct_size_3_plus": 0.0,
+            "max_size": 2,
+            "hist": {
+              "1": 229,
+              "2": 5
+            }
+          },
+          "0.9900": {
+            "threshold_log_q": -4,
+            "total_clusters": 26,
+            "size_1": 26,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 26
+            }
+          },
+          "0.9990": {
+            "threshold_log_q": -2,
+            "total_clusters": 2,
+            "size_1": 2,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 2
+            }
+          }
+        }
+      },
+      "5": {
+        "N": 5,
+        "n_pairs": 44286,
+        "n_gaps": 44285,
+        "sb_adjacent_pct": 74.96443491024048,
+        "elapsed_s": 1.6214919090270996,
+        "results": {
+          "0.9500": {
+            "threshold_log_q": -8,
+            "total_clusters": 2106,
+            "size_1": 2049,
+            "size_2": 55,
+            "size_3_plus": 2,
+            "pct_size_2": 2.611585944919278,
+            "pct_size_3_plus": 0.0949667616334283,
+            "max_size": 3,
+            "hist": {
+              "1": 2049,
+              "2": 55,
+              "3": 2
+            }
+          },
+          "0.9900": {
+            "threshold_log_q": -6,
+            "total_clusters": 241,
+            "size_1": 241,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 241
+            }
+          },
+          "0.9990": {
+            "threshold_log_q": -4,
+            "total_clusters": 26,
+            "size_1": 26,
+            "size_2": 0,
+            "size_3_plus": 0,
+            "pct_size_2": 0.0,
+            "pct_size_3_plus": 0.0,
+            "max_size": 1,
+            "hist": {
+              "1": 26
+            }
+          }
+        }
+      }
+    }
+  },
+  "verdict_summary": {
+    "F_2_T_q_diag_0.99_size2_pct": {
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0,
+      "8": 0.0
+    },
+    "F_3_T_q_diag_0.99_size2_pct": {
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.0
+    },
+    "sb_adjacent_fractions": {
+      "F_2_T_at_N_8": 66.67582228936345,
+      "F_3_T_at_N_5": 74.96443491024048
+    },
+    "verdict": "NO-GO \u2014 size-2 % at q_diag=0.99 is 0.00% across all (q, N) tested. Universality fails under canonical valuation."
+  }
+}

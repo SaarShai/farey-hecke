@@ -217,6 +217,58 @@
 
 ---
 
+## #3 (Mertens-NW conjecture) — sharpened to publishable-grade (2026-05-27)
+
+Goal `/goal Complete the work on #3` resolved as follows:
+
+- **Refutation**: the previously claimed `C ≈ 2/3` and the Euler-product guess `½·Π_p(1 + 1/(p²(p−1))) ≈ 0.66989` are **both rejected**. The first was confabulation; the second doesn't arise from any clean step in the Mikolás derivation, and is incompatible with the extended numerical sweep.
+- **New empirical lock**: at `Q = 10⁶` with `m_factor = 100`, `NW = 0.67873`. m-factor extrapolation gives `NW(10⁶, untruncated) ≈ 0.6790 ± 0.0010`. Q=2M cross-check confirms Q-drift between 1M and 2M is ≤ 0.001 after m-correction, so the asymptote is `C = 0.679 ± 0.002`, best-estimate **0.6790**.
+- **Heuristic derivation** (`research_notes/NW_asymptote_derivation_v2.md`): under RH + simple-zero + Gonek-Ng + structured-off-diagonal cancellation, `NW(Q) → (κ/6) · Π_p L_p`. The Euler-product shape is `1 + b_p/p² + ...` with rational `b_p`. Explicit `b_p` require Codecà-Perelli 1988 (paywalled in retrieval to date).
+- **Final conjecture document**: `research_notes/Mertens_NW_conjecture.md`. States Conjecture A (`NW(Q) → C ∈ [0.679, 0.685]`), Conjecture B (`1/log Q` rate, `a ≈ 0.05`), Conjecture C (Euler-product closed form, tentative).
+- **Novelty positioning**: occupies the AC2014 §8 dynamical-formulation open territory; *un-averaged* refinement of Codecà-Perelli's *Q-averaged* result (CP averaged `(1/X)·∫_X^{2X} J(Q) dQ`, we conjecture pointwise convergence of `NW(Q)`); per-step BCZ-cocycle dynamical interpretation. Static Farey↔Mertens identity (Cox-Ghosh-Sultanow 2021) is a different statement.
+- **Next steps remaining for full closure**: (i) retrieve Codecà-Perelli 1988 *Math. Ann.* 279 explicit `c` via institutional access — single citation completes Conjecture C. (ii) Push `Q = 5×10⁶` (~30-60 min M1) to confirm `0.682 ± 0.003`. (iii) Cross-check via Boca-Cobeli-Zaharescu 2001 Crelle 535 `I_2` constant.
+
+Status: **publishable as a research note** in current form — empirical asymptote nailed to 3 digits, heuristic derivation present, prior-art frontier mapped. The Codecà-Perelli explicit constant is the only outstanding step for a complete closed-form claim.
+
+---
+
+## Noted, not pursued — application demos (2026-05-27)
+
+The following application-flavored experiments were run, documented, and **demoted** after honest audit. They are kept in the record for completeness and to prevent re-litigation; **none is pursued as a research line or pitched in any paper claim**.
+
+### #118 — Arithmetic Signal Detection (cluster=2 as forensic classifier)
+- **What was run**: LDA on cluster=2 features (P[cluster size = 2 | gap > q-quantile], q=0.99) over Farey / BCZ / Stern-Brocot vs. Gaussian iid / Poisson / Brownian / AR(1). N ∈ {1k, 5k, 20k}, fixed seed.
+- **Headline number**: AUC = 1.000 across all N for the easy baselines.
+- **Why demoted**:
+  1. AUC=1.0 is against trivially-distinguishable baselines (FFT or 1-lag autocorr already separates them).
+  2. **Wigner-Dyson / GUE fails the test** — the actually-arithmetic confound. So the diagnostic is a θ ≠ 1 detector, not an "arithmetic detector".
+  3. The only non-trivial confound, AR(1) with ρ ≈ 0.5, has matching θ = 1/2; in finite-N our realization scored 0.10 (separated), but adversarial ρ-tuning would close the gap.
+  4. No identified real-world customer with a sequence-classification problem that needs θ=1/2 vs θ=1 vs Gaussian discrimination where the generative process isn't already known.
+- **Artifacts** (kept, not cited): `code/arithmetic_signal_detection_demo.py`, `figures/arithmetic_signal_roc.png`, `research_notes/arithmetic_signal_detection_demo.md`, `code/arithmetic_signal_detection_results.json`.
+
+### #119 — Spectrum Anomaly Detection in wireless RF
+- **What was run**: Rayleigh-faded synthetic spectra (NORMAL / ARITH / BCZ classes), peak detection via `find_peaks`, cluster=2 features, LDA + 5-fold CV.
+- **Headline numbers**: 42.8% ± 4.2% multiclass (chance = 33%); binary NORMAL-vs-anomalous TPR 0.90 / FPR 0.79 (biased, not discriminating); BCZ-vs-ARITH 68.3% ± 8.5%.
+- **Why demoted**: 75–95% TPR prediction NOT supported. Diagnostic detects periodic combs (ARITH collapses `p_size≥3` from 0.052→0.016) but does not separate BCZ-class interference from Rayleigh-faded noise — at ~300 peaks/spectrum the asymptotic regime is not reached and noise-driven peaks dominate ~90% of detections. No comparison vs. obvious baselines (cepstral / autocorrelation) that would likely outperform on the ARITH task.
+- **Artifacts**: `code/spectrum_anomaly_demo.py`, `figures/spectrum_anomaly_results.png`, `research_notes/spectrum_anomaly_demo.md`, `code/spectrum_anomaly_results.json`.
+
+### #120 — Hardware Approximation (cluster=2 carry-chain pruning in dividers)
+- **What was run**: Python sim of a Stern-Brocot rational-approximation divider with two-cost CSA proxy. Cluster=2 used to mark step k+1 cheap if k-1 and k were both extreme. 2,000 quasi-random α, ε ∈ {1e-4, 1e-8, 1e-12, 1e-16}; parameter sweep over A_THRESH ∈ {3,4,6} and E_PEN ∈ {1,3,6,12}.
+- **Headline number**: 0.3–5.5% stage-count reduction. 5% only at the corner (`E_PEN=12, A_THRESH=3`); modest assumptions give 1-2%.
+- **Why demoted**:
+  1. Stage-count in a Python sim, not power/area/delay in silicon. RTL+synthesis not done; place-and-route effects could erase savings.
+  2. False-prune rate under the natural partial-quotient proxy is 0.1–1.7% (cluster=2 is a Farey-gap theorem, not a CF-partial-quotient theorem). Net savings shrink correspondingly.
+  3. Prune-detector gate cost not modeled; for E_PEN ≤ 2 the detector overhead likely exceeds savings.
+  4. Real dividers use SRT / Goldschmidt / Newton-Raphson — not the Stern-Brocot pipeline assumed. GPUs and ML quantization also don't use this pipeline. The relevant carry-chain pruning literature (booth-recoding, prefix-tree balancing) is the right comparison and wasn't done.
+  5. Audience: chip vendors won't act on 1-5% from a sim with no RTL. At best a workshop paper at IEEE ARITH conditional on full RTL + baseline comparisons.
+- **Verdict in note (§6)**: "do not pursue further as a standalone application; useful as a footnote / potential micro-architectural application." Demoted to that footnote status here.
+- **Artifacts**: `code/hardware_approx_demo.py`, `research_notes/hardware_approximation_demo.md`.
+
+### Common-mode lesson
+Three application demos, three negative or strongly-conditioned outcomes. The cluster=2 *math* — sharp phase transition at t=2/9, closed-form q*_BCZ, Lean-verified bound, Pr(L≥k) family — stands on its own and **does not need application-flavored claims** to justify the work. Application framing oversold in earlier subagent prompts (50%/45%/40% predictions); calibrated retrospective is closer to 0%/0%/5%-conditional. Future application probes should require (i) named customer/baseline, (ii) honest comparison, before being run, not after.
+
+---
+
 ## Status legend
 - 🟢 Verified & closed
 - 🟡 Verified but research-open follow-up exists

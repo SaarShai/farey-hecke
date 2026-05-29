@@ -1,0 +1,256 @@
+{
+  "q_star_BCZ": 0.8618087927927428,
+  "t_star": 0.2222222222222222,
+  "eps_fixed": 0.001,
+  "t": 0.2232222222222222,
+  "N_list": [
+    10000000,
+    100000000,
+    1000000000
+  ],
+  "n_seeds": 4,
+  "data": [
+    {
+      "N_steps": 10000000,
+      "max_size_mean": 8.75,
+      "max_size_std": 2.217355782608345,
+      "max_size_se": 1.1086778913041726,
+      "mean_size_3p_mean": 5.029761904761905,
+      "mean_size_3p_se": 0.38433210612756974,
+      "pr_3p_per_cluster_mean": 8.865288648667038e-06,
+      "pr_3p_per_cluster_se": 8.964338867887869e-07,
+      "rate_3p_per_step_mean": 7.000000000000001e-07,
+      "rate_3p_per_step_se": 7.071067811865476e-08,
+      "n_3p_mean": 7.0,
+      "n_3p_se": 0.7071067811865476,
+      "hill_alpha_mean": null,
+      "hill_alpha_se": null,
+      "per_seed": [
+        {
+          "seed": 55475,
+          "N_steps": 10000000,
+          "max_size": 8,
+          "n_clusters": 789431,
+          "n_3p": 9,
+          "pr_3p_per_cluster": 1.1400616393326333e-05,
+          "rate_3p_per_step": 9e-07,
+          "mean_size_3p": 4.333333333333333,
+          "hill_alpha": null,
+          "hill_N": 9,
+          "elapsed_s": 0.08307790756225586
+        },
+        {
+          "seed": 56484,
+          "N_steps": 10000000,
+          "max_size": 10,
+          "n_clusters": 789551,
+          "n_3p": 7,
+          "pr_3p_per_cluster": 8.865798409475766e-06,
+          "rate_3p_per_step": 7e-07,
+          "mean_size_3p": 5.285714285714286,
+          "hill_alpha": null,
+          "hill_N": 7,
+          "elapsed_s": 0.08417296409606934
+        },
+        {
+          "seed": 57493,
+          "N_steps": 10000000,
+          "max_size": 6,
+          "n_clusters": 789840,
+          "n_3p": 6,
+          "pr_3p_per_cluster": 7.596475235490732e-06,
+          "rate_3p_per_step": 6e-07,
+          "mean_size_3p": 4.5,
+          "hill_alpha": null,
+          "hill_N": 6,
+          "elapsed_s": 0.08397889137268066
+        },
+        {
+          "seed": 58502,
+          "N_steps": 10000000,
+          "max_size": 11,
+          "n_clusters": 789654,
+          "n_3p": 6,
+          "pr_3p_per_cluster": 7.598264556375324e-06,
+          "rate_3p_per_step": 6e-07,
+          "mean_size_3p": 6.0,
+          "hill_alpha": null,
+          "hill_N": 6,
+          "elapsed_s": 0.0829782485961914
+        }
+      ]
+    },
+    {
+      "N_steps": 100000000,
+      "max_size_mean": 36.75,
+      "max_size_std": 13.937359864766353,
+      "max_size_se": 6.968679932383177,
+      "mean_size_3p_mean": 5.313322534710752,
+      "mean_size_3p_se": 0.07305103465224726,
+      "pr_3p_per_cluster_mean": 8.865652969533572e-06,
+      "pr_3p_per_cluster_se": 1.3715668202584409e-07,
+      "rate_3p_per_step_mean": 7e-07,
+      "rate_3p_per_step_se": 1.080123449734642e-08,
+      "n_3p_mean": 70.0,
+      "n_3p_se": 1.0801234497346435,
+      "hill_alpha_mean": 2.842336711743159,
+      "hill_alpha_se": 0.12900548052447075,
+      "per_seed": [
+        {
+          "seed": 63394,
+          "N_steps": 100000000,
+          "max_size": 36,
+          "n_clusters": 7894592,
+          "n_3p": 72,
+          "pr_3p_per_cluster": 9.12016732466985e-06,
+          "rate_3p_per_step": 7.2e-07,
+          "mean_size_3p": 5.291666666666667,
+          "hill_alpha": 2.7244697208024187,
+          "hill_N": 72,
+          "elapsed_s": 0.8315591812133789
+        },
+        {
+          "seed": 64403,
+          "N_steps": 100000000,
+          "max_size": 56,
+          "n_clusters": 7896514,
+          "n_3p": 67,
+          "pr_3p_per_cluster": 8.484756691370394e-06,
+          "rate_3p_per_step": 6.7e-07,
+          "mean_size_3p": 5.522388059701493,
+          "hill_alpha": 3.216497387417148,
+          "hill_N": 67,
+          "elapsed_s": 0.8351659774780273
+        },
+        {
+          "seed": 65412,
+          "N_steps": 100000000,
+          "max_size": 32,
+          "n_clusters": 7895327,
+          "n_3p": 70,
+          "pr_3p_per_cluster": 8.866003903321547e-06,
+          "rate_3p_per_step": 7e-07,
+          "mean_size_3p": 5.185714285714286,
+          "hill_alpha": 2.7947407938680677,
+          "hill_N": 70,
+          "elapsed_s": 0.8341319561004639
+        },
+        {
+          "seed": 66421,
+          "N_steps": 100000000,
+          "max_size": 23,
+          "n_clusters": 7896185,
+          "n_3p": 71,
+          "pr_3p_per_cluster": 8.991683958772496e-06,
+          "rate_3p_per_step": 7.1e-07,
+          "mean_size_3p": 5.253521126760563,
+          "hill_alpha": 2.633638944885001,
+          "hill_N": 71,
+          "elapsed_s": 0.8292269706726074
+        }
+      ]
+    },
+    {
+      "N_steps": 1000000000,
+      "max_size_mean": 66.0,
+      "max_size_std": 13.5400640077266,
+      "max_size_se": 6.7700320038633,
+      "mean_size_3p_mean": 5.022713064656176,
+      "mean_size_3p_se": 0.01020707207450711,
+      "pr_3p_per_cluster_mean": 9.51408513995855e-06,
+      "pr_3p_per_cluster_se": 4.29597459315691e-08,
+      "rate_3p_per_step_mean": 7.5125e-07,
+      "rate_3p_per_step_se": 3.375771516754854e-09,
+      "n_3p_mean": 751.25,
+      "n_3p_se": 3.375771516754849,
+      "hill_alpha_mean": 2.955395691849443,
+      "hill_alpha_se": 0.023727849745322008,
+      "per_seed": [
+        {
+          "seed": 71313,
+          "N_steps": 1000000000,
+          "max_size": 82,
+          "n_clusters": 78962593,
+          "n_3p": 757,
+          "pr_3p_per_cluster": 9.586817899964354e-06,
+          "rate_3p_per_step": 7.57e-07,
+          "mean_size_3p": 5.019815059445178,
+          "hill_alpha": 3.016116754632555,
+          "hill_N": 757,
+          "elapsed_s": 8.302337169647217
+        },
+        {
+          "seed": 72322,
+          "N_steps": 1000000000,
+          "max_size": 65,
+          "n_clusters": 78954813,
+          "n_3p": 757,
+          "pr_3p_per_cluster": 9.587762559832799e-06,
+          "rate_3p_per_step": 7.57e-07,
+          "mean_size_3p": 5.009247027741083,
+          "hill_alpha": 2.9166670951022784,
+          "hill_N": 757,
+          "elapsed_s": 8.306625127792358
+        },
+        {
+          "seed": 73331,
+          "N_steps": 1000000000,
+          "max_size": 49,
+          "n_clusters": 78963813,
+          "n_3p": 744,
+          "pr_3p_per_cluster": 9.422037408451895e-06,
+          "rate_3p_per_step": 7.44e-07,
+          "mean_size_3p": 5.05241935483871,
+          "hill_alpha": 2.9186376237866525,
+          "hill_N": 744,
+          "elapsed_s": 8.266929864883423
+        },
+        {
+          "seed": 74340,
+          "N_steps": 1000000000,
+          "max_size": 68,
+          "n_clusters": 78966374,
+          "n_3p": 747,
+          "pr_3p_per_cluster": 9.459722691585155e-06,
+          "rate_3p_per_step": 7.47e-07,
+          "mean_size_3p": 5.009370816599732,
+          "hill_alpha": 2.970161293876285,
+          "hill_N": 747,
+          "elapsed_s": 8.274302005767822
+        }
+      ]
+    }
+  ],
+  "scaling": {
+    "max_loglog_slope_vs_N": {
+      "slope": 0.4387679412597778,
+      "intercept": -4.7614552772760135,
+      "rmse": 0.2002451000625726
+    },
+    "max_linlog_vs_logN": {
+      "slope": 12.431679544480582,
+      "intercept": -191.8333333333333,
+      "rmse": 0.2946278254944082
+    },
+    "mean_size_3p_loglog_slope_vs_N": {
+      "slope": -0.0003045292699340298,
+      "intercept": 1.6387963828326328,
+      "rmse": 0.02618459258209258
+    },
+    "pr_3p_per_cluster_loglog_slope_vs_N": {
+      "slope": 0.015337076492972168,
+      "intercept": -11.892329467520254,
+      "rmse": 0.016628242616884413
+    },
+    "rate_3p_per_step_loglog_slope_vs_N": {
+      "slope": 0.015343222498270512,
+      "intercept": -14.431265388191736,
+      "rmse": 0.01665428586034406
+    },
+    "n_3p_loglog_slope_vs_N": {
+      "slope": 1.0153432224982692,
+      "intercept": -14.431265388191711,
+      "rmse": 0.016654285860345057
+    }
+  }
+}

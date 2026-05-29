@@ -1,0 +1,68 @@
+=== t_n family scaling test ===
+Family: [('n=1', 1, '0.222222'), ('n=3', 3, '0.240000'), ('n=5', 5, '0.204082'), ('n=6', 6, '0.187500')]
+ε list: [0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03]
+Steps per run: 500,000,000
+Warming numba...
+  done
+
+
+=== n=1: t_n = 0.2222222 ===
+  natural jump statistic: Pr(L ≥ 3)
+  ε=1e-04: t=0.222322, max=4, n_clust=39,028,366, Pr(L≥3)=7.687e-08, Pr(L≥3)=7.687e-08, dt=4.1s
+  ε=3e-04: t=0.222522, max=20, n_clust=39,129,638, Pr(L≥3)=1.048e-06, Pr(L≥3)=1.048e-06, dt=4.2s
+  ε=1e-03: t=0.223222, max=29, n_clust=39,480,906, Pr(L≥3)=1.041e-05, Pr(L≥3)=1.041e-05, dt=4.1s
+  ε=3e-03: t=0.225222, max=268, n_clust=40,496,508, Pr(L≥3)=8.413e-05, Pr(L≥3)=8.413e-05, dt=4.1s
+  ε=1e-02: t=0.232222, max=705, n_clust=44,211,791, Pr(L≥3)=8.393e-04, Pr(L≥3)=8.393e-04, dt=4.2s
+  ε=3e-02: t=0.252222, max=1988, n_clust=57,898,760, Pr(L≥3)=5.573e-03, Pr(L≥3)=5.573e-03, dt=4.3s
+  ---
+  fit Pr(L≥3): slope = +1.946 (rmse=0.176, n=6)
+  fit Pr(L≥3): slope = +1.946 (rmse=0.176, n=6)
+  fit max(L): slope = +1.094 (rmse=0.335, n=6)
+
+=== n=3: t_n = 0.2400000 ===
+  natural jump statistic: Pr(L ≥ 5)
+  ε=1e-04: t=0.240100, max=921, n_clust=48,830,274, Pr(L≥3)=2.395e-03, Pr(L≥5)=7.120e-04, dt=4.1s
+  ε=3e-04: t=0.240300, max=1670, n_clust=48,955,703, Pr(L≥3)=2.448e-03, Pr(L≥5)=7.229e-04, dt=4.2s
+  ε=1e-03: t=0.241000, max=979, n_clust=49,401,433, Pr(L≥3)=2.613e-03, Pr(L≥5)=7.748e-04, dt=4.1s
+  ε=3e-03: t=0.243000, max=929, n_clust=50,688,956, Pr(L≥3)=3.101e-03, Pr(L≥5)=9.210e-04, dt=4.1s
+  ε=1e-02: t=0.250000, max=1312, n_clust=55,865,129, Pr(L≥3)=4.964e-03, Pr(L≥5)=1.468e-03, dt=4.2s
+  ε=3e-02: t=0.270000, max=3857, n_clust=72,353,789, Pr(L≥3)=1.270e-02, Pr(L≥5)=3.496e-03, dt=4.2s
+  ---
+  fit Pr(L≥3): slope = +0.265 (rmse=0.290, n=6)
+  fit Pr(L≥5): slope = +0.255 (rmse=0.271, n=6)
+  fit max(L): slope = +0.158 (rmse=0.400, n=6)
+
+=== n=5: t_n = 0.2040816 ===
+  natural jump statistic: Pr(L ≥ 7)
+  ε=1e-04: t=0.204182, max=2, n_clust=30,907,987, Pr(L≥3)=0.000e+00, Pr(L≥7)=0.000e+00, dt=4.1s
+  ε=3e-04: t=0.204382, max=2, n_clust=30,990,975, Pr(L≥3)=0.000e+00, Pr(L≥7)=0.000e+00, dt=4.1s
+  ε=1e-03: t=0.205082, max=2, n_clust=31,272,504, Pr(L≥3)=0.000e+00, Pr(L≥7)=0.000e+00, dt=4.1s
+  ε=3e-03: t=0.207082, max=2, n_clust=32,098,552, Pr(L≥3)=0.000e+00, Pr(L≥7)=0.000e+00, dt=4.1s
+  ε=1e-02: t=0.214082, max=2, n_clust=35,122,282, Pr(L≥3)=0.000e+00, Pr(L≥7)=0.000e+00, dt=4.1s
+  ε=3e-02: t=0.234082, max=384, n_clust=45,254,071, Pr(L≥3)=1.162e-03, Pr(L≥7)=1.632e-04, dt=4.1s
+  ---
+  fit Pr(L≥3): all-zero or insufficient points (LB violated as expected if t_n < 2/9)
+  fit max(L): slope = +0.651 (rmse=1.487, n=6)
+
+=== n=6: t_n = 0.1875000 ===
+  natural jump statistic: Pr(L ≥ 8)
+  ε=1e-04: t=0.187600, max=2, n_clust=24,849,042, Pr(L≥3)=0.000e+00, Pr(L≥8)=0.000e+00, dt=4.2s
+  ε=3e-04: t=0.187800, max=2, n_clust=24,916,740, Pr(L≥3)=0.000e+00, Pr(L≥8)=0.000e+00, dt=4.1s
+  ε=1e-03: t=0.188500, max=2, n_clust=25,154,013, Pr(L≥3)=0.000e+00, Pr(L≥8)=0.000e+00, dt=4.1s
+  ε=3e-03: t=0.190500, max=2, n_clust=25,836,631, Pr(L≥3)=0.000e+00, Pr(L≥8)=0.000e+00, dt=4.1s
+  ε=1e-02: t=0.197500, max=2, n_clust=28,337,821, Pr(L≥3)=0.000e+00, Pr(L≥8)=0.000e+00, dt=4.1s
+  ε=3e-02: t=0.217500, max=2, n_clust=36,692,152, Pr(L≥3)=0.000e+00, Pr(L≥8)=0.000e+00, dt=4.1s
+  ---
+  fit Pr(L≥3): all-zero or insufficient points (LB violated as expected if t_n < 2/9)
+  fit max(L): slope = +0.000 (rmse=0.000, n=6)
+
+=== TOTAL: 99s ===
+
+=== SUMMARY: scaling slopes (small ε) ===
+   t_n |  t_n value | natural k |  slope Pr(L≥3) |  slope Pr(L≥k) |  slope max(L)
+   n=1 |   0.222222 |         3 |         +1.946 |         +1.946 |        +1.094
+   n=3 |   0.240000 |         5 |         +0.265 |         +0.255 |        +0.158
+   n=5 |   0.204082 |         7 |            —   |            —   |        +0.651
+   n=6 |   0.187500 |         8 |            —   |            —   |        +0.000
+
+Saved → /Users/za/Documents/Farey NOW/projects/mimo-mini-project/code/tn_family_scaling_results.json

@@ -1,0 +1,39 @@
+{
+  "_note": "Reconstructed from stdout of cluster_convergence_exponent.py (the in-script json.dump aborted on a trailing NameError that did not affect any computed number; bug since fixed). All values below are the printed results.",
+  "Ns": [500, 1000, 2000, 4000, 8000, 16000, 32000],
+  "ngaps": [76116, 304192, 1216588, 4863602, 19455782, 77816348, 311265184],
+  "exact_limits": {
+    "0.10": 0.02242627,
+    "0.20": 0.10601930,
+    "0.35": 0.43487549
+  },
+  "t_B": 0.290822,
+  "pinf_B_pattern_lower_bound": 0.00926914,
+  "family_C_thresholds": {"0.90": 0.195242, "0.95": 0.144577, "0.99": 0.068130},
+  "records": [
+    {"N": 500,   "F_N_0.20": 0.105549, "pB_size3": 0.083524, "q0.95_size2": 0.87556, "q0.95_p3": 0.0},
+    {"N": 1000,  "F_N_0.20": 0.105861, "pB_size3": 0.084115, "q0.95_size2": 0.88212, "q0.95_p3": 0.0},
+    {"N": 2000,  "F_N_0.20": 0.105863, "pB_size3": 0.084176, "q0.95_size2": 0.88065, "q0.95_p3": 0.0},
+    {"N": 4000,  "F_N_0.20": 0.106008, "pB_size3": 0.084656, "q0.95_size2": 0.88066, "q0.95_p3": 0.0},
+    {"N": 8000,  "F_N_0.20": 0.105991, "pB_size3": 0.084592, "q0.95_size2": 0.88053, "q0.95_p3": 0.0},
+    {"N": 16000, "F_N_0.20": 0.106014, "pB_size3": 0.084662, "q0.95_size2": 0.88076, "q0.95_p3": 0.0},
+    {"N": 32000, "F_N_0.20": 0.106014, "pB_size3": 0.084666, "q0.95_size2": 0.88070, "q0.95_p3": 0.0}
+  ],
+  "fits": {
+    "A_cdf_vs_exact": {
+      "0.10": {"delta": 1.0757, "se": 0.2740, "r2": 0.7551, "delta_logcorr": 0.4493, "c_log": -5.109},
+      "0.20": {"delta": 1.1278, "se": 0.1906, "r2": 0.8751, "delta_logcorr": -0.4992, "c_log": -13.271},
+      "0.35": {"delta": 1.1335, "se": 0.1955, "r2": 0.8705, "delta_logcorr": -0.5670, "c_log": -13.870}
+    },
+    "B_size3_fixed_t": {
+      "comment": "In-script Richardson search had a sign error (it forced the limit BELOW the data, but pB(size>=3) increases toward its limit from below). Re-extrapolated offline: assuming pN = pinf - C*N^-d, best-R2 limit pinf~0.084667 gives delta~1.70 (R2=0.86); Aitken on the top triple gives pinf~0.084666. So family-B is consistent with a FAST (delta~1.5-1.7) approach but the data plateau within 1e-5 by N=8000, leaving little lever arm — treat delta_B as soft.",
+      "richardson_pinf": 0.084667, "delta_corrected": 1.70, "r2": 0.86,
+      "aitken_pinf_top_triple": 0.084666
+    },
+    "C_quantile_drift_vs_maxN": {
+      "q0.90_size2": {"delta": 0.452, "r2": 0.124},
+      "q0.95_size2": {"delta": 1.203, "r2": 0.617},
+      "q0.99_size2": {"delta": 1.609, "r2": 0.935}
+    }
+  }
+}
