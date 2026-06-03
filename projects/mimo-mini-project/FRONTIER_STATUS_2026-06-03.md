@@ -4,6 +4,55 @@ Single source of truth after the multi-session arc (discovery → retraction →
 q=5 dual values → goal-F reduction correction → goal-L q7..16 lock-in). Adversarial-honesty ledger:
 PROVEN (Lean) / NUMERICAL / OPEN kept separate. Nothing sent outward; local repo only.
 
+> ✅ **UPDATE (2026-06-03, goal O) — zero-temperature / cusp-escape DEMONSTRATION complete (numerical).**
+> The proven `X_Ω(q)=1/λ³`+no-GS is now a worked thermodynamic-formalism instance (Riquelme–Velozo escape
+> of mass / Leplaideur). **Sharp finding:** the escape / no-ground-state is specific to the **min-MAX
+> (ess-sup, L∞)** objective; the standard Gibbs/Birkhoff zero-temperature limit selects the **min-AVERAGE**
+> measure `β_min`, which at q=5 is an EXPLICIT INTERIOR period-3 orbit (`β_min=0.18634<1/λ³=0.23607`) —
+> a genuine ground state, NO escape. (`P` not bounded below by `1/λ³` pointwise; `1/λ³` = floor of
+> ess-sup over invariant μ.) Anchors reproduced (q=3→2/9, q=4→√2/8, q=5→1/φ³ to 40 digits; transfer β=0→ρ=1
+> flat density). Parabolic residence ∝1/δ (no-GS mechanism); margins `(2−λ)q²→π²`, `(1/λ³−1/8)q²→(3/16)π²`
+> (O(1/q²)). Transfer-op μ_β *location* grid-fragile (ARPACK a-edge spurious mode at large β) — NOT claimed;
+> interior-GS rests on word search. **NO new Lean** (demonstrates the verified theorem). Code `code/Ogoal_*.py`,
+> figures `figures/Ogoal_*.png`, write-up `WRITEUP_goalO_zerotemp_escape.md`. See `FINDINGS_goalO_2026-06-03.md`.
+>
+> ✅ **UPDATE (2026-06-03, goal M) — q≥17 classification pinned + refutation hunt extended; value SURVIVES.**
+> The (L2) corridor set is now recognised as the **elliptic torsion of the Hecke triangle group
+> `G_q=(2,q,∞)`**: every elliptic corridor trace ∈ `{0}∪{±2cos(jπ/q)}`, with **`λ` extremal (slowest
+> rotation, j=1) = the F-family** — verified HP residual ≤ 1e-45, q=5..100; the q=100 "slower" hits were
+> all parabolic float artifacts (HP trace −2). **NEW VERIFIED Lean** `lean/BCZHeckeL2_traceIdentity_allq_VERIFIED.lean`
+> (EXIT=0, axioms clean): general SL₂ trace identity `tr(XY)+tr(X·adjY)=trX·trY`; **`adjF_switch_parabolic`**
+> (`tr(F k₂·(F k₁)⁻¹)=2` — the switch is parabolic, the structural reason chaining crosses thr);
+> `lam_is_max_elliptic_trace` (λ-extremality via `cos` antitone). **Refutation hunt EXTENDED:** value-safe
+> (min-esssup ≥ thr, ratio ≤1.00008) to **q≤200** (`code/Mgoal_refute_certify.py`); survivor + the DECISIVE
+> per-cell **true-map escape test** ⇒ no sub-threshold invariant set to **q≤70** (the q=60/70 fine-grid
+> survivor counts are discretization artifacts — every survivor cell's exact orbit exits S within ≤0.3q
+> steps; `code/Mgoal_q60_probe.py`). Per-q corridor no-cycle certificate passes q=17..30 (`...refute_certify.py C`).
+> **CLOSURE PASS (same day) — 2 new VERIFIED Lean thms + the key 2-branch reduction.**
+> (1) `lean/BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` `no_infinite_rotation` (∀`0<l<2`: no positive
+> sequence obeys the floor-1 rotation recurrence forever) = rigorous q-uniform CORE of (L1) "rotation
+> corridor finite"; pure algebra+Archimedes. (2) `rotation_trace_spectrum` (in the traceIdentity file):
+> `tr(Rⁿ)=2cos(nπ/q)` (Chebyshev) ⇒ `⟨R⟩` realises EXACTLY the trace spectrum (the "values" half of the
+> classification; `lam_is_max_elliptic_trace` is the "j=1 extremal" half). (3) **2-BRANCH REDUCTION
+> (numeric, robust q≤30, two independent sweeps):** sustained (run≥3) sub-threshold steps use ONLY branches `{q−1,q−3}`, floors
+> `{0..4}` = the F-family alphabet ⇒ genuine (C′) reduces to "no sustained orbit on the 2-branch F-family"
+> = exactly the Lean-covered (L2) family. So the classification is OFF the critical path.
+> ⚠ **HONESTY (refined):** goal-L's q=7..16 window lemmas are SCALAR; genuine band fully-Lean = **q=3..15**.
+> **q=16,17 now MATHEMATICALLY CLOSED:** NEW VERIFIED `lean/BCZHeckeTwoStepKick_q1617_VERIFIED.lean`
+> `two_step_kick` (EXIT=0, axiom-clean) proves the math core — `u>1,v≤1,lv−u≤1,2lv−u>1,uv−rv²<thr ⟹
+> thr≤lv²−uv` over the box `l∈[1.96,1.97],r∈[1,1.2]` (covers ALL q=16,17 non-scalar branches; rational
+> bounds, no deg-8 minpoly). With goal-L `g16/g17` + the bridging facts (non-scalar sub-thr sources
+> ∈{q−4..q−7}, floor 0, successor on q−1) every inequality is proven/decisive; remaining = MECHANICAL
+> genuine-map Lean infra (no math). 3rd new verified thm. **q≥18: value decisive,
+> proof reduced to ONE analytic statement** — the (L1)-quantitative `P≥thr` kick on the 2-branch rotation
+> (qualitative core proven; sharp margin O(1/q²) couples rotation-sweep to itinerary-feasibility — the
+> irreducible research piece, KAM-obstacle, excluded numerically survivor+escape q≤70 / value q≤200).
+> Value MATHEMATICALLY CERTAIN; full machine proof multi-session. See `FINDINGS_goalM_2026-06-03.md` §4b.
+>
+> **OPEN (unchanged frontier):** uniform analytic (C′) = (L1) closed form + classification-as-Lean-theorem
+> (group identification `⟨M_{i,k}⟩=G_q`, then λ-extremality closes the enumeration). Value DECISIVE,
+> proof PARTIAL. See `FINDINGS_goalM_2026-06-03.md`.
+
 > ✅ **UPDATE (2026-06-03, goal L) — q=7..16 scalar window lemmas locked in; q≥17 value safe to q≤150.**
 > **Objective A (PROVEN — ALL 10 of q=7..16):** `X_Ω(q)=1/λ³` scalar window lemma machine-checked
 > (EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`, no sorryAx) for **q=7,8,9,12,15 UNCONDITIONAL**
@@ -85,7 +134,8 @@ PROVEN (Lean) / NUMERICAL / OPEN kept separate. Nothing sent outward; local repo
 | **cusp-branch envelope `cusp_envelope` (`P≥1/l³` on branch q−2, ALL q, l≥φ)** — generalises `branch3_envelope` | `lean/BCZHeckeCusp_envelope_allq_VERIFIED.lean` | genuine, all q (cusp branch only) |
 | **ROTATION skeleton (goal H): sustained word `W_q=(q−1,3)(q−1,0)(q−3,0)` is SL₂ with `trace=λ`** (elliptic, = fundamental rotation `R`); family `(q−1,k)(q−1,0)(q−3,0)` `trace=λ(k−2)` (elliptic⟺k∈{1,2,3}); `W_q` preserves ellipse `a²−3λab+(2λ²+1)b²`; product oscillation `−E/(2+λ)≤cc'≤E/(2−λ)` (=L1 core) | `lean/BCZHeckeRotation_allq_VERIFIED.lean` | genuine, ALL q (parametric in λ) |
 | **COMPOSITE-trace law (goal I, =L2 core): `tr(F k₂·F k₁)=λ²(k₁−2)(k₂−2)−2 = tr(F k₁)tr(F k₂)−2`**; `switch_forces_nonelliptic`: chaining DISTINCT corridors (k₁≠k₂ or via k=2) ⇒ `|tr|≥2` (parabolic `−2` / hyperbolic `−λ²−2`) — never a new slow rotation ⇒ no sub-thr corridor-switch | `lean/BCZHeckeL2_composite_VERIFIED.lean` | genuine, ALL q (F-family, parametric in λ) |
-| abstract engines `essSup_ge_of_window`, `essSup_ge_of_no_sustained` | (in the above) | map/observable-agnostic |
+| **(L2) conceptual backbone (goal M): general SL₂ trace identity `tr(XY)+tr(X·adjY)=trX·trY`; `adjF_switch_parabolic` `tr(F k₂·(F k₁)⁻¹)=2` (the switch is parabolic ⇒ chaining crosses thr); `trace_compose_via_identity`; `lam_is_max_elliptic_trace` (`\|2cosθ\|≤λ` on `[π/q,π−π/q]` — λ = slowest rotation)** | `lean/BCZHeckeL2_traceIdentity_allq_VERIFIED.lean` | genuine, ALL q (parametric in λ) |
+| abstract engines `essSup_ge_of_window`, `essSup_ge_of_no_sustained` | (in the above; `essSup_ge_of_no_sustained` = `BCZHeckeG5_lowerbound_VERIFIED.lean:179`) | map/observable-agnostic |
 
 ### NUMERICAL (primary-verified maps, high precision)
 - Genuine domain `𝒯^q` invariant q=3..8 (escape 0); flat measure (`⟨a⟩=2/3`). Validation gate:

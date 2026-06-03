@@ -30,6 +30,15 @@ all-`1` recurrence `a_{n+2}=λa_{n+1}−a_n` (since `λ=2cos(π/q)`) is exactly 
 (Chebyshev); the lone `2` is the closing defect. So the optimizing orbit is the **rotation orbit
 with one doubled step** — a clean cusp/parabolic object. Search-verified optimal for q=4..10.
 
+> **UPDATE 2026-06-03 (goal O — thermodynamic-formalism demonstration; genuine-domain values).**
+> The no-ground-state picture below is now a worked zero-temperature instance (Riquelme–Velozo /
+> Leplaideur): see `WRITEUP_goalO_zerotemp_escape.md`, `FINDINGS_goalO_2026-06-03.md`, `figures/Ogoal_*.png`.
+> Sharpening: the escape / no-GS is specific to the **min-MAX (ess-sup, L∞)** objective `X_Ω=1/λ³`; the
+> standard Gibbs/Birkhoff zero-temperature limit selects the DIFFERENT **min-AVERAGE** value `β_min`
+> (q=5: 0.18634 < 1/λ³=0.23607), attained by an INTERIOR periodic orbit (a genuine ground state). NB this
+> §/table predates the genuine-domain pivot (goal B): the canonical genuine values are `X_Ω(q)=1/λ³`
+> (q≥5), with q=3,4 the special interior cases — see `FRONTIER_STATUS_2026-06-03.md`.
+
 ### 2. NO GROUND STATE — universal across the Hecke family
 For **every** q tested (q=3..30) the infimum `X(q)` is approached along the scale-free family at an
 **open** boundary (`x+λy=1` cusp, or a floor-jump `term<k+1`) — **attained by no invariant
