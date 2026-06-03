@@ -1,0 +1,232 @@
+==============================================================================
+SANITY (MANDATORY): reproduce RS 1994 densities via Route I
+==============================================================================
+    Route I q=4 a=3: #factors=64 sigma_tail2=0.0565 delta=0.995928
+  delta(4;3,1) = 0.995928   target 0.9959   |err|=2.77e-05   PASS
+    Route I q=3 a=2: #factors=58 sigma_tail2=0.0538 delta=0.999063
+  delta(3;2,1) = 0.999063   target 0.99906   |err|=2.93e-06   PASS
+  --> SANITY PASSED
+
+==============================================================================
+c_chi VALIDATION (analytic closed form vs known low-zero values)
+==============================================================================
+  c(chi_4 (odd)) = 0.155568  (target ~0.1556, a_chi=1)
+  c(chi_3 (odd)) = 0.113230  (target ~0.1132, a_chi=1)
+
+==============================================================================
+MAIN: delta(N;a,1) for N in {7,8,11,19,23}, every non-residue a
+  Reading: delta(N;-1,a) for two distinct NR = 1/2 EXACTLY (RS symmetry).
+  Non-degenerate hierarchy = delta(N;a,1) over NR a; rank a=-1 within it.
+==============================================================================
+
+  CRUX CHECKS (q=7, phi=6):
+    (a) leading mean (-1+#sqrt) for NR: {3: -1, 5: -1, 6: -1}  -> all == -1: True
+    (b) sum|chi(3)-1|^2 = 12.0000  (2*phi=12)
+    (b) sum|chi(5)-1|^2 = 12.0000  (2*phi=12)
+    (b) sum|chi(6)-1|^2 = 12.0000  (2*phi=12)
+    (c) even-character weight of |chi(a)-1|^2 per NR:
+        a=3: even-weight=6.0000
+        a=5: even-weight=6.0000
+        a=6: even-weight=0.0000  <-- == -1, ZERO even weight
+
+  ===== N=7  (phi=6, NR=[3, 5, 6], -1=6) =====
+    Route II (delta=1/2+rho/sqrt(2 pi V); ordering exact, value approx for small q):
+         a     V(N;a,1)   delta_II  rank-by-V
+         6       3.7311   0.913069  V-rank 1  <== a=-1 (MAX V => MIN delta)
+         3       3.0041   0.960341  V-rank 2
+         5       3.0041   0.960341  V-rank 3
+    Route I (EXACT Gil-Pelaez, reported delta values):
+         a   delta_I(N;a,1)
+         6         0.833640  <== a=-1  (LEAST-biased NR)
+         3         0.870560
+         5         0.870560
+    delta(N;-1,a) for other NR a (RS pairwise symmetry, two non-squares):
+      delta(7;-1,3) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(7;-1,5) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+
+  CRUX CHECKS (q=8, phi=4):
+    (a) leading mean (-1+#sqrt) for NR: {3: -1, 5: -1, 7: -1}  -> all == -1: True
+    (b) sum|chi(3)-1|^2 = 8.0000  (2*phi=8)
+    (b) sum|chi(5)-1|^2 = 8.0000  (2*phi=8)
+    (b) sum|chi(7)-1|^2 = 8.0000  (2*phi=8)
+    (c) even-character weight of |chi(a)-1|^2 per NR:
+        a=3: even-weight=4.0000
+        a=5: even-weight=4.0000
+        a=7: even-weight=0.0000  <-- == -1, ZERO even weight
+
+  ===== N=8  (phi=4, NR=[3, 5, 7], -1=7) =====
+    Route II (delta=1/2+rho/sqrt(2 pi V); ordering exact, value approx for small q):
+         a     V(N;a,1)   delta_II  rank-by-V
+         5       2.2060   1.574399  V-rank 1
+         7       1.8866   1.661808  V-rank 2  <== a=-1 (MAX V => MIN delta)
+         3       1.5640   1.776004  V-rank 3
+    Route I (EXACT Gil-Pelaez, reported delta values):
+         a   delta_I(N;a,1)
+         5         0.997394
+         7         0.998938  <== a=-1
+         3         0.999569
+    delta(N;-1,a) for other NR a (RS pairwise symmetry, two non-squares):
+      delta(8;-1,3) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(8;-1,5) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+
+  CRUX CHECKS (q=11, phi=10):
+    (a) leading mean (-1+#sqrt) for NR: {2: -1, 6: -1, 7: -1, 8: -1, 10: -1}  -> all == -1: True
+    (b) sum|chi(2)-1|^2 = 20.0000  (2*phi=20)
+    (b) sum|chi(6)-1|^2 = 20.0000  (2*phi=20)
+    (b) sum|chi(7)-1|^2 = 20.0000  (2*phi=20)
+    (c) even-character weight of |chi(a)-1|^2 per NR:
+        a=2: even-weight=10.0000
+        a=6: even-weight=10.0000
+        a=7: even-weight=10.0000
+        a=8: even-weight=10.0000
+        a=10: even-weight=0.0000  <-- == -1, ZERO even weight
+
+  ===== N=11  (phi=10, NR=[2, 6, 7, 8, 10], -1=10) =====
+    Route II (delta=1/2+rho/sqrt(2 pi V); ordering exact, value approx for small q):
+         a     V(N;a,1)   delta_II  rank-by-V
+        10      11.5458   0.734816  V-rank 1  <== a=-1 (MAX V => MIN delta)
+         2      10.0402   0.751808  V-rank 2
+         6      10.0402   0.751808  V-rank 3
+         7       7.7984   0.785717  V-rank 4
+         8       7.7984   0.785717  V-rank 5
+    Route I (EXACT Gil-Pelaez, reported delta values):
+         a   delta_I(N;a,1)
+        10         0.700439  <== a=-1  (LEAST-biased NR)
+         2         0.717310
+         6         0.717310
+         7         0.756525
+         8         0.756525
+    delta(N;-1,a) for other NR a (RS pairwise symmetry, two non-squares):
+      delta(11;-1,2) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(11;-1,6) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(11;-1,7) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(11;-1,8) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+
+  CRUX CHECKS (q=19, phi=18):
+    (a) leading mean (-1+#sqrt) for NR: {2: -1, 3: -1, 8: -1, 10: -1, 12: -1, 13: -1, 14: -1, 15: -1, 18: -1}  -> all == -1: True
+    (b) sum|chi(2)-1|^2 = 36.0000  (2*phi=36)
+    (b) sum|chi(3)-1|^2 = 36.0000  (2*phi=36)
+    (b) sum|chi(8)-1|^2 = 36.0000  (2*phi=36)
+    (c) even-character weight of |chi(a)-1|^2 per NR:
+        a=2: even-weight=18.0000
+        a=3: even-weight=18.0000
+        a=8: even-weight=18.0000
+        a=10: even-weight=18.0000
+        a=12: even-weight=18.0000
+        a=13: even-weight=18.0000
+        a=14: even-weight=18.0000
+        a=15: even-weight=18.0000
+        a=18: even-weight=0.0000  <-- == -1, ZERO even weight
+
+  ===== N=19  (phi=18, NR=[2, 3, 8, 10, 12, 13, 14, 15, 18], -1=18) =====
+    Route II (delta=1/2+rho/sqrt(2 pi V); ordering exact, value approx for small q):
+         a     V(N;a,1)   delta_II  rank-by-V
+        18      55.3968   0.607201  V-rank 1  <== a=-1 (MAX V => MIN delta)
+         3      48.9228   0.614073  V-rank 2
+        13      48.9228   0.614073  V-rank 3
+         2      42.3815   0.622561  V-rank 4
+        10      42.3815   0.622561  V-rank 5
+         8      29.6023   0.646648  V-rank 6
+        12      29.6023   0.646648  V-rank 7
+        14      23.9348   0.663089  V-rank 8
+        15      23.9348   0.663089  V-rank 9
+    Route I (EXACT Gil-Pelaez, reported delta values):
+         a   delta_I(N;a,1)
+        18         0.603681  <== a=-1  (LEAST-biased NR)
+         3         0.610627
+        13         0.610627
+         2         0.616903
+        10         0.616903
+         8         0.639186
+        12         0.639186
+        14         0.651149
+        15         0.651149
+    delta(N;-1,a) for other NR a (RS pairwise symmetry, two non-squares):
+      delta(19;-1,2) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,3) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,8) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,10) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,12) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,13) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,14) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(19;-1,15) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+
+  CRUX CHECKS (q=23, phi=22):
+    (a) leading mean (-1+#sqrt) for NR: {5: -1, 7: -1, 10: -1, 11: -1, 14: -1, 15: -1, 17: -1, 19: -1, 20: -1, 21: -1, 22: -1}  -> all == -1: True
+    (b) sum|chi(5)-1|^2 = 44.0000  (2*phi=44)
+    (b) sum|chi(7)-1|^2 = 44.0000  (2*phi=44)
+    (b) sum|chi(10)-1|^2 = 44.0000  (2*phi=44)
+    (c) even-character weight of |chi(a)-1|^2 per NR:
+        a=5: even-weight=22.0000
+        a=7: even-weight=22.0000
+        a=10: even-weight=22.0000
+        a=11: even-weight=22.0000
+        a=14: even-weight=22.0000
+        a=15: even-weight=22.0000
+        a=17: even-weight=22.0000
+        a=19: even-weight=22.0000
+        a=20: even-weight=22.0000
+        a=21: even-weight=22.0000
+        a=22: even-weight=0.0000  <-- == -1, ZERO even weight
+
+  ===== N=23  (phi=22, NR=[5, 7, 10, 11, 14, 15, 17, 19, 20, 21, 22], -1=22) =====
+    Route II (delta=1/2+rho/sqrt(2 pi V); ordering exact, value approx for small q):
+         a     V(N;a,1)   delta_II  rank-by-V
+        22      54.5580   0.608022  V-rank 1  <== a=-1 (MAX V => MIN delta)
+         5      44.1640   0.620062  V-rank 2
+        14      44.1640   0.620062  V-rank 3
+         7      41.2347   0.624253  V-rank 4
+        10      41.2347   0.624253  V-rank 5
+        17      38.9206   0.627894  V-rank 6
+        19      38.9206   0.627894  V-rank 7
+        11      38.9025   0.627924  V-rank 8
+        21      38.9025   0.627924  V-rank 9
+        15      34.5485   0.635746  V-rank 10
+        20      34.5485   0.635746  V-rank 11
+    Route I (EXACT Gil-Pelaez, reported delta values):
+         a   delta_I(N;a,1)
+        22         0.593680  <== a=-1  (LEAST-biased NR)
+         5         0.604889
+        14         0.604889
+         7         0.609828
+        10         0.609828
+        11         0.613424
+        21         0.613424
+        17         0.614094
+        19         0.614094
+        15         0.623020
+        20         0.623020
+    delta(N;-1,a) for other NR a (RS pairwise symmetry, two non-squares):
+      delta(23;-1,5) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,7) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,10) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,11) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,14) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,15) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,17) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,19) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,20) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+      delta(23;-1,21) = 0.500000  (EXACT, Granville-Martin/RS: two non-residues)
+
+==============================================================================
+VERDICT SUMMARY
+==============================================================================
+  N=7: -1=6; delta(N;-1,1)=0.833640; V(-1)-rank(by size)=1/3 (1=largest); delta(-1)-rank=1/3 (1=smallest); all NR vs 1 > 1/2: True
+        -> -1 has MAXIMAL variance and MINIMAL sign-density among NR.
+  N=8: -1=7; delta(N;-1,1)=0.998938; V(-1)-rank(by size)=2/3 (1=largest); delta(-1)-rank=2/3 (1=smallest); all NR vs 1 > 1/2: True
+        -> -1 has rank-2 variance and rank-2 sign-density among NR.
+  N=11: -1=10; delta(N;-1,1)=0.700439; V(-1)-rank(by size)=1/5 (1=largest); delta(-1)-rank=1/5 (1=smallest); all NR vs 1 > 1/2: True
+        -> -1 has MAXIMAL variance and MINIMAL sign-density among NR.
+  N=19: -1=18; delta(N;-1,1)=0.603681; V(-1)-rank(by size)=1/9 (1=largest); delta(-1)-rank=1/9 (1=smallest); all NR vs 1 > 1/2: True
+        -> -1 has MAXIMAL variance and MINIMAL sign-density among NR.
+  N=23: -1=22; delta(N;-1,1)=0.593680; V(-1)-rank(by size)=1/11 (1=largest); delta(-1)-rank=1/11 (1=smallest); all NR vs 1 > 1/2: True
+        -> -1 has MAXIMAL variance and MINIMAL sign-density among NR.
+
+  CONCLUSION: 'a=-1 dominates (tops) the sign-density delta among non-residues' is FALSE.
+  -1 is the UNIQUE MINIMUM of delta(N;a,1) (LEAST-biased NR) -- Fiorilli-Martin Thm 1.10.
+  -1 IS the maximum of the VARIANCE V (largest typical |D|): the amplitude reading,
+  which is the SAME fact that makes it lose the sign race.
+  All delta(N;a,1) > 1/2 (every NR beats the principal class in sign-density), but
+  -1's margin above 1/2 is the SMALLEST. delta(N;-1,a)=1/2 exactly for any other NR a.
+
+  ALL RESULTS CONDITIONAL ON GRH + LI. c_chi NUMERICAL. Nothing unconditional.

@@ -1,0 +1,1736 @@
+Prime Number Races
+Andrew Granville and Greg Martin
+1. INTRODUCTION. There’s nothing quite like a day at the races. . . . The quicken-
+ing of the pulse as the starter’s pistol sounds, the thrill when your favorite contestant
+speeds out into the lead (or the distress if another contestant dashes out ahead of yours),
+and the accompanying fear (or hope) that the leader might change. And what if the race
+is a marathon? Maybe one of the contestants will be far stronger than the others, taking
+the lead and running at the head of the pack for the whole race. Or perhaps the race
+will be more dramatic, with the lead changing again and again for as long as one cares
+to watch.
+Our race involves the odd prime numbers, separated into two teams depending on
+the remainder when they are divided by 4:
+Mod 4 Race, Team 3: 03, 07, 11, 19, 23, 31, 43, 47, 59, 67, 71, 79, 83, . . .
+Mod 4 Race, Team 1: 05, 13, 17, 29, 37, 41, 53, 61, 73, 89, 93, 97, . . .
+In this Mod 4 Race,1 Team 3 contains the primes of the form 4n + 3, and Team 1
+contains the primes of the form 4n + 1. The Mod 4 Race has just two contestants and
+is quite some marathon because it goes on forever! From the data just presented it
+appears that Team 3 is always in the lead; that is, up to any given point, there seem to
+be at least as many primes of the form 4n + 3 as there are primes of the form 4n + 1.
+Further data seems to conﬁrm our initial observations:
+Table 1. The number of primes of the form 4n + 1 and 4n + 3 up to x.
+Number of primes Number of primes
+x 4n + 3 up to x 4n + 1 up to x
+100 13 11
+200 24 21
+300 32 29
+400 40 37
+500 50 44
+600 57 51
+700 65 59
+800 71 67
+900 79 74
+1000 87 80
+2000 155 147
+3000 218 211
+4000 280 269
+5000 339 329
+6000 399 383
+7000 457 442
+8000 507 499
+9000 562 554
+10,000 619 609
+20,000 1136 1125
+50,000 2583 2549
+100,000 4808 4783
+1The integers in the arithmetic progression qn + a are often called the integers “congruent to a modulo q,”
+and thus we have the “Mod q Races.”
+January 2006] PRIME NUMBER RACES 1
+Even in this extended data, the race remains close, but Team 3 always seems to
+maintain a narrow lead. This phenomenon was ﬁrst observed in a letter written by
+Tch´ebychev to M. Fuss on 23 March 1853:
+There is a notable difference in the splitting of the prime numbers between the two forms
+4n + 3, 4n + 1: the ﬁrst form contains a lot more than the second.
+This bias is perhaps unexpected in light of an important result in analytic number the-
+ory known as “the prime number theorem for arithmetic progressions.” This theorem
+tells us that the primes tend to be equally split amongst the various forms qn + a with
+gcd(a, q) = 1 for any given modulus q.2 More precisely, we know that for two such
+eligible values a and b,
+#{primes qn + a ≤ x}
+#{primes qn + b ≤ x} → 1 (as x → ∞). (1)
+This limit does not help us to predict who will win the Mod q Race.3 In fact this
+asymptotic result, the prime number theorem for arithmetic progressions, does not
+inform us about any of the ﬁne details of these prime number counts, so neither veriﬁes
+nor contradicts our observation that Team 3 seems to be always ahead of Team 1.
+It’s time to come clean: we cheated in how we presented the data in Table 1. If we
+take the trouble to look at the counts of Teams 1 and 3 for every value of x, not just
+the ones listed in the table, we ﬁnd that occasionally there is some drama to this race,
+in that from time to time Team 1 takes the lead, but then only brieﬂy.
+Team 1 takes the lead for the ﬁrst time at prime 26,861. However, since 26,863
+is also prime, Team 3 draws even and then takes back the lead until Team 1 bolts
+ahead again at 616,841 and at various numbers until 633,798. Team 3 then regains
+the lead until Team 1 surges ahead again at 12,306,137 and at various numbers up
+to 12,382,326. Team 3 then takes back the lead until Team 1 gets ahead again at
+951,784,481 and at various numbers until 952,223,506. Team 3 then retakes the
+lead until Team 1 seizes it back at 6,309,280,697 and at various numbers below
+6,403,150,362. Team 3 then grabs the lead until Team 1 charges to the front at
+18,465,126,217 and at various numbers until 19,033,524,538. Team 3 then reassumes
+the lead and holds on to it until at least twenty billion.
+So there are, from time to time, more primes of the form 4n + 1 than of the form
+4n + 3, but this lead is held only very brieﬂy and then relinquished for a long stretch.
+Nonetheless, given this data, one might guess that 4n + 1 will occasionally take the
+lead as we continue to watch this marathon. Indeed this is the case, as Littlewood
+discovered in 1914 [18]:
+Theorem (J.E. Littlewood, 1914). There are arbitrarily large values of x for which
+there are more primes of the form 4n + 1 up to x than primes of the form 4n + 3. In
+fact, there are arbitrarily large values of x for which
+#{primes 4n + 1 ≤ x} − #{primes 4n + 3 ≤ x} ≥ 1
+2
+√
+x
+ln x ln ln ln x. (2)
+2Note that this restriction is necessary, since every integer of the form qn + a is divisible by the greatest
+common divisor of a and q, hence cannot be prime (except possibly for a single value n) if gcd(a, q) > 1.
+3If the ratio #{primes 4n + 3 ≤ x}/#{primes 4n + 1 ≤ x} converged to a number greater than 1 as x → ∞,
+then we would know that #{primes 4n + 3 ≤ x} > #{primes 4n + 1 ≤ x} for all sufﬁciently large x, so that in
+the long run Team 3 would always be ahead of Team 1. If it converged to a number less than 1 then, in the long
+run, Team 1 would always be ahead of Team 3.
+2 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+At ﬁrst sight, this seems to be the end of the story. However, after seeing how
+infrequently Team 1 manages to hold on to the lead, it is hard to put to rest the suspicion
+that Team 3 is in the lead “most of the time,” that usually there are more primes of the
+form 4n + 3 up to x than there are of the form 4n + 1, despite Littlewood’s result.
+In 1962, Knapowski and Tur´an made a conjecture that is consistent with Littlewood’s
+result but also bears out Tch´ebychev’s observation:
+Conjecture. As X → ∞, the percentage of integers x ≤ X for which there are more
+primes of the form 4n + 3 up to x than of the form 4n + 1 goes to 100%.
+This conjecture may be paraphrased as “Tch´ebychev was correct almost all of the
+time.” Let’s reconsider our data in terms of this conjecture by giving, for X in various
+ranges, the maximum percentage of values of x ≤ X for which there are more primes
+of type 4n + 1 with 4n + 1 ≤ x than of type 4n + 3:
+For X in Maximum percentage
+the range of such x ≤ X
+0–26,860 0%
+0–500,000 0.01%
+0–107 2.6%
+107–108 .6%
+108–109 .1%
+109–1010 1.6%
+1010–1011 2.8%
+Does this persuade you that the Knapowski-Tur´an conjecture is likely to be true?
+Is the percentage in the right column going to 0 as the values of x get larger? The
+percentages are evidently very low, but it is not obvious from this limited data that they
+are tending towards 0. There was a wonderful article in this MONTHLY by Richard Guy
+some years ago, entitled “The Law of Small Numbers” [11], in which Guy pointed out
+several fascinating phenomena that are “evident” for small integers yet disappear when
+one examines bigger integers. Could this be one of those phenomena?
+Another prime race: primes of the form 3n + 2 and 3n + 1. There are races be-
+tween sequences of primes other than that between primes of the forms 4n + 3 and
+4n + 1. For example, the Mod 3 Race is between primes of the form 3n + 2 and primes
+of the form 3n + 1. The race begins as follows:
+Mod 3 Race, Team 2: 02, 05, 11, 17, 23, 29, 41, 47, 53, 59, 71, 83, 89, . . .
+Mod 3 Race, Team 1: 07, 13, 19, 31, 37, 43, 61, 67, 73, 79, 97, . . .
+In this race Team 2 dashes out to an early lead that it holds on to; that is, there seems
+always to be at least as many primes of the form 3n + 2 up to x as there are primes
+of the form 3n + 1. In fact Team 2 stays in the lead up to ten million and beyond (see
+Table 2).4
+4And this time we didn’t cheat—Team 1 does not get the lead at some intermediate value of x that we have
+not recorded in the table.
+January 2006] PRIME NUMBER RACES 3
+Table 2. The column labeled “Team j” contains the number of primes of the form 3n + j up to x.
+x Team 2 Team 1 x Team 2 Team 1
+100 13 11 30000 1634 1610
+200 24 21 40000 2113 2089
+300 33 28 50000 2576 2556
+400 40 37 60000 3042 3014
+500 49 45 70000 3491 3443
+600 58 50 80000 3938 3898
+700 65 59 90000 4374 4338
+800 71 67 100000 4807 4784
+900 79 74 200000 8995 8988
+1000 87 80 300000 13026 12970
+2000 154 148 400000 16967 16892
+3000 222 207 500000 20804 20733
+4000 278 271 600000 24573 24524
+5000 338 330 700000 28306 28236
+6000 398 384 800000 32032 31918
+7000 455 444 900000 35676 35597
+8000 511 495 1000000 39266 39231
+9000 564 552 2000000 74520 74412
+10000 617 611 5000000 174322 174190
+20000 1137 1124 10000000 332384 332194
+Perhaps our experience with the Mod 4 Race makes you skeptical that Team 2
+always dominates in this Mod 3 Race. If so, you are right to be skeptical because Lit-
+tlewood’s 1914 paper also applies to this race: there are arbitrarily large values of x for
+which there are more primes of the form 3n + 1 up to x than primes of the form 3n + 2.
+(An inequality analogous to (2) also holds for this race.) Therefore Team 1 takes the
+lead from Team 2 inﬁnitely often, but where is the ﬁrst such value for x? We know it
+is beyond ten million, and in fact Team 1 ﬁrst takes the lead at x = 608,981,813,029.
+This was discovered on Christmas Day of 1976 by Bays and Hudson. It seems that
+Team 2 dominates in the Mod 3 Race even more than Team 3 dominates in the Mod
+4 Race!
+Another prime race: the last digit of a prime. Having heard that “Team 2 retains
+the lead . . . ” for over a half-a-trillion consecutive values of x, you might have grown
+bored with your day at the races. So let’s move on to a race in which there are more
+competitors, perhaps making it less likely that one will so dominate. One popular four-
+way race is between the primes that end in 1, those that end in 3, those that end in 7,
+and those that end in 9 (Table 3).
+Table 3. The columns labeled “Last digit j” contain the primes of the form 10n + j up to 100 and between
+100 and 200, respectively.
+Last Digit: 1 3 7 9 Last digit: 1 3 7 9
+3 7 101 103 107 109
+11 13 17 19 113
+23 29 127
+31 37 131 137 139
+41 43 47 149
+53 59 151 157
+61 67 163 167
+71 73 79 173 179
+83 89 181
+97 191 193 197 199
+Total 5 7 6 5 Total 10 12 12 10
+4 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+On this limited evidence it seems that the two teams in the middle lanes are usually
+ahead. However, let us examine the data in Table 4 before making any bets:
+Table 4. The column labeled “Last digit j” contains the number of primes of the form 10n + j up to x.
+x Last Digit 1 Last Digit 3 Last Digit 7 Last Digit 9
+100 5 7 6 5
+200 10 12 12 10
+500 22 24 24 23
+1000 40 42 46 38
+2000 73 78 77 73
+5000 163 172 169 163
+10,000 306 310 308 303
+20,000 563 569 569 559
+50,000 1274 1290 1288 1279
+100,000 2387 2402 2411 2390
+200,000 4478 4517 4503 4484
+500,000 10386 10382 10403 10365
+1,000,000 19617 19665 19621 19593
+Except for a brief surge by Team 1 ahead of Team 3 around x = 500,000, it does
+appear that the two teams in the middle lanes continue to share the lead.
+After watching these races for a while, we begin to get the sense that each race
+is somewhat predictable—not the tiny details, perhaps, but the large-scale picture. If
+we were to watch a similar race (the Mod q Race for some number q other than 4
+or 3 or 10), we might expect that some of the teams would be much stronger overall
+than others. But how could we predict which ones, without watching for so long that
+everybody around us would already be placing their bets on those same teams?
+Before we can hope to understand which team has the most primes most often, we
+need to appreciate how those prime counts behave in the ﬁrst place. And before we
+can hope to understand the number of primes up to x of the form qn + a (for given
+a and q), we should start by knowing how many primes there are up to x. This was
+perhaps the single most important question in nineteenth-century number theory, a
+question that continued to engage researchers throughout the twentieth century and is
+still jealously guarding most of its secrets from us today.
+2. WHAT DO WE KNOW ABOUT THE COUNT OF PRIMES UP TO x?
+Although questions in number theory were not always mathematically en vogue,
+by the middle of the nineteenth century the problem of counting primes had at-
+tracted the attention of well-respected mathematicians such as Legendre, Tch´ebychev,
+and the prodigious Gauss. Although the best rigorous results of this time were due to
+Tch´ebychev, the prediction of Gauss eventually led to a better understanding of prime
+number races.
+A query about the frequency with which primes occur elicited the following re-
+sponse:
+I pondered this problem as a boy, and determined that, at around x, the primes occur with
+density 1/ ln x.—C. F. Gauss (letter to Encke, 24 December 1849)
+This remark of Gauss can be interpreted as predicting that
+#{primes ≤ x} ≈
+[x]∑
+n=2
+1
+ln n ≈
+∫ x
+2
+dt
+ln t = Li(x).
+January 2006] PRIME NUMBER RACES 5
+Table 5 compares Gauss’s prediction5 with the most recent count of the number of
+primes up to x. (We write “Overcount” to denote Li(x) − π(x) rounded down to the
+nearest integer, which is the difference between Gauss’s prediction Li(x) and the func-
+tion π(x), the true number of primes up to x.)
+Table 5. Primes up to various x, and the overcount in Gauss’s prediction.
+x π(x) = #{primes ≤ x} Overcount: Li(x) − π(x)
+108 5761455 753
+109 50847534 1700
+1010 455052511 3103
+1011 4118054813 11587
+1012 37607912018 38262
+1013 346065536839 108970
+1014 3204941750802 314889
+1015 29844570422669 1052618
+1016 279238341033925 3214631
+1017 2623557157654233 7956588
+1018 24739954287740860 21949554
+1019 234057667276344607 99877774
+1020 2220819602560918840 222744643
+1021 21127269486018731928 597394253
+1022 201467286689315906290 1932355207
+We can make several observations from these overcounts. First notice that the width
+of the last column is always approximately half the width of the middle column. In
+other words, the overcount seems to be about the square root of the main term π(x)
+itself. Also the error term seems always to be positive, so we might guess that
+0 < Li(x) − π(x) <
+√
+π(x)
+for all x. In fact the overcount appears to be monotonically increasing, which suggests
+that we might be able to better approximate π(x) by subtracting some smooth sec-
+ondary term from the approximating function Li(x), a question we shall return to later.
+But, for now, let’s get back to the races. . . .
+The function Li(x) does not count primes, but it does seem to stay close to π(x),
+always remaining just in the lead. So for the race between Li(x) and π(x), we can ask:
+Will Li(x) retain the lead forever? Littlewood’s amazing result [18] applies here too:
+Theorem (Littlewood). There are arbitrarily large values of x for which π(x) >
+Li(x), that is, for which
+#{primes ≤ x} >
+∫ x
+2
+dt
+ln t .
+So what is the smallest x1 for which π(x1) > Li(x1)? Skewes obtained an upper
+bound for x1 from Littlewood’s proof, though not a particularly accessible bound.
+Skewes proved in 1933 that
+x1 < 1010101034
+,
+5In fact, Legendre made a similar though less accurate “prediction” some years before Gauss.
+6 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+and to do even this he needed to make a signiﬁcant assumption. Skewes assumed the
+truth of the “Riemann Hypothesis,” a conjecture that we shall discuss a little later. For
+a long time, this “Skewes’ number” was known as the largest number to which any
+“interesting” mathematical meaning could be ascribed. Skewes later gave an upper
+bound that did not depend on any unproved assumption, though at the cost of making
+the numerical estimate marginally more monstrous, and several improvements have
+been made since then:
+Skewes (1955): x1 < 101010101000
+Lehman (1966): x1 < 2 × 101165
+te Riele (1987): x1 < 6.658 × 10370
+Bays and Hudson (1999): x1 < 1.3982 × 10316
+As we shall discuss later, Bays and Hudson give compelling reasons to believe that x1
+is actually some integer close to 1.3982 × 10316. This is an extraordinary claim! We
+can only compute prime counts up to around x = 1022 with our current technology
+and algorithms, and no signiﬁcant improvements to this are foreseen. So how can they
+make such a prediction of the enormous value of x1, when this prediction is so far
+beyond the point where we can ever hope to compute π(x) directly?
+We shall explain this later. One thought though: if the ﬁrst number x for which π(x)
+pulls ahead of Li(x) is so large, then surely the numbers x for which π(x) > Li(x) are
+even scarcer than the corresponding “underdog” numbers in the races we examined
+earlier!
+Accurately estimating the count of primes. Up to the middle of the nineteenth cen-
+tury, every approach to estimating π(x) = #{primes ≤ x} was relatively direct, based
+either upon elementary number theory and combinatorial principles or upon the the-
+ory of quadratic forms. In 1859, however, the great geometer Riemann took up the
+challenge of counting the primes in a very different way. He wrote only one paper that
+could be classiﬁed under the heading “number theory,” but that one short memoir has
+had an impact lasting nearly a century and a half already, and its ideas helped to deﬁne
+the subject we now call analytic number theory.
+Riemann’s memoir described a surprising approach to the problem, an approach us-
+ing the theory of complex analysis, which was at that time still very much a developing
+subject.6 This new approach of Riemann seemed to stray far away from the realm in
+which the original problem lived. However, it had two key features:
+• it was a potentially practical way to settle the question once and for all;
+• it made predictions that were similar, though not identical, to the Gauss prediction.
+In fact, as we shall see, it suggested a secondary term to compensate somewhat for the
+overcount we saw in the data in Table 5.
+Riemann’s method is too complicated to describe in its entirety here, but we extract
+from it what we need to better understand the prime count π(x). To begin, we take the
+key prediction from Riemann’s memoir and restate it in entirely elementary language:
+lcm[1, 2, 3, . . . , x] ≈ ex (as x → ∞).
+6Indeed, Riemann’s memoir on this number-theoretic problem was a signiﬁcant factor in the development
+of the theory of analytic functions, notably their global aspects.
+January 2006] PRIME NUMBER RACES 7
+Now one can easily verify that
+( ∏
+p≤x
+p
+)
+×
+
+ ∏
+p2≤x
+p
+
+ ×
+
+ ∏
+p3≤x
+p
+
+ × · · · = lcm[1, 2, 3, . . . , x],
+since the power of any prime p that divides the integer on either side of the equation
+is precisely the largest power of p not exceeding x. Combining this identity with the
+preceding approximation and taking natural logarithms of both sides, we obtain
+( ∑
+p≤x
+ln p
+)
++
+
+ ∑
+p2≤x
+ln p
+
+ +
+
+ ∑
+p3≤x
+ln p
+
+ + · · · ≈ x
+as x → ∞.
+Notice that the primes in the ﬁrst sum are precisely the primes counted by π(x),
+the primes in the second sum are precisely the primes counted by π(√
+x), and so on.
+A technique called partial summation allows us to “take care of” the ln p summand
+(which is analogous to using integration by parts to take care of a ln x factor in an
+integrand). When partial summation is applied to the last approximation, the result is
+π(x) + 1
+2 π(x1/2) + 1
+3 π(x1/3) + · · · ≈
+∫ x
+2
+dt
+ln t = Li(x).
+If we “solve for π(x)” in an appropriate way, we ﬁnd the equivalent form
+π(x) ≈ Li(x) − 1
+2 Li(x1/2) + · · · .
+Hence Riemann’s method yields the same prediction as Gauss’s, yet it yields some-
+thing extra—namely, it predicts a secondary term that will hopefully compensate for
+the overcount that we witnessed in the Gauss prediction. Let’s review the data and see
+how Riemann’s prediction fares. “Riemann’s overcount” refers to Li(x) − 1
+2 Li(√
+x) −
+π(x), while “Gauss’s overcount” refers to Li(x) − π(x) as before (Table 6):
+Table 6. Primes up to various x, and Gauss’s and Riemann’s predictions.
+x #{primes ≤ x} Gauss’s overcount Riemann’s overcount
+108 5761455 753 131
+109 50847534 1700 −15
+1010 455052511 3103 −1711
+1011 4118054813 11587 −2097
+1012 37607912018 38262 −1050
+1013 346065536839 108970 −4944
+1014 3204941750802 314889 −17569
+1015 29844570422669 1052618 76456
+1016 279238341033925 3214631 333527
+1017 2623557157654233 7956588 −585236
+1018 24739954287740860 21949554 −3475062
+1019 234057667276344607 99877774 23937697
+1020 2220819602560918840 222744643 −4783163
+1021 21127269486018731928 597394253 −86210244
+1022 201467286689315906290 1932355207 −126677992
+8 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+Riemann’s prediction does seem to be a little better than that of Gauss, although not
+a lot better. However, the fact that the error in Riemann’s prediction takes both positive
+and negative values suggests that this might be about the best we can do.
+Going back to the key prediction from Riemann’s memoir, we can calculate some
+data to test its accuracy:
+Nearest integer to
+x ln(lcm[1, 2, 3, . . . , x]) Difference
+100 94 −6
+1000 997 −3
+10000 10013 13
+100000 100052 57
+1000000 999587 −413
+Riemann’s prediction has been made more precise over the years, and it can now be
+expressed very explicitly as
+| ln(lcm[1, 2, . . . , x]) − x| ≤ 2√
+x ln2 x
+when x ≥ 100. In fact, this inequality is equivalent7 to the celebrated Riemann Hy-
+pothesis, perhaps the most prominent open problem in mathematics. The Riemann
+Hypothesis is an assertion, proposed by Riemann in his memoir and still unproved,
+about the zeros of a certain function from complex analysis that is intimately con-
+nected with the distribution of primes. To try to give some idea of what Riemann did
+to connect the two seemingly unrelated areas of number theory and complex analysis,
+we need to talk about writing functions as combinations of “waves.”
+Doing the wave. You have probably wondered what “radio waves” and “sound
+waves” have to do with waves. Sounds don’t usually seem to be very “wavy,” but
+rather are fractured, broken up, stopping and starting and changing abruptly. So what’s
+the connection? The idea is that all sounds can be converted into a sum of waves. For
+example, let’s imagine that our “sound” is represented by the gradually ascending line
+y = x − 1
+2 , considered on the interval 0 ≤ x ≤ 1, which is shown in the ﬁrst graph of
+Figure 1.
+0.2 0.4 0.6 0.8 1
+-0.4
+-0.2
+0.2
+0.4
+0.2 0.4 0.6 0.8 1
+-0.4
+-0.2
+0.2
+0.4
+Figure 1. The line y = x − 1
+2 and the wave y = − 1
+π sin 2π x
+If we try to approximate this with a “wave,” we can come pretty close in the middle
+of the line using the function y = − 1
+π sin(2π x). However, as we see in the second
+graph of Figure 1, the approximation is rather poor when x < 1/4 or x > 3/4.
+7As is |Li(x) − π(x)| ≤ √
+x ln x when x ≥ 3.
+January 2006] PRIME NUMBER RACES 9
+How can we improve this approximation? The idea is to “add” a second wave to the
+ﬁrst, this second wave going through two complete cycles over the interval [0, 1] rather
+than only one cycle. This corresponds to hearing the sound of the two waves at the
+same time, superimposed; mathematically, we literally add the two functions together.
+As it turns out, adding the function y = − 1
+2π sin(4π x) makes the approximation better
+for a range of x-values that is quite a bit larger than the range of good approximation
+we obtained with one wave, as we see in Figure 2.
+0.2 0.4 0.6 0.8 1
+–0.4
+–0.2
+0.2
+0.4
++
+0.2 0.4 0.6 0.8 1
+–0.4
+–0.2
+0.2
+0.4
+=
+0.2 0.4 0.6 0.8 1
+–0.4
+–0.2
+0.2
+0.4
+Figure 2. Adding the wave y = − 1
+2π sin 4π x to the wave y = − 1
+π sin 2π x.
+We can continue in this way, adding more and more waves that go through three,
+four, or ﬁve complete cycles in the interval, and so on, to get increasingly better ap-
+proximations to the original straight line. The approximation we get by using one
+hundred superimposed waves is really quite good, except near the endpoints 0 and 1.
+0.2 0.4 0.6 0.8 1
+–0.6
+–0.4
+–0.2
+0.2
+0.4
+0.6
+Figure 3. The sum of one hundred carefully chosen waves.
+If we were to watch these one hundred approximations being built up one addi-
+tional wave at a time, we would quickly be willing to wager that the more waves we
+allowed ourselves, the better the resulting approximation would be, perhaps becoming
+as accurate as could ever be hoped for. As long as we allow a tiny bit of error in the
+approximation (and shut our eyes to what happens very near the endpoints), we can in
+fact construct a sufﬁciently close approximation if we use enough waves. However, to
+get a “perfect” copy of the original straight-line, we would need to use inﬁnitely many
+sine waves—more precisely, the ones on the right-hand side of the formula
+x − 1
+2 = −2
+∞∑
+n=1
+sin(2πnx)
+2πn ,
+which can be shown to hold whenever 0 < x < 1. (We can read off, in the n = 1
+and n = 2 terms of this sum, the two waves that we chose for Figures 1 and 2.) This
+formula is not of much practical use, since we can’t really transmit inﬁnitely many
+waves at once—but it’s a gorgeous formula nonetheless!
+10 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+In general, for any function f (x) deﬁned on the interval [0, 1] that is not “too ir-
+regular,” we can ﬁnd numbers an and bn such that f (x) can be written as a sum of
+trigonometric functions, namely,
+f (x) = a0 +
+∞∑
+n=1
+(an cos(2πnx) + bn sin(2πnx)).
+This formula, together with a way to calculate the coefﬁcients an and bn , is one of
+the key identities from “Fourier analysis,” and it and its many generalizations are the
+subject of the ﬁeld of mathematics known as harmonic analysis. In terms of waves,
+the numbers 2πn are the “frequencies” of the various component waves (controlling
+how fast they go through their cycles), while the coefﬁcients an and bn are their “am-
+plitudes” (controlling how far up and down they go).
+Riemann’s revolutionary formula. Riemann’s idea can be simply, albeit rather sur-
+prisingly, phrased in the following terms:
+Try counting the primes as a sum of waves.
+The precise formula he proposed is a bit too technical for this article, but we can get
+a good sense of it from the following approximation when x is large. This formula,
+while widely believed to be correct, has not yet been proved to be true.
+∫ x
+2
+dt
+ln t − #{primes ≤ x}
+√
+x/ ln x ≈ 1 + 2
+∑
+all real numbers γ > 0
+such that 1
+2 + iγ
+is a zero of ζ(s)
+sin(γ ln x)
+γ .
+ (3)
+The numerator of the left-hand side of this formula is the error term when comparing
+the Gauss prediction Li(x) with the actual count π(x) for the number of primes up
+to x. We saw earlier that the overcounts seemed to be roughly the size of the square
+root of x, so the denominator √
+x/ ln x appears to be an appropriate thing to divide
+through by. The right side of the formula bears much in common with our formula for
+x − 1/2. It is a sum of sine functions, with the numbers γ employed in two different
+ways in place of 2πn: each γ is used inside the sine (as the “frequency”), and the
+reciprocal of each γ forms the coefﬁcient of the sine (as the “amplitude”). We even
+get the same factor of 2 in each formula. However, the numbers γ here are much
+more subtle than the straightforward numbers 2πn in the corresponding formula for
+x − 1/2.
+The Riemann zeta-function ζ (s) is deﬁned as
+ζ (s) = 1
+1s + 1
+2s + 1
+3s + · · · .
+Here s is a complex number, which we write as s = σ + it when we want to refer to
+its real and imaginary parts σ and t separately. If s were a real number, we would know
+from ﬁrst-year calculus that the series in the deﬁnition of ζ (s) converges if and only
+if s > 1; that is, we can sum up the inﬁnite series and obtain a ﬁnite, unique value. In
+a similar way, it can be shown that the series only converges for complex numbers s
+such that σ > 1. But what about when σ ≤ 1? How do we get around the fact that the
+series does not sum up (that is, converge)?
+January 2006] PRIME NUMBER RACES 11
+Fortunately, there is a beautiful phenomenon in the theory of functions of a com-
+plex variable called analytic continuation. It tells us that functions that are originally
+deﬁned only for certain complex numbers often have unique “sensible” deﬁnitions for
+other complex numbers. In this case, the deﬁnition of ζ (s) as presented works only
+when σ > 1, but it turns out that analytic continuation allows us to deﬁne ζ (s) for
+every complex number s other than s = 1 (see [26] for details).
+This description of the process of analytic continuation looks disconcertingly mag-
+ical. Fortunately, there is a quite explicit way to show how ζ (σ + it) can be “sensibly”
+deﬁned at least for the region where σ > 0, an extension of the region (σ > 1) where
+ζ (s) is originally deﬁned. For this, we start with the expression (1 − 21−s )ζ (s) and
+perform some sleight-of-hand manipulations:
+(1 − 21−s )ζ (s) =
+(
+1 − 2
+2s
+)
+ζ (s) = ζ (s) − 2
+2s ζ (s)
+=
+∑
+n≥1
+1
+ns − 2
+∑
+m≥1
+1
+(2m)s
+=
+∑
+n≥1
+1
+ns − 2
+∑
+n ≥ 1
+n even
+1
+ns =
+∑
+m ≥ 1
+m odd
+1
+ms −
+∑
+n ≥ 1
+n even
+1
+ns
+=
+( 1
+1s − 1
+2s
+)
++
+( 1
+3s − 1
+4s
+)
++
+( 1
+5s − 1
+6s
+)
++ · · · .
+Solving for ζ (s), we ﬁnd that
+ζ (s) = 1
+(1 − 21−s )
+{( 1
+1s − 1
+2s
+)
++
+( 1
+3s − 1
+4s
+)
++
+( 1
+5s − 1
+6s
+)
++ · · ·
+}
+.
+All of these manipulations were valid for complex numbers s = σ + it with σ > 1.
+However, it turns out that the inﬁnite series in curly brackets actually converges when-
+ever σ > 0. Therefore, we can take this last equation as the new “sensible” deﬁnition
+of the Riemann zeta-function on this larger domain. Note that the special number s = 1
+causes the otherwise innocuous factor of 1/(1 − 21−s ) to be undeﬁned; the Riemann
+zeta-function intrinsically has a problem there, one that cannot be swept away with
+clever rearrangements of the inﬁnite series.
+Riemann’s formula (3) depends on the zeros of the analytic continuation of ζ (s).
+The easiest zeros to identify are the negative even integers; that is
+ζ (−2) = 0, ζ (−4) = 0, ζ (−6) = 0, . . . ,
+which are called the “trivial zeros” of the zeta-function. It can be shown that any other
+complex zero σ + it of the zeta-function (that is, a number satisfying ζ (σ + it) = 0)
+must satisfy 0 ≤ σ ≤ 1; these more mysterious zeros of the zeta-function are called its
+“nontrivial zeros.”
+After some calculation,8 Riemann observed that all of the nontrivial zeros of the
+zeta-function seem to lie on the line with equation Re(s) = 1/2. In other words, he
+8No reference to these calculations of Riemann appeared in the literature until Siegel discovered them in
+Riemann’s personal, unpublished notes long after Riemann’s death.
+12 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+stated the remarkable hypothesis:
+If σ + it is a complex number with 0 ≤ σ ≤ 1 and ζ (σ + it) = 0, then σ = 1
+2 .
+This assertion, which nobody has yet managed to prove, is the famous “Riemann Hy-
+pothesis.”
+If the Riemann Hypothesis is in fact true, then we can write all the nontrivial zeros of
+the zeta-function in the form ρ = 1
+2 + iγ (together with their conjugates 1
+2 − iγ , since
+ζ ( 1
+2 + iγ ) = 0 if and only if ζ ( 1
+2 − iγ ) = 0), where γ is a positive real number. These
+are the mysterious numbers γ appearing in the formula (3), which holds if and only if
+the Riemann Hypothesis is true. There is a similar formula if the Riemann Hypothesis
+is false, but it is rather complicated and technically far less pleasant. The reason is that
+the coefﬁcients 1/γ , which are constants in (3), get replaced with functions of x. So we
+want the Riemann Hypothesis to hold because it leads to the simpler formula (3), and
+that formula is a delight. Indeed (3) is similar enough to the formulas for soundwaves
+for some experts to muse that (3) asserts that “the primes have music in them.”
+One might ask how we add up the inﬁnite sum in (3)? Simple: add up by order of
+ascending γ values and it will work out.
+Clever people have computed literally billions of zeros of ζ (s), and every single
+zero that has been computed does indeed satisfy σ = 1/2. For example, the nontrivial
+zeros closest to the real axis are s = 1
+2 + iγ1 and s = 1
+2 − iγ1, where γ1 ≈ 14.1347 . . . .
+We believe that the positive numbers γ occurring in the nontrivial zeros look more or
+less like random real numbers, in the sense that none of them is related to others by
+simple linear equations with integer coefﬁcients (or even by more complicated poly-
+nomial equations with algebraic numbers as coefﬁcients). However, since about all
+we know how to do is to approximate these nontrivial zeros numerically to a given
+accuracy, we cannot say much about the precise nature of the numbers γ .
+Prime race for π(x) versus Li(x). So, how do we use this variant on “Fourier analy-
+sis” to locate the smallest x for which
+#{primes ≤ x} >
+∫ x
+2
+dt
+ln t ?
+The idea is to approximate
+Li(x) − π(x)
+√
+x/ ln x =
+∫ x
+2
+dt
+ln t − #{primes ≤ x}
+√
+x/ ln x
+by using the formula (3). Just as we saw when approximating the function x − 1/2,
+we expect to obtain a good approximation here simply by summing the formula on
+the right side of (3) over the ﬁrst few zeros of ζ (s) (that is, the smallest hundred, or
+thousand, or million values of γ with ζ ( 1
+2 + iγ ) = 0, depending upon the level of
+accuracy that we want). In other words,
+∫ x
+2
+dt
+ln t − #{primes ≤ x}
+√
+x/ ln x ≈ 1 + 2
+∑
+1
+2 + iγ is a zero of ζ(s)
+0 < γ < T
+sin(γ ln x)
+γ ,
+where we can choose T to include however many zeros we want.
+January 2006] PRIME NUMBER RACES 13
+10 4 10 5 10 6 10 7 10 8
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+10 4 10 5 10 6 10 7 10 8
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+10 4 10 5 10 6 10 7 10 8
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+10 4 10 5 10 6 10 7 10 8
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+Figure 4. A graph of (Li(x) − π(x))/( 1
+2 Li(√
+x)), followed by approximations using 10, 100, and 1000 zeros
+of ζ (s).
+Figure 4 is a graph of the function (Li(x) − π(x))/( 1
+2 Li(√
+x)) as x runs from 104
+to 108, together with three graphs of approximations using the ﬁrst 10, 100, and 1000
+values of γ , respectively.9 We see that the approximations get better the more zeros we
+take.
+Extensive computations of this type led Bays and Hudson to conjecture that the ﬁrst
+time that π(x) surpasses Li(x) is at approximately 1.3982 × 10316.
+9When x is large, 1
+2 Li(√
+x) ≈ √
+x/ ln x. We have preferred to use the latter expression because it consists
+of more familiar functions. However, when dealing with “small” values of x as in these graphs, using the
+function 1
+2 Li(√
+x) lets us highlight the similarities we want to exhibit.
+14 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+The Mod 4 Race. In 1959, Shanks suggested studying the Mod 4 Race by drawing a
+histogram of the values of
+#{primes 4n + 3 ≤ x} − #{primes 4n + 1 ≤ x}
+√
+x/ ln x . (4)
+Figure 5 displays such a histogram for the one thousand sample values x = 1000,
+2000, 3000, . . . , 106.
+0 0.5 1 1.5 2
+10
+20
+30
+40
+50
+Figure 5. A histogram for the values of (4) at x = 1000k (1 ≤ k ≤ 1000).
+This histogram is suggestive: one might guess that if we incorporate more and more
+sample values, then the histogram will more and more resemble something like a bell-
+shaped curve centered at 1. Littlewood’s result (2) implies that the tail does stretch out
+horizontally to ∞ as more and more sample values are used, since the ratio in equation
+(4) will be at least as large as some constant multiple of ln ln ln x for inﬁnitely many
+values of x.10 The inﬁnite extent of the histogram is certainly not evident from ﬁgure
+5, but this is not so surprising since, as Dan Shanks remarked in 1959 [24]:
+ln ln ln x goes to inﬁnity with great dignity.
+In (3) we saw how the difference between π(x) and Li(x) can be approximated by a
+sum of waves whose frequencies and amplitudes depend on the zeros of the Riemann
+zeta-function. To count primes up to x of the form 4n + 1, or of the form 4n + 3, or of
+any form qn + a with gcd(a, q) = 1, there is a formula analogous to (3) that depends
+on the zeros of Dirichlet L-functions, relatives of the Riemann zeta-function that also
+have natural though slightly more complicated deﬁnitions. For example, the Dirichlet
+L-function associated with the race between primes of the form 4n + 3 and primes of
+the form 4n + 1 is
+L(s) = 1
+1s − 1
+3s + 1
+5s − 1
+7s + . . . .
+Note that this (and all other Dirichlet L-functions) converges for any s = σ + it with
+σ > 0. There is a lovely formula, analogous to (3), for the number of primes of the
+10In fact, Littlewood also proved the inequality with the two terms on the left-hand side reversed, so that the
+histogram stretches out to −∞ as well.
+January 2006] PRIME NUMBER RACES 15
+form qn + a up to x. This formula holds if and only if all of the zeros of these Dirichlet
+L-functions in the strip described by 0 ≤ Re(s) ≤ 1 satisfy Re(s) = 1/2. We call
+this assertion the Generalized Riemann Hypothesis. For example, if the Generalized
+Riemann Hypothesis is true for the function L(s) just deﬁned, then we get the formula
+#{primes 4n + 3 ≤ x} − #{primes 4n + 1 ≤ x}
+√
+x/ ln x ≈ 1 + 2
+∑
+Real numbers γ > 0
+such that 1
+2 + iγ
+is a zero of L(s)
+sin(γ ln x)
+γ .
+Consequently, we can try to study the Mod 4 Race by computing the right-hand side
+of this formula, truncating to involve only a hundred or a thousand or a million zeros
+of L(s). Figure 6 shows how well such an approximation with 1000 zeros agrees with
+the actual data.
+104 105 106 107 108
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+104 105 106 107 108
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+1.8
+2
+Figure 6. A graph of the function in (4) and an approximation using 1000 zeros of L(s).
+The ﬁrst three occasions that Team 1 takes the lead are clearly visible in both
+graphs (earlier we presented the exact values for which this happens). The conve-
+nient thing about the approximation is that the approximation doesn’t become hope-
+lessly more difﬁcult to compute as x becomes large, unlike determining the precise
+count of primes. In 1999 Bays and Hudson used such approximations to predict fur-
+ther “sign changes” in (4) for x up to 101000. The next two that they predicted were
+at approximately 1.4898 × 1012, which was later found at 1,488,478,427,089, and at
+approximately 9.3190 × 1012.
+3. WHERE DO THESE BIASES COME FROM? We have observed several ex-
+amples of prime number races and of biases that certain arithmetic progressions seem
+to have over others. Although we have seen that such bias can be calculated through
+complicated formulas like (3), this explanation is not easily understood, nor does it
+give us a feeling as to how we might predict, without an enormous computation, which
+16 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+of two progressions typically dominates the other. Let’s summarize the prime races we
+have seen so far and look for a pattern, hoping that we can ﬁnd some short cut to
+making such predictions. We have seen that there seem to be, at least most of the time,
+• more primes of the form 4n + 3 than of the form 4n + 1;
+• more primes of the form 3n + 2 than of the form 3n + 1; and
+• more primes of the forms 10n + 3 and 10n + 7 than of the forms 10n + 1 and
+10n + 9.
+Do you see a pattern? There’s probably not enough data here to make a good guess.
+But let’s check out one more four-way prime number race, this one with the forms
+8n + 1, 8n + 3, 8n + 5, and 8n + 7 as the contestants (Table 7):
+Table 7. The number of primes of the form 8n + j for j = 1, 3, 5, and 7 up to various x.
+x 8n + 1 8n + 3 8n + 5 8n + 7
+1,000 37 44 43 43
+2,000 68 77 79 78
+5,000 161 168 168 171
+10,000 295 311 314 308
+20,000 556 571 569 565
+50,000 1,257 1,295 1,292 1,288
+100,000 2,384 2,409 2,399 2,399
+200,000 4,466 4,495 4,511 4,511
+500,000 10,334 10,418 10,397 10,388
+1,000,000 19,552 19,653 19,623 19,669
+This is a strange race, since the only clear pattern that emerges is that there seem to be
+• more primes of the forms 8n + 3, 8n + 5, and 8n + 7 than of the form 8n + 1.
+In fact, this is true for all x between 23 and 106. But this “strangeness” should help
+students of number theory guess at a pattern, because such students know that all odd
+squares are of the form 8n + 1.11
+During our discussion about lcm[1, 2, . . . , n] and its connection with the prime
+number counting function π(x), we saw that Riemann’s prediction π(x) + 1
+2 #{primes p
+with p2 ≤ x} is what is best approximated by
+∫ x
+2 dt/ ln t. In other words, it is the
+squares of primes that “account” for the bias that Li(x) has over π(x) for most of the
+time.
+These pieces of evidence12 point to the squares of primes playing an important role
+in such biases. Let’s check out the arithmetic progressions that the squares of primes
+belong to for the moduli already discussed in this section:
+For any prime p not dividing 4, p2 is of the form 4n + 1.
+For any prime p not dividing 3, p2 is of the form 3n + 1.
+For any prime p not dividing 10, p2 is of the form 10n + 1 or 9.
+For any prime p not dividing 8, p2 is of the form 8n + 1.
+11Note that (2m − 1)2 = 8(m
+2
+) + 1 ≡ 1 (mod 8) for all odd integers 2m − 1.
+12Admittedly somewhat circumstantial evidence.
+January 2006] PRIME NUMBER RACES 17
+Exactly right every time! It does seem that “typically” qn + a has fewer primes than
+qn + b if a is a square modulo q while b is not.
+What is the phenomenon that we are actually observing? We have been observing
+some phenomena where there is a “typical” bias in favor of one arithmetic progression
+over another, that is, one “usual” leader in the prime number race. So far, though, we
+have not exhibited a precise description of this bias nor deﬁned a number that measures
+how strong the bias is. In an earlier section, we stated Knapowski and Tur´an’s 1962
+conjecture: if we pick a very large number x “at random,” then “almost certainly”
+there will be more primes of the form 4n + 3 up to x than there are primes of the
+form 4n + 1 up to x. (Obviously, such a conjecture can be generalized to the other
+prime races we considered.) However, the supporting evidence from our data was not
+entirely convincing. Indeed, by studying the explicit formula (3), Kaczorowski [14]
+and Sarnak [22], independently, showed that the Knapowski-Tur´an conjecture is false!
+In fact, the quantity
+1
+X #{x ≤ X : there are more primes of the form 4n + 3 up to x than of the form 4n + 1}
+does not tend to any limit as X → ∞, but instead ﬂuctuates. This is not a very satisfy-
+ing state of affairs, though it is feasible that we can’t really say anything more: it could
+be that the phenomena we have observed are only true for “small numbers,”13 and that
+the race looks truly “unbiased” when we go out far enough.
+However, this turns out not to be the case. In 1994, Rubinstein and Sarnak made
+an inspired observation. After determining that one progression does not dominate the
+other for any ﬁxed percentage of the time, so that that precise line of thinking seemed
+closed, Rubinstein and Sarnak said to themselves that perhaps the obvious way to count
+prime number races is not necessarily the correct way to count them, at least in this
+context. They observed that if you count things a little differently (in technical terms,
+“if you use a different measure”), then you get a much more satisfactory answer. More-
+over, you get a whole panorama of results that explain all the observed phenomena in
+a way that feels very natural.
+Sometimes in mathematics it is the simplest remark that is the key to unlocking a
+mystery, not the hard technical slog, and that was certainly the case for this question.
+The key idea of Rubinstein and Sarnak is not to count 1 for each integer x(≤ X ) for
+which there are more primes of the form 4n + 3 up to x than of the form 4n + 1, but
+rather to count 1/x. Of course, the total sum ∑
+x≤X 1/x is not X , but approximately
+ln X , so we need to scale with this instead. However, when we do so, we obtain a
+remarkable result [21]:
+Theorem (Rubinstein and Sarnak, 1994). As X → ∞,
+1
+ln X
+∑
+x ≤ X
+There are more primes 4n + 3
+than 4n + 1 up to x
+1
+x −→ .9959. . . .
+In other words, with the appropriate method of measuring, Tch´ebychev was correct
+99.59% of the time!
+Moreover, their idea applies to all of the other prime number races that we have
+been discussing. For example, in the Mod 3 Race, we have
+13“Small” on an appropriate scale!
+18 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+1
+ln X
+∑
+x ≤ X
+There are more primes 3n + 2
+than 3n + 1 up to x
+1
+x −→ .9990 . . .
+as X → ∞, so Team 1 has only about one chance in a thousand of being ahead of
+Team 3 at any given time, when we measure “being ahead” this way.
+And what about the race between π(x) and Li(x)? Remember that we don’t expect
+to ﬁnd a counterexample until we get out to the huge value x ≈ 1.3982 × 10316. In this
+case, Rubinstein and Sarnak showed that
+1
+ln X
+∑
+x ≤ X
+π(x) < Li(x)
+1
+x −→ .99999973 . . .
+as X → ∞. That is, with the appropriate method of measuring, π(x) < Li(x) about
+99.999973% of the time! No wonder that the ﬁrst point at which π(x) > Li(x) is so
+far out.
+This successful way of measuring things is called the logarithmic measure (because
+of the “normalizing factor” ln X ). It appears in many contexts in mathematics and was
+even used in a related context by Wintner in 1941, but never quite in such an appealing
+and transparent way as by Rubinstein and Sarnak.
+Their wonderful results are proved under highly plausible assumptions. They as-
+sume ﬁrst that the Generalized Riemann Hypothesis holds (in other words, marvellous
+formulas analogous to (3) can be used to count primes of the form qn + a up to x), and
+second that the γ s that arise in these formulas—the imaginary parts of the zeros of the
+associated Dirichlet L-functions—are actually linearly independent over the rational
+numbers. It would be shocking if either of these assumptions were false, but it does
+seem unlikely that either one will be proved in the near future.
+How do you prove such results? The proofs of the results that we have already men-
+tioned, as well as those discussed in the next sections, are too technical to describe in
+full detail here. However, they do all depend on careful examination of the formula (3)
+and its analogues for the Mod q Races. The assumption of the Generalized Riemann
+Hypothesis ensures, in all the cases under consideration, that a formula of the type (3)
+exists in the ﬁrst place. To analyze its value, we need to consider the sum on the right
+side of (3) and, in particular, the values of the various terms and how they interact:
+each term −2 sin(γ ln x)/γ is a sine-wave that undulates regularly between −2/γ and
+2/γ .14 As we have seen when studying how such waves can combine to give approxi-
+mations to a straight line, if the various values of γ can be chosen so that somehow the
+individual undulations can be synchronized, then the sum can accumulate into surpris-
+ing shapes. This leads to the second assumption: if we assume that the waves cannot
+combine in some extraordinary way, then the sum should remain small and unsurpris-
+ing. In other words, we would expect that a fair portion of the terms would be positive
+and a fair portion would be negative, so there would be signiﬁcant cancellation. This
+is what is achieved by assuming that the γ s are linearly independent over the rational
+numbers. Under this second assumption, the values of the sin(γ ln x)-terms cannot be
+well synchronized for very many values of x, and we are able to establish results. In
+fact, we ﬁnd that the smallest few γ s have the largest inﬂuence on the value of the sum
+14“Regularly,” that is, if we consider ln x to be the variable rather than x. In fact, this is really the reason that
+the “logarithmic measure” is most appropriate for our prime number counts.
+January 2006] PRIME NUMBER RACES 19
+(which is not surprising, since the term corresponding to γ has a factor of γ in the
+denominator).
+Calculating precise numerical values for how often one prime number count is
+ahead of another is even more delicate. It is no longer enough to argue that the sum is
+“large” or “small”; we need to know exactly how often the sum in (3) is greater than
+−1/2 or less than −1/2, since that value is where the right-hand side switches between
+positive and negative. As it turns out, it is possible to calculate exactly how often this
+occurs if we use (traditional) Fourier analysis: we rewrite the sum of the waves in (3)
+in which the frequencies depend on the zeros of the Riemann zeta-function as a sum of
+“Fourier waves” whose frequencies depend on the numbers 2πn. Although this is too
+cumbersome to give in a closed form, one can, with clever computational techniques,
+approximate its numerical value with great accuracy.
+Squares and nonsquares: Littlewood’s method. On several occasions we have en-
+countered consequences of Littlewood’s 1914 paper.15 The method is robust enough
+to prove some fairly general results but not typically about one progression racing an-
+other.16 Indeed, for any odd prime q let Team S be the set of primes that are congruent
+to a square modulo q, and let Team N be the rest of the primes. Using Littlewood’s
+method one can show that each such team takes the lead inﬁnitely often,17 and the lead
+up to x can be as large as c√
+x ln ln ln x/ ln x for some positive constant c that depends
+only on q. One example of this is in the q = 5 race, where S contains the primes with
+last digits 1 and 9 (as well as 5), so this is the Mod 10 Race again. Recall that we
+observed in the limited data in Tables 3 and 4 that Team N typically held the lead.
+There are other races that can be analyzed by Littlewood’s method, always involving
+partitioning the primes into two seemingly equal classes. In fact, there is at least one
+such race for every modulus q, and often more than one. When q is not a prime,
+however, the descriptions of the appropriate classes become more complicated.
+More results from Rubinstein and Sarnak (1994). In a prime number race between
+two arithmetic progressions modulo q, when do we see a bias and when not? Is each
+arithmetic progression “in the lead” exactly 50% of the time (in the logarithmic mea-
+sure) or not? More importantly perhaps, can we decide this before doing a difﬁcult
+calculation? Earlier we saw that there “usually” seem to be more primes up to x of the
+form qn + b than of the form qn + a if a is a square modulo q and b is not. Indeed,
+under our two assumptions (that is, the Generalized Riemann Hypothesis and the lin-
+ear independence of the relevant γ s), Rubinstein and Sarnak proved that this is true:
+the logarithmic measure of the set of x for which there are more primes of the form
+qn + b up to x than of the form qn + a is strictly greater than 1/2, although always
+less than 1. In other words, any nonsquare is ahead of any square more than half the
+time, though not 100% of the time.
+We can ask the same question when a and b are either both squares modulo q or
+both nonsquares modulo q. In this case, under the same assumptions, Rubinstein and
+Sarnak demonstrated that
+#{primes qn + a ≤ x} > #{primes qn + b ≤ x}
+exactly half the time. As a matter of fact, they prove rather more than this. To describe
+their result, we need to deﬁne certain error terms related to these prime number counts
+15Which actually dealt only with the π(x) versus Li(x) race.
+16Though that was all we saw in the cases where q was small.
+17In other words, there are arbitrarily large x and y such that there are more primes in S than in N up to x,
+and there are more primes in N than in S up to y.
+20 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+and describe what we mean by their “limiting distributions.” As noted, the values of
+the prime counting function #{primes qn + a ≤ x} are all roughly equal as we vary
+over the integers a up to q that have no factor in common with q. In fact, we saw that
+the ratio of any two of them tended to 1 as x → ∞. This implies that
+#{primes qn + a ≤ x}
+π(x)/φ(q) → 1
+as x → ∞, where π(x) = #{primes ≤ x} as before and φ(q) is the number of positive
+integers a up to q for which gcd(a, q) = 1. We have seen that it is natural to look at
+the difference in these quantities divided by √
+x/ ln x, so we deﬁne
+Error (x; q, a) = #{primes qn + a ≤ x} − π(x)/φ(q)
+√
+x/ ln x .
+Rubinstein and Sarnak suggested that to study prime races between arithmetic pro-
+gressions a (mod q) and b (mod q) properly, one should look at the distribution of
+values of the ordered pair
+(Error(x; q, a), Error(x; q, b))
+as x varies, this distribution again being deﬁned with respect to the logarithmic mea-
+sure. More concretely, given real numbers α < β and α′ < β′, one might ask how often
+it is the case that α ≤ Error(x; q, a) ≤ β and α′ ≤ Error(x; q, b) ≤ β′. This frequency
+is deﬁned by the limit of integrals
+lim
+Y →∞
+1
+ln Y
+∫
+0 ≤ y ≤ Y,
+Error(y; q, a) ∈ [α, β],
+Error(y; q, b) ∈ [α′, β′]
+dy
+y
+(a limit that they proved exists). Rubinstein and Sarnak established that if a and b are
+both squares or both nonsquares modulo q, then this distribution is symmetric, in the
+sense that
+α ≤ Error(x; q, a) ≤ β, α′ ≤ Error(x; q, b) ≤ β′
+happens as often as
+α′ ≤ Error(x; q, a) ≤ β′, α ≤ Error(x; q, b) ≤ β.
+In other words, there is no sign of any bias, of any form, at all: the arithmetic progres-
+sions a (mod q) and b(mod q) are interchangeable in the limit.
+This was all studied in much more generality. For example, one can ask about the
+twenty-four possible orderings of the four prime number counts
+#{primes 8n + 1 ≤ x}, #{primes 8n + 3 ≤ x},
+#{primes 8n + 5 ≤ x}, #{primes 8n + 7 ≤ x}.
+Rubinstein and Sarnak showed that each ordering occurs for inﬁnitely many values of
+x; in fact, each ordering occurs a positive proportion of the time (in the logarithmic
+measure). This can be generalized to all moduli q and to as many distinct arithmetic
+progressions a1, . . . , ar (mod q) as one likes. That is, one can study the distribution of
+January 2006] PRIME NUMBER RACES 21
+(Error(x; q, a1), Error(x; q, a2), . . . , Error(x; q, ar )).
+Assuming only the Generalized Riemann Hypothesis, they prove that the distribu-
+tion function18 for this vector of error terms exists. Assuming also the linear inde-
+pendence of the pertinent γ s over the rational numbers, they prove that for distinct
+a1, . . . , ar (mod q), none of which has any factors in common with q, the ordering
+#{primes qn + a1 ≤ x} < #{primes qn + a2 ≤ x} < · · · < #{primes qn + ar ≤ x}
+occurs for a positive proportion (under the logarithmic measure) of values x. They also
+proved that, for any ﬁxed r , these proportions get increasingly close to 1/r ! as q gets
+larger. It seems extremely unlikely that this proportion is usually exactly 1/r !, but we
+cannot prove that it is or isn’t except in the following special situation.
+Earlier we saw that the distribution function is symmetric when we have a two-
+progression race and the progressions are either both squares or both nonsquares mod-
+ulo q. Surprisingly, Rubinstein and Sarnak showed that there is only one other situation
+in which the distribution function is symmetric no matter how we swap the variables
+with one another, namely, the race between three arithmetic progressions of the form
+a (mod q), aω (mod q), aω2 (mod q),
+where ω3 ≡ 1(mod q) but ω ̸≡ 1(mod q). However, Rubinstein and Sarnak’s result
+that the distribution function is not usually symmetric still leaves open the possibility
+that each ordering in a race occurs with the same frequency.19
+In discussing Shanks’s histogram of values of Error(x; 4, 3) − Error(x; 4, 1) for
+various values of x, we guessed that “the histogram will more and more resemble
+something like a bell-shaped curve centered at 1” as we take more data points. One
+perhaps surprising consequence of the work of Rubinstein and Sarnak is that this most
+obvious guess is not the correct one: although there is a distribution function, it will
+not be as simple and elegant as the classical “normal distribution” bell curve.
+4. WHAT RESEARCH IS HAPPENING RIGHT NOW? After Littlewood’s great
+(and, at the time, quite surprising) results in 1914, there was a lull in research in “com-
+parative prime number theory” until the ﬁfties and sixties. At that time, Littlewood’s
+ideas were extended in several theoretical directions that were arguably suggested di-
+rectly by Littlewood’s work and by substantial calculations of Shanks, Hudson, and
+others. By the nineties, it appeared that most of what could be done in this subject
+had been done (and that much would never be done), although Kaczorowski was still
+proving some new results at this time.
+In 1993, Giuliana Davidoff taught a senior-level undergraduate course at Mount
+Holyoke College in analytic number theory. Finding so many interested students, Pro-
+fessor Davidoff decided that she could run a fun “Research Experience for Under-
+graduates” (REU) that summer investigating prime number races. Along with students
+Caroline Osowski, Jennifer vanden Eynden, Yi Wang, and Nancy Wrinkle, she did
+some important calculations and proved several results that will be stated in section 5.
+By chance, Davidoff met Sarnak on summer vacation. She described her REU
+project and how they were developing the computational approach of Stark to such
+problems. In an e-mail to the ﬁrst-named author Sarnak wrote: “I was not familiar
+with this Chebyshev bias feature and became fascinated. In particular I was . . . very
+interested to put a deﬁnite number as to the probability of π(x) beating Li(x).”
+18Deﬁned by a certain limit of integrals, analogous to the limit a few lines earlier.
+19Since, for example, a function can be positive half the time without being symmetric.
+22 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+Sarnak continued: “When I got back to Princeton I chatted with Fernando20 about
+this . . . and began to work on this. . . . It was clear that many zeroes would have to
+be computed.” Sarnak had previously discussed other questions on the distribution of
+prime numbers with a bright undergraduate, Mike Rubinstein. “Mike, who was looking
+for a senior thesis topic, got very involved in this and after a while he and I worked on
+the problem as collaborators and this led to our paper.” This was quite an extraordinary
+senior thesis, as it became one of the most inﬂuential papers in recent analytic number
+theory. Subsequently Rubinstein went on to get his Ph.D. and has become one of the
+world’s leading researchers in the computation of different types and aspects of zeta-
+functions.21
+Soon thereafter, the second-named author read Rubinstein and Sarnak’s paper and
+became interested in determining the “probabilities” for some of the three-way prime
+number races that Rubinstein and Sarnak’s work did not address—for example, the
+race between the three contestants
+#{primes 8n + 3 ≤ x}, #{primes 8n + 5 ≤ x}, #{primes 8n + 7 ≤ x}.
+Note that none of these arithmetic progressions contains any squares.
+With colleague Andrey Feuerverger at the University of Toronto,22 he created a
+technique to determine the frequencies of the various orderings of contestants in a
+prime number race with more than two contestants. Unexpectedly, they found that the
+six orderings of the three contestants in the race just cited do not necessarily each
+happen one sixth of the time. In fact,
+#{primes 8n + 3 ≤ x} > #{primes 8n + 5 ≤ x} > #{primes 8n + 7 ≤ x}
+holds for approximately 19.2801% of integers x (in the logarithmic measure), while
+#{primes 8n + 5 ≤ x} > #{primes 8n + 3 ≤ x} > #{primes 8n + 7 ≤ x}
+holds for approximately 14.0772% of integers x (under appropriate assumptions).
+This is strange, for in the race between primes of the form 8n + 3 and primes of the
+form 8n + 5 both contestants are in the lead half the time, yet if we look only at values
+of x for which both of these prime number counts are ahead of the count for primes of
+the form 8n + 7, then the 8n + 3 primes are more likely to be ahead!
+More esoteric races. The ﬁrst author’s involvement in the topic of this paper came
+from an invitation to speak at an MAA meeting in Montgomery, Alabama, in 2001,
+which gave him an excuse to read up on this fascinating subject. A subsequent dis-
+cussion with students led to the creation of a 2001–2002 summer VIGRE research
+group at the University of Georgia to investigate analogous questions about “twin
+prime races”—races that investigate how many pairs of primes differ by two or four or
+six or any ﬁxed even number. In section 5, we present the work of a team of students at
+the University of Georgia who sought further data and tried to make predictions about
+such races.
+20Fernando Rodriguez-Villegas, now of the University of Texas at Austin, but then a Princeton postdoctoral
+fellow who had lots of computational experience.
+21Michael Rubinstein is now an assistant professor at the University of Waterloo.
+22Greg Martin was then a postdoctoral fellow at Toronto before becoming an assistant professor at the
+University of British Columbia.
+January 2006] PRIME NUMBER RACES 23
+There are results known that give asymptotics for the number of primes having
+certain properties. For example, when is 2 a cube modulo the prime p? It is easy to see
+that this is the case for all primes of the form 3n + 2, so we focus on the other primes.
+It is known that, asymptotically, 2 is a cube for one-third of the primes of the form
+3n + 1. We thus ask whether, typically, slightly more or slightly less than one-third of
+the primes p = 3n + 1 have the property that 2 is a cube modulo p.
+In his recent doctoral thesis at the University of British Columbia, Nathan Ng23
+noted that this question can be answered using techniques similar to those of Rubin-
+stein and Sarnak, since the count of these primes depends in an analogous way on the
+zeros of yet another type of L-function. Indeed, Ng observed that such results can be
+generalized to many cases in which we know the asymptotics for a set of primes that
+can be described by Galois theory.24
+Ng gave the following nice example of his work. Power series like
+q
+∞∏
+n=1
+(1 − qn )(1 − q23n ) =
+∞∑
+n=1
+an qn
+appear frequently in arithmetic geometry: this is an example of a modular form, and
+it has all sorts of seemingly miraculous properties (see Serre’s book [23]). One such
+miracle is that for every prime p the value of ap is 2, 0, or −1 and that the proportions
+of each are around 1/6, 1/2, and 1/3, respectively. Under the appropriate assumptions
+Ng showed that, in the logarithmic measure,
+2#{ p ≤ x, ap = 0} > 6#{ p ≤ x, ap = 2} for ≈ 98.30% of the values of x,
+2#{ p ≤ x, ap = 0} > 3#{ p ≤ x, ap = −1} for ≈ 72.46% of the values of x,
+and
+3#{ p ≤ x, ap = −1} > 6#{ p ≤ x, ap = 2} for ≈ 95.70% of the values of x.
+There are several other natural questions pertaining to prime number races that have
+been the subject of research over the last few years.
+It can take a long time to take the lead. Although Team 1 does occasionally get
+ahead in the Mod 4 Race, it takes quite a while for this to happen. For instance, x is
+larger than 25,000 the ﬁrst time Team 1 takes the lead and then only momentarily; the
+ﬁrst time Team 1 sustains the lead over a longer interval occurs when x is larger than
+half a million. Similarly, in the Mod 3 Race, x is larger than half a trillion before Team
+1 takes the lead. In the π(x) versus Li(x) race, we still do not know exactly when π(x)
+ﬁrst grabs the lead, though the answer is deﬁnitely gigantic.
+Another situation is where one team is ganged up on by the other teams. For in-
+stance, we saw that primes of the form 8n + 1 lag far behind primes of the forms
+8n + 3, 8n + 5, or 8n + 7 (because all the odd squares, including squares of primes,
+are of the form 8n + 1, a heavy burden on Team 1). In fact, the ﬁrst time that Team
+1 even gets out of last place is beyond half a billion: x = 588, 067, 889 is the ﬁrst
+time that there are more primes of the form 8n + 1 up to x than there are primes of
+23Nathan Ng is now an assistant professor at the University of Ottawa.
+24The L-functions in question are Artin L-functions, and the asymptotics for conjugacy classes under the ap-
+propriate Frobenius maps are obtained by Cebotarev’s density theorem. Analogous results are proved under the
+assumption of holomorphy for these L-functions as well as the Riemann Hypothesis and linear independence
+over the rationals of their zeros.
+24 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+the form 8n + 5. Moreover, x is roughly 1.9282 × 1014 before there are more primes
+of the form 8n + 1 up to x than there are primes of the form 8n + 7. Kaczorowski
+and, independently, Rubinstein and Sarnak showed that Team 1 runs in ﬁrst place in
+this four-way race for a positive proportion of values of x; however, the ﬁrst time this
+occurs is beyond 1028.
+So why does it take so long for some competitors to get their turn in the lead? To
+understand this we need to examine the most “important” terms in formulas like (3),
+namely, the “1” term and the ﬁrst few summands, those for which γ is small. Looking
+closely at formula (3), we see that these ﬁrst few summands, which correspond to the
+nontrivial zeros of the Riemann zeta-function that are closest to the real axis, have
+γ approximately equal to 14.13, then 21.02, 25.01, 30.42, . . . . In particular, these
+summands are all less than 1/7 in absolute value, which is small relative to the “1”
+term. Even if we could ﬁnd a value of x for which many of the initial terms sin(γ ln x)
+are close to −1, it would take at least the ﬁrst twenty-one terms of the sum to be
+negative enough to compensate for the initial “1” term. Thus these values of x must be
+special in that many of the sin(γ ln x) terms must be close to −1 simultaneously.
+If we look at the Mod q Race as q gets larger, it turns out that the relevant numbers
+γ become smaller (that is, the zeros of the appropriate Dirichlet L-functions lie closer
+to the real axis). As a result, changes in the lead happen sooner and more frequently.
+However, tiny values of γ come with their own problems. For example, when
+q = 163 the relevant sum has an especially small γ , namely, γ ≈ 0.2029. This one
+summand has a large impact on the ﬁnal answer since its denominator is so small. The
+ﬁrst time sin(γ ln x) is close to −1 occurs when γ ln x is close to 3π/2, which corre-
+sponds to a value of x around twelve billion! And if that x doesn’t work out because
+of the other terms, then the next such value is when γ ln x is close to 7π/2, which
+corresponds to x ≈ 3.43 × 1023. No wonder it can take a while to see the predicted
+effects!
+Sharing the lead. In a race between two contestants who keep taking the lead from
+one another, there will be plenty of moments when the two contestants are tied. Rea-
+son: because there are arbitrarily large values of x for which
+#{primes qn + a ≤ x} > #{primes qn + b ≤ x}
+as well as arbitrarily large values for which
+#{primes qn + a ≤ x} < #{primes qn + b ≤ x}
+and because these counting functions take only integer values, there must be inﬁnitely
+many integers x for which
+#{primes qn + a ≤ x} = #{primes qn + b ≤ x}.
+What about races with three or more contestants? Even if each of the contestants
+leads at some point, there seems to be no particular reason for all three of them to be
+tied at any point. So we ask: Do there exist inﬁnitely many integers x for which
+#{primes qn + a ≤ x} = #{primes qn + b ≤ x} = #{primes qn + c ≤ x} = · · ·?
+Feuerverger and Martin conjecture that there are inﬁnitely many such ties in a three-
+way Mod q Race, but not in a Mod q Race with four or more teams. Their compelling
+argument runs as follows: Consider the (k − 1)-dimensional vector whose ith entry is
+the difference
+January 2006] PRIME NUMBER RACES 25
+#{primes qn + ai ≤ x} − #{primes qn + ai+1 ≤ x} (5)
+for i = 1, 2, . . . , k − 1. Notice that the k counting functions #{primes qn + ai ≤ x}
+are all tied with one another precisely if this (k − 1)-dimensional vector has the value
+(0, 0, . . . , 0). As we let x increase, this vector changes each time x equals a prime
+number in one of the arithmetic progressions we are counting, changed by adding one
+of the vectors
+(1, 0, . . . , 0), (−1, 1, 0, . . . , 0), . . . , (0, . . . , 0, −1, 1, 0, . . . , 0), . . . , (0, . . . , 0, −1),
+(6)
+depending on whether the prime is of the form qn + a1 or qn + a2 or . . . qn + ak ,
+respectively. The prime number theorem for arithmetic progressions tells us that each
+of these vectors is roughly equally likely to occur.
+From this, Feuerverger and Martin suggest that the progress of the (k − 1)-
+dimensional vector in (5) can be modelled by a “random walk” on the (k − 1)-
+dimensional lattice generated by the vectors listed in (6). Now it is known that, with
+probability one, a random walk on a one- or two-dimensional lattice will return to the
+origin (indeed, will visit every lattice point) inﬁnitely often but a random walk on a
+lattice of dimension three or greater will return to the origin only ﬁnitely often. This
+is the source of Feuerverger and Martin’s conjecture, since the lattices of dimension
+one and two in this model correspond to prime number races with two and three
+contestants, respectively.
+Certain special symmetries. Assuming the Generalized Riemann Hypothesis, Feuer-
+verger and Martin proved that certain conﬁgurations
+#{primes qn + a1 ≤ x} < #{primes qn + a2 ≤ x} < · · · < #{primes qn + ar ≤ x}
+occur just as often25 as certain other conﬁgurations
+#{primes qn + b1 ≤ x} < #{primes qn + b2 ≤ x} < · · · < #{primes qn + br ≤ x}
+in the following situations:
+• the ai s and bi s are inverses of each other modulo q; that is, ai bi ≡ 1(mod q) for
+all i;
+• the list of bi s is just the reversal of the list of ai s (that is, bi = ar +1−i for all i) and
+are either all squares modulo q or all nonsquares modulo q;
+• there exists an integer m such that ai ≡ mbi (mod q) for each i, and in addition,
+one of the following holds: the ai s are all squares modulo q, or for each i the two
+numbers ai and bi are either both squares modulo q or both nonsquares modulo q.
+Probably the orderings appear with different frequencies if they are not related by some
+special symmetry of this type.
+25With respect to the logarithmic measure of the set of such values x.
+26 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+And what if the Riemann Hypothesis is false? If the Generalized Riemann Hy-
+pothesis is false, it turns out to be easier to prove that #{primes qn + a ≤ x} >
+#{primes qn + b ≤ x} for a positive proportion26 of x, since the “1” term in the for-
+mula analogous to (3) becomes irrelevant, and this was what caused the bias when
+we assumed the Generalized Riemann Hypothesis. However, whether one can prove
+that this happens 50% of the time is still in doubt. If one could prove this under the
+assumption that the Generalized Riemann Hypothesis were false, then we would have
+an unconditional proof that the Mod q Race between two squares or two nonsquares
+is always an even race (by combining such a proof with the work of Rubinstein and
+Sarnak).
+The behavior of prime number races might be genuinely different if the General-
+ized Riemann Hypothesis does not hold. In 2001, Ford and Konyagin proved that if the
+Generalized Riemann Hypothesis is false—false in an absurdly convenient, yet feasi-
+ble, way—then there are some orderings of the prime number counting functions that
+never occur.
+To describe one of their constructions, we need to discuss a generalization of the
+Riemann zeta-function. Deﬁne χ to be that function for which
+χ(5m) = 0, χ(5m ± 1) = ±1, χ(5m ± 2) = ±i
+for all integers m, and let L(s, χ) = ∑
+n≥1 χ(n)/ns (this is another example of a
+Dirichlet L-function). Suppose that the Generalized Riemann Hypothesis is true ex-
+cept that L(s, χ) has a single zero σ + iγ with σ > 1/2 and γ ≥ 0 and that L(s, ¯χ )
+has a zero at σ − iγ as well (zeros always come in conjugate pairs). The formula
+analogous to (3) is
+#{primes 5n + a ≤ x} − 1
+4 π(x)
+xσ / ln x ≈ −2Re
+(
+χ(a) cos(γ log x) + i sin(γ log x)
+σ + iγ
+)
+when 1 ≤ a ≤ 4. If we work this out explicitly, we see that
+1
+2 (σ 2 + γ 2) #{primes 5n + 1 ≤ x} − 1
+4 π(x)
+xσ / ln x ≈ −σ cos(γ ln x) − γ sin(γ ln x),
+1
+2 (σ 2 + γ 2) #{primes 5n + 2 ≤ x} − 1
+4 π(x)
+xσ / ln x ≈ σ sin(γ ln x) − γ cos(γ ln x),
+1
+2 (σ 2 + γ 2) #{primes 5n + 3 ≤ x} − 1
+4 π(x)
+xσ / ln x ≈ −σ sin(γ ln x) + γ cos(γ ln x),
+1
+2 (σ 2 + γ 2) #{primes 5n + 4 ≤ x} − 1
+4 π(x)
+xσ / ln x ≈ σ cos(γ ln x) + γ sin(γ ln x).
+Amazingly, this implies that the conﬁguration
+#{primes 5n + 3 ≤ x} < #{primes 5n + 2 ≤ x}
+< #{primes 5n + 4 ≤ x} < #{primes 5n + 1 ≤ x}
+26In the logarithmic measure.
+January 2006] PRIME NUMBER RACES 27
+cannot occur when x is sufﬁciently large! Why? The ﬁrst inequality implies that
+−σ sin(γ ln x) + γ cos(γ ln x) ⪅ σ sin(γ ln x) − γ cos(γ ln x)
+or, equivalently, that
+0 ⪅ σ sin(γ ln x) − γ cos(γ ln x),
+where the ⪅ symbol means that the inequality holds up to an error that goes to
+zero as x tends to inﬁnity. Similarly, the third inequality implies that σ cos(γ ln x) +
+γ sin(γ ln x) ⪅ 0. The three-inequality conﬁguration is therefore equivalent to
+0 ⪅ σ sin(γ ln x) − γ cos(γ ln x) ⪅ σ cos(γ ln x) + γ sin(γ ln x) ⪅ 0,
+which implies that both
+σ sin(γ ln x) − γ cos(γ ln x) ≈ 0
+and
+σ cos(γ ln x) + γ sin(γ ln x) ≈ 0.
+However, multiplying by sin(γ ln x) and cos(γ ln x), respectively, yields
+σ sin2(γ ln x) − γ cos(γ ln x) sin(γ ln x) ≈ 0
+and
+σ cos2(γ ln x) + γ cos(γ ln x) sin(γ ln x) ≈ 0.
+Adding these together yields
+σ = σ sin2(γ ln x) + σ cos2(γ ln x) ≈ 0,
+which is ridiculous: it would imply that σ tends to 0 as x goes to inﬁnity, yet we know
+that σ > 1/2!
+Ford and Konyagin proved more. For any three arithmetic progressions modulo
+q there is a feasible (but equally unlikely) way to prescribe Generalized-Riemann-
+Hypothesis-violating zeros of the appropriate Dirichlet L-functions that would cause
+one of the six orderings of the three arithmetic progressions not to occur beyond a
+certain x-value. Moreover, the zeros in these conﬁgurations can be placed arbitrarily
+far from the real axis, which implies that there is no way for us to rule out such a
+possibility by a ﬁnite computation. It seems that their method can be extended to show
+that certain races between just two arithmetic progressions keep the same leader from
+some point onwards, provided there is another technically feasible, but rather unlikely,
+contradiction to the Generalized Riemann Hypothesis. In summary, their results seem
+to indicate that it will be very difﬁcult to obtain deﬁnitive results independent of any
+unproved hypothesis.
+5. UNDERGRADUATE RESEARCH PROJECTS.
+The Mount Holyoke College REU. This program consisted of students Caroline
+Osowski, Jennifer vanden Eynden, Yi Wang, and Nancy Wrinkle, led by Giuliana
+Davidoff, who describes the experience:
+In my senior class in analytic number theory, I had asked students to collect data
+on various pertinent questions so as to conjecture a forthcoming theorem and then to
+report their results to the whole class. Having seen many examples where the theo-
+28 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+rems matched the initial experimental evidence, I asked them to collect data on the
+Mod 4 Race and then surprised them with Littlewood’s theorem. Next we decided to
+investigate the Mod 3, 5, 7, and 11 Races, in particular whether Team N, the set of
+primes that are not congruent to squares modulo q, consistently leads over Team S,
+the set of primes that are congruent to squares modulo q. The results found were in-
+triguingly different from one modulus to another, so we decided to study this during
+the upcoming summer REU program.
+The students began by tracking down anything in the existing literature on sign
+changes and posting an appeal on a number theory website. Within days we had re-
+ceived a generous response from Andrew Odlyzko, who pointed us to relevant data of
+Robert Rumely. This allowed us to begin our own work in earnest.
+We were most fascinated by a 1971 paper of Harold Stark [25], in which he sug-
+gested a method to study prime races between primes from any two given arithmetic
+progressions. Back then, there was no general procedure known to prove that each
+team took the lead inﬁnitely often in the race between the primes of the form qn + a
+and the primes of the form qn + b, where a is a square modulo q and b is not. Stark’s
+results thus pertained to the ﬁrst case not covered by the prior work of Littlewood [18]
+and of Knapowski and Tur´an [16], [17]. As he himself pointed out, it seemed particu-
+larly difﬁcult to show that qn + a leads inﬁnitely often, even in the case of primes of
+the form 5n + 4 racing against primes of the form 5n + 2.
+Stark rephrased the problem in terms of two auxiliary functions (which are com-
+plicated expressions, analogous to (3), given in terms of zeros of various Dirichlet L-
+functions) and, in doing so, created a beautiful setting in which he obtained a theorem
+from a numerical calculation. In this manner he was able to show that
+#{primes 5n + 4 ≤ x} > #{primes 5n + 2 ≤ x}
+for arbitrarily large values of x, assuming the Generalized Riemann Hypothesis. In fact
+he proved this with an assumption weaker than the Generalized Riemann Hypothesis:
+one needs only that the Dirichlet L-functions associated with this race have no real
+zeros in the interval (1/2, 1).
+The REU group began by making a detailed numerical study of Stark’s formula (for
+his Mod 5 Race) in order to appreciate how his complicated expressions vary with the
+actual numbers of primes: we found that there are very good correlations, though a
+little less so when we used fewer zeros to approximate the formula analogous to the
+right-hand side of (3).
+Using Stark’s results and our own numerical calculations, we were able to prove the
+by now expected result in the ﬁrst cases not treated by him [6]:
+Theorem. Assume that Dirichlet L-functions have no real zeros in the interval
+(1/2, 1). For a = 1, 2, or 4 (the squares modulo 7) and b = 3, 5, or 6 (the non-
+squares modulo 7) there are arbitrarily large values of x for which
+#{primes 7n + a ≤ x} > #{primes 7n + b ≤ x}.
+In fact, there exists a positive constant c such that there are arbitrarily large values of
+x for which
+#{primes 7n + a ≤ x} − #{primes 7n + b ≤ x} > c√
+x/ log x.
+The proof of the theorem is based on calculations of Stark’s formula using available
+tables of zeros of Dirichlet L-functions. We could have perhaps gone on to settle this
+question about races, one prime modulus at a time.
+January 2006] PRIME NUMBER RACES 29
+However, the question that initially interested us was whether Team S takes the
+lead over Team N for arbitrarily large x. To study this we had to modify Stark’s for-
+mulas appropriately: this time we found that the formulas involve only the zeros of the
+Dirichlet L-function
+∑
+n≥1
+(n/q)
+ns , (7)
+where (n/q) = 1 if n is a square modulo q, (n/q) = 0 if q divides n, and (n/q) = −1
+if n is not a square mod q.
+We found the same remarkable correlations between the actual count of primes and
+our approximation. Had the summer not ended, we would surely have proved that the
+lead changes hands inﬁnitely often in this Mod 7 race.
+I was later able to go on and prove [7] that the lead changes hands inﬁnitely often
+in the Team S vs. Team N race for any modulus q, assuming a weak version of the
+Generalized Riemann Hypothesis. One needs to assume only that any real zero of the
+Dirichlet L-function (7) lies to the left of the least upper bound of the real parts of the
+complex zeros (which holds, in particular, when the Dirichlet L-function has no real
+zeros).
+The University of Georgia VIGRE. This research group consisted of students
+Michael Beck, Zubeyir Cinkir, Brian Lawler, Eric Pine, Paul Pollack, Charles Pooh,
+and Michael Guy (who describes their ﬁndings in this subsection), with postdoctoral
+mentor Jim Solazzo.
+For any even number 2k we believe that there are inﬁnitely many integers n for
+which both n and n + 2k are prime. When 2k = 2, this is the famous Twin Prime
+Conjecture. At present, we cannot prove that there are inﬁnitely many “prime pairs”
+n and n + 2k for any value of 2k whatsoever. Nonetheless, we can predict how many
+there should be. The following conjecture as to how many such pairs there are up to x
+is due, essentially, to Hardy and Littlewood [12]:
+The Hardy-Littlewood Conjecture. Let k be a positive integer, and let π2k (x) be the
+number of prime pairs ( p, p + 2k) with p ≤ x. Then
+π2k (x) ∼ 2C2
+∏
+p|k, p>2
+( p − 1
+p − 2
+)
+· Li2(x),
+where
+C2 =
+∏
+p>2
+(
+1 − 1
+( p − 1)2
+)
+and
+Li2(x) =
+∫ x
+2
+d x
+(log x)2 .
+We decided to investigate this problem by collecting and analyzing data. Our pro-
+gram found pairs of primes using a modiﬁed sieve of Eratosthenes and then counted
+them. Some of the initial data is collected in Table 8.
+30 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+Table 8. π2k (x) is the number of prime pairs ( p, p + 2k) with p ≤ x.
+X π2(X ) π4(X ) π6(X ) π8(X ) π10(X )
+103 35 41 74 38 51
+104 205 203 411 208 270
+105 1,224 1,216 2,447 1,260 1,624
+106 8,169 8,144 16,386 8,242 10,934
+107 58,980 58,622 117,207 58,595 78,211
+108 440,312 440,258 879,908 439,908 586,811
+109 3,424,506 3,424,680 6,849,047 3,426,124 4,567,691
+1010 27,412,679 27,409,999 54,818,296 27,411,508 36,548,839
+1011 224,376,048 224,373,161 448,725,003 224,365,334 299,140,330
+1012 1,870,585,220 1,870,585,459 3,741,217,498 1,870,580,394 2,494,056,601
+Notice that the counts for 2k = 2, 4, and 8 are very close. We graphed the data for
+each value of 2k ≤ 30, noticing that π2k (x) and π2ℓ(x) are close if the prime factors
+of 2k and of 2ℓ are the same. Indeed, Hardy and Littlewood’s conjecture predicts that
+π2k (x) ∼ π2ℓ(x) in these circumstances, so we felt it would be interesting to study this
+“twin-prime race.”
+If we wish to compare π2(x) and π6(x), then it makes sense to “renormalize” so
+that the predictions of Hardy and Littlewood are the same for both. In other words, the
+conjecture predicts that π6(x)/2 should be approximately π2(x), so it makes sense to
+compare these two quantities. More generally, we deﬁne
+π′
+2k (X ) = π2k (X ) ·
+∏
+p|k, p > 2
+( p − 2
+p − 1
+)
+(k ≥ 1), πH L (X ) = 2C2 · Li2(X ).
+Hardy and Littlewood’s conjecture predicts that π′
+2k (X ) ∼ πH L (X ) for all k, so we
+have tabulated their difference (Table 9):
+Table 9. The renormalized twin prime race.
+X πH L (X ) π ′
+2 − πH L π ′
+4 − πH L π ′
+6 − πH L π ′
+8 − πH L π ′
+10 − πH L
+103 45 −10 −4 −8 −7 −7
+104 214 −9 −11 −9 −6 −12
+105 1,248 −24 −32 −25 12 −30
+106 8,248 −79 −104 −55 −6 −48
+107 58,753 227 −131 −150 −158 −95
+108 440,367 −55 −109 −413 −459 −259
+109 3,425,308 −802 −628 −785 816 460
+1010 27,411,416 1,263 −1,417 2,268 92 213
+1011 224,368,866 7,182 4,295 −6,365 −3,532 −13,619
+1012 1,870,559,881 25,339 25,578 48,868 20,513 −17,430
+What a remarkable ﬁt! It looks like |π′
+2k (x) − πH L (x)| is usually well less than √
+x.
+In fact, we collected data for k = 1, 2, . . . , 50 in this range of x, and this prediction
+seems always to be very good.
+However, this is a paper about prime races, and we wanted to investigate further
+whether there are any particular winners or losers to this race. At the beginning of our
+investigation, we seemed to have spotted what we thought were winners and losers in
+the race. It appeared that the pairs ( p, p + 60) and ( p, p + 80) were ahead of the other
+January 2006] PRIME NUMBER RACES 31
+pairs with the same prime divisors, based on data up to 5 · 109. On the other hand, after
+counting up to 1012 they were no longer regularly the winners. Similarly, several prime
+pairs were consistently the losers at the start of the prime twin race, but after a while
+there were no consistent losers. As an interesting tidbit, our program noted that there
+were 14,455 changes in ﬁrst place between 103 and 109!
+In the end, this appears to be a race in which there are no particular winners or
+losers, and still lots of unanswered questions. The main problem in analyzing these
+prime pairs races is that we have no idea what formula similar to (3) would count
+prime pairs as a sum of nice “waves.”
+ACKNOWLEDGMENTS. The section “Doing the Wave” was inspired by Enrico Bombieri’s delicious
+article [4]. We thank Carter Bays, Kevin Ford, Richard Hudson, and Nathan Ng for making available parts of
+their works that have not appeared in print. We also thank Guiliana Davidoff and Michael Guy for preparing
+the two parts of section 5.
+REFERENCES
+1. C. Bays and R.H. Hudson, Details of the ﬁrst region of integers x with π3,2(x) < π3,1(x), Math. Comp.
+32 (1978) 571–576.
+2.
+ , Zeros of Dirichlet L-functions and irregularities in the distribution of primes, Math. Comp. 69
+(2000) 861–866.
+3.
+ , A new bound for the smallest x with π(x) > Li(x), Math. Comp. 69 (2000) 1285–1296.
+4. E. Bombieri, Prime Territory: Exploring the inﬁnite landscape at the base of the number system, The
+Sciences 32 (5) (1992) 30–36.
+5. H. Davenport, Multiplicative Number Theory, Springer-Verlag, Berlin, 1980.
+6. G. Davidoff, C. Osowski, J. vanden Eynden, Yi Wang, and N. Wrinkle, Extensions of some results of
+Harold Stark on comparative prime number theory (to appear).
+7. G. Davidoff, A generalization of Littlewood’s theorem (to appear).
+8. A. Feuerverger and G. Martin, Biases in the Shanks-R´enyi prime number race, Experiment. Math. 9
+(2000) 535–570.
+9. K. Ford and S. Konyagin, The prime number race and zeros of Dirichlet L-functions off the critical line,
+Duke Math. J. 113 (2002) 313–330.
+10.
+ , The prime number race and zeros of Dirichlet L-functions off the critical line, II, Bonner Math-
+ematische Schriften, vol. 360, D. R. Heath-Brown and B. Z. Moroz, eds., Bonn, 2003.
+11. R. K. Guy, The strong law of small numbers, this MONTHLY 95 (1988) 697–712.
+12. G. H. Hardy and J. E. Littlewood, Some problems of Partitio Numerorum III: On the expression of a
+number as a sum of primes, Acta Math. 44 (1922) 1–70.
+13. R. H. Hudson, A common combinatorial principle underlies Riemann’s formula, the Chebyshev phe-
+nomenon, and other subtle effects in comparative prime number theory. I, J. Reine Angew. Math. 313
+(1980) 133–150.
+14. J. Kaczorowski, On the Shanks-R´enyi race problem, Acta Arith. 74 (1996) 31–46.
+15.
+ , On the distribution of primes (mod 4), Analysis 15 (1995) 159–171.
+16. S. Knapowski and P. Tur´an, Comparative prime-number theory, I-III, Acta Math. Acad. Sci. Hungar. 13
+(1962) 299–364.
+17.
+ , Comparative prime-number theory, IV-VIII, Acta Math. Acad. Sci. Hungar. 14 (1963) 31–250.
+18. J. E. Littlewood, Distribution des nombres premiers, C. R. Acad. Sci. Paris 158 (1914) 1869–1872.
+19. G. Martin, Asymmetries in the Shanks-R´enyi prime number race, Millennial Conference on Number
+Theory (Urbana, Illinois) (to appear).
+20. N. Ng, Limiting Distributions and Zeros of Artin L-Functions, Ph.D. thesis, University of British
+Columbia, 2000.
+21. M. Rubinstein and P. Sarnak, Chebyshev’s bias, Experiment. Math. 3 (1994) 173–197.
+22. P. Sarnak, unpublished correspondence.
+23. J. -P. Serre, A Course in Arithmetic, Springer-Verlag, Berlin, 1973.
+24. D. Shanks, Quadratic residues and the distribution of primes, Math. Comp. 13 (1959) 272–284.
+25. H. M. Stark, A problem in comparative prime number theory, Acta. Arith. 68 (1971) 311-320.
+26. E. C. Titchmarsh, The Theory of the Riemann Zeta-Function, 2nd ed., Oxford University Press, New
+York, 1986.
+27. A. Winter, On the distribution function of the remainder term of the prime number theorem, Amer. J.
+Math. 63 (1941) 233–248.
+32 c⃝ THE MATHEMATICAL ASSOCIATION OF AMERICA [Monthly 113
+ANDREW GRANVILLE was the Barrow Professor of Mathematics at the University of Georgia before mov-
+ing, in 2002, to a Canadian Research Chair in number theory at the Universit´e de Montr´eal. His awards include
+the Presidential Faculty Fellowship in mathematics (from President Clinton) in 1994 and the 1995 Hasse Prize
+of the MAA. He was an invited speaker at the ICM (Zurich, 1994) and a plenary speaker at the Annual Joint
+Meetings of 1996 and 2002. He helped create the questions for the MAA’s Putnam Exam from 1999 to 2002,
+and he has served on the scientiﬁc advisory panels of MSRI and of the Fields Institute, as well as on prize
+selection committees, such as for the 2005 Cole Prize.
+D´epartment de Math´ematiques et Statistique, Universit´e de Montr´eal, CP 6128 succ Centre-Ville, Montr´eal,
+QC H3C 3J7, Canada
+andrew@dms.umontreal.ca
+GREG MARTIN grew up in Spring, Texas, and attended Stanford University as an undergraduate, receiving
+his bachelor’s degree in 1992. He completed his doctorate in analytic number theory at the University of
+Michigan in 1997 under the supervision of Trevor Wooley and Hugh Montgomery (and thus may be the only
+person to have two Salem Prize winners as advisors). After being a member of the Institute for Advanced Study
+and a postdoctoral fellow at the University of Toronto, he took a faculty position at the University of British
+Columbia in 2001. In addition to playing ultimate and climbing rocks, he is also an avid singer, enjoying both
+collegiate a cappella and classical music.
+Department of Mathematics, University of British Columbia, Room 121, 1984 Mathematics Road, Vancouver,
+B.C., Canada V6T 1Z2
+gerg@math.ubc.ca
+“I’m at a point where I’m not sure Riemann was right, in the case of some
+local curvatures.”
+“The immortal Riemann of Riemann surfaces? You’re going to refute him?
+Baby, you’re too much.”
+“He wouldn’t mind. He was a saint, of sorts. His father was a Lutheran pastor.
+He himself died at the age of thirty-nine, of tuberculosis. He left behind note-
+books and papers full of ideas he hadn’t had time to publish. The whole universe,
+you know, is a kind of Riemann surface, according to general relativity.”
+—John Updike, Villages, Alfred A. Knopf, New York, 2004, pp. 98–99;
+submitted by Henry Ricardo, Medgar Evers College (CUNY)
+January 2006] PRIME NUMBER RACES 33

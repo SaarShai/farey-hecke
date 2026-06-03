@@ -1,0 +1,1840 @@
+arXiv:2203.12266v5  [math.NT]  27 Jun 2022
+Chebyshev’s Bias against Splitting and Principal
+Primes in Global Fields
+Miho Aoki ∗and Shin-ya Koyama †
+Dedicated to Professor Nobushige Kurokawa on his 70th birthday
+Abstract
+Reasons for the emergence of Chebyshev’s bias were investigated .
+The Deep Riemann Hypothesis (DRH) enables us to reveal that the
+bias is a natural phenomenon for achieving a well-balanced disposition
+of the whole sequence of primes, in the sense that the Euler produc t
+converges at the center. By means of a weighted counting functio n of
+primes, the authors succeed in expressing magnitudes of the deﬂe ction
+by a certain asymptotic formula under the assumption of DRH, which
+provides a new formulation of Chebyshev’s bias.
+For any Galois extension of global ﬁelds and for any element σ
+in the Galois group, we have established a criterion of the bias of
+primes whose Frobenius elements are equal to σ under the assump-
+tion of DRH. As an application we have obtained a bias toward non-
+splitting and non-principle primes in abelian extensions under DRH.
+In positive characteristic cases, DRH is known, and all these result s
+hold unconditionally.
+Mathematics Subject Classiﬁcation 11A41, 11M41, 11N05, 11N13,
+11R20, 11R37, 11R42, 11R44, 11R59
+1 Introduction
+Chebyshev’s bias is the phenomenon that there tend to be more primes of
+the form 4 k + 3 than of the form 4 k + 1 (k∈ Z). In fact, if denoting by
+∗Department of Mathematics, Interdisciplinary Faculty of S cience and Engineering,
+Shimane University, 1060, Nishikawatsu, Matsue, Shimane, 690-8504, Japan
+†Department of Biomedical Engineering, Toyo University, 21 00 Kujirai, Kawagoe,
+Saitama, 350-8585, Japan
+1
+π (x; q, a) the number of primes p≤ x such that p≡ a (mod q), then the
+inequality
+π (x; 4, 3)≥ π (x; 4, 1) (1.1)
+holds for any x less than 26861, which is the ﬁrst prime number that vio-
+lates the inequality (1.1). However, both sides draw equal a t the next prime
+26863, and π (x; 4, 3) moves ahead again until 616841. It is computed that
+more than 97% of x< 1011 satisfy the inequality (1.1). In spite of that, Lit-
+tlewood [23] proved that the diﬀerence π (x; 4, 3)− π (x; 4, 1) changes its sign
+inﬁnitely many times. Moreover, Knapowski and Turan (1962) conjectured
+that the limit of the percentage in all positive numbers of th e set
+AX ={x<X |π (x; 4, 3)≥ π (x; 4, 1)}
+as X → ∞ would be equal to 100%. However, it is proved now under
+GRH that the limit does not exist and that the conjecture is fa lse [12].
+Fiorilli and Jouve [7] have recently proved that there exist inﬁnitely many
+Galois extensions L/K of number ﬁelds and associated conjugacy classes
+cσ,c τ (σ, τ∈ Gal(L/K )) of the same size such that the set
+AX ={x<X |π (x; σ )/|cσ|≥ π (x; τ)|cτ|}
+has natural density asymptotically equal to 1, where π (x; σ ) (resp.π (x; τ))
+is the number of prime ideals of norm up to x with Frobenius conjugacy
+class cσ (resp.cτ ).
+In place of such a naive density, the logarithmic density pla ys the role.
+Deﬁne the logarithmic density of the set AX in [2,X ] by
+δ(AX ) = 1
+logX
+∫
+t∈ AX
+dt
+t . (1.2)
+Rubinstein-Sarnak [29] proved that lim X→∞ δ(AX ) = 0 . 9959... under the
+assumption of the GRH and the GSH (Grand Simplicity Hypothes is) for
+the L-functions.
+It is known by Dirichlet’s prime number theorem in arithmeti c progres-
+sions that the numbers of primes of the form 4 k + 3 and 4 k + 1 are to
+asymptotically equal. Then we have found from the following insight that
+Chebyshev’s bias means that the primes of the form 4 k + 3 appear earlier
+than those of the form 4 k + 1.
+For example, in the case that among the ﬁrst 100 prime numbers , 50 of
+the ﬁrst half are of the form 4 k +3 and those of the latter half are of the form
+4k + 1, the inequality π (x; 4, 3)≥ π (x; 4, 1) always holds in this interval
+2
+even if their total number of elements are equal, and the maxi mum diﬀerence
+becomes 50. On the other hand, in the case that primes of the fo rm 4k + 3
+and 4k + 1 appear alternately, the maximum diﬀerence may be 1 even if
+the same inequality holds incessantly. From this discussio n, it is eﬀective
+to apply the structure that “regards smaller primes as heavi er elements”,
+reﬂecting the magnitudes of the primes, so as to elucidate Ch ebyshev’s bias.
+One of the reasons why the logarithmic density was eﬀective wo uld be that
+it treated the contribution of smaller numbers as greater on es by virtue of
+the factor 1/t in the integral in (1.2).
+Therefore in this paper, we utilize the following weighted c ounting func-
+tion
+πs(x; q, a) =
+∑
+p<x: prime
+p≡ a (mod q)
+1
+ps (s≥ 0).
+This is a generalization of the counting function π (x; q, a) = π0(x; q, a).
+Here, small primes allow higher contribution to πs(x; q, a), as long as we
+ﬁx s >0. The function πs(x; q, a) (s >0) should be more appropriate to
+represent the phenomenon, as it reﬂects the size of primes wh ichπ (x; q, a)
+has ignored.
+Indeed, although the natural density of the set
+A(s) ={x> 0|πs(x; 4, 3)− πs(x; 4, 1)> 0}
+did not exist for s = 0 under GRH, it is revealed in this paper under the
+assumption of the Deep Riemann Hypothesis (DRH) that it woul d exist and
+equal to 1 when s = 1/ 2, that is,
+lim
+X→∞
+1
+X
+∫
+t∈ A(1/ 2)∩ [2,X ]
+dt = 1.
+More precisely we would reach under DRH that
+π 1
+2
+(x; 4, 3)− π 1
+2
+(x; 4, 1)∼ 1
+2 log logx (x→∞ ), (1.3)
+where f (x)∼ g(x) (x→∞ ) means that f (x)/g (x)→ 1 as x→∞ . The
+asymptotic (1.3) suggests a formulation of Chebyshev’s bia s.
+This observation is derived from the conditional convergen ce of the Euler
+products of Dirichlet L-functions, which was ﬁrst notice by Goldfeld [10] in
+1982, and later named the Deep Riemann Hypothesis (DRH) by Ku rokawa
+3
+[22]. In the case of Dirichlet L-functions L(s,χ ) for non-principal Dirichlet
+charactersχ , DRH states that it holds on Re( s) = 1/ 2 that
+lim
+x→∞
+(
+(logx)m ∏
+p≤ x: prime
+(
+1− χ (p)
+ps
+) − 1 )
+= L(m)(s,χ )
+emγm! ×
+{√
+2 ( χ 2 = 1, s = 1
+2 )
+1 (otherwise) (1.4)
+with γ the Euler constant and m =mχ = ord s= 1
+2
+L(s,χ ). Taking the loga-
+rithm of (1.4) for the case χ 2 = 1 and s = 1
+2 , the convergence of the above
+limit provides the following:
+∑
+p≤ x: prime
+χ (p)√p +
+(1
+2 +m
+)
+log logx =O(1) ( x→∞ ).
+In particular, if q is an odd prime and χ : ( Z/q Z)× → C× is deﬁned by
+χ (a) =
+(a
+q
+)
+=
+{
+1 ( a∈ ((Z/q Z)× )2)
+− 1 (otherwise) ,
+then we would have
+∑
+b∈ (Z/q Z)×
+quadratic non-residue
+π 1
+2
+(x; q, b)−
+∑
+a∈ (Z/q Z)×
+quadratic residue
+π 1
+2
+(x; q, a)
+=
+∑
+p≤ x: prime
+quadratic non-residue
+1√ p−
+∑
+p≤ x: prime
+quadratic residue
+1√ p
+∼
+(1
+2 +m
+)
+log logx (x→∞ ).
+A more precise result on the diﬀerence between individual π 1
+2
+(x; q, b) and
+π 1
+2
+(x; q, a) is proved in (3.4) in §3 under DRH. Chebyshev’s original case
+(1.3) is restored by choosing ( q, a, b) = (4, 1, 3) in Example 3.4.
+Throughout this paper K is supposed to be a global ﬁeld. Virtue of the
+formula (1.3) allows to reach a formulation of the Chebyshev bias of primes
+p of K as follows.
+4
+Deﬁnition 1.1. Let a(p)∈ R be a sequence over prime ideals p of K such
+that
+lim
+x→∞
+#{p|a(p)> 0, N (p)≤ x}
+#{p|a(p)< 0, N (p)≤ x} = 1.
+The sequence a(p) has a Chebyshev bias to being positive , if there exists
+C >0 such that
+∑
+N (p)≤ x
+a(p)√
+N (p)
+∼ C log logx (x→∞ ),
+where p runs through primes of K. On the other hand, a(p) is unbiased, if
+∑
+N (p)≤ x
+a(p)√
+N (p)
+=O(1) ( x→∞ ).
+Deﬁnition 1.2. Assume that the set of all primes p of K with N (p)≤ x
+is expressed as a disjoint union P1(x)∪ P2(x) and that their proportion
+converges to
+δ = lim
+x→∞
+|P1(x)|
+|P2(x)|.
+There exists a Chebyshev bias toward P1 (or Chebyshev bias against P2), if
+the following asymptotic holds:
+∑
+p∈ P1(x)
+1√
+N (p)
+− δ
+∑
+p∈ P2(x)
+1√
+N (p)
+∼ C log logx (x→∞ )
+for some C >0. On the other hand, there exist no biases between P1 and
+P2, if the following holds:
+∑
+p∈ P1(x)
+1√
+N (p)
+− δ
+∑
+p∈ P2(x)
+1√
+N (p)
+=O(1) ( x→∞ ).
+Denote an n-dimensional nontrivial irreducible Artin representatio n by
+ρ : Gal( K sep/K )→ AutC(V ) ( ρ̸= 1).
+The L-function LK (s,ρ ) is deﬁned by the Euler product as
+LK(s,ρ ) =
+∏
+p
+det
+(
+1− ρ(Frobp)N (p)− s|V Ip
+) − 1
+(Re(s)> 1),
+where p runs through the prime ideals of K withN (p) its norm and Frob p∈
+Gal(K sep/K ) the Frobenius element with Ip the inertia group.
+5
+Conjecture 1.1 (Deep Riemann Hypothesis (DRH)) . Put m = mρ =
+ords= 1
+2
+LK(s,ρ ). Then the limit
+lim
+x→∞
+(
+(logx)m ∏
+N (p)≤ x
+det
+(
+1− ρ(Frobp)N (p)− 1
+2|V Ip
+) − 1
+)
+(1.5)
+satisﬁes the following:
+DRH(A) The limit (1.5) exists and is nonzero.
+DRH(B) The limit (1.5) satisﬁes the following identity:
+lim
+x→∞
+(
+(logx)m ∏
+N (p)≤ x
+det
+(
+1− ρ(Frobp)N (p)− 1
+2|V Ip
+) − 1
+)
+=
+√
+2
+ν(ρ)
+L(m)
+K (1/ 2,ρ )
+emγm! ,
+whereν(ρ) = mult( 1, sym2ρ)− mult(1,∧ 2ρ)∈ Z with mult(1,σ ) being
+the multiplicity of the trivial representation 1 in σ .
+The facter
+√
+2 in the right hand side of DRH(B) was discovered by the
+pioneering work of Goldfeld [10].
+Obviously DRH(B) implies DRH(A). Also note that if m> 0, DRH(A)
+implies the following:
+lim
+x→∞
+∏
+N (p)≤ x
+det
+(
+1− ρ(Frobp)N (p)− 1
+2|V Ip
+) − 1
+=LK(1/ 2,ρ ) = 0.
+Justiﬁcation of DRH may depend on the pair ( K,ρ ). In what follows in
+this paper, whenever DRH is assumed, the types of ( K,ρ ) on which LK(s,ρ )
+should satisfy DRH are speciﬁed. However, since K is ﬁxed throughout this
+paper, “DRH for LK (s,ρ )” is abbreviated to “DRH for ρ” in some cases.
+Conjecture 1.1 originates from Birch and Swinnerton-Dyer [ 2, p.79 (A)].
+They conjectured for the representation ρE attached to an elliptic curve E/ Q
+that the Euler product of LQ(s,ρ E) should converge at the center, and that
+in case the limit is zero, it asymptotically equals C(logx)g withg = rank(E).
+In the celebrated work [10], Goldfeld proved that their conj ecture implies
+the Generalized Riemann Hypothesis (GRH) for LQ(s,ρ E) and that if their
+conjecture is correct, then g =m holds.
+6
+It is also discovered by Conrad [5, Theorems 3.3 and 6.3] that DRH
+implies both the convergence of the Euler product in Re( s)≥ 1/ 2 and the
+GRH for LK(s,ρ ).
+When char(K) > 0, both DRH(A) and (B) are proved. The proof is
+substantially given by Conrad [5, Theorems 8.1 and 8.2] in a d iﬀerent context
+under the assumption of the second moment hypothesis, and th e full proof
+is recently given by Kaneko-Koyama-Kurokawa [15] along the formulation
+of DRH. The main theorems in this paper provide a criterion of emergence
+of the Chebyshev biases under the assumption of DRH, which me ans the
+criterion holds unconditionally for char( K)> 0.
+In this paper we examine Chebyshev biases existing in the pri mes of
+global ﬁelds. Let L/K be a ﬁnite Galois extension of global ﬁelds. The
+main theorem is described in terms of the set S of all primes in K and its
+subset Sσ of unramiﬁed primes whose Frobenius element
+(
+L/K
+p
+)
+is equal to
+σ∈ Gal(L/K ):
+Theorem 1.1 (a part of Theorem 2.2) . LetL/K be a ﬁnite Galois extension
+of global ﬁelds. The following (i) and (ii) are equivalent:
+(i) DRH(A) for all non trivial irreducible representations of Gal (L/K ).
+(ii) For any σ∈ Gal(L/K ) it holds that
+∑
+p∈ S
+N(p)≤ x
+1√
+N (p)
+− [L :K]
+|cσ|
+∑
+p∈ Sσ
+N(p)≤ x
+1√
+N (p)
+=C log logx +c +o(1)
+(x→∞ )
+for some constants C and c depending on σ .
+Here C is expressed in terms of ν(ρ) and mρ in Conjecture 1.1. Various
+examples of Chebyshev biases are obtained by calculating su ch constants for
+speciﬁc cases under the assumption of (i). Some examples are presented at
+the end of this section. Note that Chebyshev’s bias is a probl em beyond the
+Riemann Hypothesis, since it is essentially equivalent to D RH(A).
+The situation for the case of entire L-functions1 is illustrated in Figure
+1. Here we denote the Generalized Riemann Hypothesis (GRH) b y just the
+Riemann Hypothesis (RH), as our interest is whether the hypo thesis is deep
+1In case the L-functions have a pole at s = 1, DRH needs modiﬁcations by Akatsuka
+[1].
+7
+or not. The Riemann Hypothesis is located in the upper left bo x by this
+notation, which follows from the upper middle box, the conve rgence of the
+Euler product in 1
+2 < Re(s) < 1, since convergence of an inﬁnite product
+implies by deﬁnition that the limit is nonzero. Extension of the region of con-
+vergence to the boundary Re( s) = 1
+2 is in the middle box, which is DRH(A).
+The theme of this paper is the essential equivalence between Chebyshev’s
+bias and DRH(A). Although it is weaker than the full Deep Riem ann Hy-
+pothesis (DRH(B)), it is still stronger than the Riemann Hyp othesis. For
+numerical evidence of DRH, see [16, Table I].
+Figure 1: Deep Riemann Hypothesis (DRH) and Chebyshev’s Bia s
+(in case of entire L-functions)
+This section is concluded by introducing three simple examp les.
+Example 1.1 (Bias against splitting primes (Example 3.3)) . Assume [L :
+K] = 2 and let χ be the nontrivial character of Gal( L/K ). The following
+(i) and (ii) are equivalent:
+(i) DRH(A) for LK(s,χ ) holds.
+8
+(ii) There exists a Chebyshev bias against splitting primes with the asymp-
+totic
+∑
+p: nonsplit
+N(p)≤ x
+1√
+N (p)
+−
+∑
+p: split
+N(p)≤ x
+1√
+N (p)
+=
+(1
+2 +mχ
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c.
+It is generally observed that real zeros of L-functions have an eﬀect on
+increasing the bias (For example, see [6]). Example 1.1 eluc idates the reason
+for this phenomenon since the factor 1
+2 +mχ in the right hand side of (ii)
+becomes bigger as mχ grows.
+Example 1.2 (Bias against quadratic residues (Corollary 3.2)) . Letq be a
+positive integer, t(q) the number of distinct prime numbers dividing q, and
+t :=
+
+
+
+
+
+t(q)− 1 (2 ||q),
+t(q) (4 ||q or 2 ∤q),
+t(q) + 1 (8 |q).
+Assume that L( 1
+2,χ ) ̸= 0 for all Dirichlet characters χ modulo q. The
+following (i) and (ii) are equivalent:
+(i) DRH(A) holds for L(s,χ ) for any Dirichlet character χ modulo q.
+(ii) There exists a Chebyshev bias against quadratic residu es modulo q
+with the asymptotic
+π 1
+2
+(x;q,b )− π 1
+2
+(x;q,a ) = 2t− 1
+ϕ (q) log logx +c +o(1) ( x→∞ )
+for some constant c and for any pair ( a,b ) of a quadratic residue a and
+a non-residue b, and there exist no biases for any pair ( a,b ) with both
+a and b quadratic residues (or non-residues).
+Example 1.3 (Bias against principal ideals (Corollary 3.5)) . We denote
+by ˜K the Hilbert class ﬁeld of K. The ideal class group is expressed as
+ClK≃ Gal( ˜K/K ). An ideal class [ a]∈ ClK corresponds to σa :=
+( ˜K/K
+a
+)
+∈
+Gal( ˜K/K ). Assume DRH(A) for LK (s,χ ) and that LK ( 1
+2,χ )̸= 0 for any
+9
+characterχ of Cl K. If |ClK|is even, then in the whole set of prime ideals of
+K, there exists a Chebyshev bias against principal ideals. Na mely,
+∑
+p: nonprincipal
+N(p)≤ x
+1√
+N (p)
+− (hK− 1)
+∑
+p: principal
+N(p)≤ x
+1√
+N (p)
+=|ClK/ Cl2
+K|− 1
+2 log logx +c +o(1) ( x→∞ )
+with hK =|ClK|.
+2 Bias of primes in global ﬁelds
+LetK be a global ﬁeld, that is, a number ﬁeld or an algebraic functi on ﬁeld of
+one variable over a ﬁnite ﬁeld Fq (q is a power of a prime number), and L/K
+a ﬁnite Galois extension. For a prime ideal p ofK which does not divide the
+relative discriminant DL/K , we denote by
+(
+L/K
+p
+)
+the Frobenius element of
+Gal(L/K ). For any σ∈ Gal(L/K ), it is known from the Chebotarev density
+theorem that the density of prime ideals p of K satisfying p ∤DL/K and(
+L/K
+p
+)
+∼ σ is|cσ|/ [L : K], where cσ is the conjugacy class of σ (See [28,
+p125, Theorem 9.13 A] for function ﬁelds). Let S be the set of all prime ideals
+of K and put Sσ :=
+{
+p∈ S p ∤DL/K ,
+(
+L/K
+p
+)
+∼ σ
+}
+for σ∈ Gal(L/K ).
+Theorem 2.1 (Chebotarev density theorem) . For any ﬁnite Galois exten-
+sion L/K of global ﬁelds and σ∈ Gal(L/K ), we have
+lim
+s→ 1+
+∑
+p∈ SσN (p)− s
+∑
+p∈ SN (p)− s = |cσ|
+[L :K].
+We will examine biases of prime ideals toward or against the s et Sσ
+depending on σ , under the assumption of DRH(A) in the case of number
+ﬁelds and unconditionally in the case of algebraic function ﬁelds. For x∈
+R>0, we put
+πs,K (x) :=
+∑
+p∈ S
+N(p)≤ x
+1
+N (p)s,
+πs(x;σ ) :=
+∑
+p∈ Sσ
+N(p)≤ x
+1
+N (p)s,
+10
+for any σ∈ Gal(L/K ) and
+πs(x;H) :=
+∑
+σ ∈ H
+πs(x;σ )
+for any H⊂ Gal(L/K ).
+Theorem 2.2. Let L/K be a ﬁnite Galois extension of global ﬁelds. For
+any σ∈ Gal(L/K ) we put
+M (σ ) := 1
+2
+∑
+ρ̸=1
+irred.
+χ ρ(σ )ν(ρ)
+with χ ρ being the character of ρ and
+m(σ ) :=
+∑
+ρ̸=1
+irred.
+χ ρ(σ )mρ,
+whereρ runs through all nontrivial irreducible representations o f Gal(L/K ).
+The following (i),(ii) and (iii) are equivalent:
+(i) DRH(A) for all non trivial irreducible representations of Gal (L/K ).
+(ii) For all σ∈ Gal(L/K ) it holds that
+π 1
+2 ,K (x)− [L :K]
+|cσ| π 1
+2
+(x;σ ) = (M (σ ) +m(σ )) log logx +c +o(1)
+(x→∞ )
+for some constant c.
+(iii) For all pairs σ, τ∈ Gal(L/K ) it holds that
+1
+|cτ|π 1
+2
+(x;τ)− 1
+|cσ|π 1
+2
+(x;σ )
+= 1
+[L :K] (M (σ )− M (τ) +m(σ )− m(τ)) log logx +c +o(1)
+(x→∞ )
+for some constant c.
+Remark 2.1. For any irreducible representation ρ, the complex conjugate
+representation ρ is irreducible and we obtain ν(ρ) = ν(ρ), m ρ = mρ and
+that χ ρ(σ ) = χ ρ(σ ). Therefore M (σ ),m (σ )∈ R holds.
+11
+Example 2.1 (Quaternion extension). LetL/ Q be a Galois extension with
+Gal(L/ Q) isomorphic to the quaternion group Q8 ={± 1,±i,±j,±k}. There
+are ﬁve irreducible representations of Gal( L/ Q). We denote the non-trivial
+1-dimensional representations by χ 1,χ 2 and χ 3, and the 2-dimensional rep-
+resentation by ρ. In this case, ν(χ 1) = ν(χ 2) = ν(χ 3) = 1 and ν(ρ) = − 1
+are valid. If assuming mχ 1 = mχ 2 = mχ 3 = 0, then the coeﬃcients M (σ )
+and m(σ ) are given as follows.
+σ 1 − 1 ±i ±j ±k
+M (σ ) 1/ 2 5 / 2 − 1/ 2 − 1/ 2 − 1/ 2
+m(σ ) 2mρ − 2mρ 0 0 0
+Fr¨ ohlich [8] proved that there exist inﬁnitely many quater nion extensions
+L/ Q satisfying mρ̸= 0.
+To prove the theorem, we show the following proposition.
+Proposition 2.1. LetK be a global ﬁeld and ρ a nontrivial irreducible Artin
+representation of Gal (K sep/K ). The following (i) and (ii) are equivalent.
+(i) DRH(A) for ρ.
+(ii) There exists a constant c such that
+∑
+N (p)≤ x
+χ ρ(Frobp)
+N (p)
+1
+2
+=−
+(ν(ρ)
+2 +mρ
+)
+log logx +c +o(1) ( x→∞ ).
+Proof. By taking the logarithm of (1.5), DRH(A) for ρ is equivalent to the
+existence of a constant L such that
+mρ log logx +
+∑
+N (p)≤ x
+∞∑
+k=1
+χ ρ(Frobk
+p )
+kN (p)
+k
+2
+  
+(∗)
+=L +o(1) ( x→∞ ). (2.1)
+The double sum (∗) is decomposed into three subseries:
+(∗) =
+∑
+N (p)≤ x
+χ ρ(Frobp)
+N (p)
+1
+2
++
+∑
+N (p)≤ x
+χ ρ(Frob2
+p)
+2N (p) +
+∑
+N (p)≤ x
+∞∑
+k=3
+χ ρ(Frobk
+p)
+kN (p)
+k
+2
+. (2.2)
+Since
+∑
+N (p)≤ x
+∞∑
+k=3
+χ ρ(Frobk
+p)
+kN (p)
+k
+2
+< 4 dimρ
+3 ζK(3/ 2)<∞ ,
+12
+the last term of (2.2) is absolutely convergent. Denote the l imit by
+C1 = lim
+x→∞
+∑
+N (p)≤ x
+∞∑
+k=3
+χ ρ(Frobk
+p)
+kN (p)
+k
+2
+. (2.3)
+Next the central term of (2.2) is estimated by means of the Gen eralized
+Mertens’ theorem ([27, Theorem 5]):
+∑
+N (p)≤ x
+χ τ (Frobp)
+N (p) = mult(1;τ) log logx +cτ +o(1) ( x→∞ )
+with a constant cτ depending on the representation τ of Gal(K sep/K ). Thus
+the central term in (2.2) is expressed as
+∑
+N (p)≤ x
+χ ρ(Frob2
+p)
+2N (p) = 1
+2
+∑
+N (p)≤ x
+χ sym2ρ(Frobp)− χ ∧ 2ρ(Frobp)
+N (p)
+= ν(ρ)
+2 log logx +C2 +o(1) (2.4)
+with some constant C2.
+If assuming (i), then (ii) follows from (2.1) (2.3) (2.4) wit h c = L−
+C1− C2. Conversely, if (ii) holds with some c, then (2.1) holds with L =
+c +C1 +C2.
+Corollary 2.1. LetL be a quadratic extension of a global ﬁeld K, and χ the
+nontrivial character of Gal (L/K ). The following (i) and (ii) are equivalent:
+(i) DRH(A) for LK(s,χ ) holds.
+(ii) There exists a Chebyshev bias toward the primes p such thatχ (Frobp) =
+− 1 with the asymptotic
+∑
+N (p)≤ x
+χ (Frobp)
+N (p)
+1
+2
+=−
+(1
+2 +mχ
+)
+log logx +c +o(1) ( x→∞ ) (2.5)
+with some constant c.
+Now we are ready to show Theorem 2.2.
+13
+Proof of Theorem 2.2. First we prove that (i) implies (ii). By the orthogo-
+nality relations of characters and Proposition 2.1, the fol lowing is obtained:
+[L :K]π 1
+2
+(x ;σ )
+= [L :K]
+∑
+p∈ Sσ
+N(p)≤ x
+1
+N (p)
+1
+2
+=|cσ|
+∑
+p∈ S
+N(p)≤ x
+∑
+ρ:irred.
+χ ρ
+((
+L/K
+p
+))
+χ ρ(σ )
+N (p)
+1
+2
+=|cσ|
+
+
+ π 1
+2 ,K (x)−
+∑
+ρ̸=1
+χ ρ(σ )
+(ν(ρ)
+2 +mρ
+)
+log logx
+
+
+ +c +o(1)
+=|cσ|{π 1
+2 ,K (x)− (M (σ ) +m(σ )) log logx} +c +o(1).
+Next we show that (ii) implies (i). Let ρ be a nontrivial irreducible repre-
+sentation of Gal(L/K ). Multiplying (2.5) by χ ρ(σ ) and adding them for all
+σ∈ Gal(L/K ), we obtain
+π 1
+2 ,K (x)
+∑
+σ ∈ G
+χ ρ(σ )− [L :K]
+∑
+N (p)≤ x
+χ ρ(Frobp)
+N (p)
+1
+2
+=
+(∑
+σ ∈ G
+χ ρ(σ )M (σ ) +
+∑
+σ ∈ G
+χ ρ(σ )m(σ )
+)
+log logx +c +o(1)
+(x→∞ ) (2.6)
+for some constant c. By the orthogonality relations of characters, we have∑
+σ ∈ Gχ ρ(σ ) = 0 and
+∑
+σ ∈ G
+χ ρ(σ )M (σ ) = 1
+2
+∑
+ρ′̸=1
+irred.
+ν(ρ′)
+∑
+σ ∈ G
+χ ρ(σ )χ ρ′(σ ) =|G|
+2 ν(ρ),
+∑
+σ ∈ G
+χ ρ(σ )m(σ ) =
+∑
+ρ′̸=1
+irred.
+mρ′
+∑
+σ ∈ G
+χ ρ(σ )χ ρ′(σ ) =|G|mρ.
+From these results, (2.6) and Proposition 2.1, we reach DRH( A) for ρ.
+The equivalence between (ii) and (iii) follows from the fact that ∑
+σ ∈ GM (σ ) =∑
+σ ∈ Gm(σ ) = 0.
+14
+3 Bias of primes in abelian extensions
+3.1 General theory
+In this section, we consider biases of prime ideals in ﬁnite a belian extensions
+L/K of global ﬁelds. Put G :=Gal(L/K ). In the case of abelian extensions,
+the coeﬃcient M (σ ) for σ∈ G in Theorem 2.2 is given by the following:
+M (σ ) =
+{
+1
+2 (|G/G 2|− 1) ( σ∈ G2),
+− 1
+2 (σ̸∈ G2).
+Hence the following is obtained.
+Theorem 3.1. Let L/K be a ﬁnite abelian extension of global ﬁelds. The
+following (i),(ii) and (iii) are equivalent:
+(i) DRH(A) holds for any nontrivial character of G.
+(ii) For any σ∈ G, there exists a constant c such that
+π 1
+2 ,K (x)− [L :K]π 1
+2
+(x;σ )
+=
+{ (
+|G/G 2|− 1
+2 +m(σ )
+)
+log logx +c +o(1) ( σ∈ G2)
+(
+− 1
+2 +m(σ )
+)
+log logx +c +o(1) ( σ̸∈ G2)
+(x→∞ ),
+where m(σ ) := ∑
+χ ̸=1χ (σ )mσ with χ running through all nontrivial
+characters of G.
+(iii) For any σ,τ ∈ G, there exists a constant c such that
+π 1
+2
+(x;τ)− π 1
+2
+(x;σ )
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+[L:K]
+(
+|G/G 2|
+2 +m(σ )− m(τ)
+)
+log logx +c +o(1)
+(σ∈ G2,τ ̸∈ G2)
+− 1
+[L:K]
+(
+|G/G 2|
+2 − m(σ ) +m(τ)
+)
+log logx +c +o(1)
+(σ̸∈ G2,τ ∈ G2)
+1
+[L:K] (m(σ )− m(τ)) log logx +c +o(1)
+(σ,τ ∈ G2 or σ,τ ̸∈ G2)
+(x→∞ ).
+15
+Remark 3.1. From Theorem 3.1, if G̸=G2, then there exists a Chebyshev
+bias against primes p such that
+(
+L/K
+p
+)
+∈ G2. See Example 3.1 for de-
+tails. Note that G/G 2 is the Galois group of the composite of all quadratic
+extensions over K contained in L, and that |G/G 2| = 1 is equivalent to
+|G|= [L :K] being odd.
+Corollary 3.1. Let L/K be a ﬁnite abelian extension of global ﬁelds. The
+following (i) and (ii) are equivalent:
+(i) DRH(A) holds for any nontrivial character of G.
+(ii) For any subset H of G, there exists a constant c such that
+|H|π 1
+2
+(x;G\H)−|G\H|π 1
+2
+(x;H)
+= log logx
+2|G2| (|G\H||H∩ G2|−|G2\H||H|)
+− log logx
+∑
+σ ∈ H
+m(σ ) +c +o(1) ( x→∞ ). (3.1)
+Proof. Assume (i), and it follows from Theorem 3.1 that
+π 1
+2
+(x;H) =
+∑
+σ ∈ H∩ G2
+π 1
+2
+(x;σ ) +
+∑
+σ ∈ H \G2
+π 1
+2
+(x;σ )
+= 1
+|G|
+(
+|H|π 1
+2 ,K (x)− log logx
+2 (|H∩ G2||G/G 2|−|H|)
+− log logx
+∑
+σ ∈ H
+m(σ )
+)
++c +o(1) ( x→∞ ),
+and that
+π 1
+2
+(x;G\H)
+=
+∑
+σ ∈ G2 \H
+π 1
+2
+(x;σ ) +
+∑
+σ ∈ G \(H∪ G2)
+π 1
+2
+(x;σ )
+= 1
+|G|
+(
+|G\H|π 1
+2 ,K (x)− log logx
+2 (|G2\H||G/G 2|−|G\H|)
+− log logx
+∑
+σ ∈ G \H
+m(σ )
+
+ +c +o(1) ( x→∞ ).
+16
+The assertion (ii) follows from these two identities and ∑
+σ ∈ Gm(σ ) = 0.
+Conversely, assume (ii). We can show Theorem 3.1 (ii) by cons idering
+the subset H ={σ} for (3.1) for any σ∈ G.
+Example 3.1. Let L/K be a ﬁnite abelian extension of global ﬁelds. As-
+sume DRH(A) for any nontrivial character ofG. Then there exists a constant
+c such that
+π 1
+2
+(x;G\G2)− (|G/G 2|− 1)π 1
+2
+(x;G2)
+=
+
+|G/G 2|− 1
+2 − 1
+|G2|
+∑
+σ ∈ G2
+m(σ )
+
+ log logx +c +o(1) (3.2)
+as x→∞ . Let P2 be the set of primes p of K such that p ∤DL/K and(
+L/K
+p
+)
+∈ G2 and P1 be the complement of P2 in the set of primes p of K
+satisfying p ∤DL/K . A positive constant δ is given by Theorem 2.1 as
+δ =|G\G2|
+|G2| = lim
+x→∞
+#{p∈ P1|N (p)≤ x}
+#{p∈ P2|N (p)≤ x}.
+Then the left hand side of (3.2) is equal to
+∑
+p∈ P1, N (p)≤ x
+1√
+N (p)
+− δ
+∑
+p∈ P2, N (p)≤ x
+1√
+N (p)
+.
+Thus we conclude that if G̸= G2 and m(σ ) = 0 for any σ , there exists a
+Chebyshev bias against primes p such that
+(
+L/K
+p
+)
+∈ G2.
+Example 3.2. LetL/K be a quadratic extension of global ﬁelds with G =
+Gal(L/K ) =⟨τ⟩. The following (i) and (ii) are equivalent:
+(i) DRH(A) for LK(s,χ ) holds for the nontrivial character χ of G.
+(ii) There exists a Chebyshev bias toward the primes p such that
+(
+L/K
+p
+)
+=
+τ with the asymptotic
+π 1
+2
+(x;τ)− π 1
+2
+(x; 1) =
+(1
+2 +mχ
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c.
+17
+In the following sections we will apply the above results to v arious ﬁnite
+quotients of the idele class group CK ofK. The class ﬁeld theory asserts that
+there is a one-to-one correspondence between ﬁnite abelian extensions over
+K and open subgroups of ﬁnite index of CK, and there is an isomorphism
+called the Artin map
+ψ :CK/N L/K CL−→ Gal(L/K )
+for any ﬁnite abelian extension L/K . Let Kp be the completion of K for a
+prime ideal p ofK, andπp a prime element ofKp. Let [πp]∈ CK be the image
+of a natural map K ×
+p → CK/N L/K CL. For a prime ideal p which does not
+divide the relative discriminant DL/K of L/K , we obtain ψ ([πp]) =
+(
+L/K
+p
+)
+,
+where
+(
+L/K
+p
+)
+is the Frobenius element in Gal( L/K ).
+3.2 Bias against splitting primes
+We denote by SD the set of all prime ideals of K which split completely and
+let SN :=S\SD. For x∈ R>0, the following is deﬁned:
+πs(x;L/K )D :=
+∑
+p∈ SD
+N(p)≤ x
+1
+N (p)s,
+πs(x;L/K )N :=
+∑
+p∈ SN
+N(p)≤ x
+1
+N (p)s.
+Since a prime ideal p ofK with p ∤DL/K decomposes completely in L if and
+only if
+(
+L/K
+p
+)
+= 1, it holds πs(x;L/K )D =πs(x; 1) and hence the following
+is obtained from Theorem 3.1:
+π 1
+2 ,K (x)− [L :K]π 1
+2
+(x;L/K )D
+=
+(|G/G 2|− 1
+2 +m(1)
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c under the assumption of DRH(A) in the case of number
+ﬁelds. This asymptotic suggests that if G̸= G2 and m(1) = 0, then there
+exists a Chebyshev bias against primes which split complete ly. Indeed, the
+following theorem is obtained.
+18
+Theorem 3.2. Let L/K be a ﬁnite abelian extension of global ﬁelds. We
+assume DRH(A) for any nontrivial characters of G in the case of number
+ﬁelds. The following asymptotic is valid for some constant c:
+π 1
+2
+(x;L/K )N− ([L :K]− 1)π 1
+2
+(x;L/K )D
+=
+(|G/G 2|− 1
+2 +m(1)
+)
+log logx +c +o(1) ( x→∞ ).
+Proof. The assertion follows from Corollary 3.1 and the following i dentities:
+πs(x;L/K )D =πs(x; 1),
+πs(x;L/K )N =πs(x;G\{ 1}) +
+∑
+p∈ S, p|DL/K
+N(p)≤ x
+1
+N (p)s.
+Example 3.3. Let L/K be a quadratic extension of global ﬁelds. The
+following (i) and (ii) are equivalent:
+(i) DRH(A) for LK(s,χ ) holds with χ the nontrivial character of G =
+Gal(L/K ).
+(ii) There exists a Chebyshev bias against splitting primes with the asymp-
+totic:
+π 1
+2
+(x;L)N− π 1
+2
+(x;L)D =
+(1
+2 +mχ
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c.
+3.3 Cyclotomic ﬁelds
+Let L = Q(ζq) (q ≥ 3) be a cyclotomic ﬁeld. The Galois group G :=
+Gal(L/ Q) is isomorphic to the multiplicative group ( Z/q Z)× anda∈ (Z/q Z)×
+corresponds to σa =
+(
+L/ Q
+(a)
+)
+∈ G, where
+(
+L/ Q
+·
+)
+is the Artin symbol. The
+group of characters of G is isomorphic to the group of Dirichlet characters
+moduloq. Let t(q) be the number of distinct prime numbers dividing q, and
+t :=
+
+
+
+
+
+t(q)− 1 (2 ||q),
+t(q) (4 ||q or 2 ∤q),
+t(q) + 1 (8 |q).
+19
+Then|G/G 2|= 2 t holds. For x∈ R>0 and a∈ (Z/q Z)× , let
+πs(x;q,a ) :=
+∑
+p<x: prime
+p≡ a (mod q)
+1
+ps.
+Under the assumption of DRH(A) for any nontrivial character ofG, it follows
+from Theorem 3.1 that there exists a constant c such that
+π 1
+2 , Q(x)− ϕ (q)π 1
+2
+(x;q,a )
+=
+
+
+
+
+
+
+
+(
+2t− 1
+2 +m(σa)
+)
+log logx +c +o(1)
+(a is a quadratic residue modulo q)(
+− 1
+2 +m(σa)
+)
+log logx +c +o(1) (otherwise)
+(x→∞ ), (3.3)
+where ϕ (q) is Euler’s totient function. It is expected [4] that L( 1
+2,χ )̸= 0
+for any Dirichlet character χ , that is m(σ ) = 0 for any σ∈ G. Under this
+assumption we have the following.
+Corollary 3.2. Assume DRH(A) for L(s,χ ) and that L( 1
+2,χ ) ̸= 0 for
+Dirichlet characters χ . If m(σa) = 0 for any a∈ (Z/q Z)× , there exists
+a Chebyshev bias against primes which are quadratic residues moduloq.
+Moreover the size of the bias grows with an increase in the num ber
+of distinct prime divisors of q. Indeed under the assumption of m(σa) =
+m(σb) = 0, it follows from (3.3) that
+π 1
+2
+(x;q,b )− π 1
+2
+(x;q,a ) = 2t− 1
+ϕ (q) log logx +c +o(1) ( x→∞ ) (3.4)
+for some constant c witha andb being a quadratic residue and a non-residue
+modulo q, respectively. We also have
+π 1
+2
+(x;q,b )− π 1
+2
+(x;q,a ) = c +o(1) ( x→∞ ),
+when both a and b are quadratic residues or non-residues modulo q under
+the assumption of m(σa) = m(σb) = 0.
+Corollary 3.3. Assume DRH(A) for L(s,χ ) and that L( 1
+2,χ ) ̸= 0 for
+Dirichlet characters χ . If m(σa) = 0 for any a ∈ (Z/q Z)× , there exist
+no biases between any pair of quadratic residues, and betwee n any pair of
+quadratic non-residues.
+20
+Example 3.4 (Chebyshev’s original case q = 4) . The group ( Z/ 4Z)× has
+two elements 1 and 3 (mod 4), which are a quadratic residue and a non-
+residue, respectively. From Proposition 2.1, DRH(A) for LQ(s,χ ) with χ
+the nontrivial character of ( Z/ 4Z)× is equivalent to the asymptotic
+π 1
+2
+(x; 4, 3)− π 1
+2
+(x; 4, 1) = 1
+2 log logx +c +o(1) ( x→∞ ).
+This elucidates the original question of Chebyshev.
+Example 3.5 (q = 8) . The group ( Z/ 8Z)× has four elements 1, 3, 5 and
+7 (mod 8), all of which except 1 are quadratic non-residues. T hus DRH(A)
+for LQ(s,χ ) for all nontrivial characters χ of ( Z/ 8Z)× is equivalent to the
+following asymptotics: for j = 3, 5, 7
+π 1
+2
+(x; 8, j)− π 1
+2
+(x; 8, 1) = 1
+2 log logx +c +o(1) ( x→∞ ),
+and for any pairs of j, k∈{ 3, 5, 7}
+π 1
+2
+(x; 8, j)− π 1
+2
+(x; 8, k) = c +o(1) ( x→∞ ).
+3.4 Cyclotomic function ﬁelds
+Let K = Fq(T ) and L = K(ΛM ) (M ∈ Fq[T ],M ̸= 0) be a cyclotomic
+function ﬁeld introduced by Carlitz [3]. The set Λ M is given by Λ M :={u∈
+K|uM = 0} whereuM :=M (ϕ +µ )(u), and ϕ andµ the endomorphisms of
+Fq-module K deﬁned by ϕ (u) := uq and µ (u) := Tu . Hayes [11] developed
+Carlitz’ ideas to an explicit class ﬁeld theory for algebrai c function ﬁelds.
+The Galois group G = Gal(L/K ) is isomorphic to the multiplicative group
+(Fq[T ]/M Fq[T ])× . A residue class A ∈ (Fq[T ]/M Fq[T ])× corresponds to
+σA :=
+(
+L/K
+(A)
+)
+∈ G, where
+(
+L/K
+·
+)
+is the Artin symbol. For a positive integer
+n and A∈ (Fq[T ]/M Fq[T ])× , use the following:
+πs,K (qn) :=
+∑
+deg P ≤ n
+1
+N (P )s,
+πs(qn;M,A ) :=
+∑
+deg P ≤ n
+P ≡ A (mod M )
+1
+N (P )s,
+21
+where P runs through all monic irreducible polynomials in Fq[T ]. From
+Theorem 3.1 there exists a constant c such that
+π 1
+2 ,K (qn)− Φ(M )π 1
+2
+(qn;M,A )
+=
+
+
+
+
+
+
+
+(
+2t− 1
+2 +m(σA)
+)
+logn +c +o(1)
+(A is a quadratic residue modulo M )(
+− 1
+2 +m(σA)
+)
+logn +c +o(1) ( n→∞ ) (otherwise)
+(n→∞ ),
+where Φ(M ) := |(Fq[T ]/M Fq[T ])×| and t := dim F2(G/G 2). Note that if
+M is a product of diﬀerent r irreducible polynomials, then t is given by
+t =
+{
+1 ( q is a power of 2)
+2r (otherwise) .
+Corollary 3.4. If m(σA) = 0 for any A∈ (Fq[T ]/M Fq[T ])× , there exists a
+Chebyshev bias against irreducible polynomials which are qu adratic residues
+moduloM .
+Example 3.6. Put q = 2 and M = T 2. The quotient ring F2[T ]/ (T 2)
+has two invertible elements 1 and T + 1. Since m(σ1) = m(σT +1) = 0,
+there exists a Chebyshev bias toward irreducible polynomia ls congruent to
+the quadratic non-residue T + 1. If we denote an irreducible polynomial by
+h = ∑n
+j=0ajT j (aj∈ F2), there exists a Chebyshev bias toward those with
+a1 = 1.
+3.5 Bias against principal ideals and divisors
+Let K be a global ﬁeld. In this section, we apply Theorem 3.1 for ﬁni te
+abelian extensions corresponding to the ideal class group a nd the divisor
+class group of degree 0 which are quotients of the idele class group of K. Let
+IK be the group of fractional ideals of K,PK its subgroup of principal ideals,
+ClK :=IK/P K the ideal class group and hk :=|ClK| the class number. We
+denote by ˜K the Hilbert class ﬁeld of K, hence we have Cl K≃ Gal( ˜K/K ).
+An ideal class [ a]∈ ClK corresponds to σa :=
+( ˜K/K
+a
+)
+∈ Gal( ˜K/K ).
+We assume DRH(A) below for the case that K is a number ﬁeld. From
+22
+Theorem 3.1 the following is obtained:
+∑
+N (p)≤ x
+1√
+N (p)
+− hK
+∑
+p∈ PK
+N(p)≤ x
+1√
+N (p)
+=
+(|ClK/ Cl2
+K|− 1
+2 +m(1)
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c, where p runs through prime ideals of K. Furthermore,
+the following holds:
+∑
+p̸∈ PK
+N(p)≤ x
+1√
+N (p)
+− (hK− 1)
+∑
+p∈ PK
+N(p)≤ x
+1√
+N (p)
+=
+(|ClK/ Cl2
+K|− 1
+2 +m(1)
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c.
+Hence we have the following.
+Corollary 3.5. Assume DRH(A) for LK(s,σ a) and that m(σa) = 0 for
+any [a]∈ ClK. If |ClK| is even, then there exists a Chebyshev bias against
+principal ideals in the whole set of prime ideals of K.
+Example 3.7. Let K = Q(
+√
+D) be a quadratic ﬁeld with the discriminant
+D. Let P +
+K be the group of totally positive principal ideals and Cl +
+K :=
+IK/P +
+K the narrow ideal class group of K and h+
+K := |Cl+
+K|. We apply
+Theorem 3.1 for the ﬁnite abelian extension L/K corresponding to Cl +
+K,
+hence Cl +
+K≃ Gal(L/K ) holds. From the genus theory we obtain
+∑
+N (p)≤ x
+1
+√
+N (p)
+− h+
+K
+∑
+p∈ P +
+K
+N(p)≤ x
+1
+√
+N (p)
+=
+(
+2t(D)− 1− 1
+2 +m(1)
+)
+log logx +c +o(1) ( x→∞ )
+for some constant c, where t(D) is the number of distinct prime numbers
+dividing D.
+Example 3.8. LetK be an algebraic function ﬁeld of one variable over Fq.
+Let D0
+K be the group of divisors of degree 0, HK its subgroup of principal
+divisors, ClK :=D0
+K/H K the divisor class group of degree 0 and hK :=|ClK|.
+23
+We apply Theorem 3 . 1 for the ﬁnite abelian extension L/K corresponding
+to ClK, hence ClK≃ Gal(L/K ) holds. The following is obtained.
+∑
+degP ≤ n
+1√
+N (P )
+− hK
+∑
+P ∈ HK
+degP ≤ n
+1√
+N (P )
+=
+(|ClK/ Cl2
+K|− 1
+2 +m(1)
+)
+logn +c +o(1) ( n→∞ )
+for some constant c, where the sums are taken over monic irreducible poly-
+nomials in Fq[T ].
+4 Perspectives
+The method of the proof of Theorem 2.2 can be applied to more ge neral
+L-functions. This section introduces two examples as applic ations of our
+technique as well as future prospects on Selberg zeta functi ons.
+4.1 Automorphic L-functions
+Let τ(n) be the Ramanujan’s function deﬁned by
+∆(z) = q
+∞∏
+k=1
+(1− qk)24 =
+∞∑
+n=1
+τ(n)qn.
+Kurokawa and the second author obtain a bias on its signature as follows:
+Theorem 4.1 (Koyama-Kurokawa [19]). Assume DRH(A) for L(s+ 11
+2, ∆).
+Then the sequence a(p) = τ(p)p− 11/ 2 has a Chebyshev bias to being positive.
+More precisely, it holds that
+∑
+p≤ x
+prime
+τ(p)
+p6 = 1
+2 log logx +c +o(1) ( x→∞ )
+with some constant c.
+Here Ramanujan’s L-function is deﬁned as
+L(s, ∆) =
+∞∑
+n=1
+τ(n)
+ns
+(
+Re(s)> 13
+2
+)
+.
+24
+Theorem 4.1 suggests that the Satake parameters θ(p)∈ [0,π ] have a bias to
+being in [0,π/ 2], where we deﬁne θ(p) as τ(p) = 2p
+11
+2 cos(θ(p)). In general,
+biases of the Satake parameters for automorphic forms on GL(n) may be
+obtained. For example, according to [18], under DRH(A) for t he symmetric
+square L-function of L(s, ∆), which is an L-function for GL(3), a bias to
+being negative was found for a sequence over squares of primes. Namely,
+∑
+p≤ x
+τ(p2)
+p
+23
+2
+=− 1
+2 log logx +c +o(1) ( x→∞ )
+with some constant c.
+Sarnak [30] also reached a similar prediction under the assu mption of the
+Generalized Riemann Hypothesis as well as the Grand Simplic ity Hypothesis
+forL(s, ∆), which asserts linear independence over Q of the imaginary parts
+of all nontrivial zeros of L(s, ∆) in the upper half plane. He has pointed out
+that the sum
+S(x) =
+∑
+p≤ x
+prime
+τ(p)
+p
+11
+2
+has a bias to the positive side, in the sense that the mean of th e measure µ
+deﬁned by
+1
+logX
+∫ X
+2
+f
+(logx√ x S(x)
+) dx
+x →
+∫
+R
+f (x)dµ (x) ( x→∞ )
+forf∈ C(R) is equal to 1. In the proof he closely examines the logarithm ic
+derivative of L(s, ∆) to ﬁnd that the second term in its expansion is the
+cause of the above bias. While our discussion above deals wit h the loga-
+rithm instead of its derivative, we have also reached the poi nt that the bias
+derives from the second term in the expansion. Although our c onclusion
+has a common cause of the bias with what is given in [30], our pr oof is
+straightforward enough to simplify the proofs.
+4.2 L-functions of elliptic curves
+Let E be an elliptic curve over K. For any ﬁnite place v of K, we put
+av =av(E) = qv + 1− #Ens
+v (kv),
+whereqv is the cardinal of the residue ﬁeld kv, and #Ens
+v (kv) is the number
+ofkv-rational points on the nonsingular locus of the reduction Ev ofE atv.
+25
+Deﬁning θv∈ [0,π ] as av = 2q
+1
+2
+v cos(θv), the L-function
+L(s,M E) =
+∏
+v: good
+(1− 2 cos(θv)q− s
+v +q− 2s
+v )− 1 ∏
+v: bad
+(1− avq− s
+v )− 1
+satisﬁes a functional equation for s↔ 1− s.
+By ﬁxing ℓ and K with ℓ̸= char(K), we are equipped with a represen-
+tation
+ρE : Gal( K sep/K )→ Aut(Tℓ(E)⊗ Qℓ),
+where Tℓ(E) = lim←−n
+E[ℓn] is the ℓ-adic Tate module of E/K . It holds
+that L(s,M E) = LK(s,ρ E). If ρE is irreducible and DRH(A) is true for
+LK (s,ρ E), a bias of the sequence av/√ qv is obtained. Ulmer [31] proves
+that ρE is irreducible, when char( K) > 0 and E is nonconstant. By using
+this result, Kaneko and the second author obtain the followi ng theorem.
+Theorem 4.2 (Kaneko-Koyama [14]) . Assume char(K) > 0 and that E
+is a non-constant elliptic curve over K. If rank(K)> 0, then the sequence
+av/√ qv has a Chebyshev bias to being negative. More precisely, the fo llowing
+holds: ∑
+qv≤ x
+av
+qv
+=C log logx +O(1) ( x→∞ ), (4.1)
+whereC = 1
+2− rank(K).
+The proof uses the DRH(A) proved for char( K) > 0 and a part of the
+Birch-Swinnerton-Dyer Conjecture proved by Ulmer in [31] f or char(K)> 0.
+4.3 Selberg zeta functions
+In positive characteristic cases, the Selberg zeta functio ns for congruence
+subgroups of PGL (2, Fq[T ]) attached to nontrivial representations satisfy
+both DRH(A) and (B) (Koyama-Suzuki [20]). This allows us to c onsider
+biases of closed paths in the Ramanujan diagrams (i.e. inﬁni te Ramanujan
+graphs) corresponding to the congruence subgroups.
+When a Ramanujan diagram X is a cover of X0 of ﬁnite degree, a Cheby-
+shev bias would exist in the set of closed paths in X0 toward those coming
+from X.
+For Riemann surfaces with characteristic zero, analogous p henomena
+are expected to emerge. For this purpose it is needed to prove DRH(A)
+for Selberg zeta functions. Kaneko-Koyama [13] proved the c onvergence of
+the Euler products of Selberg zeta functions for arithmetic subgroups of
+26
+PSL (2, R) in the whole zero-free region. Hence in the case of congruen ce
+subgroups of PSL (2, Z), the Euler product converges in 1
+2 < Re(s) < 1
+under the assumption of the Selberg 1
+4 -conjecture. If the convergence region
+is extended to the boundary, DRH(A) holds and we would be able to obtain
+biases of prime geodesics on arithmetic surfaces toward tho se coming from
+covering spaces.
+Acknowledgement
+This work was supported by JSPS KAKENHI Grant Number JP21K03 181.
+References
+[1] H. Akatsuka: The Euler product for the Riemann zeta-func tion in the
+critical strip. Kodai. Math. J. 40 (2017) 79-101.
+[2] B.J. Birch and H.P.F. Swinnerton-Dyer: Notes on ellipti c curves. II. J.
+reine angew. Math., 218 (1965) 79-108.
+[3] L. Carlitz: On certain functions connected with polynom ials in a Galois
+ﬁeld, Duke Math. J. 1 (1935), 137–168.
+[4] S.D. Chowla: The Riemann Hypothesis and Hilbert’s tenth prob-
+lem. Gordon and Breach Science Publishers, New York, London , Paris
+(1965).
+[5] K. Conrad: Partial Euler products on the critical line. C anad. J. Math.
+57 (2005) 267-297.
+[6] D. Fiorilli: Highly biased prime number races. Algebra N umber Theory
+8 (2014) 1733-1767.
+[7] D. Fiorilli and F. Jouve: Unconditional Chebyshev biase s in number
+ﬁelds, J. ´Ec. polytech. Math. 9 (2022), 671-679.
+[8] A. Fr¨ ohlich: Artin root numbers and normal integral bas es for quater-
+nion ﬁelds, Invent. Math. 17 (1972), 143–166.
+[9] S.R. Garcia and E.S. Lee: Explicit Mertens’ Theorems for Number
+Fields (preprint). https://arxiv.org/abs/2006.03337
+[10] D. Goldfeld: Sur les produits partiels eul´ eriens atta ch´ es aux courbes
+elliptiques. C. R. Acad. Sci. Paris Ser. I Math. 294 (1982) 471-474.
+27
+[11] D. R. Hayes: Explicit class ﬁeld theory for rational fun ction ﬁelds,
+Trans. Amer. Math. Soc. 189 (1974), 77–91.
+[12] J. Kaczorowski: On the distribution of primes (mod 4). A nalysis, 15
+(1995) 159-171.
+[13] I. Kaneko and S. Koyama: Euler products of Selberg
+zeta functions in the critical strip. Ramanujan J. (2022).
+https://doi.org/10.1007/s11139-022-00550-y
+[14] I. Kaneko and S. Koyama: Chebyshev’s Bias for elliptic c urves.
+(preprint) https://arxiv.org/abs/2206.05445
+[15] I. Kaneko, S. Koyama and N. Kurokawa: Towards the deep Ri emann
+hypothesis for GLn. (preprint) https://arxiv.org/abs/2206.02612
+[16] T. Kimura, S. Koyama and N. Kurokawa: Euler products bey ond the
+boundary. Letters in Math. Phys. 104 (2014) 1-19.
+[17] H. Kornblum: ¨Uber die Primfunktionen in einer arithmetischen Pro-
+gression. Math. Zeit., 5 (1919) 100-111.
+[18] S. Koyama: Chebyshev’s bias for Ramanujan’s τ-function via the Deep
+Riemann Hypothesis. (Talk given at RIMS Conference on Autom orphic
+Forms on January 29, 2022) https://youtu.be/2IaNolUJjBE
+[19] S. Koyama and N. Kurokawa: Chebyshev’s Bias for Ramanuj an’s τ-
+function via the Deep Riemann Hypothesis. Proc. Japan Acad 98A
+(2022) 35-39.
+[20] S. Koyama and F. Suzuki: Euler products beyond the bound ary for
+Selberg zeta functions. Proc. Japan Acad. 90A (2014) 101-106.
+[21] W. Kuo and R. Murty: On a conjecture of Birch and Swinnert on-Dyer.
+Canad. J. Math. 57 (2005) 328-337.
+[22] N. Kurokawa: The pursuit of the Riemann Hypothesis (in J apanese).
+Gijutsu Hyoron-sha, 2012.
+[23] J. E. Littlewood: Distribution des Nombres Premiers. C . R. Acad. Sci.
+Paris 158 (1914) 1869-1872.
+[24] L. Laﬀorgue: Chtoucas de Drinfeld et correspondance de L anglands.
+Invent. Math. 147 (2002) 1–241.
+28
+[25] P. Lebacque: Generalised Mertens and Brauer-Siegel th eorems. Acta
+Arith. 130 (2007) 333-350.
+[26] S. Omar: Non-vanishing of Dirichlet L-functions at the central point.
+Algorithmic number theory, 443-453, Lecture Notes in Compu t. Sci.,
+5011, Springer, Berlin, 2008.
+[27] M. Rosen: A generalization of Mertens’ theorem. J. Rama nujan Math.
+Soc. 14 (1999) 1-19.
+[28] M. Rosen: Number Theory in Function Fields. Graduate Te xts in Math.
+210, Springer-Verlag, New York, 2002.
+[29] M. Rubinstein and P. Sarnak: Chebyshev’s bias. Exp. Mat h. 3 (1994)
+173-197.
+[30] P. Sarnak: Letter to Barry Mazur on “Chebyshev’s bias” f or τ(p).
+November, 2007.
+[31] D. Ulmer: Elliptic curves over function ﬁelds, Arithme tic of L-
+functions. IAS/Park City Math. Ser., vol. 18: Amer. Math. So c., Prov-
+idence, RI, 2011, pp. 211-280.
+[32] T. Willwacher: Basic group and representation theory. Lecture Notes,
+ETH Zurich, 2019.
+29
+Appendix: Numerical Evidence of the Chebyshev Biases
+Miho Aoki, Shin-ya Koyama and Takamasa Yoshida
+Abstract
+We give numerical evidences for the facts which were proved in
+the joint paper of the ﬁrst and the second authors [A1] under the
+assumption of the Deep Riemann Hypothesis (DRH).
+A Introduction
+In this appendix we show numerical evidences for the Deep Rie mann Hy-
+pothesis (DRH), by verifying the asymptotics in [A1] numeri cally. We ful-
+ﬁlled the calculations for p≤ 1010.
+We used the software MATLAB R2021b (Mathworks, Natick, MA) a nd
+illustrated the results by plotting the points in the follow ing manner for the
+purpose of suppressing the load to the computer system:
+• Showed all values for p≤ 105.
+• Showed every ten values for 10 5 <p ≤ 1010.
+B Chebyshev’s original case
+Let q≥ 3 be an integer. Denote by π 1
+2
+(x;q,a ) the sum of the reciprocals of
+the square roots of primes p≤ x satisfying p≡ a (mod q). Under the as-
+sumption of the Deep Riemann Hypothesis (DRH) and non-vanis hing of the
+DirichletL-functionL(s,χ ) at s = 1/ 2 for any nontrivial Dirichlet character
+χ modulo q, it follows from (3.4) in [A1] that
+π 1
+2
+(x;q,b )− π 1
+2
+(x;q,a )∼ 2t− 1
+ϕ (q) log logx (x→∞ ) (B.1)
+witha andb being a quadratic residue and a non-residue modulo q, respec-
+tively, where the integert is deﬁned by|G/G 2|= 2 t withG = Gal(Q(ζq)/ Q).
+We restore Chebyshev’s original case by choosing q = 4. Denote by χ
+the nontrivial character of G = Gal( Q(√− 1)/ Q)∼
+= Z/ 2Z. Then (B.1) tells
+that DRH for L(s,χ ) implies
+π 1
+2
+(x; 4, 3)− π 1
+2
+(x; 4, 1)∼ 1
+2 log logx (x→∞ ). (B.2)
+30
+The graph of the left hand side of (B.2), which we put as S(x; 4, 1), is drawn
+in blue in Figure B with the horizontal axis being with the log arithmic scale,
+while the right hand side of (B.2) is shown in brown.
+Figure B: Chebyshev’s original case
+C Other cyclotomic ﬁelds
+For abelian extension of global ﬁelds L/K , we put
+πs,K (x) :=
+∑
+N (p)≤ x
+1
+N (p)s.
+Assume DRH and L(1/ 2,χ )̸= 0 for any nontrivial Dirichlet character mod-
+ulo q. It follows from (3.3) that under such assumptions
+π 1
+2 , Q(x)− ϕ (q)π 1
+2
+(x;q,a )
+∼
+{
+2t− 1
+2 log logx (a is a quadratic residue modulo q)
+− 1
+2 log logx (otherwise)
+(x→∞ ). (C.1)
+Let q = 60. We have ϕ (60) = 16 and t = 3. There exist two quadratic
+residuesa = 1, 49 and fourteen non-residuesa = 7, 11, 13, 17, 19, 23, 29, 31, 37,
+41, 43, 47, 53, 59. Denoting the left hand side of (C.1) by S(x;q,a ), we show
+31
+the graphs of S(x; 60, 1) and S(x; 60, 7) in Figure C in blue. The right hand
+side of (C.1) is shown in brown in each graph.
+Figure C: Quadratic residue and non-residue modulo 60
+32
+D Unbiased cases
+Eachσ∈ G :=Gal(L/K ) is equipped with
+Sσ :=
+{
+p
+p ∤DL/K ,
+(L/K
+p
+)
+=σ
+}
+and
+πs(x;L/K,σ ) :=
+∑
+p∈ Sσ
+N(p)≤ x
+1
+N (p)s.
+We choose K = Q and L = Q(ζ7 +ζ− 1
+7 ), which is an intermediate ﬁeld in
+Q(ζ7)/ Q with [ Q(ζ7) : L] = 2 and [ L : Q] = 3. The group G :=Gal(L/ Q) is
+of order 3, and we put G :={1,σ,τ } with
+S1 :=
+{
+p p̸= 7,
+(L/ Q
+(p)
+)
+= 1
+}
+={p|p =± 1 (mod 7) },
+Sσ :=
+{
+p p̸= 7,
+(L/ Q
+(p)
+)
+=σ
+}
+={p|p =± 2 (mod 7) },
+Sτ :=
+{
+p p̸= 7,
+(L/ Q
+(p)
+)
+=τ
+}
+={p|p =± 3 (mod 7) }.
+Putting S(x;L/K,σ ) := π 1
+2 ,K (x)− [L : K]π 1
+2
+(x;L/K,σ ), we will draw the
+graphs of the following three functions
+S(x;L/ Q, 1) := π 1
+2 , Q(x)− 3 π 1
+2
+(x;L/ Q, 1) = π 1
+2 , Q(x)− 3
+∑
+p≤ x:prime
+p≡ 1,6 (mod 7)
+1√p
+S(x;L/ Q,σ ) := π 1
+2 , Q(x)− 3 π 1
+2
+(x;L/ Q,σ ) = π 1
+2 , Q(x)− 3
+∑
+p≤ x:prime
+p≡ 2,5 (mod 7)
+1√ p
+S(x;L/ Q,τ ) := π 1
+2 , Q(x)− 3 π 1
+2
+(x;L/ Q,τ ) = π 1
+2 , Q(x)− 3
+∑
+p≤ x:prime
+p≡ 3,4 (mod 7)
+1√ p
+under the assumptions of DRH and L(1/ 2,χ )̸= 0 for any nontrivial Dirichlet
+character χ modulo 7. By Remark 3.1 in [A1], there would exist no biases
+when the order of the Galois group is odd. We actually have alm ost ﬂat
+graphs in Figure D.
+33
+Figure D: Unbiased cases
+34
+References
+[A1] M. Aoki and S. Koyama: Chebyshev’s Bias against splitti ng and prin-
+cipal primes in global ﬁelds. (preprint)
+35

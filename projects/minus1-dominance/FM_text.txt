@@ -1,0 +1,6817 @@
+J. reine angew. Math. 676 (2013), 121—212
+DOI 10.1515/crelle.2012.004
+Journal fu¨ r die reine und
+angewandte Mathematik
+( Walter de Gruyter
+Berlin /C1 Boston 2013
+Inequities in the Shanks–Re ´nyi prime number
+race: An asymptotic formula for the densities
+By Daniel Fiorilli at Montreal and Greg Martin at Vancouver
+Abstract. Chebyshev was the ﬁrst to observe a bias in the distribution of primes in
+residue classes. The general phenomenon is that if a is a nonsquare ðmod qÞ and b is a
+square ðmod qÞ, then there tend to be more primes congruent to a ðmod qÞ than b ðmod qÞ
+in initial intervals of the positive integers; more succinctly, there is a tendency for pðx; q; aÞ
+to exceed pðx; q; bÞ. Rubinstein and Sarnak deﬁned dðq; a; bÞ to be the logarithmic density
+of the set of positive real numbers x for which this inequality holds; intuitively, dðq; a; bÞ is
+the ‘‘probability’’ that pðx; q; aÞ > pðx; q; bÞ when x is ‘‘chosen randomly’’. In this paper,
+we establish an asymptotic series for dðq; a; bÞ that can be instantiated with an error term
+smaller than any negative power of q. This asymptotic formula is written in terms of a
+variance V ðq; a; bÞ that is originally deﬁned as an inﬁnite sum over all nontrivial zeros of
+Dirichlet L-functions corresponding to characters ðmod qÞ; we show how V ðq; a; bÞ can be
+evaluated exactly as a ﬁnite expression. In addition to providing the exact rate at which
+dðq; a; bÞ converges to 1 =2a s q grows, these evaluations allow us to compare the various
+density values dðq; a; bÞ as a and b vary modulo q; by analyzing the resulting formulas, we
+can explain and predict which of these densities will be larger or smaller, based on arithme-
+tic properties of the residue classes a and b ðmod qÞ. For example, we show that if a is a
+prime power and a
+0 is not, then dðq; a; 1Þ < dðq; a0; 1Þ for all but ﬁnitely many moduli q
+for which both a and a0 are nonsquares. Finally, we establish rigorous numerical bounds
+for these densities dðq; a; bÞ and report on extensive calculations of them, including for ex-
+ample the determination of all 117 density values that exceed 9 =10.
+Le premier auteur est titulaire d’une bourse doctorale du Conseil de recherches en sciences naturelles et en
+ge´nie du Canada. The second author was supported in part by grants from the Natural Sciences and Engineering
+Research Council of Canada.
+Contents
+1. Introduction
+2. The asymptotic series for the density dðq; a; bÞ
+2.1. Distributions and random variables
+2.2. Calculating the characteristic function
+2.3. Bounds for the characteristic function
+2.4. Derivation of the asymptotic series
+3. Analysis of the variance V ðq; a; bÞ
+3.1. Arithmetic sums over characters
+3.2. A formula for the variance
+3.3. Evaluation of the analytic term M
+/C3 ðq; a; bÞ
+3.4. Estimates in terms of arithmetic information only
+3.5. A central limit theorem
+3.6. Racing quadratic nonresidues against quadratic residues
+4. Fine-scale di¤erences among races to the same modulus
+4.1. The impact of the residue classes a and b
+4.2. The predictability of the relative sizes of densities
+4.3. The Bays–Hudson ‘‘mirror image phenomenon’’
+5. Explicit bounds and computations
+5.1. Bounds for classical functions
+5.2. Bounds for the variance V ðq; a; bÞ
+5.3. Bounds for the density dðq; a; bÞ
+5.4. Explicit computation of the densities
+References
+1. Introduction
+We have known for over a century now that the prime numbers are asymptotically
+evenly distributed among the reduced residue classes modulo any ﬁxed positive integer q.
+In other words, if pðx; q; aÞ denotes the number of primes not exceeding x that are con-
+gruent to a ðmod qÞ, then lim
+x!y
+pðx; q; aÞ=pðx; q; bÞ¼ 1 for any integers a and b that are
+relatively prime to q. However, this information by itself is not enough to tell us about the
+distribution of values of the di¤erence pðx; q; aÞ/C0 pðx; q; bÞ, in particular whether this dif-
+ference must necessarily take both positive and negative values. Several authors—notably
+Chebyshev in 1853 and Shanks [15] in 1959—observed that pðx; 4; 3Þ has an extremely
+strong tendency to be greater than pðx; 4; 1Þ, and similar biases exist for other moduli
+as well. The general phenomenon is that pðx; q; aÞ tends to exceed pðx; q; bÞ when a is a
+nonsquare modulo q and b is a square modulo q.
+In 1994, Rubinstein and Sarnak [14] developed a framework for studying these ques-
+tions that has proven to be quite fruitful. Deﬁne dðq; a; bÞ to be the logarithmic density of
+the set of real numbers x f 1 satisfying pðx; q; aÞ > pðx; q; bÞ. (Recall that the logarithmic
+density of a set S of positive real numbers is
+lim
+X !y
+/C181
+log X
+Ð
+1exeX
+x A S
+dx
+x
+/C19
+;
+122 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+or equivalently the natural density of the set flog x : x A Sg.) Rubinstein and Sarnak inves-
+tigated these densities under the following two hypotheses:
+/C15 The Generalized Riemann Hypothesis (GRH): all nontrivial zeros of Dirichlet L-
+functions have real part equal to 1 =2.
+/C15 A linear independence hypothesis (LI): the nonnegative imaginary parts of these
+nontrivial zeros are linearly independent over the rationals.
+Under these hypotheses, they proved that the limit deﬁning dðq; a; bÞ always exists
+and is strictly between 0 and 1. Among other things, they also proved that dðq; a; bÞ tends
+to 1=2a s q tends to inﬁnity, uniformly for all pairs a, b of distinct reduced residues ðmod qÞ.
+In the present paper, we examine these densities dðq; a; bÞ more closely. We are partic-
+ularly interested in a quantitative statement of the rate at which dðq; a; bÞ approaches 1 =2.
+In addition, computations show that for a ﬁxed modulus q, the densities dðq; a; bÞ vary as
+a and b range over nonsquares and squares modulo q, respectively. We are also interested
+in determining which pairs a; b ðmod qÞ give rise to larger or smaller values of dðq; a; bÞ, and
+especially in giving criteria that depend as directly as possible on a and b rather than on
+analytic data such as the zeros of Dirichlet L-functions.
+Our ﬁrst theorem, which is proved in Section 2.4, exhibits an asymptotic series for
+dðq; a; bÞ:
+Theorem 1.1. Assume GRH and LI. Let q be a positive integer , and let rðqÞ be the
+function deﬁned in Deﬁnition 1:2. Let a and b be reduced residues ðmod qÞ such that a is a
+nonsquare ðmod qÞ and b is a square ðmod qÞ, and let V ðq; a; bÞ be the variance deﬁned in
+Deﬁnition 1:3. Then for any nonnegative integer K ,
+dðq; a; bÞ¼ 1
+2 þ rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2pV ðq; a; bÞ
+p PK
+l¼0
+1
+V ðq; a; bÞl
+Pl
+j¼0
+rðqÞ2j sq; a; bðl; jÞð1:1Þ
+þ OK
+rðqÞ2Kþ3
+V ðq; a; bÞKþ3=2
+ !
+;
+where the real numbers s q; a; bðl; jÞ, which are bounded in absolute value by a function of l
+uniformly in q , a, b, and j , are deﬁned in Deﬁnition 2:23. In particular , sq; a; bð0; 0Þ¼ 1, so
+that
+dðq; a; bÞ¼ 1
+2 þ rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2pV ðq; a; bÞ
+p þ O rðqÞ3
+V ðq; a; bÞ3=2
+ !
+:ð1:2Þ
+We will see in Proposition 3.6 that V ðq; a; bÞ @ 2fðqÞ log q, and so the error term in
+equation (1.1) is fK; e 1=qKþ3=2/C0 e.
+The assumption that a is a nonsquare ðmod qÞ and b is a square ðmod qÞ is natural
+in this context, reﬂecting the bias observed by Chebyshev. Rubinstein and Sarnak showed
+(assuming GRH and LI) that dðq; b; aÞþ dðq; a; bÞ¼ 1; therefore if a is a square ðmod qÞ
+and b is a nonsquare ðmod qÞ, the right-hand sides of the asymptotic formulas (1.1) and
+123Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+(1.2) become 1 =2 /C0/C1/C1/C1 instead of 1 =2 þ/C1/C1/C1 . Rubinstein and Sarnak also showed that
+dðq; b; aÞ¼ dðq; a; bÞ¼ 1=2i f a and b are both squares or both nonsquares ðmod qÞ.
+The deﬁnitions of rðqÞ and of V ðq; a; bÞ are as follows:
+Deﬁnition 1.2. As usual, oðqÞ denotes the number of distinct prime factors of q.
+Deﬁne rðqÞ to be the number of real characters ðmod qÞ, or equivalently the index of the
+subgroup of squares in the full multiplicative group ðmod qÞ, or equivalently still the num-
+ber of solutions of x2 1 1 ðmod qÞ. An exercise in elementary number theory shows that
+rðqÞ¼
+2oðqÞ; if 2 F q;
+2oðqÞ/C0 1; if 2 j q but 4 F q;
+2oðqÞ; if 4 j q but 8 F q;
+2oðqÞþ1; if 8 j q;
+8
+>>>
+<
+>>
+>:
+which implies that rðqÞ f
+e qe for every e > 0. U
+Deﬁnition 1.3. For any Dirichlet character w ðmod qÞ, deﬁne
+bðwÞ¼ P
+g A R
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2 :
+We adopt the convention throughout this paper that the zeros are listed with multiplicity in
+all such sums (though note that the hypothesis LI, when in force, implies that all such zeros
+are simple). For any reduced residues a and b ðmod qÞ, deﬁne
+V ðq; a; bÞ¼ P
+w ðmod qÞ
+jwðbÞ/C0 wðaÞj2bðwÞ:
+We will see in Proposition 2.7 that V ðq; a; bÞ is the variance of a particular distribution
+associated with the di¤erence pðx; q; aÞ/C0 pðx; q; bÞ. U
+As the asymptotic series in Theorem 1.1 depends crucially on the variance V ðq; a; bÞ,
+we next give a formula for it (established in Section 3.2) that involves only a ﬁnite number
+of easily computed quantities:
+Theorem 1.4. Assume GRH. For any pair a , b of distinct reduced residues modulo q ,
+V ðq; a; bÞ¼ 2fðqÞ
+/C0
+LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2
+/C1
+þ 2M /C3 ðq; a; bÞ;
+where the functions L, Kq, and iq are deﬁned in Deﬁnition 1.5 and the quantity M /C3 ðq; a; bÞ is
+deﬁned in Deﬁnition 1.6.
+The deﬁnitions of these three arithmetic functions and of the analytic quantity M /C3 are
+as follows:
+124 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Deﬁnition 1.5. As usual, fðqÞ denotes Euler’s totient function, and LðqÞ denotes the
+von Mangoldt function, which takes the value log p if q is a power of the prime p and 0
+otherwise. For any positive integer q, deﬁne
+LðqÞ¼ log q /C0 P
+p j q
+log p
+p /C0 1 þ LðqÞ
+fðqÞ /C0ð g0 þ log 2pÞ;
+where g0 ¼ lim
+x!y
+/C18P
+nex
+1
+n /C0 log x
+/C19
+is Euler’s constant; it can be easily shown that LðqÞ
+is positive when q f 43. Note that LðqÞ¼ logðq=2peg0 Þ when q is prime and that
+LðqÞ¼ log q þ Oðlog log qÞ for any integer q f 3. Also let
+iqðnÞ¼ 1; if n 1 1 ðmod qÞ;
+0; if n E 1 ðmod qÞ
+/C26
+denote the characteristic function of the integers that are congruent to 1 ðmod qÞ. Finally,
+deﬁne
+KqðnÞ¼ L
+/C0
+q=ðq; nÞ
+/C1
+f
+/C0
+q=ðq; nÞ
+/C1/C0 LðqÞ
+fðqÞ :
+Note that these last two functions depend only on the residue class of n modulo q. For this
+reason, in expressions such as iqðn/C0 1Þ or Kqðn/C0 1Þ, the argument n/C0 1 is to be interpreted as
+an integer that is the multiplicative inverse of n ðmod qÞ. In addition, note that KqðnÞ f 0,
+since the only way that the second term can contribute is if q is a prime power, in which
+case the ﬁrst term contributes at least as much. On the other hand, Kq is bounded above,
+since if q=ðq; nÞ is a power of the prime p, then KqðnÞ e ðlog pÞ=ðp /C0 1Þ e log 2. Note also
+that KqðnÞ¼ 0 when ðn; qÞ¼ 1. U
+Deﬁnition 1.6. As usual, Lðs; wÞ¼ Py
+n¼1
+wðnÞn/C0 s denotes the L-function associated to
+the Dirichlet character w. Given such a character w ðmod qÞ, let q/C3 denote its conductor
+(that is, the smallest integer d such that w is induced by a character modulo d), and let w/C3
+be the unique character modulo q/C3 that induces w. Now deﬁne
+M /C3 ðq; a; bÞ¼ P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2 L0ð1; w/C3 Þ
+Lð1; w/C3 Þ
+and
+Mðq; a; bÞ¼ P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2 L0ð1; wÞ
+Lð1; wÞ : U
+The formula for V ðq; a; bÞ in Theorem 1.4 is exact and hence well suited for compu-
+tations. For theoretical purposes, however, we need a better understanding of M /C3 ðq; a; bÞ,
+which our next theorem (proved in Section 3.3) provides:
+125Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Theorem 1.7. Assume GRH. For any pair a , b of distinct reduced residues modulo q ,
+let r1 and r2 denote the least positive residues of ab /C0 1 and ba /C0 1 ðmod qÞ, and let the quantity
+Hðq; a; bÞ be deﬁned in Deﬁnition 1.8. Then
+M /C3 ðq; a; bÞ¼ fðqÞ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ Hðq; a; bÞþ O log2 q
+q
+ !0
+@
+1
+A;
+where the implied constant is absolute.
+(The unexpected appearance of the speciﬁc integers r1 and r2, in a formula for a quan-
+tity depending upon entire residue classes ðmod qÞ, is due to the approximation of inﬁnite
+series by their ﬁrst terms—see Proposition 3.12.) The quantity Hðq; a; bÞ is usually quite
+small, unless there is an extreme coincidence in the locations of a and b relative to the prime
+divisors of q, which would be reﬂected in a small value of the quantity eðq; p; rÞ deﬁned as
+follows:
+Deﬁnition 1.8. Given an integer q and a prime p, let n f 0 be the integer such that
+pn k q (that is, pn j q but pnþ1 F q). For any reduced residue r ðmod qÞ, deﬁne
+eðq; p; rÞ¼ minfe f 1 : pe 1 r/C0 1 ðmod q=pnÞg;
+and deﬁne
+hðq; p; rÞ¼ 1
+fðpnÞ
+log p
+peðq; p; rÞ :
+When r is not in the multiplicative subgroup generated by p ðmod q=pnÞ, we make the con-
+vention that eðq; p; rÞ¼ y and hðq; p; rÞ¼ 0. Finally, for any integers a and b, deﬁne
+Hðq; a; bÞ¼ P
+p j q
+/C0
+hðq; p; ab/C0 1Þþ hðq; p; ba/C0 1Þ
+/C1
+:
+Note that if q ¼ pn is a prime power, then hðq; p; rÞ¼ð log pÞ=pnðp /C0 1Þ is independent of r,
+which implies that Hðq; a; bÞ f ðlog qÞ=q when q is a prime power. U
+The extremely small relative error in Theorem 1.1 implies that the formula given
+therein is useful even for moderate values of q. The following corollary of the above
+theorems, the proof of which is given in Section 4.1, is useful only for large q due to a worse
+error term. It has the advantage, however, of isolating the ﬁne-scale dependence of dðq; a; bÞ
+on the residue classes a and b from its primary dependence on the modulus q:
+Corollary 1.9. Assume GRH and LI. Let q f 43 be an integer. Let a and b be reduced
+residues ðmod qÞ such that a is a nonsquare ðmod qÞ and b is a square ðmod qÞ, and let r 1
+and r2 denote the least positive residues of ab /C0 1 and ba /C0 1 ðmod qÞ. Then
+dðq; a; bÞ¼ 1
+2 þ rðqÞ
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ
+p 1 /C0 Dðq; a; bÞ
+2LðqÞ þ O 1
+log2 q
+/C18/C19 !
+;ð1:3Þ
+126 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+where
+Dðq; a; bÞ¼ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2 þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ Hðq; a; bÞð1:4Þ
+(here, the functions L, Kq, and iq are deﬁned in Deﬁnition 1.5, and H is deﬁned in
+Deﬁnition 1.8). Moreover, Dðq; a; bÞ is nonnegative and bounded above by an absolute
+constant.
+Armed with this knowledge of the delicate dependence of dðq; a; bÞ on the residue
+classes a and b, we are actually able to ‘‘race races’’, that is, investigate inequalities between
+various values of dðq; a; bÞ as q increases. We remark that Feuerverger and Martin [5],
+Theorem 2 (b), showed that dðq; a; bÞ¼ dðq; ab/C0 1; 1Þ for any square b ðmod qÞ, and so it
+often su‰ces to consider only the densities dðq; a; 1Þ. Some surprising inequalities come to
+light when we ﬁx the residue class a and allow the modulus q to vary (among moduli rela-
+tively prime to a for which a is a nonsquare). Our next theorem, which is a special case of
+Corollary 4.3 derived in Section 4.2, demonstrates some of these inequalities:
+Theorem 1.10. Assume GRH and LI.
+/C15 For any integer a 3 /C0 1, we have dðq; /C0 1; 1Þ < dðq; a; 1Þ for all but ﬁnitely many
+integers q with ðq; aÞ¼ 1 such that both /C0 1 and a are nonsquares ðmod qÞ.
+/C15 If a is a prime power and a 0 3 /C0 1 is an integer that is not a prime power , then
+dðq; a; 1Þ < dðq; a0; 1Þ for all but ﬁnitely many integers q with ðq; aa0Þ¼ 1 such that both a
+and a 0 are nonsquares ðmod qÞ.
+/C15 If a and a 0 are prime powers with LðaÞ=a > Lða0Þ=a0, then dðq; a; 1Þ < dðq; a0; 1Þ for
+all but ﬁnitely many integers q with ðq; aa0Þ¼ 1 such that both a and a 0 are nonsquares
+ðmod qÞ.
+Finally, these results have computational utility as well. A formula ([5], equation
+(2-57)) for calculating the value of dðq; a; bÞ is known. However, this formula requires
+knowledge of a large number of zeros of all Dirichlet L-functions associated to characters
+ðmod qÞ even to estimate via numerical integration; therefore it becomes unwieldy to use
+the formula when q becomes large. On the other hand, the asymptotic series in Theorem
+1.1 can be made completely e¤ective, and the calculation of V ðq; a; bÞ is painless thanks
+to Theorem 1.4. Therefore the densities dðq; a; bÞ can be individually calculated, and collec-
+tively bounded, for large q.
+For example, the values of dðq; a; bÞ for all moduli up to 1000 are plotted in Figure 1.
+The modulus q is given on the horizontal axis; the vertical line segment plotted for each q
+extends between the maximal and minimal values of dðq; a; bÞ,a s a runs over all nonsquares
+ðmod qÞ and b runs over all squares ðmod qÞ. (Of course both a and b should be relatively
+prime to q. We also omit moduli of the form q 1 2 ðmod 4Þ, since the distribution of primes
+into residue classes modulo such q is the same as their distribution into residue classes
+modulo q=2.)
+127Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+The values shown in Figure 1 organize themselves into several bands; each band cor-
+responds to a constant value of rðqÞ, the e¤ect of which on the density dðq; a; bÞ can be
+clearly seen in the second term on the right-hand side of equation (1.3). For example, the
+lowest (and darkest) band corresponds to moduli q for which rðqÞ¼ 2, meaning odd
+primes and their powers (as well as q ¼ 4); the second-lowest band corresponds to those
+moduli for which rðqÞ¼ 4, consisting essentially of numbers with two distinct prime fac-
+tors; and so on, with the ﬁrst modulus q ¼ 840 for which rðqÞ¼ 32 (the segment closest
+to the upper right-hand corner of the graph) hinting at the beginning of a ﬁfth such band.
+Each band decays roughly at a rate of 1 =
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+q log q
+p
+, as is also evident from the aforemen-
+tioned term of equation (1.3).
+To give one further example of these computations, which we describe in Section 5.4,
+we are able to ﬁnd the largest values of dðq; a; bÞ that ever occur. (All decimals listed in this
+paper are rounded o¤ in the last decimal place.)
+Theorem 1.11. Assume GRH and LI. The ten largest values of dðq; a; bÞ are given in
+Table 1.
+Our approach expands upon the seminal work of Rubinstein and Sarnak [14], who
+introduced a random variable whose distribution encapsulates the information needed to
+Figure 1. All densities dðq; a; bÞ with q e 1000.
+qa b dðq; a; bÞ
+24 5 1 0.999988
+24 11 1 0.999983
+12 11 1 0.999977
+24 23 1 0.999889
+24 7 1 0.999834
+24 19 1 0.999719
+8 3 1 0.999569
+12 5 1 0.999206
+24 17 1 0.999125
+3 2 1 0.999063
+Table 1. The top 10 most unfair prime number races.
+128 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+understand pðx; q; aÞ/C0 pðx; q; bÞ. We discuss these random variables, formulas and esti-
+mates for their characteristic functions (that is, Fourier transforms), and the subsequent
+derivation of the asymptotic series from Theorem 1.1 in Section 2. In Section 3 we demon-
+strate how to transform the variance V ðq; a; bÞ from an inﬁnite sum into a ﬁnite expression;
+we can even calculate it extremely precisely using only arithmetic (rather than analytic) in-
+formation. We also show how the same techniques can be used to establish a central limit
+theorem for the aforementioned distributions, and we outline how modiﬁcations of our ar-
+guments can address the two-way race between all nonresidues and all residues ðmod qÞ.
+We investigate the ﬁne-scale e¤ect of the particular residue classes a and b upon the density
+dðq; a; bÞ in Section 4; we also show how a similar analysis can explain a ‘‘mirror image’’
+phenomenon noticed by Bays and Hudson [3]. Finally, Section 5 is devoted to explicit esti-
+mates and a description of our computations of the densities and the resulting conclusions,
+including Theorem 1.11.
+Acknowledgment. The authors thank Brian Conrey and K. Soundararajan for
+suggesting proofs of Lemma 2.8 (c) and Proposition 3.10, respectively, that were supe-
+rior to our original proofs. We also thank Andrew Granville for indicating how to im-
+prove the error term in Proposition 3.11, as well as Colin Myerscough for correcting a
+numerical error in Proposition 2.14 that a¤ected our computations in Sections 5.3–5.4.
+Robert Rumely and Michael Rubinstein provided lists of zeros of Dirichlet L-functions
+and the appropriate software to compute these zeros, which are needed for the calcu-
+lations of the densities in Section 5, and we thank them as well. Finally, we express
+our gratitude to our advisors past and present, Andrew Granville, Hugh Montgomery,
+and Trevor Wooley, both for their advice about this paper and for their guidance in
+general.
+2. The asymptotic series for the density d(q; a, b)
+The ultimate goal of this section is to prove Theorem 1.1. We begin in Section 2.1
+by describing a random variable whose distribution is the same as the limiting logarithmic
+distribution of a suitably normalized version of pðx; q; aÞ/C0 pðx; q; bÞ, as well as calculat-
+ing its variance. This approach is the direct descendant of that of Rubinstein and Sarnak
+[14]; one of our main innovations is the exact evaluation of the variance V ðq; a; bÞ in a
+form that does not involve the zeros of Dirichlet L-functions. In Section 2.2 we derive the
+formula for the characteristic function (Fourier transform) of that random variable; this
+formula is already known, but our derivation is slightly di¤erent and allows us to write
+the characteristic function in a convenient form (see Proposition 2.12). We then use our
+knowledge of the characteristic function to write the density dðq; a; bÞ as the truncation
+of an inﬁnite integral in Section 2.3, where the error terms are explicitly bounded using
+knowledge of the counting function NðT; wÞ of zeros of Dirichlet L-functions. Finally, we
+derive the asymptotic series from Theorem 1.1 from this truncated integral formula in
+Section 2.4.
+2.1. Distributions and random variables. We begin by describing random variables
+related to the counting functions of primes in arithmetic progressions. As is typical when
+considering primes in arithmetic progressions, we ﬁrst consider expressions built out of
+Dirichlet characters.
+129
+Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Deﬁnition 2.1. For any Dirichlet character w such that GRH holds for Lðs; wÞ,
+deﬁne
+Eðx; wÞ¼ P
+g A R
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig :
+This sum does not converge absolutely, but (thanks to GRH and the functional equation
+for Dirichlet L-functions) it does converge conditionally when interpreted as the limit ofP
+jgj<T
+as T tends to inﬁnity. All untruncated sums over zeros of Dirichlet L-functions in
+this paper should be similarly interpreted. U
+Deﬁnition 2.2. For any real number g, let Zg denote a random variable that is uni-
+formly distributed on the unit circle, and let Xg denote the random variable that is the real
+part of Zg. We stipulate that the collection fZgggf0 is independent and that Z/C0 g ¼ Zg; this
+implies that the collection fXgggf0 is also independent and that X/C0 g ¼ Xg. U
+By the limiting logarithmic distribution of a real-valued function f ðtÞ, we mean the
+measure dn having the property that the limiting logarithmic density of the set of positive
+real numbers such that f ðtÞ lies between a and b is
+Ðb
+a
+dn for any interval ða; bÞ.
+Proposition 2.3. Assume LI. Let fcw : w ðmod qÞg be a collection of complex numbers ,
+indexed by the Dirichlet characters ðmod qÞ, satisfying cw ¼ cw. The limiting logarithmic dis-
+tribution of the function
+P
+w ðmod qÞ
+cwEðx; wÞ
+is the same as the distribution of the random variable
+2 P
+w ðmod qÞ
+jcwj P
+g>0
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p :
+Proof. We have
+P
+w ðmod qÞ
+cwEðx; wÞ¼ lim
+T!y
+P
+w ðmod qÞ
+cw
+P
+jgj<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig
+¼ lim
+T!y
+P
+w ðmod qÞ
+cw
+/C18P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig þ P
+/C0 T<g<0
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig
+/C19
+:
+(The assumption of LI precludes the possibility that g ¼ 0.) By the functional equation,
+the zeros of Lðs; wÞ below the real axis correspond to those of Lðs; wÞ above the real axis.
+130 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Therefore
+P
+w ðmod qÞ
+cwEðx; wÞ¼ lim
+T!y
+P
+w ðmod qÞ
+cw
+/C18P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig þ P
+0<g<T
+Lð1=2þig; wÞ¼0
+x/C0 ig
+1=2 /C0 ig
+/C19
+ð2:1Þ
+¼ lim
+T!y
+/C18P
+w ðmod qÞ
+cw
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig
+þ P
+w ðmod qÞ
+cw
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig
+/C19
+:
+Reindexing this last sum by replacing w by w, we obtain
+P
+w ðmod qÞ
+cwEðx; wÞ¼ lim
+T!y
+/C18P
+w ðmod qÞ
+cw
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ igð2:2Þ
+þ P
+w ðmod qÞ
+cw
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig
+/C19
+¼ lim
+T!y
+2R e
+/C18P
+w ðmod qÞ
+cw
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+xig
+1=2 þ ig
+/C19
+¼ 2 lim
+T!y
+P
+w ðmod qÞ
+jcwj Re
+/C18P
+0<g<T
+Lð1=2þig; wÞ¼0
+eig log xyw; gﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+/C19
+;
+where yw; g ¼ cw 1=2 þ igjj =jcwj 1=2 þ igðÞ is a complex number of modulus 1. The quantity
+eig log xyw; g is uniformly distributed (as a function of log x) on the unit circle as x tends
+to inﬁnity, and hence its limiting logarithmic distribution is the same as the distribu-
+tion of Zg. Since the various g in each inner sum are linearly independent over the rationals
+by LI, the tuple ðeig log xyw; gÞ0<g<T is uniformly distributed in the NðT; wÞ-dimensional
+torus by Kronecker’s theorem. Therefore the limiting logarithmic distribution of the
+sum
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+eig log xyw; gﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+is the same as the distribution of the random variable
+P
+0<g<T
+Lð1=2þig; wÞ¼0
+Zgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p :
+131Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Finally, the work of Rubinstein and Sarnak ([14], Section 3.1) shows that the limiting
+logarithmic distribution of
+P
+w ðmod qÞ
+cwEðx; wÞ¼ 2 lim
+T!y
+P
+w ðmod qÞ
+jcwj Re
+/C18P
+0<g<T
+Lð1=2þig; wÞ¼0
+eig log xyw; gﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+/C19
+is the same as the distribution of the random variable
+P
+w ðmod qÞ
+cwEðx; wÞ¼ 2 lim
+T!y
+P
+w ðmod qÞ
+jcwj P
+0<g<T
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+¼ 2 P
+w ðmod qÞ
+jcwj P
+g>0
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p ;
+the convergence of this last limit being ensured by the fact that the Xg are bounded and that
+each of the sums
+P
+g>0
+Lð1=2þig; wÞ¼0
+1ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ ! 2
+e bðwÞ
+is ﬁnite. This establishes the lemma. r
+We shall have further occasion to change the indexing of sums, between over all g and
+over only positive g, in the same manner as in equations (2.1) and (2.2); henceforth we shall
+justify such changes ‘‘by the functional equation for Dirichlet L-functions’’ and omit the
+intermediate steps.
+Deﬁnition 2.4. For any relative prime integers q and a, deﬁne
+cðq; aÞ¼/C0 1 þ Kfx ðmod qÞ : x2 1 a ðmod qÞg:
+Note that cðq; aÞ takes only the values /C0 1 and rðqÞ/C0 1. Now, with Xg as deﬁned in Deﬁni-
+tion 2.2, deﬁne the random variable
+Xq; a; b ¼ cðq; bÞ/C0 cðq; aÞþ 2 P
+w ðmod qÞ
+jwðbÞ/C0 wðaÞj P
+g>0
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p :
+Note that the expectation of the random variable Xq; a; b is either GrðqÞ or 0, depending on
+the values of cðq; aÞ and cðq; bÞ. U
+Deﬁnition 2.5. With pðx; q; aÞ¼ Kfp e x : p prime; p 1 a ðmod qÞg denoting the
+counting function of primes in the arithmetic progression a ðmod qÞ, deﬁne the normalized
+error term
+Eðx; q; aÞ¼ log xﬃﬃﬃxp /C0
+fðqÞpðx; q; aÞ/C0 pðxÞ
+/C1
+: U
+132 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+The next proposition characterizes the limiting logarithmic distribution of the di¤er-
+ence of two of these normalized counting functions.
+Proposition 2.6. Assume GRH and LI. Let a and b be reduced residues modulo q. The
+limiting logarithmic distribution of E ðx; q; aÞ/C0 Eðx; q; bÞ is the same as the distribution of the
+random variable X q; a; b deﬁned in Deﬁnition 2.4.
+Remark. Since dðq; a; bÞ is deﬁned to be the logarithmic density of those real num-
+bers x for which pðx; q; aÞ > pðx; q; bÞ, or equivalently for which Eðx; q; aÞ > Eðx; q; bÞ,w e
+see that dðq; a; bÞ equals the probability that Xq; a; b is greater than 0. However, we never use
+this fact directly in the present paper, instead quoting from [5] a consequence of that fact in
+equation (2.10) below.
+Proof. As is customary, deﬁne
+cðx; wÞ¼ P
+nex
+wðnÞLðnÞ:
+A consequence of the explicit formula for cðx; wÞ that arises from the analytic proof of the
+prime number theorem for arithmetic progressions ([11], Corollary 12.11, combined with
+[11], (12.12)) is that for w 3 w0,
+cðx; wÞ¼/C0 P
+g A R
+Lð1=2þig; wÞ¼0
+x1=2þig
+1=2 þ ig þ Oðlog q /C1 log xÞ
+under the assumption of GRH. We also know ([14], Lemma 2.1) that
+Eðx; q; aÞ¼/C0 cðq; aÞþ P
+w ðmod qÞ
+w3w0
+wðaÞ cðx; wÞﬃﬃﬃxp þ Oq
+1
+log x
+/C18/C19
+:ð2:3Þ
+Combining these last two equations with Deﬁnition 2.1 for Eðx; wÞ, we obtain
+Eðx; q; aÞ¼/C0 cðq; aÞ/C0 P
+w ðmod qÞ
+w3w0
+wðaÞEðx; wÞþ Oq
+1
+log x
+/C18/C19
+:
+We therefore see that
+Eðx; q; aÞ/C0 Eðx; q; bÞ¼ cðq; bÞ/C0 cðq; aÞþ P
+w ðmod qÞ
+/C0
+wðbÞ/C0 wðaÞ
+/C1
+Eðx; wÞþ Oq
+1
+log x
+/C18/C19
+(where we have added in the w ¼ w0 term for convenience). The error term tends to zero as
+x grows and thus does not a¤ect the limiting distribution, and the constant cðq; bÞ/C0 cðq; aÞ
+is independent of x. Therefore, by Proposition 2.3, the limiting logarithmic distribution of
+Eðx; q; aÞ/C0 Eðx; q; bÞ is the same as the distribution of the random variable
+cðq; bÞ/C0 cðq; aÞþ 2 P
+w ðmod qÞ
+jwðbÞ/C0 wðaÞj P
+g>0
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p :
+133Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Since jwðbÞ/C0 wðaÞj ¼ j wðbÞ/C0 wðaÞj, this last expression is exactly the random variable Xq; a; b
+as claimed. r
+To conclude this section, we calculate the variance of the random variable Xq; a; b.
+Proposition 2.7. Assume LI. Let fcw : w ðmod qÞg be a collection of complex numbers
+satisfying cw ¼ cw. For any constant m, the variance of the random variable
+m þ 2 P
+w ðmod qÞ
+cw
+P
+g>0
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+pð2:4Þ
+equals P
+w ðmod qÞ
+jcwj2bðwÞ, where b ðwÞ was deﬁned in Deﬁnition 1.3. In particular , the variance
+of the random variable X q; a; b deﬁned in Deﬁnition 2.4 is equal to the quantity V ðq; a; bÞ
+deﬁned in Deﬁnition 1.3.
+Proof. The random variables fXg : g > 0g form an independent collection by deﬁni-
+tion; it is important to note that no single variable Xg can correspond to multiple char-
+acters w, due to the assumption of LI. The variance of the sum (2.4) is therefore simply the
+sum of the individual variances, that is,
+s2
+/C18
+2 P
+w ðmod qÞ
+jcwj P
+g>0
+Lð1=2þig; wÞ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+/C19
+¼ 4 P
+w ðmod qÞ
+jcwj2 P
+g>0
+Lð1=2þig; wÞ¼0
+s2ðXgÞ
+1=4 þ g2 :
+The variance of any Xg is 1 =2, and so this last expression equals
+2 P
+w ðmod qÞ
+jcwj2 P
+g>0
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2
+¼ P
+w ðmod qÞ
+jcwj2 P
+g>0
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2 þ P
+w ðmod qÞ
+jcwj2 P
+g<0
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2
+¼ P
+w ðmod qÞ
+jcwj2 P
+g A R
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2 ¼ P
+w ðmod qÞ
+jcwj2bðwÞ
+by the functional equation for Dirichlet L-functions. The fact that V ðq; a; bÞ is the variance
+of Xq; a; b now follows directly from their deﬁnitions. r
+2.2. Calculating the characteristic function. The characteristic function ^XX q; a; bðzÞ
+of the random variable Xq; a; b will be extremely important to our analysis of the density
+dðq; a; bÞ. To derive the formula for this characteristic function, we begin by setting down
+some relevant facts about the standard Bessel function J0 of order zero. Speciﬁcally, we col-
+lect in the following lemma some useful information about the power series coe‰cients ln
+for
+log J0ðzÞ¼ Py
+n¼0
+lnzn;ð2:5Þ
+134 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+which is valid for jzj e 12=5 since J0 has no zeros in a disk of radius slightly larger than
+12=5 centered at the origin.
+Lemma 2.8. Let the coe‰cients ln be deﬁned in equation (2.5). Then :
+(a) ln f 5
+12
+/C18/C19n
+uniformly for n f 0,
+(b) l0 ¼ 0 and l2m/C0 1 ¼ 0 for every m f 1,
+(c) l2m < 0 for every m f 1,
+(d) ln is a rational number for every n f 0.
+Proof. The fact that log J0 is analytic in a disk of radius slightly larger than 12 =5
+centered at the origin immediately implies part (a). Part (b) follows from the fact that J0
+is an even function with J0ð0Þ¼ 1. Next, J0 has the product expansion ([17], Section
+15.41, equation (3))
+J0ðzÞ¼ Qy
+k¼1
+1 /C0 z2
+z2
+k
+/C18/C19
+;
+where the zk are the positive zeros of J0. Taking logarithms of both sides and expanding
+each summand in a power series (valid for jzj e 12=5 as before) gives
+log J0ðzÞ¼ Py
+k¼1
+log 1 /C0 z2
+z2
+k
+/C18/C19
+¼/C0 Py
+n¼1
+z2n
+n
+Py
+k¼1
+1
+z2n
+k
+;
+which shows that l2n ¼/C0 n/C0 1 Py
+k¼1
+z/C0 2n
+k is negative, establishing part (c). Finally, the Bessel
+function J0ðzÞ¼ Py
+m¼0
+ð/C0 1=4Þmz2m=ðm!Þ2 itself has a power series with rational coe‰cients,
+as does log ð1 þ zÞ; therefore the composition log
+/C0
+1 þ
+/C0
+J0ðzÞ/C0 1
+/C1/C1
+also has rational coe‰-
+cients, establishing part (d). r
+Deﬁnition 2.9. Let ln be deﬁned in equation (2.5). For any distinct reduced residues
+a and b ðmod qÞ, deﬁne
+Wnðq; a; bÞ¼ 22njl2nj
+V ðq; a; bÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n P
+g>0
+Lð1=2þig; wÞ¼0
+1
+ð1=4 þ g2Þn ;ð2:6Þ
+where V ðq; a; bÞ was deﬁned in Deﬁnition 1.3, so that W1ðq; a; bÞ¼ 1
+2 for example. U
+In fact, Wnðq; a; bÞV ðq; a; bÞ is (up to a constant factor depending on n) the 2 nth
+cumulant of X ðq; a; bÞ, which explains why it will appear in the lower terms of the asymp-
+135Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+totic formula. We have normalized by V ðq; a; bÞ so that the Wnðq; a; bÞ depend upon q, a,
+and b in a bounded way:
+Proposition 2.10. We have W nðq; a; bÞ f 10
+3
+/C18/C192n
+uniformly for all integers q and all
+reduced residues a and b ðmod qÞ.
+Proof. From Deﬁnition 2.9 and Lemma 2.8 (a), we see that
+Wnðq; a; bÞ f 22n
+V ðq; a; bÞ
+5
+12
+/C18/C192n P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n P
+g>0
+Lð1=2þig; wÞ¼0
+1
+ð1=4 þ g2Þn
+f ð5=6Þ2n
+V ðq; a; bÞ
+P
+w ðmod qÞ
+22n/C0 2jwðbÞ/C0 wðaÞj2 P
+g>0
+Lð1=2þig; wÞ¼0
+4n/C0 1
+1=4 þ g2
+¼ 5
+6
+/C18/C192n
+22n/C0 24n/C0 1 f 10
+3
+/C18/C192n
+;
+as claimed. r
+The following functions are necessary to write down the formula for the characteristic
+function ^XX q; a; b.
+Deﬁnition 2.11. For any Dirichlet character w, deﬁne
+F ðz; wÞ¼ Q
+g>0
+L 1
+2þig; wðÞ ¼0
+J0
+2zﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !
+:
+Then deﬁne
+Fq; a; bðzÞ¼ Q
+w ðmod qÞ
+F
+/C0
+jwðaÞ/C0 wðbÞjz; w
+/C1
+for any reduced residues a and b ðmod qÞ. Note that jF ðx; wÞj e 1 for all real numbers x,
+since the same is true of J0. U
+The quantity Wnðq; a; bÞ owes its existence to the following convenient expansion:
+Proposition 2.12. For any reduced residue classes a and b ðmod qÞ,
+Fq; a; bðzÞ¼ exp
+/C18
+/C0 V ðq; a; bÞPy
+m¼1
+Wmðq; a; bÞz2m
+/C19
+for jzj < 3
+10 . In particular ,
+Fq; a; bðzÞ¼ e/C0 V ðq; a; bÞz2=2/C0
+1 þ O
+/C0
+V ðq; a; bÞz4/C1/C1
+for jzj e min V ðq; a; bÞ/C0 1=4; 1
+4
+/C26/C27
+.
+136 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. Taking logarithms of both sides of the deﬁnition of Fq; a; bðzÞ in Deﬁni-
+tion 2.11 yields
+log Fq; a; bðzÞ¼ P
+w ðmod qÞ
+P
+g>0
+Lð1=2þig; wÞ¼0
+log J0
+2jwðaÞ/C0 wðbÞjzﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !
+:
+Since jzj < 3=10, the argument of the logarithm of J0 is at most 2 /C1 2 /C1 3
+10
+/C301
+2 ¼ 12
+5 , and so
+the power series expansion (2.5) converges absolutely, giving
+log Fq; a; bðzÞ¼ P
+w ðmod qÞ
+P
+g>0
+Lð1=2þig; wÞ¼0
+Py
+n¼0
+ln
+2jwðaÞ/C0 wðbÞjzﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ ! n
+:
+By Lemma 2.8 (b) only the terms n ¼ 2m with m f 1 survive, and by Lemma 2.8 (c) we
+may replace l2m by /C0j l2mj. We thus obtain
+log Fq; a; bðzÞ¼/C0 Py
+m¼0
+z2m /C1j l2mj22m P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2m P
+g>0
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2ðÞ m
+¼/C0 Py
+m¼1
+V ðq; a; bÞWmðq; a; bÞz2m
+for jzj < 3=10, by Deﬁnition 2.9 for Wmðq; a; bÞ. This establishes the ﬁrst assertion of the
+proposition.
+By Proposition 2.10, we also have
+Py
+m¼2
+Wmðq; a; bÞz2m fPy
+m¼2
+10
+3
+/C18/C192m
+z2m ¼ ð10=3Þ4z4
+1 /C0 100z2=9 f z4ð2:7Þ
+uniformly for jzj e 1=4, say. Therefore by the ﬁrst assertion of the proposition,
+Fq; a; bðzÞ¼ exp
+/C0
+/C0 V ðq; a; bÞW1ðq; a; bÞz2/C1
+exp
+/C18
+/C0 V ðq; a; bÞPy
+m¼2
+Wmðq; a; bÞz2m
+/C19
+¼ e/C0 V ðq; a; bÞz2=2 exp
+/C0
+O
+/C0
+V ðq; a; bÞz4/C1/C1
+¼ e/C0 V ðq; a; bÞz2=2/C0
+1 þ O
+/C0
+V ðq; a; bÞz4/C1/C1
+as long as V ðq; a; bÞz4 e 1. This establishes the second assertion of the proposition. r
+All the tools are now in place to calculate the characteristic function
+^XX q; a; bðzÞ¼ EðeizXq; a; b Þ:
+137Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proposition 2.13. For any reduced residue classes a and b ðmod qÞ,
+^XX q; a; bðzÞ¼ eizðcðq; bÞ/C0 cðq; aÞÞFq; a; bðzÞ:
+In particular,
+log ^XX q; a; bðzÞ¼ i
+/C0
+cðq; aÞ/C0 cðq; bÞ
+/C1
+z /C0 1
+2 V ðq; a; bÞz2 þ O
+/C0
+V ðq; a; bÞz4/C1
+for jzj e 1
+4 .
+Remark. The ﬁrst assertion of the proposition was shown by Feuerverger and
+Martin [5] by a slightly di¤erent method. Unfortunately an i in the exponential factor
+of [5], equation (2-21), is missing, an omission that is repeated in the statement of [5],
+Theorem 4.
+Proof. For a random variable X , deﬁne the cumulant-generating function
+g
+X ðtÞ¼ log ^XX ðtÞ¼ log EðeitX Þ
+to be the logarithm of the characteristic function of X . It is easy to see that gaX ðtÞ¼ gX ðatÞ
+for any constant a. Moreover, if X and Y are independent random variables, then we
+have EðeitX eitY Þ¼ EðeitX ÞEðeitY Þ and so gX þY ðtÞ¼ gX ðtÞþ gY ðtÞ. Note that if the random
+variable C is constant with value c, then gC ðtÞ¼ itc.
+We can also calculate gXg ðtÞ where Xg was deﬁned in Deﬁnition 2.2. Indeed, if Y is
+a random variable uniformly distributed on the interval ½/C0 p; p/C138 , then Zg ¼ eiY and thus
+Xg ¼ cos Y, whence
+gXg ðtÞ¼ log Eðeit cos YÞ¼ log
+/C18Ðp
+/C0 p
+eit cos y dy
+2p
+/C19
+¼ log J0ðtÞ;
+where J0 is the Bessel function of order zero ([1], 9.1.21).
+From Deﬁnition 2.4, the above observations yield
+gXq; a; b ðtÞ¼ it
+/C0
+cðq; bÞ/C0 cðq; aÞ
+/C1
+þ P
+w ðmod qÞ
+P
+g>0
+Lð1=2þig; wÞ¼0
+gXg
+2jwðaÞ/C0 wðbÞjﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p t
+ !
+;
+in other words,
+log ^XX q; a; bðtÞ¼ it
+/C0
+cðq; bÞ/C0 cðq; aÞ
+/C1
+ð2:8Þ
+þ P
+w ðmod qÞ
+P
+g>0
+Lð1=2þig; wÞ¼0
+log J0
+2jwðaÞ/C0 wðbÞjﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p t
+ !
+¼ it
+/C0
+cðq; bÞ/C0 cðq; aÞ
+/C1
+þ log Fq; a; bðxÞ
+138 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+according to Deﬁnition 2.11. Exponentiating both sides establishes the ﬁrst assertion
+of the proposition. To establish the second assertion, we combine equation (2.8) with
+Proposition 2.12 to see that for jzj e 1=4,
+log ^XX q; a; bðtÞ¼ it
+/C0
+cðq; bÞ/C0 cðq; aÞ
+/C1
+/C0 V ðq; a; bÞPy
+m¼1
+Wmðq; a; bÞz2m
+¼ it
+/C0
+cðq; bÞ/C0 cðq; aÞ
+/C1
+/C0 1
+2 V ðq; a; bÞz2 þ O
+/C0
+V ðq; a; bÞz4/C1
+by the estimate (2.7) and the fact that W1ðq; a; bÞ¼ 1
+2 . r
+2.3. Bounds for the characteristic function. A formula (namely equation (2.10)
+below) is known that relates dðq; a; bÞ to an integral involving Fq; a; b. Using this formula
+to obtain explicit estimates for dðq; a; bÞ requires explicit estimates upon Fq; a; b; our ﬁrst
+estimate shows that this function takes its largest values near 0.
+Proposition 2.14. Let 0 e k e 5=24. For any reduced residue classes a and b ðmod qÞ,
+we have jFq; a; bðtÞj e jFq; a; bðkÞj for all t f k.
+Proof. From Deﬁnition 2.11, it su‰ces to show that for any real number g > 0,
+J0
+2jwðaÞ/C0 wðbÞjtﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12e J0
+2jwðaÞ/C0 wðbÞjkﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12ð2:9Þ
+for all t f k. We use the facts that J0 is a positive, decreasing function on the interval
+½0; 5=3/C138 and that J0ð5=3Þ f jJ0ðxÞj for all x f 5=3. Since
+0 e 2jwðaÞ/C0 wðbÞjkﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p e 2 /C1 2 /C1 5=24ﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4
+p ¼ 5
+3 ;
+we see that J0 is positive and decreasing on the interval
+2jwðaÞ/C0 wðbÞjkﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p ; 5
+3
+"#
+:
+Together with J0ð5=3Þ f jJ0ðxÞj for all x f 5=3, this establishes equation (2.9) and hence
+the lemma. r
+Let NðT; wÞ denote, as usual, the number of nontrivial zeros of Lðs; wÞ having imagi-
+nary part at most T in absolute value. Since the function Fq; a; b is a product indexed
+by these nontrivial zeros, we need to establish the following explicit estimates for NðT; wÞ.
+Although exact values for the constants in the results of this section are not needed for
+proving Theorem 1.1, they will become necessary in Section 5 when we explicitly calculate
+values and bounds for dðq; a; bÞ.
+139
+Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proposition 2.15. Let the nonprincipal character w ðmod qÞ be induced by
+w/C3 ðmod q/C3 Þ. For any real number T f 1,
+NðT; wÞ e T
+p log q/C3 T
+2pe þ 0:68884 log q/C3 T
+2pe þ 10:6035:
+For T f 100,
+NðT; wÞ f 44T
+45p log q/C3 T
+2pe /C0 10:551:
+Proof. We cite the following result of McCurley ([10], Theorem 2.1): for T f 1 and
+h A ð0; 0:5/C138 ,
+NðT; wÞ/C0 T
+p log q/C3 T
+2pe
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12< C
+1 log q/C3 T þ C2;
+with
+C1 ¼ 1 þ 2h
+p log 2
+and
+C2 ¼ :3058 /C0 :268h þ 4 log zð1 þ hÞ
+log 2 /C0 2 log zð2 þ 2hÞ
+log 2 þ 2
+p
+log zð3=2 þ 2hÞ
+log 2 :
+(McCurley states his result for primitive nonprincipal characters, but since Lðs; wÞ and
+Lðs; w/C3 Þ have the same zeros inside the critical strip, the result holds for any nonprincipal
+character.) Taking h ¼ 0:25, we obtain
+NðT; wÞ/C0 T
+p log q/C3 T
+2pe
+/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12< 0:68884 log q
+/C3 T þ 8:64865 < 0:68884 log q/C3 T
+2pe þ 10:6035:
+This inequality establishes the ﬁrst assertion of the proposition. The inequality also implies
+that
+NðT; wÞ > 44T
+45p log q/C3 T
+2pe þ T
+45p /C0 :68884
+/C18/C19
+log q/C3 T
+2pe /C0 10:6035
+ !
+;
+the second assertion of the proposition follows upon calculating that the expression in
+parentheses is at least /C0 10:551 when T f 100 (we know that q/C3 f 3 as there are no non-
+principal primitive characters modulo 1 or 2). r
+The next two results establish an exponentially decreasing upper bound for Fq; a; bðtÞ
+when t is large.
+Lemma 2.16. For any nonprincipal character w ðmod qÞ, we have
+jF ðx; wÞF ðx; wÞj e e/C0 0:2725x
+for x f 200.
+140 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. First note that
+F ðx; wÞ¼ Q
+g>0
+Lð1=2þig; wÞ¼0
+J0
+2xﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !
+¼ Q
+g<0
+Lð1=2þig; wÞ¼0
+J0
+2xﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þð /C0 gÞ2
+q
+0
+@
+1
+A
+by the identity Lðs; wÞ¼ Lðs; wÞ, and therefore
+F ðx; wÞF ðx; wÞ¼ Q
+g A R
+Lð1=2þig; wÞ¼0
+J0
+2xﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !
+:
+Using the bound ([14], equation (4.5))
+jJ0ðzÞj e min 1 ;
+ﬃﬃﬃﬃﬃﬃﬃﬃ
+2
+pjxj
+s()
+;
+we see that for x f 1,
+jF ðx; wÞF ðx; wÞj e Q
+/C0 x=2<g<x=2
+Lð1=2þig; wÞ¼0
+J0
+2xﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12e Q
+jgj<x=2
+Lð1=2þig; wÞ¼0
+ð1=4 þ g2Þ1=4
+ﬃﬃﬃﬃﬃﬃpxp :
+When x f 1 and jgj < x=2, the factor ð1=4 þ g2Þ1=4ðpxÞ/C0 1=2 never exceeds 1 =2. Therefore
+jF ðx; wÞF ðx; wÞj e 2/C0 Nðx=2; wÞ ¼ exp
+/C0
+/C0ð log 2ÞNðx=2; wÞ
+/C1
+:
+By Proposition 2.15, we thus have for x f 200
+jF ðx; wÞF ðx; wÞj e 210:558 exp /C0 22 log 2
+45p x log q/C3 x
+4pe
+/C18/C19
+e exp /C0 0:107866x log 3x
+4pe þ 7:3183
+/C18/C19
+e e/C0 0:2725x;
+as claimed. r
+Proposition 2.17. For any distinct reduced residue classes a and b ðmod qÞ such that
+ðab; qÞ¼ 1, we have jFq; a; bðtÞj e e/C0 0:0454fðqÞt for t f 200.
+Proof. We begin by noting that the orthogonality relations for Dirichlet characters
+imply that P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 ¼ 2fðqÞ (as we show in Proposition 3.1 below). On the
+other hand, if S is the set of characters w ðmod qÞ such that jwðaÞ/C0 wðbÞj f 1, then
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 e P
+w ðmod qÞ
+w B S
+1 þP
+w A S
+4 ¼ fðqÞ/C0 KS þ 4KS:
+141Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Combining these two inequalities shows that
+2fðqÞ e fðqÞþ 3KS;
+or equivalently KS f 1
+3 fðqÞ. Note that clearly w0 B S.
+From Deﬁnition 2.11, we have
+jFq; a; bðtÞj2 ¼ Q
+w ðmod qÞ
+/C12/C12F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1/C12/C122
+¼ Q
+w ðmod qÞ
+/C12/C12F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1
+F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1/C12/C12;
+since every character appears once as w and once as w in the product on the right-hand side.
+Since jF ðx; wÞj e 1 for all real numbers x, we can restrict the product on the right-hand side
+to those characters w A S and still have a valid upper bound. For any w A S, Lemma 2.16
+gives us
+/C12/C12F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1
+F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1/C12/C12e e/C0 0:2725j wðaÞ/C0 wðbÞjt e e/C0 0:2725t for t f 200,
+whence
+jFq; a; bðtÞj2 eQ
+w A S
+/C12/C12F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1
+F
+/C0
+jwðaÞ/C0 wðbÞjt; w
+/C1/C12/C12
+e ðe/C0 0:2725tÞKS e ðe/C0 0:0454fðqÞtÞ2;
+which is equivalent to the assertion of the proposition. r
+At this point we can establish the required formula for dðq; a; bÞ, in terms of a
+truncated integral involving Fq; a; b, with an explicit error term. To more easily record the
+explicit bounds for error terms, we employ a variant of the O-notation: we write A ¼ OðBÞ
+if jAj e B (as opposed to a constant times B) for all values of the parameters under consid-
+eration.
+Proposition 2.18. Assume GRH and LI. Let a and b be reduced residues ðmod qÞ such
+that a is a nonsquare ðmod qÞ and b is a square ðmod qÞ.I fV ðq; a; bÞ f 531, then
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+ÐV ðq; a; bÞ/C0 1=4
+/C0 V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x Fq; a; bðxÞ dx
+þ O 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 63:67rðqÞe/C0 V ðq; a; bÞ1=2=2
+/C18/C19
+:
+Proof. Our starting point is the formula of Feuerverger and Martin ([5], equation
+(2.57)), which is valid under the assumptions of GRH and LI:
+dðq; a; bÞ¼ 1
+2 /C0 1
+2p
+Ðy
+/C0 y
+sin
+/C0/C0
+cðq; aÞ/C0 cðq; bÞ
+/C1
+x
+/C1
+x Fq; a; bðxÞ dx:ð2:10Þ
+142 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+In the case where a is a nonsquare modulo q and b is a square modulo q, we ﬁnd that the
+constant cðq; aÞ/C0 cðq; bÞ equals /C0 rðqÞ, so that
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+Ðy
+/C0 y
+sin rðqÞx
+x Fq; a; bðxÞ dx:
+The part of the integral where x f 200 can be bounded using Proposition 2.17:
+/C12/C12/C12/C12
+1
+2p
+Ðy
+200
+sin rðqÞx
+x Fq; a; bðxÞ dx
+/C12/C12/C12/C12e 1
+400p
+Ðy
+200
+e/C0 0:0454fðqÞx dx < 0:01753e/C0 9:08fðqÞ
+fðqÞ :
+The part where x e /C0 200 is bounded by the same amount, and so
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+Ð200
+/C0 200
+sin rðqÞx
+x Fq; a; bðxÞ dx þ O 0:03506 e/C0 9:08fðqÞ
+fðqÞ
+/C18/C19
+:ð2:11Þ
+We now consider the part of the integral where V ðq; a; bÞ/C0 1=4 e x e 200. The hypoth-
+esis that V ðq; a; bÞ f 531 implies that V ðq; a; bÞ/C0 1=4 < 5=24, which allows us to make two
+simpliﬁcations. First, by Proposition 2.14, we know that jFq; a; bðxÞj e Fq; a; b
+/C0
+V ðq; a; bÞ/C0 1=4/C1
+for all x in the range under consideration. Second, by Proposition 2.12 we have
+Fq; a; bðxÞ¼ exp
+/C18
+/C0 V ðq; a; bÞPy
+m¼1
+Wmðq; a; bÞx2m
+/C19
+e e/C0 V ðq; a; bÞx2=2
+for all real numbers jxj < 3=10, since W1ðq; a; bÞ¼ 1=2 and all the Wmðq; a; bÞ are non-
+negative by Deﬁnition 2.9. Since 5 =24 < 3=10, we see that jFq; a; bðxÞj e e/C0 V ðq; a; bÞ1=2=2 for
+all x in the range under consideration. Noting also that
+/C12/C12sin
+/C0
+rðqÞx
+/C1
+=x
+/C12/C12e rðqÞ for all real
+numbers x, we conclude that
+/C12/C12/C12/C12
+Ð200
+V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x FðxÞ dx
+/C12/C12/C12/C12e rðqÞ
+Ð200
+V ðq; a; bÞ/C0 1=4
+e/C0 V ðq; a; bÞ1=2=2 dx
+e 200rðqÞe/C0 V ðq; a; bÞ1=2=2:
+The part of the integral where /C0 200 e x e /C0 V ðq; a; bÞ/C0 1=4 is bounded by the same amount,
+and thus equation (2.11) becomes
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+ÐV ðq; a; bÞ/C0 1=4
+/C0 V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x Fq; a; bðxÞ dx
+þ O 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 200
+p rðqÞe/C0 V ðq; a; bÞ1=2=2
+ !
+;
+which establishes the proposition. r
+143Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+2.4. Derivation of the asymptotic series. In this section we give the proof of
+Theorem 1.1. Our ﬁrst step is to transform the conclusion of Proposition 2.18, which was
+phrased with a mind towards the explicit calculations in Section 5, into a form more
+convenient for our present purposes:
+Lemma 2.19. Assume GRH and LI. For any reduced residues a and b ðmod qÞ such
+that a is a nonsquare ðmod qÞ and b is a square ðmod qÞ, and for any ﬁxed J > 0,
+dðq; a; bÞ¼
+1
+2 þ rðqÞ
+2p
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p ÐV ðq; a; bÞ1=4
+/C0 V ðq; a; bÞ1=4
+sin
+/C0
+rðqÞy=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p /C1
+rðqÞy=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p Fq; a; b
+yﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p
+ !
+dy
+þ OJ
+/C0
+V ðq; a; bÞ/C0 J/C1
+:
+Proof. We make the change of variables x ¼ y=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p
+in Proposition 2.18,
+obtaining
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+ÐV ðq; a; bÞ1=4
+/C0 V ðq; a; bÞ1=4
+sin
+/C0
+rðqÞy=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p /C1
+y=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p Fq; a; b
+yﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p
+ !
+dyﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+V ðq; a; bÞ
+p
+þ O 0:06217 e/C0 5:12fðqÞ
+fðqÞ þ 63:67rðqÞe/C0 V ðq; a; bÞ1=2=2
+/C18/C19
+;
+the main terms of which are exactly what we want. The lemma then follows from the esti-
+mates
+e/C0 5:12fðqÞ fJ V ðq; a; bÞ/C0 J and rðqÞe/C0 V ðq; a; bÞ1=2=2 fJ V ðq; a; bÞ/C0 J
+for any ﬁxed constant J: these estimates hold because V ðq; a; bÞ @ 2fðqÞ log q by Prop-
+osition 3.6, while the standard lower bound fðqÞ g q=log log q follows from equa-
+tion (5.19). r
+We will soon be expanding most of the integrand in Lemma 2.19 into a power series;
+the following deﬁnition and lemma treat the integrals that so arise.
+Deﬁnition 2.20. For any nonnegative integer k, deﬁne
+ð2k /C0 1Þ!! ¼ð 2k /C0 1Þð2k /C0 3Þ/C1/C1/C1 3 /C1 1;
+where we make the convention that ð/C0 1Þ!! ¼ 1. Also, for any nonnegative integer k and
+any positive real number B, deﬁne
+MkðBÞ¼ ÐB
+/C0 B
+y2k e/C0 y2=2 dy: U
+Lemma 2.21. Let J and B be positive real numbers. For any nonnegative integer k , we
+have M kðBÞ¼ð 2k /C0 1Þ!!
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+þ Ok; J
+/C0
+B/C0 J/C1
+.
+144 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. We proceed by induction on k. In the case k ¼ 0, we have
+M0ðBÞ¼
+ÐB
+/C0 B
+e/C0 y2=2 dy ¼
+Ðy
+/C0 y
+e/C0 y2=2 dy /C0 2
+Ðy
+B
+e/C0 y2=2 dy
+¼
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+þ O
+/C18Ðy
+B
+e/C0 By=2 dy
+/C19
+¼
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+þ O 2
+B e/C0 B2=2
+/C18/C19
+¼
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+þ OJ ðB/C0 J Þ
+as required. On the other hand, for k f 1 we can use integration by parts to obtain
+MkðBÞ¼
+ÐB
+/C0 B
+y2k/C0 1 /C1 ye/C0 y2=2 dy ¼/C0 y2k/C0 1e/C0 y2=2jB
+/C0 B þð 2k /C0 1Þ
+ÐB
+/C0 B
+y2k/C0 2e/C0 y2=2 dy
+¼ OðB2k/C0 1e/C0 B2=2Þþð 2k /C0 1ÞMk/C0 1ðBÞ:
+Since the error term B2k/C0 1e/C0 B2=2 is indeed Ok; J
+/C0
+B/C0 J/C1
+, the lemma follows from the inductive
+hypothesis for Mk/C0 1ðBÞ. r
+The following familiar power series expansions can be truncated with reasonable
+error terms:
+Lemma 2.22. Let K be a nonnegative integer and C > 1 a real number. Uniformly
+for jzj e C, we have the series expansions
+ez ¼PK
+j¼0
+z j
+j! þ OC; K ðjzjKþ1Þ;
+sin z
+z ¼PK
+j¼0
+ð/C0 1Þ j z2j
+ð2j þ 1Þ! þ OC; K ðjzj2ðKþ1ÞÞ:
+Proof. The Taylor series for ez, valid for all complex numbers z, can be written as
+ez ¼PK
+j¼0
+z j
+j! þ zKþ1Py
+j¼0
+z j
+ð j þ K þ 1Þ! :
+The function Py
+j¼0
+z j =ð j þ K þ 1Þ! converges for all complex numbers z and hence represents
+an entire function; in particular, it is continuous and hence bounded in the disc jzj e C.
+This establishes the ﬁrst assertion of the lemma, and the second assertion is proved in a
+similar fashion. r
+Everything we need to prove Theorem 1.1 is now in place, once we give the deﬁnition
+of the constants sq; a; bðl; jÞ that appear in its statement:
+145Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Deﬁnition 2.23. For any reduced residues a and b ðmod qÞ, and any positive integers
+j e l, deﬁne
+sq; a; bðl; jÞ¼ ð/C0 1Þ j
+ð2j þ 1Þ!
+P /C1/C1/C1 P
+i2þ2i3þ/C1/C1/C1þ lilþ1¼l/C0 j
+/C0
+2ðl þ i2 þ/C1/C1/C1þ ilþ1Þ/C0 1
+/C1
+!!Qlþ1
+k¼2
+/C0
+/C0 Wk ðq; a; bÞ
+/C1ik
+ik! ;
+where the indices i2; ... ; ilþ1 take all nonnegative integer values that satisfy the constraint
+i2 þ 2i3 þ/C1/C1/C1þ lilþ1 ¼ l /C0 j. Note that sq; a; bð0; 0Þ¼ 1 always. Since Wkðq; a; bÞ fð10=3Þk
+by Proposition 2.10, we see that sq; a; bðl; jÞ is bounded in absolute value by some (combina-
+torially complicated) function of l uniformly in q, a, and b (and uniformly in j as well,
+since there are only ﬁnitely many possibilities f0; 1; ... ; lg for j). U
+Proof of Theorem 1.1. To lighten the notation in this proof, we temporarily write r
+for rðqÞ, d for dðq; a; bÞ, V for V ðq; a; bÞ, and Wk for Wkðq; a; bÞ. We also allow all
+O-constants to depend on K. Since d is bounded, the theorem is trivially true when V is
+bounded, since the error term is at least as large as any other term in that case; therefore
+we may assume that V is su‰ciently large. For later usage in this proof, we note that
+r f V
+1=4, which follows amply from the bound r fe qe mentioned in Deﬁnition 1.2 and
+the asymptotic formula V @ 2fðqÞ log q proved in Proposition 3.6.
+We begin by noting that from Proposition 2.12,
+Fq; a; bðxÞ¼ exp
+/C18
+/C0 VPy
+k¼1
+Wkx2k
+/C19
+¼ exp
+/C18
+/C0 V PKþ1
+k¼1
+Wk x2k þ OðVx2ðKþ2ÞÞ
+/C19
+ð2:12Þ
+¼ exp
+/C18
+/C0 V PKþ1
+k¼1
+Wkx2k
+/C19/C0
+1 þ OðVx2ðKþ2ÞÞ
+/C1
+uniformly for all jxj e minð1=4; V /C0 1=4Þ, where the second equality follows from the upper
+bound given in Proposition 2.10. Inserting this formula into the expression for dðq; a; bÞ
+from Lemma 2.19, applied with J ¼ K þ 2, gives
+d ¼ 1
+2 þ r
+2p
+ﬃﬃﬃﬃ
+V
+p ÐV 1=4
+/C0 V 1=4
+sinðry=
+ﬃﬃﬃﬃ
+V
+p
+Þ
+ry=
+ﬃﬃﬃﬃ
+V
+p exp
+/C18
+/C0 PKþ1
+k¼1
+Wk y2k
+V k/C0 1
+/C19
+1 þ O y2ðKþ2Þ
+V Kþ1
+/C18/C19 !
+dy þ O
+/C0
+V /C0 K/C0 2/C1
+:
+This use of equation (2.12) is justiﬁed because the argument y=
+ﬃﬃﬃﬃ
+V
+p
+of Fq; a; b in the integral
+in Lemma 2.19 is at most V 1=4=
+ﬃﬃﬃﬃ
+V
+p
+e 1=4, by the assumption that V is su‰ciently large.
+To simplify the error term in the integral, we ignore all of the factors in the integrand
+(which are bounded by 1 in absolute value) except for the k ¼ 1 term, in which W
+1 ¼ 1=2,
+to derive the upper bound
+ÐV 1=4
+/C0 V 1=4
+sinðry=
+ﬃﬃﬃﬃ
+V
+p
+Þ
+ry=
+ﬃﬃﬃﬃ
+V
+p exp
+/C18
+/C0 PKþ1
+k¼1
+Wk y2k
+V k/C0 1
+/C19y2ðKþ2Þ
+V Kþ1 dy f 1
+V Kþ1
+Ðy
+/C0 y
+e/C0 y2=2y2Kþ4 dy
+fK
+1
+V Kþ1 :
+146 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Therefore
+d ¼ 1
+2 þ r
+2p
+ﬃﬃﬃﬃ
+V
+p ÐV 1=4
+/C0 V 1=4
+sinðry=
+ﬃﬃﬃﬃ
+V
+p
+Þ
+ry=
+ﬃﬃﬃﬃ
+V
+p exp
+/C18
+/C0 PKþ1
+k¼1
+Wk y2k
+V k/C0 1
+/C19
+dy þ O r
+V Kþ3=2
+/C18/C19
+:ð2:13Þ
+The integrand in equation (2.13) is the product of K þ 2 functions, namely K þ 1 ex-
+ponential factors and a factor involving the function ðsin zÞ=z. Our plan is to keep the ﬁrst
+exponential function as it is and expand the other factors into their power series at the or-
+igin. Note that the argument of the kth exponential factor is at most Wk V 1/C0 k=2 in absolute
+value, which is bounded (by a constant depending on K) for all k f 2 by Proposition 2.10.
+Similarly, the argument of the function ðsin zÞ=z is bounded by rV 1=4=
+ﬃﬃﬃﬃ
+V
+p
+f 1. Therefore
+the expansion of all of these factors, excepting the exponential factor corresponding to
+k ¼ 1, into their power series is legitimate in the range of integration.
+Speciﬁcally, we have the two identities
+PK
+j¼0
+ð/C0 1Þ j
+ð2j þ 1Þ!
+ðryÞ2j
+V j ¼ sinðry=
+ﬃﬃﬃﬃ
+V
+p
+Þ
+ry=
+ﬃﬃﬃﬃ
+V
+p þ O ðryÞ2ðKþ1Þ
+V Kþ1
+ !
+;
+PK
+ik ¼0
+ð/C0 1Þik
+ik!
+Wk y2k
+V k/C0 1
+/C18/C19ik
+¼ exp /C0 Wk y2k
+V k/C0 1
+/C18/C19
+þ O Wk y2k
+V k/C0 1
+/C18/C19Kþ1 !
+¼ exp /C0 Wk y2k
+V k/C0 1
+/C18/C19
+þ O y2kðKþ1Þ
+V Kþ1
+/C18/C19
+;
+where the error terms are justiﬁed by Lemma 2.22; in the last equality we have used
+Proposition 2.10 to ignore the contribution of the factor Wk to the error term (since the
+O-constant may depend on K). From these identities, we deduce that
+/C18PK
+j¼0
+ð/C0 1Þ j
+ð2j þ 1Þ!
+ðryÞ2j
+V j
+/C19
+e/C0 y2=2 QKþ1
+k¼2
+PK
+ik ¼0
+ð/C0 1Þik
+ik!
+Wk y2k
+V k/C0 1
+/C18/C19ik
+ !
+¼ sinðry=
+ﬃﬃﬃﬃ
+V
+p
+Þ
+ry=
+ﬃﬃﬃﬃ
+V
+p þ O ðryÞ2ðKþ1Þ
+V Kþ1
+ !0
+@
+1
+A
+/C2 e/C0 y2=2 QKþ1
+k¼2
+exp /C0 Wk y2k
+V k/C0 1
+/C18/C19
+þ O Wk y2k
+V k/C0 1
+/C18/C19Kþ1 ! !
+¼ sinðry=
+ﬃﬃﬃﬃ
+V
+p
+Þ
+ry=
+ﬃﬃﬃﬃ
+V
+p QKþ1
+k¼1
+exp /C0 Wk y2k
+V k/C0 1
+/C18/C19
+þ Oy ðKþ2ÞðKþ1Þ2
+e/C0 y2=2 r2Kþ2
+V Kþ1
+/C18/C19
+:
+(The computation of the error term is simpliﬁed by the fact that all the main terms on
+the right-hand side are at most 1 in absolute value, so that we only need to ﬁgure out the
+largest powers of y and r, and the smallest power of V , that can be obtained by the cross
+terms.)
+147Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Substituting this identity into equation (2.13) yields
+d ¼ 1
+2 þ r
+2p
+ﬃﬃﬃﬃ
+V
+p ÐV 1=4
+/C0 V 1=4
+/C18PK
+j¼0
+ð/C0 1Þ j
+ð2j þ 1Þ!
+ðryÞ2j
+V j
+/C19
+e/C0 y2=2 QKþ1
+k¼2
+PK
+ik ¼0
+ð/C0 1Þik
+ik!
+Wk y2k
+V k/C0 1
+/C18/C19ik
+ !
+dy
+þ O
+/C18rﬃﬃﬃﬃ
+V
+p Ðy
+/C0 y
+yðKþ2ÞðKþ1Þ2
+e/C0 y2=2 r2Kþ2
+V Kþ1 dy þ r
+V Kþ3=2
+/C19
+¼ 1
+2 þ r
+2p
+ﬃﬃﬃﬃ
+V
+p PK
+j¼0
+PK
+i2¼0
+/C1/C1/C1 PK
+iKþ1¼0
+/C2 ð/C0 1Þ j
+ð2j þ 1Þ!
+r2j
+V j
+QKþ1
+k¼2
+1
+ik !
+/C0 Wk
+V k/C0 1
+/C18/C19ik
+Mjþ2i2þ/C1/C1/C1þð Kþ1ÞiKþ1 ðV 1=4Þ
+ !
+þ O r2Kþ3
+V Kþ3=2
+/C18/C19
+;
+where M was deﬁned in Deﬁnition 2.20. Invoking Lemma 2.21 and then collecting the
+summands according to the power l ¼ j þ i1 þ 2i2 þ/C1/C1/C1þ KiKþ1 of V in the denominator,
+we obtain
+d ¼ 1
+2 þ rﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2pV
+p PK
+j¼0
+PK
+i2¼0
+/C1/C1/C1 PK
+iKþ1¼0
+ð2:14Þ
+/C2
+/C18ð/C0 1Þ j
+ð2j þ 1Þ!
+r2j
+V j
+QKþ1
+k¼2
+1
+ik!
+/C0 Wk
+V k/C0 1
+/C18/C19ik/C0/C0
+2
+/C0
+j þ 2i2 þ/C1/C1/C1þð K þ 1ÞiKþ1
+/C1
+/C0 1
+/C1
+!!
+þ OðV /C0ð Kþ1ÞÞ
+/C1/C19
+þ O r2Kþ3
+V Kþ3=2
+/C18/C19
+¼ 1
+2 þ rﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2pV
+p PKð1þKðKþ1Þ=2Þ
+l¼0
+1
+V l
+PK
+j¼0
+ð/C0 1Þ j r2j
+ð2j þ 1Þ!
+PK
+i2¼0
+/C1/C1/C1 PK
+iKþ1¼0
+i2þ2i3þ/C1/C1/C1þ KiKþ1¼l/C0 j
+/C2
+/C18QKþ1
+k¼2
+ð/C0 WkÞik
+ik!
+/C0
+2ðl þ i2 þ/C1/C1/C1þ iKþ1Þ/C0 1
+/C1
+!!
+/C19
+þ O r2Kþ3
+V Kþ3=2
+/C18/C19
+;
+where we have subsumed the ﬁrst error term into the second with the help of Prop-
+osition 2.10.
+The proof of Theorem 1.1 is actually now complete, although it takes a moment
+to recognize it. For 0 e l e K, the values of j that contribute to the sum are 0 e j e l,
+since l /C0 j must be a sum of nonnegative numbers due to the condition of summation
+of the inner sum. In particular, all possible values of j and the ik are represented in the
+sum, and the upper bound of K for these variables is unnecessary. We therefore see that
+the coe‰cient of r2j V /C0 l on the right-hand side of equation (2.14) matches Deﬁnition 2.23
+for sq; a; bðl; jÞ. On the other hand, for each of the ﬁnitely many larger values of l, the
+lth summand is bounded above by r2K V /C0 K/C0 1 times some constant depending only on K
+(again we have used Proposition 2.10 to bound the quantities Wk uniformly), which
+is smaller than the indicated error term once the leading factor r=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2pV
+p
+is taken into
+account. r
+148 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+3. Analysis of the variance V(q; a, b)
+In this section we prove Theorems 1.4 and 1.7, as well as discussing related results to
+which our methods apply. We begin by establishing some arithmetic identities involving
+Dirichlet characters and their conductors in Section 3.1. Using these identities and a classi-
+cal formula for bðwÞ, we complete the proof of Theorem 1.4 in Section 3.2. The linear com-
+bination of values L
+0ð1; wÞ=Lð1; wÞ that deﬁnes M /C3 ðq; a; bÞ can be converted into an asymp-
+totic formula involving the von Mangoldt L-function, as we show in Section 3.3, and in
+this way we establish Theorem 1.7.
+Our analysis to this point has the interesting consequence that the densities dðq; a; bÞ
+can be evaluated extremely precisely using only arithmetic content, that is, arithmetic on
+rational numbers (including multiplicative functions of integers) and logarithms of integers;
+we explain this consequence in Section 3.4. Next, we show in Section 3.5 that the limiting
+logarithmic distributions of the di¤erences Eðx; q; aÞ/C0 Eðx; q; bÞ obey a central limit
+theorem as q tends to inﬁnity. Finally, we explain in Section 3.6 how our analysis can be
+modiﬁed to apply to the race between the aggregate counting functions
+pðx; q; NÞ¼ Kfp e x : p is a quadratic nonresidue mod qg
+and
+pðx; q; RÞ¼ Kfp e x : p is a quadratic residue mod qg:
+3.1. Arithmetic sums over characters. We begin by establishing some preliminary
+arithmetic identities that will be needed in later proofs.
+Proposition 3.1. Let a and b be distinct reduced residue classes ðmod qÞ. Then
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 ¼ 2fðqÞ;
+while for any reduced residue c E 1 ðmod qÞ we have
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2wðcÞ¼/C0 fðqÞ
+/C0
+iqðcab/C0 1Þþ iqðcba/C0 1Þ
+/C1
+;
+where iq is deﬁned in Deﬁnition 1.5.
+Proof. These sums are easy to evaluate using the orthogonality relation ([11],
+Corollary 4.5)
+P
+w ðmod qÞ
+wðmÞ¼ fðqÞ; if m 1 1 ðmod qÞ
+0; if m E 1 ðmod qÞ
+/C26/C27
+¼ fðqÞiqðmÞ:ð3:1Þ
+149Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+We have
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 ¼ P
+w ðmod qÞ
+/C0
+2 /C0 wðaÞwðbÞ/C0 wðbÞwðaÞ
+/C1
+¼ P
+w ðmod qÞ
+2 /C0 P
+w ðmod qÞ
+wðab/C0 1Þ/C0 P
+w ðmod qÞ
+wðba/C0 1Þ¼ 2fðqÞþ 0 þ 0;
+since a E b ðmod qÞ. Similarly,
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2wðcÞ¼ P
+w ðmod qÞ
+/C0
+2 /C0 wðaÞwðbÞ/C0 wðbÞwðaÞ
+/C1
+wðcÞ
+¼ P
+w ðmod qÞ
+2wðcÞ/C0 P
+w ðmod qÞ
+wðcab/C0 1Þ/C0 P
+w ðmod qÞ
+wðcba/C0 1Þ
+¼ 0 /C0 fðqÞ
+/C0
+iqðcab/C0 1Þþ iqðcba/C0 1Þ
+/C1
+: r
+The results in the next two lemmas were discovered independently by Vorhauer
+(see [11], Section 9.1, Problem 8).
+Lemma 3.2. For any positive integer q , we have
+P
+d j q
+Lðq=dÞfðdÞ¼ fðqÞP
+p j q
+log p
+p /C0 1 ;
+while for any proper divisor s of q we have
+P
+d j s
+Lðq=dÞfðdÞ¼ fðqÞ Lðq=sÞ
+fðq=sÞ :
+Proof. For the ﬁrst identity, we group together the contributions from the divisors d
+such that q=d is a power of a particular prime factor p of q.I f pr k q, write q ¼ mpr,s o
+that p F m. We get a contribution to the sum only when d ¼ mpr/C0 k for some 1 e k e r.
+Therefore
+P
+d j q
+Lðq=dÞfðdÞ¼ P
+p r k q
+Pr
+k¼1
+LðpkÞfðmpr/C0 kÞ¼ P
+p r k q
+fðmÞ log pPr
+k¼1
+fðpr/C0 kÞ:
+Since P
+a j b
+fðaÞ¼ b for any positive integer b, the inner sum is exactly pr/C0 1. Noting that
+fðmÞ¼ fðqÞ=fðprÞ since p F n, we obtain
+P
+d j q
+Lðq=dÞfðdÞ¼ P
+p r k q
+fðqÞ
+fðprÞ pr/C0 1 log p ¼ fðqÞP
+p j q
+log p
+p /C0 1
+as claimed.
+We turn now to the second identity. If q=s has at least two distinct prime factors, then
+so will q=d for every divisor d of s, and hence all of the Lðq=dÞ terms will be 0. Therefore
+the entire sum equals 0, which is consistent with the claimed identity as RqðsÞ¼ 0 as well in
+this case. Therefore we only need to consider the case where q=s equals a prime power pt.
+150 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Again write q ¼ mpr with p F m. Since s ¼ q=pt ¼ mpt/C0 r, the only terms that con-
+tribute to the sum are d ¼ mpr/C0 k for t e k e r. By a similar calculation as before,
+P
+d j s
+Lðq=dÞfðdÞ¼ Pr
+k¼t
+Lðpk Þfðmpr/C0 k Þ¼ fðmÞ log pPr
+k¼t
+fðpr/C0 kÞ
+¼ fðqÞ
+fðprÞ pr/C0 t log p
+¼ fðqÞ log p
+pt/C0 1ðp /C0 1Þ
+¼ fðqÞ Lðq=sÞ
+fðq=sÞ ;
+since q=s ¼ pt. This establishes the second identity. r
+Recall that w/C3 denotes the primitive character that induces w and that q/C3 denotes the
+conductor of w/C3 .
+Proposition 3.3. For any positive integer q ,
+P
+w ðmod qÞ
+log q/C3 ¼ fðqÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1
+/C19
+;
+while if a E 1 ðmod qÞ is a reduced residue ,
+P
+w ðmod qÞ
+wðaÞ log q/C3 ¼/C0 fðqÞ L
+/C0
+q=ðq; a /C0 1Þ
+/C1
+f
+/C0
+q=ðq; a /C0 1Þ
+/C1:
+Proof. First we show that
+P
+w ðmod qÞ
+wðaÞ log q/C3 ¼ log q P
+w ðmod qÞ
+wðaÞ/C0 P
+d j q
+Lðq=dÞ P
+w ðmod dÞ
+wðaÞð3:2Þ
+for any reduced residue a ðmod qÞ. Given a character w ðmod qÞ and a divisor d of q, the
+character w is induced by a character ðmod dÞ if and only if d is a multiple of q/C3 . Therefore
+P
+d j q
+Lðq=dÞ P
+w ðmod dÞ
+wðaÞ¼ P
+w ðmod qÞ
+wðaÞP
+d j q
+q /C3 j d
+Lðq=dÞ:
+Making the change of variables c ¼ q=d, this identity becomes
+P
+d j q
+Lðq=dÞ P
+w ðmod dÞ
+wðaÞ¼ P
+w ðmod qÞ
+wðaÞ P
+c j q=q/C3
+LðcÞ
+¼ P
+w ðmod qÞ
+wðaÞ log q
+q/C3 ¼ log q P
+w ðmod qÞ
+wðaÞ/C0 P
+w ðmod qÞ
+wðaÞ log q/C3 ;
+which veriﬁes equation (3.2).
+151Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+If a 1 1 ðmod qÞ, then equation (3.2) becomes
+P
+w ðmod qÞ
+log q/C3 ¼ log q P
+w ðmod qÞ
+1 /C0 P
+d j q
+Lðq=dÞ P
+w ðmod dÞ
+1
+¼ fðqÞ log q /C0 P
+d j q
+Lðq=dÞfðdÞ¼ fðqÞ log q /C0 fðqÞP
+p j q
+log p
+p /C0 1
+by Lemma 3.2, establishing the ﬁrst assertion of the lemma. If on the other hand
+a E 1 ðmod qÞ, then applying the orthogonality relation (3.1) to equation (3.2) yields
+P
+w ðmod qÞ
+wðaÞ log q/C3 ¼ 0 /C0 P
+d j q
+Lðq=dÞfðdÞid ðaÞ
+¼/C0 P
+d jð q; a/C0 1Þ
+Lðq=dÞfðdÞ¼/C0 fðqÞ L
+/C0
+q=ðq; a /C0 1Þ
+/C1
+f
+/C0
+q=ðq; a /C0 1Þ
+/C1
+by Lemma 3.2 again, establishing the second assertion of the lemma. r
+Finally we record a proposition that involves values of both primitive characters and
+characters induced by them.
+Proposition 3.4. Let p be a prime and e a positive integer , and let r be a reduced
+residue ðmod qÞ.I fp F q, then
+P
+w ðmod qÞ
+wðrÞ
+/C0
+w/C3 ðpeÞ/C0 wðpeÞ
+/C1
+¼ 0:
+On the other hand , if p j q, then
+P
+w ðmod qÞ
+wðrÞ
+/C0
+w/C3 ðpeÞ/C0 wðpeÞ
+/C1
+¼ f
+/C0
+q=pn/C1
+; if rp e 1 1 ðmod q=pnÞ;
+0; otherwise;
+/C26
+where n f 1 is the integer such that p n k q.
+Proof. The ﬁrst assertion is trivial: if p F q, then w/C3 ðpeÞ¼ wðpeÞ for every character
+w ðmod qÞ.I f p j q, then wðpeÞ¼ 0 for every w, and so
+P
+w ðmod qÞ
+wðrÞ
+/C0
+w/C3 ðpeÞ/C0 wðpeÞ
+/C1
+¼ P
+w ðmod qÞ
+wðrÞw/C3 ðpeÞ¼ P
+w ðmod qÞ
+w/C3 ðrpeÞ
+since wðrÞ¼ w/C3 ðrÞ for every w ðmod qÞ due to the hypothesis that ðr; qÞ¼ 1. Also, we have
+w/C3 ðpeÞ¼ 0 for any character w such that p j q/C3 , and so
+P
+w ðmod qÞ
+w/C3 ðrpeÞ¼ P
+w ðmod qÞ
+q /C3 j q=p n
+w/C3 ðrpeÞ¼ P
+w ðmod q=p nÞ
+wðrpeÞ;
+since ðpe; q=pnÞ¼ 1. The second assertion now follows from the orthogonality relation
+(3.1) above. r
+152 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+3.2. A formula for the variance. Recall that bðwÞ was deﬁned in Deﬁnition 1.3; we
+record a classical formula for bðwÞ in the next lemma, after which we will be able to prove
+Theorem 1.4.
+Lemma 3.5. Assume GRH. Let q f 3, and let w be any nonprincipal character
+modulo q. Then
+bðwÞ¼ log q/C3
+p /C0 g0 /C0
+/C0
+1 þ wð/C0 1Þ
+/C1
+log 2 þ 2R e L0ð1; w/C3 Þ
+Lð1; w/C3 Þ :
+Proof. Since the zeros of Lðs; wÞ and Lðs; w/C3 Þ on the line Re z ¼ 1
+2 are identical, it
+su‰ces to show that for any primitive character w modulo q,
+P
+g A R
+Lð1=2þig; wÞ¼0
+1
+1=4 þ g2 ¼ log q
+p /C0 g0 /C0
+/C0
+1 þ wð/C0 1Þ
+/C1
+log 2 þ 2R e L0ð1; wÞ
+Lð1; wÞ :
+There is a certain constant BðwÞ that appears in the Hadamard product formula for Lðs; wÞ.
+One classical formula related to it ([11], equation (10.38)) is
+Re BðwÞ¼/C0 P
+r A C
+0<Re r<1
+Lðr; wÞ¼0
+Re 1
+r :ð3:3Þ
+We can relate BðwÞ to bðwÞ under GRH by rewriting the previous equation as
+/C0 2R e BðwÞ¼ P
+g A R
+Lð1=2þig; wÞ¼0
+Re 2
+1=2 þ ig
+/C18/C19
+¼ P
+g A R
+Lð1=2þig; wÞ¼0
+Re 1 /C0 2ig
+1=4 þ g2
+ !
+¼ bðwÞ:ð3:4Þ
+On the other hand, Vorhauer showed in 2006 (see [11], equation (10.39)) that
+BðwÞ¼/C0 1
+2 log q
+p /C0 L0
+L ð1; wÞþ g0
+2 þ 1 þ wð/C0 1Þ
+2 log 2:
+Taking real parts (which renders moot the di¤erence between w and w) and comparing to
+equation (3.4) establishes the lemma. r
+Proof of Theorem 1.4. We begin by applying Lemma 3.5 to Deﬁnition 1.3 for
+V ðq; a; bÞ, which yields
+V ðq; a; bÞ¼ P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2ð3:5Þ
+/C2 log q/C3
+p /C0 g0 /C0
+/C0
+1 þ wð/C0 1Þ
+/C1
+log 2 þ 2R e L0ð1; w/C3 Þ
+Lð1; w/C3 Þ
+/C18/C19
+¼ P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 log q/C3 /C0ð g0 þ log 2pÞ P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2
+/C0 log 2 P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2wð/C0 1Þþ 2M /C3 ðq; a; bÞ;
+153Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+recalling Deﬁnition 1.6 for M /C3 ðq; a; bÞ. We are permitted to reinclude the principal charac-
+ter w0 in the three sums on the right-hand side, since the coe‰cient jw0ðaÞ/C0 w0ðbÞj2 always
+equals 0.
+The second and third terms on the right-hand side of equation (3.5) are easy to eval-
+uate using Proposition 3.1: we have
+/C0ð g0 þ log 2pÞ P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 ¼/C0 2ðg0 þ log 2pÞfðqÞð3:6Þ
+and
+/C0 log 2 P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2wð/C0 1Þ¼ð log 2ÞfðqÞ
+/C0
+iqð/C0 ab/C0 1Þþ iqð/C0 ba/C0 1Þ
+/C1
+ð3:7Þ
+¼ð 2 log 2ÞfðqÞiqð/C0 ab/C0 1Þ:
+The ﬁrst sum on the right-hand side of equation (3.5) can be evaluated using Prop-
+osition 3.3:
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 log q/C3 ¼ P
+w ðmod qÞ
+/C0
+2 /C0 wðab/C0 1Þ/C0 wðba/C0 1Þ
+/C1
+log q/C3
+¼ 2fðqÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1
+/C19
+þ fðqÞ L
+/C0
+q=ðq; ab/C0 1 /C0 1Þ
+/C1
+f
+/C0
+q=ðq; ab/C0 1 /C0 1Þ
+/C1
+þ fðqÞ L
+/C0
+q=ðq; ba/C0 1 /C0 1Þ
+/C1
+f
+/C0
+q=ðq; ba/C0 1 /C0 1Þ
+/C1:
+Since ðq; mnÞ¼ð q; nÞ for any integer m that is relatively prime to q, we see that
+ðq; ab/C0 1 /C0 1Þ¼ð q; a /C0 bÞ¼ð q; b /C0 aÞ¼ð q; ba/C0 1 /C0 1Þ;
+and therefore
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 log q/C3 ¼ 2fðqÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1 þ L
+/C0
+q=ðq; a /C0 bÞ
+/C1
+f
+/C0
+q=ðq; a /C0 bÞ
+/C1
+/C19
+:ð3:8Þ
+Substituting the evaluations (3.6), (3.7), and (3.8) into equation (3.5), we obtain
+V ðq; a; bÞ¼ 2fðqÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1 þ L
+/C0
+q=ðq; a /C0 bÞ
+/C1
+f
+/C0
+q=ðq; a /C0 bÞ
+/C1
+/C19
+/C0 2ðg0 þ log 2pÞfðqÞþð 2 log 2ÞfðqÞiqð/C0 ab/C0 1Þþ 2M /C3 ðq; a; bÞ
+¼ 2fðqÞ
+/C0
+LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2
+/C1
+þ 2M /C3 ðq; a; bÞ;
+where LðqÞ and KqðnÞ were deﬁned in Deﬁnition 1.5. This establishes the theorem. r
+Theorem 1.4 has the following asymptotic formula as a corollary:
+154 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proposition 3.6. Assuming GRH, we have
+V ðq; a; bÞ¼ 2fðqÞ log q þ O
+/C0
+fðqÞ log log q
+/C1
+:
+Proof. First note that the function ðlog tÞ=ðt /C0 1Þ is decreasing for t > 1. Conse-
+quently, LðqÞ=fðqÞ is bounded by log 2. Also, letting pj denote the jth prime, we see that
+P
+p j q
+log p
+p /C0 1 ePoðqÞ
+j¼1
+log pj
+pj /C0 1 f log poðqÞ f log oðqÞ f log log q;
+where the ﬁnal inequality uses the trivial bound oðqÞ e ðlog qÞ=ðlog 2Þ. From Deﬁni-
+tion 1.5, we conclude that LðqÞ¼ log q þ Oðlog log qÞ. Next, Kqða /C0 bÞ is bounded by log 2
+as above, and iqðab/C0 1Þ is of course bounded as well. Finally, on GRH we know that
+L0ð1; w/C3 Þ=Lð1; w/C3 Þ f log log q/C3 e log log q
+(either see [8], or take y ¼ log2 q in Proposition 3.10), which immediately implies that
+M /C3 ðq; a; bÞ f fðqÞ log log q
+by Deﬁnition 1.6. The proposition now follows from Theorem 1.4. r
+3.3. Evaluation of the analytic term M *(q; a, b). The goal of this section is a proof of
+Theorem 1.7. We start by examining more closely, in the next two lemmas, the relationship
+between the quantities M
+/C3 ðq; a; bÞ and Mðq; a; bÞ deﬁned in Deﬁnition 1.6. Recall that
+eðq; p; rÞ was deﬁned in Deﬁnition 1.8.
+Lemma 3.7. If p n k q, then
+P
+ef1
+rpe11 ðmod q=p nÞ
+1
+pe ¼ 1
+peðq; p; rÞð1 /C0 p/C0 eðq; p; 1ÞÞ :
+Proof. If r is not in the multiplicative subgroup ðmod q=pnÞ generated by p, then the
+left-hand side is clearly zero, while the right-hand side is zero by the convention that
+eðq; p; rÞ¼ y in this case. Otherwise, the positive integers e for which rp
+e 1 1 ðmod q=pnÞ
+are precisely the ones of the form eðq; p; rÞþ keðq; p; 1Þ for k f 0, since eðq; p; rÞ is the ﬁrst
+such integer and eðq; p; 1Þ is the order of p ðmod q=pnÞ. Therefore we obtain the geometric
+series
+P
+ef1
+rpe11 ðmod q=p nÞ
+1
+pe ¼Py
+k¼0
+1
+peðq; p; rÞþkeðq; p; 1Þ ¼ 1
+peðq; p; rÞð1 /C0 p/C0 eðq; p; 1ÞÞ
+as claimed. r
+Deﬁnition 3.8. If pn k q, deﬁne
+h0ðq; p; rÞ¼ 1
+fðpnÞ
+log p
+peðq; p; rÞð1 /C0 p/C0 eðq; p; 1ÞÞ
+155Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+and
+H0ðq; a; bÞ¼ P
+p j q
+/C0
+h0ðq; p; ab/C0 1Þþ h0ðq; p; ba/C0 1Þ/C0 2h0ðq; p; 1Þ
+/C1
+:
+We will see later in this section, in the proof of Theorem 1.7, that h0 and H0 are very close
+to the functions h and H also deﬁned in Deﬁnition 1.8. Notice that if q is prime, then
+h0ðq; q; rÞ¼ð log qÞ=qðq /C0 1Þ is independent of r and thus Hðq; a; bÞ¼ 0 for any a and b. U
+The next lemma could be proved under a hypothesis much weaker than GRH, but
+this is irrelevant to our present purposes.
+Lemma 3.9. Assume GRH. If a and b are reduced residues ðmod qÞ, then
+M /C3 ðq; a; bÞ¼ Mðq; a; bÞþ fðqÞH0ðq; a; bÞ;
+where M /C3 ðq; a; bÞ and M ðq; a; bÞ are deﬁned in Deﬁnition 1.6.
+Proof. We begin with the identity
+L0ð1; wÞ
+Lð1; wÞ ¼/C0 lim
+y!y
+P
+pey
+Py
+e¼1
+wðpeÞ log p
+pe :
+This identity follows from the fact that the Euler product of Lðs; wÞ converges uniformly
+for Re ðsÞ f 1=2 þ e; this is implied by the estimate P
+pex
+wðpÞ fq x1=2 log2 x which itself is a
+consequence of GRH.
+Therefore
+M /C3 ðq; a; bÞ/C0 Mðq; a; bÞ
+¼ P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2 L0ð1; w/C3 Þ
+Lð1; w/C3 Þ /C0 L0ð1; wÞ
+Lð1; wÞ
+/C18/C19
+¼/C0 P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2 lim
+y!y
+P
+pey
+log pPy
+e¼1
+w/C3 ðpeÞ/C0 wðpeÞ
+pe
+¼ lim
+y!y
+P
+pey
+log pPy
+e¼1
+1
+pe
+P
+w ðmod qÞ
+/C0
+wðab/C0 1Þþ wðba/C0 1Þ/C0 2
+/C1/C0
+w/C3 ðpeÞ/C0 wðpeÞ
+/C1
+;
+where the inserted term involving w0 is always zero. Proposition 3.4 tells us that the inner
+sum vanishes except possibly when the prime p divides q; invoking that proposition three
+times, we see that
+M /C3 ðq; a; bÞ/C0 Mðq; a; bÞ
+¼ P
+pn k q
+fðq=pnÞ log p
+/C18 P
+ef1
+ab/C0 1pe11 ðmod q=p nÞ
+1
+pe þ P
+ef1
+ba/C0 1p e11 ðmod q=pnÞ
+1
+pe /C0 2 P
+ef1
+p e11 ðmod q=p nÞ
+1
+pe
+/C19
+:
+156 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+We can evaluate these inner sums using Lemma 3.7: by comparison with Deﬁnition 3.8,
+M /C3 ðq; a; bÞ/C0 Mðq; a; bÞ
+¼ fðqÞP
+p n k q
+log p
+fðpnÞ
+/C18 1
+peðq; p; ab/C0 1Þð1 /C0 p/C0 eðq; p; 1ÞÞ
+þ 1
+peðq; p; ba/C0 1Þð1 /C0 p/C0 eðq; p; 1ÞÞ /C0 2 1
+peðq; p; 1Þð1 /C0 p/C0 eðq; p; 1ÞÞ
+/C19
+¼ fðqÞH0ðq; a; bÞ;
+which establishes the lemma. r
+We will need the following three propositions, with explicit constants given, when
+we undertake our calculations and estimations of dðq; a; bÞ. Because the need for explicit
+constants makes their derivations rather lengthy, we will defer the proofs of the ﬁrst two
+propositions until Section 5.2 and derive only the third one in this section.
+Proposition 3.10. Assume GRH. Let w be a nonprincipal character ðmod qÞ. For any
+positive real number y ,
+L0ð1; wÞ
+Lð1; wÞ ¼/C0 Py
+n¼1
+wðnÞLðnÞ
+n e/C0 n=y þ O 14:27 log q þ 16:25
+y1=2 þ 16:1 log q þ 17:83
+y3=4
+/C18/C19
+:
+Proposition 3.11. If 1 e a < q, then
+P
+n1a ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+¼ LðaÞ
+a þ O 2 log2 q
+q þ 3:935 log q
+q
+ !
+:
+Assuming these propositions for the moment, we can derive the following explicit
+estimate for M /C3 ðq; a; bÞ, after which we will be able to ﬁnish the proof of Theorem 1.7.
+Proposition 3.12. Assume GRH. For any pair a , b of distinct reduced residues
+modulo q, let r 1 and r2 denote the least positive residues of ab /C0 1 and ba /C0 1 ðmod qÞ. Then for
+q f 150,
+M /C3 ðq; a; bÞ¼ fðqÞ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ H0ðq; a; bÞ
+/C18/C19
+þ O 23:619fðqÞ log2 q
+q
+ !
+:
+Proof. The bulk of the proof is devoted to understanding Mðq; a; bÞ. From Proposi-
+tion 3.10, we have
+Mðq; a; bÞ¼ P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2 L0ð1; wÞ
+Lð1; wÞð3:9Þ
+157Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+¼ P
+w ðmod qÞ
+/C0
+2 /C0 wðba/C0 1Þ/C0 wðab/C0 1Þ
+/C1
+/C2
+ 
+/C0 Py
+n¼1
+LðnÞwðnÞ
+n e/C0 n=y þ O 14:27 log q þ 10:6
+y1=2 þ 16:1 log q þ 13:1
+y3=4
+/C18/C19 !
+¼Py
+n¼1
+LðnÞ
+n e/C0 n=y P
+w ðmod qÞ
+/C0
+wðba/C0 1nÞþ wðab/C0 1nÞ/C0 2wðnÞ
+/C1
+þ 4fðqÞO 14:27 log q þ 16:25
+y1=2 þ 16:1 log q þ 17:83
+y3=4
+/C18/C19
+;
+and using the orthogonality relations in Proposition 3.1, we see that
+Mðq; a; bÞ¼ fðqÞ
+/C18P
+n1ab/C0 1 ðmod qÞ
+LðnÞ
+n e/C0 n=y þ P
+n1ba/C0 1 ðmod qÞ
+LðnÞ
+n e/C0 n=y
+/C0 2 P
+n11 ðmod qÞ
+LðnÞ
+n e/C0 n=y
+/C19
+þ 4fðqÞO 14:27 log q þ 16:25
+y1=2 þ 16:1 log q þ 17:83
+y3=4
+/C18/C19
+:
+At this point we choose y ¼ q2. We calculate that
+ð14:27 log q þ 16:25Þ=q þð 16:1 log q þ 17:83Þ=q3=2 < 3:816ðlog2 qÞ=q
+for q f 150, and so
+Mðq; a; bÞ¼ fðqÞ
+/C18P
+n1ab/C0 1 ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+þ P
+n1ba/C0 1 ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+/C0 2 P
+n11 ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+/C19
+þ O 15:263fðqÞ log2 q
+q
+ !
+:
+Let r1 and r2 denote the least positive residues of ab/C0 1 and ba/C0 1 ðmod qÞ. Using
+Proposition 3.11 three times, we see that
+Mðq; a; bÞ¼ fðqÞ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+/C0 2 Lð1Þ
+1 þ O 3 2 log2 q
+q þ 3:935 log q
+q
+ !0
+@
+1
+A
+0
+@
+1
+A
+þ O 15:263fðqÞ log2 q
+q
+ !
+¼ fðqÞ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+/C18/C19
+þ O 36:619fðqÞ log2 q
+q
+ !
+158 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+for q f 150. With this understanding of Mðq; a; bÞ, the proposition now follows for
+M /C3 ðq; a; bÞ by Lemma 3.9. r
+Proof of Theorem 1.7. Since Proposition 3.12 tells us that
+M /C3 ðq; a; bÞ¼ fðqÞ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ H0ðq; a; bÞþ O log2 q
+q
+ !0
+@
+1
+A;
+all we need to do to prove the theorem is to show that
+H0ðq; a; bÞ¼ Hðq; a; bÞþ O log2 q
+q
+ !
+:
+The key observation is that peðq; p; 1Þ 1 1 ðmod q=pnÞ and peðq; p; 1Þ f p1 > 1, and so
+peðq; p; 1Þ > q=pn:
+Therefore by Deﬁnitions 1.8 and 3.8, we have h0ðq; p; rÞ¼ hðq; p; rÞ
+/C0
+1 þ Oðpn=qÞ
+/C1
+and
+hðq; p; 1Þ f ðlog pÞ=fðpnÞðq=pnÞ f ðlog pÞ=q. We see that
+H0ðq; a; bÞ¼ P
+p n k q
+/C0
+h0ðq; p; ab/C0 1Þþ h0ðq; p; ba/C0 1Þ/C0 2h0ðq; p; 1Þ
+/C1
+¼ P
+p n k q
+/C0
+hðq; p; ab/C0 1Þþ hðq; p; ba/C0 1Þ
+/C1
+1 þ O pn
+q
+/C18/C19 !
+þ O log p
+q
+/C18/C19 !
+:
+It is certainly true that hðq; p; rÞ f ðlog pÞ=fðpnÞ f ðlog pÞ=pn, and so the previous equation
+becomes
+H0ðq; a; bÞ¼ Hðq; a; bÞþ O P
+p n k q
+log p
+pn
+pn
+q þ log p
+q
+/C18/C19 !
+¼ Hðq; a; bÞþ O log q
+q
+/C18/C19
+;
+which establishes the theorem. r
+3.4. Estimates in terms of arithmetic information only. The purpose of this section
+is to show that the densities dðq; a; bÞ can be calculated extremely precisely using only
+‘‘arithmetic information’’. For the purposes of this section, ‘‘arithmetic information’’
+means ﬁnite expressions composed of elementary arithmetic operations involving only
+integers, logarithms of integers, values of the Riemann zeta function at positive integers,
+and the constants p and g
+0. (In fact, all of these quantities themselves can in principle be
+calculated arbitrarily precisely using only elementary arithmetic operations on integers.)
+The point is that ‘‘arithmetic information’’ excludes integrals and such quantities as
+Dirichlet characters and L-functions, Bessel functions, and trigonometric functions. The
+formula we can derive, with only arithmetic information in the main term, has an error
+term of the form O
+Aðq/C0 AÞ for any constant A > 0 we care to specify in advance.
+To begin, we note that letting y tend to inﬁnity in equation (3.9) leads to the heuristic
+statement
+159Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Mðq; a; bÞ¼ Py
+n¼1
+LðnÞ
+n
+P
+w ðmod qÞ
+/C0
+wðba/C0 1nÞþ wðab/C0 1nÞ/C0 2wðnÞ
+/C1
+¼ fðqÞPy
+n¼1
+LðnÞ
+n
+/C0
+iqðba/C0 1nÞþ iqðab/C0 1nÞ/C0 2iqðnÞ
+/C1
+‘‘ ¼’’ fðqÞ
+/C18P
+n1ab/C0 1 ðmod qÞ
+LðnÞ
+n þ P
+n1ba/C0 1 ðmod qÞ
+LðnÞ
+n /C0 2 P
+n11 ðmod qÞ
+LðnÞ
+n
+/C19
+;
+where the ‘‘ ¼’’ warns that the sums on the right-hand side do not individually converge. In
+fact, using a di¤erent approach based on the explicit formula, one can obtain
+Mðq; a; bÞ¼ fðqÞ
+/C18P
+1eney
+n1ab/C0 1 ðmod qÞ
+LðnÞ
+n þ P
+1eney
+n1ba/C0 1 ðmod qÞ
+LðnÞ
+nð3:10Þ
+/C0 2 P
+1eney
+n11 ðmod qÞ
+LðnÞ
+n
+/C19
+þ O fðqÞ log2 qyﬃﬃﬃyp
+ !
+:
+In light of Theorem 1.4 in conjunction with Lemma 3.9, we see that we can get an arbi-
+trarily good approximation to V ðq; a; bÞ using only arithmetic information.
+By Theorem 1.1, we see we can thus obtain an extremely precise approximation for
+dðq; a; bÞ as long as we can calculate the coe‰cients sq; a; bðl; jÞ deﬁned in Deﬁnition 2.23.
+Inspecting that deﬁnition reveals that it su‰ces to be able to calculate Wmðq; a; bÞ (or equiv-
+alently Wmðq; a; bÞV ðq; a; bÞ) arbitrarily precisely using only arithmetic content. With the
+next several lemmas, we describe how such a calculation can be made.
+Lemma 3.13. Let n be a positive integer , and set l ¼ n
+2
+jk
+. There exist rational num-
+bers Cn; 1; ... ; Cn; l such that
+1
+ð1=4 þ t2Þn ¼ 2R e 1
+ð1=2 /C0 itÞn
+/C18/C19
+þ Cn; 1
+ð1=4 þ t2Þn/C0 1 þ Cn; 2
+ð1=4 þ t2Þn/C0 2 þ/C1/C1/C1þ Cn; l
+ð1=4 þ t2Þn/C0 l
+for any complex number t.
+Proof. Since
+2R e 1
+ð1=2 /C0 itÞn ¼ 1
+ð1=2 /C0 itÞn þ 1
+ð1=2 þ itÞn ¼ ð1=2 þ itÞn þð 1=2 /C0 itÞn
+ð1=4 þ t2Þn ;
+it su‰ces to show that
+ð1=2 þ itÞn þð 1=2 /C0 itÞn
+ð1=4 þ t2Þnð3:11Þ
+¼ Cn; 0
+ð1=4 þ t2Þn þ /C0 Cn; 1
+ð1=4 þ t2Þn/C0 1 þ/C1/C1/C1þ /C0 Cn; l
+ð1=4 þ t2Þn/C0 l ;
+160 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+where each Cn; m is a rational number and Cn; 0 ¼ 1. In fact, we only need to show that this
+identity holds for some rational number Cn; 0, since multiplying both sides by ð1=4 þ t2Þn
+and taking the limit as t tends to i=2 proves that Cn; 0 must equal 1.
+Using the binomial theorem,
+ð1=2 þ itÞn þð 1=2 /C0 itÞn ¼Pn
+k¼0
+n
+k
+/C18/C191
+2
+/C18/C19n/C0 k/C0
+ðitÞk þð /C0 itÞk/C1
+¼Pl
+j¼0
+n
+2j
+/C18/C191
+2
+/C18/C19n/C0 2j/C0
+2ð/C0 1Þ j t2j/C1
+¼ 2Pl
+j¼0
+n
+2j
+/C18/C191
+2
+/C18/C19n/C0 2j
+ð/C0 1Þ j 1
+4 þ t2
+/C18/C19
+/C0 1
+4
+ ! j
+¼ 2Pl
+j¼0
+n
+2j
+/C18/C191
+2
+/C18/C19n/C0 2j
+ð/C0 1Þ jPj
+m¼0
+j
+m
+/C18/C191
+4 þ t2
+/C18/C19m
+/C0 1
+4
+/C18/C19j/C0 m
+;
+which is a linear combination of the expressions ð1=4 þ t2Þm, for 0 e m e l, with rational
+coe‰cients not depending on t. Dividing both sides by ð1=4 þ t2Þn establishes equation
+(3.11) for suitable rational numbers Cn; m and hence the lemma. r
+For the rest of this section, we say that a quantity is a ﬁxed Q-linear combination of
+certain elements if the coe‰cients of this linear combination are rational numbers that are
+independent of q, a, b and w (but may depend on n and j where appropriate). Our methods
+allow the exact calculation of these rational coe‰cients, but the point of this section would
+be obscured by the bookkeeping required to record them.
+Deﬁnition 3.14. As usual, GðzÞ denotes Euler’s Gamma function. For any positive
+integer n and any Dirichlet character w ðmod qÞ, deﬁne
+bnðwÞ¼ P
+g A R
+Lð1=2þig; wÞ¼0
+1
+ð1=4 þ g2Þn ;
+so that b1ðwÞ¼ bðwÞ for example. U
+Lemma 3.15. Assume GRH. Let n be a positive integer , and let w be a primitive char-
+acter ðmod qÞ. Then b nðwÞ is a ﬁxed Q-linear combination of the quantities
+/C26
+log q
+p ; d
+ds log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+; ... ; d n
+dsn log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+;ð3:12Þ
+Re d
+ds log Lðs; wÞ
+/C20/C21
+s¼1
+; ... ; Re d n
+dsn log Lðs; wÞ
+/C20/C21
+s¼1
+/C27
+;
+where x ¼ 0 if wð/C0 1Þ¼ 1 and x ¼ 1 if wð/C0 1Þ¼/C0 1.
+161Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Remark. Since the critical zeros of Lðs; wÞ and Lðs; w/C3 Þ are identical, the lemma
+holds for any nonprincipal character w if, in the set (3.12), we replace q by q/C3 and Lðs; wÞ
+by Lðs; w/C3 Þ.
+Proof. For primitive characters w, Lemma 3.5 tells us that
+bðwÞ¼ log q
+p /C0 g0 /C0
+/C0
+1 þ wð/C0 1Þ
+/C1
+log 2 þ 2R e L0ð1; wÞ
+Lð1; wÞ
+¼ log q
+p þ G0ðsÞ
+GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+þ 2R e L0ð1; wÞ
+Lð1; wÞ ;
+which establishes the lemma for n ¼ 1. We proceed by induction on n. By Lemma 3.13, we
+see that
+bnðwÞ¼ P
+g A R
+Lð1=2þig; wÞ¼0
+1
+ð1=4 þ g2Þnð3:13Þ
+¼ P
+g A R
+Lð1=2þig; wÞ¼0
+ 
+2R e 1
+ð1=2 /C0 igÞn þ Cn; 1
+ð1=4 þ g2Þn/C0 1
+þ Cn; 2
+ð1=4 þ g2Þn/C0 2 þ/C1/C1/C1þ Cn; l
+ð1=4 þ g2Þn/C0 l
+!
+¼ Cn; 1bn/C0 1ðwÞþ/C1/C1/C1þ Cn; lbn/C0 lðwÞþ 2 P
+g A R
+Lð1=2þig; wÞ¼0
+Re 1
+ð1=2 /C0 igÞn
+(where l ¼b n=2c). By the induction hypothesis, each term of the form Cn; mbn/C0 mðwÞ is a
+ﬁxed Q-linear combination of the elements of the set (3.12); therefore all that remains is
+to show that the sum on the right-hand side of equation (3.13) is also a ﬁxed Q-linear com-
+bination of these elements.
+Consider the known formula ([11], equation (10.37))
+d
+ds log Lðs; wÞ¼ BðwÞ/C0 d
+ds log G s þ x
+2
+/C18/C19
+/C0 1
+2 log q
+p þP
+r
+1
+s /C0 r þ 1
+r
+/C18/C19
+;
+whereP
+r
+denotes a sum over all nontrivial zeros of Lðs; wÞ and BðwÞ is a constant (alluded
+to in the proof of Lemma 3.5). If we di¤erentiate this formula n /C0 1 times with respect to s,
+we obtain
+d n
+dsn log Lðs; wÞ¼/C0 d n
+dsn log G s þ x
+2
+/C18/C19
+þP
+r
+ð/C0 1Þn/C0 1ðn /C0 1Þ!
+ðs /C0 rÞn :
+Setting s ¼ 1 and taking real parts, and using GRH, we conclude that
+162 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+P
+g A R
+Lð1=2þig; wÞ¼0
+Re 1
+ð1=2 /C0 igÞn ¼P
+r
+Re 1
+ð1 /C0 rÞn
+¼ ð/C0 1Þn/C0 1
+ðn /C0 1Þ! Re d n
+dsn log Lðs; wÞþ d n
+dsn log G s þ x
+2
+/C18/C19/C20/C21
+s¼1
+;
+which is a ﬁxed Q-linear combination of the elements of the set (3.12) as desired. (Although
+d n
+dsn log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+and d n
+dsn log G s þ x
+2
+/C18/C19/C20/C21
+s¼1
+di¤er by a factor of 2 n, this does not
+invalidate the conclusion.) r
+The following three deﬁnitions, which generalize earlier notation, will be important in
+our analysis of the higher-order terms Wnðq; a; bÞV ðq; a; bÞ.
+Deﬁnition 3.16. For any positive integers q and n, deﬁne
+LnðqÞ¼ P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19 
+iqðaib/C0 iÞ log q
+p /C0 P
+p j q
+log p
+p /C0 1
+ !
+/C0
+/C0
+1 /C0 iqðaib/C0 iÞ
+/C1L
+/C0
+q=ðq; ai /C0 biÞ
+/C1
+f
+/C0
+q=ðq; ai /C0 biÞ
+/C1
+!
+: U
+Deﬁnition 3.17. Let w be a Dirichlet character ðmod qÞ, and let a and b be integers.
+For any positive integers j e n, deﬁne
+M/C3
+n; j ðq; a; bÞ¼ 1
+fðqÞ
+P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2n d j
+ds j log Lðs; w/C3 Þ
+/C20/C21
+s¼1
+and
+Mn; j ðq; a; bÞ¼ 1
+fðqÞ
+P
+w ðmod qÞ
+w3w0
+jwðaÞ/C0 wðbÞj2n d j
+ds j log Lðs; wÞ
+/C20/C21
+s¼1
+;
+so that M/C3
+1; 1ðq; a; bÞ¼ M /C3 ðq; a; bÞ=fðqÞ and M1; 1ðq; a; bÞ¼ Mðq; a; bÞ=fðqÞ for example.
+One can use Lemma 3.19 and Perron’s formula to show that
+Mn; j ðq; a; bÞ¼ð /C0 1Þ j P
+jije j
+ð/C0 1Þi 2j
+j þ i
+/C18/C19 P
+ney
+n1a i b/C0 i ðmod qÞ
+LðnÞ log j/C0 1 n
+n þ Oj
+log jþ1 qyﬃﬃﬃyp
+ !
+;
+in analogy with equation (3.10). U
+Deﬁnition 3.18. For any distinct reduced residue classes a and b ðmod qÞ, deﬁne
+Hn; j ðq; a; bÞ¼ð /C0 1Þ j P
+p n k q
+ðlog pÞ j
+fðpnÞ
+P
+jije j
+ð/C0 1Þi 2n
+n þ i
+/C18/C19 P
+ef1
+ai b/C0 i pe11 ðmod q=p nÞ
+e j/C0 1
+pe
+163Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+for any integers 1 e j e n. Notice that the inner sum is
+P
+ef1
+a i b/C0 i p e11 ðmod q=p nÞ
+e j/C0 1
+pe ¼ P
+ef1
+e1eðq; p; ai b/C0 i Þð mod eðq; p; 1ÞÞ
+e j/C0 1
+pe ;
+where eðq; p; rÞ is deﬁned in Deﬁnition 1.8. It turns out that the identity
+P
+ef1
+e1r ðmod sÞ
+em
+pe ¼ 1
+prð1 /C0 p/C0 sÞ
+Pm
+g¼0
+m
+g
+/C18/C19
+sgrm/C0 gPg
+l¼0
+g
+l
+/C26/C27 l!
+ðps /C0 1Þl
+(in which g
+l
+/C26/C27
+denotes the Stirling number of the second kind) is valid for any positive
+integers m, p, r, and s such that r e s (as one can see by expanding ðsk þ rÞm by the bino-
+mial theorem and then invoking the identity [6], equation 7.46). Consequently, we see
+that Hn; j ðq; a; bÞ is a rational linear combination of the elements of the set fðlog pÞ j : p j qg
+(although the rational coe‰cients depend upon q, a, and b). U
+Once we determine how to expand the coe‰cient jwðaÞ/C0 wðbÞj2n as a linear combina-
+tion of individual values of w, we can establish Proposition 3.20 which describes how the
+cumulant Wnðq; a; bÞV ðq; a; bÞ can be evaluated in terms of the arithmetic information
+already deﬁned.
+Lemma 3.19. Let w be a Dirichlet character ðmod qÞ, and let a and b be reduced
+residues ðmod qÞ. For any nonnegative integer n , we have
+jwðaÞ/C0 wðbÞj2n ¼ P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19
+wðaib/C0 iÞ:
+Proof. The algebraic identity
+/C0
+2 /C0 t /C0 t/C0 1/C1n
+¼ P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19
+ti
+can be veriﬁed by a straightforward induction on n. Since
+jwðaÞ/C0 wðbÞj2 ¼
+/C0
+wðaÞ/C0 wðbÞ
+/C1/C0
+wðaÞ/C0 wðbÞ
+/C1
+¼ 2 /C0 wðab/C0 1Þ/C0 wðab/C0 1Þ/C0 1;
+the lemma follows immediately. r
+Proposition 3.20. Assume GRH. Let a and b be reduced residues ðmod qÞ. For any
+positive integer n , the expression W nðq; a; bÞV ðq; a; bÞ=fðqÞ can be written as a ﬁxed Q-linear
+combination of elements in the set
+fLnðqÞg W fiqðaib/C0 iÞ log 2; iqð/C0 aib/C0 iÞ log 2; iqðaib/C0 iÞg0 : jij e ngð3:14Þ
+W fiqðaib/C0 iÞzð jÞ; iqð/C0 aib/C0 iÞzð jÞ : jij e n; 2 e j e ng
+W fHn; j ðq; a; bÞ; Mn; j ðq; a; bÞ : 1 e j e ng:
+164 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. From the deﬁnitions (2.9) and (3.14) of Wnðq; a; bÞ and bnðwÞ, we have
+Wnðq; a; bÞV ðq; a; bÞ
+fðqÞ ¼ 22njl2nj
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n P
+g>0
+Lð1=2þig; wÞ¼0
+1
+ð1=4 þ g2Þn
+¼ 22n/C0 1jl2nj/C1 1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2nbnðwÞ:
+Lemma 2.8 (d) tells us that the numbers l2n are rational. Therefore by Lemma 3.15, it
+su‰ces to establish that three types of expressions, corresponding to the three types of
+quantities in the set (3.12), are ﬁxed Q-linear combinations of elements of the set (3.14).
+Type 1.
+1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n log q/C3
+p .
+Note that Proposition 3.3 can be rewritten in the form
+1
+fðqÞ
+P
+w ðmod qÞ
+wðaÞ log q/C3 ¼ iqðaÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1
+/C19
+ð3:15Þ
+/C0
+/C0
+1 /C0 iqðaÞ
+/C1L
+/C0
+q=ðq; a /C0 1Þ
+/C1
+f
+/C0
+q=ðq; a /C0 1Þ
+/C1:
+By Lemma 3.19 and the orthogonality relation (3.1), we have
+1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2nwðcÞ¼ P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19
+iqðaib/C0 icÞ:ð3:16Þ
+Therefore, using equation (3.15) and Proposition 3.1, we get
+1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n log q/C3
+p
+¼ 1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n log q/C3 /C0 1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n log p
+¼ P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19 /C18
+iqðaib/C0 iÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1
+/C19
+/C0
+/C0
+1 /C0 iqðaib/C0 iÞ
+/C1L
+/C0
+q=ðq; aib/C0 i /C0 1Þ
+/C1
+f
+/C0
+q=ðq; aib/C0 i /C0 1Þ
+/C1/C0 iqðaib/C0 iÞ log p
+/C19
+¼ LnðqÞ;
+since ðq; aib/C0 i /C0 1Þ¼ð q; ai /C0 biÞ.
+Type 2. 1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n d j
+ds j log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+for some 1 e j e n.
+165Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+The following identities hold for j f 2 (see [1], equations (6.4.2) and (6.4.4)):
+d j
+ds j log GðsÞ
+/C20/C21
+s¼1
+¼ð /C0 1Þ j ð j /C0 1Þ!zð jÞ;
+d j
+ds j log GðsÞ
+/C20/C21
+s¼1=2
+¼ð /C0 1Þ j ð j /C0 1Þ!zð jÞð2 j /C0 1Þ:
+Because x ¼ 0 when wð/C0 1Þ¼ 1 and x ¼ 1 when wð/C0 1Þ¼/C0 1, we may thus write
+d j
+ds j log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+¼ð /C0 1Þ j ð j /C0 1Þ!zð jÞ
+/C0
+2 j/C0 1 þ wð/C0 1Þð2 j/C0 1 /C0 1Þ
+/C1
+;
+whence by equation (3.16),
+1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n d j
+ds j log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+¼ 1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2nð/C0 1Þ j ð j /C0 1Þ!zð jÞ
+/C0
+2 j/C0 1 þ wð/C0 1Þð2 j/C0 1 /C0 1Þ
+/C1
+¼ð /C0 1Þ j ð j /C0 1Þ!zð jÞ
+ 
+2 j/C0 1 P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19
+iqðaib/C0 iÞ
+þð 2 j/C0 1 /C0 1ÞP
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19
+iqð/C0 aib/C0 iÞ
+!
+;
+which is a linear combination of the desired type. The case j ¼ 1 can be handled similarly
+using the identity
+d
+ds log GðsÞ
+/C20/C21
+s¼ð1þxÞ=2
+¼/C0 g0 /C0
+/C0
+1 þ wð/C0 1Þ
+/C1
+log 2:
+Type 3. 1
+fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2n Re d j
+ds j log Lðs; w/C3 Þ
+/C20/C21
+s¼1
+for some 1 e j e n.
+The expression in question is exactly M/C3
+n; j ðq; a; bÞ, and so it su‰ces to show that
+M/C3
+n; j ðq; a; bÞ¼ Mn; j ðq; a; bÞþ Hn; j ðq; a; bÞ. Note that the identity
+d j
+ds j log Lðs; wÞ¼ d j/C0 1
+ds j/C0 1
+/C18
+/C0 Py
+n¼1
+LðnÞwðnÞ
+ns
+/C19
+¼ð /C0 1Þ jPy
+n¼1
+LðnÞðlog nÞ j/C0 1wðnÞ
+ns
+implies
+d j
+ds j log Lðs; wÞ
+/C20/C21
+s¼1
+¼ð /C0 1Þ jP
+p
+ðlog pÞ j Py
+e¼1
+e j/C0 1
+pe wðpeÞ:
+166 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+The proof of Lemma 3.9 can then be adapted to obtain the equation
+M/C3
+n; j ðq; a; bÞ/C0 Mn; j ðq; a; bÞ
+¼ ð/C0 1Þ j
+fðqÞ
+P
+p j q
+ðlog pÞ j Py
+e¼1
+e j/C0 1
+pe
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj2nw/C3 ðpeÞ
+¼ ð/C0 1Þ j
+fðqÞ
+P
+p j q
+ðlog pÞ j Py
+e¼1
+e j/C0 1
+pe
+P
+jijen
+ð/C0 1Þi 2n
+n þ i
+/C18/C19P
+w ðmod qÞ
+wðaib/C0 iÞw/C3 ðpeÞ
+by Lemma 3.19. Evaluating the inner sum by Proposition 3.4 shows that this last expres-
+sion is precisely the deﬁnition of Hn; j ðq; a; bÞ, as desired. r
+As described at the beginning of this section, Proposition 3.14 is exactly what we need
+to justify the assertion that we can calculate dðq; a; bÞ, using only arithmetic information, to
+within an error of the form OAðq/C0 AÞ. That some small primes in arithmetic progressions
+ðmod qÞ enter the calculations is not surprising; interestingly, though, the arithmetic pro-
+gressions involved are the residue classes a j b/C0 j for j jj e n, rather than the residue classes
+a and b themselves!
+To give a better ﬂavor of the form these approximations take, we end this section by
+explicitly giving such a formula with an error term better than Oðq/C0 5=2þeÞ for any e > 0.
+Taking K ¼ 1 in Theorem 1.1 gives the formula
+dðq; a; bÞ¼ 1
+2 þ rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2pV ðq; a; bÞ
+p 1 /C0 rðqÞ2
+6V ðq; a; bÞ /C0 3W2ðq; a; bÞ
+V ðq; a; bÞ
+ !
+þ O rðqÞ5
+V ðq; a; bÞ5=2
+ !
+:
+Going through the above proofs, one can laboriously work out that
+W2ðq; a; bÞV ðq; a; bÞ
+fðqÞ ¼ 1
+4 L2ðqÞ/C0 1
+4fðqÞ
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj4
+/C2 g0 þ log 2 þ 1
+2 zð2Þ
+/C18/C19
+þ wð/C0 1Þ log 2 þ 1
+4 zð2Þ
+/C18/C19/C26/C27
+þ 1
+2
+/C0
+M2; 1ðq; a; bÞþ H2; 1ðq; a; bÞ
+/C1
+/C0 1
+4
+/C0
+M2; 2ðq; a; bÞþ H2; 2ðq; a; bÞ
+/C1
+;
+to which Lemma 3.19 can be applied with n ¼ 2. Combining these two expressions and
+expanding V ðq; a; bÞ as described after equation (3.10) results in the following formula:
+Proposition 3.21. Assume GRH and LI. Suppose a and b are reduced residues
+ðmod qÞ such that a is a nonsquare and b is a square ðmod qÞ. Then
+167Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+dðq; a; bÞ¼ 1
+2 þ rðqÞ
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞ
+/C0~LLðq; a; bÞþ ~RRðq; a; bÞ
+/C1q
+/C2
+/C18
+1 /C0 rðqÞ2
+12fðqÞ ~LLðq; a; bÞ
+/C0 3
+16fðqÞ ~LLðq; a; bÞ2
+/C2
+/C26
+L2ðqÞ/C0
+/C0
+6 þ 2iqða2b/C0 2Þ
+/C1
+g0 þ log 2 þ 1
+2 zð2Þ
+/C18/C19
+/C0
+/C0
+2iqð/C0 a2b/C0 2Þ/C0 8iqð/C0 ab/C0 1Þ
+/C1
+log 2 þ 1
+4 zð2Þ
+/C18/C19
+þ 2F1ðq; a; bÞþ 2H2; 1ðq; a; bÞ/C0 F2ðq; a; bÞ/C0 H2; 2ðq; a; bÞ
+/C27/C19
+þ O rðqÞ5 ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+log q
+p
+fðqÞ5=2
+ !
+;
+where L2ðqÞ is deﬁned in Deﬁnition 3.16 and H 2; j ðq; a; bÞ is deﬁned in Deﬁnition 3.18,
+and
+~LLðq; a; bÞ¼ LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2 þ H0ðq; a; bÞþ Lðab/C0 1Þ
+ab/C0 1 þ Lðba/C0 1Þ
+ba/C0 1 ;
+~RRðq; a; bÞ¼ P
+qeneq4
+n1ab/C0 1 ðmod qÞ
+LðnÞ
+n þ P
+qeneq4
+n1ba/C0 1 ðmod qÞ
+LðnÞ
+n /C0 2 P
+qeneq4
+n11 ðmod qÞ
+LðnÞ
+n ;
+F1ðq; a; bÞ¼ Lða2b/C0 2Þ
+a2b/C0 2 /C0 4 Lðab/C0 1Þ
+ab/C0 1 /C0 4 Lðba/C0 1Þ
+ba/C0 1 þ Lðb2a/C0 2Þ
+b2a/C0 2 ;
+F2ðq; a; bÞ¼ Lða2b/C0 2Þ logða2b/C0 2Þ
+a2b/C0 2 /C0 4 Lðab/C0 1Þ logðab/C0 1Þ
+ab/C0 1
+/C0 4 Lðba/C0 1Þ logðba/C0 1Þ
+ba/C0 1 þ Lðb2a/C0 2Þ logðb2a/C0 2Þ
+b2a/C0 2 :
+In all these deﬁnitions , expressions such as a 2b/C0 2 refer to the smallest positive integer con-
+gruent to a 2b/C0 2 ðmod qÞ.
+3.5. A central limit theorem. In this section we prove a central limit theorem for the
+functions
+Eðx; q; aÞ/C0 Eðx; q; bÞ¼ fðqÞ
+/C0
+pðx; q; aÞ/C0 pðx; q; bÞ
+/C1
+x/C0 1=2 log x:
+The technique we use is certainly not without precedent. Hooley [7] and Rubinstein and
+Sarnak [14] both prove central limit theorems for similar normalized error terms under
+the same hypotheses GRH and LI (though each with di¤erent acronyms).
+168 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Theorem 3.22. Assume GRH and LI. As q tends to inﬁnity , the limiting logarithmic
+distributions of the functions
+Eðx; q; aÞ/C0 Eðx; q; bÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2fðqÞ log q
+pð3:17Þ
+converge in measure to the standard normal distribution of mean 0 and variance 1, uniformly
+for all pairs a , b of distinct reduced residues modulo q.
+We remark that this result can in fact be derived from Rubinstein and Sarnak’s
+2-dimensional central limit theorem [14], Section 3.2, for
+/C0
+Eðx; q; aÞ; Eðx; q; bÞ
+/C1
+, although
+this implication is not made explicit in their paper. In general, let
+fX ; Y ðs; tÞ¼ Ðy
+0
+Ðy
+0
+exp
+/C0
+iðsx þ tyÞ
+/C1
+fX ; Y ðx; yÞ dx dy
+denote the joint characteristic function of a pair ðX ; Y Þ of real-valued random variables,
+where fX ; Y ðx; yÞ is the joint density function of the pair. Then the characteristic function
+of the real-valued random variable X /C0 Y is
+fX /C0 Y ðtÞ¼ E
+/C0
+exp
+/C0
+itðX /C0 Y Þ
+/C1/C1
+¼
+Ðy
+0
+Ðy
+0
+exp
+/C0
+itðx /C0 yÞ
+/C1
+fX ; Y ðx; yÞ dx dy ¼ fX ; Y ðt; /C0 tÞ:
+The derivation of Theorem 3.22 from Rubinstein and Sarnak’s 2-dimensional central
+limit theorem then follows by taking X and Y to be the random variables having the
+same limiting distributions as Eðx; q; aÞ and Eðx; q; bÞ, respectively (which implies that
+X /C0 Y ¼ Xq; a; b).
+On the other hand, we note that our analysis of the variances of these distributions
+has the beneﬁt of providing a better quantitative statement of the convergence of our limit-
+ing distributions to the Gaussian distribution: see equation (3.19) below.
+Proof of Theorem 3.22. Since the Fourier transform of the limiting logarithmic
+distribution of Eðx; q; aÞ/C0 Eðx; q; bÞ is ^XX q; a; bðhÞ, the Fourier transform of the limiting
+logarithmic distribution of the quotient (3.17) is ^XX q; a; b
+/C0
+h=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2fðqÞ log q
+p /C1
+. A theorem of
+Le´vy from 1925 ([12], Section 4.2, Theorem 4), the Continuity Theorem for characteristic
+functions, asserts that all we need to show is that
+lim
+q!y
+^XX q; a; b
+hﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2fðqÞ log q
+p
+ !
+¼ e/C0 h2=2ð3:18Þ
+for every ﬁxed real number h. Because the right-hand side is continuous at h ¼ 0, it is
+automatically the characteristic function of the measure to which the limiting logarithmic
+distributions of the quotients (3.17) converge in distribution, according to Le ´vy’s theorem.
+When q is large enough in terms of h, we have jh=
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2fðqÞ log q
+p
+j e 1=4. For such q,
+Proposition 2.13 implies that
+169Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+log ^XX q; a; b
+hﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2fðqÞ log q
+p
+ !
+ð3:19Þ
+¼/C0 V ðq; a; bÞ
+2fðqÞ log q
+h2
+2 þ O
+/C0
+cðq; aÞ/C0 cðq; bÞ
+/C1/C12/C12hjﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+fðqÞ log q
+p þ V ðq; a; bÞh4
+/C0
+fðqÞ log q
+/C12
+ !
+¼/C0 h2
+2 þ O h2 log log q
+log q þ jhjrðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+fðqÞ log q
+p þ h4
+fðqÞ log q
+ !
+using the asymptotic formula for V ðq; a; bÞ given in Proposition 3.6. Since h is ﬁxed, this is
+enough to verify (3.18), which establishes the theorem. r
+3.6. Racing quadratic nonresidues against quadratic residues. This section is devoted
+to understanding the e¤ect of low-lying zeros of Dirichlet L-functions on prime number
+races between quadratic residues and quadratic nonresidues. This phenomenon has already
+been studied by many authors—see for instance [2]. Let q be an odd prime, and deﬁne
+pðx; q; NÞ¼ Kfp e x : p is a quadratic nonresidue mod qg
+and
+pðx; q; RÞ¼ Kfp e x : p is a quadratic residue mod qg:
+Each of pðx; q; NÞ and pðx; q; RÞ is asymptotic to pðxÞ=2, but Chebyshev’s bias predicts that
+the di¤erence pðx; q; NÞ/C0 pðx; q; RÞ, or equivalently the normalized di¤erence
+Eðx; N; RÞ¼ log xﬃﬃﬃxp /C0
+pðx; q; NÞ/C0 pðx; q; RÞ
+/C1
+;
+is more often positive than negative.
+Our methods lead to an asymptotic formula for dðq; N; RÞ, the logarithmic density of
+the set of real numbers x f 1 satisfying pðx; q; NÞ > pðx; q; RÞ, that explains the e¤ect of
+low-lying zeros in a straightfoward and quantitative way. We sketch this application now.
+First, deﬁne the random variable
+Xq; N; R ¼ 2 þ 2 P
+g>0
+Lð1=2þig; w1Þ¼0
+Xgﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p ;
+where w1 is the unique quadratic character ðmod qÞ. Under GRH and LI, the distribution of
+Xq; N; R is the same as the limiting distribution of the normalized error term Eðx; N; RÞ. The
+methods of Section 3 then lead to an asymptotic formula analogous to equation (1.2):
+dðq; N; RÞ¼ 1
+2 þ
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2
+pV ðq; N; RÞ
+s
+þ O 1
+V ðq; N; RÞ3=2
+ !
+;ð3:20Þ
+170 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+where
+V ðq; N; RÞ¼ bðw1Þ¼ P
+g A R
+Lð1=2þig; w1Þ¼0
+1
+1=4 þ g2 :
+To simplify the discussion, we explore only the e¤ect of the lowest zero (the zero closest to
+the real axis) on the size of V ðq; N; RÞ.
+By the classical formula for the zero-counting function NðT; wÞ, the average height of
+the lowest zero of Lðs; w1Þ is 2 p=log q. Suppose we have a lower-than-average zero, say at
+height c /C1 2p=log q for some 0 < c < 1. Then we get a higher-than-average contribution to
+the variance of size
+1
+1=4 þð c /C1 2p=log qÞ2 /C0 1
+1=4 þð 2p=log qÞ2 :
+Since the variance V ðq; N; RÞ¼ bðw1Þ is asymptotically log q by Lemma 3.5, this increases
+the variance by roughly a percentage t given by
+t @ 1
+log q
+1
+1=4 þð c /C1 2p=log qÞ2 /C0 1
+1=4 þð 2p=log qÞ2
+ !
+:ð3:21Þ
+Therefore, given any two of the three parameters
+/C15 how low the lowest zero is (in terms of the percentage c of the average),
+/C15 how large a contribution we see to the variance (in terms of the percentage t), and
+/C15 the size of the modulus q,
+we can determine the range for the third parameter from equation (3.21).
+For example, as c tends to 0, the right-hand side of equation (3.21) is asymptotically
+64p2
+ðlog2 q þ 16p2Þ log q
+:
+So if we want to see an increase in variance of 10%, an approximation for the range of q
+for which this might be possible is given by setting 64 p2=ðlog2 q þ 16p2Þ log q ¼ 0:1 and
+solving for q, which gives log q ¼ 15:66 or about q ¼ 6,300,000. This assumes that c tends
+to 0—in other words, that Lðs; w1Þ has an extremely low zero. However, even taking
+c ¼ 1=3 on the right-hand side of equation (3.21) and setting the resulting expression equal
+to 0.1 yields about q ¼ 1,600,000. In other words, having a zero that is only a third as high
+as the average zero, for example, will give a ‘‘noticeable’’ (at least 10%) lift to the variance
+up to roughly q ¼ 1,600,000.
+171Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+It turns out that unusually low zeros of this sort are not particularly rare.
+The Katz–Sarnak model predicts that the proportion of L-functions in the family
+fLðs; wÞ : w primitive of order 2 g having a zero as low as c /C1 2p=log q is asymptotically
+2p2c3=9a s c tends to 0. Continuing with our example value c ¼ 1=3, we see that roughly
+8% of the moduli less than 1,600,000 will have a 10% lift in the variance V ðq; N; RÞ coming
+from the lowest-lying zero.
+Well-known examples of L-functions having low-lying zeros are the Lðs; w1Þ corre-
+sponding to prime moduli q for which the class number hð/C0 qÞ equals 1, as explained in
+[2] with the Chowla–Selberg formula for q ¼ 163. For this modulus, the imaginary part
+of the lowest-lying zero is 0 :202901 ... ¼ 0:16449 ... /C1 2p=log 163. According to our ap-
+proximations, this low-lying zero increases the variance by roughly t ¼ 56%; considering
+this increased variance in equation (3.20) explains why the value of dð163; N; RÞ is excep-
+tionally low. The actual value of dð163; N; RÞ, along with some neighboring values, are
+shown in Table 2.
+Other Dirichlet L-functions having low-lying zeros are the Lðs; w1Þ corresponding to
+prime moduli q for which the class number hð/C0 qÞ is relatively small; a good summary of
+the ﬁrst few class numbers is given in [2], Table VI.
+Notice that in principle, racing quadratic residues against quadratic nonresidues
+makes sense for any modulus q for which rðqÞ¼ 2, which includes powers of odd primes
+and twice these powers. However, being a quadratic residue modulo a prime q is exactly
+equivalent to being a quadratic residue modulo any power of q, and also (for odd numbers)
+exactly equivalent to being a quadratic residue modulo twice a power of q. Therefore
+dðq; N; RÞ¼ dðqk; N; RÞ¼ dð2qk; N; RÞ
+for every odd prime q. The only other modulus for which rðqÞ¼ 2i s q ¼ 4, which has been
+previously studied: Rubinstein and Sarnak [14] calculated that
+dð4; N; RÞ¼ dð4; 3; 1ÞA 0:9959:
+4. Fine-scale di¤erences among races to the same modulus
+In this section we probe the e¤ect that the speciﬁc choice of residue classes a and b has
+on the density dðq; a; bÞ. We begin by proving Corollary 1.9, which isolates the quantitative
+q dðq; N; RÞ
+151 0.745487
+157 0.750767
+163 0.590585
+167 0.780096
+173 0.659642
+Table 2. Values of dðq; N; RÞ for q ¼ 163 and nearby primes.
+172 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+inﬂuence of dðq; a; bÞ on a and b from its dependence on q, in Section 4.1. We then dissect
+the relevant inﬂuence, namely the function Dðq; a; bÞ, showing how particular arithmetic
+properties of the residue classes a and b predictably a¤ect the density; three tables of com-
+putational data are included to illustrate these conclusions. In Section 4.2 we develop this
+theme even further, proving Theorem 4.2 and hence its implication Theorem 1.10, which
+establishes a lasting ‘‘meta-bias’’ among these densities. Finally, in Section 4.3 we apply
+our techniques to the seemingly unrelated ‘‘mirror image phenomenon’’ observed by Bays
+and Hudson, explaining its existence with a similar analysis.
+4.1. The impact of the residue classes a and b. The work of the previous sections has
+provided us with all the tools we need to establish Corollary 1.9.
+Proof of Corollary 1.9. We begin by showing that the function
+Dðq; a; bÞ¼ K
+qða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2 þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ Hðq; a; bÞ
+deﬁned in equation (1.4) is bounded above by an absolute constant (the fact that it is
+nonnegative is immediate from the deﬁnitions of its constituent parts). It has already
+been remarked in Deﬁnition 1.5 that Kq is uniformly bounded, as is iq. We also have
+LðrÞ=r e ðlog rÞ=r, and this function is decreasing for r f 3, so the third and fourth terms
+are each uniformly bounded as well. Finally, from Deﬁnition 1.8, we see that
+hðq; p; rÞ¼ 1
+fðpnÞ
+log p
+peðq; p; rÞ e 1
+p /C0 1
+log p
+p1 ;
+and so Hðq; a; bÞ <P
+p
+2ðlog pÞ=pðp /C0 1Þ is uniformly bounded by a convergent sum as
+well.
+We now turn to the main assertion of the corollary. By Theorems 1.4 and 1.7, we
+have
+V ðq; a; bÞ¼ 2fðqÞ
+/C0
+LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2
+/C1
+þ 2M /C3 ðq; a; bÞ
+¼ 2fðqÞ
+0
+@LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2 þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ Hðq; a; bÞþ O log2 q
+q
+ ! 1
+A
+¼ 2fðqÞ LðqÞþ Dðq; a; bÞþ O log2 q
+q
+ !0
+@
+1
+A
+¼ 2fðqÞLðqÞ 1 þ Dðq; a; bÞ
+LðqÞ þ O log q
+q
+/C18/C19 !
+:
+173Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Since Dðq; a; bÞ is bounded while LðqÞ @ log q, we see that V ðqÞ @ 2fðqÞ log q; moreover,
+the power series expansion of ð1 þ tÞ/C0 1=2 around t ¼ 0 implies that
+V ðq; a; bÞ/C0 1=2 ¼
+/C0
+2fðqÞLðqÞ
+/C1/C0 1=2
+1 /C0 Dðq; a; bÞ
+2LðqÞ þ O Dðq; a; bÞ2
+LðqÞ2 þ log q
+q
+ !0
+@
+1
+A
+¼
+/C0
+2fðqÞLðqÞ
+/C1/C0 1=2
+1 /C0 Dðq; a; bÞ
+2LðqÞ þ O 1
+log2 q
+/C18/C19 !
+:
+(Recall that we are assuming that q f 43, which is enough to ensure that LðqÞ is positive.)
+Together with the last assertion of Theorem 1.1, this formula implies that
+dðq; a; bÞ¼ 1
+2 þ rðqÞ
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ
+p 1 /C0 Dðq; a; bÞ
+2LðqÞ þ O 1
+log2 q
+/C18/C19 !
+þ O rðqÞ3
+V ðq; a; bÞ3=2
+ !
+:
+Since the last error term is fe qe=
+/C0
+fðqÞ log q
+/C13=2
+, it can be subsumed into the ﬁrst error
+term, and the proof of the corollary is complete. r
+Corollary 1.9 tells us that larger values of Dðq; a; bÞ lead to smaller values of the
+density dðq; a; bÞ. Computations of the values of dðq; a; bÞ (using methods described in
+Section 5.4) illustrate this relationship nicely. Since dðq; a; bÞ¼ dðq; ab/C0 1; 1Þ when b is a
+square ðmod qÞ, we restrict our attention to densities of the form dðq; a; 1Þ.
+We begin by investigating a prime modulus q, noting that
+Dðq; a; 1Þ¼ iqð/C0 aÞ log 2 þ LðaÞ
+a þ Lða/C0 1Þ
+a/C0 1 þ 2 log q
+qðq /C0 1Þ
+when q is prime (here a/C0 1 denotes the smallest positive integer that is a multiplicative inverse
+of a ðmod qÞ). Therefore we obtain the largest value of Dðq; a; bÞ when a 1 /C0 1 ðmod qÞ, and
+the next largest values are when a is a small prime, so that the LðaÞ=a term is large. (These
+next large values also occur when a/C0 1 is a small prime, and in fact we already know that
+dðq; a; 1Þ¼ dðq; a/C0 1; 1Þ. When q is large, it is impossible for both a and a/C0 1 to be small.)
+Notice that LðaÞ=a is generally decreasing on primes a, except that Lð3Þ=3 > Lð2Þ=2.
+Therefore the second, third, and fourth-largest values of Dðq; a; 1Þ will occur for a congru-
+ent to 3, 2, and 5 ðmod qÞ, respectively.
+This e¤ect is quite visible in the calculated data. We use the prime modulus q ¼ 163
+as an example, since the smallest 12 primes, as well as /C0 1, are all nonsquares ðmod 163Þ.
+Table 3 lists the values of all densities of the form dð163; a; 1Þ (remembering that
+dðq; a; 1Þ¼ dðq; a/C0 1; 1Þ and that the value of any dðq; a; bÞ is equal to one of these). Even
+though the relationship between Dðq; a; 1Þ and dðq; a; 1Þ given in Corollary 1.9 involves an
+error term, the data is striking. The smallest ten values of dðq; a; 1Þ are exactly in the order
+predicted by our analysis of Dðq; a; 1Þ: the smallest is a ¼ 162 1 /C0 1 ðmod 163Þ, then a ¼ 3
+and a ¼ 2, then the seven next smallest primes in order. (This ordering, which is clearly
+related to Theorem 1.10, will be seen again in Figure 2.)
+174 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+One can also probe more closely the e¤ect of the term Mðq; a; 1Þ upon the density
+dðq; a; 1Þ. Equation (3.10) can be rewritten as the approximation
+Mðq; a; 1Þ
+fðqÞ þ 2 P
+ney
+n11 ðmod qÞ
+LðnÞ
+n A P
+ney
+n1a ðmod qÞ
+LðnÞ
+n þ P
+ney
+n1a/C0 1 ðmod qÞ
+LðnÞ
+nð4:1Þ
+(where we are ignoring the exact form of the error term). Taking y ¼ q recovers the ap-
+proximation Mðq; a; 1ÞA fðqÞ
+/C0
+LðaÞ=a þ Lða/C0 1Þ=a/C0 1/C1
+used in the deﬁnition of Dðq; a; bÞ,
+but taking y larger would result in a better approximation.
+We examine this e¤ect on the calculated densities for the medium-sized prime modu-
+lus q ¼ 101. In Table 4, the second group of columns records the ﬁrst four prime powers
+that are congruent to a or a/C0 1 ðmod 101Þ. The second-to-last column gives the value of
+the right-hand side of equation (4.1), computed at y ¼ 106. Note that smaller prime powers
+in the second group of columns give large contributions to this second-to-last column, a
+trend that can be visually conﬁrmed. Finally, the last column lists the values of the densities
+dðq; a; bÞ, according to which the rows have been sorted in ascending order. The correlation
+between larger values of the second-to-last column and smaller values of dðq; a; bÞ is almost
+perfect (the adjacent entries a ¼ 40 and a ¼ 10 being the only exception): the existence of
+smaller primes and prime powers in the residue classes a and a
+/C0 1 ðmod 101Þ really does
+contribute positively to the variance V ðq; a; 1Þ and hence decreases the density dðq; a; 1Þ.
+qa a /C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ
+163 162 162 0.524032 163 30 125 0.526809
+163 3 109 0.525168 163 76 148 0.526815
+163 2 82 0.525370 163 92 101 0.526829
+163 5 98 0.525428 163 86 127 0.526869
+163 7 70 0.525664 163 128 149 0.526879
+163 11 89 0.525744 163 129 139 0.526879
+163 13 138 0.526079 163 80 108 0.526894
+163 17 48 0.526083 163 114 153 0.526898
+163 19 103 0.526090 163 117 124 0.526900
+163 23 78 0.526213 163 20 106 0.526906
+163 31 142 0.526378 163 42 66 0.526912
+163 67 73 0.526437 163 28 99 0.526914
+163 37 141 0.526510 163 44 63 0.526925
+163 29 45 0.526532 163 12 68 0.526931
+163 27 157 0.526578 163 72 120 0.526941
+163 32 107 0.526586 163 112 147 0.526975
+163 59 105 0.526620 163 110 123 0.526981
+163 8 102 0.526638 163 122 159 0.526996
+163 79 130 0.526682 163 50 75 0.526997
+163 94 137 0.526746 163 52 116 0.527002
+163 18 154 0.526768
+Table 3. The densities dðq; a; 1Þ computed for q ¼ 163.
+175Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+(Note that the e¤ect of the term i101ð/C0 aÞ log 2 is not present here, since 101 is a prime
+congruent to 1 ðmod 4Þ and hence /C0 1 is not a nonsquare.)
+Finally we investigate a highly composite modulus q to witness the e¤ect of the term
+Kqða /C0 1Þ¼ L
+/C0
+q=ðq; a /C0 1Þ
+/C1
+=f
+/C0
+q=ðq; a /C0 1Þ
+/C1
+/C0 LðqÞ=fðqÞ on the size of Dðq; a; 1Þ. This ex-
+pression vanishes unless a /C0 1 has such a large factor in common with q that the quotient
+q=ðq; a /C0 1Þ is a prime power. Therefore we see a larger value of Dðq; a; 1Þ, and hence
+expect to see a smaller value of dðq; a; 1Þ, when q=ðq; a /C0 1Þ is a small prime, for example
+when a ¼ q=2 þ 1.
+Table 5 conﬁrms this observation with the modulus q ¼ 420. Of the six smallest
+densities dð420; a; 1Þ, ﬁve of them correspond to the residue classes a (and their inverses)
+for which q=ðq; a /C0 1Þ is a prime power; the sixth corresponds to a 1 /C0 1 ðmod 420Þ, echo-
+ing the e¤ect already seen for q ¼ 163. Moreover, the ordering of these ﬁrst six densities are
+exactly as predicted: even the battle for smallest density between a 1 /C0 1 ðmod 420Þ and
+a ¼ 420=2 /C0 1 is appropriate, since both residue classes cause an increase in Dð420; a; 1Þ
+qa a /C0 1 ﬁrst four prime powers RHS of (4.1) dð101; a; 1Þ
+101 7 29 7 29 433 512 0.563304 0.534839
+101 2 51 2 103 709 859 0.554043 0.534928
+101 3 34 3 337 811 1013 0.528385 0.535103
+101 11 46 11 349 617 1021 0.383090 0.536123
+101 8 38 8 109 139 311 0.332888 0.536499
+101 53 61 53 61 263 457 0.329038 0.536522
+101 12 59 59 113 463 719 0.276048 0.536955
+101 67 98 67 199 269 401 0.271567 0.536993
+101 41 69 41 243 271 647 0.268766 0.537013
+101 28 83 83 331 487 937 0.235130 0.537284
+101 15 27 27 128 229 419 0.235035 0.537293
+101 66 75 167 277 479 571 0.230291 0.537340
+101 18 73 73 523 881 1129 0.215281 0.537463
+101 50 99 151 353 503 757 0.211209 0.537500
+101 55 90 191 257 661 797 0.205833 0.537537
+101 42 89 89 547 1153 1301 0.202289 0.537586
+101 44 62 163 347 751 769 0.199652 0.537607
+101 72 94 173 397 577 599 0.196417 0.537623
+101 32 60 32 739 941 1171 0.191447 0.537660
+101 26 35 127 439 641 733 0.190601 0.537688
+101 39 57 241 443 461 1049 0.187848 0.537708
+101 40 48 149 343 1151 1361 0.178698 0.537780
+101 10 91 293 313 919 1303 0.180422 0.537792
+101 74 86 389 983 1399 1601 0.165153 0.537900
+101 63 93 467 1103 1709 2083 0.146466 0.538067
+Table 4. The e¤ect of medium-sized prime powers on the densities dðq; a; 1Þ, illustrated
+with q ¼ 101 and y ¼ 106.
+176 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+of size exactly log 2. (Since 420 is divisible by the four smallest primes, the largest e¤ect that
+the LðaÞ=a term could have on Dðq; a; bÞ is ðlog 11Þ=11, and so these e¤ects are not nearly
+as large.) The magnitude of this e¤ect is quite signiﬁcant: note that the di¤erence between
+the ﬁrst and seventh-smallest values of dð420; a; 1Þ (from a ¼ 211 to a ¼ 17) is larger than
+the spread of the largest 46 values (from a ¼ 17 to a ¼ 391).
+4.2. The predictability of the relative sizes of densities. The speciﬁcity of our asymp-
+totic formulas to this point suggests comparing, for ﬁxed integers a
+1 and a2, the densities
+dðq; a1; 1Þ and dðq; a2; 1Þ as q runs through all moduli for which both a1 and a2 are non-
+squares. (We have already seen that every density is equal to one of the form dðq; a; 1Þ.)
+Theorem 1.10, which we will derive shortly from Corollary 4.3, is a statement about exactly
+this sort of comparison.
+In fact we can investigate even more general families of race games: ﬁx two rational
+numbers r and s, and consider the family of densities dðq; r þ sq; 1Þ as q varies. We need
+r þ sq to be an integer and relatively prime to q for this density to be sensible; we further
+qa a /C0 1 ðq; a /C0 1Þ Kqða /C0 1Þ dðq; a; 1Þ qa a /C0 1 ðq; a /C0 1Þ Kqða /C0 1Þ dðq; a; 1Þ
+420 211 211 210 log 2 0.770742 420 113 197 28 0 0.807031
+420 419 419 2 0 0.772085 420 149 389 4 0 0.807209
+420 281 281 140 ðlog 3Þ=2 0.779470 420 103 367 6 0 0.807284
+420 253 337 84 ðlog 5Þ=4 0.788271 420 223 307 6 0 0.807302
+420 61 241 60 ðlog 7Þ=6 0.788920 420 83 167 2 0 0.807505
+420 181 181 60 ðlog 7Þ=6 0.789192 420 151 331 30 0 0.809031
+420 17 173 4 0 0.795603 420 59 299 2 0 0.809639
+420 47 143 2 0 0.796173 420 137 233 4 0 0.809647
+420 29 29 28 0 0.796943 420 139 139 6 0 0.810290
+420 13 97 12 0 0.797669 420 73 397 12 0 0.811004
+420 187 283 6 0 0.797855 420 157 313 12 0 0.811197
+420 53 317 4 0 0.798207 420 251 251 10 0 0.811557
+420 11 191 10 0 0.798316 420 349 349 12 0 0.811706
+420 107 263 2 0 0.798691 420 323 407 14 0 0.811752
+420 41 41 20 0 0.800067 420 179 359 2 0 0.811765
+420 19 199 6 0 0.800937 420 229 409 12 0 0.811776
+420 43 127 42 0 0.801609 420 131 311 10 0 0.811913
+420 23 347 2 0 0.802681 420 277 373 12 0 0.812052
+420 37 193 12 0 0.803757 420 239 239 14 0 0.812215
+420 79 319 6 0 0.804798 420 247 403 6 0 0.812215
+420 89 269 4 0 0.804836 420 227 383 2 0 0.812777
+420 101 341 20 0 0.805089 420 221 401 20 0 0.813594
+420 71 71 70 0 0.805123 420 293 377 4 0 0.813793
+420 67 163 6 0 0.805196 420 379 379 42 0 0.813818
+420 31 271 30 0 0.806076 420 209 209 4 0 0.815037
+420 257 353 4 0 0.806638 420 391 391 30 0 0.815604
+Table 5. The densities dðq; a; 1Þ computed for q ¼ 420, together with the values of
+Kqða /C0 1Þ¼ L
+/C0
+420=ð420; a /C0 1Þ
+/C1
+=f
+/C0
+420=ð420; a /C0 1Þ
+/C1
+.
+177Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+desire r þ sq to be a nonsquare ðmod qÞ, or else dðq; r þ sq; 1Þ simply equals 1 =2. Therefore,
+we deﬁne the set of qualiﬁed moduli
+Qðr; sÞ¼f q A N : r þ sq A Z; ðr þ sq; qÞ¼ 1; there are no solutions to x2 1 r þ sq ðmod qÞg:
+(Note that translating s by an integer does not change the residue class of r þ sq ðmod qÞ,s o
+one could restrict s to the interval ½0; 1Þ without losing generality if desired.)
+It turns out that every pair ðr; sÞ of rational numbers can be assigned a ‘‘rating’’
+Rðr; sÞ that dictates how the densities in the family dðq; r þ sq; 1Þ compare to other densities
+in similar families.
+Deﬁnition 4.1. Deﬁne a rating function Rðr; sÞ as follows:
+/C15 Suppose that the denominator of s is a prime power pk (k f 1).
+–I f r is a power p j of the same prime, then Rðr; sÞ¼ð log pÞ=fðp jþkÞ.
+–I f r ¼ 1o r r ¼ 1=p j for some integer 1 e j < k, then Rðr; sÞ¼ð log pÞ=fðpkÞ.
+–I f r ¼ 1=pk, then Rðr; sÞ¼ð log pÞ=pk.
+– Otherwise Rðr; sÞ¼ 0.
+/C15 Suppose that s is an integer.
+–I f r ¼/C0 1, then Rðr; sÞ¼ log 2.
+–I f r is a prime power p j ð j f 1Þ, then Rðr; sÞ¼ð log pÞ=p j .
+– Otherwise Rðr; sÞ¼ 0.
+/C15 Rðr; sÞ¼ 0 for all other values of s. U
+Theorem 4.2. Let Dðq; a; bÞ be deﬁned as in equation (1.4). For ﬁxed rational num-
+bers r and s ,
+Dðq; r þ sq; 1Þ¼ Rðr; sÞþ Or; s
+log q
+q
+/C18/C19
+as q tends to inﬁnity within the set Q ðr; sÞ.
+We will be able to prove this theorem at the end of the section; ﬁrst, however, we note
+an interesting corollary.
+Corollary 4.3. Assume GRH and LI. If r 1, s1, r2, s2 are rational numbers such that
+Rðr1; s1Þ > Rðr2; s2Þ, then
+dðq; r1 þ s1q; 1Þ < dðq; r2 þ s2q; 1Þ for all but ﬁnitely many q A Qðr1; s1Þ X Qðr2; s2Þ:
+178 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. We may assume that q f 43. Inserting the conclusion of Theorem 4.2 into
+the formula for dðq; a; bÞ in Corollary 1.9, we obtain
+dðq; r þ sq; 1Þ¼ 1
+2 þ rðqÞ
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ
+p 1 /C0 Rðr; sÞ
+2LðqÞ þ O 1
+log2 q
+/C18/C19 !
+ð4:2Þ
+for any q A Qðr; sÞ. Therefore for all q A Qðr1; s1Þ X Qðr2; s2Þ,
+dðq; r1 þ s1q; 1Þ/C0 dðq; r2 þ s2q; 1Þ¼ /C0 Rðr1; s1Þþ Rðr2; s2Þ
+2LðqÞ þ O 1
+log2 q
+/C18/C19 !
+rðqÞ
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ
+p :
+Since the constant /C0 Rðr1; s1Þþ Rðr2; s2Þ is negative by hypothesis, we see that the di¤erence
+dðq; r1 þ s1q; 1Þ/C0 dðq; r2 þ s2q; 1Þ is negative when q is su‰ciently large in terms of r1, s1, r2,
+and s2. r
+Notice, from the part of Deﬁnition 4.1 where s is an integer, that Theorem 1.10 is
+precisely the special case of Corollary 4.3 where s1 ¼ s2 ¼ 0. Therefore we have reduced
+Theorem 1.10 to proving Theorem 4.2.
+Theorem 1.10 itself is illustrated in Figure 2, using the computed densities for prime
+moduli to most clearly observe the relevant phenomenon. For each prime q up to 1000, and
+for every nonsquare a ðmod qÞ, the point
+q;
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ3
+q
+rðqÞ dðq; a; 1Þ/C0 1
+2
+/C18/C19
+/C0 LðqÞ
+0
+@
+1
+Að4:3Þ
+¼ q;
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pðq /C0 1Þ
+p
+log q
+2peg0
+/C18/C19 3=2
+dðq; a; 1Þ/C0 1
+2
+/C18/C19
+/C0 log q
+2peg0
+ !
+has been plotted; the values corresponding to certain residue classes have been emphasized
+with the listed symbols. The motivation for the seemingly strange (though order-preserving)
+normalization in the second coordinate is equation (4.2), which shows that the value in
+the second coordinate is /C0 Rða; 0Þ=2 þ Oð1=log qÞ. In other words, on the vertical axis the
+value 0 corresponds to dðq; a; bÞ being exactly the ‘‘default’’ value 1 =2 þ rðqÞ=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ
+p
+,
+the value /C0 0:05 corresponds to dðq; a; bÞ being less than the default value by
+0:05rðqÞ=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+pfðqÞLðqÞ3
+q
+, and so on. We clearly see in Figure 2 the normalized values cor-
+responding to dðq; /C0 1; 1Þ, dðq; 3; 1Þ, dðq; 2; 1Þ, and so on sorting themselves out into rows
+converging on the values /C0ð log 2Þ=2, /C0ð log 3Þ=6, /C0ð log 2Þ=4, and so on.
+We need to establish several lemmas before we can prove Theorem 4.2. The recurring
+theme in the following analysis is that solutions to linear congruences ðmod qÞ with ﬁxed
+coe‰cients must be at least a constant times q in size, save for speciﬁc exceptions that can
+be catalogued.
+179Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Lemma 4.4. Let r and s be rational numbers. If r 3 /C0 1 or if s is not an integer ,
+then there are only ﬁnitely many positive integers q such that r þ sq is an integer and
+r þ sq 1 /C0 1 ðmod qÞ.
+Proof. Write r ¼ a
+b and s ¼ c
+d . The congruence a
+b þ c
+d q 1 /C0 1 ðmod qÞ implies that
+ad
+b þ cq 1 /C0 d ðmod qÞ, which means that q must divide ad
+b þ d. This only happens for
+ﬁnitely many q unless ad
+b þ d ¼ 0, which is equivalent (since d 3 0) to a
+b ¼/C0 1. In this case
+the congruence is c
+d q 1 0 ðmod qÞ, which can happen only if c
+d is an integer. r
+Lemma 4.5. Let r and s be rational numbers. Suppose that q is a positive integer such
+that r þ sq is an integer. If r 3 1, then Kqðr þ sq /C0 1Þ fr; s ðlog qÞ=q.
+Proof. We ﬁrst note that LðtÞ=fðtÞ f ðlog tÞ=t for all positive integers t:i f LðtÞ
+is nonzero, then t is a prime power, which means fðtÞ f t=2. Therefore it su‰ces to
+show that ðq; r þ sq /C0 1Þ is bounded, since then q=ðq; r þ sq /C0 1Þ gr; s q and consequently
+Kqðr þ sq /C0 1Þ fr; s ðlog qÞ=q since ðlog tÞ=t is decreasing for t f 3. But writing r ¼ a
+b and
+s ¼ c
+d , we have
+q; a
+b þ c
+d q /C0 1
+/C18/C19 /C12/C12/C12/C12
+/C0
+q; dða /C0 bÞþ bcq
+/C1
+¼
+/C0
+q; dða /C0 bÞ
+/C1/C12/C12dða /C0 bÞ:
+Since r 3 1, we see that dða /C0 bÞ is nonzero, and hence ðq; r þ sq /C0 1Þ e dja /C0 bj fr; s 1a s
+required. r
+Lemma 4.6. Let r and s be rational numbers. Assume that r is not a positive integer
+or s is not an integer. If q and y are positive integers such that r þ sq is an integer and
+y 1 r þ sq ðmod qÞ, then y gr; s q.
+Figure 2. Normalized densities dðq; a; 1Þ for primes q, using the normalization (4.3).
+180 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. Suppose ﬁrst that s is not an integer, and write s ¼ c=d where d > 1.
+Then s is at least 1 =d away from the nearest integer, so that sq is at least q=d away
+from the nearest multiple of q. Since y ¼ r þ sq /C0 mq for some integer m, we have
+y f jsq /C0 mqj/C0j rj f q=d /C0j rj gr; s q when q is su‰ciently large in terms of r and s.
+On the other hand, if s is an integer, then r must also be an integer. If r is nonpositive,
+then the least integer y congruent to r ðmod qÞ is q /C0j rj gr q when q is su‰ciently large in
+terms of r. r
+Lemma 4.7. Let r and s be rational numbers. Assume that either r is not the reciprocal
+of a positive integer or that s =r is not an integer. Suppose that positive integers q and y are
+given such that r þ sq is an integer and ðr þ sqÞy 1 1 ðmod qÞ. Then y gr; s q.
+Proof. Write r ¼ a
+b and s ¼ c
+d with ða; bÞ¼ð c; dÞ¼ 1 and b; d > 0. We may assume
+that q > 2d 2, for if q e 2d 2, then y f 1 f q
+2d 2 gs q. Note that a 3 0, since 0 þ c
+d q ¼ c q
+d
+cannot be invertible modulo q when q > d. The assumption that r þ sq is an integer implies
+that dðr þ sqÞ¼ ad
+b þ cq is also an integer; since ða; bÞ¼ 1, this implies that b j d. Therefore
+we may write d ¼ bd for some integer d. Similarly, it must be true that bðr þ sqÞ¼ a þ cq
+dis an integer; since ðc; dÞjð c; dÞ¼ 1, this implies that q is a multiple of d.
+Case 1. Suppose ﬁrst that d ¼ 1. If a ¼ 1, then r ¼ 1=b would be the reciprocal of a
+positive integer and s
+r ¼ c=b
+1=b would be an integer, contrary to assumption; therefore a 3 1.
+The condition ðr þ sqÞy 1 1 ðmod qÞ, when multiplied by b, becomes ay 1 b ðmod qÞ. Now
+if a ¼/C0 1, then the congruence in question is equivalent to y 1 /C0 b ðmod qÞ; since b > 0,
+this implies that y f q /C0 b gr q as desired. Therefore for the rest of Case 1, we can assume
+that jaj > 1.
+Since any common factor of a and q would consequently be a factor of b as well, but
+ða; bÞ¼ 1, we must have ða; qÞ¼ 1. Thus we may choose u such that uq 1 /C0 1 ðmod aÞ,
+so that y0 ¼ bðuq þ 1Þ=a is an integer. We see by direct calculation that y0 is a solution
+to ay 1 b ðmod qÞ, and all other solutions di¤er from this one by a multiple of q=ðb; qÞ,
+which is certainly a multiple of q=b. In other words, y ¼ q bu
+a þ z
+b
+/C18/C19
+þ b
+a for some integer z.
+If bu
+a þ z
+b ¼ 0, then /C0 z ¼ b bu
+a þ z
+b
+/C18/C19
+/C0 z ¼ b2u
+a would be an integer, but this is impossible
+since both b and u are relatively prime to a (here we use jaj 3 1). Therefore bu
+a þ z
+b
+/C12/C12/C12/C12
+/C12/C12/C12/C12f 1
+jajb ,
+and so y f q
+jajb /C0 b
+jaj ; since q > 2d 2 ¼ 2b2, this gives y f q
+2jajb gr; s q.
+Case 2. Suppose now that d > 1. The condition a
+b þ c
+d q
+/C18/C19
+y 1 1 ðmod qÞ
+forces ðy; qÞ¼ 1 and so ðy; dÞ¼ 1 as well. Multiplying the condition by b yields
+ay þ cy q
+d 1 b ðmod qÞ, which we write as cyq
+d /C0 qm ¼ b /C0 ay for some integer m. But
+181Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+notice that ðcy; dÞ¼ 1, so that cy
+d is at least 1
+d away from every integer (here we use
+d > 1); therefore cyq
+d is at least q
+d away from the nearest multiple of q. Therefore
+q
+d e cyq
+d /C0 qm
+/C12/C12/C12
+/C12/C12/C12¼j b /C0 ayj e b þj ajy, and hence y f ðq /C0 bdÞ=jajd; since q > 2d ¼ 2bd,
+this gives y f q
+2jajd gr; s q. r
+Corollary 4.8. Let r and s be rational numbers , and let q be a positive integer such that
+r þ sq is an integer.
+(a) Assume that r is not a positive integer or s is not an integer. Suppose that y is a
+positive integer such that y 1 r þ sq ðmod qÞ. Then LðyÞ=y fr; s ðlog qÞ=q.
+(b) Assume that either r is not the reciprocal of a positive integer or that s =r is not
+an integer. Suppose that y is a positive integer such that ðr þ sqÞy 1 1 ðmod qÞ. Then
+LðyÞ=y fr; s ðlog qÞ=q.
+Proof. Since LðyÞ=y e ðlog yÞ=y, which is a decreasing function for y f 3, this
+follows from Lemmas 4.6 and 4.7. r
+Lemma 4.9. Let r and s be rational numbers. Let q be a positive integer such that
+r þ sq is an integer , and let p be a prime such that p n k q with n f 1.
+(a) Suppose that e is a positive integer such that p e 1 r þ sq ðmod q=pnÞ. Then either
+pe ¼ ro rp e gr; s q=pn.
+(b) Suppose that e is a positive integer such that p eðr þ sqÞ 1 1 ðmod q=pnÞ. Then
+either p e ¼ 1=ro r p e gr; s q=pn.
+Notice that if pe ¼ r in (a), then spn is an integer; also, if pe ¼ 1=r in (b), then speþn
+is an integer. In both cases, it is necessary that the denominator of s be a power of p as
+well.
+Proof. We may assume that q=pn is su‰ciently large in terms of r and s, for other-
+wise any positive integer is gr; s q=pn. We have two cases to examine.
+(a) We are assuming that pe 1 r þ sq ðmod q=pnÞ. Suppose ﬁrst that spn is an integer.
+Then sq is an integer multiple of q=pn, and so pe 1 r ðmod q=pnÞ. This means that either
+pe ¼ r or pe f q=pn þ r gr q=pn, since q=pn is su‰ciently large in terms of r.
+On the other hand, suppose that spn is not an integer. Then
+pe 1 r þ sq ¼ r þð spnÞq=pn 1 r þð spn /C0b spncÞq=pn ðmod q=pnÞ:
+If the denominator of s is d, then the di¤erence spn /C0b spnc is at least 1 =d, and therefore
+pe f q=dpn þ r gr; s q=pn as well, since q=pn is su‰ciently large in terms of r and s.
+182 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+(b) We are assuming that peðr þ sqÞ 1 1 ðmod q=pnÞ. We apply Lemma 4.7 with q=pn
+in place of q and with y ¼ pe, which yields the desired lower bound pe gr; s q=pn unless r
+is the reciprocal of a positive integer and s=r is an integer. In this case, multiplying the
+assumed congruence by the integer 1 =r gives peð1 þ qs=rÞ 1 1=r ðmod q=pnÞ, which implies
+pe 1 1=r ðmod q=pnÞ since s=r is an integer. Therefore, since q=pn is su‰ciently large in
+terms of r, either pe ¼ 1=r or pe f q=pn þ 1=r > q=pn. r
+The next two lemmas involve the functions hðq; p; rÞ and Hðq; a; bÞ that were deﬁned
+in Deﬁnition 1.8. Since we are dealing with rational numbers, we make the following
+clariﬁcation: when we say ‘‘power of p’’, we mean p
+k for some positive integer k (so p2
+and p1 are powers of p, but neither 1 nor p/C0 1 is).
+Lemma 4.10. Let r and s be rational numbers , and suppose that q is a positive integer
+such that r þ sq is an integer that is relatively prime to q. Let p be a prime dividing q , and
+choose n f 1 such that p n k q.
+(a) If both r and the denominator of s are powers of p (note that if the denominator of s
+equals p k , these conditions imply n ¼ k), then
+h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+¼ log p
+rfðpnÞ þ Or; s
+log p
+q
+/C18/C19
+;
+otherwise h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+fr; s ðlog pÞ=q.
+(b) If both 1=r and the denominator of s are powers of p (note that if r ¼ 1=p j and the
+denominator of s equals p k , these conditions imply n ¼ k /C0 j), then
+hðq; p; r þ sqÞ¼ r log p
+fðpnÞ þ Or; s
+log p
+q
+/C18/C19
+;
+otherwise hðq; p; r þ sqÞ fr; s ðlog pÞ=q.
+Proof. (a) Assume pe 1 r þ sq ðmod q=pnÞ. By Lemma 4.9, we have that either
+r ¼ pe (which implies that the denominator of s is a power of p), or else
+h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+fr; s ðlog pÞ=q. So we only need to compute h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+in the
+case where r is any power of p (say r ¼ pe) and where s has a denominator which is a
+power of p (say s ¼ c=pz, where z e n since q is a multiple of the denominator of s).
+In this case the congruence pe 1 r þ sq ðmod q=pnÞ is satisﬁed. Furthermore, e is the
+minimal such positive integer if q is su‰ciently large in terms of r and s.I f e is minimal, we
+have h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+¼ð log pÞ=fðpnÞpe ¼ð log pÞ=rfðpnÞ by deﬁnition; if e is not mini-
+mal, we have h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+fr; s ðlog pÞ=q since there are only ﬁnitely many possible
+values of q. In both cases, the proposition is established (the ‘‘main term’’ ðlog pÞ=rfðpnÞ
+is actually dominated by the error term in the latter case).
+183Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+(b) Assume peðr þ sqÞ 1 1 ðmod q=pnÞ. By Lemma 4.9, we have that either 1 =r ¼ pe
+(which implies that the denominator of s is a power of p), or else
+hðq; p; r þ sqÞ fr; s ðlog pÞ=q:
+So we only need to compute hðq; p; r þ sqÞ in the case where 1 =r is any power of p (say
+1=r ¼ p j ) and where s has a denominator which is a power of p (say s ¼ c=pk, where
+k /C0 j ¼ n > 0).
+In this case the congruence p j ðr þ sqÞ 1 1 ðmod q=pnÞ is satisﬁed (since
+p j sq 1 0 ðmod q=pnÞ). We can rewrite this congruence as p j 1 1=r ðmod q=pnÞ. As above,
+either j is the minimal such positive integer, in which case
+hðq; p; r þ sqÞ¼ð log pÞ=fðpnÞpe ¼ð r log pÞ=fðpnÞ
+by deﬁnition, or else q is bounded in terms of r and s, in which case
+hðq; p; r þ sqÞ fr; s ðlog pÞ=q:
+In both cases, the proposition is established. r
+Corollary 4.11. Let r and s be rational numbers , and suppose that q is a positive
+integer such that r þ sq is an integer that is relatively prime to q.
+(a) Suppose both r and the denominator of s are powers of the same prime p. Then
+Hðq; r þ sq; 1Þ¼ log p
+fðp jþkÞ þ Or; s
+log q
+q
+/C18/C19
+;
+where r ¼ p j and the denominator of s is p k .
+(b) Suppose both 1=r and the denominator of s are powers of the same prime p , with
+1=r < s. Then
+Hðq; r þ sq; 1Þ¼ log p
+fðpk Þ þ Or; s
+log q
+q
+/C18/C19
+;
+where the denominator of s is p k.
+(c) If neither of the above sets of conditions holds , then H ðq; r þ sq; 1Þ fr; s ðlog qÞ=q.
+Proof. We sum the conclusion of Lemma 4.10 over all prime divisors p of q (and,
+according to Deﬁnition 1.8, over both residue classes r þ sq and ðr þ sqÞ/C0 1 for each prime
+divisor). For each such p there is a contribution of Or; s
+/C0
+ðlog pÞ=q
+/C1
+from error terms, and
+the sum of all these terms is fr; s q/C0 1P
+p j q
+log p e ðlog qÞ=q. The only remaining task is to
+consider the possible main terms.
+If r ¼ p j and the denominator pk of s are powers of the same prime p, then this
+prime p must divide any q for which r þ sq is an integer; hence by Lemma 4.10, we have
+pk k q and the term h
+/C0
+q; p; ðr þ sqÞ/C0 1/C1
+contributes ðlog pÞ=rfðpnÞ¼ð log pÞ=fðp jþkÞ to
+184 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Hðq; r þ sq; 1Þ. Similarly, if r ¼ 1=p j and the denominators pk of s are powers of the
+same prime p with j < k, then this prime p must divide any q for which r þ sq is an integer
+(this would be false if j ¼ k); hence by Lemma 4.10, we have pk/C0 j k q and so the term
+hðq; p; r þ sqÞ contributes rðlog pÞ=fðpnÞ¼ð log pÞ=fðpkÞ to Hðq; r þ sq; 1Þ. For other pairs
+ðr; sÞ, no main term appears, and so the corollary is established. r
+Proof of Theorem 4.2. From the deﬁnition (1.4) of Dðq; a; bÞ, we have
+Dðq; r þ sq; 1Þ¼ iq
+/C0
+/C0ð r þ sqÞ
+/C1
+log 2 þ Kqðr þ sq /C0 1Þþ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ Hðq; r þ sq; 1Þ;
+where r1 and r2 are the least positive integers congruent to r þ sq and ðr þ sqÞ/C0 1, respec-
+tively, modulo q. The results in this section allow us to analyze each term individually:
+/C15 If r ¼/C0 1 and s is an integer, then iq
+/C0
+/C0ð r þ sqÞ
+/C1
+log 2 ¼ log 2. Otherwise, we have
+iq
+/C0
+/C0ð r þ sqÞ
+/C1
+log 2 ¼ 0 for all but ﬁnitely many (depending on r and s) integers q by Lemma
+4.3, whence in particular iq
+/C0
+/C0ð r þ sqÞ
+/C1
+log 2 fr; s ðlog qÞ=q.
+/C15 If r ¼ 1, then ðr þ sq /C0 1; qÞ¼ð sq; qÞ¼ q=d where d is the denominator of s, and
+so Kqðr þ sq /C0 1Þ¼ LðdÞ=fðdÞ by Deﬁnition 1.5. Otherwise, Kqðr þ sq /C0 1Þ fr; s ðlog qÞ=q
+by Lemma 4.5; this bound also holds if the denominator d of s is not a prime power, since
+then LðdÞ=fðdÞ¼ 0.
+/C15 If r is a positive integer and s is an integer, then r1 ¼ r for all but ﬁnitely many q,
+in which case Lðr1Þ=r1 ¼ LðrÞ=r. Otherwise Lðr1Þ=r1 fr; s ðlog qÞ=q by Corollary 4.8; this
+bound also holds if r is not a prime power, since then LðrÞ=r ¼ 0.
+Similarly, if r ¼ 1=b is the reciprocal of a positive integer and s=r ¼ bs is an integer,
+then bðr þ sqÞ¼ 1 þð bsÞq 1 1 ðmod qÞ; moreover, b will be the smallest positive integer
+(for all but ﬁnitely many q) such that bðr þ sqÞ 1 1 ðmod qÞ, and so Lðr2Þ=r2 ¼ LðbÞ=b.
+Otherwise Lðr2Þ=r2 fr; s ðlog qÞ=q by Corollary 4.8; this bound also holds if the reciprocal
+b of r is not a prime power, since then LðbÞ=b ¼ 0. Note also that if b is a prime power,
+then the denominator of s must be the same prime power, since bs and r þ sq are both
+integers.
+/C15 Corollary 4.11 tells us exactly when we have a contribution from Hðq; r þ sq; 1Þ
+other than the error term Or; s
+/C0
+ðlog qÞ=q
+/C1
+: the denominator of s must be a prime power,
+and r must be either a power of the same prime or else the reciprocal of a smaller power
+of the same prime.
+In summary, there are six situations in which there is a contribution to Dðq; r þ sq; 1Þ
+beyond the error term Or; s
+/C0
+ðlog qÞ=q
+/C1
+: four situations when the denominator of s is a prime
+power and two situations when s is an integer. All six situations are disjoint, and the con-
+tribution to Dðq; r þ sq; 1Þ in each situation is exactly Rðr; sÞ as deﬁned in Deﬁnition 4.1.
+This establishes the theorem. r
+4.3. The Bays–Hudson ‘‘mirror image phenomenon’’. In 1983, Bays and Hudson [3]
+published their observations of some curious phenomena in the prime number race among
+the reduced residue classes modulo 11. They graphed normalized error terms corresponding
+185Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+to pðx; 11; 1Þ; ... ; pðx; 11; 10Þ, much like the functions Eðx; 11; aÞ discussed in this paper,
+and from the graph they saw that the terms corresponding to the nonsquare residue classes
+tended to be positive, while the terms corresponding to the square residue classes tended
+to be negative, as Chebyshev’s bias predicts. Unexpectedly, however, they noticed ([3],
+Figure 1) that the graph corresponding to pðx; 11; 1Þ had a tendency to look like a mirror
+image of the graph corresponding to pðx; 11; 10Þ, and similarly for the other pairs pðx; 11; aÞ
+and pðx; 11; 11 /C0 aÞ. They deemed this observation the ‘‘additive inverse phenomenon’’; we
+use the physically suggestive name ‘‘mirror image phenomenon’’.
+This prompted them to graph the various normalized error terms corresponding to the
+sums pðx; 11; aÞþ pðx; 11; bÞ where a is a nonsquare ðmod 11Þ and b is a square ðmod 11Þ;
+all such normalized sums have the same mean value. They witnessed a noticable di¤erence
+between the cases a þ b ¼ 11, when the graph corresponding to the sum was typically quite
+close to the average value (as in [3], Figure 2), and all other cases which tended to result in
+more spread-out graphs.
+The ideas of the current paper can be used to explain this phenomenon. We con-
+sider more generally the limiting logarithmic distributions of the sums of error terms
+Eðx; q; aÞþ Eðx; q; bÞ, where a is a nonsquare ðmod qÞ and b is a square ðmod qÞ. The
+methods of Section 2.1 are easily modiﬁed to show (under the usual assumptions of GRH
+and LI) that this distribution has variance
+V
+þðq; a; bÞ¼ P
+w ðmod qÞ
+w3w0
+jwðaÞþ wðbÞj2bðwÞ:ð4:4Þ
+Following the method of proof of Theorem 1.4, one can show that for any modulus q and
+any pair a, b of reduced residues modulo q, we have
+V þðq; a; bÞ¼ 2fðqÞ
+/C18
+log q /C0 P
+p j q
+log p
+p /C0 1 /C0 LðqÞ
+fðqÞ /C0ð g0 þ log 2pÞð4:5Þ
+/C0 Kqða /C0 bÞ/C0 iqð/C0 ab/C0 1Þ log 2
+/C19
+þ 2M þðq; a; bÞ/C0 4bðw0Þ;
+where
+M þðq; a; bÞ¼ P
+w ðmod qÞ
+w3w0
+jwðaÞþ wðbÞj2 L0ð1; w/C3 Þ
+Lð1; w/C3 Þ :
+In particular, we note the term /C0 iqð/C0 ab/C0 1Þ log 2; many of the other terms vanish or sim-
+plify in the special case that q is prime. We also note that the primary contribution to
+M þðq; a; bÞ is the expression /C0 Lðr1Þ=r1 /C0 Lðr2Þ=r2, where r1 and r2 are the least positive
+residues of ab/C0 1 and ba/C0 1 ðmod qÞ. Both of these expressions are familiar to us from our
+analysis of V ðq; a; bÞ, although their signs are negative in the current setting rather than
+positive as before.
+We see that the variance V þðq; a; bÞ of this distribution Eðx; q; aÞþ Eðx; q; bÞ is
+somewhat smaller than the typical size if there is a small prime congruent to ab/C0 1 or
+186 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+ba/C0 1 ðmod qÞ; more importantly, it is smallest of all if /C0 ab/C0 1 1 1 ðmod qÞ, which is pre-
+cisely the situation a þ b ¼ q. In other words, we see very explicitly that the cases where
+a þ b ¼ q yield distributions with smaller-than-normal variance, as observed for q ¼ 11 by
+Bays and Hudson. In particular, our theory predicts that for any prime q 1 3 ðmod 4Þ (so
+that exactly one of a and /C0 a is a square), the graphs of Eðx; q; aÞ and Eðx; q; q /C0 aÞ will
+tend to resemble mirror images of each other, more so than the graphs of two functions
+Eðx; q; aÞ and Eðx; q; bÞ where a and b are unrelated. On the other hand, the contribution
+of the i
+q term is in a secondary main term, and so the theory predicts that this mirror-image
+tendency becomes weaker as q grows larger.
+We can use the numerical data in the case q ¼ 11, computed ﬁrst by Bays and
+Hudson, to conﬁrm our theoretical evaluation of these variances. We computed the values
+of each of the twenty-ﬁve functions Eðx; 11; aÞþ Eðx; 11; bÞ, where a is a square and b a
+nonsquare ðmod qÞ, on 400 logarithmically equally spaced points spanning the interval
+½10
+3; 107/C138 . We then computed the variance of our sample points for each function, in order
+to compare them with the theoretical variance given in equation (4.5), which we computed
+numerically. It is evident from equation (4.4) that multiplying both a and b by the same
+factor does not change V þðq; a; bÞ, and therefore there are only three distinct values
+for these theoretical variances: the functions Eðx; q; aÞþ Eðx; q; bÞ where a þ b ¼ 11 all
+give the same variance, as do the functions where ab/C0 1 1 2o r ab/C0 1 1 2/C0 1 1 6 ðmod 11Þ,
+and the functions where ab/C0 1 1 7o r ab/C0 1 1 7/C0 1 1 8 ðmod 11Þ. Table 6 summarizes our
+calculations, where the middle column reports the mean of the variances calculated for
+the functions in each set.
+Looking directly at the deﬁnition (4.4) of V þðq; a; bÞ, we see that when
+a 1 /C0 b ðmod qÞ, the only characters that contribute to the sum are the even characters,
+since we have
+wðaÞþ wðbÞ¼ wðaÞþ wð/C0 1ÞwðaÞ¼ 0
+when wð/C0 1Þ¼/C0 1. As seen earlier in Lemma 3.5, the quantity bðwÞ is smaller for even
+characters than for odd characters, which is another way to express the explanation of the
+Bays–Hudson observations.
+5. Explicit bounds and computations
+We concern ourselves with explicit numerical bounds and computations of the den-
+sities dðq; a; bÞ in this ﬁnal section. We begin in Section 5.1 by establishing auxiliary bounds
+set of functions
+Eðx; 11; aÞþ Eðx; 11; bÞ
+average variance calculated
+from sampled data
+theoretical
+variance
+a þ b ¼ 11 5.60 5.31
+fab/C0 1; ba/C0 1g 1 f2; 6gð mod 11Þ 7.10 6.82
+fab/C0 1; ba/C0 1g 1 f7; 8gð mod 11Þ 9.59 9.06
+Table 6. Observed and theoretical variances for Eðx; 11; aÞþ Eðx; 11; bÞ.
+187Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+for GðzÞ, for L0
+L ðs; wÞ, and for the number of zeros of Lðs; wÞ near a given height. In Section
+5.2 we use these explicit inequalities to provide the proofs of two propositions stated in
+Section 3.3; we also establish computationally accessible upper and lower bounds for the
+variance V ðq; a; bÞ. Explicit estimates for the density dðq; a; bÞ are proved in Section 5.3,
+including two theorems that give explicit numerical upper bounds for dðq; a; bÞ for q above
+1000. Finally, in Section 5.4 we describe the two methods we used to calculate numerical
+values for dðq; a; bÞ; we include some sample data from these calculations, including the 120
+largest density values that ever occur.
+5.1. Bounds for classical functions. The main goals of this section are to bound the
+number of zeros of Lðs; wÞ near a particular height and to estimate the size of L0
+L ðs; wÞ
+inside the critical strip, both with explicit constants. To achieve this, we ﬁrst establish some
+explicit inequalities for the Euler Gamma function.
+Proposition 5.1. If Re z f 1
+8 , then
+log GðzÞ/C0 z /C0 1
+2
+/C18/C19
+log z þ z /C0 1
+2 log 2p
+/C12/C12/C12/C12
+/C12/C12/C12/C12e 1
+4jzj
+and
+G0ðzÞ
+GðzÞ /C0 logðz þ 1Þþ 1
+2z þ 2 þ 1
+z
+/C12/C12/C12/C12
+/C12/C12/C12/C12< 0:2:
+Proof. The ﬁrst inequality follows from [9], equations (1) and (9) of Section 1.3,
+both taken with n ¼ 1. As for the second inequality, we begin with the identity [16],
+equation (21), taken with a ¼ 1:
+Cðz þ 1Þ¼ logðz þ 1Þ/C0 1
+2ðz þ 1Þ þ f 0
+1 ðzÞ:
+Here CðzÞ¼ G0
+G ðzÞ has its usual meaning; we use the identity G0ðzÞ
+GðzÞ þ 1
+z ¼ G0ðz þ 1Þ
+Gðz þ 1Þ to
+obtain
+G0ðzÞ
+GðzÞ þ 1
+z /C0 logðz þ 1Þþ 1
+2ðz þ 1Þ ¼ f 0
+1 ðzÞ;
+and therefore it su‰ces to show that j f 0
+1 ðzÞj e 0:2 when Re ðzÞ f 1=8. The notation
+f1ðzÞ¼ log F1; 1=2ðzÞ
+is deﬁned in [16], equation (9), and therefore
+f 0
+1 ðzÞ¼ F 0
+1; 1=2ðzÞ=F1; 1=2ðzÞ:
+188 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+By [16], Lemma 1.1.1, the denominator F1; 1=2ðzÞ is bounded below in modulus by
+ﬃﬃﬃﬃﬃﬃﬃﬃ
+e=p
+p
+;
+by [16], Lemma 2.2.1, taken with a ¼ n ¼ 1, the numerator is bounded above in modulus
+by
+jF 0
+1; 1=2ðzÞj < log x þ 1
+x þ 1=2 /C0 1
+2x þ 2 ;
+where x ¼ Re z (unfortunately [16], equation (27), contains the misprint f ðnÞ
+a; 1=2 where F ðnÞ
+a; 1=2
+is intended). The right-hand side of this inequality is a decreasing function of x, and its
+value at x ¼ 1=8 is log ð9=5Þ/C0 4=9. We conclude that for Re z f 1=8, we have
+j f 0
+1 ðzÞj e log 9
+5 /C0 4
+9
+/C18/C19 /C30ﬃﬃﬃﬃﬃﬃﬃﬃ
+e=p
+p
+< 0:2;
+as needed. r
+Lemma 5.2. Let a ¼ 0 or a ¼ 1. For any real numbers 1
+4 e s e 1 and T , we have
+G0 1
+2 ðs þ iT þ aÞ
+/C18/C19
+G 1
+2 ðs þ iT þ aÞ
+/C18/C19 /C0
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+/C12/C12/C12/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12/C12/C12/C12
+< 7:812:ð5:1Þ
+Proof. By symmetry we may assume that T f 0. We ﬁrst dispose of the case T e 3.
+When a ¼ 0, a computer calculation shows that the maximum value of the left-hand side of
+equation (5.1) in the rectangle fs þ iT : 1=4 e s e 1; 0 e T e 3g occurs at s ¼ 1=4 and
+T ¼ 0: the value of the left-hand side at that point is a bit less than 7.812. When a ¼ 1,
+a similar calculation shows that the left-hand side of equation (5.1) is always strictly less
+than 7.812.
+For the rest of the proof, we may therefore assume that T f 3. By Proposition 5.1,
+G0 1
+2 ðs þ iT þ aÞ
+/C18/C19
+G 1
+2 ðs þ iT þ aÞ
+/C18/C19 /C0
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+¼ log s þ iT þ a þ 2
+2 /C0 1
+s þ iT þ a þ 2 /C0 2
+s þ iT þ a
+/C0 log 4 þ iT þ a
+2 þ 1
+4 þ iT þ a þ 2
+2 þ iT þ a þ Oð0:4Þ;
+and therefore
+189Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+G0 1
+2 ðs þ iT þ aÞ
+/C18/C19
+G 1
+2 ðs þ iT þ aÞ
+/C18/C19 /C0
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+/C12/C12/C12/C12/C12
+/C12/C12/C12
+/C12/C12/C12/C12/C12
+/C12/C12/C12
+e log 1 /C0
+2 /C0 s
+4 þ iT þ a
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12þ 2 /C0 s
+ðs þ iT þ a þ 2Þð4 þ iT þ aÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12
+þ 2 2 /C0 s
+ðs þ iT þ aÞð2 þ iT þ aÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12þ 0:4:
+Under the assumptions on s, a, and T, we always have the inequality
+2 /C0 s
+4 þ iT þ a
+/C12/C12/C12/C12
+/C12/C12/C12/C12e 1
+2 :
+The maximum modulus principle implies the inequality 1
+z logð1 /C0 zÞ
+/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12e log 4 for jzj e
+1
+2 ,
+and so
+G0 1
+2 ðs þ iT þ aÞ
+/C18/C19
+G 1
+2 ðs þ iT þ aÞ
+/C18/C19 /C0
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+/C12/C12/C12/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12/C12/C12/C12
+e 2 /C0 s
+4 þ iT þ a
+/C12/C12/C12/C12
+/C12/C12/C12/C12log 4 þ 2 /C0 s
+ðs þ iT þ a þ 3Þð5 þ iT þ aÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12
+þ 2 2 /C0 s
+ðs þ iT þ aÞð2 þ iT þ aÞ
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12þ 0:4:
+Finally we use the inequalities on s, a, and T to conclude that
+G0 1
+2 ðs þ iT þ aÞ
+/C18/C19
+G 1
+2 ðs þ iT þ aÞ
+/C18/C19 /C0
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+/C12/C12/C12/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12/C12/C12/C12
+e 2
+5 log 4 þ 2
+5
+ﬃﬃﬃﬃﬃ
+13
+p þ 4
+3
+ﬃﬃﬃﬃﬃ
+13
+p þ 0:4 < 1:4353;
+which amply su‰ces to ﬁnish the proof. r
+We turn now to estimates for quantities associated with Dirichlet L-functions. The
+next few results do not require GRH to be true, and in fact their proofs cite identities
+from the literature that hold more generally no matter where the zeros of Lðs; wÞ might
+lie. Accordingly, we use the usual notation r ¼ b þ ig to denote a nontrivial zero of
+Lðs; wÞ, and all sums in this section of the form P
+r
+denote sums over all such nontrivial
+zeros of the Dirichlet L-function.
+Lemma 5.3. Let q f 2, and let w be a nonprincipal character ðmod qÞ. For any real
+number T ,
+P
+r
+1
+j2 þ iT /C0 rj2 < 1
+2 log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+:
+190 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. It su‰ces to prove the lemma for primitive characters. For w primitive, it is
+known ([11], equation (10.37)) that as meromorphic functions on the complex plane,
+L0ðs; wÞ
+Lðs; wÞ ¼/C0 1
+2 log q
+p /C0 1
+2
+G0 1
+2 ðs þ aÞ
+/C18/C19
+G
+1
+2 ðs þ aÞ
+/C18/C19 þ BðwÞþ P
+r
+1
+s /C0 r þ 1
+r
+/C18/C19
+;ð5:2Þ
+where the constant BðwÞ was described earlier in the proof of Lemma 3.5, and where a ¼ 0
+if wð/C0 1Þ¼ 1 and a ¼ 1i f wð/C0 1Þ¼/C0 1. Taking real parts of both sides and using the iden-
+tity (3.3), we obtain after rearrangement
+ReP
+r
+1
+s /C0 r ¼ Re L0ðs; wÞ
+Lðs; wÞ þ 1
+2 log q
+p þ 1
+2 Re
+G0 1
+2 ðs þ aÞ
+/C18/C19
+G 1
+2 ðs þ aÞ
+/C18/C19 :ð5:3Þ
+If we put z ¼ 1
+2 ðs þ aÞ in Proposition 5.1, we see that for Re s f 1
+8 ,
+Re
+G0 1
+2 ðs þ aÞ
+/C18/C19
+G 1
+2 ðs þ aÞ
+/C18/C19 ¼ Re log s þ a þ 2
+2 /C0 Re 1
+s þ a þ 2 /C0 Re 2
+s þ a þ 0:2
+e logjs þ a þ 1j/C0 log 2 þ 0 þ 0:2 e logjs þ 3j/C0 0:493:
+Inserting this bound into equation (5.3) and putting s ¼ 2 þ iT,
+ReP
+r
+1
+2 þ iT /C0 r e Re L0ð2 þ iT; wÞ
+Lð2 þ iT; wÞ þ 1
+2 log q
+p þ 1
+2 logj5 þ iTj/C0 0:246:
+Now notice that
+L0ð2 þ iT; wÞ
+Lð2 þ iT; wÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12¼
+/C12/C12/C12/C12/C0 Py
+n¼1
+wðnÞLðnÞ
+n2þiT
+/C12/C12/C12/C12ePy
+n¼1
+LðnÞ
+n2 ¼/C0 z0ð2Þ
+zð2Þ < 0:57;ð5:4Þ
+and therefore
+ReP
+r
+1
+2 þ iT /C0 r e 0:57 þ 1
+2 log q
+p þ 1
+2 logj5 þ iTj/C0 0:246
+e 1
+2 log q þ 1
+2 logðjTjþ 5Þþ 0:57 /C0 1
+2 log p /C0 0:246
+e 1
+2 log
+/C0
+qðjTjþ 5Þ
+/C1
+/C0 0:248 e 1
+2 log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+:
+191Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+We obtain ﬁnally
+P
+r
+1
+j2 þ iT /C0 rj2 <P
+r
+2 /C0 b
+j2 þ iT /C0 rj2ð5:5Þ
+¼ ReP
+r
+1
+2 þ iT /C0 r e 1
+2 log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+as claimed. r
+Proposition 5.4. For any nonprincipal character w and any real number T , we have
+Kfr : jT /C0 Im rj e 2g e 4 log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+:
+Proof. This follows immediately from equation (5.5) and the inequalities
+P
+r
+jT/C0 gje2
+1 e 8P
+r
+1
+ð2 /C0 sÞ2 þð T /C0 gÞ2 e 8P
+r
+2 /C0 b
+j2 þ iT /C0 rj2 : r
+Lemma 5.5. Let s ¼ s þ iT with 1
+4 e s e 1. For any primitive character w ðmod qÞ
+with q f 2, if Lðs; wÞ 3 0, then
+/C12/C12
+/C12/C12
+L0ðs; wÞ
+Lðs; wÞ /C0 P
+r
+jT/C0 gje2
+1
+s /C0 r
+/C12/C12
+/C12/C12e
+ﬃﬃﬃ
+2
+p
+log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+þ 4:48:
+Proof. Applying equation (5.2) at s ¼ s þ iT and again at 2 þ iT, we obtain
+L0ðs; wÞ
+Lðs; wÞ /C0 L0ð2 þ iT; wÞ
+Lð2 þ iT; wÞ ¼ 1
+2
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G
+1
+2 ð2 þ iT þ aÞ
+/C18/C19 /C0 1
+2
+G0 1
+2 ðs þ aÞ
+/C18/C19
+G
+1
+2 ðs þ aÞ
+/C18/C19
+þP
+r
+1
+s /C0 r /C0 1
+2 þ iT /C0 r
+/C18/C19
+;
+which implies
+/C12/C12/C12/C12
+L0ðs; wÞ
+Lðs; wÞ /C0 P
+r
+jT/C0 gje2
+1
+s /C0 r
+/C12/C12/C12/C12e L0ð2 þ iT; wÞ
+Lð2 þ iT; wÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12þ 1
+2
+G0 1
+2 ð2 þ iT þ aÞ
+/C18/C19
+G 1
+2 ð2 þ iT þ aÞ
+/C18/C19 /C0
+G0 1
+2 ðs þ aÞ
+/C18/C19
+G 1
+2 ðs þ aÞ
+/C18/C19
+/C12/C12/C12/C12/C12/C12/C12/C12
+/C12/C12/C12/C12/C12/C12/C12/C12
+þ P
+r
+jT/C0 gj>2
+1
+s /C0 r /C0 1
+2 þ iT /C0 r
+/C12/C12/C12/C12
+/C12/C12/C12/C12þ P
+r
+jT/C0 gje2
+1
+j2 þ iT /C0 rj :
+Using equation (5.4) and Lemma 5.2 to bound the ﬁrst two terms on the right-hand side,
+we see that
+192 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+/C12/C12/C12/C12
+L0ðs; wÞ
+Lðs; wÞ /C0 P
+r
+jT/C0 gje2
+1
+s /C0 r
+/C12/C12/C12/C12< 0:57 þ 3:906 þ P
+r
+jT/C0 gj>2
+2 /C0 s
+js /C0 rjj 2 þ iT /C0 rjð5:6Þ
+þ P
+r
+jT/C0 gje2
+1
+j2 þ iT /C0 rj :
+To prepare the last two sums for an application of Lemma 5.3, we note that when
+jT /C0 gj > 2,
+2 /C0 s
+js /C0 rjj 2 þ iT /C0 rj < 2 j2 þ iT /C0 rj
+js /C0 rj
+1
+j2 þ iT /C0 rj2 < 2
+ﬃﬃﬃ
+2
+p 1
+j2 þ iT /C0 rj2 ;
+on the other hand, when jT /C0 gj e 2,
+1
+j2 þ iT /C0 rj ¼ j2 þ iT /C0 rj
+j2 þ iT /C0 rj2 < 2
+ﬃﬃﬃ
+2
+p
+j2 þ iT /C0 rj2 :
+Therefore equation (5.6) becomes, by Lemma 5.3,
+/C12/C12
+/C12/C12
+L0ðs; wÞ
+Lðs; wÞ /C0 P
+r
+jT/C0 gje2
+1
+s /C0 r
+/C12/C12
+/C12/C12< 0:57 þ 3:906 þ 2
+ﬃﬃﬃ
+2
+p P
+r
+1
+j2 þ iT /C0 rj2
+< 4:48 þ
+ﬃﬃﬃ
+2
+p
+log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+as claimed. r
+We restore the assumption of GRH for the last proposition of this section, which is
+used in the proof of Lemma 5.10 below.
+Proposition 5.6. Assume GRH. Let s ¼ s þ iT with 1
+4 e s e 1, s 3 1
+2 .I f w is any
+nonprincipal character ðmod qÞ, then
+L0ðs; wÞ
+Lðs; wÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12e 4
+s /C0 1=2jj þ
+ﬃﬃﬃ
+2
+p/C18/C19
+log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+þ 4:48 þ log q
+2s /C0 1 :
+Furthermore, if w is primitive and q f 2, then the summand ðlog qÞ=ð2s /C0 1Þ can be omitted
+from the upper bound.
+Proof. Assume ﬁrst that w is primitive. Lemma 5.5 tells us that
+/C12/C12
+/C12/C12
+L0ðs; wÞ
+Lðs; wÞ
+/C12/C12
+/C12/C12e P
+r
+jT/C0 gje2
+1
+js /C0 rj þ
+ﬃﬃﬃ
+2
+p
+log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+þ 4:48
+e 1
+s /C0 1
+2
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12
+Kfr : jT /C0 gj e 2gþ
+ﬃﬃﬃ
+2
+p
+log
+/C0
+0:609qðjTjþ 5Þ
+/C1
+þ 4:48
+193
+Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+under the assumption of GRH; the proposition for primitive w now follows immediately
+from Proposition 5.4.
+If w is not primitive, then Lðs; wÞ¼ Lðs; w/C3 ÞQ
+p j q
+1 /C0 w/C3 ðpÞ
+ps
+/C18/C19
+; we then have the
+identity
+L0ðs; wÞ
+Lðs; wÞ ¼ L0ðs; w/C3 Þ
+Lðs; w/C3 Þ þP
+p j q
+w/C3 ðpÞ log p
+ps /C0 w/C3 ðpÞ :
+Therefore
+/C12/C12/C12/C12
+L0ðs; wÞ
+Lðs; wÞ /C0 L0ðs; w/C3 Þ
+Lðs; w/C3 Þ
+/C12/C12/C12/C12eP
+p j q
+log p
+ps /C0 1 e 1
+2s /C0 1
+P
+p j q
+log p e log q
+2s /C0 1 ;
+which ﬁnishes the proof of the proposition in full. r
+5.2. Bounds for the variance V(q; a, b). This section has two main purposes. First,
+we provide the proofs of Propositions 3.10 and 3.11, two statements involving smoothed
+sums of the von Mangoldt function which were stated in Section 3.3. Second, we establish
+two sets of upper and lower bounds for the variance V ðq; a; bÞ, one when q is prime and one
+valid for all q. All of these results are stated with explicit constants and are valid for explicit
+ranges of q.
+Lemma 5.7. For any real number t , we have
+d
+dt G /C0 1
+2 þ it
+/C18/C19/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12e G
+0 /C0 1
+2 þ it
+/C18/C19/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12.
+Proof. We show more generally that if f ðtÞ is any di¤erentiable complex-
+valued function that never takes the value 0, then j f ðtÞj is also di¤erentiable and
+d
+dt j f ðtÞj
+/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12e j f
+0ðtÞj; the lemma then follows since G never takes the value 0. Write
+f ðtÞ¼ uðtÞþ ivðtÞ where u and v are real-valued; then
+d
+dt j f ðtÞj ¼ d
+dt
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+uðtÞ2 þ vðtÞ2
+q
+¼ uðtÞu0ðtÞþ vðtÞv0ðtÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+uðtÞ2 þ vðtÞ2
+q
+while j f 0ðtÞj ¼ j u0ðtÞþ iv0ðtÞj ¼
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+u0ðtÞ2 þ v0ðtÞ2
+q
+. The asserted inequality is therefore equiv-
+alent to juðtÞu0ðtÞþ vðtÞv0ðtÞj e
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+uðtÞ2 þ vðtÞ2
+q ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+u0ðtÞ2 þ v0ðtÞ2
+q
+, which is a consequence of
+the Cauchy–Schwarz inequality. r
+Lemma 5.8. We have jGðsÞj e jGðRe sÞj for all complex numbers s.
+Note that this assertion is trivially true if Re s is a nonpositive integer, under the
+convention jGð/C0 nÞj ¼ y for n f 0.
+Proof. We prove that the assertion holds whenever Re s > /C0 n, by induction on n.
+The base case n ¼ 0 can be derived from the integral representation GðsÞ¼ Ðy
+0
+ts/C0 1e/C0 t dt,
+194 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+which gives
+jGðsÞj eÐy
+0
+jts/C0 1je/C0 t dt ¼Ðy
+0
+tRe s/C0 1e/C0 t dt ¼ GðRe sÞ:
+Now assume that the assertion holds whenever Re s > /C0 n. Given a complex number s for
+which Re s > /C0ð n þ 1Þ, we use the identity Gðs þ 1Þ¼ sGðsÞ and the induction hypothesis
+to write
+jGðsÞj ¼ jGðs þ 1Þj
+jsj e jGðRe s þ 1Þj
+jsj ¼ jRe sj
+jsj jGðRe sÞj e jGðRe sÞj;
+as desired. r
+Lemma 5.9. For any nonprincipal character w,
+P
+g A R
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12e 14:27 log q þ 16:25:
+We remark that this lemma does not assume GRH, since the sum on the left-hand
+side only decreases if some of the zeros of Lðs; wÞ lie o¤ the critical line.
+Proof. First, by Proposition 5.4 applied with T ¼ 0, the number of zeros of Lðs; wÞ
+with jgj e 2 is at most 4 log ð3:045qÞ; thus by Lemma 5.8,
+P
+jgje2
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12e G /C0
+1
+2
+/C18/C19/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12
+P
+jgje2
+Lð1=2þig; wÞ¼0
+1ð5:7Þ
+e 8 ﬃﬃﬃpp logð3:045qÞ e 14:18 log q þ 15:79:
+We can write the remainder of the sum using Riemann–Stieltjes integration as
+P
+jgj>2
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12¼
+Ðy
+2
+G /C0 1
+2 þ it
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12d
+/C0
+Nðt; wÞ/C0 Nð2; wÞ
+/C1
+¼/C0
+Ðy
+2
+/C0
+Nðt; wÞ/C0 Nð2; wÞ
+/C1d
+dt G /C0 1
+2 þ it
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12dt;
+the vanishing of the boundary terms is justiﬁed by the upper bound Nðt; wÞ fq t log t
+(see Proposition 2.15 for example) and the exponential decay of GðsÞ on vertical lines. We
+conclude from Lemma 5.7 that
+P
+jgje2
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12eÐ
+y
+2
+Nðt; wÞ G0 /C0 1
+2 þ it
+/C18/C19/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12dt
+e
+Ð
+y
+2
+t
+p þ 0:68884
+/C18/C19
+log qt
+2pe þ 10:6035
+ !
+G0 /C0 1
+2 þ it
+/C18/C19/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12dt
+195
+Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+by Proposition 2.15. Since log ðqt=2peÞ¼ log q þ logðt=2peÞ, the right-hand side is simply a
+linear function of log q; using numerical integration, we see that
+P
+jgje2
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12e 0:09 log q þ 0:46:
+Combining this upper bound with the bound in equation (5.7) establishes the lemma. r
+Lemma 5.10. Assume GRH. For any nonprincipal character w,
+Ð/C0 3=4þiy
+/C0 3=4/C0 iy
+L0ðs þ 1; wÞ
+Lðs þ 1; wÞ GðsÞ
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12ds e 101 log q þ 112:
+Proof. Proposition 5.6 with s ¼
+1
+4 tells us that for any real number t,
+L0 1
+4 þ it; w
+/C18/C19
+L 1
+4 þ it; w
+/C18/C19
+/C12/C12
+/C12/C12/C12/C12/C12/C12
+/C12/C12
+/C12/C12/C12/C12/C12/C12
+e 17:42 log
+/C0
+0:609qðjtjþ 5Þ
+/C1
+þ 4:48 þ
+log q
+0:1892
+e 22:71 log q þ 17:42 logðjtjþ 5Þ/C0 4:159;
+and therefore
+Ð/C0 3=4þiy
+/C0 3=4/C0 iy
+L0ðs þ 1; wÞ
+Lðs þ 1; wÞ GðsÞ
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12ds e Ð
+y
+/C0 y
+/C0
+22:71 log q þ 17:42 logðjtjþ 5Þ/C0 4:159
+/C1
+G /C0 3
+4 þ it
+/C18/C19/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12dt:
+Again this integral is a linear function of log q, and a numerical calculation establishes the
+particular constants used in the statement of the lemma. r
+With these lemmas in hand, we are now able to provide the two proofs deferred until
+now from Section 3.3.
+Proof of Proposition 3.10. We begin with the Mellin transform formula, valid for
+any real number c > 0,
+/C0 P
+y
+n¼1
+wðnÞLðnÞ
+n e/C0 n=y ¼ 1
+2pi
+Ðcþiy
+c/C0 iy
+L0ðs þ 1; wÞ
+Lðs þ 1; wÞ GðsÞys ds
+(see [11], equations (5.24) and (5.25)). We move the contour to the left, from the vertical
+line Re s ¼ c to the vertical line Re s ¼/C0 3=4, picking up contributions from the pole of G
+at s ¼ 0 as well as from each nontrivial zero of Lðs; wÞ. The result is
+196 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+/C0 Py
+n¼1
+wðnÞLðnÞ
+n e/C0 n=y ¼ L0ð1; wÞ
+Lð1; wÞ þ P
+g A R
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19
+y/C0 1=2þigð5:8Þ
+þ 1
+2pi
+Ð/C0 3=4þiy
+/C0 3=4/C0 iy
+L0ðs þ 1; wÞ
+Lðs þ 1; wÞ GðsÞys ds
+since we are assuming GRH. (Strictly speaking, we should consider truncations of these
+inﬁnite integrals; however, the exponential decay of GðsÞ in vertical strips implies that the
+contributions at large height do vanish in the limit.)
+The sum on the right-hand side can be bounded by
+/C12/C12/C12
+/C12
+P
+g A R
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19
+y/C0 1=2þig
+/C12/C12/C12
+/C12e y
+/C0 1=2 P
+g A R
+Lð1=2þig; wÞ¼0
+G /C0 1
+2 þ ig
+/C18/C19/C12/C12/C12
+/C12
+/C12/C12/C12
+/C12
+e
+14:27 log q þ 16:25
+y1=2
+by Lemma 5.9, while the integral can be bounded by
+/C12/C12/C12/C12
+1
+2pi
+Ð/C0 3=4þiy
+/C0 3=4/C0 iy
+L0ðs þ 1; wÞ
+Lðs þ 1; wÞ GðsÞys ds
+/C12/C12/C12/C12e 1
+2py3=4
+Ð/C0 3=4þiy
+/C0 3=4/C0 iy
+L0ðs þ 1; wÞ
+Lðs þ 1; wÞ GðsÞ
+/C12/C12/C12/C12
+/C12/C12/C12/C12ds
+e 101 log q þ 112
+2py3=4
+by Lemma 5.10. Using these two inequalities in equation (5.8) establishes the proposition.
+r
+Proof of Proposition 3.11. Since 1 e a < q, we may write
+P
+n1a ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+ð5:9Þ
+¼ LðaÞ
+a e/C0 a=q2
+þ O
+/C18P
+qeneq2
+n1a ðmod qÞ
+LðnÞ
+n þ P
+n>q2
+n1a ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+/C19
+:
+Since LðnÞ=n e ðlog nÞ=n, which is a decreasing function of n for n f 3, we have
+P
+n>q2
+n1a ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+e log q2
+q2
+Py
+j¼q
+e/C0ð qj þaÞ=q2
+e 2 log q
+q2 e/C0 1Py
+k¼0
+e/C0 j=q ¼ 2 log q
+q2 e/C0 1 1
+1 /C0 e/C0 1=q ;
+197Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+note here that 1 e a < q so q f 2. As the function t=ð1 /C0 e/C0 tÞ is bounded by 1 =2ð1 /C0 e/C0 1=2Þ
+for 0 < t e 1=2, we conclude that
+P
+n>q2
+n1a ðmod qÞ
+LðnÞ
+n e/C0 n=q2
+e 2 log q
+q e/C0 1 1
+2ð1 /C0 e/C0 1=2Þ < 0:935 log q
+q :
+We bound the second term of equation (5.9) crudely:
+P
+qeneq2
+n1a ðmod qÞ
+LðnÞ
+n e ðlog q2ÞPq/C0 1
+j¼1
+1
+qj þ a e 2 log q
+q
+Pq/C0 1
+j¼1
+1
+j e 2 log q
+q ðlog q þ 1Þ:
+Finally, for the ﬁrst term of equation (5.9), the estimate e/C0 t ¼ 1 þ OðtÞ for t f 0 allows us
+to write
+LðaÞ
+a e/C0 a=q ¼ LðaÞ
+a 1 þ O a
+q
+/C18/C19 !
+¼ LðaÞ
+a þ O log q
+q
+/C18/C19
+:
+Using these three deductions transforms equation (5.9) into the statement of the prop-
+osition. r
+We now turn to the matter of giving explicit upper and lower bounds for V ðq; a; bÞ.I n
+the case where q is prime, we are already able to establish such estimates.
+Proposition 5.11. If q f 150 is prime, then
+2ðq /C0 1Þðlog q /C0 2:42Þ/C0 47:238 log2 q eV ðq; a; bÞ e 2ðq /C0 1Þðlog q /C0 0:99Þþ 47:238 log2 q:
+Proof. Combining Theorem 1.4 with Proposition 3.12, we see that
+V ðq; a; bÞ¼ 2fðqÞ
+/C0
+LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2
+/C1
+þ 2M /C3 ðq; a; bÞð5:10Þ
+¼ 2fðqÞ
+ 
+LðqÞþ Kqða /C0 bÞþ iqð/C0 ab/C0 1Þ log 2
+þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ H0ðq; a; bÞ
+!
+þ O 47:238fðqÞ log2 q
+q
+ !
+for any q f 150, where r1 and r2 denote the least positive residues of ab/C0 1 and ba/C0 1 ðmod qÞ.
+Since we are assuming q is prime, both Kqða /C0 bÞ and H0ðq; a; bÞ vanish, and we have
+V ðq; a; bÞ¼ 2ðq /C0 1Þ log q
+2peg0
+þ iqð/C0 ab/C0 1Þ log 2 þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+/C18/C19
+þ Oð47:238 log2 qÞ:
+198 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+The function LðnÞ=n is nonnegative and bounded above by ðlog 3Þ=3, and the function iq
+takes only the values 0 and 1; therefore the quantity in large parentheses satisﬁes the
+bounds
+log q /C0 2:42 e log q
+2peg0
+þ iqð/C0 ab/C0 1Þ log 2 þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+e log q /C0 0:99;
+which establishes the proposition. r
+We require two additional lemmas before we can treat the case of general (possibly
+composite) q.
+Lemma 5.12. With H0 deﬁned in Deﬁnition 3.8, we have
+/C0ð 4 log qÞ=q e H0ðq; a; bÞ e 4:56
+for any reduced residues a and b ðmod qÞ.
+Proof. Since eðq; p; rÞ f 1 always, we have
+h0ðq; p; rÞ¼ 1
+fðpnÞ
+log p
+peðq; p; rÞð1 /C0 p/C0 eðq; p; 1ÞÞ e 1
+p /C0 1
+log p
+p /C0 1 e 4 log p
+p2 :
+Therefore
+H0ðq; a; bÞ eP
+p j q
+/C0
+h0ðq; p; ab/C0 1Þþ h0ðq; p; ba/C0 1Þ
+/C1
+e 8P
+p j q
+log p
+p2
+< 8Py
+n¼1
+LðnÞ
+n2 ¼ 8 z0ð2Þ
+zð2Þ
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12e 4:56;
+which establishes the upper bound. On the other hand, note that p
+eðq; p; 1Þ is an integer larger
+than 1 that is congruent to 1 ðmod q=pnÞ. Therefore peðq; p; 1Þ f q=pn þ 1, and so
+H0ðq; a; bÞ f /C0 2P
+p j q
+h0ðq; p; 1Þ¼/C0 2P
+p j q
+1
+fðpnÞ
+log p
+peðq; p; 1Þ /C0 1
+f /C0 2P
+p j q
+1
+pnð1 /C0 1=pÞ
+log p
+q=pn f /C0 4
+q
+P
+p j q
+log p f /C0 4 log q
+q ;
+which establishes the lower bound. r
+Lemma 5.13. If q f 2 is any integer , then
+P
+p j q
+log p
+p /C0 1 e 1:02 log logq þ 3:04:
+199Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. We separate the sum into two intervals at the point 1 þ log q. The contribu-
+tion from the larger primes is at worst
+P
+p j q
+pf1þlog q
+log p
+p /C0 1 e 1
+log q
+P
+p j q
+log p e log q
+log q ¼ 1:
+For the smaller primes, recall the usual notation yðtÞ¼ P
+pet
+log p. We will use the explicit
+bound yðtÞ e 1:01624t for t > 0 from Theorem 9 of [13] , and so the contribution from the
+smaller primes is bounded by
+P
+p j q
+p<1þlog q
+log p
+p /C0 1 e P
+p<1þlog q
+log p
+p /C0 1
+¼ Ð1þlog q
+2/C0
+dyðtÞ
+t /C0 1
+¼ yð1 þ log qÞ
+log q þ
+Ð1þlog q
+2
+yðtÞ
+ðt /C0 1Þ2 dt
+e 1:01624
+/C181 þ log q
+log q þ Ð1þlog q
+2
+td t
+ðt /C0 1Þ2
+/C19
+¼ 1:01624 1 þ 1
+log q þ log log q /C0 1
+log q þ 1
+/C18/C19
+¼ 1:01624 log logq þ 2:03248;
+which ﬁnishes the proof of the lemma. r
+Proposition 5.14. If q f 500, then
+2fðqÞðlog q /C0 1:02 log logq /C0 7:34Þ e V ðq; a; bÞ e 2fðqÞðlog q þ 6:1Þ:
+Proof. We begin with equation (5.10), expanding the functions L and Kq according
+to Deﬁnition 1.5:
+V ðq; a; bÞ¼ 2fðqÞ
+0
+@log q
+2peg0
+/C0 P
+p j q
+log p
+p /C0 1 þ L
+/C0
+q=ðq; a /C0 bÞ
+/C1
+f
+/C0
+q=ðq; a /C0 bÞ
+/C1þ iqð/C0 ab/C0 1Þ log 2ð5:11Þ
+þ Lðr1Þ
+r1
+þ Lðr2Þ
+r2
+þ H0ðq; a; bÞþ O 23:62 log2 q
+q
+ ! 1
+A:
+The last term on the ﬁrst line is nonnegative and bounded above by log 2, while the ﬁrst
+three terms on the second line are nonnegative and bounded together by log 2 þð 2 log 3Þ=3
+200 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+as in the proof of Proposition 5.11. The term H0ðq; a; bÞ is bounded above by 4.56 and
+below by ð/C0 4 log qÞ=q by Lemma 5.12. Therefore
+2fðqÞ log q /C0 log 2peg0 /C0 P
+p j q
+log p
+p /C0 1 /C0 4 log q
+q þ O 23:62 log2 q
+q
+ !0
+@
+1
+Að5:12Þ
+e V ðq; a; bÞ
+e 2fðqÞ
+0
+@log q /C0 log 2peg0 þ log 2 þ log 2 þ 2
+3 log 3 þ 4:56
+þ O 23:62 log2 q
+q
+ ! 1
+A:
+The sum being subtracted on the top line is bounded above by 1 :02 log logq þ 3:04
+by Lemma 5.13. Lastly, a calculation shows that the O error term is at most 1 :83 for
+q f 500, and therefore
+2fðqÞ log q /C0 log 2peg0 /C0ð 1:02 log logq þ 3:04Þ/C0 4 log q
+q /C0 1:83
+/C18/C19
+e V ðq; a; bÞ
+e 2fðqÞ log q /C0 log 2peg0 þ log 2 þ log 2 þ 2
+3 log 3 þ 4:56 þ 1:83
+/C18/C19
+;
+which implies the assertion of the proposition. r
+5.3. Bounds for the density d(q; a, b). We use the results of the previous section to
+obtain explicit upper and lower bounds on dðq; a; bÞ; from these bounds, we can prove in
+particular that all of the largest values of these densities occur when the modulus q is less
+than an explicit bound. In the proof of Theorem 1.1, we expanded several functions, includ-
+ing an instance of sin, into their power series at the origin. While this yielded an excellent
+theoretical formula, for numerical purposes we will take a slightly di¤erent approach
+involving the error function Erf ðzÞ¼
+2ﬃﬃﬃpp Ðz
+0
+e/C0 t2
+dt. The following two lemmas allow us to
+write the density dðq; a; bÞ in terms of the error function.
+Lemma 5.15. For any constants v > 0 and r,
+Ðy
+/C0 y
+t4e/C0 vt2=2 dt ¼ 3
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+v5=2 and
+Ðy
+/C0 y
+sin rt
+t e/C0 vt2=2 dt ¼ p Erf rﬃﬃﬃﬃﬃ
+2v
+p
+/C18/C19
+:
+Proof. For the ﬁrst identity, a change of variables gives
+Ðy
+y
+t4e/C0 vt2=2 dt ¼ v/C0 5=2Ðy
+y
+w4e/C0 w2=2 dw ¼ v/C0 5=2M2ðyÞ¼ 3
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+v5=2
+201Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+by Lemma 2.21. Our starting point for the second identity is [1], equation (7.4.6): for any
+constants a > 0 and x,
+Ðy
+0
+e/C0 at2
+cos 2xt dt ¼ 1
+2
+ﬃﬃﬃp
+a
+r
+e/C0 x2=a;
+which can be rewritten as
+ﬃﬃﬃp
+a
+r
+e/C0 x2
+¼ Ðy
+/C0 y
+e/C0 at2
+cosð2xt ﬃﬃﬃap Þ dt:
+Integrating both sides from x ¼ 0t o x ¼ w yields
+p
+2 ﬃﬃﬃap ErfðwÞ¼
+Ðy
+/C0 y
+e/C0 at2
+/C18Ðw
+0
+cosð2xt ﬃﬃﬃap Þ dx
+/C19
+dt ¼
+Ðy
+/C0 y
+e/C0 at2 sinð2wt ﬃﬃﬃap Þ
+2t ﬃﬃﬃap dt
+(the interchanging of the integrals in the middle expression is justiﬁed by the absolute con-
+vergence of the integral). Setting a ¼ v=2 and w ¼ r=
+ﬃﬃﬃﬃﬃ
+2v
+p
+, we obtain
+pﬃﬃﬃﬃﬃ
+2v
+p Erf rﬃﬃﬃﬃﬃ
+2v
+p
+/C18/C19
+¼
+Ðy
+/C0 y
+e/C0 vt2=2 sin rt
+t
+ﬃﬃﬃﬃﬃ
+2v
+p dt;
+which establishes the lemma. r
+Lemma 5.16. Assume GRH and LI. Let a be a nonsquare ðmod qÞ and let b be a
+square ðmod qÞ.I fV ðq; a; bÞ f 531, then
+dðq; a; bÞ¼ 1
+2 þ 1
+2 Erf rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2V ðq; a; bÞ
+p
+ !
+þ O 47:65rðqÞ
+V ðq; a; bÞ3=2 þ 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 63:68rðqÞe/C0 V ðq; a; bÞ1=2=2
+ !
+:
+Proof. From Deﬁnition 2.11, we know that
+log Fq; a; bðxÞ¼ P
+w ðmod qÞ
+P
+g>0
+Lð1=2þig; wÞ¼0
+log J0
+2jwðaÞ/C0 wðbÞjxﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !
+¼ 1
+2
+P
+w ðmod qÞ
+P
+g A R
+Lð1=2þig; wÞ¼0
+log J0
+2jwðaÞ/C0 wðbÞjxﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+1=4 þ g2
+p
+ !
+202 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+by the functional equation for Dirichlet L-functions. If jxj e 1=4, then the argument of J0 is
+at most 2 /C1 2 /C1 1
+4
+/C301
+2 ¼ 2 in absolute value. Since the Taylor expansion
+log J0ðxÞ¼/C0 x2=4 þ Oð:0311x4Þ
+is valid for jxj e 2, we see that
+log Fq; a; bðxÞð5:13Þ
+¼ 1
+2
+P
+w ðmod qÞ
+P
+g A R
+Lð1=2þig; wÞ¼0
+/C0 jwðaÞ/C0 wðbÞj2x2
+1=4 þ g2 þ O :0311 16jwðaÞ/C0 wðbÞj4x4
+ð1=4 þ g2Þ2
+ ! !
+¼/C0 1
+2 x2 P
+w ðmod qÞ
+P
+g A R
+Lð1=2þig; wÞ¼0
+jwðaÞ/C0 wðbÞj2
+1=4 þ g2
+þ O
+ 
+1
+2 x4 P
+w ðmod qÞ
+P
+g A R
+Lð1=2þig; wÞ¼0
+:0311 16 /C1 4jwðaÞ/C0 wðbÞj2
+1=4ð1=4 þ g2Þ
+!
+¼/C0 1
+2 V ðq; a; bÞx2 þ O
+/C0
+39:81V ðq; a; bÞx4/C1
+when jxj e 1=4. Moreover, the error term in the expansion log J0ðxÞ¼/C0 x2=4 þ Oð:0311x4Þ
+is always nonpositive as a consequence of Lemma 2.8 (c), and hence the same is true for
+the recently obtained error term O
+/C0
+39:81V ðq; a; bÞx4/C1
+. This knowledge allows us to use
+the expansion et ¼ 1 þ OðtÞ for t e 0, which yields
+Fq; a; bðxÞ¼ e/C0 V ðq; a; bÞx2=2/C0
+1 þ O
+/C0
+39:81V ðq; a; bÞx4/C1/C1
+when jxj e 1=4.
+Proposition 2.18 says that when V ðq; a; bÞ f 531,
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+ÐV ðq; a; bÞ/C0 1=4
+/C0 V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x Fq; a; bðxÞ dx
+þ O 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 63:67rðqÞe/C0 V ðq; a; bÞ1=2=2
+/C18/C19
+:
+Notice that V ðq; a; bÞ/C0 1=4 e 531/C0 1=4 < 1=4, and so we may use our approximation for
+Fq; a; bðxÞ to deduce that
+203Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+ÐV ðq; a; bÞ/C0 1=4
+/C0 V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+xð5:14Þ
+/C2 e/C0 V ðq; a; bÞx2=2/C0
+1 þ O
+/C0
+39:81V ðq; a; bÞx4/C1/C1
+dx
+þ O 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 63:67rðqÞe/C0 V ðq; a; bÞ1=2=2
+/C18/C19
+:
+The main term can be evaluated by the second identity of Lemma 5.15:
+1
+2p
+ÐV ðq; a; bÞ/C0 1=4
+/C0 V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x e/C0 V ðq; a; bÞx2=2 dx
+¼ 1
+2p
+Ðy
+/C0 y
+sin rðqÞx
+x e/C0 V ðq; a; bÞx2=2 dx þ O
+/C181
+p
+Ðy
+V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x
+/C12/C12
+/C12/C12
+/C12/C12
+/C12/C12e
+/C0 V ðq; a; bÞx2=2 dx
+/C19
+¼ 1
+2 Erf rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2V ðq; a; bÞ
+p
+ !
+þ O
+/C181
+p
+Ðy
+V ðq; a; bÞ/C0 1=4
+rðqÞV ðq; a; bÞ1=4xe/C0 V ðq; a; bÞx2=2 dx
+/C19
+¼ 1
+2 Erf rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2V ðq; a; bÞ
+p
+ !
+þ O rðqÞ
+pV ðq; a; bÞ3=4 e/C0 V ðq; a; bÞ1=2=2
+ !
+:
+The error term in the integral in equation (5.14) can be estimated by the ﬁrst identity of
+Lemma 5.15:
+1
+2p
+ÐV ðq; a; bÞ/C0 1=4
+/C0 V ðq; a; bÞ/C0 1=4
+sin rðqÞx
+x
+/C12/C12/C12/C12
+/C12/C12/C12/C12e/C0 V ðq; a; bÞx2=239:81V ðq; a; bÞx4 dx
+e 6:336rðqÞV ðq; a; bÞ
+Ðy
+/C0 y
+x4e/C0 V ðq; a; bÞx2=2 dx e 19:008
+ﬃﬃﬃﬃﬃﬃ
+2p
+p
+/C1 rðqÞV ðq; a; bÞ/C0 3=2:
+Therefore equation (5.14) becomes
+dðq; a; bÞ¼ 1
+2 þ 1
+2 Erf rðqÞﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2V ðq; a; bÞ
+p
+ !
+þ O rðqÞ
+pV ðq; a; bÞ3=4 e/C0 V ðq; a; bÞ1=2=2
+ !
+þ O 47:65rðqÞ
+V ðq; a; bÞ3=2 þ 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 63:67rðqÞe/C0 V ðq; a; bÞ1=2=2
+ !
+:
+Since 1 =pV ðq; a; bÞ3=4 e 1=pð531Þ3=4 < 0:01, this last estimate implies the statement of the
+lemma. r
+We are now ready to bound dðq; a; bÞ for all large prime moduli q.
+Theorem 5.17. Assume GRH and LI. If q f 400 is prime, then dðq; a; bÞ < 0:5262 for
+all reduced residues a and b ðmod qÞ.I fq f 1000 is prime, then dðq; a; bÞ < 0:51.
+204 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Proof. We may assume that a is a nonsquare ðmod qÞ and b is a square ðmod qÞ, for
+otherwise dðq; a; bÞ e 1=2. When q f 331 is prime, Proposition 5.11 and a quick calculation
+yield
+V ðq; a; bÞ f 2ðq /C0 1Þðlog q /C0 2:42Þ/C0 47:238 log2 qð5:15Þ
+f 2qðlog q /C0 2:42Þ/C0 48 log2 q f 531:
+Therefore Lemma 5.16 applies, yielding (since rðqÞ¼ 2 and fðqÞ¼ q /C0 1)
+dðq; a; bÞ¼ 1
+2 þ 1
+2 Erf
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2
+V ðq; a; bÞ
+s !
+þ O 95:3
+V ðq; a; bÞ3=2 þ 0:03506 e/C0 9:08q
+q /C0 1 þ 127:36e/C0 V ðq; a; bÞ1=2=2
+ !
+e 1
+2 þ 1
+2 Erf
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2
+2qðlog q /C0 2:42Þ/C0 48 log2 q
+s !
+þ 95:3
+/C0
+2qðlog q /C0 2:42Þ/C0 48 log2 q
+/C13=2 þ 0:03506 e/C0 9:08q
+q /C0 1
+þ 127:36e/C0
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+qðlog q/C0 2:42Þ=2/C0 12 log2 q
+p
+;
+using the second inequality in equation (5.15). This upper bound is decreasing for q f 331,
+and so calculating it at q ¼ 400 and q ¼ 1000 establishes the inequalities given in the
+theorem. r
+A similar bound for composite moduli q requires one last estimate.
+Lemma 5.18. For all q f 3, we have rðqÞ e 2q1:04=log log q.
+Proof. We ﬁrst record some explicit estimates on the prime counting functions
+pðyÞ¼ P
+pey
+1 and yðyÞ¼ P
+pey
+log p:
+Rosser and Shoenfeld ([13], Corollary 1 and Theorems 9 and 10) give, for y f 101, the
+bounds 0:84y e yðyÞ e 1:01624y and pðyÞ e 1:25506y=log y. Therefore
+pðyÞ e 1:25506y
+log y e 1:25506yðyÞ=0:84
+log yðyÞ/C0 log 1:01624 e 1:5yðyÞ
+log yðyÞð5:16Þ
+(a calculation shows that the last inequality holds for yðyÞ f 61, which is valid in the range
+y f 101).
+205Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Now consider integers of the form
+qðyÞ¼ Q
+pey
+p;
+so that o
+/C0
+qðyÞ
+/C1
+¼ pðyÞ and log qðyÞ¼ yðyÞ. Equation (5.16) becomes
+o
+/C0
+qðyÞ
+/C1
+e 1:5
+/C0
+log qðyÞ
+/C1
+=log log qðyÞ;
+while the derivation was valid for y f 101, one can calculate that the inequality holds for
+3 e y e 101 as well. The following standard argument then shows that
+oðqÞ e 1:5 log q
+log log qð5:17Þ
+holds for all integers q f 3: if q has k distinct prime factors, then choose y to be the kth
+prime. Then the inequality (5.17) has been shown to hold for qðyÞ, and therefore it holds
+for q as well, since the left-hand side is k in both cases while the right-hand side is at least as
+large for q as it is for qðyÞ.
+(This argument uses the fact that the right-hand side is an increasing function, which
+holds only for q f ee; therefore technically we have proved (5.17) only for numbers with at
+least three distinct prime factors, since only then does the corresponding qðyÞ exceed ee.
+However, the right-hand side of (5.17) is always at least 4 in the range q f 3, and so num-
+bers with one or two distinct prime factors easily satisfy the inequality.)
+Finally, the inequality rðqÞ e 2oðqÞþ1 that was noted in Deﬁnition 1.2 allows us to
+conclude that rðqÞ e 21þ1:5ðlog qÞ=log log q < 2q1:04=log log q for all q f 3, as desired. r
+Theorem 5.19. Assume GRH and LI. If q > 480 and q B f840; 1320g, then
+dðq; a; bÞ < 0:75
+for all reduced residues a and b ðmod qÞ.
+Proof. Again we may assume that a is a nonsquare ðmod qÞ and b is a square
+ðmod qÞ. First we restrict to the range q f 260000; by Proposition 5.14 we have
+V ðq; a; bÞ > 531. Using Lemma 5.16, together with the upper bound for rðqÞ from
+Lemma 5.18 and the lower bound for V ðq; a; bÞ from Proposition 5.14, we have
+dðq; a; bÞð5:18Þ
+e 1
+2 þ 1
+2 Erf 2q1:04=log log q
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+fðqÞðlog q /C0 1:02 log logq /C0 7:34Þ
+p
+ !
+þ 33:7q1:04=log log q
+fðqÞ3=2ðlog q /C0 1:02 log logq /C0 7:34Þ3=2 þ 0:03506 e/C0 9:08fðqÞ
+fðqÞ
+þ 127:36q1:04=log log q exp /C0
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+fðqÞ
+2 log q /C0 1:02 log logq /C0 7:34ðÞ
+r !
+:
+206 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Rosser and Schoenfeld ([13], Theorem 15) have given the bound
+fðqÞ > q
+eg0 log log q þ 2:50637=log log qð5:19Þ
+for q f 3. When this lower bound is substituted for fðqÞ in the upper bound (5.18), the
+result is a smooth function of q that is well-deﬁned and decreasing for q f 260000, and its
+value at q ¼ 260000 is less than 0.75.
+We now turn to the range 1000 e q e 260000. We ﬁrst compute explicitly, for each
+such modulus q, the lower bound for V ðq; a; bÞ in equation (5.12); the value of this sharper
+lower bound turns out always to exceed 531 in this range. Consequently, we may use
+Lemma 5.16 together with the lower bound for V ðq; a; bÞ from equation (5.12), obtaining
+dðq; a; bÞ e 1
+2 þ 1
+2 Erf rðqÞ
+2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+fðqÞ
+/C18
+log q /C0 log 2peg0 /C0 P
+p j q
+log p
+p /C0 1 /C0 4 log q
+q /C0 23:62 log2 q
+q
+/C19s
+0
+BB@
+1
+CCA
+þ 17:85rðqÞ
+fðqÞ3=2
+/C18
+log q /C0 log 2peg0 /C0 P
+p j q
+log p
+p /C0 1 /C0 4 log q
+q /C0 23:62 log2 q
+q
+/C193=2 þ 0:03506 e/C0 9:08fðqÞ
+fðqÞ
+þ 63:68rðqÞ exp /C0
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+fðqÞ
+2
+/C18
+log q /C0 log 2peg0 /C0 P
+p j q
+log p
+p /C0 1 /C0 4 log q
+q /C0 23:62 log2 q
+q
+/C19vuut
+0
+@
+1
+A:
+This upper bound can be computed exactly for each q in the range 1000 e q e 260000; the
+only ﬁve moduli for which the upper bound exceeds 0.75 are 1020, 1320, 1560, 1680, and
+1848.
+Finally, we use the methods described in Section 5.4, computing directly every value
+of dðq; a; bÞ for the moduli 480 < q e 1000 and q A f1020; 1320; 1560; 1680; 1848g and ver-
+ifying the inequality dðq; a; bÞ < 0:75 holds except for q ¼ 840 and q ¼ 1320, to complete
+the proof of the theorem. r
+5.4. Explicit computation of the densities. Throughout this section, we assume GRH
+and LI, and we let a denote a nonsquare ðmod qÞ and b a square ðmod qÞ. In this section we
+describe the process by which we computed actual values of the densities dðq; a; bÞ, resulting
+for example in the data given in the tables and ﬁgures of this paper. In fact, we used two
+di¤erent methods for these computations, one that works for ‘‘small q’’ and one that works
+for ‘‘large q’’. For ease of discussion, we deﬁne the sets
+S1 ¼f 3 e q e 1000 : q E 2 ðmod 4Þ and fðqÞ < 80g;
+S2 ¼f 101; 103; 107; 109; 113; 115; 119; 121; 123; 125; 129; 133; 141; 143; 145; 147; 153;
+155; 159; 164; 165; 171; 172; 175; 176; 177; 183; 184; 188; 189; 195; 196; 200; 208;
+212; 220; 224; 225; 231; 232; 236; 255; 260; 264; 276; 280; 288; 300; 308; 312; 324;
+336; 348; 360; 372; 396; 420g;
+207Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+S3 ¼f 3 e q e 1000 : q E 2 ðmod 4Þ and fðqÞ f 80gnS2;
+S4 ¼f 1020; 1320; 1560; 1680; 1848g:
+We omit integers congruent to 2 ðmod 4Þ from these sets, since for odd q the prime number
+race ðmod 2qÞ is identical to the prime number race ðmod qÞ.
+For the moduli q in the set S1 W S2, we numerically evaluated the integral in equation
+(2.10) directly; this method was used by Feuerverger and Martin [5] and is analogous
+to, and indeed based upon, the method used by Rubinstein and Sarnak [14]. We ﬁrst used
+Rubinstein’s computational package lcalc to calculate, for each character w ðmod qÞ, the
+ﬁrst NðqÞ nontrivial zeros of Lðs; wÞ lying above the real axis. The term Fq; a; b in the
+integrand is a product of functions of the form F ðz; wÞ, which is indexed by inﬁnitely
+many zeros of Lðs; wÞ; we approximated F ðz; wÞ by its truncation at NðqÞ zeros, multiplied
+by a compensating quadratic polynomial as in [14], Section 4.3. With this approximation to
+the integral (2.10), we truncated the range of integration to an interval ½/C0 CðqÞ; CðqÞ/C138 and
+then discretized the truncated integral, replacing it by a sum over points spaced by eðqÞ as
+in [14], Section 4.1. The result is an approximation to dðq; a; bÞ that is valid up to at least 8
+decimal places, provided we choose NðqÞ, CðqÞ, and eðqÞ carefully to get small errors. (All
+of these computations were performed using the computational software Mathematica.)
+Explicitly bounding the error in this process is not the goal of the present paper; we refer
+the interested reader to [14] for rigorous error bounds of this kind, corresponding to their
+calculation of dðq; N; RÞ for q A f3; 4; 5; 7; 11; 13g.
+For the moduli q in the set S3 W S4 (and for any other moduli larger than 1000 we
+wished to address), we used an approach based on our asymptotic formulas for dðq; a; bÞ.
+We now outline a variant of the asymptotic formulas described earlier in this paper, one
+that was optimized somewhat for the actual computations rather than streamlined for the-
+oretical purposes.
+We ﬁrst note that a slight modiﬁcation of the proof of Proposition 2.18 yields the es-
+timate, for any 0 e k e 5=24,
+dðq; a; bÞ¼ 1
+2 þ 1
+2p
+Ðk
+/C0 k
+sin rðqÞx
+x Fq; a; bðxÞ dxð5:20Þ
+þ O
+ 
+1
+p
+Ð5=24
+k
+rðqÞjFq; a; bðxÞj dx þ 0:03506 e/C0 9:08fðqÞ
+fðqÞ
+þ 63:67rðqÞ Fq; a; b
+5
+24
+/C18/C19/C12/C12/C12/C12
+/C12/C12/C12/C12
+!
+as long as V ðq; a; bÞ f 531. In addition we have, for jxj < 3=10, the inequalities
+/C0 1
+2 V ðq; a; bÞx2 /C0 Uðq; a; bÞx4 /C0 15:816Uðq; a; bÞx6
+e log Fq; a; bðxÞ e /C0 1
+2 V ðq; a; bÞx2 /C0 Uðq; a; bÞx4;
+208 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+where for convenience we have deﬁned Uðq; a; bÞ¼ W2ðq; a; bÞV ðq; a; bÞ; these inequalities
+can be proved using an argument similar to the calculation in equation (5.13), but employ-
+ing the more precise estimate log J0ðzÞ¼/C0 z2=4 /C0 z4=64 þ Oð0:00386z6Þ for jzj e 2. Using
+the methods of Section 3.4, we also obtain the formula
+Uðq; a; bÞ¼ fðqÞ
+2
+/C0
+3 þ iqða2b/C0 2Þ
+/C1/C18
+log q
+2pe/C0 g0
+/C0 P
+p j q
+log p
+p /C0 1 /C0 zð2Þ
+2
+/C19
+ð5:21Þ
+þ fðqÞ
+2
+/C18
+4 L
+/C0
+q=ðq; a /C0 bÞ
+/C1
+f
+/C0
+q=ðq; a /C0 bÞ
+/C1/C0 L
+/C0
+q=ðq; a2 /C0 b2Þ
+/C1
+f
+/C0
+q=ðq; a2 /C0 b2Þ
+/C1
+/C0
+/C0
+iqð/C0 a2b/C0 2Þ/C0 4iqð/C0 ab/C0 1Þ
+/C1
+log 2 þ zð2Þ
+4
+/C18/C19 /C19
+þ 1
+4
+P
+w ðmod qÞ
+jwðaÞ/C0 wðbÞj4 2 L0ð1; wÞ
+Lð1; wÞ /C0 L00ð1; wÞ
+Lð1; wÞ þ L0ð1; wÞ
+Lð1; wÞ
+/C18/C19 2 !
+:
+If we deﬁne kðq; a; bÞ¼ min p=rðqÞ; V ðq; a; bÞ/C0 1=4
+/C16/C17
+, then we know that
+kðq; a; bÞ e 5=24 because of the lower bound V ðq; a; bÞ f 531, and also that
+/C0
+sin rðqÞx
+/C1
+=x
+is nonnegative for jxj e kðq; a; bÞ. Hence, equation (5.20) and the subsequent discussion
+establishes the following proposition:
+Proposition 5.20. Assume GRH and LI , and let a be a nonsquare ðmod qÞ and b a
+square ðmod qÞ.I fV ðq; a; bÞ f 531, then
+1
+2 þ 1
+2p
+Ðkðq; a; bÞ
+/C0 kðq; a; bÞ
+sin rðqÞx
+x e/C0 V ðq; a; bÞx2=2/C0 Uðq; a; bÞx4/C0 15:816Uðq; a; bÞx6
+dx /C0 Y ðq; a; bÞ
+e dðq; a; bÞ e 1
+2 þ 1
+2p
+Ðkðq; a; bÞ
+/C0 kðq; a; bÞ
+sin rðqÞx
+x e/C0 V ðq; a; bÞx2=2/C0 Uðq; a; bÞx4
+dx þ Y ðq; a; bÞ;
+where
+Y ðq; a; bÞ¼ rðqÞ
+p
+Ð5=24
+kðq; a; bÞ
+e/C0 V ðq; a; bÞx2=2/C0 Uðq; a; bÞx4
+dx
+þ 0:03506 e/C0 9:08fðqÞ
+fðqÞ þ 63:67rðqÞe/C0 25V ðq; a; bÞ=1152/C0ð 5=24Þ4Uðq; a; bÞ
+and formulas for V ðq; a; bÞ and U ðq; a; bÞ are given in Theorem 1.4 and equation (5.21),
+respectively.
+The inequalities in Proposition 5.20 give accurate evaluations of dðq; a; bÞ when fðqÞ
+is large; we chose the inequality fðqÞ f 80 to be our working deﬁnition of ‘‘large’’. For
+each of the moduli q in the set S3 W S4, we computed every possible value of V ðq; a; bÞ
+and veriﬁed that they all exceed 531, so that Proposition 5.20 can be used. (The reason
+that the moduli in S2 were calculated using the ﬁrst method, rather than this one, is because
+at least one variance V ðq; a; bÞ was less than 531 for each of the moduli in S2.) We then
+calculated the upper and lower bounds of Proposition 5.20, using numerical integration
+in pari/gp, to obtain all values of dðq; a; bÞ. The calculation of V ðq; a; bÞ and Uðq; a; bÞ
+209Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+involve the analytic terms Lð1; wÞ, L0ð1; wÞ, and L00ð1; wÞ; we used the pari/gp package
+computeL (see [4]) to obtain these values accurate to 16 decimal places.
+Table 7 gives a sample of the data we calculated with this second method, including
+the error bounds obtained. The error bounds are stronger for when q and fðqÞ are large,
+explaining why the error bounds for the large prime q ¼ 997 are so much better than for
+the smaller composite number q ¼ 244.
+We also take this opportunity to reinforce the patterns described in Section 4.1. For
+q ¼ 244, the residue class a ¼ 123 has the property that q=ðq; a /C0 1Þ¼ 2; thus the contribu-
+tion of K244ð122Þ to Dð244; 123; 1Þ reduces the density dð244; 123; 1Þ. We see also the famil-
+iar small densities corresponding to a ¼ 243 1 /C0 1 ðmod 244Þ and to small prime values
+of a. For q ¼ 997, the small prime values of a (among those that are nonsquares modulo
+997) appear in perfect order. We point out that the residue class a ¼ 8 is almost in its
+correct limiting position, since the contribution to Dð997; a; 1Þ is inversely correlated to
+LðaÞ
+a , and Lð41Þ
+41 > Lð43Þ
+43 > Lð8Þ
+8 > Lð47Þ
+47 .
+We mention that we undertook the exercise of calculating values dðq; a; bÞ by both
+methods, for several intermediate values of q, as a way to verify our computations. For ex-
+ample, the calculations of dð163; a; bÞ (see Table 3) were done using the integral formula
+(2.10) as described above. We calculated these same densities using Proposition 5.20; the
+error bounds obtained were all at most 4 :6 /C2 10
+/C0 6, and the results of the ﬁrst calculation
+all lay comfortably within the intervals deﬁned by the second calculation.
+qa a /C0 1 dðq; a; 1Þ error bound qa a /C0 1 dðq; a; 1Þ error bound
+244 243 243 0.558910 0.000022 997 2 499 0.508116457 0.000000014
+244 123 123 0.559000 0.000018 997 5 399 0.508142372 0.000000015
+244 3 163 0.562304 0.000020 997 7 285 0.508184978 0.000000015
+244 7 35 0.563216 0.000022 997 11 272 0.508238549 0.000000016
+244 31 63 0.563543 0.000022 997 17 176 0.508279881 0.000000016
+244 153 185 0.563804 0.000021 997 29 722 0.508329803 0.000000016
+244 11 111 0.564069 0.000024 997 37 512 0.508345726 0.000000016
+244 29 101 0.564124 0.000024 997 41 535 0.508351018 0.000000016
+244 17 201 0.564321 0.000023 997 8 374 0.508353451 0.000000016
+244 33 37 0.564436 0.000024 997 43 371 0.508355411 0.000000016
+244 19 167 0.564741 0.000024 997 47 297 0.508358709 0.000000016
+244 23 191 0.564786 0.000023 997 61 474 0.508368790 0.000000016
+244 107 187 0.565310 0.000024 997 163 367 0.508392448 0.000000016
+244 69 145 0.565319 0.000022 997 103 242 0.508392587 0.000000016
+244 53 221 0.565376 0.000022 997 113 150 0.508395577 0.000000016
+244 85 89 0.565606 0.000022 997 181 661 0.508397690 0.000000016
+244 129 157 0.565683 0.000021 997 127 840 0.508402416 0.000000016
+244 173 189 0.565707 0.000023 997 157 870 0.508404812 0.000000016
+244 177 193 0.565859 0.000023 997 283 613 0.508406794 0.000000016
+244 103 199 0.565861 0.000024 997 179 518 0.508406994 0.000000016
+Table 7. The 20 smallest values of dð244; a; 1Þ and of dð997; a; 1Þ, calculated using Proposition 5.20.
+210 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+qa a /C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ
+24 5 5 0.999988 8 7 7 0.998939 60 19 19 0.986459
+24 11 11 0.999983 24 13 13 0.998722 120 89 89 0.986364
+12 11 11 0.999977 12 7 7 0.998606 120 79 79 0.986309
+24 23 23 0.999889 8 5 5 0.997395 120 101 101 0.984792
+24 7 7 0.999834 4 3 3 0.995928 15 2 8 0.983853
+24 19 19 0.999719 120 71 71 0.988747 120 13 37 0.980673
+8 3 3 0.999569 120 59 59 0.988477 40 19 19 0.980455
+12 5 5 0.999206 60 11 11 0.987917 60 7 43 0.979323
+24 17 17 0.999125 60 29 29 0.986855 120 23 47 0.979142
+3 2 2 0.999063 120 109 109 0.986835 15 14 14 0.979043
+qa a
+/C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ
+120 17 113 0.978762 120 91 91 0.975051 15 7 13 0.964719
+120 7 103 0.978247 120 83 107 0.975001 120 31 31 0.963190
+48 23 23 0.978096 120 29 29 0.974634 60 13 37 0.963058
+120 43 67 0.978013 120 19 19 0.974408 60 59 59 0.962016
+60 17 53 0.977433 120 11 11 0.971988 40 31 31 0.960718
+48 41 41 0.977183 48 31 31 0.970470 48 5 29 0.960195
+40 29 29 0.977161 40 7 23 0.969427 40 3 27 0.960099
+20 3 7 0.976713 40 13 37 0.969114 16 7 7 0.959790
+120 53 77 0.976527 120 73 97 0.967355 48 11 35 0.959245
+60 23 47 0.975216 20 19 19 0.966662 120 119 119 0.957182
+qa a
+/C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ
+15 11 11 0.955226 40 11 11 0.945757 20 11 11 0.931367
+120 41 41 0.955189 40 39 39 0.942554 168 139 139 0.931362
+48 19 43 0.952194 60 31 31 0.941802 168 55 55 0.931346
+5 2 3 0.952175 48 7 7 0.939000 48 47 47 0.929478
+20 13 17 0.948637 16 5 13 0.938369 168 67 163 0.928944
+120 61 61 0.948586 168 125 125 0.936773 84 71 71 0.928657
+60 41 41 0.947870 168 155 155 0.935843 168 41 41 0.927933
+16 3 11 0.947721 168 47 143 0.932099 84 55 55 0.927755
+48 13 37 0.946479 168 61 157 0.931981 168 71 71 0.927349
+40 17 33 0.946002 84 41 41 0.931702 16 15 15 0.926101
+qa a
+/C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ qa a /C0 1 dðq; a; 1Þ
+168 65 137 0.923960 168 59 131 0.917874 56 31 47 0.906135
+168 53 149 0.923937 168 23 95 0.917718 84 67 79 0.905578
+168 83 83 0.923868 168 31 103 0.917278 168 13 13 0.904525
+21 5 17 0.923779 168 29 29 0.915514 168 97 97 0.904162
+168 79 151 0.922597 72 53 53 0.913533 72 35 35 0.903755
+40 21 21 0.922567 21 2 11 0.911872 84 47 59 0.902413
+168 37 109 0.922359 168 19 115 0.911412 56 37 53 0.900863
+168 17 89 0.920542 168 11 107 0.909850 84 53 65 0.899063
+48 17 17 0.918910 168 73 145 0.908239 28 11 23 0.898807
+56 27 27 0.918015 168 5 101 0.908206 168 127 127 0.898647
+Table 8. The top 120 most unfair prime number races.
+211Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Finally, the upper bounds for dðq; a; bÞ in Theorems 5.17 and 5.19, together with the
+explicit calculation of the densities dðq; a; bÞ for q A S1 W S2 W S3 W S4, allow us to deter-
+mine the most biased possible two-way races, that is, the largest values of dðq; a; bÞ among
+all possible choices of q, a, and b. In particular, we veriﬁed Theorem 1.11 in this way, and
+we list the 120 largest densities in Table 8; there are precisely 117 distinct densities above
+9=10. (It is helpful to recall here that dðq; a; 1Þ¼ dðq; a/C0 1; 1Þ and that dðq; a; 1Þ¼ dðq; ab; bÞ
+for any nonsquare a and square b modulo q.)
+References
+[1] M. Abramowitz and I. A. Stegun , Handbook of mathematical functions with formulas, graphs, and mathe-
+matical tables, Dover, New York 1965.
+[2] C. Bays , K. Ford , R. H. Hudson and M. Rubinstein , Zeros of Dirichlet L-functions near the real axis and
+Chebyshev’s bias, J. Number Th. 87 (2001), no. 1, 54–76.
+[3] C. Bays and R. H. Hudson , The cyclic behavior of primes in the arithmetic progressions modulo 11, J. reine
+angew. Math. 339 (1983), 215–220.
+[4] T. Dokchitser , Computing special values of motivic L-functions, Experiment. Math. 13 (2004), no. 2,
+137–149.
+[5] A. Feuerverger and G. Martin, Biases in the Shanks–Re ´nyi prime number race, Experiment. Math. 9 (2000),
+no. 4, 535–570.
+[6] R. L. Graham , D. E. Knuth and O. Patashnik , Concrete mathematics. A foundation for computer science,
+Second edition, Addison-Wesley Publishing Company, Reading, MA, 1994.
+[7] C. Hooley , On the Barban–Davenport–Halberstam theorem. VII, J. Lond. Math. Soc. (2) 16 (1977), no. 1,
+1–8.
+[8] J. E. Littlewood , On the class-number of the corpus Pð
+ﬃﬃﬃﬃﬃﬃﬃ
+/C0 k
+p
+Þ, Proc. Lond. Math. Soc. (2) 27 (1928), 358–372.
+[9] Y. L. Luke , Mathematical functions and their approximations, Academic Press, New York–London 1975.
+[10] K. S. McCurley , Explicit estimates for the error term in the prime number theorem for arithmetic progres-
+sions, Math. Comp. 42 (1984), no. 165, 265–285.
+[11] H. L. Montgomery and R. C. Vaughan , Multiplicative number theory. I. Classical theory, Cambridge Stud.
+Adv. Math. 97, Cambridge University Press, Cambridge 2007.
+[12] M. M. Rao , Probability theory with applications, Probability and Mathematical Statistics, Academic Press,
+New York 1984.
+[13] J. B. Rosser and L. Schoenfeld, Approximate formulas for some functions of prime numbers, Illinois J. Math.
+6 (1962), 64–94.
+[14] M. Rubinstein and P. Sarnak , Chebyshev’s bias, Experiment. Math. 3 (1994), no. 3, 173–197.
+[15] D. Shanks , Quadratic residues and the distribution of primes, Math. Tables Aids Comput. 13 (1959),
+272–284.
+[16] J. L. Spouge , Computation of the gamma, digamma, and trigamma functions, SIAM J. Numer. Anal. 31
+(1994), no. 3, 931–944.
+[17] G. N. Watson , A treatise on the theory of Bessel functions, Second edition, Cambridge Mathematical
+Library, Cambridge University Press, Cambridge 1995.
+De´partement de mathe´matiques et de statistique, Universite´ de Montre´al, CP 6128, succ. Centre-ville,
+Montre´al, QC, Canada H3C 3J7
+e-mail: ﬁorilli@dms.umontreal.ca
+Department of Mathematics, University of British Columbia, Room 121, 1984 Mathematics Road,
+Vancouver, BC, Canada V6T 1Z2
+e-mail: gerg@math.ubc.ca
+Eingegangen 12. Dezember 2010, in revidierter Fassung 5. Februar 2011
+212 Fiorilli and Martin , Inequities in the Shanks–Re ´nyi prime number race
+Copyright of Journal für die Reine und Angewandte Mathematik is the property of De Gruyter and its content
+may not be copied or emailed to multiple sites or posted to a listserv without the copyright holder's express
+written permission. However, users may print, download, or email articles for individual use.

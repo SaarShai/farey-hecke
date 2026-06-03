@@ -1,0 +1,6819 @@
+INEQUITIES IN THE SHANKS–R ´ENYI PRIME NUMBER RACE: AN ASYMPTOTIC
+FORMULA FOR THE DENSITIES
+DANIEL FIORILLI AND GREG MARTIN
+ABSTRACT . Chebyshev was the ﬁrst to observe a bias in the distribution of primes in residue
+classes. The general phenomenon is that if a is a nonsquare (mod q) and b is a square (mod q),
+then there tend to be more primes congruent to a (modq) than b (modq) in initial intervals of the
+positive integers; more succinctly, there is a tendency forπ(x;q,a ) to exceedπ(x;q,b ). Rubinstein
+and Sarnak deﬁnedδ(q;a,b ) to be the logarithmic density of the set of positive real numbers x for
+which this inequality holds; intuitively, δ(q;a,b ) is the “probability” that π(x;q,a ) > π(x;q,b )
+whenx is “chosen randomly”. In this paper, we establish an asymptotic series for δ(q;a,b ) that can
+be instantiated with an error term smaller than any negative power ofq. This asymptotic formula is
+written in terms of a varianceV (q;a,b ) that is originally deﬁned as an inﬁnite sum over all nontriv-
+ial zeros of DirichletL-functions corresponding to characters (modq); we show howV (q;a,b ) can
+be evaluated exactly as a ﬁnite expression. In addition to providing the exact rate at whichδ(q;a,b )
+converges to 1
+2 asq grows, these evaluations allow us to compare the various density valuesδ(q;a,b )
+asa andb vary moduloq; by analyzing the resulting formulas, we can explain and predict which of
+these densities will be larger or smaller, based on arithmetic properties of the residue classes a and
+b (modq). For example, we show that ifa is a prime power anda′ is not, thenδ(q;a, 1)<δ (q;a′, 1)
+for all but ﬁnitely many moduliq for which botha anda′ are nonsquares. Finally, we establish rig-
+orous numerical bounds for these densities δ(q;a,b ) and report on extensive calculations of them,
+including for example the determination of all 117 density values that exceed 9
+10.
+CONTENTS
+1. Introduction 2
+Acknowledgments 7
+2. The asymptotic series for the density δ(q; a, b) 8
+2.1. Distributions and random variables 8
+2.2. Calculating the characteristic function 12
+2.3. Bounds for the characteristic function 16
+2.4. Derivation of the asymptotic series 20
+3. Analysis of the variance V (q; a, b) 24
+3.1. Arithmetic sums over characters 24
+3.2. A formula for the variance 27
+3.3. Evaluation of the analytic term M∗(q; a, b) 29
+3.4. Estimates in terms of arithmetic information only 33
+3.5. A central limit theorem 41
+3.6. Racing quadratic nonresidues against quadratic residues 42
+4. Fine-scale differences among races to the same modulus 44
+4.1. The impact of the residue classes a and b 44
+2000 Mathematics Subject Classiﬁcation. 11N13 (11Y35).
+1
+arXiv:0912.4908v3  [math.NT]  21 Jul 2011
+----PAGE 1----
+4.2. The predictability of the relative sizes of densities 47
+4.3. The Bays–Hudson “mirror image phenomenon” 54
+5. Explicit bounds and computations 56
+5.1. Bounds for classical functions 56
+5.2. Bounds for the variance V (q; a, b) 61
+5.3. Bounds for the density δ(q; a, b) 66
+5.4. Explicit computation of the densities 71
+References 74
+1. I NTRODUCTION
+We have known for over a century now that the prime numbers are asymptotically evenly dis-
+tributed among the reduced residue classes modulo any ﬁxed positive integer q. In other words,
+if π(x; q, a) denotes the number of primes not exceeding x that are congruent to a (mod q), then
+limx→∞ π(x; q, a)/π(x; q, b) = 1 for any integers a and b that are relatively prime to q. However,
+this information by itself is not enough to tell us about the distribution of values of the difference
+π(x; q, a)− π(x; q, b), in particular whether this difference must necessarily take both positive and
+negative values. Several authors—notably Chebyshev in 1853 and Shanks [15] in 1959—observed
+that π(x; 4, 3) has an extremely strong tendency to be greater than π(x; 4, 1), and similar biases
+exist for other moduli as well. The general phenomenon is thatπ(x; q, a) tends to exceed π(x; q, b)
+when a is a nonsquare modulo q and b is a square modulo q.
+In 1994, Rubinstein and Sarnak [14] developed a framework for studying these questions that
+has proven to be quite fruitful. Deﬁne δ(q; a, b) to be the logarithmic density of the set of real
+numbers x≥ 1 satisfying π(x; q, a) > π(x; q, b). (Recall that the logarithmic density of a set S of
+positive real numbers is
+lim
+X→∞
+( 1
+log X
+∫
+1≤x≤X
+x∈S
+dx
+x
+)
+,
+or equivalently the natural density of the set{log x: x∈ S}.) Rubinstein and Sarnak investigated
+these densities under the following two hypotheses:
+• The Generalized Riemann Hypothesis (GRH): all nontrivial zeros of Dirichlet L-functions
+have real part equal to 1
+2
+• A linear independence hypothesis (LI): the nonnegative imaginary parts of these nontrivial
+zeros are linearly independent over the rationals
+Under these hypotheses, they proved that the limit deﬁning δ(q; a, b) always exists and is strictly
+between 0 and 1. Among other things, they also proved that δ(q; a, b) tends to 1
+2 as q tends to
+inﬁnity, uniformly for all pairsa, b of distinct reduced residues (mod q).
+In the present paper, we examine these densities δ(q; a, b) more closely. We are particularly
+interested in a quantitative statement of the rate at which δ(q; a, b) approaches 1
+2. In addition,
+computations show that for a ﬁxed modulus q, the densities δ(q; a, b) vary as a and b range over
+nonsquares and squares modulo q, respectively. We are also interested in determining which pairs
+a, b (mod q) give rise to larger or smaller values of δ(q; a, b), and especially in giving criteria that
+depend as directly as possible on a and b rather than on analytic data such as the zeros of Dirichlet
+L-functions.
+2
+----PAGE 2----
+Our ﬁrst theorem, which is proved in Section 2.4, exhibits an asymptotic series forδ(q; a, b):
+Theorem 1.1. Assume GRH and LI. Let q be a positive integer, and letρ(q) be the function deﬁned
+in Deﬁnition 1.2. Leta and b be reduced residues (mod q) such that a is a nonsquare (mod q) and
+b is a square (mod q), and let V (q; a, b) be the variance deﬁned in Deﬁnition 1.3. Then for any
+nonnegative integer K,
+δ(q; a, b) = 1
+2 + ρ(q)√
+2πV (q; a, b)
+K∑
+ℓ=0
+1
+V (q; a, b)ℓ
+ℓ∑
+j=0
+ρ(q)2jsq;a,b(ℓ, j) + OK
+( ρ(q)2K+3
+V (q; a, b)K+3/2
+)
+,
+(1.1)
+where the real numbers sq;a,b(ℓ, j), which are bounded in absolute value by a function of ℓ uni-
+formly in q, a, b, and j, are deﬁned in Deﬁnition 2.23. In particular,sq;a,b(0, 0) = 1, so that
+δ(q; a, b) = 1
+2 + ρ(q)√
+2πV (q; a, b)
++ O
+( ρ(q)3
+V (q; a, b)3/2
+)
+. (1.2)
+We will see in Proposition 3.6 that V (q; a, b) ∼ 2φ(q) logq, and so the error term in equa-
+tion (1.1) is≪K,ε 1/qK+3/2−ε.
+The assumption that a is a nonsquare (mod q) and b is a square (mod q) is natural in this context,
+reﬂecting the bias observed by Chebyshev. Rubinstein and Sarnak showed (assuming GRH and
+LI) that δ(q; b, a) + δ(q; a, b) = 1; therefore if a is a square (mod q) and b is a nonsquare (mod q),
+the right-hand sides of the asymptotic formulas (1.1) and (1.2) become 1
+2−··· instead of 1
+2 +··· .
+Rubinstein and Sarnak also showed that δ(q; b, a) = δ(q; a, b) = 1
+2 if a and b are both squares or
+both nonsquares (mod q).
+The deﬁnitions ofρ(q) and of V (q; a, b) are as follows:
+Deﬁnition1.2. As usual, ω(q) denotes the number of distinct prime factors of q. Deﬁne ρ(q) to be
+the number of real characters (mod q), or equivalently the index of the subgroup of squares in the
+full multiplicative group (mod q), or equivalently still the number of solutions of x2≡ 1 (mod q).
+An exercise in elementary number theory shows that
+ρ(q) =
+
+
+
+2ω(q), if 2 ∤ q,
+2ω(q)−1, if 2|q but 4 ∤ q,
+2ω(q), if 4|q but 8 ∤ q,
+2ω(q)+1, if 8|q,
+which implies that ρ(q)≪ε qε for every ε > 0. ♦
+Deﬁnition1.3. For any Dirichlet character χ (mod q), deﬁne
+b(χ) =
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+1
+1
+4 + γ2 .
+We adopt the convention throughout this paper that the zeros are listed with multiplicity in all such
+sums (though note that the hypothesis LI, when in force, implies that all such zeros are simple).
+For any reduced residues a and b (mod q), deﬁne
+V (q; a, b) =
+∑
+χ (modq)
+|χ(b)− χ(a)|2b(χ).
+3
+----PAGE 3----
+We will see in Proposition 2.7 that V (q; a, b) is the variance of a particular distribution associated
+with the difference π(x; q, a)− π(x; q, b). ♦
+As the asymptotic series in Theorem 1.1 depends crucially on the variance V (q; a, b), we next
+give a formula for it (established in Section 3.2) that involves only a ﬁnite number of easily com-
+puted quantities:
+Theorem 1.4. Assume GRH. For any pair a, b of distinct reduced residues modulo q,
+V (q; a, b) = 2φ(q)
+(
+L(q) + Kq(a− b) + ιq(−ab−1) log 2
+)
++ 2M∗(q; a, b),
+where the functions L, Kq, and ιq are deﬁned in Deﬁnition 1.5 and the quantity M∗(q; a, b) is
+deﬁned in Deﬁnition 1.6.
+The deﬁnitions of these three arithmetic functions and of the analytic quantityM∗ are as follows:
+Deﬁnition1.5. As usual, φ(q) denotes Euler’s totient function, andΛ(q) denotes the von Mangoldt
+function, which takes the valuelog p if q is a power of the primep and 0 otherwise. For any positive
+integer q, deﬁne
+L(q) = log q−
+∑
+p|q
+log p
+p− 1 + Λ(q)
+φ(q)− (γ0 + log 2π),
+where γ0 = lim x→∞
+(∑
+n≤x
+1
+n− log x
+)
+is Euler’s constant; it can be easily shown that L(q)
+is positive when q ≥ 43. Note that L(q) = log( q/2πeγ0) when q is prime and that L(q) =
+log q + O(log logq) for any integer q≥ 3. Also let
+ιq(n) =
+{
+1, if n≡ 1 (mod q),
+0, if n̸≡ 1 (mod q)
+denote the characteristic function of the integers that are congruent to 1 (mod q). Finally, deﬁne
+Kq(n) = Λ(q/(q, n))
+φ(q/(q, n))− Λ(q)
+φ(q) .
+Note that these last two functions depend only on the residue class of n modulo q. For this reason,
+in expressions such as ιq(n−1) or Kq(n−1), the argument n−1 is to be interpreted as an integer that
+is the multiplicative inverse of n (mod q). In addition, note that Kq(n)≥ 0, since the only way
+that the second term can contribute is if q is a prime power, in which case the ﬁrst term contributes
+at least as much. On the other hand Kq is bounded above, since if q/(q, n) is a power of the prime
+p then Kq(n)≤ (log p)/(p− 1)≤ log 2. Note also that Kq(n) = 0 when (n, q) = 1. ♦
+Deﬁnition1.6. As usual, L(s, χ) =∑∞
+n=1 χ(n)n−s denotes the L-function associated to the Dirich-
+let character χ. Given such a character χ (mod q), let q∗ denote its conductor (that is, the smallest
+integer d such that χ is induced by a character modulo d), and let χ∗ be the unique character
+modulo q∗ that induces χ. Now deﬁne
+M∗(q; a, b) =
+∑
+χ (modq)
+χ̸=χ0
+|χ(a)− χ(b)|2 L′(1, χ∗)
+L(1, χ∗)
+and
+M(q; a, b) =
+∑
+χ (modq)
+χ̸=χ0
+|χ(a)− χ(b)|2 L′(1, χ)
+L(1, χ) .
+4
+----PAGE 4----
+♦
+The formula for V (q; a, b) in Theorem 1.4 is exact and hence well suited for computations.
+For theoretical purposes, however, we need a better understanding of M∗(q; a, b), which our next
+theorem (proved in Section 3.3) provides:
+Theorem 1.7. Assume GRH. For any pair a, b of distinct reduced residues modulo q, let r1 and
+r2 denote the least positive residues of ab−1 and ba−1 (mod q), and let the quantity H(q; a, b) be
+deﬁned in Deﬁnition 1.8. Then
+M∗(q; a, b) = φ(q)
+(Λ(r1)
+r1
++ Λ(r2)
+r2
++ H(q; a, b) + O
+(log2 q
+q
+))
+,
+where the implied constant is absolute.
+(The unexpected appearance of the speciﬁc integers r1 and r2, in a formula for a quantity de-
+pending upon entire residue classes (mod q), is due to the approximation of inﬁnite series by their
+ﬁrst terms—see Proposition 3.12.) The quantityH(q; a, b) is usually quite small, unless there is an
+extreme coincidence in the locations of a and b relative to the prime divisors of q, which would be
+reﬂected in a small value of the quantity e(q; p, r) deﬁned as follows:
+Deﬁnition1.8. Given an integer q and a prime p, let ν≥ 0 be the integer such that pν∥ q (that
+is, pν|q but pν+1 ∤ q). For any reduced residue r (mod q), deﬁne e(q; p, r) = min{e≥ 1: pe≡
+r−1 (mod q/pν)}, and deﬁne
+h(q; p, r) = 1
+φ(pν)
+log p
+pe(q;p,r) .
+When r is not in the multiplicative subgroup generated by p (mod q/pν), we make the convention
+that e(q; p, r) =∞ and h(q; p, r) = 0. Finally, for any integers a and b, deﬁne
+H(q; a, b) =
+∑
+p|q
+(
+h(q; p, ab−1) + h(q; p, ba−1)
+)
+.
+Note that if q = pν is a prime power, thenh(q; p, r) = (log p)/pν(p−1) is independent of r, which
+implies that H(q; a, b)≪ (log q)/q when q is a prime power. ♦
+The extremely small relative error in Theorem 1.1 implies that the formula given therein is useful
+even for moderate values of q. The following corollary of the above theorems, the proof of which
+is given in Section 4.1, is useful only for large q due to a worse error term. It has the advantage,
+however, of isolating the ﬁne-scale dependence ofδ(q; a, b) on the residue classes a and b from its
+primary dependence on the modulus q:
+Corollary 1.9. Assume GRH and LI. Let q≥ 43 be an integer. Let a and b be reduced residues
+(mod q) such that a is a nonsquare (mod q) and b is a square (mod q), and let r1 and r2 denote the
+least positive residues of ab−1 and ba−1 (mod q). Then
+δ(q; a, b) = 1
+2 + ρ(q)
+2
+√
+πφ(q)L(q)
+(
+1− ∆(q; a, b)
+2L(q) + O
+( 1
+log2 q
+))
+, (1.3)
+where
+∆(q; a, b) = Kq(a− b) + ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
++ H(q; a, b) (1.4)
+(here, the functionsL, Kq, and ιq are deﬁned in Deﬁnition 1.5, andH is deﬁned in Deﬁnition 1.8).
+Moreover,∆(q; a, b) is nonnegative and bounded above by an absolute constant.
+5
+----PAGE 5----
+Armed with this knowledge of the delicate dependence of δ(q; a, b) on the residue classes a and
+b, we are actually able to “race races”, that is, investigate inequalities between various values of
+δ(q; a, b) as q increases. We remark that Feuerverger and Martin [5, Theorem 2(b)] showed that
+δ(q; a, b) = δ(q; ab−1, 1) for any square b (mod q), and so it often sufﬁces to consider only the
+densities δ(q; a, 1). Some surprising inequalities come to light when we ﬁx the residue classa and
+allow the modulus q to vary (among moduli relatively prime to a for which a is a nonsquare). Our
+next theorem, which is a special case of Corollary 4.3 derived in Section 4.2, demonstrates some
+of these inequalities:
+Theorem 1.10. Assume GRH and LI.
+• For any integera̸=−1, we have δ(q;−1, 1) < δ(q; a, 1) for all but ﬁnitely many integersq
+with (q, a) = 1 such that both−1 and a are nonsquares (mod q).
+• If a is a prime power and a′̸=−1 is an integer that is not a prime power, then δ(q; a, 1) <
+δ(q; a′, 1) for all but ﬁnitely many integers q with (q, aa′) = 1 such that both a and a′ are
+nonsquares (mod q).
+• If a and a′ are prime powers withΛ(a)/a > Λ(a′)/a′, then δ(q; a, 1) < δ(q; a′, 1) for all but
+ﬁnitely many integersq with (q, aa′) = 1 such that both a and a′ are nonsquares (mod q).
+Finally, these results have computational utility as well. A formula [5, equation (2-57)] for
+calculating the value of δ(q; a, b) is known. However, this formula requires knowledge of a large
+number of zeros of all Dirichlet L-functions associated to characters (mod q) even to estimate via
+numerical integration; therefore it becomes unwieldy to use the formula when q becomes large.
+On the other hand, the asymptotic series in Theorem 1.1 can be made completely effective, and the
+calculation of V (q; a, b) is painless thanks to Theorem 1.4. Therefore the densities δ(q; a, b) can
+be individually calculated, and collectively bounded, for large q.
+For example, the values of δ(q; a, b) for all moduli up to 1000 are plotted in Figure 1. The
+modulus q is given on the horizontal axis; the vertical line segment plotted for each q extends
+between the maximal and minimal values of δ(q; a, b), as a runs over all nonsquares (mod q) and
+b runs over all squares (mod q). (Of course both a and b should be relatively prime to q. We
+also omit moduli of the form q≡ 2 (mod 4), since the distribution of primes into residue classes
+modulo such q is the same as their distribution into residue classes modulo q/2.)
+The values shown in Figure 1 organize themselves into several bands; each band corresponds
+to a constant value of ρ(q), the effect of which on the density δ(q; a, b) can be clearly seen in
+the second term on the right-hand side of equation (1.3). For example, the lowest (and darkest)
+band corresponds to moduli q for which ρ(q) = 2, meaning odd primes and their powers (as well
+FIGURE 1. All densities δ(q; a, b) with q≤ 1000
+0 200 400 600 800 1000
+0.6
+0.7
+0.8
+0.9
+1.0
+6
+----PAGE 6----
+as q = 4 ); the second-lowest band corresponds to those moduli for which ρ(q) = 4 , consisting
+essentially of numbers with two distinct prime factors; and so on, with the ﬁrst modulus q = 840
+for which ρ(q) = 32 (the segment closest to the upper right-hand corner of the graph) hinting at
+the beginning of a ﬁfth such band. Each band decays roughly at a rate of 1/√q log q, as is also
+evident from the aforementioned term of equation (1.3).
+To give one further example of these computations, which we describe in Section 5.4, we are
+able to ﬁnd the largest values of δ(q; a, b) that ever occur. (All decimals listed in this paper are
+rounded off in the last decimal place.)
+Theorem 1.11. Assume GRH and LI. The ten largest values of δ(q; a, b) are given in Table 1.
+TABLE 1. The top 10 most unfair prime number races
+q a b δ(q; a, b)
+24 5 1 0.999988
+24 11 1 0.999983
+12 11 1 0.999977
+24 23 1 0.999889
+24 7 1 0.999834
+24 19 1 0.999719
+8 3 1 0.999569
+12 5 1 0.999206
+24 17 1 0.999125
+3 2 1 0.999063
+Our approach expands upon the seminal work of Rubinstein and Sarnak [14], who introduced a
+random variable whose distribution encapsulates the information needed to understandπ(x; q, a)−
+π(x; q, b). We discuss these random variables, formulas and estimates for their characteristic func-
+tions (that is, Fourier transforms), and the subsequent derivation of the asymptotic series from
+Theorem 1.1 in Section 2. In Section 3 we demonstrate how to transform the variance V (q; a, b)
+from an inﬁnite sum into a ﬁnite expression; we can even calculate it extremely precisely using
+only arithmetic (rather than analytic) information. We also show how the same techniques can
+be used to establish a central limit theorem for the aforementioned distributions, and we outline
+how modiﬁcations of our arguments can address the two-way race between all nonresidues and
+all residues (mod q). We investigate the ﬁne-scale effect of the particular residue classes a and b
+upon the density δ(q; a, b) in Section 4; we also show how a similar analysis can explain a “mirror
+image” phenomenon noticed by Bays and Hudson [2]. Finally, Section 5 is devoted to explicit
+estimates and a description of our computations of the densities and the resulting conclusions,
+including Theorem 1.11.
+Acknowledgments. The authors thank Brian Conrey and K. Soundararajan for suggesting proofs
+of Lemma 2.8(c) and Proposition 3.10, respectively, that were superior to our original proofs. We
+also thank Andrew Granville for indicating how to improve the error term in Proposition 3.11, as
+well as Colin Myerscough for correcting a numerical error in Proposition 2.14 that affected our
+computations in Sections 5.3–5.4. Robert Rumely and Michael Rubinstein provided lists of zeros
+of Dirichlet L-functions and the appropriate software to compute these zeros, which are needed
+for the calculations of the densities in Section 5, and we thank them as well. Finally, we express
+7
+----PAGE 7----
+our gratitude to our advisors past and present, Andrew Granville, Hugh Montgomery, and Trevor
+Wooley, both for their advice about this paper and for their guidance in general. Le premier auteur
+est titulaire d’une bourse doctorale du Conseil de recherches en sciences naturelles et en g ´enie
+du Canada. The second author was supported in part by grants from the Natural Sciences and
+Engineering Research Council of Canada.
+2. T HE ASYMPTOTIC SERIES FOR THE DENSITY δ(q; a, b)
+The ultimate goal of this section is to prove Theorem 1.1. We begin in Section 2.1 by describing a
+random variable whose distribution is the same as the limiting logarithmic distribution of a suitably
+normalized version of π(x; q, a)− π(x; q, b), as well as calculating its variance. This approach is
+the direct descendant of that of Rubinstein and Sarnak [14]; one of our main innovations is the
+exact evaluation of the variance V (q; a, b) in a form that does not involve the zeros of Dirichlet L-
+functions. In Section 2.2 we derive the formula for the characteristic function (Fourier transform)
+of that random variable; this formula is already known, but our derivation is slightly different and
+allows us to write the characteristic function in a convenient form (see Proposition 2.12). We then
+use our knowledge of the characteristic function to write the density δ(q; a, b) as the truncation of
+an inﬁnite integral in Section 2.3, where the error terms are explicitly bounded using knowledge of
+the counting function N(T, χ) of zeros of Dirichlet L-functions. Finally, we derive the asymptotic
+series from Theorem 1.1 from this truncated integral formula in Section 2.4.
+2.1. Distributions and random variables. We begin by describing random variables related to
+the counting functions of primes in arithmetic progressions. As is typical when considering primes
+in arithmetic progressions, we ﬁrst consider expressions built out of Dirichlet characters.
+Deﬁnition2.1. For any Dirichlet character χ such that GRH holds for L(s, χ), deﬁne
+E(x, χ) =
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ .
+This sum does not converge absolutely, but (thanks to GRH and the functional equation for Dirich-
+let L-functions) it does converge conditionally when interpreted as the limit of∑
+|γ|<T as T tends to
+inﬁnity. All untruncated sums over zeros of DirichletL-functions in this paper should be similarly
+interpreted. ♦
+Deﬁnition2.2. For any real numberγ, let Zγ denote a random variable that is uniformly distributed
+on the unit circle, and let Xγ denote the random variable that is the real part of Zγ. We stipulate
+that the collection {Zγ}γ≥0 is independent and that Z−γ = Zγ; this implies that the collection
+{Xγ}γ≥0 is also independent and that X−γ = Xγ. ♦
+By the limiting logarithmic distribution of a real-valued function f(t), we mean the measure dν
+having the property that the limiting logarithmic density of the set of positive real numbers such
+that f(t) lies between α and β is
+∫β
+α dν for any interval (α, β).
+Proposition 2.3. Assume LI. Let{cχ : χ (mod q)} be a collection of complex numbers, indexed by
+the Dirichlet characters (mod q), satisfying c¯χ = cχ. The limiting logarithmic distribution of the
+function ∑
+χ (modq)
+cχE(x, χ)
+8
+----PAGE 8----
+is the same as the distribution of the random variable
+2
+∑
+χ (modq)
+|cχ|
+∑
+γ>0
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+.
+Proof. We have
+∑
+χ (modq)
+cχE(x, χ) = lim
+T→∞
+∑
+χ (modq)
+cχ
+∑
+|γ|<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ
+= lim
+T→∞
+∑
+χ (modq)
+cχ
+( ∑
+0<γ<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ +
+∑
+−T<γ< 0
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ
+)
+.
+(The assumption of LI precludes the possibility that γ = 0.) By the functional equation, the zeros
+of L(s, χ) below the real axis correspond to those of L(s, ¯χ) above the real axis. Therefore
+∑
+χ (modq)
+cχE(x, χ) = lim
+T→∞
+∑
+χ (modq)
+cχ
+( ∑
+0<γ<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ +
+∑
+0<γ<T
+L(1/2+iγ, ¯χ)=0
+x−iγ
+1
+2− iγ
+)
+(2.1)
+= lim
+T→∞
+( ∑
+χ (modq)
+cχ
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ +
+∑
+χ (modq)
+c¯χ
+∑
+0<γ<T
+L(1/2+iγ, ¯χ)=0
+xiγ
+1
+2 + iγ
+)
+.
+Reindexing this last sum by replacing ¯χ by χ, we obtain
+∑
+χ (modq)
+cχE(x, χ) = lim
+T→∞
+( ∑
+χ (modq)
+cχ
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ +
+∑
+χ (modq)
+cχ
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ
+)
+= lim
+T→∞
+2 Re
+( ∑
+χ (modq)
+cχ
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+xiγ
+1
+2 + iγ
+)
+(2.2)
+= 2 lim
+T→∞
+∑
+χ (modq)
+|cχ|Re
+( ∑
+0<γ<T
+L(1/2+iγ,χ)=0
+eiγ logxθχ,γ√
+1
+4 + γ2
+)
+,
+where θχ,γ = cχ|1
+2 + iγ|/|cχ|( 1
+2 + iγ) is a complex number of modulus 1. The quantity eiγ logxθχ,γ
+is uniformly distributed (as a function of log x) on the unit circle as x tends to inﬁnity, and hence
+its limiting logarithmic distribution is the same as the distribution of Zγ. Since the various γ in
+each inner sum are linearly independent over the rationals by LI, the tuple (eiγ logxθχ,γ)0<γ<T is
+uniformly distributed in the N(T, χ)-dimensional torus by Kronecker’s theorem. Therefore the
+limiting logarithmic distribution of the sum
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+eiγ logxθχ,γ√
+1
+4 + γ2
+9
+----PAGE 9----
+is the same as the distribution of the random variable
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+Zγ√
+1
+4 + γ2
+.
+Finally, the work of Rubinstein and Sarnak [14, Section 3.1] shows that the limiting logarithmic
+distribution of
+∑
+χ (modq)
+cχE(x, χ) = 2 lim
+T→∞
+∑
+χ (modq)
+|cχ|Re
+( ∑
+0<γ<T
+L(1/2+iγ,χ)=0
+eiγ logxθχ,γ√
+1
+4 + γ2
+)
+is the same as the distribution of the random variable
+∑
+χ (modq)
+cχE(x, χ) = 2 lim
+T→∞
+∑
+χ (modq)
+|cχ|
+∑
+0<γ<T
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+= 2
+∑
+χ (modq)
+|cχ|
+∑
+γ>0
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+,
+the convergence of this last limit being ensured by the fact that the Xγ are bounded and that each
+of the sums
+∑
+γ>0
+L(1/2+iγ,χ)=0
+( 1√
+1
+4 + γ2
+)2
+≤ b(χ)
+is ﬁnite. This establishes the lemma. □
+We shall have further occasion to change the indexing of sums, between over allγ and over only
+positive γ, in the same manner as in equations (2.1) and (2.2); henceforth we shall justify such
+changes “by the functional equation for Dirichlet L-functions” and omit the intermediate steps.
+Deﬁnition2.4. For any relative prime integers q and a, deﬁne
+c(q; a) =−1 + #{x (mod q): x2≡ a (mod q)}.
+Note that c(q; a) takes only the values−1 and ρ(q)− 1. Now, with Xγ as deﬁned in Deﬁnition 2.2,
+deﬁne the random variable
+Xq;a,b = c(q, b)− c(q, a) + 2
+∑
+χ (modq)
+|χ(b)− χ(a)|
+∑
+γ>0
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+.
+Note that the expectation of the random variable Xq;a,b is either±ρ(q) or 0, depending on the
+values of c(q, a) and c(q, b). ♦
+Deﬁnition 2.5. With π(x; q, a) = # {p ≤ x: p prime, p ≡ a (mod q)} denoting the counting
+function of primes in the arithmetic progression a (mod q), deﬁne the normalized error term
+E(x; q, a) = log x√x
+(
+φ(q)π(x; q, a)− π(x)
+)
+.
+♦
+10
+----PAGE 10----
+The next proposition characterizes the limiting logarithmic distribution of the difference of two
+of these normalized counting functions.
+Proposition 2.6. Assume GRH and LI. Let a and b be reduced residues modulo q. The limiting
+logarithmic distribution of E(x; q, a)− E(x; q, b) is the same as the distribution of the random
+variable Xq;a,b deﬁned in Deﬁnition 2.4.
+Remark. Since δ(q; a, b) is deﬁned to be the logarithmic density of those real numbersx for which
+π(x; q, a) > π (x; q, b), or equivalently for which E(x; q, a) > E (x; q, b), we see that δ(q; a, b)
+equals the probability that Xq;a,b is greater than 0. However, we never use this fact directly in the
+present paper, instead quoting from [5] a consequence of that fact in equation (2.10) below.
+Proof. As is customary, deﬁne
+ψ(x, χ) =
+∑
+n≤x
+χ(n)Λ(n)
+A consequence of the explicit formula for ψ(x, χ) that arises from the analytic proof of the prime
+number theorem for arithmetic progressions ([11, Corollary 12.11] combined with [11, (12.12)])
+is that for χ̸= χ0,
+ψ(x, χ) =−
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+x1/2+iγ
+1
+2 + iγ + O(log q· log x)
+under the assumption of GRH. We also know [14, Lemma 2.1] that
+E(x; q, a) =−c(q, a) +
+∑
+χ (modq)
+χ̸=χ0
+¯χ(a) ψ(x, χ)√x + Oq
+( 1
+log x
+)
+. (2.3)
+Combining these last two equations with Deﬁnition 2.1 forE(x, χ), we obtain
+E(x; q, a) =−c(q, a)−
+∑
+χ (modq)
+χ̸=χ0
+¯χ(a)E(x, χ) + Oq
+( 1
+log x
+)
+.
+We therefore see that
+E(x; q, a)− E(x; q, b) = c(q, b)− c(q, a) +
+∑
+χ (modq)
+(¯χ(b)− ¯χ(a))E(x, χ) + Oq
+( 1
+log x
+)
+(where we have added in theχ = χ0 term for convenience). The error term tends to zero asx grows
+and thus doesn’t affect the limiting distribution, and the constant c(q, b)− c(q, a) is independent
+of x. Therefore, by Proposition 2.3, the limiting logarithmic distribution of E(x; q, a)− E(x; q, b)
+is the same as the distribution of the random variable
+c(q, b)− c(q, a) + 2
+∑
+χ (modq)
+|¯χ(b)− ¯χ(a)|
+∑
+γ>0
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+.
+Since|¯χ(b)− ¯χ(a)|=|χ(b)− χ(a)|, this last expression is exactly the random variable Xq;a,b as
+claimed. □
+To conclude this section, we calculate the variance of the random variable Xq;a,b.
+11
+----PAGE 11----
+Proposition 2.7. Assume LI. Let{cχ : χ (mod q)} be a collection of complex numbers satisfying
+c¯χ = cχ. For any constant µ, the variance of the random variable
+µ + 2
+∑
+χ (modq)
+cχ
+∑
+γ>0
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+(2.4)
+equals∑
+χ (modq)|cχ|2b(χ), where b(χ) was deﬁned in Deﬁnition 1.3. In particular, the variance of
+the random variable Xq;a,b deﬁned in Deﬁnition 2.4 is equal to the quantity V (q; a, b) deﬁned in
+Deﬁnition 1.3.
+Proof. The random variables {Xγ : γ > 0} form an independent collection by deﬁnition; it is
+important to note that no single variable Xγ can correspond to multiple characters χ, due to the
+assumption of LI. The variance of the sum (2.4) is therefore simply the sum of the individual
+variances, that is,
+σ2
+(
+2
+∑
+χ (modq)
+|cχ|
+∑
+γ>0
+L(1/2+iγ,χ)=0
+Xγ√
+1
+4 + γ2
+)
+= 4
+∑
+χ (modq)
+|cχ|2
+∑
+γ>0
+L(1/2+iγ,χ)=0
+σ2(Xγ)
+1
+4 + γ2 .
+The variance of any Xγ is 1
+2, and so this last expression equals
+2
+∑
+χ (modq)
+|cχ|2
+∑
+γ>0
+L(1/2+iγ,χ)=0
+1
+1
+4 + γ2
+=
+∑
+χ (modq)
+|cχ|2
+∑
+γ>0
+L(1/2+iγ,χ)=0
+1
+1
+4 + γ2 +
+∑
+χ (modq)
+|cχ|2
+∑
+γ<0
+L(1/2+iγ, ¯χ)=0
+1
+1
+4 + γ2
+=
+∑
+χ (modq)
+|cχ|2
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+1
+1
+4 + γ2 =
+∑
+χ (modq)
+|cχ|2b(χ)
+by the functional equation for Dirichlet L-functions. The fact that V (q; a, b) is the variance of
+Xq;a,b now follows directly from their deﬁnitions. □
+2.2. Calculating the characteristic function. The characteristic function ˆXq;a,b(z) of the random
+variable Xq;a,b will be extremely important to our analysis of the density δ(q; a, b). To derive the
+formula for this characteristic function, we begin by setting down some relevant facts about the
+standard Bessel function J0 of order zero. Speciﬁcally, we collect in the following lemma some
+useful information about the power series coefﬁcientsλn for
+log J0(z) =
+∞∑
+n=0
+λnzn, (2.5)
+which is valid for|z|≤ 12
+5 since J0 has no zeros in a disk of radius slightly larger than 12
+5 centered
+at the origin.
+Lemma 2.8. Let the coefﬁcientsλn be deﬁned in equation(2.5). Then:
+(a) λn≪
+(5
+12
+)n
+uniformly for n≥ 0;
+(b) λ0 = 0 and λ2m−1 = 0 for every m≥ 1;
+(c) λ2m < 0 for every m≥ 1;
+12
+----PAGE 12----
+(d) λn is a rational number for every n≥ 0.
+Proof. The fact that log J0 is analytic in a disk of radius slightly larger than 12
+5 centered at the
+origin immediately implies part (a). Part (b) follows from the fact that J0 is an even function with
+J0(0) = 1. Next, J0 has the product expansion [17, Section 15.41, equation (3)]
+J0(z) =
+∞∏
+k=1
+(
+1− z2
+z2
+k
+)
+,
+where the zk are the positive zeros of J0. Taking logarithms of both sides and expanding each
+summand in a power series (valid for|z|≤ 12
+5 as before) gives
+log J0(z) =
+∞∑
+k=1
+log
+(
+1− z2
+z2
+k
+)
+=−
+∞∑
+n=1
+z2n
+n
+∞∑
+k=1
+1
+z2n
+k
+,
+which shows that λ2n =−n−1∑∞
+k=1 z−2n
+k is negative, establishing part (c). Finally, the Bessel
+function J0(z) = ∑∞
+m=0
+(
+− 1
+4)mz2m/(m!)2 itself has a power series with rational coefﬁcients, as
+does log(1 + z); therefore the composition log(1 + (J0(z)− 1)) also has rational coefﬁcients,
+establishing part (d). □
+Deﬁnition 2.9. Let λn be deﬁned in equation (2.5). For any distinct reduced residues a and
+b (mod q), deﬁne
+Wn(q; a, b) = 22n|λ2n|
+V (q; a, b)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n
+∑
+γ>0
+L(1/2+iγ,χ)=0
+1
+(1/4 + γ2)n , (2.6)
+where V (q; a, b) was deﬁned in Deﬁnition 1.3, so thatW1(q; a, b) = 1
+2 for example. ♦
+In fact, Wn(q; a, b)V (q; a, b) is (up to a constant factor depending on n) the 2nth cumulant of
+X(q; a, b), which explains why it will appear in the lower terms of the asymptotic formula. We
+have normalized by V (q; a, b) so that the Wn(q; a, b) depend upon q, a, and b in a bounded way:
+Proposition 2.10. We have Wn(q; a, b) ≪
+(10
+3
+)2n
+uniformly for all integers q and all reduced
+residues a and b (mod q).
+Proof. From Deﬁnition 2.9 and Lemma 2.8(a), we see that
+Wn(q; a, b)≪ 22n
+V (q; a, b)
+(5
+12
+)2n ∑
+χ (modq)
+|χ(a)− χ(b)|2n
+∑
+γ>0
+L(1/2+iγ,χ)=0
+1
+(1/4 + γ2)n
+≪ (5/6)2n
+V (q; a, b)
+∑
+χ (modq)
+22n−2|χ(b)− χ(a)|2
+∑
+γ>0
+L(1/2+iγ,χ)=0
+4n−1
+1/4 + γ2
+=
+(5
+6
+)2n
+22n−24n−1≪
+(10
+3
+)2n
+,
+as claimed. □
+The following functions are necessary to write down the formula for the characteristic function
+ˆXq;a,b.
+13
+----PAGE 13----
+Deﬁnition2.11. For any Dirichlet character χ, deﬁne
+F (z, χ) =
+∏
+γ>0
+L( 1
+2 +iγ,χ)=0
+J0
+( 2z√
+1
+4 + γ2
+)
+.
+Then deﬁne
+Φq;a,b(z) =
+∏
+χ (modq)
+F
+(
+|χ(a)− χ(b)|z, χ
+)
+for any reduced residues a and b (mod q). Note that|F (x, χ)|≤1 for all real numbers x, since the
+same is true of J0. ♦
+The quantity Wn(q; a, b) owes its existence to the following convenient expansion:
+Proposition 2.12. For any reduced residue classesa and b (mod q),
+Φq;a,b(z) = exp
+(
+−V (q; a, b)
+∞∑
+m=1
+Wm(q; a, b)z2m
+)
+for|z|< 3
+10. In particular,
+Φq;a,b(z) = e−V (q;a,b)z2/2(
+1 + O(V (q; a, b)z4)
+)
+for|z|≤min{V (q; a, b)−1/4, 1
+4}.
+Proof. Taking logarithms of both sides of the deﬁnition ofΦq;a,b(z) in Deﬁnition 2.11 yields
+log Φq;a,b(z) =
+∑
+χ (modq)
+∑
+γ>0
+L(1/2+iγ,χ)=0
+log J0
+(2|χ(a)− χ(b)|z√
+1
+4 + γ2
+)
+.
+Since|z|< 3
+10, the argument of the logarithm of J0 is at most 2· 2· 3
+10 / 1
+2 = 12
+5 , and so the power
+series expansion (2.5) converges absolutely, giving
+log Φq;a,b(z) =
+∑
+χ (modq)
+∑
+γ>0
+L(1/2+iγ,χ)=0
+∞∑
+n=0
+λn
+(2|χ(a)− χ(b)|z√
+1
+4 + γ2
+)n
+.
+By Lemma 2.8(b) only the terms n = 2 m with m≥ 1 survive, and by Lemma 2.8(c) we may
+replace λ2m by−|λ2m|. We thus obtain
+log Φq;a,b(z) =−
+∞∑
+m=0
+z2m·|λ2m|22m
+∑
+χ (modq)
+|χ(a)− χ(b)|2m
+∑
+γ>0
+L(1/2+iγ,χ)=0
+1
+( 1
+4 + γ2)m
+=−
+∞∑
+m=1
+V (q; a, b)Wm(q; a, b)z2m
+for|z|< 3
+10, by Deﬁnition 2.9 forWm(q; a, b). This establishes the ﬁrst assertion of the proposition.
+By Proposition 2.10, we also have
+∞∑
+m=2
+Wm(q; a, b)z2m≪
+∞∑
+m=2
+(10
+3
+)2m
+z2m = (10/3)4z4
+1− 100z2/9≪ z4 (2.7)
+14
+----PAGE 14----
+uniformly for|z|≤ 1
+4, say. Therefore by the ﬁrst assertion of the proposition,
+Φq;a,b(z) = exp
+(
+−V (q; a, b)W1(q; a, b)z2)
+exp
+(
+−V (q; a, b)
+∞∑
+m=2
+Wm(q; a, b)z2m
+)
+= e−V (q;a,b)z2/2 exp
+(
+O(V (q; a, b)z4)
+)
+= e−V (q;a,b)z2/2(
+1 + O(V (q; a, b)z4)
+)
+as long as V (q; a, b)z4≤ 1. This establishes the second assertion of the proposition. □
+All the tools are now in place to calculate the characteristic function ˆXq;a,b(z) = E
+(
+eizXq;a,b
+)
+.
+Proposition 2.13. For any reduced residue classesa and b (mod q),
+ˆXq;a,b(z) = eiz(c(q,b)−c(q,a))Φq;a,b(z).
+In particular,
+log ˆXq;a,b(z) = i
+(
+c(q, a)− c(q, b)
+)
+z− 1
+2 V (q; a, b)z2 + O
+(
+V (q; a, b)z4)
+for|z|≤ 1
+4.
+Remark. The ﬁrst assertion of the proposition was shown by Feuerverger and Martin [5] by a
+slightly different method. Unfortunately an i in the exponential factor of [5, equation (2-21)] is
+missing, an omission that is repeated in the statement of [5, Theorem 4].
+Proof. For a random variable X, deﬁne the cumulant-generating function
+gX(t) = log ˆX(t) = log E(eitX)
+to be the logarithm of the characteristic function of X. It is easy to see that gαX(t) = gX(αt)
+for any constant α. Moreover, if X and Y are independent random variables, then E(eitXeitY ) =
+E(eitX)E(eitY ) and so gX+Y (t) = gX(t) + gY (t). Note that if the random variable C is constant
+with value c, then gC(t) = itc.
+We can also calculate gXγ(t) where Xγ was deﬁned in Deﬁnition 2.2. Indeed, ifΘ is a random
+variable uniformly distributed on the interval[−π, π], then Zγ = eiΘ and thus Xγ = cos Θ, whence
+gXγ(t) = log E
+(
+eit cos Θ)
+= log
+(∫ π
+−π
+eit cosθ dθ
+2π
+)
+= log J0(t),
+where J0 is the Bessel function of order zero [1, 9.1.21].
+From Deﬁnition 2.4, the above observations yield
+gXq;a,b(t) = it(c(q, b)− c(q, a)) +
+∑
+χ (modq)
+∑
+γ>0
+L(1/2+iγ,χ)=0
+gXγ
+(2|χ(a)− χ(b)|√
+1/4 + γ2
+t
+)
+;
+in other words,
+log ˆXq;a,b(t) = it(c(q, b)− c(q, a)) +
+∑
+χ (modq)
+∑
+γ>0
+L(1/2+iγ,χ)=0
+log J0
+(2|χ(a)− χ(b)|√
+1/4 + γ2
+t
+)
+= it(c(q, b)− c(q, a)) + log Φq;a,b(x) (2.8)
+15
+----PAGE 15----
+according to Deﬁnition 2.11. Exponentiating both sides establishes the ﬁrst assertion of the propo-
+sition. To establish the second assertion, we combine equation (2.8) with Proposition 2.12 to see
+that for|z|≤ 1
+4,
+log ˆXq;a,b(t) = it(c(q, b)− c(q, a))− V (q; a, b)
+∞∑
+m=1
+Wm(q; a, b)z2m
+= it(c(q, b)− c(q, a))− 1
+2 V (q; a, b)z2 + O(V (q; a, b)z4)
+by the estimate (2.7) and the fact that W1(q; a, b) = 1
+2. □
+2.3. Bounds for the characteristic function. A formula (namely equation (2.10) below) is known
+that relates δ(q; a, b) to an integral involving Φq;a,b. Using this formula to obtain explicit estimates
+for δ(q; a, b) requires explicit estimates uponΦq;a,b; our ﬁrst estimate shows that this function takes
+its largest values near 0.
+Proposition 2.14. Let 0≤ κ≤ 5
+24. For any reduced residue classes a and b (mod q), we have
+|Φq;a,b(t)|≤|Φq;a,b(κ)|for all t≥ κ.
+Proof. From Deﬁnition 2.11, it sufﬁces to show that for any real numberγ > 0,⏐⏐⏐⏐J0
+(2|χ(a)− χ(b)|t√
+1/4 + γ2
+)⏐⏐⏐⏐≤
+⏐⏐⏐⏐J0
+(2|χ(a)− χ(b)|κ√
+1/4 + γ2
+)⏐⏐⏐⏐ (2.9)
+for all t≥ κ. We use the facts that J0 is a positive, decreasing function on the interval [0, 5
+3] and
+that J0
+(5
+3
+)
+≥|J0(x)|for all x≥ 5
+3. Since
+0≤ 2|χ(a)− χ(b)|κ√
+1/4 + γ2
+≤ 2· 2· 5/24√
+1/4
+= 5
+3 ,
+we see that J0 is positive and decreasing on the interval
+[2|χ(a)− χ(b)|κ√
+1/4 + γ2
+, 5
+3
+]
+.
+Together with J0
+(5
+3
+)
+≥|J0(x)|for all x≥ 5
+3, this establishes equation (2.9) and hence the lemma.
+□
+Let N(T, χ) denote, as usual, the number of nontrivial zeros ofL(s, χ) having imaginary part at
+most T in absolute value. Since the function Φq;a,b is a product indexed by these nontrivial zeros,
+we need to establish the following explicit estimates for N(T, χ). Although exact values for the
+constants in the results of this section are not needed for proving Theorem 1.1, they will become
+necessary in Section 5 when we explicitly calculate values and bounds for δ(q; a, b).
+Proposition 2.15. Let the nonprincipal character χ (mod q) be induced by χ∗ (mod q∗). For any
+real number T≥ 1,
+N(T, χ)≤ T
+π log q∗T
+2πe + 0.68884 log q∗T
+2πe + 10.6035.
+For T≥ 100,
+N(T, χ)≥ 44T
+45π log q∗T
+2πe− 10.551.
+16
+----PAGE 16----
+Proof. We cite the following result of McCurley [10, Theorem 2.1]: for T≥ 1 and η∈ (0, 0.5],
+⏐⏐⏐⏐N(T, χ)− T
+π log q∗T
+2πe
+⏐⏐⏐⏐ < C1 log q∗T + C2,
+with C1 = 1+2η
+π log 2 and C2 = .3058− .268η + 4logζ(1+η)
+log 2 − 2 logζ(2+2η)
+log 2 + 2
+π
+logζ( 3
+2 +2η)
+log 2 . (McCurley
+states his result for primitive nonprincipal characters, but sinceL(s, χ) and L(s, χ∗) have the same
+zeros inside the critical strip, the result holds for any nonprincipal character.) Takingη = 0.25, we
+obtain⏐⏐⏐⏐N(T, χ)− T
+π log q∗T
+2πe
+⏐⏐⏐⏐ < 0.68884 logq∗T + 8.64865 < 0.68884 log q∗T
+2πe + 10.6035.
+This inequality establishes the ﬁrst assertion of the proposition. The inequality also implies that
+N(T, χ) > 44T
+45π log q∗T
+2πe +
+(( T
+45π− .68884
+)
+log q∗T
+2πe− 10.6035
+)
+;
+the second assertion of the proposition follows upon calculating that the expression in parentheses
+is at least−10.551 when T ≥ 100 (we know that q∗≥ 3 as there are no nonprincipal primitive
+characters modulo 1 or 2). □
+The next two results establish an exponentially decreasing upper bound for Φq;a,b(t) when t is
+large.
+Lemma 2.16. For any nonprincipal character χ (mod q), we have|F (x, χ)F (x, ¯χ)|≤ e−0.2725x
+for x≥ 200.
+Proof. First note that
+F (x, ¯χ) =
+∏
+γ>0
+L(1/2+iγ, ¯χ)=0
+J0
+( 2x√
+1/4 + γ2
+)
+=
+∏
+γ<0
+L(1/2+iγ,χ)=0
+J0
+( 2x√
+1/4 + (−γ)2
+)
+by the identity L(s, ¯χ) = L(¯s, χ), and therefore
+F (x, χ)F (x, ¯χ) =
+∏
+γ∈R
+L(1/2+iγ,χ)=0
+J0
+( 2x√
+1/4 + γ2
+)
+.
+Using the bound [14, equation (4.5)]
+|J0(z)|≤min
+{
+1,
+√
+2
+π|x|
+}
+,
+we see that for x≥ 1,
+|F (x, χ)F (x, ¯χ)|≤
+∏
+−x/2<γ<x/2
+L(1/2+iγ,χ)=0
+⏐⏐⏐⏐J0
+( 2x√
+1/4 + γ2
+)⏐⏐⏐⏐≤
+∏
+|γ|<x/2
+L(1/2+iγ,χ)=0
+(1/4 + γ2)1/4
+√πx .
+When x≥ 1 and|γ|< x/2, the factor (1/4 + γ2)1/4(πx)−1/2 never exceeds 1/2. Therefore
+|F (x, χ)F (x, ¯χ)|≤2−N(x/2,χ) = exp
+(
+−(log 2)N(x/2, χ)
+)
+.
+17
+----PAGE 17----
+By Proposition 2.15, we thus have for x≥ 200
+|F (x, χ)F (x, ¯χ)|≤210.558 exp
+(
+−22 log 2
+45π x log q∗x
+4πe
+)
+≤ exp
+(
+−0.107866x log 3x
+4πe + 7.3183
+)
+≤ e−0.2725x,
+as claimed. □
+Proposition 2.17. For any distinct reduced residue classes a and b (mod q) such that (ab, q) = 1,
+we have|Φq;a,b(t)|≤e−0.0454φ(q)t for t≥ 200.
+Proof. We begin by noting that the orthogonality relations for Dirichlet characters imply that∑
+χ (modq)|χ(a)− χ(b)|2 = 2 φ(q) (as we show in Proposition 3.1 below). On the other hand,
+if S is the set of characters χ (mod q) such that|χ(a)− χ(b)|≥1, then
+∑
+χ (modq)
+|χ(a)− χ(b)|2≤
+∑
+χ (modq)
+χ/∈S
+1 +
+∑
+χ∈S
+4 = φ(q)− #S + 4#S.
+Combining these two inequalities shows that 2φ(q)≤ φ(q) + 3#S, or equivalently #S≥ 1
+3 φ(q).
+Note that clearly χ0 /∈ S.
+From Deﬁnition 2.11, we have
+|Φq;a,b(t)|2 =
+∏
+χ (modq)
+|F (|χ(a)− χ(b)|t, χ)|2 =
+∏
+χ (modq)
+⏐⏐F (|χ(a)− χ(b)|t, χ)F (|χ(a)− χ(b)|t, ¯χ)
+⏐⏐,
+since every character appears once as χ and once as ¯χ in the product on the right-hand side. Since
+|F (x, χ)|≤ 1 for all real numbers x, we can restrict the product on the right-hand side to those
+characters χ ∈ S and still have a valid upper bound. For any χ ∈ S, Lemma 2.16 gives us
+|F (|χ(a)− χ(b)|t, χ)F (|χ(a)− χ(b)|t, ¯χ)|≤e−0.2725|χ(a)−χ(b)|t≤ e−0.2725t for t≥ 200, whence
+|Φq;a,b(t)|2≤
+∏
+χ∈S
+⏐⏐F (|χ(a)− χ(b)|t, χ)F (|χ(a)− χ(b)|t, ¯χ)
+⏐⏐≤ (e−0.2725t)#S≤ (e−0.0454φ(q)t)2,
+which is equivalent to the assertion of the proposition. □
+At this point we can establish the required formula for δ(q; a, b), in terms of a truncated integral
+involving Φq;a,b, with an explicit error term. To more easily record the explicit bounds for error
+terms, we employ a variant of the O-notation: we write A = O(B) if|A|≤ B (as opposed to a
+constant times B) for all values of the parameters under consideration.
+Proposition 2.18. Assume GRH and LI. Let a and b be reduced residues (mod q) such that a is a
+nonsquare (mod q) and b is a square (mod q). If V (q; a, b)≥ 531, then
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ V (q;a,b)−1/4
+−V (q;a,b)−1/4
+sin ρ(q)x
+x Φq;a,b(x) dx
++ O
+(
+0.03506 e−9.08φ(q)
+φ(q) + 63.67ρ(q)e−V (q;a,b)1/2/2
+)
+,
+18
+----PAGE 18----
+Proof. Our starting point is the formula of Feuerverger and Martin [5, equation (2.57)], which is
+valid under the assumptions of GRH and LI:
+δ(q; a, b) = 1
+2− 1
+2π
+∫ ∞
+−∞
+sin((c(q, a)− c(q, b))x)
+x Φq;a,b(x) dx. (2.10)
+In the case wherea is a nonsquare moduloq and b is a square moduloq, the constant c(q, a)−c(q, b)
+equals−ρ(q), so that
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ ∞
+−∞
+sin ρ(q)x
+x Φq;a,b(x) dx.
+The part of the integral where x≥ 200 can be bounded using Proposition 2.17:
+⏐⏐⏐⏐
+1
+2π
+∫ ∞
+200
+sin ρ(q)x
+x Φq;a,b(x) dx
+⏐⏐⏐⏐≤ 1
+400π
+∫ ∞
+200
+e−0.0454φ(q)x dx < 0.01753e−9.08φ(q)
+φ(q) .
+The part where x≤− 200 is bounded by the same amount, and so
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ 200
+−200
+sin ρ(q)x
+x Φq;a,b(x) dx + O
+(
+0.03506 e−9.08φ(q)
+φ(q)
+)
+. (2.11)
+We now consider the part of the integral where V (q; a, b)−1/4≤ x≤ 200. The hypothesis that
+V (q; a, b)≥ 531 implies that V (q; a, b)−1/4 < 5
+24, which allows us to make two simpliﬁcations.
+First, by Proposition 2.14, we know that|Φq;a,b(x)|≤ Φq;a,b(V (q; a, b)−1/4) for all x in the range
+under consideration. Second, by Proposition 2.12 we have
+Φq;a,b(x) = exp
+(
+−V (q; a, b)
+∞∑
+m=1
+Wm(q; a, b)x2m
+)
+≤ e−V (q;a,b)x2/2
+for all real numbers |x|< 3
+10, since W1(q; a, b) = 1
+2 and all the Wm(q; a, b) are nonnegative by
+Deﬁnition 2.9. Since 5
+24 < 3
+10, we see that|Φq;a,b(x)|≤ e−V (q;a,b)1/2/2 for all x in the range under
+consideration. Noting also that
+⏐⏐ sin(ρ(q)x)/x
+⏐⏐≤ ρ(q) for all real numbers x, we conclude that
+⏐⏐⏐⏐
+∫ 200
+V (q;a,b)−1/4
+sin ρ(q)x
+x Φ(x)dx
+⏐⏐⏐⏐≤ ρ(q)
+∫ 200
+V (q;a,b)−1/4
+e−V (q;a,b)1/2/2dx≤ 200ρ(q)e−V (q;a,b)1/2/2.
+The part of the integral where−200≤ x≤− V (q; a, b)−1/4 is bounded by the same amount, and
+thus equation (2.11) becomes
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ V (q;a,b)−1/4
+−V (q;a,b)−1/4
+sin ρ(q)x
+x Φq;a,b(x) dx
++ O
+(
+0.03506 e−9.08φ(q)
+φ(q) + 200
+π ρ(q)e−V (q;a,b)1/2/2
+)
+,
+which establishes the proposition. □
+19
+----PAGE 19----
+2.4. Derivation of the asymptotic series. In this section we give the proof of Theorem 1.1. Our
+ﬁrst step is to transform the conclusion of Proposition 2.18, which was phrased with a mind towards
+the explicit calculations in Section 5, into a form more convenient for our present purposes:
+Lemma 2.19. Assume GRH and LI. For any reduced residues a and b (mod q) such that a is a
+nonsquare (mod q) and b is a square (mod q), and for any ﬁxedJ > 0,
+δ(q; a, b) = 1
+2 + ρ(q)
+2π
+√
+V (q; a, b)
+∫ V (q;a,b)1/4
+−V (q;a,b)1/4
+sin
+(
+ρ(q)y/
+√
+V (q; a, b)
+)
+ρ(q)y/
+√
+V (q; a, b)
+Φq;a,b
+( y√
+V (q; a, b)
+)
+dy
++ OJ
+(
+V (q; a, b)−J)
+.
+Proof. We make the change of variables x = y/
+√
+V (q; a, b) in Proposition 2.18, obtaining
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ V (q;a,b)1/4
+−V (q;a,b)1/4
+sin
+(
+ρ(q)y/
+√
+V (q; a, b)
+)
+y/
+√
+V (q; a, b)
+Φq;a,b
+( y√
+V (q; a, b)
+) dy√
+V (q; a, b)
++ O
+(
+0.06217 e−5.12φ(q)
+φ(q) + 63.67ρ(q)e−V (q;a,b)1/2/2
+)
+,
+the main terms of which are exactly what we want. The lemma then follows from the estimates
+e−5.12φ(q)≪J V (q; a, b)−J and ρ(q)e−V (q;a,b)1/2/2≪J V (q; a, b)−J
+for any ﬁxed constantJ: these estimates hold because V (q; a, b)∼ 2φ(q) logq by Proposition 3.6,
+while the standard lower bound φ(q)≫ q/ log logq follows from equation (5.19). □
+We will soon be expanding most of the integrand in Lemma 2.19 into a power series; the fol-
+lowing deﬁnition and lemma treat the integrals that so arise.
+Deﬁnition2.20. For any nonnegative integerk, deﬁne(2k−1)!! = (2k−1)(2k−3)··· 3·1, where
+we make the convention that (−1)!! = 1. Also, for any nonnegative integer k and any positive real
+number B, deﬁne
+Mk(B) =
+∫ B
+−B
+y2ke−y2/2 dy.
+♦
+Lemma 2.21. Let J and B be positive real numbers. For any nonnegative integer k, we have
+Mk(B) = (2k− 1)!!
+√
+2π + Ok,J
+(
+B−J)
+.
+Proof. We proceed by induction on k. In the case k = 0, we have
+M0(B) =
+∫ B
+−B
+e−y2/2 dy =
+∫ ∞
+−∞
+e−y2/2 dy− 2
+∫ ∞
+B
+e−y2/2 dy
+=
+√
+2π + O
+(∫ ∞
+B
+e−By/2 dy
+)
+=
+√
+2π + O
+( 2
+B e−B2/2
+)
+=
+√
+2π + OJ(B−J)
+20
+----PAGE 20----
+as required. On the other hand, for k≥ 1 we can use integration by parts to obtain
+Mk(B) =
+∫ B
+−B
+y2k−1· ye−y2/2 dy =−y2k−1e−y2/2
+⏐⏐⏐⏐
+B
+−B
++ (2k− 1)
+∫ B
+−B
+y2k−2e−y2/2 dy
+= O
+(
+B2k−1e−B2/2)
++ (2k− 1)Mk−1(B).
+Since the error term B2k−1e−B2/2 is indeed Ok,J
+(
+B−J)
+, the lemma follows from the inductive
+hypothesis for Mk−1(B). □
+The following familiar power series expansions can be truncated with reasonable error terms:
+Lemma 2.22. Let K be a nonnegative integer and C > 1 a real number. Uniformly for|z|≤ C,
+we have the series expansions
+ez =
+K∑
+j=0
+zj
+j! + OC,K(|z|K+1);
+sin z
+z =
+K∑
+j=0
+(−1)j z2j
+(2j + 1)! + OC,K(|z|2(K+1)).
+Proof. The Taylor series for ez, valid for all complex numbers z, can be written as
+ez =
+K∑
+j=0
+zj
+j! + zK+1
+∞∑
+j=0
+zj
+(j + K + 1)!.
+The function ∑∞
+j=0 zj/(j + K + 1)! converges for all complex numbers z and hence represents
+an entire function; in particular, it is continuous and hence bounded in the disc |z|≤ C. This
+establishes the ﬁrst assertion of the lemma, and the second assertion is proved in a similar fashion.
+□
+Everything we need to prove Theorem 1.1 is now in place, once we give the deﬁnition of the
+constants sq;a,b(ℓ, j) that appear in its statement:
+Deﬁnition2.23. For any reduced residues a and b (mod q), and any positive integers j≤ ℓ, deﬁne
+sq;a,b(ℓ, j) = (−1)j
+(2j + 1)!
+∑
+···
+∑
+i2+2i3+···+ℓiℓ+1=ℓ−j
+(
+2(ℓ + i2 +··· + iℓ+1)− 1
+)
+!!
+ℓ+1∏
+k=2
+(−Wk(q; a, b))ik
+ik! ,
+where the indices i2, . . . , iℓ+1 take all nonnegative integer values that satisfy the constraint i2 +
+2i3 +··· + ℓiℓ+1 = ℓ− j. Note that sq;a,b(0, 0) = 1 always. Since Wk(q; a, b)≪
+(10
+3
+)k
+by
+Proposition 2.10, we see that sq;a,b(ℓ, j) is bounded in absolute value by some (combinatorially
+complicated) function of ℓ uniformly in q, a, and b (and uniformly in j as well, since there are only
+ﬁnitely many possibilities{0, 1, . . . , ℓ} for j). ♦
+Proof of Theorem 1.1. To lighten the notation in this proof, we temporarily write ρ for ρ(q), δ for
+δ(q; a, b), V for V (q; a, b), and Wk for Wk(q; a, b). We also allow all O-constants to depend on K.
+Since δ is bounded, the theorem is trivially true when V is bounded, since the error term is at least
+as large as any other term in that case; therefore we may assume that V is sufﬁciently large. For
+later usage in this proof, we note that ρ≪ V 1/4, which follows amply from the bound ρ≪ε qε
+mentioned in Deﬁnition 1.2 and the asymptotic formulaV∼ 2φ(q) logq proved in Proposition 3.6.
+21
+----PAGE 21----
+We begin by noting that from Proposition 2.12,
+Φq;a,b(x) = exp
+(
+−V
+∞∑
+k=1
+Wkx2k
+)
+= exp
+(
+−V
+K+1∑
+k=1
+Wkx2k + O(V x2(K+2))
+)
+= exp
+(
+−V
+K+1∑
+k=1
+Wkx2k
+)(
+1 + O(V x2(K+2))
+)
+(2.12)
+uniformly for all|x|≤ min( 1
+4 , V−1/4), where the second equality follows from the upper bound
+given in Proposition 2.10. Inserting this formula into the expression forδ(q; a, b) from Lemma 2.19,
+applied with J = K + 2, gives
+δ = 1
+2 + ρ
+2π
+√
+V
+∫ V 1/4
+−V 1/4
+sin(ρy/
+√
+V )
+ρy/
+√
+V
+exp
+(
+−
+K+1∑
+k=1
+Wky2k
+Vk−1
+)(
+1 + O
+( y2(K+2)
+VK+1
+))
+dy
++ O
+(
+V−K−2)
+.
+This use of equation (2.12) is justiﬁed because the argument y/
+√
+V of Φq;a,b in the integral in
+Lemma 2.19 is at most V 1/4/
+√
+V ≤ 1
+4, by the assumption that V is sufﬁciently large. To simplify
+the error term in the integral, we ignore all of the factors in the integrand (which are bounded by 1
+in absolute value) except for the k = 1 term, in which W1 = 1
+2, to derive the upper bound
+∫ V 1/4
+−V 1/4
+sin(ρy/
+√
+V )
+ρy/
+√
+V
+exp
+(
+−
+K+1∑
+k=1
+Wky2k
+Vk−1
+) y2(K+2)
+VK+1 dy≪ 1
+VK+1
+∫ ∞
+−∞
+e−y2/2y2K+4 dy≪K
+1
+VK+1 .
+Therefore
+δ = 1
+2 + ρ
+2π
+√
+V
+∫ V 1/4
+−V 1/4
+sin(ρy/
+√
+V )
+ρy/
+√
+V
+exp
+(
+−
+K+1∑
+k=1
+Wky2k
+Vk−1
+)
+dy + O
+( ρ
+VK+3/2
+)
+. (2.13)
+The integrand in equation (2.13) is the product of K + 2 functions, namely K + 1 exponential
+factors and a factor involving the function (sin z)/z. Our plan is to keep the ﬁrst exponential
+function as it is and expand the other factors into their power series at the origin. Note that the
+argument of the kth exponential factor is at most WkV 1−k/2 in absolute value, which is bounded
+(by a constant depending on K) for all k≥ 2 by Proposition 2.10. Similarly, the argument of the
+function (sin z)/z is bounded by ρV 1/4/
+√
+V ≪ 1. Therefore the expansion of all of these factors,
+excepting the exponential factor corresponding tok = 1, into their power series is legitimate in the
+range of integration.
+Speciﬁcally, we have the two identities
+K∑
+j=0
+(−1)j
+(2j + 1)!
+(ρy)2j
+Vj = sin(ρy/
+√
+V )
+ρy/
+√
+V
++ O
+((ρy)2(K+1)
+VK+1
+)
+;
+K∑
+ik=0
+(−1)ik
+ik!
+( Wky2k
+Vk−1
+)ik
+= exp
+(
+− Wky2k
+Vk−1
+)
++ O
+(( Wky2k
+Vk−1
+)K+1)
+= exp
+(
+− Wky2k
+Vk−1
+)
++ O
+( y2k(K+1)
+VK+1
+)
+,
+22
+----PAGE 22----
+where the error terms are justiﬁed by Lemma 2.22; in the last equality we have used Proposi-
+tion 2.10 to ignore the contribution of the factor Wk to the error term (since the O-constant may
+depend on K). From these identities, we deduce that
+( K∑
+j=0
+(−1)j
+(2j + 1)!
+(ρy)2j
+Vj
+)
+e−y2/2
+K+1∏
+k=2
+( K∑
+ik=0
+(−1)ik
+ik!
+( Wky2k
+Vk−1
+)ik)
+=
+(sin(ρy/
+√
+V )
+ρy/
+√
+V
++ O
+((ρy)2(K+1)
+VK+1
+))
+× e−y2/2
+K+1∏
+k=2
+(
+exp
+(
+− Wky2k
+Vk−1
+)
++ O
+(( Wky2k
+Vk−1
+)K+1))
+= sin(ρy/
+√
+V )
+ρy/
+√
+V
+K+1∏
+k=1
+exp
+(
+− Wky2k
+Vk−1
+)
++ O
+(
+y(K+2)(K+1)2
+e−y2/2 ρ2K+2
+VK+1
+)
+.
+(The computation of the error term is simpliﬁed by the fact that all the main terms on the right-hand
+side are at most 1 in absolute value, so that we need only ﬁgure out the largest powers of y and ρ,
+and the smallest power of V , that can be obtained by the cross terms.)
+Substituting this identity into equation (2.13) yields
+δ = 1
+2 + ρ
+2π
+√
+V
+∫ V 1/4
+−V 1/4
+( K∑
+j=0
+(−1)j
+(2j + 1)!
+(ρy)2j
+Vj
+)
+e−y2/2
+K+1∏
+k=2
+( K∑
+ik=0
+(−1)ik
+ik!
+( Wky2k
+Vk−1
+)ik)
+dy
++ O
+( ρ√
+V
+∫ ∞
+−∞
+y(K+2)(K+1)2
+e−y2/2 ρ2K+2
+VK+1 dy + ρ
+VK+3/2
+)
+= 1
+2 + ρ
+2π
+√
+V
+K∑
+j=0
+K∑
+i2=0
+···
+K∑
+iK+1=0
+( (−1)j
+(2j + 1)!
+ρ2j
+Vj
+×
+K+1∏
+k=2
+1
+ik!
+(−Wk
+Vk−1
+)ik
+Mj+2i2+···+(K+1)iK+1
+(
+V 1/4))
++ O
+( ρ2K+3
+VK+3/2
+)
+,
+where M was deﬁned in Deﬁnition 2.20. Invoking Lemma 2.21 and then collecting the summands
+according to the power ℓ = j + i1 + 2i2 +··· + KiK+1 of V in the denominator, we obtain
+δ = 1
+2 + ρ√
+2πV
+K∑
+j=0
+K∑
+i2=0
+···
+K∑
+iK+1=0
+( (−1)j
+(2j + 1)!
+ρ2j
+Vj
+K+1∏
+k=2
+1
+ik!
+(−Wk
+Vk−1
+)ik
+×
+((
+2(j + 2i2 +··· + (K + 1)iK+1)− 1
+)
+!! + O
+(
+V−(K+1))))
++ O
+( ρ2K+3
+VK+3/2
+)
+= 1
+2 + ρ√
+2πV
+K(1+K(K+1)/2)∑
+ℓ=0
+1
+Vℓ
+K∑
+j=0
+(−1)jρ2j
+(2j + 1)!
+K∑
+i2=0
+···
+K∑
+iK+1=0
+i2+2i3+···+KiK+1=ℓ−j
+(K+1∏
+k=2
+(−Wk)ik
+ik!
+×
+(
+2(ℓ + i2 +··· + iK+1)− 1
+)
+!!
+)
++ O
+( ρ2K+3
+VK+3/2
+)
+, (2.14)
+23
+----PAGE 23----
+where we have subsumed the ﬁrst error term into the second with the help of Proposition 2.10.
+The proof of Theorem 1.1 is actually now complete, although it takes a moment to recognize
+it. For 0 ≤ ℓ ≤ K, the values of j that contribute to the sum are 0 ≤ j ≤ ℓ, since ℓ− j
+must be a sum of nonnegative numbers due to the condition of summation of the inner sum. In
+particular, all possible values of j and the ik are represented in the sum, and the upper bound of K
+for these variables is unnecessary. We therefore see that the coefﬁcient ofρ2jV−ℓ on the right-hand
+side of equation (2.14) matches Deﬁnition 2.23 for sq;a,b(ℓ, j). On the other hand, for each of the
+ﬁnitely many larger values of ℓ, the ℓth summand is bounded above by ρ2KV−K−1 times some
+constant depending only on K (again we have used Proposition 2.10 to bound the quantities Wk
+uniformly), which is smaller than the indicated error term once the leading factorρ/
+√
+2πV is taken
+into account. □
+3. A NALYSIS OF THE VARIANCE V (q; a, b)
+In this section we prove Theorems 1.4 and 1.7, as well as discussing related results to which our
+methods apply. We begin by establishing some arithmetic identities involving Dirichlet characters
+and their conductors in Section 3.1. Using these identities and a classical formula for b(χ), we
+complete the proof of Theorem 1.4 in Section 3.2. The linear combination of values L′
+L (1, χ)
+that deﬁnes M∗(q; a, b) can be converted into an asymptotic formula involving the von Mangoldt
+Λ-function, as we show in Section 3.3, and in this way we establish Theorem 1.7.
+Our analysis to this point has the interesting consequence that the densities δ(q; a, b) can be
+evaluated extremely precisely using only arithmetic content, that is, arithmetic on rational num-
+bers (including multiplicative functions of integers) and logarithms of integers; we explain this
+consequence in Section 3.4. Next, we show in Section 3.5 that the limiting logarithmic distribu-
+tions of the differences E(x; q, a)− E(x; q, b) obey a central limit theorem as q tends to inﬁnity.
+Finally, we explain in Section 3.6 how our analysis can be modiﬁed to apply to the race between
+the aggregate counting functions π(x; q, N) = #{p≤ x: p is a quadratic nonresidue (mod q)}
+and π(x; q, R) = #{p≤ x: p is a quadratic residue (mod q)}.
+3.1. Arithmetic sums over characters. We begin by establishing some preliminary arithmetic
+identities that will be needed in later proofs.
+Proposition 3.1. Let a and b be distinct reduced residue classes (mod q). Then
+∑
+χ (modq)
+|χ(a)− χ(b)|2 = 2φ(q),
+while for any reduced residue c̸≡ 1 (mod q) we have
+∑
+χ (modq)
+|χ(a)− χ(b)|2χ(c) =−φ(q)
+(
+ιq(cab−1) + ιq(cba−1)
+)
+,
+where ιq is deﬁned in Deﬁnition 1.5.
+Proof. These sums are easy to evaluate using the orthogonality relation [11, Corollary 4.5]
+∑
+χ (modq)
+χ(m) =
+{
+φ(q), if m≡ 1 (mod q)
+0, if m̸≡ 1 (mod q)
+}
+= φ(q)ιq(m). (3.1)
+24
+----PAGE 24----
+We have
+∑
+χ (modq)
+|χ(a)− χ(b)|2 =
+∑
+χ (modq)
+(2− χ(a)χ(b)− χ(b)χ(a))
+=
+∑
+χ (modq)
+2−
+∑
+χ (modq)
+χ(ab−1)−
+∑
+χ (modq)
+χ(ba−1) = 2φ(q) + 0 + 0,
+since a̸≡ b (mod q). Similarly,
+∑
+χ (modq)
+|χ(a)− χ(b)|2χ(c) =
+∑
+χ (modq)
+(2− χ(a)χ(b)− χ(b)χ(a))χ(c)
+=
+∑
+χ (modq)
+2χ(c)−
+∑
+χ (modq)
+χ(cab−1)−
+∑
+χ (modq)
+χ(cba−1)
+= 0− φ(q)
+(
+ιq(cab−1) + ιq(cba−1)
+)
+.
+□
+The results in the next two lemmas were discovered independently by V orhauer (see [11, Section
+9.1, problem 8]).
+Lemma 3.2. For any positive integerq, we have
+∑
+d|q
+Λ(q/d)φ(d) = φ(q)
+∑
+p|q
+log p
+p− 1 ,
+while for any proper divisor s of q we have
+∑
+d|s
+Λ(q/d)φ(d) = φ(q)Λ(q/s)
+φ(q/s) .
+Proof. For the ﬁrst identity, we group together the contributions from the divisors d such that q/d
+is a power of a particular prime factor p of q. If pr∥ q, write q = mpr, so that p ∤ m. We get a
+contribution to the sum only when d = mpr−k for some 1≤ k≤ r. Therefore
+∑
+d|q
+Λ(q/d)φ(d) =
+∑
+pr∥q
+r∑
+k=1
+Λ(pk)φ(mpr−k) =
+∑
+pr∥q
+φ(m) logp
+r∑
+k=1
+φ(pr−k).
+Since∑
+a|b φ(a) = b for any positive integer b, the inner sum is exactly pr−1. Noting that φ(m) =
+φ(q)/φ(pr) since p ∤ n, we obtain
+∑
+d|q
+Λ(q/d)φ(d) =
+∑
+pr∥q
+φ(q)
+φ(pr) pr−1 log p = φ(q)
+∑
+p|q
+log p
+p− 1
+as claimed.
+We turn now to the second identity. If q/s has at least two distinct prime factors, then so will
+q/d for every divisor d of s, and hence all of the Λ(q/d) terms will be 0. Therefore the entire sum
+equals 0, which is consistent with the claimed identity asRq(s) = 0 as well in this case. Therefore
+we need only consider the case where q/s equals a prime power pt.
+25
+----PAGE 25----
+Again write q = mpr with p ∤ m. Since s = q/pt = mpt−r, the only terms that contribute to the
+sum are d = mpr−k for t≤ k≤ r. By a similar calculation as before,
+∑
+d|s
+Λ(q/d)φ(d) =
+r∑
+k=t
+Λ(pk)φ(mpr−k) = φ(m) logp
+r∑
+k=t
+φ(pr−k)
+= φ(q)
+φ(pr) pr−t log p = φ(q) log p
+pt−1(p− 1) = φ(q)Λ(q/s)
+φ(q/s) ,
+since q/s = pt. This establishes the second identity. □
+Recall that χ∗ denotes the primitive character that induces χ and that q∗ denotes the conductor
+of χ∗.
+Proposition 3.3. For any positive integerq,
+∑
+χ (modq)
+log q∗ = φ(q)
+(
+log q−
+∑
+p|q
+log p
+p− 1
+)
+,
+while if a̸≡ 1 (mod q) is a reduced residue,
+∑
+χ (modq)
+χ(a) logq∗ =−φ(q)Λ(q/(q, a− 1))
+φ(q/(q, a− 1)) .
+Proof. First we show that
+∑
+χ (modq)
+χ(a) logq∗ = log q
+∑
+χ (modq)
+χ(a)−
+∑
+d|q
+Λ(q/d)
+∑
+χ (modd)
+χ(a) (3.2)
+for any reduced residue a (mod q). Given a character χ (mod q) and a divisor d of q, the character
+χ is induced by a character (mod d) if and only if d is a multiple of q∗. Therefore
+∑
+d|q
+Λ(q/d)
+∑
+χ (modd)
+χ(a) =
+∑
+χ (modq)
+χ(a)
+∑
+d|q
+q∗|d
+Λ(q/d).
+Making the change of variables c = q/d, this identity becomes
+∑
+d|q
+Λ(q/d)
+∑
+χ (modd)
+χ(a) =
+∑
+χ (modq)
+χ(a)
+∑
+c|q/q∗
+Λ(c)
+=
+∑
+χ (modq)
+χ(a) log q
+q∗ = log q
+∑
+χ (modq)
+χ(a)−
+∑
+χ (modq)
+χ(a) logq∗,
+which veriﬁes equation (3.2).
+If a≡ 1 (mod q), then equation (3.2) becomes
+∑
+χ (modq)
+log q∗ = log q
+∑
+χ (modq)
+1−
+∑
+d|q
+Λ(q/d)
+∑
+χ (modd)
+1
+= φ(q) logq−
+∑
+d|q
+Λ(q/d)φ(d) = φ(q) logq− φ(q)
+∑
+p|q
+log p
+p− 1
+26
+----PAGE 26----
+by Lemma 3.2, establishing the ﬁrst assertion of the lemma. If on the other hand a̸≡ 1 (mod q),
+then applying the orthogonality relation (3.1) to equation (3.2) yields
+∑
+χ (modq)
+χ(a) logq∗ = 0−
+∑
+d|q
+Λ(q/d)φ(d)ιd(a)
+=−
+∑
+d|(q,a−1)
+Λ(q/d)φ(d) =−φ(q)Λ(q/(q, a− 1))
+φ(q/(q, a− 1))
+by Lemma 3.2 again, establishing the second assertion of the lemma. □
+Finally we record a proposition that involves values of both primitive characters and characters
+induced by them.
+Proposition 3.4. Let p be a prime and e a positive integer, and letr be a reduced residue (mod q).
+If p ∤ q, then ∑
+χ (modq)
+χ(r)
+(
+χ∗(pe)− χ(pe)
+)
+= 0.
+On the other hand, if p|q then
+∑
+χ (modq)
+χ(r)
+(
+χ∗(pe)− χ(pe)
+)
+=
+{
+φ
+(
+q/pν)
+, if rpe≡ 1 (mod q/pν),
+0, otherwise,
+where ν≥ 1 is the integer such that pν∥ q.
+Proof. The ﬁrst assertion is trivial: if p ∤ q then χ∗(pe) = χ(pe) for every character χ (mod q). If
+p|q, then χ(pe) = 0 for every χ, and so
+∑
+χ (modq)
+χ(r)
+(
+χ∗(pe)− χ(pe)
+)
+=
+∑
+χ (modq)
+χ(r)χ∗(pe) =
+∑
+χ (modq)
+χ∗(rpe)
+since χ(r) = χ∗(r) for every χ (mod q) due to the hypothesis that (r, q) = 1 . Also, we have
+χ∗(pe) = 0 for any character χ such that p|q∗, and so
+∑
+χ (modq)
+χ∗(rpe) =
+∑
+χ (modq)
+q∗|q/pν
+χ∗(rpe) =
+∑
+χ (modq/pν)
+χ(rpe),
+since (pe, q/pν) = 1. The second assertion now follows from the orthogonality relation (3.1). □
+3.2. A formula for the variance. Recall that b(χ) was deﬁned in Deﬁnition 1.3; we record a
+classical formula for b(χ) in the next lemma, after which we will be able to prove Theorem 1.4.
+Lemma 3.5. Assume GRH. Let q≥ 3, and let χ be any nonprincipal character modulo q. Then
+b(χ) = log q∗
+π− γ0− (1 + χ(−1)) log 2 + 2 ReL′(1, χ∗)
+L(1, χ∗) .
+Proof. Since the zeros of L(s, χ) and L(s, χ∗) on the line Re z = 1
+2 are identical, it sufﬁces to
+show that for any primitive character χ modulo q,
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+1
+1
+4 + γ2 = log q
+π− γ0− (1 + χ(−1)) log 2 + 2 ReL′(1, χ)
+L(1, χ) .
+27
+----PAGE 27----
+There is a certain constant B(χ) that appears in the Hadamard product formula for L(s, χ). One
+classical formula related to it [11, equation (10.38)] is
+Re B(χ) =−
+∑
+ρ∈C
+0<Reρ<1
+L(ρ,χ)=0
+Re 1
+ρ . (3.3)
+We can relate B(χ) to b(χ) under GRH by rewriting the previous equation as
+− 2 ReB(χ) =
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+Re
+( 2
+1
+2 + iγ
+)
+=
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+Re
+(1− 2iγ
+1
+4 + γ2
+)
+= b(χ). (3.4)
+On the other hand, V orhauer showed in 2006 (see [11, equation (10.39)]) that
+B(χ) =−1
+2 log q
+π− L′
+L (1, ¯χ) + γ0
+2 + 1 + χ(−1)
+2 log 2.
+Taking real parts (which renders moot the difference between ¯χ and χ) and comparing to equa-
+tion (3.4) establishes the lemma. □
+Proof of Theorem 1.4. We begin by applying Lemma 3.5 to Deﬁnition 1.3 for V (q; a, b), which
+yields
+V (q; a, b) =
+∑
+χ (modq)
+χ̸=χ0
+|χ(a)− χ(b)|2
+(
+log q∗
+π− γ0− (1 + χ(−1)) log 2 + 2 ReL′(1, χ∗)
+L(1, χ∗)
+)
+=
+∑
+χ (modq)
+|χ(a)− χ(b)|2 log q∗− (γ0 + log 2π)
+∑
+χ (modq)
+|χ(a)− χ(b)|2
+− log 2
+∑
+χ (modq)
+|χ(a)− χ(b)|2χ(−1) + 2M∗(q; a, b), (3.5)
+recalling Deﬁnition 1.6 forM∗(q; a, b). We are permitted to reinclude the principal characterχ0 in
+the three sums on the right-hand side, since the coefﬁcient|χ0(a)− χ0(b)|2 always equals 0.
+The second and third terms on the right-hand side of equation (3.5) are easy to evaluate using
+Proposition 3.1: we have
+− (γ0 + log 2π)
+∑
+χ (modq)
+|χ(a)− χ(b)|2 =−2(γ0 + log 2π)φ(q) (3.6)
+and
+− log 2
+∑
+χ (modq)
+|χ(a)− χ(b)|2χ(−1) = (log 2)φ(q)
+(
+ιq(−ab−1) + ιq(−ba−1)
+)
+= (2 log 2)φ(q)ιq(−ab−1). (3.7)
+The ﬁrst sum on the right-hand side of equation (3.5) can be evaluated using Proposition 3.3:
+∑
+χ (modq)
+|χ(a)− χ(b)|2 log q∗ =
+∑
+χ (modq)
+(2− χ(ab−1)− χ(ba−1)) logq∗
+= 2φ(q)
+(
+log q−
+∑
+p|q
+log p
+p− 1
+)
++ φ(q)Λ(q/(q, ab−1− 1))
+φ(q/(q, ab−1− 1)) + φ(q)Λ(q/(q, ba−1− 1))
+φ(q/(q, ba−1− 1)) .
+28
+----PAGE 28----
+Since (q, mn) = (q, n) for any integer m that is relatively prime to q, we see that (q, ab−1− 1) =
+(q, a− b) = (q, b− a) = (q, ba−1− 1), and therefore
+∑
+χ (modq)
+|χ(a)− χ(b)|2 log q∗ = 2φ(q)
+(
+log q−
+∑
+p|q
+log p
+p− 1 + Λ(q/(q, a− b))
+φ(q/(q, a− b))
+)
+. (3.8)
+Substituting the evaluations (3.6), (3.7), and (3.8) into equation (3.5), we obtain
+V (q; a, b) = 2φ(q)
+(
+log q−
+∑
+p|q
+log p
+p− 1 + Λ(q/(q, a− b))
+φ(q/(q, a− b))
+)
+− 2(γ0 + log 2π)φ(q) + (2 log 2)φ(q)ιq(−ab−1) + 2M∗(q; a, b)
+= 2φ(q)
+(
+L(q) + Kq(a− b) + ιq(−ab−1) log 2
+)
++ 2M∗(q; a, b),
+whereL(q) and Kq(n) were deﬁned in Deﬁnition 1.5. This establishes the theorem. □
+Theorem 1.4 has the following asymptotic formula as a corollary:
+Proposition 3.6. Assuming GRH, we have V (q; a, b) = 2φ(q) logq + O(φ(q) log logq).
+Proof. First note that the function(log t)/(t−1) is decreasing for t > 1. Consequently, Λ(q)/φ(q)
+is bounded by log 2. Also, letting pj denote the jth prime, we see that
+∑
+p|q
+log p
+p− 1≤
+ω(q)∑
+j=1
+log pj
+pj− 1≪ log pω(q)≪ log ω(q)≪ log logq,
+where the ﬁnal inequality uses the trivial bound ω(q) ≤ (log q)/(log 2). From Deﬁnition 1.5,
+we conclude that L(q) = log q + O(log logq). Next, Kq(a− b) is bounded by log 2 as above,
+and ιq(ab−1) is of course bounded as well. Finally, on GRH we know that L′(1, χ∗)/L(1, χ∗)≪
+log logq∗≤ log logq (either see [8], or take y = log 2 q in Proposition 3.10), which immediately
+implies that M∗(q; a, b)≪ φ(q) log logq by Deﬁnition 1.6. The proposition now follows from
+Theorem 1.4. □
+3.3. Evaluation of the analytic term M∗(q; a, b). The goal of this section is a proof of Theo-
+rem 1.7. We start by examining more closely, in the next two lemmas, the relationship between the
+quantities M∗(q; a, b) and M(q; a, b) deﬁned in Deﬁnition 1.6. Recall thate(q; p, r) was deﬁned in
+Deﬁnition 1.8.
+Lemma 3.7. If pν∥ q, then
+∑
+e≥1
+rpe≡1 (modq/pν)
+1
+pe = 1
+pe(q;p,r)(1− p−e(q;p,1)).
+Proof. If r is not in the multiplicative subgroup (mod q/pν) generated by p, then the left-hand side
+is clearly zero, while the right-hand side is zero by the convention that e(q; p, r) =∞ in this case.
+Otherwise, the positive integers e for which rpe≡ 1 (mod q/pν) are precisely the ones of the form
+e(q; p, r) + ke(q; p, 1) for k≥ 0, since e(q; p, r) is the ﬁrst such integer and e(q; p, 1) is the order
+of p (mod q/pν). Therefore we obtain the geometric series
+∑
+e≥1
+rpe≡1 (modq/pν)
+1
+pe =
+∞∑
+k=0
+1
+pe(q;p,r)+ke(q;p,1) = 1
+pe(q;p,r)(1− p−e(q;p,1))
+as claimed. □
+29
+----PAGE 29----
+Deﬁnition3.8. If pν∥ q, deﬁne
+h0(q; p, r) = 1
+φ(pν)
+log p
+pe(q;p,r)(1− p−e(q;p,1))
+and
+H0(q; a, b) =
+∑
+p|q
+(
+h0(q; p, ab−1) + h0(q; p, ba−1)− 2h0(q; p, 1)
+)
+.
+We will see later in this section, in the proof of Theorem 1.7, that h0 and H0 are very close to
+the functions h and H also deﬁned in Deﬁnition 1.8. Notice that if q is prime, then h0(q; q, r) =
+(log q)/q(q− 1) independent of r and thus H(q; a, b) = 0 for any a and b. ♦
+The next lemma could be proved under a hypothesis much weaker than GRH, but this is irrele-
+vant to our present purposes.
+Lemma 3.9. Assume GRH. If a and b are reduced residues (mod q), then
+M∗(q; a, b) = M(q; a, b) + φ(q)H0(q; a, b),
+where M∗(q; a, b) and M(q; a, b) are deﬁned in Deﬁnition 1.6.
+Proof. We begin with the identity
+L′(1, χ)
+L(1, χ) =− lim
+y→∞
+∑
+p≤y
+∞∑
+e=1
+χ(pe) logp
+pe .
+This identity follows from the fact that the Euler product of L(s, χ) converges uniformly for
+Re(s)≥ 1/2 + ε; this is implied by the estimate ∑
+p≤x χ(p)≪q x1/2 log2 x which itself is a
+consequence of GRH.
+Therefore
+M∗(q; a, b)− M(q; a, b) =
+∑
+χ (modq)
+χ̸=χ0
+⏐⏐χ(a)− χ(b)
+⏐⏐2
+( L′(1, χ∗)
+L(1, χ∗)− L′(1, χ)
+L(1, χ)
+)
+=−
+∑
+χ (modq)
+χ̸=χ0
+⏐⏐χ(a)− χ(b)
+⏐⏐2
+lim
+y→∞
+∑
+p≤y
+log p
+∞∑
+e=1
+χ∗(pe)− χ(pe)
+pe
+= lim
+y→∞
+∑
+p≤y
+log p
+∞∑
+e=1
+1
+pe
+∑
+χ (modq)
+(
+χ(ab−1) + χ(ba−1)− 2
+)(
+χ∗(pe)− χ(pe)
+)
+,
+where the inserted term involving χ0 is always zero. Proposition 3.4 tells us that the inner sum
+vanishes except possibly when the prime p divides q; invoking that proposition three times, we see
+that
+M∗(q; a, b)− M(q; a, b) =
+∑
+pν∥q
+φ(q/pν) logp
+×
+( ∑
+e≥1
+ab−1pe≡1 (modq/pν)
+1
+pe +
+∑
+e≥1
+ba−1pe≡1 (modq/pν)
+1
+pe− 2
+∑
+e≥1
+pe≡1 (modq/pν)
+1
+pe
+)
+.
+30
+----PAGE 30----
+We can evaluate these inner sums using Lemma 3.7: by comparison with Deﬁnition 3.8,
+M∗(q; a, b)− M(q; a, b) = φ(q)
+∑
+pν∥q
+log p
+φ(pν)
+( 1
+pe(q;p,ab−1)(1− p−e(q;p,1))
++ 1
+pe(q;p,ba−1)(1− p−e(q;p,1))− 2 1
+pe(q;p,1)(1− p−e(q;p,1))
+)
+= φ(q)H0(q; a, b),
+which establishes the lemma. □
+We will need the following three propositions, with explicit constants given, when we undertake
+our calculations and estimations of δ(q; a, b). Because the need for explicit constants makes their
+derivations rather lengthy, we will defer the proofs of the ﬁrst two propositions until Section 5.2
+and derive only the third one in this section.
+Proposition 3.10. Assume GRH. Let χ be a nonprincipal character (mod q). For any positive real
+number y,
+L′(1, χ)
+L(1, χ) =−
+∞∑
+n=1
+χ(n)Λ(n)
+n e−n/y + O
+(14.27 logq + 16.25
+y1/2 + 16.1 logq + 17.83
+y3/4
+)
+.
+Proposition 3.11. If 1≤ a < q , then
+∑
+n≡a (modq)
+Λ(n)
+n e−n/q2
+= Λ(a)
+a + O
+(2 log2 q
+q + 3.935 logq
+q
+)
+.
+Assuming these propositions for the moment, we can derive the following explicit estimate for
+M∗(q; a, b), after which we will be able to ﬁnish the proof of Theorem 1.7.
+Proposition 3.12. Assume GRH. For any paira, b of distinct reduced residues moduloq, let r1 and
+r2 denote the least positive residues of ab−1 and ba−1 (mod q). Then for q≥ 150,
+M∗(q; a, b) = φ(q)
+(Λ(r1)
+r1
++ Λ(r2)
+r2
++ H0(q; a, b)
+)
++ O
+(23.619φ(q) log2 q
+q
+)
+.
+Proof. The bulk of the proof is devoted to understanding M(q; a, b). From Proposition 3.10, we
+have
+M(q; a, b) =
+∑
+χ (modq)
+⏐⏐χ(a)− χ(b)
+⏐⏐2 L′(1, χ)
+L(1, χ)
+=
+∑
+χ (modq)
+(
+2− χ(ba−1)− χ(ab−1)
+)(
+−
+∞∑
+n=1
+Λ(n)χ(n)
+n e−n/y
++ O
+(14.27 logq + 10.6
+y1/2 + 16.1 logq + 13.1
+y3/4
+))
+=
+∞∑
+n=1
+Λ(n)
+n e−n/y
+∑
+χ (modq)
+(
+χ(ba−1n) + χ(ab−1n)− 2χ(n)
+)
++ 4φ(q)O
+(14.27 logq + 16.25
+y1/2 + 16.1 logq + 17.83
+y3/4
+))
+, (3.9)
+31
+----PAGE 31----
+and using the orthogonality relations in Proposition 3.1, we see that
+M(q; a, b) = φ(q)
+( ∑
+n≡ab−1 (modq)
+Λ(n)
+n e−n/y+
+∑
+n≡ba−1 (modq)
+Λ(n)
+n e−n/y−2
+∑
+n≡1 (modq)
+Λ(n)
+n e−n/y
+)
++ 4φ(q)O
+(14.27 logq + 16.25
+y1/2 + 16.1 logq + 17.83
+y3/4
+))
+.
+At this point we choosey = q2. We calculate that(14.27 logq + 16.25)/q+(16.1 logq + 17.83)/q3/2 <
+3.816(log2 q)/q for q≥ 150, and so
+M(q; a, b) = φ(q)
+( ∑
+n≡ab−1 (modq)
+Λ(n)
+n e−n/q2
++
+∑
+n≡ba−1 (modq)
+Λ(n)
+n e−n/q2
+−2
+∑
+n≡1 (modq)
+Λ(n)
+n e−n/q2
+)
++ O
+(15.263φ(q) log2 q
+q
+)
+.
+Let r1 and r2 denote the least positive residues ofab−1 and ba−1 (mod q). Using Proposition 3.11
+three times, we see that
+M(q; a, b) = φ(q)
+(Λ(r1)
+r1
++ Λ(r2)
+r2
+− 2Λ(1)
+1 + O
+(
+3
+(2 log2 q
+q + 3.935 logq
+q
+)))
++ O
+(15.263φ(q) log2 q
+q
+)
+= φ(q)
+(Λ(r1)
+r1
++ Λ(r2)
+r2
+)
++ O
+(36.619φ(q) log2 q
+q
+)
+for q≥ 150. With this understanding of M(q; a, b), the proposition now follows for M∗(q; a, b) by
+Lemma 3.9. □
+Proof of Theorem 1.7. Since Proposition 3.12 tells us that
+M∗(q; a, b) = φ(q)
+(Λ(r1)
+r1
++ Λ(r2)
+r2
++ H0(q; a, b) + O
+(log2 q
+q
+))
+,
+all we need to do to prove the theorem is to show that
+H0(q; a, b) = H(q; a, b) + O
+(log2 q
+q
+)
+.
+The key observation is that pe(q;p,1) ≡ 1 (mod q/pν) and pe(q;p,1) ≥ p1 > 1, and so pe(q;p,1) >
+q/pν. Therefore by Deﬁnitions 1.8 and 3.8, we have h0(q; p, r) = h(q; p, r)(1 + O(pν/q)) and
+h(q; p, 1)≪ (log p)/φ(pν)(q/pν)≪ (log p)/q. We see that
+H0(q; a, b) =
+∑
+pν∥q
+(
+h0(q; p, ab−1) + h0(q; p, ba−1)− 2h0(q; p, 1)
+)
+=
+∑
+pν∥q
+((
+h(q; p, ab−1) + h(q; p, ba−1)
+)(
+1 + O
+(pν
+q
+))
++ O
+(logp
+q
+))
+.
+It is certainly true that h(q; p, r)≪ (log p)/φ(pν)≪ (log p)/pν, and so the previous equation
+becomes
+H0(q; a, b) = H(q; a, b) + O
+(∑
+pν∥q
+(log p
+pν
+pν
+q + log p
+q
+))
+= H(q; a, b) + O
+(log q
+q
+)
+,
+32
+----PAGE 32----
+which establishes the theorem. □
+3.4. Estimates in terms of arithmetic information only. The purpose of this section is to show
+that the densities δ(q; a, b) can be calculated extremely precisely using only “arithmetic informa-
+tion”. For the purposes of this section, “arithmetic information” means ﬁnite expressions com-
+posed of elementary arithmetic operations involving only integers, logarithms of integers, values
+of the Riemann zeta function at positive integers, and the constants π and γ0. (In fact, all of these
+quantities themselves can in principal be calculated arbitrarily precisely using only elementary
+arithmetic operations on integers.) The point is that “arithmetic information” excludes integrals
+and such quantities as Dirichlet characters and L-functions, Bessel functions, and trigonometric
+functions. The formula we can derive, with only arithmetic information in the main term, has an
+error term of the form OA(q−A) for any constant A > 0 we care to specify in advance.
+To begin, we note that letting y tend to inﬁnity in equation (3.9) leads to the heuristic statement
+M(q; a, b) =
+∞∑
+n=1
+Λ(n)
+n
+∑
+χ (modq)
+(
+χ(ba−1n) + χ(ab−1n)− 2χ(n)
+)
+= φ(q)
+∞∑
+n=1
+Λ(n)
+n
+(
+ιq(ba−1n) + ιq(ab−1n)− 2ιq(n)
+)
+“ =” φ(q)
+( ∑
+n≡ab−1 (modq)
+Λ(n)
+n +
+∑
+n≡ba−1 (modq)
+Λ(n)
+n − 2
+∑
+n≡1 (modq)
+Λ(n)
+n
+)
+,
+where the “ =” warns that the sums on the right-hand side do not individually converge. In fact,
+using a different approach based on the explicit formula, one can obtain
+M(q; a, b) = φ(q)
+( ∑
+1≤n≤y
+n≡ab−1 (modq)
+Λ(n)
+n +
+∑
+1≤n≤y
+n≡ba−1 (modq)
+Λ(n)
+n − 2
+∑
+1≤n≤y
+n≡1 (modq)
+Λ(n)
+n
+)
++ O
+( φ(q) log2 qy√y
+)
+. (3.10)
+In light of Theorem 1.4 in conjunction with Lemma 3.9, we see that we can get an arbitrarily good
+approximation to V (q; a, b) using only arithmetic information.
+By Theorem 1.1, we see we can thus obtain an extremely precise approximation forδ(q; a, b) as
+long as we can calculate the coefﬁcientssq;a,b(ℓ, j) deﬁned in Deﬁnition 2.23. Inspecting that deﬁ-
+nition reveals that it sufﬁces to be able to calculateWm(q; a, b) (or equivalentlyWm(q; a, b)V (q; a, b))
+arbitrarily precisely using only arithmetic content. With the next several lemmas, we describe how
+such a calculation can be made.
+Lemma 3.13. Let n be a positive integer, and setℓ =⌊n
+2⌋. There exist rational numbers Cn,1, . . . ,
+Cn,ℓ such that
+1
+(1/4 + t2)n = 2 Re
+( 1
+(1/2− it)n
+)
++ Cn,1
+(1/4 + t2)n−1 + Cn,2
+(1/4 + t2)n−2 +··· + Cn,ℓ
+(1/4 + t2)n−ℓ
+for any complex number t.
+33
+----PAGE 33----
+Proof. Since
+2 Re 1
+(1/2− it)n = 1
+(1/2− it)n + 1
+(1/2 + it)n = (1/2 + it)n + (1/2− it)n
+(1/4 + t2)n ,
+it sufﬁces to show that
+(1/2 + it)n + (1/2− it)n
+(1/4 + t2)n = Cn,0
+(1/4 + t2)n + −Cn,1
+(1/4 + t2)n−1 +··· + −Cn,ℓ
+(1/4 + t2)n−ℓ , (3.11)
+where each Cn,m is a rational number and Cn,0 = 1. In fact, we need only show that this identity
+holds for some rational number Cn,0, since multiplying both sides by (1/4 + t2)n and taking the
+limit as t tends to i/2 proves that Cn,0 must equal 1.
+Using the binomial theorem,
+(1/2 + it)n + (1/2− it)n =
+n∑
+k=0
+(n
+k
+)(1
+2
+)n−k(
+(it)k + (−it)k)
+=
+ℓ∑
+j=0
+(n
+2j
+)(1
+2
+)n−2j(
+2(−1)jt2j)
+= 2
+ℓ∑
+j=0
+(n
+2j
+)(1
+2
+)n−2j
+(−1)j(
+( 1
+4 + t2)− 1
+4
+)j
+= 2
+ℓ∑
+j=0
+(n
+2j
+)(1
+2
+)n−2j
+(−1)j
+j∑
+m=0
+(j
+m
+)
+( 1
+4 + t2)m(
+− 1
+4
+)j−m
+,
+which is a linear combination of the expressions (1/4 + t2)m, for 0 ≤ m ≤ ℓ, with rational
+coefﬁcients not depending ont. Dividing both sides by (1/4 + t2)n establishes equation (3.11) for
+suitable rational numbers Cn,m and hence the lemma. □
+For the rest of this section, we say that a quantity is a ﬁxedQ-linear combination of certain
+elements if the coefﬁcients of this linear combination are rational numbers that are independent
+of q, a, b and χ (but may depend on n and j where appropriate). Our methods allow the exact
+calculation of these rational coefﬁcients, but the point of this section would be obscured by the
+bookkeeping required to record them.
+Deﬁnition3.14. As usual, Γ(z) denotes Euler’s Gamma function. For any positive integer n and
+any Dirichlet character χ (mod q), deﬁne
+bn(χ) =
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+1
+( 1
+4 + γ2)n ,
+so that b1(χ) = b(χ) for example. ♦
+34
+----PAGE 34----
+Lemma 3.15. Assume GRH. Let n be a positive integer, and letχ be a primitive character(mod q).
+Then bn(χ) is a ﬁxedQ-linear combination of the quantities
+{
+log q
+π ,
+[d
+ds log Γ(s)
+]
+s=(1+ξ)/2
+, . . . ,
+[dn
+dsn log Γ(s)
+]
+s=(1+ξ)/2
+,
+Re
+[d
+ds log L(s, χ)
+]
+s=1
+, . . . ,Re
+[dn
+dsn log L(s, χ)
+]
+s=1
+}
+, (3.12)
+where ξ = 0 if χ(−1) = 1 and ξ = 1 if χ(−1) =−1.
+Remark. Since the critical zeros of L(s, χ) and L(s, χ∗) are identical, the lemma holds for any
+nonprincipal character χ if, in the set (3.12), we replace q by q∗ and L(s, χ) by L(s, χ∗).
+Proof. For primitive characters χ, Lemma 3.5 tells us that
+b(χ) = log q
+π− γ0− (1 + χ(−1)) log 2 + 2 ReL′(1, χ)
+L(1, χ)
+= log q
+π +
+[Γ′(s)
+Γ(s)
+]
+s=(1+ξ)/2
++ 2 Re L′(1, χ)
+L(1, χ) ,
+which establishes the lemma for n = 1. We proceed by induction on n. By Lemma 3.13, we see
+that
+bn(χ) =
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+1
+(1/4 + γ2)n
+=
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+(
+2 Re 1
+(1/2− iγ)n + Cn,1
+(1/4 + γ2)n−1 + Cn,2
+(1/4 + γ2)n−2 +··· + Cn,ℓ
+(1/4 + γ2)n−ℓ
+)
+= Cn,1bn−1(χ) +··· + Cn,ℓbn−ℓ(χ) + 2
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+Re 1
+(1/2− iγ)n (3.13)
+(where ℓ =⌊n
+2⌋). By the induction hypothesis, each term of the form Cn,mbn−m(χ) is a ﬁxed
+Q-linear combination of the elements of the set (3.12); therefore all that remains is to show that
+the sum on the right-hand side of equation (3.13) is also a ﬁxed Q-linear combination of these
+elements.
+Consider the known formula [11, equation (10.37)]
+d
+ds log L(s, χ) = B(χ)− d
+ds log Γ
+( s + ξ
+2
+)
+− 1
+2 log q
+π +
+∑
+ρ
+( 1
+s− ρ + 1
+ρ
+)
+,
+where∑
+ρ denotes a sum over all nontrivial zeros of L(s, χ) and B(χ) is a constant (alluded to in
+the proof of Lemma 3.5). If we differentiate this formula n− 1 times with respect to s, we obtain
+dn
+dsn log L(s, χ) =− dn
+dsn log Γ
+( s + ξ
+2
+)
++
+∑
+ρ
+(−1)n−1(n− 1)!
+(s− ρ)n .
+35
+----PAGE 35----
+Setting s = 1 and taking real parts, and using GRH, we conclude that
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+Re 1
+(1/2− iγ)n =
+∑
+ρ
+Re 1
+(1− ρ)n
+= (−1)n−1
+(n− 1)!
+[
+Re dn
+dsn log L(s, χ) + dn
+dsn log Γ
+( s + ξ
+2
+)]
+s=1
+,
+which is a ﬁxed Q-linear combination of the elements of the set (3.12) as desired. (Although[dn
+dsn log Γ(s)
+]
+s=(1+ξ)/2 and
+[dn
+dsn log Γ
+(s+ξ
+2
+)]
+s=1 differ by a factor of 2n, this does not invalidate the
+conclusion.) □
+The following three deﬁnitions, which generalize earlier notation, will be important in our anal-
+ysis of the higher-order terms Wn(q; a, b)V (q; a, b).
+Deﬁnition3.16. For any positive integers q and n, deﬁne
+Ln(q) =
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)(
+ιq(aib−i)
+(
+log q
+π−
+∑
+p|q
+log p
+p− 1
+)
+−
+(
+1− ιq(aib−i)
+)Λ(q/(q, ai− bi))
+φ(q/(q, ai− bi))
+)
+.
+♦
+Deﬁnition3.17. Let χ be a Dirichlet character (mod q), and let a and b be integers. For any positive
+integers j≤ n, deﬁne
+M∗
+n,j(q; a, b) = 1
+φ(q)
+∑
+χ (modq)
+χ̸=χ0
+|χ(a)− χ(b)|2n
+[dj
+dsj log L(s, χ∗)
+]
+s=1
+and
+Mn,j(q; a, b) = 1
+φ(q)
+∑
+χ (modq)
+χ̸=χ0
+|χ(a)− χ(b)|2n
+[dj
+dsj log L(s, χ)
+]
+s=1
+,
+so thatM∗
+1,1(q; a, b) = M∗(q; a, b)/φ(q) andM1,1(q; a, b) = M(q; a, b)/φ(q) for example. One
+can use Lemma 3.19 and Perron’s formula to show that
+Mn,j(q; a, b) = (−1)j
+∑
+|i|≤j
+(−1)i
+( 2j
+j + i
+) ∑
+n≤y
+n≡aib−i (modq)
+Λ(n) logj−1 n
+n + Oj
+(logj+1 qy√y
+)
+,
+in analogy with equation (3.10). ♦
+Deﬁnition3.18. For any distinct reduced residue classes a and b (mod q), deﬁne
+Hn,j(q; a, b) = (−1)j
+∑
+pν∥q
+(log p)j
+φ(pν)
+∑
+|i|≤j
+(−1)i
+( 2n
+n + i
+) ∑
+e≥1
+aib−ipe≡1 (modq/pν)
+ej−1
+pe
+36
+----PAGE 36----
+for any integers 1≤ j≤ n. Notice that the inner sum is
+∑
+e≥1
+aib−ipe≡1 (modq/pν)
+ej−1
+pe =
+∑
+e≥1
+e≡e(q;p,aib−i) (mode(q;p, 1))
+ej−1
+pe ,
+where e(q; p, r) is deﬁned in Deﬁnition 1.8. It turns out that the identity
+∑
+e≥1
+e≡r (mods)
+em
+pe = 1
+pr(1− p−s)
+m∑
+g=0
+(m
+g
+)
+sgrm−g
+g∑
+ℓ=0
+{g
+ℓ
+} ℓ!
+(ps− 1)ℓ
+(in which
+{g
+ℓ
+}
+denotes the Stirling number of the second kind) is valid for any positive integersm,
+p, r, and s such that r≤ s (as one can see by expanding (sk + r)m by the binomial theorem and
+then invoking the identity [6, (equation 7.46)]). Consequently, we see thatHn,j(q; a, b) is a rational
+linear combination of the elements of the set {(log p)j : p|q} (although the rational coefﬁcients
+depend upon q, a, and b). ♦
+Once we determine how to expand the coefﬁcient |χ(a)− χ(b)|2n as a linear combination
+of individual values of χ, we can establish Proposition 3.20 which describes how the cumulant
+Wn(q; a, b)V (q; a, b) can be evaluated in terms of the arithmetic information already deﬁned.
+Lemma 3.19. Let χ be a Dirichlet character(mod q), and let a and b be reduced residues(mod q).
+For any nonnegative integern, we have
+|χ(a)− χ(b)|2n =
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)
+χ(aib−i).
+Proof. The algebraic identity
+(
+2− t− t−1)n
+=
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)
+ti
+can be veriﬁed by a straightforward induction onn. Since
+|χ(a)− χ(b)|2 =
+(
+χ(a)− χ(b)
+)(
+χ(a)− χ(b)
+)
+= 2− χ(ab−1)− χ(ab−1)−1,
+the lemma follows immediately. □
+Proposition 3.20. Assume GRH. Let a and b be reduced residues(mod q). For any positive integer
+n, the expression Wn(q; a, b)V (q; a, b)/φ(q) can be written as a ﬁxed Q-linear combination of
+elements in the set
+{Ln(q)}∪
+{
+ιq
+(
+aib−i)
+log 2, ιq
+(
+−aib−i)
+log 2, ιq
+(
+aib−i)
+γ0 :|i|≤n
+}
+∪
+{
+ιq
+(
+aib−i)
+ζ(j), ιq
+(
+−aib−i)
+ζ(j):|i|≤n, 2≤ j≤ n
+}
+∪
+{
+Hn,j(q; a, b),Mn,j(q; a, b): 1≤ j≤ n
+}
+. (3.14)
+37
+----PAGE 37----
+Proof. From the deﬁnitions (2.9) and (3.14) ofWn(q; a, b) and bn(χ), we have
+Wn(q; a, b)V (q; a, b)
+φ(q) = 22n|λ2n|
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n
+∑
+γ>0
+L(1/2+iγ,χ)=0
+1
+(1/4 + γ2)n
+= 22n−1|λ2n|· 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2nbn(χ).
+Lemma 2.8(d) tells us that the numbers λ2n are rational. Therefore by Lemma 3.15, it sufﬁces
+to establish that three types of expressions, corresponding to the three types of quantities in the
+set (3.12), are ﬁxedQ-linear combinations of elements of the set (3.14).
+Type 1: 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n log q∗
+π .
+Note that Proposition 3.3 can be rewritten in the form
+1
+φ(q)
+∑
+χ (modq)
+χ(a) logq∗ = ιq(a)
+(
+log q−
+∑
+p|q
+log p
+p− 1
+)
+−
+(
+1− ιq(a)
+)Λ(q/(q, a− 1))
+φ(q/(q, a− 1)) . (3.15)
+By Lemma 3.19 and the orthogonality relation (3.1), we have
+1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2nχ(c) =
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)
+ιq(aib−ic). (3.16)
+Therefore, using equation (3.15) and Proposition 3.1, we get
+1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n log q∗
+π
+= 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n log q∗− 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n log π
+=
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)(
+ιq(aib−i)
+(
+log q−
+∑
+p|q
+log p
+p− 1
+)
+− (1− ιq(aib−i))Λ(q/(q, aib−i− 1))
+φ(q/(q, aib−i− 1))− ιq(aib−i) logπ
+)
+=Ln(q),
+since (q, aib−i− 1) = (q, ai− bi).
+Type 2: 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n
+[dj
+dsj log Γ(s)
+]
+s=(1+ξ)/2
+for some 1≤ j≤ n.
+The following identities hold for j≥ 2 (see [1, equations 6.4.2 and 6.4.4]):
+[dj
+dsj log Γ(s)
+]
+s=1
+= (−1)j(j− 1)!ζ(j);
+[dj
+dsj log Γ(s)
+]
+s=1/2
+= (−1)j(j− 1)!ζ(j)(2j− 1).
+38
+----PAGE 38----
+Because ξ = 0 when χ(−1) = 1 and ξ = 1 when χ(−1) =−1, we may thus write
+[dj
+dsj log Γ(s)
+]
+s=(1+ξ)/2
+= (−1)j(j− 1)!ζ(j)
+(
+2j−1 + χ(−1)(2j−1− 1)
+)
+,
+whence by equation (3.16),
+1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n
+[dj
+dsj log Γ(s)
+]
+s=(1+ξ)/2
+= 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n(−1)j(j− 1)!ζ(j)
+(
+2j−1 + χ(−1)(2j−1− 1)
+)
+= (−1)j(j− 1)!ζ(j)
+(
+2j−1
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)
+ιq(aib−i)
++ (2j−1− 1)
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+)
+ιq(−aib−i)
+)
+,
+which is a linear combination of the desired type. The case j = 1 can be handled similarly using
+the identity [d
+ds log Γ(s)
+]
+s=(1+ξ)/2
+=−γ0−
+(
+1 + χ(−1)
+)
+log 2.
+Type 3: 1
+φ(q)
+∑
+χ (modq)
+|χ(a)− χ(b)|2n Re
+[dj
+dsj log L(s, χ∗)
+]
+s=1
+for some 1≤ j≤ n.
+The expression in question is exactlyM∗
+n,j(q; a, b), and so it sufﬁces to show thatM∗
+n,j(q; a, b) =
+Mn,j(q; a, b) + Hn,j(q; a, b). Note that the identity
+dj
+dsj log L(s, χ) = dj−1
+dsj−1
+(
+−
+∞∑
+n=1
+Λ(n)χ(n)
+ns
+)
+= (−1)j
+∞∑
+n=1
+Λ(n)(log n)j−1χ(n)
+ns
+implies [dj
+dsj log L(s, χ)
+]
+s=1
+= (−1)j
+∑
+p
+(log p)j
+∞∑
+e=1
+ej−1
+pe χ(pe).
+The proof of Lemma 3.9 can then be adapted to obtain the equation
+M∗
+n,j(q; a, b)−Mn,j(q; a, b) = (−1)j
+φ(q)
+∑
+p|q
+(log p)j
+∞∑
+e=1
+ej−1
+pe
+∑
+χ (modq)
+⏐⏐χ(a)− χ(b)
+⏐⏐2n
+χ∗(pe)
+= (−1)j
+φ(q)
+∑
+p|q
+(log p)j
+∞∑
+e=1
+ej−1
+pe
+∑
+|i|≤n
+(−1)i
+( 2n
+n + i
+) ∑
+χ (modq)
+χ(aib−i)χ∗(pe)
+by Lemma 3.19. Evaluating the inner sum by Proposition 3.4 shows that this last expression is
+precisely the deﬁnition ofHn,j(q; a, b), as desired. □
+As described at the beginning of this section, Proposition 3.14 is exactly what we need to justify
+the assertion that we can calculate δ(q; a, b), using only arithmetic information, to within an error
+39
+----PAGE 39----
+of the form OA(q−A). That some small primes in arithmetic progressions (mod q) enter the calcu-
+lations is not surprising; interestingly, though, the arithmetic progressions involved are the residue
+classes ajb−j for|j|≤n, rather than the residue classes a and b themselves!
+To give a better ﬂavor of the form these approximations take, we end this section by explicitly
+giving such a formula with an error term better than O(q−5/2+ε) for any ε > 0. Taking K = 1 in
+Theorem 1.1 gives the formula
+δ(q; a, b) = 1
+2 + ρ(q)√
+2πV (q; a, b)
+(
+1− ρ(q)2
+6V (q; a, b)− 3W2(q; a, b)
+V (q; a, b)
+)
++ O
+( ρ(q)5
+V (q; a, b)5/2
+)
+.
+Going through the above proofs, one can laboriously work out that
+W2(q; a, b)V (q; a, b)
+φ(q) = 1
+4L2(q)
+− 1
+4φ(q)
+∑
+χ (modq)
+⏐⏐χ(a)− χ(b)
+⏐⏐4{(
+γ0 + log 2 + 1
+2 ζ(2)
+)
++ χ(−1)
+(
+log 2 + 1
+4 ζ(2)
+)}
++ 1
+2
+(
+M2,1(q; a, b) + H2,1(q; a, b)
+)
+− 1
+4
+(
+M2,2(q; a, b) + H2,2(q; a, b)
+)
+,
+to which Lemma 3.19 can be applied withn = 2. Combining these two expressions and expanding
+V (q; a, b) as described after equation (3.10) results in the following formula:
+Proposition 3.21. Assume GRH and LI. Suppose a and b are reduced residues (mod q) such that
+a is a nonsquare and b is a square (mod q). Then
+δ(q; a, b) = 1
+2 + ρ(q)
+2
+√
+πφ(q)( ˜L(q; a, b) + ˜R(q; a, b))
+(
+1− ρ(q)2
+12φ(q) ˜L(q; a, b)
+− 3
+16φ(q) ˜L(q; a, b)2
+{
+L2(q)− (6 + 2ιq(a2b−2))
+(
+γ0 + log 2 + 1
+2 ζ(2)
+)
+− (2ιq(−a2b−2)− 8ιq(−ab−1))
+(
+log 2 + 1
+4 ζ(2)
+)
++ 2F1(q; a, b) + 2H2,1(q; a, b)−F 2(q; a, b)− H2,2(q; a, b)
+})
++ O
+( ρ(q)5√log q
+φ(q)5/2
+)
+,
+whereL2(q) is deﬁned in Deﬁnition 3.16 andH2,j(q; a, b) is deﬁned in Deﬁnition 3.18, and
+˜L(q; a, b) =L(q) + Kq(a− b) + ιq(−ab−1) log 2 +H0(q; a, b) + Λ(ab−1)
+ab−1 + Λ(ba−1)
+ba−1
+˜R(q; a, b) =
+∑
+q≤n≤q4
+n≡ab−1 (modq)
+Λ(n)
+n +
+∑
+q≤n≤q4
+n≡ba−1 (modq)
+Λ(n)
+n − 2
+∑
+q≤n≤q4
+n≡1 (modq)
+Λ(n)
+n
+F1(q; a, b) = Λ(a2b−2)
+a2b−2 − 4Λ(ab−1)
+ab−1 − 4Λ(ba−1)
+ba−1 + Λ(b2a−2)
+b2a−2
+F2(q; a, b) = Λ(a2b−2) log(a2b−2)
+a2b−2 − 4Λ(ab−1) log(ab−1)
+ab−1 − 4Λ(ba−1) log(ba−1)
+ba−1 + Λ(b2a−2) log(b2a−2)
+b2a−2 .
+40
+----PAGE 40----
+In all these deﬁnitions, expressions such as a2b−2 refer to the smallest positive integer congruent
+to a2b−2 (mod q).
+3.5. A central limit theorem. In this section we prove a central limit theorem for the functions
+E(x; q, a)− E(x; q, b) = φ(q)(π(x; q, a)− π(x; q, b))x−1/2 log x.
+The technique we use is certainly not without precedent. Hooley [7] and Rubinstein and Sarnak
+[14] both prove central limit theorems for similar normalized error terms under the same hypothe-
+ses GRH and LI (though each with different acronyms).
+Theorem 3.22. Assume GRH and LI. As q tends to inﬁnity, the limiting logarithmic distributions
+of the functions
+E(x; q, a)− E(x; q, b)√
+2φ(q) logq
+(3.17)
+converge in measure to the standard normal distribution of mean 0 and variance 1, uniformly for
+all pairs a, b of distinct reduced residues modulo q.
+We remark that this result can in fact be derived from Rubinstein and Sarnak’s 2-dimensional
+central limit theorem [14, Section 3.2] for
+(
+E(x; q, a), E(x; q, b)
+)
+, although this implication is not
+made explicit in their paper. In general, let
+φX,Y (s, t) =
+∫ ∞
+0
+∫ ∞
+0
+exp
+(
+i(sx + ty)
+)
+fX,Y (x, y) dx dy
+denote the joint characteristic function of a pair (X, Y ) of real-valued random variables, where
+fX,Y (x, y) is the joint density function of the pair. Then the characteristic function of the real-
+valued random variable X− Y is
+φX−Y (t) = E
+(
+exp(it(X− Y ))
+)
+=
+∫ ∞
+0
+∫ ∞
+0
+exp(it(x− y))fX,Y (x, y) dx dy = φX,Y (t,−t).
+The derivation of Theorem 3.22 from Rubinstein and Sarnak’s 2-dimensional central limit theorem
+then follows by taking X and Y to be the random variables having the same limiting distributions
+as E(x; q, a) and E(x; q, b), respectively (which implies that X− Y = Xq;a,b).
+On the other hand, we note that our analysis of the variances of these distributions has the beneﬁt
+of providing a better quantitative statement of the convergence of our limiting distributions to the
+Gaussian distribution: see equation (3.19) below.
+Proof of Theorem 3.22. Since the Fourier transform of the limiting logarithmic distribution of
+E(x; q, a)− E(x; q, b) is ˆXq;a,b(η), the Fourier transform of the limiting logarithmic distribution
+of the quotient (3.17) is ˆXq;a,b(η/
+√
+2φ(q) logq). A theorem of L ´evy from 1925 [12, Section 4.2,
+Theorem 4], the Continuity Theorem for characteristic functions, asserts that all we need to show
+is that
+lim
+q→∞
+ˆXq;a,b
+( η√
+2φ(q) logq
+)
+= e−η2/2 (3.18)
+for every ﬁxed real number η. Because the right-hand side is continuous at η = 0, it is automat-
+ically the characteristic function of the measure to which the limiting logarithmic distributions of
+the quotients (3.17) converge in distribution, according to L´evy’s theorem.
+41
+----PAGE 41----
+When q is large enough in terms of η, we have |η/
+√
+2φ(q) logq|≤ 1
+4. For such q, Proposi-
+tion 2.13 implies that
+log ˆXq;a,b
+( η√
+2φ(q) logq
+)
+=− V (q; a, b)
+2φ(q) logq
+η2
+2 + O
+((c(q, a)− c(q, b))|η|√
+φ(q) logq
++ V (q; a, b)η4
+(φ(q) logq)2
+)
+=− η2
+2 + O
+(η2 log logq
+log q + |η|ρ(q)√
+φ(q) logq
++ η4
+φ(q) logq
+)
+(3.19)
+using the asymptotic formula forV (q; a, b) given in Proposition 3.6. Sinceη is ﬁxed, this is enough
+to verify (3.18), which establishes the theorem. □
+3.6. Racing quadratic nonresidues against quadratic residues. This section is devoted to un-
+derstanding the effect of low-lying zeros of Dirichlet L-functions on prime number races between
+quadratic residues and quadratic nonresidues. This phenomenon has already been studied by many
+authors—see for instance [3]. Let q be an odd prime, and deﬁne π(x; q, N) = #{p≤ x: p is
+a quadratic nonresidue (mod q)} and π(x; q, R) = #{p≤ x: p is a quadratic residue (mod q)}.
+Each of π(x; q, N) and π(x; q, R) is asymptotic to π(x)/2, but Chebyshev’s bias predicts that the
+difference π(x; q, N)− π(x; q, R), or equivalently the normalized difference
+E(x; N, R) = log x√x
+(
+π(x; q, N)− π(x; q, R)
+)
+,
+is more often positive than negative.
+Our methods lead to an asymptotic formula for δ(q; N, R), the logarithmic density of the set of
+real numbers x≥ 1 satisfying π(x; q, N) > π (x; q, R), that explains the effect of low-lying zeros
+in a straightfoward and quantitative way. We sketch this application now.
+First, deﬁne the random variable
+Xq;N,R = 2 + 2
+∑
+γ>0
+L(1/2+iγ,χ1)=0
+Xγ√
+1
+4 + γ2
+,
+where χ1 is the unique quadratic character (mod q). Under GRH and LI, the distribution of Xq;N,R
+is the same as the limiting distribution of the normalized error term E(x; N, R). The methods of
+Section 3 then lead to an asymptotic formula analogous to equation (1.2):
+δ(q; N, R) = 1
+2 +
+√
+2
+πV (q; N, R) + O
+( 1
+V (q; N, R)3/2
+)
+, (3.20)
+where
+V (q; N, R) = b(χ1) =
+∑
+γ∈R
+L(1/2+iγ,χ1)=0
+1
+1
+4 + γ2 .
+To simplify the discussion, we explore only the effect of the lowest zero (the zero closest to the
+real axis) on the size of V (q; N, R).
+By the classical formula for the zero-counting functionN(T, χ), the average height of the lowest
+zero of L(s, χ1) is 2π/ log q. Suppose we have a lower-than-average zero, say at heightc·2π/ log q
+for some 0 < c < 1. Then we get a higher-than-average contribution to the variance of size
+1
+1/4 + (c· 2π/ log q)2− 1
+1/4 + (2π/ log q)2 .
+42
+----PAGE 42----
+Since the variance V (q; N, R) = b(χ1) is asymptotically log q by Lemma 3.5, this increases the
+variance by roughly a percentage t given by
+t∼ 1
+log q
+( 1
+1/4 + (c· 2π/ log q)2− 1
+1/4 + (2π/ log q)2
+)
+. (3.21)
+Therefore, given any two of the three parameters
+• how low the lowest zero is (in terms of the percentage c of the average),
+• how large a contribution we see to the variance (in terms of the percentage t), and
+• the size of the modulus q,
+we can determine the range for the third parameter from equation (3.21).
+For example, as c tends to 0, the right-hand side of equation (3.21) is asymptotically
+64π2
+(log2 q + 16π2) logq .
+So if we want to see an increase in variance of 10%, an approximation for the range of q for
+which this might be possible is given by setting 64π2/(log2 q + 16π2) logq = 0.1 and solving for
+q, which gives log q = 15 .66 or about q = 6,300,000. This assumes that c tends to 0—in other
+words, that L(s, χ1) has an extremely low zero. However, even takingc = 1
+3 on the right-hand side
+of equation (3.21) and setting the resulting expression equal to 0.1 yields about q = 1,600,000. In
+other words, having a zero that’s only a third as high as the average zero, for example, will give a
+“noticeable” (at least 10%) lift to the variance up to roughly q = 1,600,000.
+It turns out that unusually low zeros of this sort are not particularly rare. The Katz-Sarnak model
+predicts that the proportion ofL-functions in the family{L(s, χ): χ primitive of order 2} having a
+zero as low as c· 2π/ log q is asymptotically 2π2c3/9 as c tends to 0. Continuing with our example
+value c = 1
+3, we see that roughly 8% of the moduli less than 1,600,000 will have a 10% lift in the
+variance V (q; N, R) coming from the lowest-lying zero.
+Well-known examples of L-functions having low-lying zeros are the L(s, χ1) corresponding to
+prime moduli q for which the class number h(−q) equals 1, as explained in [3] with the Chowla–
+Selberg formula for q = 163 . For this modulus, the imaginary part of the lowest-lying zero is
+0.202901 . . . = 0 .16449 . . .· 2π/ log 163. According to our approximations, this low-lying zero
+increases the variance by roughly t = 56%; considering this increased variance in equation (3.20)
+explains why the value of δ(163; N, R) is exceptionally low. The actual value of δ(163; N, R),
+along with some neighboring values, are shown in Table 2.
+Other Dirichlet L-functions having low-lying zeros are the L(s, χ1) corresponding to prime
+moduli q for which the class number h(−q) is relatively small; a good summary of the ﬁrst few
+class numbers is given in [3, Table VI].
+TABLE 2. Values of δ(q; N, R) for q = 163 and nearby primes
+q δ(q; N, R)
+151 0.745487
+157 0.750767
+163 0.590585
+167 0.780096
+173 0.659642
+43
+----PAGE 43----
+Notice that in principle, racing quadratic residues against quadratic nonresidues makes sense for
+any modulus q for which ρ(q) = 2, which includes powers of odd primes and twice these powers.
+However, being a quadratic residue modulo a prime q is exactly equivalent to being a quadratic
+residue modulo any power of q, and also (for odd numbers) exactly equivalent to being a quadratic
+residue modulo twice a power of q. Therefore δ(q; N, R) = δ(qk; N, R) = δ(2qk; N, R) for every
+odd prime q. The only other modulus for which ρ(q) = 2 is q = 4 , which has been previously
+studied: Rubinstein and Sarnak [14] calculated that δ(4; N, R) = δ(4; 3, 1)≈ 0.9959.
+4. F INE -SCALE DIFFERENCES AMONG RACES TO THE SAME MODULUS
+In this section we probe the effect that the speciﬁc choice of residue classes a and b has on the
+density δ(q; a, b). We begin by proving Corollary 1.9, which isolates the quantitative inﬂuence of
+δ(q; a, b) on a and b from its dependence on q, in Section 4.1. We then dissect the relevant inﬂu-
+ence, namely the function ∆(q; a, b), showing how particular arithmetic properties of the residue
+classes a and b predictably affect the density; three tables of computational data are included to il-
+lustrate these conclusions. In Section 4.2 we develop this theme even further, proving Theorem 4.2
+and hence its implication Theorem 1.10, which establishes a lasting “meta-bias” among these den-
+sities. Finally, in Section 4.3 we apply our techniques to the seemingly unrelated “mirror image
+phenomenon” observed by Bays and Hudson, explaining its existence with a similar analysis.
+4.1. The impact of the residue classes a and b. The work of the previous sections has provided
+us with all the tools we need to establish Corollary 1.9.
+Proof of Corollary 1.9. We begin by showing that the function
+∆(q; a, b) = Kq(a− b) + ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
++ H(q; a, b)
+deﬁned in equation (1.4) is bounded above by an absolute constant (the fact that it is nonnegative
+is immediate from the deﬁnitions of its constituent parts). It has already been remarked in Deﬁni-
+tion 1.5 that Kq is uniformly bounded, as is ιq. We also haveΛ(r)/r≤ (log r)/r, and this function
+is decreasing for r≥ 3, so the third and fourth terms are each uniformly bounded as well. Finally,
+from Deﬁnition 1.8, we see that
+h(q; p, r) = 1
+φ(pν)
+log p
+pe(q;p,r)≤ 1
+p− 1
+log p
+p1 ,
+and so H(q; a, b) <∑
+p 2(log p)/p(p− 1) is uniformly bounded by a convergent sum as well.
+We now turn to the main assertion of the corollary. By Theorems 1.4 and 1.7, we have
+V (q; a, b) = 2φ(q)
+(
+L(q) + Kq(a− b) + ιq(−ab−1) log 2
+)
++ 2M∗(q; a, b)
+= 2φ(q)
+(
+L(q) + Kq(a− b) + ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
++ H(q; a, b) + O
+(log2 q
+q
+))
+= 2φ(q)
+(
+L(q) + ∆(q; a, b) + O
+(log2 q
+q
+))
+= 2φ(q)L(q)
+(
+1 + ∆(q; a, b)
+L(q) + O
+(log q
+q
+))
+.
+44
+----PAGE 44----
+TABLE 3. The densities δ(q; a, 1) computed for q = 163
+q a a−1 δ(q;a, 1) q a a−1 δ(q;a, 1)
+163 162 162 0.524032 163 30 125 0.526809
+163 3 109 0.525168 163 76 148 0.526815
+163 2 82 0.525370 163 92 101 0.526829
+163 5 98 0.525428 163 86 127 0.526869
+163 7 70 0.525664 163 128 149 0.526879
+163 11 89 0.525744 163 129 139 0.526879
+163 13 138 0.526079 163 80 108 0.526894
+163 17 48 0.526083 163 114 153 0.526898
+163 19 103 0.526090 163 117 124 0.526900
+163 23 78 0.526213 163 20 106 0.526906
+163 31 142 0.526378 163 42 66 0.526912
+163 67 73 0.526437 163 28 99 0.526914
+163 37 141 0.526510 163 44 63 0.526925
+163 29 45 0.526532 163 12 68 0.526931
+163 27 157 0.526578 163 72 120 0.526941
+163 32 107 0.526586 163 112 147 0.526975
+163 59 105 0.526620 163 110 123 0.526981
+163 8 102 0.526638 163 122 159 0.526996
+163 79 130 0.526682 163 50 75 0.526997
+163 94 137 0.526746 163 52 116 0.527002
+163 18 154 0.526768
+Since ∆(q; a, b) is bounded whileL(q)∼ log q, we see that V (q)∼ 2φ(q) logq; moreover, the
+power series expansion of (1 + t)−1/2 around t = 0 implies that
+V (q; a, b)−1/2 =
+(
+2φ(q)L(q)
+)−1/2
+(
+1− ∆(q; a, b)
+2L(q) + O
+(∆(q; a, b)2
+L(q)2 + log q
+q
+))
+=
+(
+2φ(q)L(q)
+)−1/2
+(
+1− ∆(q; a, b)
+2L(q) + O
+( 1
+log2 q
+))
+.
+(Recall that we are assuming thatq≥ 43, which is enough to ensure thatL(q) is positive.) Together
+with the last assertion of Theorem 1.1, this formula implies that
+δ(q; a, b) = 1
+2 + ρ(q)
+2
+√
+πφ(q)L(q)
+(
+1− ∆(q; a, b)
+2L(q) + O
+( 1
+log2 q
+))
++ O
+( ρ(q)3
+V (q; a, b)3/2
+)
+.
+Since the last error term is≪ε qε/(φ(q) logq)3/2, it can be subsumed into the ﬁrst error term, and
+the proof of the corollary is complete. □
+Corollary 1.9 tells us that larger values of∆(q; a, b) lead to smaller values of the densityδ(q; a, b).
+Computations of the values of δ(q; a, b) (using methods described in Section 5.4) illustrate this re-
+lationship nicely. Since δ(q; a, b) = δ(q; ab−1, 1) when b is a square (mod q), we restrict our
+attention to densities of the form δ(q; a, 1).
+We begin by investigating a prime modulusq, noting that
+∆(q; a, 1) = ιq(−a) log 2 +Λ(a)
+a + Λ(a−1)
+a−1 + 2 logq
+q(q− 1)
+45
+----PAGE 45----
+when q is prime (here a−1 denotes the smallest positive integer that is a multiplicative inverse of
+a (mod q)). Therefore we obtain the largest value of∆(q; a, b) when a≡− 1 (mod q), and the next
+largest values are whena is a small prime, so that theΛ(a)/a term is large. (These next large values
+also occur when a−1 is a small prime, and in fact we already know that δ(q; a, 1) = δ(q; a−1, 1).
+When q is large, it is impossible for both a and a−1 to be small.) Notice that Λ(a)/a is generally
+decreasing on primes a, except that Λ(3)/3 > Λ(2)/2. Therefore the second, third, and fourth-
+largest values of ∆(q; a, 1) will occur for a congruent to 3, 2, and 5 (mod q), respectively.
+This effect is quite visible in the calculated data. We use the prime modulus q = 163 as an
+example, since the smallest 12 primes, as well as −1, are all nonsquares (mod 163). Table 3 lists
+the values of all densities of the form δ(163, a,1) (remembering that δ(q; a, 1) = δ(q; a−1, 1) and
+that the value of any δ(q; a, b) is equal to one of these). Even though the relationship between
+∆(q; a, 1) and δ(q; a, 1) given in Corollary 1.9 involves an error term, the data is striking. The
+smallest ten values of δ(q; a, 1) are exactly in the order predicted by our analysis of ∆(q; a, 1): the
+smallest is a = 162≡− 1 (mod 163), then a = 3 and a = 2, then the seven next smallest primes
+in order. (This ordering, which is clearly related to Theorem 1.10, will be seen again in Figure 2.)
+One can also probe more closely the effect of the term M(q; a, 1) upon the density δ(q; a, 1).
+Equation (3.10) can be rewritten as the approximation
+M(q; a, 1)
+φ(q) + 2
+∑
+n≤y
+n≡1 (modq)
+Λ(n)
+n ≈
+∑
+n≤y
+n≡a (modq)
+Λ(n)
+n +
+∑
+n≤y
+n≡a−1 (modq)
+Λ(n)
+n (4.1)
+(where we are ignoring the exact form of the error term). Takingy = q recovers the approximation
+M(q; a, 1)≈ φ(q)
+(
+Λ(a)/a + Λ(a−1)/a−1)
+used in the deﬁnition of∆(q; a, b), but taking y larger
+would result in a better approximation.
+We examine this effect on the calculated densities for the medium-sized prime modulusq = 101.
+In Table 4, the second group of columns records the ﬁrst four prime powers that are congruent to
+a or a−1 (mod 101). The second-to-last column gives the value of the right-hand side of equa-
+tion (4.1), computed at y = 106. Note that smaller prime powers in the second group of columns
+give large contributions to this second-to-last column, a trend that can be visually conﬁrmed. Fi-
+nally, the last column lists the values of the densities δ(q; a, b), according to which the rows have
+been sorted in ascending order. The correlation between larger values of the second-to-last column
+and smaller values of δ(q; a, b) is almost perfect (the adjacent entries a = 40 and a = 10 being
+the only exception): the existence of smaller primes and prime powers in the residue classes a and
+a−1 (mod 101) really does contribute positively to the variance V (q; a, 1) and hence decreases the
+density δ(q; a, 1). (Note that the effect of the term ι101(−a) log 2is not present here, since 101 is a
+prime congruent to 1 (mod 4) and hence−1 is not a nonsquare.)
+Finally we investigate a highly composite modulusq to witness the effect of the termKq(a−1) =
+Λ(q/(q, a− 1))/φ(q/(q, a− 1))− Λ(q)/φ(q) on the size of ∆(q; a, 1). This expression vanishes
+unless a− 1 has such a large factor in common with q that the quotient q/(q, a− 1) is a prime
+power. Therefore we see a larger value of ∆(q; a, 1), and hence expect to see a smaller value of
+δ(q; a, 1), when q/(q, a− 1) is a small prime, for example when a = q
+2 + 1.
+Table 5 conﬁrms this observation with the modulus q = 420 . Of the six smallest densities
+δ(420; a, 1), ﬁve of them correspond to the residue classesa (and their inverses) for whichq/(q, a−
+1) is a prime power; the sixth corresponds to a≡− 1 (mod 420), echoing the effect already seen
+for q = 163. Moreover, the ordering of these ﬁrst six densities are exactly as predicted: even the
+battle for smallest density betweena≡− 1 (mod 420) and a = 420/2−1 is appropriate, since both
+46
+----PAGE 46----
+TABLE 4. The effect of medium-sized prime powers on the densities δ(q; a, 1),
+illustrated with q = 101 and y = 106
+q a a−1 First four prime powers RHS of (4.1) δ(101,a, 1)
+101 7 29 7 29 433 512 0.563304 0.534839
+101 2 51 2 103 709 859 0.554043 0.534928
+101 3 34 3 337 811 1013 0.528385 0.535103
+101 11 46 11 349 617 1021 0.383090 0.536123
+101 8 38 8 109 139 311 0.332888 0.536499
+101 53 61 53 61 263 457 0.329038 0.536522
+101 12 59 59 113 463 719 0.276048 0.536955
+101 67 98 67 199 269 401 0.271567 0.536993
+101 41 69 41 243 271 647 0.268766 0.537013
+101 28 83 83 331 487 937 0.235130 0.537284
+101 15 27 27 128 229 419 0.235035 0.537293
+101 66 75 167 277 479 571 0.230291 0.537340
+101 18 73 73 523 881 1129 0.215281 0.537463
+101 50 99 151 353 503 757 0.211209 0.537500
+101 55 90 191 257 661 797 0.205833 0.537537
+101 42 89 89 547 1153 1301 0.202289 0.537586
+101 44 62 163 347 751 769 0.199652 0.537607
+101 72 94 173 397 577 599 0.196417 0.537623
+101 32 60 32 739 941 1171 0.191447 0.537660
+101 26 35 127 439 641 733 0.190601 0.537688
+101 39 57 241 443 461 1049 0.187848 0.537708
+101 40 48 149 343 1151 1361 0.178698 0.537780
+101 10 91 293 313 919 1303 0.180422 0.537792
+101 74 86 389 983 1399 1601 0.165153 0.537900
+101 63 93 467 1103 1709 2083 0.146466 0.538067
+residue classes cause an increase in∆(420; a, 1) of size exactlylog 2. (Since 420 is divisible by the
+four smallest primes, the largest effect that theΛ(a)/a term could have on∆(q; a, b) is (log 11)/11,
+and so these effects are not nearly as large.) The magnitude of this effect is quite signiﬁcant: note
+that the difference between the ﬁrst and seventh-smallest values of δ(420; a, 1) (from a = 211 to
+a = 17) is larger than the spread of the largest 46 values (from a = 17 to a = 391).
+4.2. The predictability of the relative sizes of densities. The speciﬁcity of our asymptotic for-
+mulas to this point suggests comparing, for ﬁxed integers a1 and a2, the densities δ(q; a1, 1) and
+δ(q; a2, 1) as q runs through all moduli for which both a1 and a2 are nonsquares. (We have already
+seen that every density is equal to one of the form δ(q; a, 1).) Theorem 1.10, which we will derive
+shortly from Corollary 4.3, is a statement about exactly this sort of comparison.
+In fact we can investigate even more general families of race games: ﬁx rwo rational numbers
+r and s, and consider the family of densities δ(q; r + sq, 1) as q varies. We need r + sq to be an
+integer and relatively prime to q for this density to be sensible; we further desire r + sq to be a
+nonsquare (mod q), or else δ(q; r + sq, 1) simply equals 1
+2. Therefore, we deﬁne the set of qualiﬁed
+moduli
+Q(r, s) ={q∈ N: r + sq∈ Z, (r + sq, q) = 1; there are no solutions to x2≡ r + sq (mod q)}.
+(Note that translating s by an integer does not change the residue class of r + sq (mod q), so one
+could restrict s to the interval [0, 1) without losing generality if desired.)
+47
+----PAGE 47----
+TABLE 5. The densities δ(q; a, 1) computed for q = 420, together with the values
+of Kq(a− 1) = Λ(420/(420, a− 1))/φ(420/(420, a− 1))
+q a a−1 (q,a− 1) Kq(a− 1) δ(q;a, 1) q a a−1 (q,a− 1) Kq(a− 1) δ(q;a, 1)
+420 211 211 210 log 2 0.770742 420 113 197 28 0 0.807031
+420 419 419 2 0 0.772085 420 149 389 4 0 0.807209
+420 281 281 140 (log 3)/2 0.779470 420 103 367 6 0 0.807284
+420 253 337 84 (log 5)/4 0.788271 420 223 307 6 0 0.807302
+420 61 241 60 (log 7)/6 0.788920 420 83 167 2 0 0.807505
+420 181 181 60 (log 7)/6 0.789192 420 151 331 30 0 0.809031
+420 17 173 4 0 0.795603 420 59 299 2 0 0.809639
+420 47 143 2 0 0.796173 420 137 233 4 0 0.809647
+420 29 29 28 0 0.796943 420 139 139 6 0 0.810290
+420 13 97 12 0 0.797669 420 73 397 12 0 0.811004
+420 187 283 6 0 0.797855 420 157 313 12 0 0.811197
+420 53 317 4 0 0.798207 420 251 251 10 0 0.811557
+420 11 191 10 0 0.798316 420 349 349 12 0 0.811706
+420 107 263 2 0 0.798691 420 323 407 14 0 0.811752
+420 41 41 20 0 0.800067 420 179 359 2 0 0.811765
+420 19 199 6 0 0.800937 420 229 409 12 0 0.811776
+420 43 127 42 0 0.801609 420 131 311 10 0 0.811913
+420 23 347 2 0 0.802681 420 277 373 12 0 0.812052
+420 37 193 12 0 0.803757 420 239 239 14 0 0.812215
+420 79 319 6 0 0.804798 420 247 403 6 0 0.812215
+420 89 269 4 0 0.804836 420 227 383 2 0 0.812777
+420 101 341 20 0 0.805089 420 221 401 20 0 0.813594
+420 71 71 70 0 0.805123 420 293 377 4 0 0.813793
+420 67 163 6 0 0.805196 420 379 379 42 0 0.813818
+420 31 271 30 0 0.806076 420 209 209 4 0 0.815037
+420 257 353 4 0 0.806638 420 391 391 30 0 0.815604
+It turns out that every pair (r, s) of rational numbers can be assigned a “rating” R(r, s) that
+dictates how the densities in the familyδ(q; r+sq, 1) compare to other densities in similar families.
+Deﬁnition4.1. Deﬁne a rating functionR(r, s) as follows:
+• Suppose that the denominator of s is a prime power pk (k≥ 1).
+– If r is a power pj of the same prime, then R(r, s) = (log p)/φ(pj+k).
+– If r = 1 or r = 1/pj for some integer 1≤ j < k , then R(r, s) = (log p)/φ(pk).
+– If r = 1/pk, then R(r, s) = (log p)/pk.
+– Otherwise R(r, s) = 0.
+• Suppose that s is an integer.
+– If r =−1, then R(r, s) = log 2.
+– If r is a prime power pj (j≥ 1), then R(r, s) = (log p)/pj.
+– Otherwise R(r, s) = 0.
+• R(r, s) = 0 for all other values of s. ♦
+Theorem 4.2. Let ∆(q; a, b) be deﬁned as in equation(1.4). For ﬁxed rational numbersr and s,
+∆(q; r + sq, 1) = R(r, s) + Or,s
+(log q
+q
+)
+as q tends to inﬁnity within the setQ(r, s).
+48
+----PAGE 48----
+We will be able to prove this theorem at the end of the section; ﬁrst, however, we note an
+interesting corollary.
+Corollary 4.3. Assume GRH and LI. If r1, s1, r2, s2 are rational numbers such that R(r1, s1) >
+R(r2, s2), then
+δ(q; r1 + s1q, 1) < δ(q; r2 + s2q, 1) for all but ﬁnitely manyq∈ Q(r1, s1)∩ Q(r2, s2).
+Proof. We may assume that q≥ 43. Inserting the conclusion of Theorem 4.2 into the formula for
+δ(q; a, b) in Corollary 1.9, we obtain
+δ(q; r + sq, 1) = 1
+2 + ρ(q)
+2
+√
+πφ(q)L(q)
+(
+1− R(r, s)
+2L(q) + O
+( 1
+log2 q
+))
+(4.2)
+for any q∈ Q(r, s). Therefore for all q∈ Q(r1, s1)∩ Q(r2, s2),
+δ(q; r1 + s1q, 1)− δ(q; r2 + s2q, 1) =
+(−R(r1, s1) + R(r2, s2)
+2L(q) + O
+( 1
+log2 q
+)) ρ(q)
+2
+√
+πφ(q)L(q)
+.
+Since the constant−R(r1, s1) +R(r2, s2) is negative by hypothesis, we see thatδ(q; r1 + s1q, 1)−
+δ(q; r2 + s2q, 1) is negative when q is sufﬁciently large in terms ofr1, s1, r2, and s2. □
+Notice, from the part of Deﬁnition 4.1 where s is an integer, that Theorem 1.10 is precisely the
+special case of Corollary 4.3 where s1 = s2 = 0 . Therefore we have reduced Theorem 1.10 to
+proving Theorem 4.2.
+Theorem 1.10 itself is illustrated in Figure 2, using the computed densities for prime moduli
+to most clearly observe the relevant phenomenon. For each prime q up to 1000, and for every
+nonsquare a (mod q), the point
+(
+q, 2
+√
+πφ(q)L(q)3
+ρ(q)
+(
+δ(q; a, 1)− 1
+2
+)
+−L (q)
+)
+=
+(
+q,
+√
+π(q− 1)
+(
+log q
+2πeγ0
+)3/2(
+δ(q; a, 1)− 1
+2
+)
+− log q
+2πeγ0
+)
+(4.3)
+FIGURE 2. Normalized densities δ(q; a, 1) for primes q, using the normalization (4.3)
+-1 Hmod qL
+3 Hmod qL
+2 Hmod qL
+5 Hmod qL
+7 Hmod qL
+others
+0 200 400 600 800 1000
+-0.30
+-0.25
+-0.20
+-0.15
+-0.10
+-0.05
+0.00
+49
+----PAGE 49----
+has been plotted; the values corresponding to certain residue classes have been emphasized with the
+listed symbols. The motivation for the seemingly strange (though order-preserving) normalization
+in the second coordinate is equation (4.2), which shows that the value in the second coordinate is
+−R(a, 0)/2 +O(1/ log q). In other words, on the vertical axis the value 0 corresponds toδ(q; a, b)
+being exactly the “default” value 1
+2 +ρ(q)/2
+√
+πφ(q)L(q), the value−0.05 corresponds to δ(q; a, b)
+being less than the default value by 0.05ρ(q)/2
+√
+πφ(q)L(q)3, and so on. We clearly see in Fig-
+ure 2 the normalized values corresponding to δ(q;−1, 1), δ(q; 3, 1), δ(q; 2, 1), and so on sorting
+themselves out into rows converging on the values− 1
+2 log 2,− 1
+6 log 3,− 1
+4 log 2, and so on.
+We need to establish several lemmas before we can prove Theorem 4.2. The recurring theme in
+the following analysis is that solutions to linear congruences (mod q) with ﬁxed coefﬁcients must
+be at least a constant times q in size, save for speciﬁc exceptions that can be catalogued.
+Lemma 4.4. Let r and s be rational numbers. If r̸=−1 or if s is not an integer, then there are
+only ﬁnitely many positive integersq such that r + sq is an integer and r + sq≡− 1 (mod q).
+Proof. Write r = a
+b and s = c
+d. The congruence a
+b + c
+d q≡− 1 (mod q) implies that ad
+b + cq≡
+−d (mod q), which means that q must divide ad
+b + d. This only happens for ﬁnitely many q unless
+ad
+b + d = 0 , which is equivalent (since d ̸= 0 ) to a
+b = −1. In this case the congruence is
+c
+d q≡ 0 (mod q), which can happen only if c
+d is an integer. □
+Lemma 4.5. Let r and s be rational numbers. Suppose that q is a positive integer such that r + sq
+is an integer. If r̸= 1, then Kq(r + sq− 1)≪r,s (log q)/q.
+Proof. We ﬁrst note thatΛ(t)/φ(t)≪ (log t)/t for all positive integers t: if Λ(t) is nonzero, then
+t is a prime power, which means φ(t)≥ t/2. Therefore it sufﬁces to show that (q, r + sq− 1) is
+bounded, since then q/(q, r + sq− 1)≫r,s q and consequently Kq(r + sq− 1)≪r,s (log q)/q
+since (log t)/t is decreasing for t≥ 3. But writing r = a
+b and s = c
+d, we have
+(
+q, a
+b + c
+d q− 1
+)
+|(q, d(a− b) + bcq) = (q, d(a− b))|d(a− b).
+Since r̸= 1 , we see that d(a− b) is nonzero, and hence (q, r + sq− 1)≤ d|a− b|≪r,s 1 as
+required. □
+Lemma 4.6. Let r and s be rational numbers. Assume that r is not a positive integer or s is not
+an integer. If q and y are positive integers such that r + sq is an integer and y≡ r + sq (mod q),
+then y≫r,s q.
+Proof. Suppose ﬁrst thats is not an integer, and write s = c/d where d > 1. Then s is at least 1/d
+away from the nearest integer, so that sq is at least q/d away from the nearest multiple of q. Since
+y = r + sq− mq for some integer m, we have y≥|sq− mq|−|r|≥q/d−|r|≫r,s q when q is
+sufﬁciently large in terms ofr and s.
+On the other hand, if s is an integer, then r must also be an integer. If r is nonpositive, then the
+least integer y congruent to r (mod q) is q−|r|≫r q when q is sufﬁciently large in terms ofr. □
+Lemma 4.7. Let r and s be rational numbers. Assume that either r is not the reciprocal of a
+positive integer or that s
+r is not an integer. Suppose that positive integers q and y are given such
+that r + sq is an integer and (r + sq)y≡ 1 (mod q). Then y≫r,s q.
+Proof. Write r = a
+b and s = c
+d with (a, b) = (c, d) = 1 and b, d > 0. We may assume that q > 2d2,
+for if q≤ 2d2 then y≥ 1≥ q
+2d2≫s q. Note that a̸= 0, since 0 + c
+d q = cq
+d cannot be invertible
+50
+----PAGE 50----
+modulo q when q > d . The assumption that r + sq is an integer implies that d(r + sq) = ad
+b + cq
+is also an integer; since (a, b) = 1, this implies that b|d. Therefore we may write d = bδ for some
+integer δ. Similarly, it must be true that b(r + sq) = a + cq
+δ is an integer; since (c, δ)|(c, d) = 1,
+this implies that q is a multiple of δ.
+Case 1: Suppose ﬁrst that δ = 1 . If a = 1 , then r = 1
+b would be the reciprocal of a positive
+integer and s
+r = c/b
+1/b would be an integer, contrary to assumption; therefore a̸= 1. The condition
+(r + sq)y≡ 1 (mod q), when multiplied by b, becomes ay≡ b (mod q). Now if a =−1, then
+the congruence in question is equivalent to y≡− b (mod q); since b > 0, this implies that y≥
+q− b≫r q as desired. Therefore for the rest of Case 1, we can assume that|a|> 1.
+Since any common factor of a and q would consequently be a factor of b as well, but (a, b) = 1,
+we must have (a, q) = 1 . Thus we may choose u such that uq ≡ −1 (mod a), so that y0 =
+b(uq + 1)/a is an integer. We see by direct calculation that y0 is a solution to ay≡ b (mod q), and
+all other solutions differ from this one by a multiple of q/(b, q), which is certainly a multiple of q
+b.
+In other words, y = q(bu
+a + z
+b) +b
+a for some integer z. If bu
+a + z
+b = 0 then−z = b(bu
+a + z
+b)− z = b2u
+a
+would be an integer, but this is impossible since both b and u are relatively prime to a (here we
+use|a|̸= 1). Therefore
+⏐⏐bu
+a + z
+b
+⏐⏐≥ 1
+|a|b, and so y≥ q
+|a|b− b
+|a|; since q > 2d2 = 2 b2, this gives
+y≥ q
+2|a|b≫r,s q.
+Case 2: Suppose now that δ > 1. The condition (a
+b + c
+d q)y≡ 1 (mod q) forces (y, q) = 1 and so
+(y, δ) = 1 as well. Multiplying the condition by b yields ay + cyq
+δ≡ b (mod q), which we write as
+cyq
+δ − qm = b− ay for some integer m. But notice that (cy, δ) = 1 , so that cy
+δ is at least 1
+δ away
+from every integer (here we use δ > 1); therefore cyq
+δ is at least q
+δ away from the nearest multiple
+of q. Therefore q
+δ ≤
+⏐⏐cyq
+δ − qm
+⏐⏐ =|b− ay|≤ b +|a|y, and hence y≥ (q− bδ)/|a|δ; since
+q > 2d = 2bδ, this gives y≥ q
+2|a|δ≫r,s q. □
+Corollary 4.8. Let r and s be rational numbers, and let q be a positive integer such that r + sq is
+an integer.
+(a) Assume that r is not a positive integer or s is not an integer. Suppose that y is a positive
+integer such that y≡ r + sq (mod q). Then Λ(y)/y≪r,s (log q)/q.
+(b) Assume that either r is not the reciprocal of a positive integer or that s
+r is not an integer.
+Suppose that y is a positive integer such that (r + sq)y≡ 1 (mod q). Then Λ(y)/y≪r,s
+(log q)/q.
+Proof. Since Λ(y)/y≤ (log y)/y, which is a decreasing function for y≥ 3, this follows from
+Lemmas 4.6 and 4.7. □
+Lemma 4.9. Let r and s be rational numbers. Let q be a positive integer such that r + sq is an
+integer, and letp be a prime such that pν∥ q with ν≥ 1.
+(a) Suppose that e is a positive integer such that pe≡ r + sq (mod q/pν). Then either pe = r
+or pe≫r,s q/pν.
+(b) Suppose that e is a positive integer such that pe(r + sq) ≡ 1 (mod q/pν). Then either
+pe = 1/r or pe≫r,s q/pν.
+Notice that if pe = r in (a) then spν is an integer; also, if pe = 1/r in (b) then spe+ν is an integer.
+In both cases, it is necessary that the denominator of s be a power of p as well.
+51
+----PAGE 51----
+Proof. We may assume thatq/pν is sufﬁciently large in terms ofr and s, for otherwise any positive
+integer is≫r,s q/pν. We have two cases to examine.
+(a) We are assuming that pe≡ r + sq (mod q/pν). Suppose ﬁrst thatspν is an integer. Then sq
+is an integer multiple of q/pν, and so pe≡ r (mod q/pν). This means that either pe = r or
+pe≥ q/pν + r≫r q/pν, since q/pν is sufﬁciently large in terms ofr.
+On the other hand, suppose that spν is not an integer. Then
+pe≡ r + sq = r + (spν)q/pν≡ r + (spν−⌊ spν⌋)q/pν (mod q/pν).
+If the denominator of s is d, then the difference spν−⌊ spν⌋ is at least 1
+d, and therefore
+pe≥ q/dpν + r≫r,s q/pν as well, since q/pν is sufﬁciently large in terms ofr and s.
+(b) We are assuming that pe(r + sq) ≡ 1 (mod q/pν). We apply Lemma 4.7 with q/pν in
+place of q and with y = pe, which yields the desired lower bound pe ≫r,s q/pν unless
+r is the reciprocal of a positive integer and s
+r is an integer. In this case, multiplying the
+assumed congruence by the integer 1/r gives pe(1 + s
+r q)≡ 1/r (mod q/pν), which implies
+pe≡ 1/r (mod q/pν) since s
+r is an integer. Therefore, since q/pν is sufﬁciently large in
+terms of r, either pe = 1/r or pe≥ q/pν + 1/r > q/pν.
+□
+The next two lemmas involve the functions h(q; p, r) and H(q; a, b) that were deﬁned in Deﬁni-
+tion 1.8. Since we are dealing with rational numbers, we make the following clariﬁcation: when
+we say “power of p”, we mean pk for some positive integer k (so p2 and p1 are powers of p, but
+neither 1 nor p−1 is).
+Lemma 4.10. Let r and s be rational numbers, and suppose that q is a positive integer such that
+r + sq is an integer that is relatively prime to q. Let p be a prime dividing q, and choose ν≥ 1
+such that pν∥ q.
+(a) If both r and the denominator of s are powers of p (note that if the denominator of s equals
+pk, these conditions imply ν = k), then
+h(q; p, (r + sq)−1) = log p
+rφ(pν) + Or,s
+(log p
+q
+)
+;
+otherwise h(q; p, (r + sq)−1)≪r,s (log p)/q.
+(b) If both 1/r and the denominator of s are powers of p (note that if r = 1/pj and the denom-
+inator of s equals pk, these conditions imply ν = k− j), then
+h(q; p, r + sq) = r log p
+φ(pν) + Or,s
+(log p
+q
+)
+,
+otherwise h(q; p, r + sq)≪r,s (log p)/q.
+Proof. (a) Assume pe≡ r + sq (mod q/pν). By Lemma 4.9, we have that either r = pe (which
+implies that the denominator ofs is a power ofp), or else h(q; p, (r+ sq)−1)≪r,s (log p)/q.
+So we only need to compute h(q; p, (r + sq)−1) in the case where r is any power of p (say
+r = pe) and where s has a denominator which is a power of p (say s = c/pz, where z≤ ν
+since q is a multiple of the denominator of s).
+In this case the congruence pe≡ r + sq (mod q/pν) is satisﬁed. Furthermore, e is the
+minimal such positive integer ifq is sufﬁciently large in terms ofr and s. If e is minimal we
+52
+----PAGE 52----
+have h(q; p, (r + sq)−1) = (log p)/φ(pν)pe = (log p)/rφ(pν) by deﬁnition; ife is not min-
+imal we have h(q; p, (r + sq)−1)≪r,s (log p)/q since there are only ﬁnitely many possible
+values of q. In both cases, the proposition is established (the “main term” (log p)/rφ(pν) is
+actually dominated by the error term in the latter case).
+(b) Assume pe(r + sq)≡ 1 (mod q/pν). By Lemma 4.9, we have that either 1/r = pe (which
+implies that the denominator of s is a power of p), or else h(q; p, r + sq)≪r,s (log p)/q.
+So we only need to compute h(q; p, r + sq) in the case where 1/r is any power of p (say
+1/r = pj) and where s has a denominator which is a power of p (say s = c/pk, where
+k− j = ν > 0).
+In this case the congruencepj(r+sq)≡ 1 (mod q/pν) is satisﬁed (sincepjsq≡ 0 (mod q/pν)).
+We can rewrite this congruence as pj≡ 1/r (mod q/pν). As above, either j is the minimal
+such positive integer, in which case h(q; p, r + sq) = (log p)/φ(pν)pe = ( r log p)/φ(pν)
+by deﬁnition, or else q is bounded in terms of r and s, in which case h(q; p, r + sq)≪r,s
+(log p)/q. In both cases, the proposition is established.
+□
+Corollary 4.11. Let r and s be rational numbers, and suppose thatq is a positive integer such that
+r + sq is an integer that is relatively prime to q.
+(a) Suppose both r and the denominator of s are powers of the same prime p. Then
+H(q; r + sq, 1) = log p
+φ(pj+k) + Or,s
+(log q
+q
+)
+,
+where r = pj and the denominator of s is pk.
+(b) Suppose both 1/r and the denominator of s are powers of the same prime p, with 1/r < s .
+Then
+H(q; r + sq, 1) = log p
+φ(pk) + Or,s
+(log q
+q
+)
+,
+where the denominator of s is pk.
+(c) If neither of the above sets of conditions holds, then H(q; r + sq, 1)≪r,s (log q)/q.
+Proof. We sum the conclusion of Lemma 4.10 over all prime divisors p of q (and, according to
+Deﬁnition 1.8, over both residue classes r + sq and (r + sq)−1 for each prime divisor). For each
+such p there is a contribution of Or,s
+(
+(log p)/q
+)
+from error terms, and the sum of all these terms is
+≪r,s
+1
+q
+∑
+p|q log p≤ (log q)/q. The only remaining task is to consider the possible main terms.
+If r = pj and the denominator pk of s are powers of the same prime p, then this prime p must
+divide any q for which r + sq is an integer; hence by Lemma 4.10, we have pk∥ q and the term
+h(q; p, (r + sq)−1) contributes (log p)/rφ(pν) = (log p)/φ(pj+k) to H(q; r + sq, 1). Similarly, if
+r = 1/pj and the denominator pk of s are powers of the same primep with j < k , then this prime p
+must divide anyq for which r+sq is an integer (this would be false ifj = k); hence by Lemma 4.10,
+we have pk−j∥ q and so the term h(q; p, r + sq) contributes r(log p)/φ(pν) = (log p)/φ(pk) to
+H(q; r+sq, 1). For other pairs (r, s), no main term appears, and so the corollary is established. □
+Proof of Theorem 4.2. From the deﬁnition (1.4) of∆(q; a, b), we have
+∆(q; r + sq, 1) = ιq(−(r + sq)) log 2 +Kq(r + sq− 1) + Λ(r1)
+r1
++ Λ(r2)
+r2
++ H(q; r + sq, 1),
+53
+----PAGE 53----
+where r1 and r2 are the least positive integers congruent to r + sq and (r + sq)−1, respectively,
+modulo q. The results in this section allow us to analyze each term individually:
+• If r =−1 and s is an integer, then ιq(−(r + sq)) log 2 = log 2 . Otherwise, ιq(−(r +
+sq)) log 2 = 0 for all but ﬁnitely many (depending on r and s) integers q by Lemma 4.4,
+whence in particular ιq(−(r + sq)) log 2≪r,s (log q)/q.
+• If r = 1 , then (r + sq− 1, q) = ( sq, q) = q/d where d is the denominator of s, and so
+Kq(r + sq− 1) = Λ(d)/φ(d) by Deﬁnition 1.5. Otherwise,Kq(r + sq− 1)≪r,s (log q)/q
+by Lemma 4.5; this bound also holds if the denominator d of s is not a prime power, since
+then Λ(d)/φ(d) = 0.
+• If r is a positive integer and s is an integer, then r1 = r for all but ﬁnitely manyq, in which
+case Λ(r1)/r1 = Λ(r)/r. Otherwise Λ(r1)/r1≪r,s (log q)/q by Corollary 4.8; this bound
+also holds if r is not a prime power, since then Λ(r)/r = 0.
+Similarly, if r = 1/b is the reciprocal of a positive integer and s
+r = bs is an integer, then
+b(r + sq) = 1 + (bs)q≡ 1 (mod q); moreover, b will be the smallest positive integer (for all
+but ﬁnitely manyq) such that b(r + sq)≡ 1 (mod q), and so Λ(r2)/r2 = Λ(b)/b. Otherwise
+Λ(r2)/r2≪r,s (log q)/q by Corollary 4.8; this bound also holds if the reciprocal b of r is
+not a prime power, since then Λ(b)/b = 0 . Note also that if b is a prime power, then the
+denominator of s must be the same prime power, since bs and r + sq are both integers.
+• Corollary 4.11 tells us exactly when we have a contribution fromH(q; r + sq, 1) other than
+the error term Or,s
+(
+(log q)/q
+)
+: the denominator of s must be a prime power, and r must
+be either a power of the same prime or else the reciprocal of a smaller power of the same
+prime.
+In summary, there are six situations in which there is a contribution to ∆(q; r + sq, 1) beyond the
+error term Or,s
+(
+(log q)/q
+)
+: four situations when the denominator of s is a prime power and two
+situations when s is an integer. All six situations are disjoint, and the contribution to∆(q; r+sq, 1)
+in each situation is exactly R(r, s) as deﬁned in Deﬁnition 4.1. This establishes the theorem. □
+4.3. The Bays–Hudson “mirror image phenomenon”. In 1983, Bays and Hudson [2] pub-
+lished their observations of some curious phenomena in the prime number race among the reduced
+residue classes modulo 11. They graphed normalized error terms corresponding to π(x; 11, 1),
+. . . ,π(x; 11, 10), much like the functions E(x; 11, a) discussed in this paper, and from the graph
+they saw that the terms corresponding to the nonsquare residue classes tended to be positive,
+while the terms corresponding to the square residue classes tended to be negative, as Chebyshev’s
+bias predicts. Unexpectedly, however, they noticed [2, Figure 1]) that the graph corresponding to
+π(x; 11, 1) had a tendency to look like a mirror image of the graph corresponding to π(x; 11, 10),
+and similarly for the other pairs π(x; 11, a) and π(x; 11, 11− a). They deemed this observation the
+“additive inverse phenomenon”; we use the physically suggestive name “mirror image phenome-
+non”.
+This prompted them to graph the various normalized error terms corresponding to the sums
+π(x; 11, a) + π(x; 11, b) where a is a nonsquare (mod 11) and b is a square (mod 11); all such
+normalized sums have the same mean value. They witnessed a noticeable difference between the
+cases a+ b = 11, when the graph corresponding to the sum was typically quite close to the average
+value (as in [2, Figure 2]), and all other cases which tended to result in more spread-out graphs.
+The ideas of the current paper can be used to explain this phenomenon. We consider more
+generally the limiting logarithmic distributions of the sums of error terms E(x; q, a) + E(x; q, b),
+54
+----PAGE 54----
+where a is a nonsquare (mod q) and b is a square (mod q). The methods of Section 2.1 are easily
+modiﬁed to show (under the usual assumptions of GRH and LI) that this distribution has variance
+V +(q; a, b) =
+∑
+χ (modq)
+χ̸=χ0
+|χ(a) + χ(b)|2b(χ). (4.4)
+Following the method of proof of Theorem 1.4, one can show that for any modulus q and any pair
+a, b of reduced residues modulo q, we have
+V +(q; a, b) = 2φ(q)
+(
+log q−
+∑
+p|q
+log p
+p− 1− Λ(q)
+φ(q)− (γ0 + log 2π)
+− Kq(a− b)− ιq(−ab−1) log 2
+)
++ 2M +(q; a, b)− 4b(χ0), (4.5)
+where
+M +(q; a, b) =
+∑
+χ (modq)
+χ̸=χ0
+|χ(a) + χ(b)|2 L′(1, χ∗)
+L(1, χ∗) .
+In particular, we note the term −ιq(−ab−1) log 2; many of the other terms vanish or simplify in
+the special case that q is prime. We also note that the primary contribution to M +(q; a, b) is the
+expression−Λ(r1)/r1− Λ(r2)/r2, where r1 and r2 are the least positive residues of ab−1 and
+ba−1 (mod q). Both of these expressions are familiar to us from our analysis ofV (q; a, b), although
+their signs are negative in the current setting rather than positive as before.
+We see that the variance V +(q; a, b) of this distribution E(x; q, a) + E(x; q, b) is somewhat
+smaller than the typical size if there is a small prime congruent to ab−1 or ba−1 (mod q); more
+importantly, it is smallest of all if−ab−1≡ 1 (mod q), which is precisely the situation a + b = q.
+In other words, we see very explicitly that the cases where a + b = q yield distributions with
+smaller-than-normal variance, as observed for q = 11 by Bays and Hudson. In particular, our
+theory predicts that for any prime q≡ 3 (mod 4) (so that exactly one of a and−a is a square), the
+graphs of E(x; q, a) and E(x; q, q− a) will tend to resemble mirror images of each other, more
+so than the graphs of two functions E(x; q, a) and E(x; q, b) where a and b are unrelated. On the
+other hand, the contribution of the ιq term is in a secondary main term, and so the theory predicts
+that this mirror-image tendency becomes weaker as q grows larger.
+We can use the numerical data in the case q = 11 , computed ﬁrst by Bays and Hudson, to
+conﬁrm our theoretical evaluation of these variances. We computed the values of each of the
+twenty-ﬁve functions E(x; 11, a) + E(x; 11, b), where a is a square and b a nonsquare (mod q),
+on 400 logarithmically equally spaced points spanning the interval [103, 107]. We then computed
+the variance of our sample points for each function, in order to compare them with the theoretical
+variance given in equation (4.5), which we computed numerically. It is evident from equation (4.4)
+that multiplying both a and b by the same factor does not change V +(q; a, b), and therefore there
+are only three distinct values for these theoretical variances: the functions E(x; q, a) + E(x; q, b)
+where a + b = 11 all give the same variance, as do the functions whereab−1≡ 2 or ab−1≡ 2−1≡
+6 (mod 11), and the functions where ab−1≡ 7 or ab−1≡ 7−1≡ 8 (mod 11). Table 6 summarizes
+our calculations, where the middle column reports the mean of the variances calculated for the
+functions in each set.
+55
+----PAGE 55----
+TABLE 6. Observed and theoretical variances for E(x; 11, a) + E(x; 11, b)
+Set of functions Average variance calculated Theoretical
+E(x; 11, a) + E(x; 11, b) from sampled data variance
+a + b = 11 5.60 5.31
+{ab−1, ba−1}≡{ 2, 6} (mod 11) 7.10 6.82
+{ab−1, ba−1}≡{ 7, 8} (mod 11) 9.59 9.06
+Looking directly at the deﬁnition (4.4) of V +(q; a, b), we see that when a≡− b (mod q), the
+only characters that contribute to the sum are the even characters, since we have χ(a) + χ(b) =
+χ(a) + χ(−1)χ(a) = 0 when χ(−1) =−1. As seen earlier in Lemma 3.5, the quantity b(χ) is
+smaller for even characters than for odd characters, which is another way to express the explanation
+of the Bays–Hudson observations.
+5. E XPLICIT BOUNDS AND COMPUTATIONS
+We concern ourselves with explicit numerical bounds and computations of the densitiesδ(q; a, b)
+in this ﬁnal section. We begin in Section 5.1 by establishing auxiliary bounds forΓ(z), for L′
+L (s, χ),
+and for the number of zeros of L(s, χ) near a given height. In Section 5.2 we use these explicit
+inequalities to provide the proofs of two propositions stated in Section 3.3; we also establish com-
+putationally accessible upper and lower bounds for the variance V (q; a, b). Explicit estimates for
+the density δ(q; a, b) are proved in Section 5.3, including two theorems that give explicit numerical
+upper bounds for δ(q; a, b) for q above 1000. Finally, in Section 5.4 we describe the two meth-
+ods we used to calculate numerical values for δ(q; a, b); we include some sample data from these
+calculations, including the 120 largest density values that ever occur.
+5.1. Bounds for classical functions. The main goals of this section are to bound the number of
+zeros of L(s, χ) near a particular height and to estimate the size ofL′
+L (s, χ) inside the critical strip,
+both with explicit constants. To achieve this, we ﬁrst establish some explicit inequalities for the
+Euler Gamma-function.
+Proposition 5.1. If Re z≥ 1
+8, then
+⏐⏐⏐⏐ log Γ(z)−
+(
+z− 1
+2
+)
+log z + z− 1
+2 log 2π
+⏐⏐⏐⏐≤ 1
+4|z|
+and ⏐⏐⏐⏐
+Γ′(z)
+Γ(z)− log(z + 1) + 1
+2z + 2 + 1
+z
+⏐⏐⏐⏐ < 0.2.
+Proof. The ﬁrst inequality follows from [9, equations (1) and (9) of Section 1.3], both taken with
+n = 1 . As for the second inequality, we begin with the identity [16, equation (21)], taken with
+a = 1:
+Ψ(z + 1) = log(z + 1)− 1
+2(z + 1) + f′
+1(z).
+Here Ψ(z) = Γ′
+Γ (z) has its usual meaning; we use the identity Γ′(z)
+Γ(z) + 1
+z = Γ′(z+1)
+Γ(z+1) to obtain
+Γ′(z)
+Γ(z) + 1
+z− log(z + 1) + 1
+2(z + 1) = f′
+1(z),
+56
+----PAGE 56----
+and therefore it sufﬁces to show that |f′
+1(z)| ≤0.2 when Re(z) ≥ 1
+8. The notation f1(z) =
+log F1,1/2(z) is deﬁned in [16, equation (9)], and therefore f′
+1(z) = F′
+1,1/2(z)/F1,1/2(z). By [16,
+Lemma 1.1.1], the denominator F1,1/2(z) is bounded below in modulus by
+√
+e/π; by [16, Lemma
+2.2.1] taken with a = n = 1, the numerator is bounded above in modulus by
+⏐⏐F′
+1,1/2(z)
+⏐⏐ < log x + 1
+x + 1/2− 1
+2x + 2,
+where x = Re z (unfortunately [16, equation (27)] contains the misprint f (n)
+a,1/2 where F (n)
+a,1/2 is
+intended). The right-hand side of this inequality is a decreasing function of x, and its value at
+x = 1
+8 is log 9
+5− 4
+9. We conclude that for Re z≥ 1
+8, we have|f′
+1(z)|≤
+(
+log 9
+5− 4
+9
+)
+/
+√
+e/π < 0.2,
+as needed. □
+Lemma 5.2. Let a = 0 or a = 1. For any real numbers 1
+4≤ σ≤ 1 and T , we have
+⏐⏐⏐⏐
+Γ′( 1
+2(σ + iT + a))
+Γ( 1
+2(σ + iT + a))− Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a))
+⏐⏐⏐⏐ < 7.812. (5.1)
+Proof. By symmetry we may assume that T≥ 0. We ﬁrst dispose of the caseT≤ 3. When a = 0,
+a computer calculation shows that the maximum value of the left-hand side of equation (5.1) in
+the rectangle{σ + iT : 1
+4≤ σ≤ 1, 0≤ T ≤ 3} occurs at σ = 1
+4 and T = 0: the value of the
+left-hand side at that point is a bit less than 7.812. When a = 1, a similar calculation shows that
+the left-hand side of equation (5.1) is always strictly less than 7.812.
+For the rest of the proof, we may therefore assume that T≥ 3. By Proposition 5.1,
+Γ′( 1
+2(σ + iT + a))
+Γ( 1
+2(σ + iT + a))− Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a)) = log σ + iT + a + 2
+2 − 1
+σ + iT + a + 2− 2
+σ + iT + a
+− log 4 + iT + a
+2 + 1
+4 + iT + a + 2
+2 + iT + a + O(0.4),
+and therefore
+⏐⏐⏐⏐
+Γ′( 1
+2(σ + iT + a))
+Γ( 1
+2(σ + iT + a))− Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a))
+⏐⏐⏐⏐≤
+⏐⏐⏐⏐ log
+(
+1− 2− σ
+4 + iT + a
+)⏐⏐⏐⏐
++
+⏐⏐⏐⏐
+2− σ
+(σ + iT + a + 2)(4 + iT + a)
+⏐⏐⏐⏐ + 2
+⏐⏐⏐⏐
+2− σ
+(σ + iT + a)(2 + iT + a)
+⏐⏐⏐⏐ + 0.4.
+Under the assumptions on σ, a, and T , we always have the inequality
+⏐⏐2− σ/(4 + iT + a)
+⏐⏐≤ 1
+2.
+The maximum modulus principle implies the inequality
+⏐⏐ 1
+z log(1− z)
+⏐⏐≤ log 4 for|z|≤ 1
+2, and so
+⏐⏐⏐⏐
+Γ′( 1
+2(σ + iT + a))
+Γ( 1
+2(σ + iT + a))− Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a))
+⏐⏐⏐⏐≤
+⏐⏐⏐⏐
+2− σ
+4 + iT + a
+⏐⏐⏐⏐ log 4
++
+⏐⏐⏐⏐
+2− σ
+(σ + iT + a + 3)(5 + iT + a)
+⏐⏐⏐⏐ + 2
+⏐⏐⏐⏐
+2− σ
+(σ + iT + a)(2 + iT + a)
+⏐⏐⏐⏐ + 0.4
+Finally we use the inequalities on σ, a, and T to conclude that
+⏐⏐⏐⏐
+Γ′( 1
+2(σ + iT + a))
+Γ( 1
+2(σ + iT + a))− Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a))
+⏐⏐⏐⏐≤ 2
+5 log 4 + 2
+5
+√
+13 + 4
+3
+√
+13 + 0.4 < 1.4353,
+which amply sufﬁces to ﬁnish the proof. □
+57
+----PAGE 57----
+We turn now to estimates for quantities associated with Dirichlet L-functions. The next few
+results do not require GRH to be true, and in fact their proofs cite identities from the literature that
+hold more generally no matter where the zeros of L(s, χ) might lie. Accordingly, we use the usual
+notation ρ = β + iγ to denote a nontrivial zero of L(s, χ), and all sums in this section of the form∑
+ρ denote sums over all such nontrivial zeros of the Dirichlet L-function.
+Lemma 5.3. Let q≥ 2, and let χ be a nonprincipal character (mod q). For any real number T ,
+∑
+ρ
+1
+|2 + iT− ρ|2 < 1
+2 log
+(
+0.609q(|T|+ 5)
+)
+.
+Proof. It sufﬁces to prove the lemma for primitive characters. For χ primitive, it is known [11,
+equation (10.37)] that as meromorphic functions on the complex plane,
+L′(s, χ)
+L(s, χ) =−1
+2 log q
+π− 1
+2
+Γ′( 1
+2(s + a))
+Γ( 1
+2(s + a)) + B(χ) +
+∑
+ρ
+( 1
+s− ρ + 1
+ρ
+)
+, (5.2)
+where the constant B(χ) was described earlier in the proof of Lemma 3.5, and where a = 0 if
+χ(−1) = 1 and a = 1 if χ(−1) =−1. Taking real parts of both sides and using the identity (3.3),
+we obtain after rearrangement
+Re
+∑
+ρ
+1
+s− ρ = Re L′(s, χ)
+L(s, χ) + 1
+2 log q
+π + 1
+2 Re Γ′( 1
+2(s + a))
+Γ( 1
+2(s + a)) . (5.3)
+If we put z = 1
+2(s + a) in Proposition 5.1, we see that for Re s≥ 1
+8,
+Re Γ′( 1
+2(s + a))
+Γ( 1
+2(s + a)) = Re log s + a + 2
+2 − Re 1
+s + a + 2− Re 2
+s + a + 0.2
+≤ log|s + a + 1|−log 2 + 0 + 0.2≤ log|s + 3|−0.493.
+Inserting this bound into equation (5.3) and putting s = 2 + iT ,
+Re
+∑
+ρ
+1
+2 + iT− ρ≤ Re L′(2 + iT, χ)
+L(2 + iT, χ) + 1
+2 log q
+π + 1
+2 log|5 + iT|−0.246.
+Now notice that
+⏐⏐⏐⏐
+L′(2 + iT, χ)
+L(2 + iT, χ)
+⏐⏐⏐⏐ =
+⏐⏐⏐⏐−
+∞∑
+n=1
+χ(n)Λ(n)
+n2+iT
+⏐⏐⏐⏐≤
+∞∑
+n=1
+Λ(n)
+n2 =− ζ′(2)
+ζ(2) < 0.57, (5.4)
+and therefore
+Re
+∑
+ρ
+1
+2 + iT− ρ≤ 0.57 + 1
+2 log q
+π + 1
+2 log|5 + iT|−0.246
+≤ 1
+2 log q + 1
+2 log(|T|+ 5) + 0.57− 1
+2 log π− 0.246
+≤ 1
+2 log
+(
+q(|T|+ 5)
+)
+− 0.248≤ 1
+2 log
+(
+0.609q(|T|+ 5)
+)
+.
+58
+----PAGE 58----
+We obtain ﬁnally
+∑
+ρ
+1
+|2 + iT− ρ|2 <
+∑
+ρ
+2− β
+|2 + iT− ρ|2
+= Re
+∑
+ρ
+1
+2 + iT− ρ≤ 1
+2 log
+(
+0.609q(|T|+ 5)
+)
+(5.5)
+as claimed. □
+Proposition 5.4. For any nonprincipal character χ and any real number T , we have
+#{ρ:|T− Im ρ|≤2}≤ 4 log
+(
+0.609q(|T|+ 5)
+)
+.
+Proof. This follows immediately from equation (5.5) and the inequalities
+∑
+ρ
+|T−γ|≤2
+1≤ 8
+∑
+ρ
+1
+(2− σ)2 + (T− γ)2≤ 8
+∑
+ρ
+2− β
+|2 + iT− ρ|2 .
+□
+Lemma 5.5. Let s = σ + iT with 1
+4≤ σ≤ 1. For any primitive character χ (mod q) with q≥ 2,
+if L(s, χ)̸= 0 then
+⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)−
+∑
+ρ
+|T−γ|≤2
+1
+s− ρ
+⏐⏐⏐⏐≤
+√
+2 log
+(
+0.609q(|T|+ 5)
+)
++ 4.48.
+Proof. Applying equation (5.2) at s = σ + iT and again at 2 + iT , we obtain
+L′(s, χ)
+L(s, χ)− L′(2 + iT, χ)
+L(2 + iT, χ) = 1
+2
+Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a))− 1
+2
+Γ′( 1
+2(s + a))
+Γ( 1
+2(s + a)) +
+∑
+ρ
+( 1
+s− ρ− 1
+2 + iT− ρ
+)
+,
+which implies
+⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)−
+∑
+ρ
+|T−γ|≤2
+1
+s− ρ
+⏐⏐⏐⏐≤
+⏐⏐⏐⏐
+L′(2 + iT, χ)
+L(2 + iT, χ)
+⏐⏐⏐⏐ + 1
+2
+⏐⏐⏐⏐
+Γ′( 1
+2(2 + iT + a))
+Γ( 1
+2(2 + iT + a))− Γ′( 1
+2(s + a))
+Γ( 1
+2(s + a))
+⏐⏐⏐⏐
++
+∑
+ρ
+|T−γ|>2
+⏐⏐⏐⏐
+1
+s− ρ− 1
+2 + iT− ρ
+⏐⏐⏐⏐ +
+∑
+ρ
+|T−γ|≤2
+1
+|2 + iT− ρ|.
+Using equation (5.4) and Lemma 5.2 to bound the ﬁrst two terms on the right-hand side, we see
+that
+⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)−
+∑
+ρ
+|T−γ|≤2
+1
+s− ρ
+⏐⏐⏐⏐ < 0.57 + 3.906
++
+∑
+ρ
+|T−γ|>2
+2− σ
+|s− ρ||2 + iT− ρ|+
+∑
+ρ
+|T−γ|≤2
+1
+|2 + iT− ρ|. (5.6)
+59
+----PAGE 59----
+To prepare the last two sums for an application of Lemma 5.3, we note that when|T− γ|> 2,
+2− σ
+|s− ρ||2 + iT− ρ|< 2|2 + iT− ρ|
+|s− ρ|
+1
+|2 + iT− ρ|2 < 2
+√
+2 1
+|2 + iT− ρ|2 ;
+on the other hand, when|T− γ|≤2,
+1
+|2 + iT− ρ|= |2 + iT− ρ|
+|2 + iT− ρ|2 < 2
+√
+2
+|2 + iT− ρ|2 .
+Therefore equation (5.6) becomes, by Lemma 5.3,
+⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)−
+∑
+ρ
+|T−γ|≤2
+1
+s− ρ
+⏐⏐⏐⏐ < 0.57 + 3.906 + 2
+√
+2
+∑
+ρ
+1
+|2 + iT− ρ|2
+< 4.48 +
+√
+2 log
+(
+0.609q(|T|+ 5)
+)
+as claimed. □
+We restore the assumption of GRH for the last proposition of this section, which is used in the
+proof of Lemma 5.10 below.
+Proposition 5.6. Assume GRH. Let s = σ + iT with 1
+4≤ σ≤ 1, σ̸= 1
+2. If χ is any nonprincipal
+character (mod q), then
+⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)
+⏐⏐⏐⏐≤
+( 4
+|σ− 1
+2|+
+√
+2
+)
+log
+(
+0.609q(|T|+ 5)
+)
++ 4.48 + log q
+2σ− 1 .
+Furthermore, if χ is primitive and q≥ 2, then the summand (log q)/(2σ− 1) can be omitted from
+the upper bound.
+Proof. Assume ﬁrst thatχ is primitive. Lemma 5.5 tells us that
+⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)
+⏐⏐⏐⏐≤
+∑
+ρ
+|T−γ|≤2
+1
+|s− ρ|+
+√
+2 log
+(
+0.609q(|T|+ 5)
+)
++ 4.48
+≤ 1
+|σ− 1
+2|#{ρ:|T− γ|≤2} +
+√
+2 log
+(
+0.609q(|T|+ 5)
+)
++ 4.48
+under the assumption of GRH; the proposition for primitive χ now follows immediately from
+Proposition 5.4.
+If χ is not primitive, then L(s, χ) = L(s, χ∗)∏
+p|q
+(
+1− χ∗(p)
+ps
+)
+; we then have the identity
+L′(s, χ)
+L(s, χ) = L′(s, χ∗)
+L(s, χ∗) +
+∑
+p|q
+χ∗(p) logp
+ps− χ∗(p) .
+Therefore ⏐⏐⏐⏐
+L′(s, χ)
+L(s, χ)− L′(s, χ∗)
+L(s, χ∗)
+⏐⏐⏐⏐≤
+∑
+p|q
+log p
+pσ− 1≤ 1
+2σ− 1
+∑
+p|q
+log p≤ log q
+2σ− 1 ,
+which ﬁnishes the proof of the proposition in full. □
+60
+----PAGE 60----
+5.2. Bounds for the variance V (q; a, b). This section has two main purposes. First, we provide
+the proofs of Propositions 3.10 and 3.11, two statements involving smoothed sums of the von
+Mangoldt function which were stated in Section 3.3. Second, we establish two sets of upper and
+lower bounds for the variance V (q; a, b), one when q is prime and one valid for all q. All of these
+results are stated with explicit constants and are valid for explicit ranges of q.
+Lemma 5.7. For any real number t, we have
+⏐⏐d
+dt
+⏐⏐Γ
+(
+− 1
+2 + it
+)⏐⏐⏐⏐≤
+⏐⏐Γ′(
+− 1
+2 + it
+)⏐⏐.
+Proof. We show more generally that if f(t) is any differentiable complex-valued function that
+never takes the value 0, then|f(t)|is also differentiable and
+⏐⏐d
+dt|f(t)|
+⏐⏐≤|f′(t)|; the lemma then
+follows since Γ never takes the value 0. Write f(t) = u(t) + iv(t) where u and v are real-valued;
+then
+d
+dt|f(t)|= d
+dt
+√
+u(t)2 + v(t)2 = u(t)u′(t) + v(t)v′(t)√
+u(t)2 + v(t)2
+while|f′(t)|=|u′(t) + iv′(t)|=
+√
+u′(t)2 + v′(t)2. The asserted inequality is therefore equiva-
+lent to|u(t)u′(t) + v(t)v′(t)|≤
+√
+u(t)2 + v(t)2
+√
+u′(t)2 + v′(t)2, which is a consequence of the
+Cauchy-Schwarz inequality. □
+Lemma 5.8. We have|Γ(s)|≤|Γ(Re s)|for all complex numbers s.
+Note that this assertion is trivially true if Re s is a nonpositive integer, under the convention
+|Γ(−n)|=∞ for n≥ 0.
+Proof. We prove that the assertion holds whenever Re s >−n, by induction on n. The base case
+n = 0 can be derived from the integral representation Γ(s) =
+∫∞
+0 ts−1e−tdt, which gives
+|Γ(s)|≤
+∫ ∞
+0
+|ts−1|e−tdt =
+∫ ∞
+0
+tRes−1e−tdt = Γ(Re s).
+Now assume that the assertion holds whenever Re s >−n. Given a complex number s for which
+Re s >−(n + 1), we use the identity Γ(s + 1) = sΓ(s) and the induction hypothesis to write
+|Γ(s)|=|Γ(s + 1)|
+|s| ≤|Γ(Re s + 1)|
+|s| =|Re s|
+|s||Γ(Re s)|≤|Γ(Re s)|,
+as desired. □
+Lemma 5.9. For any nonprincipal character χ,
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+⏐⏐Γ
+(
+− 1
+2 + iγ
+)⏐⏐≤ 14.27 logq + 16.25.
+We remark that this lemma does not assume GRH, since the sum on the left-hand side only de-
+creases if some of the zeros of L(s, χ) lie off the critical line.
+Proof. First, by Proposition 5.4 applied with T = 0, the number of zeros of L(s, χ) with|γ|≤ 2
+is at most 4 log(3.045q); thus by Lemma 5.8,
+∑
+|γ|≤2
+L(1/2+iγ,χ)=0
+⏐⏐Γ
+(
+− 1
+2 + iγ
+)⏐⏐≤
+⏐⏐Γ
+(
+− 1
+2
+)⏐⏐ ∑
+|γ|≤2
+L(1/2+iγ,χ)=0
+1
+≤ 8√π log(3.045q)≤ 14.18 logq + 15.79. (5.7)
+61
+----PAGE 61----
+We can write the remainder of the sum using Riemann-Stieltjes integration as
+∑
+|γ|>2
+L(1/2+iγ,χ)=0
+⏐⏐Γ
+(
+− 1
+2 + iγ
+)⏐⏐ =
+∫ ∞
+2
+⏐⏐Γ
+(
+− 1
+2 + it
+)⏐⏐ d
+(
+N(t, χ)− N(2, χ)
+)
+=−
+∫ ∞
+2
+(
+N(t, χ)− N(2, χ)
+)d
+dt
+⏐⏐Γ
+(
+− 1
+2 + it
+)⏐⏐ dt;
+the vanishing of the boundary terms is justiﬁed by the upper boundN(t, χ)≪q t log t (see Propo-
+sition 2.15 for example) and the exponential decay of Γ(s) on vertical lines. We conclude from
+Lemma 5.7 that
+∑
+|γ|≤2
+L(1/2+iγ,χ)=0
+⏐⏐Γ
+(
+− 1
+2 + iγ
+)⏐⏐≤
+∫ ∞
+2
+N(t, χ)
+⏐⏐Γ′(
+− 1
+2 + it
+)⏐⏐ dt
+≤
+∫ ∞
+2
+(( t
+π + 0.68884
+)
+log qt
+2πe + 10.6035
+)⏐⏐Γ′(
+− 1
+2 + it
+)⏐⏐ dt
+by Proposition 2.15. Since log(qt/2πe) = log q +log( t/2πe), the right-hand side is simply a linear
+function of log q; using numerical integration we see that
+∑
+|γ|≤2
+L(1/2+iγ,χ)=0
+⏐⏐Γ
+(
+− 1
+2 + iγ
+)⏐⏐≤ 0.09 logq + 0.46.
+Combining this upper bound with the bound in equation (5.7) establishes the lemma. □
+Lemma 5.10. Assume GRH. For any nonprincipal character χ,
+∫ −3/4+i∞
+−3/4−i∞
+⏐⏐⏐⏐
+L′(s + 1, χ)
+L(s + 1, χ) Γ(s)
+⏐⏐⏐⏐ ds≤ 101 logq + 112.
+Proof. Proposition 5.6 with σ = 1
+4 tells us that for any real number t,
+⏐⏐⏐⏐
+L′( 1
+4 + it, χ)
+L( 1
+4 + it, χ)
+⏐⏐⏐⏐≤ 17.42 log
+(
+0.609q(|t|+ 5)
+)
++ 4.48 + log q
+0.1892
+≤ 22.71 logq + 17.42 log(|t|+ 5)− 4.159,
+and therefore∫ −3/4+i∞
+−3/4−i∞
+⏐⏐⏐⏐
+L′(s + 1, χ)
+L(s + 1, χ) Γ(s)
+⏐⏐⏐⏐ ds≤
+∫ ∞
+−∞
+(
+22.71 logq +17 .42 log(|t|+5)−4.159
+)⏐⏐Γ
+(
+− 3
+4 + it
+)⏐⏐ dt.
+Again this integral is a linear function of log q, and a numerical calculation establishes the partic-
+ular constants used in the statement of the lemma. □
+With these lemmas in hand, we are now able to provide the two proofs deferred until now from
+Section 3.3.
+Proof of Proposition 3.10. We begin with the Mellin transform formula, valid for any real number
+c > 0,
+−
+∞∑
+n=1
+χ(n)Λ(n)
+n e−n/y = 1
+2πi
+∫ c+i∞
+c−i∞
+L′(s + 1, χ)
+L(s + 1, χ) Γ(s)ys ds
+62
+----PAGE 62----
+(see [11, equations (5.24) and (5.25)]). We move the contour to the left, from the vertical line
+Re s = c to the vertical line Re s =− 3
+4, picking up contributions from the pole of Γ at s = 0 as
+well as from each nontrivial zero of L(s, χ). The result is
+−
+∞∑
+n=1
+χ(n)Λ(n)
+n e−n/y = L′(1, χ)
+L(1, χ) +
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+Γ
+(
+− 1
+2 + iγ
+)
+y−1/2+iγ
++ 1
+2πi
+∫ −3/4+i∞
+−3/4−i∞
+L′(s + 1, χ)
+L(s + 1, χ) Γ(s)ys ds (5.8)
+since we are assuming GRH. (Strictly speaking, we should consider truncations of these inﬁnite
+integrals; however, the exponential decay ofΓ(s) in vertical strips implies that the contributions at
+large height do vanish in the limit.)
+The sum on the right-hand side can be bounded by⏐⏐⏐⏐
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+Γ
+(
+− 1
+2 + iγ
+)
+y−1/2+iγ
+⏐⏐⏐⏐≤ y−1/2
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+⏐⏐Γ
+(
+− 1
+2 + iγ
+)⏐⏐≤ 14.27 logq + 16.25
+y1/2
+by Lemma 5.9, while the integral can be bounded by
+⏐⏐⏐⏐
+1
+2πi
+∫ −3/4+i∞
+−3/4−i∞
+L′(s + 1, χ)
+L(s + 1, χ) Γ(s)ys ds
+⏐⏐⏐⏐≤ 1
+2πy3/4
+∫ −3/4+i∞
+−3/4−i∞
+⏐⏐⏐⏐
+L′(s + 1, χ)
+L(s + 1, χ) Γ(s)
+⏐⏐⏐⏐ ds
+≤ 101 logq + 112
+2πy3/4
+by Lemma 5.10. Using these two inequalities in equation (5.8) establishes the proposition. □
+Proof of Proposition 3.11. Since 1≤ a < q , we may write
+∑
+n≡a (modq)
+Λ(n)
+n e−n/q2
+= Λ(a)
+a e−a/q2
++ O
+( ∑
+q≤n≤q2
+n≡a (modq)
+Λ(n)
+n +
+∑
+n>q2
+n≡a (modq)
+Λ(n)
+n e−n/q2
+)
+. (5.9)
+Since Λ(n)/n≤ (log n)/n, which is a decreasing function of n for n≥ 3, we have
+∑
+n>q2
+n≡a (modq)
+Λ(n)
+n e−n/q2
+≤ log q2
+q2
+∞∑
+j=q
+e−(qj+a)/q2
+≤ 2 logq
+q2 e−1
+∞∑
+k=0
+e−j/q = 2 logq
+q2 e−1 1
+1− e−1/q ;
+note here that 1≤ a < q so q≥ 2. As the function t/(1− e−t) is bounded by 1/2(1− e−1/2) for
+0 < t≤ 1
+2, we conclude that
+∑
+n>q2
+n≡a (modq)
+Λ(n)
+n e−n/q2
+≤ 2 logq
+q e−1 1
+2(1− e−1/2) < 0.935log q
+q .
+We bound the second term of equation (5.9) crudely:
+∑
+q≤n≤q2
+n≡a (modq)
+Λ(n)
+n ≤ (log q2)
+q−1∑
+j=1
+1
+qj + a≤ 2 logq
+q
+q−1∑
+j=1
+1
+j≤ 2 logq
+q (log q + 1).
+63
+----PAGE 63----
+Finally, for the ﬁrst term of equation (5.9), the estimatee−t = 1 +O(t) for t≥ 0 allows us to write
+Λ(a)
+a e−a/q = Λ(a)
+a
+(
+1 + O
+( a
+q
+))
+= Λ(a)
+a + O
+(log q
+q
+)
+.
+Using these three deductions transforms equation (5.9) into the statement of the proposition. □
+We now turn to the matter of giving explicit upper and lower bounds for V (q; a, b). In the case
+where q is prime, we are already able to establish such estimates.
+Proposition 5.11. If q≥ 150 is prime, then
+2(q− 1)(log q− 2.42)− 47.238 log2 q≤ V (q; a, b)≤ 2(q− 1)(log q− 0.99) + 47.238 log2 q.
+Proof. Combining Theorem 1.4 with Proposition 3.12, we see that
+V (q; a, b) = 2φ(q)
+(
+L(q) + Kq(a− b) + ιq(−ab−1) log 2
+)
++ 2M∗(q; a, b)
+= 2φ(q)
+(
+L(q) + Kq(a− b) + ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
++ H0(q; a, b)
+)
++ O
+(47.238φ(q) log2 q
+q
+)
+(5.10)
+for any q≥ 150, where r1 and r2 denote the least positive residues of ab−1 and ba−1 (mod q).
+Since we are assuming q is prime, both Kq(a− b) and H0(q; a, b) vanish, and we have
+V (q; a, b) = 2(q− 1)
+(
+log q
+2πeγ0
++ ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
+)
++ O(47.238 log2 q).
+The function Λ(n)/n is nonnegative and bounded above by (log 3)/3, and the function ιq takes
+only the values 0 and 1; therefore the quantity in large parentheses satisﬁes the bounds
+log q− 2.42≤ log q
+2πeγ0
++ ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
+≤ log q− 0.99,
+which establishes the proposition. □
+We require two additional lemmas before we can treat the case of general (possibly composite)q.
+Lemma 5.12. With H0 deﬁned in Deﬁnition 3.8, we have−(4 logq)/q≤ H0(q; a, b)≤ 4.56 for
+any reduced residues a and b (mod q).
+Proof. Since e(q; p, r)≥ 1 always, we have
+h0(q; p, r) = 1
+φ(pν)
+log p
+pe(q;p,r)(1− p−e(q;p,1))≤ 1
+p− 1
+log p
+p− 1≤ 4log p
+p2 .
+Therefore
+H0(q; a, b)≤
+∑
+p|q
+(
+h0(q; p, ab−1)+h0(q; p, ba−1)
+)
+≤ 8
+∑
+p|q
+log p
+p2 < 8
+∞∑
+n=1
+Λ(n)
+n2 = 8
+⏐⏐⏐⏐
+ζ′(2)
+ζ(2)
+⏐⏐⏐⏐≤ 4.56,
+64
+----PAGE 64----
+which establishes the upper bound. On the other hand, note that pe(q;p,1) is an integer larger than 1
+that is congruent to 1 (mod q/pν). Therefore pe(q;p,1)≥ q/pν + 1, and so
+H0(q; a, b)≥− 2
+∑
+p|q
+h0(q; p, 1) =−2
+∑
+p|q
+1
+φ(pν)
+log p
+pe(q;p,1)− 1
+≥− 2
+∑
+p|q
+1
+pν(1− 1/p)
+log p
+q/pν≥− 4
+q
+∑
+p|q
+log p≥− 4 logq
+q ,
+which establishes the lower bound. □
+Lemma 5.13. If q≥ 2 is any integer, then
+∑
+p|q
+log p
+p− 1≤ 1.02 log logq + 3.04.
+Proof. We separate the sum into two intervals at the point 1 + log q. The contribution from the
+larger primes is at worst
+∑
+p|q
+p≥1+logq
+log p
+p− 1≤ 1
+log q
+∑
+p|q
+log p≤ log q
+log q = 1.
+For the smaller primes, recall the usual notation θ(t) =∑
+p≤t log p. We will use the explicit bound
+θ(t)≤ 1.01624t for t > 0 from Theorem 9 of [13] , and so the contribution from the smaller
+primes is bounded by
+∑
+p|q
+p<1+logq
+log p
+p− 1≤
+∑
+p<1+logq
+log p
+p− 1 =
+∫ 1+logq
+2−
+dθ(t)
+t− 1
+= θ(1 + logq)
+log q +
+∫ 1+logq
+2
+θ(t)
+(t− 1)2 dt
+≤ 1.01624
+(1 + logq
+log q +
+∫ 1+logq
+2
+t dt
+(t− 1)2
+)
+= 1.01624
+(
+1 + 1
+log q + log logq− 1
+log q + 1
+)
+= 1.01624 log logq + 2.03248,
+which ﬁnishes the proof of the lemma. □
+Proposition 5.14. If q≥ 500, then
+2φ(q)(log q− 1.02 log logq− 7.34)≤ V (q; a, b)≤ 2φ(q)(log q + 6.1).
+65
+----PAGE 65----
+Proof. We begin with equation (5.10), expanding the functions L and Kq according to Deﬁni-
+tion 1.5:
+V (q; a, b) = 2φ(q)
+(
+log q
+2πeγ0
+−
+∑
+p|q
+log p
+p− 1 + Λ(q/(q, a− b))
+φ(q/(q, a− b))
++ ιq(−ab−1) log 2 +Λ(r1)
+r1
++ Λ(r2)
+r2
++ H0(q; a, b) + O
+(23.62 log2 q
+q
+))
+. (5.11)
+The last term on the ﬁrst line is nonnegative and bounded above by log 2, while the ﬁrst three
+terms on the second line are nonnegative and bounded together by log 2 + 2
+3 log 3 as in the proof
+of Proposition 5.11. The term H0(q; a, b) is bounded above by 4.56 and below by (−4 logq)/q by
+Lemma 5.12. Therefore
+2φ(q)
+(
+log q− log 2πeγ0−
+∑
+p|q
+log p
+p− 1− 4 logq
+q + O
+(23.62 log2 q
+q
+))
+≤ V (q; a, b)
+≤ 2φ(q)
+(
+log q− log 2πeγ0 + log 2 + log 2 +2
+3 log 3 + 4.56 + O
+(23.62 log2 q
+q
+))
+. (5.12)
+The sum being subtracted on the top line is bounded above by1.02 log logq+3.04 by Lemma 5.13.
+Lastly, a calculation shows that the O error term is at most 1.83 for q≥ 500, and therefore
+2φ(q)
+(
+log q− log 2πeγ0− (1.02 log logq + 3.04)− 4 logq
+q − 1.83
+)
+≤ V (q; a, b)
+≤ 2φ(q)
+(
+log q− log 2πeγ0 + log 2 + log 2 +2
+3 log 3 + 4.56 + 1.83
+)
+,
+which implies the assertion of the proposition. □
+5.3. Bounds for the density δ(q; a, b). We use the results of the previous section to obtain explicit
+upper and lower bounds on δ(q; a, b); from these bounds, we can prove in particular that all of the
+largest values of these densities occur when the modulus q is less than an explicit bound. In the
+proof of Theorem 1.1, we expanded several functions, including an instance ofsin, into their power
+series at the origin. While this yielded an excellent theoretical formula, for numerical purposes we
+will take a slightly different approach involving the error function Erf(z) = 2√π
+∫z
+0 e−t2
+dt. The
+following two lemmas allow us to write the density δ(q; a, b) in terms of the error function.
+Lemma 5.15. For any constants v > 0 and ρ,
+∫ ∞
+−∞
+t4e−vt2/2 dt = 3
+√
+2π
+v5/2 and
+∫ ∞
+−∞
+sin ρt
+t e−vt2/2 dt = π Erf
+( ρ√
+2v
+)
+.
+Proof. For the ﬁrst identity, a change of variables gives
+∫ ∞
+∞
+t4e−vt2/2 dt = v−5/2
+∫ ∞
+∞
+w4e−w2/2 dw = v−5/2M2(∞) = 3
+√
+2π
+v5/2
+by Lemma 2.21. Our starting point for the second identity is [1, equation (7.4.6)]: for any constants
+a > 0 and x, ∫ ∞
+0
+e−at2
+cos 2xt dt = 1
+2
+√π
+a e−x2/a,
+66
+----PAGE 66----
+which can be rewritten as √π
+a e−x2
+=
+∫ ∞
+−∞
+e−at2
+cos(2xt√a) dt.
+Integrating both sides from x = 0 to x = w yields
+π
+2√a Erf(w) =
+∫ ∞
+−∞
+e−at2
+(∫ w
+0
+cos(2xt√a) dx
+)
+dt =
+∫ ∞
+−∞
+e−at2 sin(2wt√a)
+2t√a dt
+(the interchanging of the integrals in the middle expression is justiﬁed by the absolute convergence
+of the integral). Setting a = v
+2 and w = ρ√
+2v, we obtain
+π√
+2v Erf
+( ρ√
+2v
+)
+=
+∫ ∞
+−∞
+e−vt2/2 sin ρt
+t
+√
+2v dt,
+which establishes the lemma. □
+Lemma 5.16. Assume GRH and LI. Let a be a nonsquare (mod q) and b a square (mod q). If
+V (q; a, b)≥ 531, then
+δ(q; a, b) = 1
+2 + 1
+2 Erf
+( ρ(q)√
+2V (q; a, b)
+)
++ O
+( 47.65ρ(q)
+V (q; a, b)3/2 + 0.03506 e−9.08φ(q)
+φ(q) + 63.68ρ(q)e−V (q;a,b)1/2/2
+)
+.
+Proof. From Deﬁnition 2.11, we know that
+log Φq;a,b(x) =
+∑
+χ (modq)
+∑
+γ>0
+L(1/2+iγ,χ)=0
+log J0
+(2|χ(a)− χ(b)|x√
+1
+4 + γ2
+)
+= 1
+2
+∑
+χ (modq)
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+log J0
+(2|χ(a)− χ(b)|x√
+1
+4 + γ2
+)
+by the functional equation for Dirichlet L-functions. If|x|≤ 1
+4, then the argument of J0 is at most
+2· 2· 1
+4 / 1
+2 = 2 in absolute value. Since the Taylor expansion log J0(x) =−x2/4 + O(.0311x4) is
+valid for|x|≤2, we see that
+log Φq;a,b(x) = 1
+2
+∑
+χ (modq)
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+(
+−|χ(a)− χ(b)|2x2
+1
+4 + γ2 + O
+(
+.031116|χ(a)− χ(b)|4x4
+( 1
+4 + γ2)2
+))
+=− 1
+2 x2
+∑
+χ (modq)
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+|χ(a)− χ(b)|2
+1
+4 + γ2
++ O
+(
+1
+2 x4
+∑
+χ (modq)
+∑
+γ∈R
+L(1/2+iγ,χ)=0
+.031116· 4|χ(a)− χ(b)|2
+1
+4( 1
+4 + γ2)
+)
+=− 1
+2 V (q; a, b)x2 + O(39.81V (q; a, b)x4) (5.13)
+67
+----PAGE 67----
+when|x|≤ 1
+4. Moreover, the error term in the expansion log J0(x) = −x2/4 + O(.0311x4) is
+always nonpositive as a consequence of Lemma 2.8(c), and hence the same is true for the recently
+obtained error term O(39.81V (q; a, b)x4). This knowledge allows us to use the expansion et =
+1 + O(t) for t≤ 0, which yields
+Φq;a,b(x) = e−V (q;a,b)x2/2(
+1 + O(39.81V (q; a, b)x4)
+)
+when|x|≤ 1
+4.
+Proposition 2.18 says that when V (q; a, b)≥ 531,
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ V (q;a,b)−1/4
+−V (q;a,b)−1/4
+sin ρ(q)x
+x Φq;a,b(x) dx
++ O
+(
+0.03506 e−9.08φ(q)
+φ(q) + 63.67ρ(q)e−V (q;a,b)1/2/2
+)
+.
+Notice that V (q; a, b)−1/4≤ 531−1/4 < 1
+4, and so we may use our approximation for Φq;a,b(x) to
+deduce that
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ V (q;a,b)−1/4
+−V (q;a,b)−1/4
+sin ρ(q)x
+x e−V (q;a,b)x2/2(
+1 + O(39.81V (q; a, b)x4)
+)
+dx
++ O
+(
+0.03506 e−9.08φ(q)
+φ(q) + 63.67ρ(q)e−V (q;a,b)1/2/2
+)
+. (5.14)
+The main term can be evaluated by the second identity of Lemma 5.15:
+1
+2π
+∫ V (q;a,b)−1/4
+−V (q;a,b)−1/4
+sin ρ(q)x
+x e−V (q;a,b)x2/2 dx
+= 1
+2π
+∫ ∞
+−∞
+sin ρ(q)x
+x e−V (q;a,b)x2/2 dx + O
+( 1
+π
+∫ ∞
+V (q;a,b)−1/4
+⏐⏐⏐⏐
+sin ρ(q)x
+x
+⏐⏐⏐⏐e−V (q;a,b)x2/2 dx
+)
+= 1
+2 Erf
+( ρ(q)√
+2V (q; a, b)
+)
++ O
+( 1
+π
+∫ ∞
+V (q;a,b)−1/4
+ρ(q)V (q; a, b)1/4xe−V (q;a,b)x2/2 dx
+)
+= 1
+2 Erf
+( ρ(q)√
+2V (q; a, b)
+)
++ O
+( ρ(q)
+πV (q; a, b)3/4 e−V (q;a,b)1/2/2
+)
+.
+The error term in the integral in equation (5.14) can be estimated by the ﬁrst identity of Lemma 5.15:
+1
+2π
+∫ V (q;a,b)−1/4
+−V (q;a,b)−1/4
+⏐⏐⏐⏐
+sin ρ(q)x
+x
+⏐⏐⏐⏐e−V (q;a,b)x2/239.81V (q; a, b)x4 dx
+≤ 6.336ρ(q)V (q; a, b)
+∫ ∞
+−∞
+x4e−V (q;a,b)x2/2 dx≤ 19.008
+√
+2π· ρ(q)V (q; a, b)−3/2.
+68
+----PAGE 68----
+Therefore equation (5.14) becomes
+δ(q; a, b) = 1
+2 + 1
+2 Erf
+( ρ(q)√
+2V (q; a, b)
+)
++ O
+( ρ(q)
+πV (q; a, b)3/4 e−V (q;a,b)1/2/2
+)
++ O
+( 47.65ρ(q)
+V (q; a, b)3/2 + 0.03506 e−9.08φ(q)
+φ(q) + 63.67ρ(q)e−V (q;a,b)1/2/2
+)
+.
+Since 1/πV (q; a, b)3/4 ≤ 1/π(531)3/4 < 0.01, this last estimate implies the statement of the
+lemma. □
+We are now ready to bound δ(q; a, b) for all large prime moduli q.
+Theorem 5.17. Assume GRH and LI. If q≥ 400 is prime, then δ(q; a, b) < 0.5262 for all reduced
+residues a and b (mod q). If q≥ 1000 is prime, then δ(q; a, b) < 0.51.
+Proof. We may assume that a is a nonsquare (mod q) and b is a square (mod q), for otherwise
+δ(q; a, b)≤ 1
+2. When q≥ 331 is prime, Proposition 5.11 and a quick calculation yield
+V (q; a, b)≥ 2(q− 1)(log q− 2.42)− 47.238 log2 q≥ 2q(log q− 2.42)− 48 log2 q≥ 531. (5.15)
+Therefore Lemma 5.16 applies, yielding (since ρ(q) = 2 and φ(q) = q− 1)
+δ(q; a, b) = 1
+2 + 1
+2 Erf
+(√
+2
+V (q; a, b)
+)
++ O
+( 95.3
+V (q; a, b)3/2 + 0.03506 e−9.08q
+q− 1 + 127.36e−V (q;a,b)1/2/2
+)
+≤ 1
+2 + 1
+2 Erf
+(√
+2
+2q(log q− 2.42)− 48 log2 q
+)
++ 95.3
+(2q(log q− 2.42)− 48 log2 q)3/2 + 0.03506 e−9.08q
+q− 1 + 127.36e−
+√
+q(logq−2.42)/2−12 log2q,
+using the second inequality in equation (5.15). This upper bound is decreasing for q≥ 331, and so
+calculating it at q = 400 and q = 1000 establishes the inequalities given in the theorem. □
+A similar bound for composite moduli q requires one last estimate.
+Lemma 5.18. For all q≥ 3, we have ρ(q)≤ 2q1.04/ log logq.
+Proof. We ﬁrst record some explicit estimates on the prime counting functions π(y) = ∑
+p≤y 1
+and θ(y) =∑
+p≤y log p. Rosser and Shoenfeld [13, Corollary 1 and Theorems 9 and 10] give, for
+y≥ 101, the bounds 0.84y≤ θ(y)≤ 1.01624y and π(y)≤ 1.25506y/ log y. Therefore
+π(y)≤ 1.25506y
+log y ≤ 1.25506θ(y)/0.84
+log θ(y)− log 1.01624≤ 1.5θ(y)
+log θ(y) (5.16)
+(a calculation shows that the last inequality holds for θ(y) ≥ 61, which is valid in the range
+y≥ 101).
+Now consider integers of the form q(y) =∏
+p≤y p, so that ω(q(y)) = π(y) and log q(y) = θ(y).
+Equation (5.16) becomes ω(q(y))≤ 1.5(log q(y))/ log logq(y); while the derivation was valid for
+y≥ 101, one can calculate that the inequality holds for 3≤ y≤ 101 as well. The following
+standard argument then shows that
+ω(q)≤ 1.5 logq
+log logq (5.17)
+69
+----PAGE 69----
+holds for all integers q≥ 3: if q has k distinct prime factors, then choose y to be the kth prime.
+Then the inequality (5.17) has been shown to hold for q(y), and therefore it holds for q as well,
+since the left-hand side is k in both cases while the right-hand side is at least as large for q as it is
+for q(y).
+(This argument uses the fact that the right-hand side is an increasing function, which holds only
+for q≥ ee; therefore technically we have proved (5.17) only for numbers with at least three distinct
+prime factors, since only then does the correspondingq(y) exceed ee. However, the right-hand side
+of (5.17) is always at least 4 in the range q≥ 3, and so numbers with one or two distinct prime
+factors easily satisfy the inequality.)
+Finally, the inequality ρ(q)≤ 2ω(q)+1 that was noted in Deﬁnition 1.2 allows us to conclude that
+ρ(q)≤ 21+1.5(logq)/ log logq < 2q1.04/log logq for all q≥ 3, as desired. □
+Theorem 5.19. Assume GRH and LI. If q > 480 and q /∈{ 840, 1320}, then δ(q; a, b) < 0.75 for
+all reduced residues a and b (mod q).
+Proof. Again we may assume that a is a nonsquare (mod q) and b is a square (mod q). First
+we restrict to the range q ≥ 260000; by Proposition 5.14 we have V (q; a, b) > 531. Using
+Lemma 5.16, together with the upper bound for ρ(q) from Lemma 5.18 and the lower bound for
+V (q; a, b) from Proposition 5.14, we have
+δ(q; a, b)≤ 1
+2 + 1
+2 Erf
+( 2q1.04/ log logq
+2
+√
+φ(q)
+(
+log q− 1.02 log logq− 7.34
+)
+)
++ 33.7q1.04/ log logq
+φ(q)3/2(
+log q− 1.02 log logq− 7.34
+)3/2 + 0.03506 e−9.08φ(q)
+φ(q)
++ 127.36q1.04/ log logq exp
+(
+−
+√
+φ(q)
+2
+(
+log q− 1.02 log logq− 7.34
+))
+. (5.18)
+Rosser and Schoenfeld [13, Theorem 15] have given the bound
+φ(q) > q
+eγ0 log logq + 2.50637/ log logq (5.19)
+for q≥ 3. When this lower bound is substituted for φ(q) in the upper bound (5.18), the result
+is a smooth function of q that is well-deﬁned and decreasing for q ≥ 260000, and its value at
+q = 260000 is less than 0.75.
+We now turn to the range 1000≤ q ≤ 260000. We ﬁrst compute explicitly, for each such
+modulus q, the lower bound for V (q; a, b) in equation (5.12); the value of this sharper lower bound
+turns out always to exceed531 in this range. Consequently, we may use Lemma 5.16 together with
+70
+----PAGE 70----
+the lower bound for V (q; a, b) from equation (5.12), obtaining
+δ(q; a, b)≤ 1
+2 + 1
+2 Erf
+( ρ(q)
+2
+√
+φ(q)
+(
+log q− log 2πeγ0−∑
+p|q
+logp
+p−1− 4 logq
+q − 23.62 log2q
+q
+)
+)
++ 17.85ρ(q)
+φ(q)3/2(
+log q− log 2πeγ0−∑
+p|q
+logp
+p−1− 4 logq
+q − 23.62 log2q
+q
+)3/2 + 0.03506 e−9.08φ(q)
+φ(q)
++ 63.68ρ(q) exp
+(
+−
+√ φ(q)
+2
+(
+log q− log 2πeγ0−
+∑
+p|q
+log p
+p− 1− 4 logq
+q − 23.62 log2 q
+q
+))
+.
+This upper bound can be computed exactly for each q in the range 1000≤ q≤ 260000; the only
+ﬁve moduli for which the upper bound exceeds 0.75 are 1020, 1320, 1560, 1680, and 1848.
+Finally, we use the methods described in Section 5.4, computing directly every value ofδ(q; a, b)
+for the moduli 480 < q ≤ 1000 and q∈{ 1020, 1320, 1560, 1680, 1848} and verifying the in-
+equality δ(q; a, b) < 0.75 holds except for q = 840 and q = 1320 , to complete the proof of the
+theorem. □
+5.4. Explicit computation of the densities. Throughout this section, we assume GRH and LI,
+and we let a denote a nonsquare (mod q) and b a square (mod q). In this section we describe the
+process by which we computed actual values of the densities δ(q; a, b), resulting for example in
+the data given in the tables and ﬁgures of this paper. In fact, we used two different methods for
+these computations, one that works for “small q” and one that works for “large q”. For ease of
+discussion, we deﬁne the sets
+S1 ={3≤ q≤ 1000: q̸≡ 2 (mod 4) and φ(q) < 80}
+S2 ={101, 103, 107, 109, 113, 115, 119, 121, 123, 125, 129, 133, 141, 143, 145, 147, 153, 155, 159,
+164, 165, 171, 172, 175, 176, 177, 183, 184, 188, 189, 195, 196, 200, 208, 212, 220, 224, 225,
+231, 232, 236, 255, 260, 264, 276, 280, 288, 300, 308, 312, 324, 336, 348, 360, 372, 396, 420}
+S3 ={3≤ q≤ 1000: q̸≡ 2 (mod 4) and φ(q)≥ 80}\ S2
+S4 ={1020, 1320, 1560, 1680, 1848}.
+We omit integers congruent to 2 (mod 4) from these sets, since for odd q the prime number race
+(mod 2q) is identical to the prime number race (mod q).
+For the moduli q in the set S1∪ S2, we numerically evaluated the integral in equation (2.10)
+directly; this method was used by Feuerverger and Martin [5] and is analogous to, and indeed based
+upon, the method used by Rubinstein and Sarnak [14]. We ﬁrst used Rubinstein’s computational
+package lcalc to calculate, for each characterχ (mod q), the ﬁrstN(q) nontrivial zeros ofL(s, χ)
+lying above the real axis. The term Φq;a,b in the integrand is a product of functions of the form
+F (z, χ), which is indexed by inﬁnitely many zeros of L(s, χ); we approximated F (z, χ) by its
+truncation at N(q) zeros, multiplied by a compensating quadratic polynomial as in [14, Section
+4.3]. With this approximation to the integral (2.10), we truncated the range of integration to an
+interval [−C(q), C(q)] and then discretized the truncated integral, replacing it by a sum over points
+spaced by ε(q) as in [14, Section 4.1]. The result is an approximation to δ(q; a, b) that is valid up
+to at least 8 decimal places, provided we chooseN(q), C(q), and ε(q) carefully to get small errors.
+(All of these computations were performed using the computational software Mathematica.)
+71
+----PAGE 71----
+Explicitly bounding the error in this process is not the goal of the present paper; we refer the
+interested reader to [14] for rigorous error bounds of this kind, corresponding to their calculation
+of δ(q; N, R) for q∈{ 3, 4, 5, 7, 11, 13}.
+For the moduli q in the set S3∪ S4 (and for any other moduli larger than 1000 we wished to
+address), we used an approach based on our asymptotic formulas for δ(q; a, b). We now outline a
+variant of the asymptotic formulas described earlier in this paper, one that was optimized somewhat
+for the the actual computations rather than streamlined for theoretical purposes.
+We ﬁrst note that a slight modiﬁcation of the proof of Proposition 2.18 yields the estimate, for
+any 0≤ κ≤ 5
+24,
+δ(q; a, b) = 1
+2 + 1
+2π
+∫ κ
+−κ
+sin ρ(q)x
+x Φq;a,b(x) dx
++ O
+( 1
+π
+∫ 5/24
+κ
+ρ(q)|Φq;a,b(x)|dx + 0.03506 e−9.08φ(q)
+φ(q) + 63.67ρ(q)
+⏐⏐Φq;a,b
+(5
+24
+)⏐⏐
+)
+(5.20)
+as long as V (q; a, b)≥ 531. In addition we have, for|x|< 3
+10, the inequalities
+− 1
+2 V (q; a, b)x2− U(q; a, b)x4− 15.816U(q; a, b)x6
+≤ log Φq;a,b(x)≤− 1
+2 V (q; a, b)x2− U(q; a, b)x4,
+where for convenience we have deﬁned U(q; a, b) = W2(q; a, b)V (q; a, b); these inequalities can
+be proved using an argument similar to the calculation in equation (5.13), but employing the more
+precise estimate log J0(z) =−z2/4− z4/64 + O(0.00386z6) for|z|≤ 2. Using the methods of
+Section 3.4, we also obtain the formula
+U(q; a, b) = φ(q)
+2 (3 + ιq(a2b−2))
+(
+log q
+2πe−γ0
+−
+∑
+p|q
+log p
+p− 1− ζ(2)
+2
+)
++ φ(q)
+2
+(
+4Λ(q/(q, a− b))
+φ(q/(q, a− b))− Λ(q/(q, a2− b2))
+φ(q/(q, a2− b2) −
+(
+ιq(−a2b−2)− 4ιq(−ab−1)
+)(
+log 2 + ζ(2)
+4
+))
++ 1
+4
+∑
+χ (modq)
+|χ(a)− χ(b)|4
+(
+2 L′(1, χ)
+L(1, χ)− L′′(1, χ)
+L(1, χ) +
+(L′(1, χ)
+L(1, χ)
+)2)
+. (5.21)
+If we deﬁneκ(q; a, b) = min( π
+ρ(q) , V (q; a, b)−1/4), then we know that κ(q; a, b)≤ 5
+24 because of
+the lower bound V (q; a, b)≥ 531, and also that (sin ρ(q)x)/x is nonnegative for|x|≤ κ(q; a, b).
+Hence, equation (5.20) and the subsequent discussion establishes the following proposition:
+Proposition 5.20. Assume GRH and LI, and let a be a nonsquare (mod q) and b a square (mod q).
+If V (q; a, b)≥ 531, then
+1
+2 + 1
+2π
+∫ κ(q;a,b)
+−κ(q;a,b)
+sin ρ(q)x
+x e−V (q;a,b)x2/2−U(q;a,b)x4−15.816U(q;a,b)x6
+dx− Y (q; a, b)
+≤ δ(q; a, b)≤ 1
+2 + 1
+2π
+∫ κ(q;a,b)
+−κ(q;a,b)
+sin ρ(q)x
+x e−V (q;a,b)x2/2−U(q;a,b)x4
+dx + Y (q; a, b),
+72
+----PAGE 72----
+where
+Y (q; a, b) = ρ(q)
+π
+∫ 5/24
+κ(q;a,b)
+e−V (q;a,b)x2/2−U(q;a,b)x4
+dx
++ 0.03506 e−9.08φ(q)
+φ(q) + 63.67ρ(q)e−25V (q;a,b)/1152−(5/24)4U(q;a,b)
+and formulas for V (q; a, b) and U(q; a, b) are given in Theorem 1.4 and equation (5.21), respec-
+tively.
+The inequalities in Proposition 5.20 give accurate evaluations of δ(q; a, b) when φ(q) is large;
+we chose the inequality φ(q)≥ 80 to be our working deﬁnition of “large”. For each of the moduli
+q in the set S3∪S4, we computed every possible value ofV (q; a, b) and veriﬁed that they all exceed
+531, so that Proposition 5.20 can be used. (The reason that the moduli in S2 were calculated using
+the ﬁrst method, rather than this one, is because at least one variance V (q; a, b) was less than 531
+for each of the moduli in S2.) We then calculated the upper and lower bounds of Proposition 5.20,
+using numerical integration in pari/gp, to obtain all values of δ(q; a, b). The calculation of
+V (q; a, b) and U(q; a, b) involve the analytic terms L(1, χ), L′(1, χ), and L′′(1, χ); we used the
+pari/gp package computeL (see [4]) to obtain these values accurate to 16 decimal places.
+Table 7 gives a sample of the data we calculated with this second method, including the error
+bounds obtained. The error bounds are stronger for when q and φ(q) are large, explaining why the
+error bounds for the large primeq = 997 are so much better than for the smaller composite number
+q = 244.
+TABLE 7. The 20 smallest values of δ(244; a, 1) and of δ(997; a, 1), calculated
+using Proposition 5.20
+q a a−1 δ(q;a, 1) Error bound
+244 243 243 0.558910 0.000022
+244 123 123 0.559000 0.000018
+244 3 163 0.562304 0.000020
+244 7 35 0.563216 0.000022
+244 31 63 0.563543 0.000022
+244 153 185 0.563804 0.000021
+244 11 111 0.564069 0.000024
+244 29 101 0.564124 0.000024
+244 17 201 0.564321 0.000023
+244 33 37 0.564436 0.000024
+244 19 167 0.564741 0.000024
+244 23 191 0.564786 0.000023
+244 107 187 0.565310 0.000024
+244 69 145 0.565319 0.000022
+244 53 221 0.565376 0.000022
+244 85 89 0.565606 0.000022
+244 129 157 0.565683 0.000021
+244 173 189 0.565707 0.000023
+244 177 193 0.565859 0.000023
+244 103 199 0.565861 0.000024
+q a a−1 δ(q;a, 1) Error bound
+997 2 499 0.508116457 0.000000014
+997 5 399 0.508142372 0.000000015
+997 7 285 0.508184978 0.000000015
+997 11 272 0.508238549 0.000000016
+997 17 176 0.508279881 0.000000016
+997 29 722 0.508329803 0.000000016
+997 37 512 0.508345726 0.000000016
+997 41 535 0.508351018 0.000000016
+997 8 374 0.508353451 0.000000016
+997 43 371 0.508355411 0.000000016
+997 47 297 0.508358709 0.000000016
+997 61 474 0.508368790 0.000000016
+997 163 367 0.508392448 0.000000016
+997 103 242 0.508392587 0.000000016
+997 113 150 0.508395577 0.000000016
+997 181 661 0.508397690 0.000000016
+997 127 840 0.508402416 0.000000016
+997 157 870 0.508404812 0.000000016
+997 283 613 0.508406794 0.000000016
+997 179 518 0.508406994 0.000000016
+73
+----PAGE 73----
+We also take this opportunity to reinforce the patterns described in Section 4.1. Forq = 244, the
+residue class a = 123 has the property that q/(q, a− 1) = 2 ; thus the contribution of K244(122)
+to ∆(244; 123, 1) reduces the density δ(244; 123, 1). We see also the familiar small densities cor-
+responding to a = 243≡− 1 (mod 244) and to small prime values of a. For q = 997, the small
+prime values of a (among those that are nonsquares modulo 997) appear in perfect order. We point
+out that the residue class a = 8 is almost in its correct limiting position, since the contribution to
+∆(997; a, 1) is inversely correlated to Λ(a)
+a , and Λ(41)
+41 > Λ(43)
+43 > Λ(8)
+8 > Λ(47)
+47 .
+We mention that we undertook the exercise of calculating values δ(q; a, b) by both methods, for
+several intermediate values ofq, as a way to verify our computations. For example, the calculations
+of δ(163; a, b) (see Table 3) were done using the integral formula (2.10) as described above. We
+calculated these same densities using Proposition 5.20; the error bounds obtained were all at most
+4.6× 10−6, and the results of the ﬁrst calculation all lay comfortably within the intervals deﬁned
+by the second calculation.
+Finally, the upper bounds for δ(q; a, b) in Theorems 5.17 and 5.19, together with the explicit
+calculation of the densities δ(q; a, b) for q∈ S1∪ S2∪ S3∪ S4, allow us to determine the most
+biased possible two-way races, that is, the largest values of δ(q; a, b) among all possible choices
+of q, a, and b. In particular, we veriﬁed Theorem 1.11 in this way, and we list the 120 largest
+densities in Table 8; there are precisely 117 distinct densities above 9
+10. (It is helpful to recall here
+that δ(q; a, 1) = δ(q; a−1, 1) and that δ(q; a, 1) = δ(q; ab, b) for any nonsquare a and square b
+modulo q.)
+REFERENCES
+[1] Milton Abramowitz, Irene A. Stegun, eds., Handbook of Mathematical Functions with Formulas, Graphs, and
+Mathematical Tables, New York: Dover, ISBN 0-486-61272-4 (1965).
+[2] Carter Bays and Richard H. Hudson, The cyclic behavior of primes in the arithmetic progressions modulo 11, J.
+Reine Angew. Math. 339 (1983), 215–220.
+[3] Carter Bays, Kevin Ford, Richard H. Hudson, and Michael Rubinstein, Zeros of DirichletL-functions near the
+real axis and Chebyshev’s bias, J. Number Theory 87 (2001), no. 1, 54–76.
+[4] Tim Dokchitser, Computing special values of motivicL-functions Experiment. Math. 13 (2004), no. 2, 137–149.
+[5] Andrey Feuerverger and Greg Martin, Biases in the Shanks-R ´enyi prime number race , Experiment. Math. 9
+(2000), no. 4, 535–570.
+[6] Ronald L. Graham, Donald E. Knuth, and Oren Patashnik, Concrete mathematics. A foundation for computer
+science (2nd ed.), Addison-Wesley Publishing Company, Reading, MA, 1994.
+[7] C. Hooley, On the Barban-Davenport-Halberstam theorem. VII, J. London Math. Soc. (2) 16 (1977), no. 1, 1–8.
+[8] J. E. Littlewood, On the class-number of the corpusP (
+√
+−k), Proc. London Math. Soc. (2) 27 (1928), 358–372.
+[9] Yudell L. Luke, Mathematical functions and their approximations , Academic Press, Inc. [Harcourt Brace Jo-
+vanovich, Publishers], New York/London, 1975. xvii+568 pp.
+[10] Kevin S. McCurley, Explicit estimates for the error term in the prime number theorem for arithmetic progres-
+sions, Math. Comp. 42 (1984), no. 165, 265–285.
+[11] Hugh L. Montgomery and Robert C. Vaughan, Multiplicative number theory. I. Classical theory , Cambridge
+Studies in Advanced Mathematics, vol. 97, Cambridge University Press, Cambridge, 2007. MR MR2378655
+(2009b:11001)
+[12] M. M. Rao, Probability theory with applications, Probability and Mathematical Statistics, Academic Press Inc.
+[Harcourt Brace Jovanovich Publishers], New York, 1984.
+[13] J. Barkley Rosser, Lowell Schoenfeld, Approximate formulas for some functions of prime numbers Illinois J.
+Math. 6 (1962), 64–94.
+[14] Michael Rubinstein and Peter Sarnak, Chebyshev’s bias, Experiment. Math. 3 (1994), no. 3, 173–197.
+[15] Daniel Shanks, Quadratic residues and the distribution of primes , Math. Tables Aids Comput. 13 (1959), 272–
+284.
+74
+----PAGE 74----
+TABLE 8. The top 120 most unfair prime number races
+q a a−1 δ(q;a, 1)
+24 5 5 0.999988
+24 11 11 0.999983
+12 11 11 0.999977
+24 23 23 0.999889
+24 7 7 0.999834
+24 19 19 0.999719
+8 3 3 0.999569
+12 5 5 0.999206
+24 17 17 0.999125
+3 2 2 0.999063
+q a a−1 δ(q;a, 1)
+8 7 7 0.998939
+24 13 13 0.998722
+12 7 7 0.998606
+8 5 5 0.997395
+4 3 3 0.995928
+120 71 71 0.988747
+120 59 59 0.988477
+60 11 11 0.987917
+60 29 29 0.986855
+120 109 109 0.986835
+q a a−1 δ(q;a, 1)
+60 19 19 0.986459
+120 89 89 0.986364
+120 79 79 0.986309
+120 101 101 0.984792
+15 2 8 0.983853
+120 13 37 0.980673
+40 19 19 0.980455
+60 7 43 0.979323
+120 23 47 0.979142
+15 14 14 0.979043
+q a a−1 δ(q;a, 1)
+120 17 113 0.978762
+120 7 103 0.978247
+48 23 23 0.978096
+120 43 67 0.978013
+60 17 53 0.977433
+48 41 41 0.977183
+40 29 29 0.977161
+20 3 7 0.976713
+120 53 77 0.976527
+60 23 47 0.975216
+q a a−1 δ(q;a, 1)
+120 91 91 0.975051
+120 83 107 0.975001
+120 29 29 0.974634
+120 19 19 0.974408
+120 11 11 0.971988
+48 31 31 0.970470
+40 7 23 0.969427
+40 13 37 0.969114
+120 73 97 0.967355
+20 19 19 0.966662
+q a a−1 δ(q;a, 1)
+15 7 13 0.964719
+120 31 31 0.963190
+60 13 37 0.963058
+60 59 59 0.962016
+40 31 31 0.960718
+48 5 29 0.960195
+40 3 27 0.960099
+16 7 7 0.959790
+48 11 35 0.959245
+120 119 119 0.957182
+q a a−1 δ(q;a, 1)
+15 11 11 0.955226
+120 41 41 0.955189
+48 19 43 0.952194
+5 2 3 0.952175
+20 13 17 0.948637
+120 61 61 0.948586
+60 41 41 0.947870
+16 3 11 0.947721
+48 13 37 0.946479
+40 17 33 0.946002
+q a a−1 δ(q;a, 1)
+40 11 11 0.945757
+40 39 39 0.942554
+60 31 31 0.941802
+48 7 7 0.939000
+16 5 13 0.938369
+168 125 125 0.936773
+168 155 155 0.935843
+168 47 143 0.932099
+168 61 157 0.931981
+84 41 41 0.931702
+q a a−1 δ(q;a, 1)
+20 11 11 0.931367
+168 139 139 0.931362
+168 55 55 0.931346
+48 47 47 0.929478
+168 67 163 0.928944
+84 71 71 0.928657
+168 41 41 0.927933
+84 55 55 0.927755
+168 71 71 0.927349
+16 15 15 0.926101
+q a a−1 δ(q;a, 1)
+168 65 137 0.923960
+168 53 149 0.923937
+168 83 83 0.923868
+21 5 17 0.923779
+168 79 151 0.922597
+40 21 21 0.922567
+168 37 109 0.922359
+168 17 89 0.920542
+48 17 17 0.918910
+56 27 27 0.918015
+q a a−1 δ(q;a, 1)
+168 59 131 0.917874
+168 23 95 0.917718
+168 31 103 0.917278
+168 29 29 0.915514
+72 53 53 0.913533
+21 2 11 0.911872
+168 19 115 0.911412
+168 11 107 0.909850
+168 73 145 0.908239
+168 5 101 0.908206
+q a a−1 δ(q;a, 1)
+56 31 47 0.906135
+84 67 79 0.905578
+168 13 13 0.904525
+168 97 97 0.904162
+72 35 35 0.903755
+84 47 59 0.902413
+56 37 53 0.900863
+84 53 65 0.899063
+28 11 23 0.898807
+168 127 127 0.898647
+[16] John L. Spouge, Computation of the gamma, digamma, and trigamma functionsSIAM J. Numer. Anal.31 (1994),
+no. 3, 931–944.
+[17] G. N. Watson, A treatise on the theory of Bessel functions, 2nd ed., Cambridge Mathematical Library, Cambridge
+University Press, 1995.
+75
+----PAGE 75----
+D ´EPARTEMENT DE MATH ´EMATIQUES ET DE STATISTIQUE , U NIVERSIT ´E DE MONTR ´EAL , CP 6128, SUCC .
+CENTRE -VILLE , MONTR ´EAL , QC, C ANADA H3C 3J7
+E-mail address: fiorilli@dms.umontreal.ca
+DEPARTMENT OF MATHEMATICS , U NIVERSITY OF BRITISH COLUMBIA , R OOM 121, 1984 M ATHEMATICS
+ROAD, C ANADA V6T 1Z2
+E-mail address: gerg@math.ubc.ca
+76
+----PAGE 76----
