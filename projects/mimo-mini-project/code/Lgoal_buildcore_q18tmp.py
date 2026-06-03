@@ -24,7 +24,7 @@ importlib.reload(E)
 LAM = E.LAM
 
 UNIQUE_ROOT = {7, 8, 9, 12, 15}        # one minpoly root in (1,2): 9/5<lam from hps alone
-WINDOW = {7: 4, 8: 4, 9: 4, 10: 4, 11: 4, 12: 5, 13: 5, 14: 5, 15: 5, 16: 5, 18: 6, 19: 6, 20: 6}
+WINDOW = {7: 4, 8: 4, 9: 4, 10: 4, 11: 4, 12: 5, 13: 5, 14: 5, 15: 5, 16: 5, 18: 6, 19: 6, 20: 6, 21: 6}
 # q=12: W=4 (1,1,1)-window has no deg<=3 Positivstellensatz cert locally; the WEAKER W=5 window
 # (no 5 consecutive sub-thr products) is still infeasible AND has a deg-2 cert -> same X_Omega=1/lam^3.
 LETTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
