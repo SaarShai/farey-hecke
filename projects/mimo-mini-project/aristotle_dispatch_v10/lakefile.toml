@@ -1,0 +1,19 @@
+name = "RequestProject"
+defaultTargets = ["GoalM_ScalarC"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.28.0"
+
+[[lean_lib]]
+name = "HeckeGeneralLB"
+globs = ["HeckeGeneralLB"]
+
+[[lean_lib]]
+name = "BCZHeckeNoInfiniteRotation"
+globs = ["BCZHeckeNoInfiniteRotation"]
+
+[[lean_lib]]
+name = "GoalM_ScalarC"
+globs = ["GoalM_ScalarC"]
