@@ -1,3 +1,12 @@
+> ⚠️ **PARTIAL RETRACTION (2026-06-02, later same day) — see `FINDINGS_corrected_2026-06-02.md`.**
+> The optimizer family `(1^{q−3},2)` is FEASIBLE only for **q≤11** (q=12 degenerate, q≥13 empty scale
+> window). The X(q) table below for **q≥13** and the "no-GS universal q=3..30 / strictly increasing
+> →∞" claims are **unsubstantiated**: they were produced by `Xq_exact_for_word`, which computes only
+> the lower scale bound `s_lo` and never checks feasibility (the floor upper bound). Exhaustive search
+> finds NO feasible parabolic word for q=13,14,16. Rigorous/honest scope: q≤11 (sharp Lean-proven
+> no-GS only q=3,4). The naive triangle D is the natural-extension domain only for q=3 (≈100% of seeds
+> escape D for all q≥4). Read the corrected file before citing anything from §3/table for large q.
+
 # Discovery: ergodic-optimization infimum X(q) across the Hecke family (2026-06-02)
 
 **Object.** Hecke group `G_q`, `λ = λ_q = 2cos(π/q)`. BCZ-type return map
