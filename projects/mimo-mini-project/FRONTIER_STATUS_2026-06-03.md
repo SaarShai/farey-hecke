@@ -1,8 +1,49 @@
 # Hecke BCZ ergodic-optimization — consolidated frontier status (2026-06-03)
 
 Single source of truth after the multi-session arc (discovery → retraction → genuine domain →
-q=5 dual values). Adversarial-honesty ledger: PROVEN (Lean) / NUMERICAL / OPEN kept separate.
-Nothing sent outward; local repo only.
+q=5 dual values → goal-F reduction correction → goal-L q7..16 lock-in). Adversarial-honesty ledger:
+PROVEN (Lean) / NUMERICAL / OPEN kept separate. Nothing sent outward; local repo only.
+
+> ✅ **UPDATE (2026-06-03, goal L) — q=7..16 scalar window lemmas locked in; q≥17 value safe to q≤150.**
+> **Objective A (PROVEN — ALL 10 of q=7..16):** `X_Ω(q)=1/λ³` scalar window lemma machine-checked
+> (EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`, no sorryAx) for **q=7,8,9,12,15 UNCONDITIONAL**
+> and **q=10,11,13,14,16 CONDITIONAL on `hlo:9/5<λ`** — where `hlo` is itself PROVEN universally by
+> `hecke_lam_lo: ∀q≥10, 9/5<2cos(π/q)` (`lean/HeckeLamBounds_VERIFIED.lean`). Files
+> `lean/BCZHeckeG{7..16}_window_VERIFIED.lean`. q=12 uses W=5 (its W=4 (1,1,1)-case had no deg≤3 cert; the
+> weaker W=5 window has a deg-2 cert — same conclusion). q=16 = deg-8 field, W=5, 84-product deg-3 cert
+> (~8 min compile @ `maxHeartbeats 20000000`).
+> **Structural key:** for ALL q≥7 every interior floor in a full W-window is forced to K=1 (Kmax=1; the
+> exact-run digit-2 is a run-BOUNDARY step), so each window core is a SINGLE Positivstellensatz case (vs 27
+> for q=5); the floor bound reduces to the field-INDEPENDENT fact `(λ²−λ)²≥2` (from `9/5<λ<2`). General
+> emitter `code/Lgoal_{emit,buildcore,field_algebra}.py`. q=12 cert not found at deg≤3 (staged
+> `aristotle/GOAL_L_q12_window4.md`); q=14,16 generated, W=5 deg-6/8 compile-heavy (see ledger row).
+> **Objective B (q≥17): value SAFE, uniform proof partial.** Independent adversarial min-esssup ≥1/λ³ for
+> q=17,19,23,29,37,50,75,100,150 (ratio 1.00000–1.00011; minimiser=cusp word) — NO orbit below threshold,
+> extends prior q≤50 to **q≤150** (`code/Lgoal_value_safety.py`). The (L2) composite-trace dichotomy is
+> Lean-proven for the dominant W_q-family; the uniform proof gap is exactly (L1)-piecewise +
+> uniform-corridor-characterisation. NOT a finished uniform proof. See `FINDINGS_goalL_2026-06-03.md`.
+
+> ⚠️ **CORRECTION (2026-06-03, goal F) — READ FIRST.** Goal-D's "THE REDUCTION" (per-branch envelope
+> `P≥1/λ³` on all non-scalar branches ⇒ collapse to the scalar map) was asserted for *all q* but
+> verified only `q≤8`. On the **actual genuine map** it holds **only `5≤q≤15`** and is **FALSE for
+> `q≥16`**: middle branches carry genuine points with `P<1/λ³` (witness q=16, branch ~10–12,
+> `(a,b)≈(0.7857,−0.5412)`, `P≈0.1304<1/λ³=0.1325`; actual-grid below_off: q=14,15→0, q=16→131).
+> The **headline value `X_Ω(q)=1/λ³` still survives numerically for all q** (cusp UB exact; no orbit
+> beats it; adversarial max-run finite though growing ~q/3) — but the *general-q lower-bound PROOF* is
+> NOT the scalar reduction; it needs a genuine multi-branch argument (window grows ~q/3; averaging
+> dead). New uniform Lean result: `cusp_envelope` (the cusp branch i=q−2 envelope, all q). See
+> `FINDINGS_goalF_2026-06-03.md`.
+
+> ✅ **UPDATE (2026-06-03, goal E) — q=5 window-4 core CLOSED + brief corrected.** The q=5 scalar
+> window-4 lemma as written in the goal-E brief is **FALSE** (it omitted the genuine `𝒯⁵` edge
+> `φc_n+c_{n+1}>1`; the `c≤1` cap is NOT the essential ingredient). Counterexample K=(1,1,2). The
+> **corrected** lemma (BOTH Taha edges) is now **machine-checked end-to-end**: `g5_core` (5-coord pure
+> window-4) via 27 exact ℚ(φ) Positivstellensatz certificates (`nlinarith` times out → nullspace-LP
+> certs + `linarith`); orbit form `g5_no_four_below_genuine`; and the gluing `X5_ge_of_window4` into
+> the verified `essSup_ge_of_window4` ⟹ `X_Ω(5) ≥ 1/φ³`. Files `lean/BCZHeckeG5_window_core_VERIFIED
+> .lean`, `lean/BCZHeckeG5_window_capstone_VERIFIED.lean`. With the verified cusp UB ⇒ `X_Ω(5)=1/φ³`.
+> Remaining: the measure-theoretic glue connecting genuine `G5` to the scalar sequence (per-branch
+> envelopes verified). See `FINDINGS_goalE_q5_window_correction_2026-06-03.md`.
 
 ## The object
 - `λ_q = 2cos(π/q)`, `θ=π/q`. Observable `P` = gap-product (`=xy` naive / `=1/R_q` genuine).
@@ -39,6 +80,11 @@ Nothing sent outward; local repo only.
 | genuine `X_Ω(5) ≤ 1/φ³`, non-attainment (cusp upper bound + no-GS) | `lean/BCZHeckeG5_genuine_VERIFIED.lean` | genuine GLOBAL, q=5 |
 | `g5_tpoint_excl` (1/4-point exclusion, unconditional) + sharp X_interior(5)=1/4 cond. on `Q5Window` | `lean/BCZHeckeG5_sharp_tpoint_VERIFIED.lean` | genuine INTERIOR (=V), q=5 |
 | weak `X(5) ≥ (√5−2)/2` | `lean/BCZHeckeG5_lowerbound_VERIFIED.lean` | superseded by sharp |
+| all-q cusp `cusp_gt_inf`, `cusp_approaches`, W=4 engine `essSup_ge_of_window4`, `cuspSeg_no_ground_state` | `lean/BCZHeckeGenuine_allq_VERIFIED.lean` | genuine, parametric all-q |
+| q=5 per-branch envelope `branch2_envelope`, `branch3_envelope` (`P≥1/φ³` off scalar branch = the reduction premise) | `lean/BCZHeckeG5_genuine_envelope_VERIFIED.lean` | genuine, q=5 |
+| **cusp-branch envelope `cusp_envelope` (`P≥1/l³` on branch q−2, ALL q, l≥φ)** — generalises `branch3_envelope` | `lean/BCZHeckeCusp_envelope_allq_VERIFIED.lean` | genuine, all q (cusp branch only) |
+| **ROTATION skeleton (goal H): sustained word `W_q=(q−1,3)(q−1,0)(q−3,0)` is SL₂ with `trace=λ`** (elliptic, = fundamental rotation `R`); family `(q−1,k)(q−1,0)(q−3,0)` `trace=λ(k−2)` (elliptic⟺k∈{1,2,3}); `W_q` preserves ellipse `a²−3λab+(2λ²+1)b²`; product oscillation `−E/(2+λ)≤cc'≤E/(2−λ)` (=L1 core) | `lean/BCZHeckeRotation_allq_VERIFIED.lean` | genuine, ALL q (parametric in λ) |
+| **COMPOSITE-trace law (goal I, =L2 core): `tr(F k₂·F k₁)=λ²(k₁−2)(k₂−2)−2 = tr(F k₁)tr(F k₂)−2`**; `switch_forces_nonelliptic`: chaining DISTINCT corridors (k₁≠k₂ or via k=2) ⇒ `|tr|≥2` (parabolic `−2` / hyperbolic `−λ²−2`) — never a new slow rotation ⇒ no sub-thr corridor-switch | `lean/BCZHeckeL2_composite_VERIFIED.lean` | genuine, ALL q (F-family, parametric in λ) |
 | abstract engines `essSup_ge_of_window`, `essSup_ge_of_no_sustained` | (in the above) | map/observable-agnostic |
 
 ### NUMERICAL (primary-verified maps, high precision)
@@ -50,22 +96,119 @@ Nothing sent outward; local repo only.
 - Window-`(q−2)` hypothesis REFUTED: longest sub-threshold run `W*(q) ≈ 3(q−2)/2`
   (q=5..11 → 4,5,7,8,10,11,13), bounded.
 - Closed form `X(q)` (interior/naive) re-verified symbolically + geometrically (`Xq_independent_verify.py`, 11/11).
+- **THE REDUCTION (goal D) — CORRECTED to `5≤q≤15` only (goal F).** Claim: `P < 1/λ³` occurs ONLY on
+  the scalar branch i=q−1 ⇒ collapse to scalar `T_q`. **TRUE only for `5≤q≤15`; FALSE for `q≥16`**
+  (middle branches carry genuine `P<1/λ³` points — actual-grid below_off: q≤15→0, q=16→131). The
+  per-branch envelope `min_i P_i = x_{i-1}/(1+x_{i-2})^2` and `(B)⟺λ³x_{i-1}≥(1+x_{i-2})²` drops below
+  `1/λ³` on middle branches once q≥16. q=5 envelope still Lean-proven (`branch2/3_envelope`); cusp
+  branch (i=q−2) envelope now Lean-proven for ALL q (`cusp_envelope`). For q≥16 the reduction is NOT
+  the route; the genuine lower bound is multi-branch (window~q/3). See `FINDINGS_goalF_2026-06-03.md`.
+- **Sub-action route is DEAD at q=5 (correction):** `β_min = inf_μ∫P < 1/λ³` (scalar word (1,1,2),
+  time-avg **0.1863 < 0.2361 = 1/φ³**, esssup 0.25; independently confirmed). By Mañé no sub-action is
+  calibrated at `1/λ³`, and `inf esssup = 1/λ³ > β_min` — the two ergodic-opt problems differ. ⇒ the
+  min-max / window route is the only path. (Caveat: for q≥6 bounded search gives β_min=1/λ³, not ruled out.)
+- **Window for `1/λ³` GROWS too:** adversarial max-run of `P<1/λ³` = 3,2,3,3,3,4 for q=5,6,7,8,10,13
+  (q=13 needs window 5). So `essSup_ge_of_no_sustained` (no fixed window) is the clean q-uniform framing.
+- **REFUTATION HUNT (goal I) — value SAFE.** Maximal forward-invariant set inside `{P<1/λ³}` = **EMPTY**,
+  q=17,18,19,20,22,25,30,40,50 (`code/Igoal_survivor.py`; survivor fixpoint, resolution-confirmed: iters
+  saturate at true max-run ~0.4q; coarse near-thr survivors at high q vanish on grid refinement;
+  conservative-dilate residue is transient on the true map). No KAM island / invariant curve / sub-thr
+  periodic orbit. ⇒ `X_Ω(q)=1/λ³` not refuted. Single-corridor genuine min-max-P ≥ thr all q (margin
+  O(1/q²)→thr in cusp limit). Composite-monodromy table: distinct-corridor chains parabolic/hyperbolic.
 
 ### OPEN (honest frontier)
-- **Sharp GLOBAL lower bound `X_Ω(q) ≥ 1/λ³` for all q** — needs a Mañé / Conze–Guivarc'h sub-action
-  (the cusp orbit is the calibrated orbit). The headline open theorem. → `GOAL_D`.
+- **The REAL nut (re-scoped by goal F):** sharp GLOBAL `X_Ω(q) ≥ 1/λ³`.
+  - For `5≤q≤15`: reduces (via the reduction) to **(C) scalar `T_q` has no orbit keeping every
+    `P ≤ 1/λ³`** — finite window `W(q)≤5`; q=5 next concrete Lean target (scalar window-4).
+  - For `q≥16`: reduction is DEAD; the lower bound is **genuinely multi-branch** on the Taha map.
+    Window grows ~q/3 (not fixed), averaging dead (β_min<1/λ³ at q=5), so neither fixed-window
+    `nlinarith` nor sub-action works. The transience mechanism is now EXACT: sub-thr runs are
+    **rotations by π/q** (goal H), and (goal I) chaining distinct corridors is parabolic/hyperbolic
+    (composite-trace law, Lean). (C′) ⇐ **(L1)** single-corridor exits (algebraic core Lean; closed
+    form OPEN — single-ellipse shortcut ill-posed) + **(L2)** no corridor-switch (F-family Lean; full
+    uniform OPEN). **REFUTATION SURVIVED** (survivor=0, q≤50). Half-strength `hecke_ground_value_pos`
+    is the only uniform LB proven; the value is numerically decisive, the uniform proof partial.
 - **`Q5Window`** (window-5 cluster bound, no 5 consecutive interior products < 1/4) — the last gap for
   sharp INTERIOR X_interior(5)=1/4 (t-point exclusion already done).
 - Sharp + no-GS for q=5..11 in general (interior); cluster law `C(q)` exact form.
 
 ## Goal-prompt inventory
-- **LIVE:** `GOAL_D_genuine_lower_bound.md` — genuine global lower bound `X_Ω(q)≥1/λ³` + no-GS, all q
-  (carries q=5 cusp witness + cheap measure-form companion + the open sub-action).
+- **NEXT (staged, the live frontier):**
+  - `GOAL_E_close_q5_scalar.md` — **DONE (q=5 CLOSED).** Goal E machine-checked the corrected window-4
+    core (`g5_core`, 27 ℚ(φ) Positivstellensatz certs — both Taha edges; the brief's `c≤1`-only version
+    was FALSE) ⇒ `X_Ω(5)=1/φ³` (+ verified cusp UB). Remaining: parametric measure-glue (→ GOAL_K). See
+    `FINDINGS_goalE_q5_window_correction_2026-06-03.md`, `lean/BCZHeckeG5_window_{core,capstone}_VERIFIED.lean`.
+  - `GOAL_H_q16_multibranch.md` — **MECHANISM FOUND (2026-06-03), uniform proof still open.** The
+    sustained sub-thr runs are **rotations by π/q**: every maximal recurring low-P word has ELLIPTIC
+    monodromy of **trace exactly λ** (= the fundamental rotation `R`, conjugate). Sustained word
+    `W_q=(q−1,3)(q−1,0)(q−3,0)` (branches q−1 & q−3, skip cusp q−2); family trace `=λ(k−2)` gives the
+    elliptic(k∈{1,2,3})/hyperbolic(escape) dichotomy = the transience, exact. Product is a quasi-sinusoid
+    on the invariant ellipse ⇒ forced above 1/λ³ in O(q) steps ⇒ run ~0.4q, finite. **Value re-confirmed**
+    (digit≤4/period≤5 exhaustive, only cusp word realizes 1/λ³). Rotation skeleton **machine-checked all q**
+    (`lean/BCZHeckeRotation_allq_VERIFIED.lean`). (C′) now reduces to **(L1) rotation-oscillation** (finite,
+    formalizable) + **(L2) no regime-chaining** (the single open crux; area-preservation permits KAM-islands
+    so it needs the corridor geometry). See `FINDINGS_goalH_2026-06-03.md`.
+  - `GOAL_I_L2_no_chaining.md` — **REFUTATION SURVIVED + (L2) core PROVEN (2026-06-03).** Decisive
+    refutation hunt: the **maximal forward-invariant set inside `{P<1/λ³}` is EMPTY** for q=17..50
+    (`code/Igoal_survivor.py`, resolution-confirmed; coarse near-thr survivors vanish on refinement, the
+    conservative-dilate residue is provably transient on the true map). This excludes KAM islands,
+    invariant curves, AND periodic orbits (rational-rotation elliptic regions ⇒ positive-measure
+    families) ⇒ **`X_Ω(q)=1/λ³` is NOT refuted.** The (L2) *mechanism* is now a machine-checked trace
+    law (`lean/BCZHeckeL2_composite_VERIFIED.lean`): chaining distinct elliptic corridors is parabolic/
+    hyperbolic — never a new slow rotation — so no infinite sub-thr word by switching (transition scan,
+    corridor-WORD labelled: genuine inter-corridor switch runs = 0; W_q = one corridor). **Still OPEN:** (L1) closed form (single-ellipse shortcut FAILS,
+    ill-posed — needs piecewise structure) + uniform (L2) over ALL corridors (Lean covers the dominant
+    F-family; deep-middle composites rely on survivor=0). See `FINDINGS_goalI_2026-06-03.md`.
+  - `GOAL_K_lockin_q6_q16.md` — **lock in the PROVEN core:** machine-check `X_Ω(q)=1/λ³`+no-GS for q=6..16
+    via goal E's window-lemma template (q≤16 scalar-reducible) + the parametric measure-glue. Finite
+    grinding, guaranteed payoff — a proven band q≤16 regardless of how (L2) goes. Aristotle for tedious certs.
+  - `GOAL_J_empirical_bulletproof.md` — **bulletproof the value / refutation hunt at SCALE:** massive
+    genuine-map search (period 15–30, q=17..200, full branch set + corridor-cycle search) for ANY orbit
+    below `1/λ³`. Prior evidence is thin (top-branches, period≤6). Compute front → fleet (once −1 sieve
+    frees M1/M2) + Kaggle (token 401). Feeds the corridor map to GOAL_I.
+- **SUPERSEDED / premise falsified (bannered):**
+  - `GOAL_F_general_scalar_nosustained.md` — scalar-reduction route; **DEAD for q≥16** (goal F: (B) fails
+    q≥16). Valid only q≤15; superseded by GOAL_H for the general case.
+  - `GOAL_G_priorart_novelty.md` — **DONE** (novelty audit; 3 gates closed; write-up unblocked).
+- **RAN / core done:** `GOAL_D_genuine_lower_bound.md` — proved THE REDUCTION (genuine→scalar; q=5
+  Lean-verified), killed the sub-action route at q=5, machine-checked the all-q cusp/W=4 engine + q=5
+  per-branch envelope (`FINDINGS_goalD_genuine_lowerbound_2026-06-03.md`). Remaining work split into E/F.
 - **DONE/resolved:** `GOAL_2` (closed form), `GOAL_7` (arithmetic meaning), `GOAL_B` (genuine domain),
   `GOAL_1` (uniform LB).
 - **SUPERSEDED (bannered):** `GOAL_A` (naive rotation-sweep — produced the genuine INTERIOR sharp
   t-point exclusion for q=5 + the window refutation, still valid for the interior object),
   `GOAL_C` (naive q=5=1/4 / 4-window — premise false; re-targeted to genuine, now done).
+  - **DONE — novelty audit:** `GOAL_G_priorart_novelty.md` → `research_notes/PRIORART_ergodic_opt_2026-06-03.md`.
+
+## Novelty / prior-art (goal G audit — verdict: conditional GO for INTERNAL write-up)
+4 parallel primary-source sweeps. Verdicts: (1) ergodic optimization `inf_μ ess-sup_μ P` ON the
+BCZ/Hecke-BCZ map = **apparently novel** (no prior; JMU2007 is Gauss-map only); (2) the constants
+2/9, √2/8, `1/λ³` = **related-distinct, values not found in lit**; (3) no-GS via cusp escape = **known
+mechanism, novel realization** (JMU2007 Ex.12, Riquelme–Velozo 2020); (4) min-max ≠ min-average =
+**novel-as-formulation**.
+- **Highest-risk overlap REFUTED (independently re-confirmed here):** the Hecke Hurwitz constant
+  `1/h_q ∈ [0.447, 0.5] → 1/2` vs project `1/λ³ ∈ [1, 0.125] → 1/8` — disjoint at every integer q
+  (min gap 0.146 @ q=4), different limits. `1/λ³` is NOT the Hecke Hurwitz/Markov/Legendre/Lenstra
+  constant, not Hall's `3/π²`, not KS's `2 log φ`. Observable `P=xy` = Hall's gap = Taha's roof
+  `R(a,b)=ab` (classical); only the extremal min-max is new.
+- **Framing = novelty-of-realization, NOT a new phenomenon.** New formulation on BCZ/Hecke-BCZ + new
+  closed-form constants + machine-checked no-GS / min-max≠min-avg.
+- **GATING items — ALL THREE CLOSED (2026-06-03, primary sources read first-hand):**
+  1. **2/9 coincidence — verified first-hand (PDF).** It is **JMU2007 Example 16**: `g(x)=x(1−x)`,
+     `inf f|[2] = g(1/3) = 2/9` on the GAUSS continued-fraction map (level-2 Markov partition). [Goal
+     G's audit DOC already had this right (§"2/9 coincidence" = Ex.16); only its chat summary loosely
+     tagged "Ex.12" — which is the *separate* escape/no-maximizer example, correctly cited for Claim 3.
+     Both pinned; no error in the durable record.] **Footnote (ready):** "Jenkinson–Mauldin–Urbański,
+     *Dynamical Systems* 22 (2007), Example 16 obtain 2/9 = g(1/3), g(x)=x(1−x), as a CYLINDER infimum
+     `inf f|[2]` for the Gauss map — a different map and a different extremal notion (cylinder-inf, not
+     `inf_μ ess-sup_μ`). The shared value reflects the common product structure (x(1−x) vs ab=xy); no
+     logical dependence."
+  2. **Haas–Series — CONFIRMED exactly:** "The Hurwitz Constant and Diophantine Approximation on Hecke
+     Groups", *J. London Math. Soc.* (2) **34** (1986), 219–234.
+  3. **Riquelme–Velozo — PINNED:** "Ergodic optimization and zero temperature limits in negative
+     curvature", **arXiv:2001.01694** (2020), pub. *Ann. Henri Poincaré* **23** (2022). Its theorem
+     ("the only obstruction to a maximizing measure is full escape of mass") = our no-GS mechanism.
+  ⇒ novelty audit fully closed; internal write-up unblocked (with the footnote). Nothing outward without USER gate.
 
 ## Cross-session verification (this session's contribution)
 Independent re-verification (anti-fabrication) of the goal sessions' outputs:

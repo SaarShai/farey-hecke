@@ -191,3 +191,55 @@ sub-dynamics, but are NOT about the genuine `X_Ω(5)`.
   floor-=3 Middle kernel), `g4_no_sustained`, `g4_exists_product_gt`, `g4_no_ground_state`, and the
   full assembly. This is the piece TrackA_no_ground_state.md flagged as "a separate substantial
   effort, not yet done" — now done and machine-checked.
+
+---
+
+## 2026-06-03 (goal E) — q=5 genuine window-4 core: CORRECTION + machine-checked
+
+**Files (VERIFIED, EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`):**
+- `lean/BCZHeckeG5_window_core_VERIFIED.lean` — `g5_floor_helper`, floor bounds `K≤3`, the **27
+  floor-combo case lemmas** `case111…case333` (each an exact ℚ(φ) Positivstellensatz certificate),
+  **`g5_core`** (5-coord pure window-4), **`g5_no_four_below_genuine`** (orbit form).
+- `lean/BCZHeckeG5_window_capstone_VERIFIED.lean` — `X5_ge_of_window4`: the orbit form is EXACTLY the
+  `hWin` input of the verified `essSup_ge_of_window4`; gluing ⟹ `1/φ³ ≤ essSup P μ`.
+
+**⚠️ CORRECTION to the goal-E brief:** its scalar window-4 lemma is **FALSE** as stated — it omitted
+the genuine `𝒯⁵` lower edge `φc_n+c_{n+1}>1` (Taha's `1−φa<b`). Counterexample K=(1,1,2):
+(0.2595,0.4577,0.4811,0.3207,0.5568), all ≤1, all 4 products `<1/φ³`. The brief thought the `c≤1`
+cap was the essential extra hypothesis — it is NOT (window-4 holds with/without cap once the genuine
+edge is added). Corrected lemma uses BOTH edges; worst margin +0.0107 at K=(2,1,2). See
+`../FINDINGS_goalE_q5_window_correction_2026-06-03.md`.
+
+**Method note (reusable):** `nlinarith` times out on the tight degree-4 / irrational-`1/φ³` cases;
+solved by exact ℚ(φ) certificates found via sympy nullspace + small float-LP, emitted as φ-reduced
+`have`s + `linarith` (no product-forming). Scripts `code/emit5.py`, `code/build_core.py`. φ MUST be a
+free variable (`phi^2=phi+1`), not a `noncomputable def` (def-unfold → whnf timeouts on `phi^3`).
+
+---
+## Goal L (2026-06-03) — scalar window lemmas q=7..16 (band locked) + value safety q≤150
+
+**PROVEN (re-compiled `/tmp/lean-minus1`, EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`, no sorryAx):**
+`X_Ω(q)=1/λ³` scalar window lemma for **ALL 10** values q=7..16:
+- UNCONDITIONAL: q=7,8,9,12,15  (`lean/BCZHeckeG{7,8,9,12,15}_window_VERIFIED.lean`).
+- CONDITIONAL on `hlo:9/5<λ` (PROVEN ∀q≥10 by `hecke_lam_lo`, `lean/HeckeLamBounds_VERIFIED.lean`):
+  q=10,11,13,14,16  (`lean/BCZHeckeG{10,11,13,14,16}_window_VERIFIED.lean`). q=16 = deg-8, W=5,
+  84-product deg-3 cert (~8 min @ maxHeartbeats 20000000).
+Each file: `g{q}_floor_helper`, `case_q{q}`, `g{q}_core` (W+1 coords ⇒ False), `g{q}_no_window_below_genuine`
+(+`g{q}_lam_lo` for unique-root q). Window W=4 for q=7..11, W=5 for q=12..16 (q=12 uses W=5 — its W=4
+case lacked a deg≤3 cert; the weaker W=5 window suffices for the same `X_Ω=1/λ³`).
+
+**Structural key:** for ALL q≥7 every interior floor in a full W-window is forced to K=1 (Kmax=1) ⇒ a
+SINGLE Positivstellensatz case (vs 27 for q=5); the floor bound reduces to the field-INDEPENDENT fact
+`(λ²−λ)²≥2` (from `9/5<λ<2`). Emitter `code/Lgoal_{buildcore,emit,field_algebra}.py`; cert found in 2
+vars then emitted variable-form by bridging products via `linear_combination(field+recurrence cofactors)`.
+W=5 files need `set_option maxHeartbeats 20000000`.
+
+**Method note (reusable):** higher-degree fields (q≥7, deg `d=φ(2q)/2` up to 8) — the cert's negative-
+RATIONAL residual means `linarith` closes with NO λ bounds (only `hps`); only the floor bound needs the
+isolating `9/5<λ` (synthetic division `(λ−9/5)g(λ)=−p(9/5)` for unique-root q; `hecke_lam_lo` cos-bound
+for multi-root q). `Real.pi_lt_d2 : π<3.15` is the π bound (not `pi_lt_315`).
+
+**NUMERICAL (Objective B value safety):** adversarial min-esssup ≥ 1/λ³ for q=17,19,23,29,37,50,75,100,150
+(ratio 1.00000–1.00011; minimiser = cusp word) — no orbit below threshold; extends prior q≤50 to q≤150
+(`code/Lgoal_value_safety.py`). q≥17 uniform LB proof remains partial (L1-piecewise + corridor
+characterisation open); composite-trace dichotomy proven for the dominant W_q-family.
