@@ -124,7 +124,7 @@ A self-contained Aristotle dispatch package is also staged at `aristotle_dispatc
 
 ---
 
-## 4. EMPIRICAL — the prime-counting curve / sieve  **[PENDING]**
+## 4. EMPIRICAL — the prime-counting curve / sieve  **[DONE 2026-06-03]**
 
 The asymptotic `δ`/`V` ordering above has an **onset scale**: at the largest previously
 verified `x = 1.3×10¹³`, the sign bias is not yet visible — `−1` is mid-pack for
@@ -139,17 +139,37 @@ rank `2/3` (N=7), `4/5` (N=11), `6/9` (N=19), `9/11` (N=23); argmax classes
 (the finite-`x` signed-`D` is amplitude + low-zero noise, not yet the limiting law), and
 matches REPORT.md's "−1 mid-pack at 1.3×10¹³". It also confirms the Part-B code runs clean.
 
-The M2 sieve to `3×10¹⁴` tests whether extending to the onset scale moves `a=−1` toward the
-variance-MAX, as the conditional theory predicts. **[PENDING — sieve running on M2, `mr1_par`;
-late chunks slow (~5.6×10³ s each); output assembled only at completion. An independent M1
-replication runs in parallel for a frontier integer cross-check]:**
-1. cross-check `curve_3e14.tsv` for `x ≤ 1.3×10¹³` against `out2.tsv` (must agree to the
-   integer at the 9 shared checkpoints 1e9–1.3e13);
-2. recompute the RS-normalized `V(N;a,1)` over the extended grid; report whether `a = −1`
-   becomes the empirical variance-MAX for **N = 19 and N = 23** at onset.
-   **Honest caveat:** even at `3×10¹⁴` we are only *at* the onset, not deep in the asymptotic
-   regime, so a finite-`x` ranking is suggestive, not decisive; the actual proof of the
-   ordering is the analytic FM result in §1 (GRH+LI), not this curve.
+**RESULTS — `curve_3e14.tsv` (M2 `mr1_par`, Xmax=3×10¹⁴, 438-pt grid, completed 2026-06-03 in
+98498 s; `minus1_curve_analysis.py curve_3e14.tsv`):**
+
+**Part A — integer cross-check vs `out2.tsv` (x ≤ 1.3×10¹³): EXACT MATCH (PASS), 567/567, 0
+mismatches** across N=7,8,11,19,23 at all 9 shared checkpoints. ⇒ the 3×10¹⁴ sieve is
+integer-validated against the prior double-verified baseline; no logic/overflow drift to the
+frontier. (Independent M1-hardware replication `curve_m1_3e14.tsv` still running, 146/224, for a
+second integer cross-check via `compare_curves.py` — not on the critical path; A already passes.)
+
+**Part B — does the onset move `a=−1` to variance-MAX? PARTIAL / TRANSIENT (honest).** RS-normalized
+`Var_grid[(log x/√x)(π(x;N,a)−π(x;N,1))]`:
+- **N=7: `a=−1` IS variance-MAX at every window incl. top-decade x≥3e13.** ✓ theory-consistent.
+- **N=19: `a=−1` BECOMES variance-MAX in the top-decade x≥3e13** (rank 2/9 below that). ✓ onset emerging.
+- N=11: `a=−1` rank 2/5 (full) → 3–4/5 (upper); argmax a=6. NOT max.
+- N=23: `a=−1` rank 5/11 (full) → 10–11/11 (upper). NOT max.
+
+**Raw table metric (Koyama's Tables 3–7 form): `π(3e14;N,a)−π(3e14;N,1)` ranked among non-residues:**
+**`−1` LEADS strictly for N=7 and N=23**; rank 3/3 (coprime NR {3,5,7}) for N=8, rank 3/5 for N=11
+(a=7 leads), rank 6/9 for N=19 (−1 value is NEGATIVE, −16802). So the raw-lead and variance-MAX
+signals are BOTH modulus-dependent and do NOT coincide — e.g. N=19 is variance-MAX yet value-NEGATIVE
+(the Fiorilli–Martin signature: `−1` = noisiest/largest-amplitude, NOT largest value in the unweighted
+race). The picture also SHIFTED vs 1.3×10¹³ (where N=8 led and N=7,23 did not) — i.e. non-monotone,
+transient, exactly as the low-lying-zero caveat (Koyama nontriv.pdf p.19; our §1) predicts.
+
+**Honest verdict:** at `3×10¹⁴` we are only *at* the onset (`e^{33.4}≈3.2×10¹⁴`), not deep in the
+asymptotic regime, so the finite-`x` ranking is **suggestive, not decisive**. The data are
+**consistent with** the GRH+LI prediction that `a=−1` is the limiting variance-MAX (cleanly for N=7,
+emerging for N=19) and with the transient-reversal caveat for the slow moduli (N=11, 23) — but they do
+**not** by themselves establish the ordering. The actual proof of the ordering is the analytic
+Fiorilli–Martin result in §1 (GRH+LI), not this curve. DoD met: curve computed + integer-validated +
+onset analysis reported honestly.
 
 ---
 

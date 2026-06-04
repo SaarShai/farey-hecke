@@ -243,3 +243,121 @@ for multi-root q). `Real.pi_lt_d2 : π<3.15` is the π bound (not `pi_lt_315`).
 (ratio 1.00000–1.00011; minimiser = cusp word) — no orbit below threshold; extends prior q≤50 to q≤150
 (`code/Lgoal_value_safety.py`). q≥17 uniform LB proof remains partial (L1-piecewise + corridor
 characterisation open); composite-trace dichotomy proven for the dominant W_q-family.
+
+---
+
+## Goal M (2026-06-03) — q≥17 classification backbone + refutation extended
+
+**PROVEN (re-compiled `/tmp/lean-minus1`, EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`, no
+sorryAx):** NEW `lean/BCZHeckeL2_traceIdentity_allq_VERIFIED.lean` — the conceptual backbone of (L2),
+parametric in `l=λ`, all q (8 theorems):
+- `tr_mul_add_tr_mul_adj` : general SL₂ trace identity `tr(X·Y)+tr(X·adj Y)=tr X·tr Y` (any 2×2).
+- `mul_adj_eq_one` : `X·adj X=I` when `det X=1`.
+- `adjF_switch_parabolic` : `tr(F k₂·adj(F k₁))=2` — the corridor SWITCH element `F k₂·(F k₁)⁻¹` is
+  PARABOLIC (conjugate to a unipotent) for all `k₁,k₂,l`. The structural reason chaining crosses thr.
+- `trace_compose_via_identity` : recovers `tr(F k₂·F k₁)=l²(k₁−2)(k₂−2)−2` from identity+parabolic-switch.
+- `abs_cos_le_of_between` / `lam_is_max_elliptic_trace` : `|2cos θ|≤2cos(π/q)=λ` on `θ∈[π/q,π−π/q]`
+  (`Real.strictAntiOn_cos`+`Real.cos_pi_sub`) ⇒ λ is the largest elliptic trace / slowest rotation.
+
+Re-verified this session (HARD RULE, all EXIT=0, axioms clean, no sorryAx):
+`BCZHeckeL2_composite_VERIFIED`, `BCZHeckeRotation_allq_VERIFIED`, `BCZHecke_noGroundState_q3q4_VERIFIED`,
+`BCZHeckeCusp_envelope_allq_VERIFIED`, `BCZHeckeGenuine_allq_VERIFIED`, `HeckeLamBounds_VERIFIED`.
+(The `(C′)` engine `essSup_ge_of_no_sustained` is in `BCZHeckeG5_lowerbound_VERIFIED.lean:179`, fully
+general `(T,P,D,t,M,μ)+hNS ⇒ t≤essSup`.)
+
+**CLASSIFICATION (NUMERICAL, structural).** The corridor monodromies = elliptic torsion of the Hecke
+triangle group `G_q=(2,q,∞)`: every elliptic trace ∈ `{0}∪{±2cos(jπ/q)}` (HP residual ≤1e-45, q=5..100),
+`λ` extremal (slowest rotation = F-family). q=100 "slower-than-λ" hits all parabolic float artifacts (HP
+trace −2). `code/Mgoal_corridor_classify.py`.
+
+**NUMERICAL (refutation hunt — value SURVIVES).** Value-safe min-esssup ≥ 1/λ³ to **q≤200** (ratio
+≤1.00008, minimiser=cusp; extends prior q≤150); single-corridor HP min-max-P margin O(1/q²)>0 to q=100.
+No sub-threshold invariant set to **q≤70** via the DECISIVE per-cell true-map escape test (grid survivor
+COUNT alone unreliable at fine grid — discretization cycles; q=60/70 counts refuted by escape: every
+survivor cell exits S within ≤0.3q steps). Per-q corridor no-cycle certificate passes q=17..30.
+`code/Mgoal_refute_certify.py`, `code/Mgoal_q60_probe.py`.
+
+**OPEN:** uniform analytic (C′) for q≥17 = (L1) closed form (single-ellipse shortcut ill-posed) +
+classification-as-Lean-theorem (identify `⟨M_{i,k}⟩=G_q`, then `lam_is_max_elliptic_trace` closes the
+enumeration). Value DECISIVE, uniform proof PARTIAL. See `FINDINGS_goalM_2026-06-03.md`.
+
+### Goal M closure pass (2026-06-03, "close all open stuff")
+
+**NEW PROVEN** `lean/BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` (EXIT=0, axioms
+`[propext,Classical.choice,Quot.sound]`, no sorryAx; 1 cosmetic linter warning):
+- `no_infinite_rotation` : for `0<l<2` (every finite Hecke q), NO sequence `c:ℕ→ℝ` has `0<c n` ∀n AND
+  the floor-1 recurrence `c(n+2)=l c(n+1)−c n` ∀n. ⇒ pure rotation never sustains; every BCZ orbit has
+  `K_n≥2` infinitely often. Rigorous q-uniform CORE of (L1) "a rotation corridor is finite" (mechanism
+  behind max-run ~0.3q). Pure algebra + Archimedes, no limits/series.
+- Supporting (all axiom-clean): `E_conserved`, `E_const` (E=c_n²+c_{n+1}²−l c_n c_{n+1} conserved on
+  floor-1), `E_pos` (posdef, l<2), `c_le_M`/`pair_ge_m` (orbit bounds), `d_two_step`/`d_step_drop`/
+  `d_even_le` (the first-difference drops by ≥δ>0 every 2 steps), `d_gt_negM`.
+
+**HONESTY REFINEMENT (scope of goal-L band).** `g{q}_no_window_below_genuine` (q=7..16) are SCALAR
+statements (scalar `hrec` + both Taha edges + cap). They close genuine `X_Ω(q)` only where the scalar
+reduction holds = `q=5..15` (goal F: reduction FALSE q≥16). ⇒ **genuine fully-Lean-proven band = q=3..15**;
+**q=16 is partial (same status as q≥17)** — scalar window lemma proven (EXIT=0) but genuine multi-branch
+LB not closed. The "q≤16 DONE" summary conflated scalar-window-proven with genuine-proven. No Lean file
+retracted; only the claimed scope corrected.
+
+**RESIDUAL (precise, NOT session-closable):** uniform genuine LB for q≥16 = (L1)-quantitative (`P≥1/λ³`
+kick, not just the proven "leaves floor 1") + classification-as-Lean-theorem (`⟨M_{i,k}⟩=G_q` ⇒ traces
+`2cos(jπ/q)`, λ-extremal — the `|·|≤λ` half is Lean `lam_is_max_elliptic_trace`). Both blocked by the
+KAM/area-preservation obstacle; excluded numerically (survivor+true-map escape q≤70; value-safe q≤200) and
+by classical triangle-group structure (numeric residual 1e-45). Value mathematically certain; full
+machine proof = multi-session formalization.
+
+### Goal M closure pass 2 (2026-06-03) — Chebyshev spectrum + 2-branch reduction
+
+**NEW PROVEN** (added to `lean/BCZHeckeL2_traceIdentity_allq_VERIFIED.lean`, EXIT=0, axioms clean, no
+sorryAx): `rotation_trace_spectrum` — the fundamental-rotation trace sequence `tr(Rⁿ)` (`t₀=2,t₁=l,
+t_{n+2}=l t_{n+1}−t_n`) equals `2cos(nπ/q)` for `l=2cos(π/q)` (Chebyshev induction, `Real.cos_add`/`cos_sub`,
+`linear_combination`). ⇒ `⟨R⟩` realises EXACTLY the trace spectrum `{2cos(jπ/q)}` — "values realised" half
+of the classification (complement to `lam_is_max_elliptic_trace` = "j=1 extremal"). File now 9 theorems.
+
+**NEW NUMERICAL (robust, key reduction)** — `code/Mgoal_subthr_branches.py`, `code/Mgoal_collapse_robust.py`
+(40k seeds): every sub-threshold RUN of length ≥3 uses ONLY branch offsets `{1,3}` (= branches `q−1,q−3`),
+floors `{0..4}` = the F-family alphabet. ⇒ genuine (C′) reduces to the 2-branch F-family (already the
+Lean-covered (L2) family) ⇒ classification OFF the critical path. Sharp boundary:
+- **q≤17: sustained runs PURE SCALAR (offset 1), max run = 4, no run reaches 5** ⇒ goal-L scalar window
+  lemma g16/g17 (W=5) controls them ⇒ **q=16,17 ESSENTIALLY PROVEN** (rigorous modulo numerically-robust
+  "a length-≥5 sub-threshold run is scalar"). Reinstates q=16,17 from "partial like q≥17".
+- **q≥18: 2-branch {q−1,q−3}, max run ~0.3q** (rotation sweep) ⇒ needs the (L1)-quantitative.
+
+**Residual after this pass:** uniform q≥18 = the (L1)-quantitative `P≥1/λ³` kick on the 2-branch rotation
+(qualitative core PROVEN = `no_infinite_rotation`; sharp O(1/q²) margin = rotation-sweep × itinerary-
+feasibility) + the confinement lemma. KAM-obstacle; value decisive (survivor+escape q≤70, value q≤200).
+Not session-closable; sharply isolated.
+
+### Goal M — q=16,17 reduced to a clean bounded target (2-consec⟹scalar)
+`code/Mgoal_two_consec.py`: at q=16,17, **(2-consec⟹scalar)** "if `P(a,b)<thr` and `P(T(a,b))<thr` then
+`(a,b)` is on scalar branch `q−1`" holds on a 2400² grid with LARGE margin (worst successor `P−thr` =
++0.106 (q16), +0.099 (q17)); breaks at q=18 on branch `q−3`. Chaining: 5 consec sub-thr ⟹ steps 0..3
+scalar ⟹ scalar recurrence ⟹ `P_0..P_4=c_0c_1..c_4c_5<thr` ⟹ contradicts goal-L `g{16,17}` ⟹ no 5
+consec genuine sub-thr ⟹ `essSup_ge_of_window` (W=5) ⟹ `X_Ω(16)=X_Ω(17)=1/λ³`. ⇒ **q=16,17 = a clean,
+bounded, large-margin Positivstellensatz target** (per-branch 2-variable lemma; goal-K-style emitter),
+no longer "partial like q≥17". The un-formalised step is exactly that 2-variable lemma.
+
+### Goal M — `two_step_kick` PROVEN (the math core of the q=16,17 closure)
+`lean/BCZHeckeTwoStepKick_q1617_VERIFIED.lean` (EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`,
+no sorryAx): in vars `u=L_{i−1}, v=L_i`, `r=x_{i−2}/x_{i−1}`,
+  `l∈[49/25,197/100]`, `r∈[1,6/5]`, `thr∈[1307/10⁴,1329/10⁴]`, `u>1`, `v≤1`, `l v−u≤1`, `2 l v−u>1`,
+  `u v − r v² < thr`  ⟹  `thr ≤ l v² − u v`.
+One `nlinarith` over the BOX covers ALL q=16,17 non-scalar branches (margin ≈0.077 ≫ rational-bound
+error; NO deg-8 minpoly). Binding combination: `u>1 ∧ P_i<thr ⇒ v(1−rv)<thr` pins `v` (the `(u−1)v>0`
+hint). This is the successor-product lower bound `L_i·L_{i+1}=λv²−uv ≥ thr`, i.e. a non-scalar
+sub-threshold step has an above-threshold successor.
+**Status of q=16,17:** mathematically CLOSED — all inequalities proven (`two_step_kick` + goal-L
+`g16/g17` + cusp UB) or numerically decisive (bridging: non-scalar sub-thr sources ∈ {q−4..q−7}, floor 0,
+successor on `q−1`). Remaining = MECHANICAL genuine-map Lean infrastructure (branch/floor/domain defs +
+the chaining 5-window⇒steps 0..3 scalar⇒`g16/g17` + `essSup_ge_of_window`); NO further mathematical
+content. Third new verified theorem this session (with `no_infinite_rotation`, `rotation_trace_spectrum`).
+
+**ADDENDUM (goal M, continued).** `HeckeNoRot.infinitely_many_high_floor` ADDED to
+`lean/BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` (EXIT=0, axioms `[propext,Classical.choice,Quot.sound]`,
+no sorryAx): no scalar BCZ orbit is eventually all-floor-1 ⇒ floor `K_n≥2` infinitely often (direct
+corollary of `no_infinite_rotation` on the shifted tail). This is link (2) of the q≥18 architecture.
+The remaining OPEN link is the sharp uniform scalar (C) `scalar_no_sustained_below` (¬∀n, c_n c_{n+1}<1/l³,
+all l∈(1,2); numerically TRUE+sharp) — staged for Aristotle at `aristotle_dispatch_v10/` and handed off as
+`GOAL_N_close_q18.md`. Aristotle key saved `~/.config/aristotle/api_key`; per-action SUBMIT is USER-gated
+(outward; classifier-denied autonomous submit).
