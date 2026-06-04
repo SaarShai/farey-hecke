@@ -78,3 +78,32 @@ piece and the dominant difficulty.
 `code/Ngoal_gbound.py` (window law `g`), `code/Ngoal_Ebound.py` (`f`=min E), closed-form checks inline.
 Handoff `GOAL_N_close_q18.md` (updated with the closed forms). Aristotle v10 project
 `c890631c-ef4d-4f7e-8f32-5a2264e47bc5` (attempting, with these hints).
+
+## ADDENDUM (orchestration, 2026-06-03) — 4-route results + a STATEMENT CORRECTION
+Four parallel routes attacked q≥18; each independently re-verified. Net:
+- **Route 1 (uniform window, VERIFIED computer-assisted):** `g_closed(⌈7q/25⌉,q)≥1/λ³` ∀q≥18 — validated
+  interval arithmetic q=18..500 + analytic tail q≥23. Binding q=21 margin +4.6e-4; margin GROWS to +0.0107
+  as q→∞ (not O(1/q²)-vanishing). Independently re-ran (binding q=21 confirmed). `code/Ngoal_uniform_*.py`.
+  NOT Lean (interval arithmetic).
+- **Route 2 (per-q Lean):** q=18 AND q=21 scalar window lemmas VERIFIED (axiom-clean, re-compiled).
+  q=19,20 emits FAILED (sympy LP didn't produce a cert / killed). `lean/BCZHeckeG{18,21}_window_VERIFIED.lean`.
+- **Route 3 (genuine assembly):** VERIFIED Lean but WRONG OBSERVABLE (`Pgen=a(a+λb)/λ ≥ P_actual` 100%,
+  wrong direction for inf-essSup LB) ⇒ NOT a close. Salvaged `kick_pure` (verified, pure-algebra kick).
+  See `FINDINGS_route3_verdict_2026-06-03.md`.
+- **Route 4 (Aristotle, 9h31m):** did NOT close it. TWO outputs: (a) a VERIFIED **counterexample** —
+  `scalar_no_sustained_below` as I stated it (`1<l<2`) is FALSE: l=√2 (q=4) has a 2-periodic orbit
+  (`9/25, 9√2/25`), floors (1,2), all products `9√2/25·9/25 = 0.18328 < 1/l³=0.35355` (numerically
+  re-verified: domain+recurrence exact). EXPECTED since `X_Ω(4)=√2/8≠1/λ³`. (b) sorry-free building blocks
+  matching my closed forms — `energy_trig_form: E=r²sin²θ` (= my `r²=4E/(4−λ²)`, since `4−λ²=4sin²θ`),
+  `cos/sin_chebyshev_recurrence`, `product_to_sum`, `c_at_high_floor`, `all_products_small_forces_c_bound`.
+
+**STATEMENT CORRECTION (important):** the scalar window theorem holds for **q≥5 (l>√2)**, NOT general
+`l∈(1,2)`. The q=4 (`l=√2`) counterexample uses a K=2 step — confirming the floor-1 window alone is
+NECESSARY-not-SUFFICIENT: the K≥2 handling is where q=4 (value √2/8) differs from q≥5 (value 1/λ³). All
+q≥18 work is in the q≥5 regime and unaffected; the dispatch statement should carry `q≥5`/`l>√2`.
+
+**CONSOLIDATED q≥18 VERDICT:** the SCALAR/floor-1 window crux is rigorously established (route 1 uniform
+computer-assisted + route 2 per-q Lean q=18,21). Genuine `X_Ω(q≥18)` still needs: (a) Lean-formalize
+route 1 (the trig building blocks from Aristotle + the closed forms are the materials); (b) the K≥2-step /
+multi-branch handling (where q=4 fails, q≥5 holds) assembled into genuine (C′) — the 2-branch confinement
+is numeric (q≤30). Value certain. No single route closed it; the crux ingredient is now rigorous.
