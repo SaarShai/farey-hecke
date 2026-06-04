@@ -1,0 +1,204 @@
+% Bibliography for the Saar–Koyama §X technical/computational
+% section. Twelve external references cited in §X.3–§X.7 and in
+% Appendices A and B. Page / chapter anchors recorded where the
+% citation is to a specific equation or theorem.
+
+@article{Mikolas1949,
+  author  = {Mikol\'as, Mikl\'os},
+  title   = {Farey series and their connection with the prime number problem.~{I}},
+  journal = {Acta Sci. Math. (Szeged)},
+  volume  = {13},
+  year    = {1949},
+  pages   = {93--117},
+  note    = {Volume~13 spans 1949--1950. Classical Farey--Mertens
+             identity and the connection of Farey-fraction sums to
+             the Mertens function; the static identity underlying the
+             project's ``Farey bridge identity'' (the $m = p$ slice)
+             is of this lineage.},
+}
+
+@article{Akatsuka2017EulerProduct,
+  author  = {Akatsuka, Hirotaka},
+  title   = {The Euler product for the {Riemann} zeta-function in the critical strip},
+  journal = {Kodai Mathematical Journal},
+  volume  = {40},
+  number  = {1},
+  year    = {2017},
+  pages   = {79--101},
+  doi     = {10.2996/kmj/1490083225},
+  note    = {Lemma 2.1 / eq.\ (2.5) (proof: eqs.\ (2.6)--(2.7)): the boundary-line ($\Re s = 1$) Mertens-type partial-summation estimate $\sum_{p\le X}p^{-1-2it_0}=c(t_0)+O(1/\log X)$ ($t_0\ne0$), derived from PNT with the classical error term $\pi(x)=x/\log x+O(x/(\log x)^2)$ -- UNCONDITIONAL (independent of that paper's RH/DRH-conditional critical-strip Theorem~1). Primary-verified against the published PDF 2026-05-16. There is no Akatsuka 2013 paper (legacy bibkey said 2013; renamed 2026-05-16).},
+}
+
+@article{AokiKoyama2023,
+  author  = {Aoki, Miho and Koyama, Shin-ya},
+  title   = {{Chebyshev's} bias against splitting and principal primes in global fields},
+  journal = {J. Number Theory},
+  volume  = {245},
+  year    = {2023},
+  pages   = {233--262},
+  doi     = {10.1016/j.jnt.2022.10.005},
+  note    = {arXiv:2203.12266. Eq.\ (1.4), p.\ 235: the $e^{-m\gamma}$-normalised partial-Euler-product asymptotic at noncentral zeros (Hypothesis~AK, \S{}X.4.3). DRH-CONDITIONAL in characteristic 0 (number-field / Dirichlet setting); unconditional only in positive characteristic. Primary-verified against the published PDF 2026-05-16.},
+}
+
+@book{Davenport2000MultiplicativeNumberTheory,
+  author    = {Davenport, Harold},
+  title     = {Multiplicative Number Theory},
+  edition   = {3rd},
+  series    = {Graduate Texts in Mathematics},
+  volume    = {74},
+  publisher = {Springer},
+  year      = {2000},
+  note      = {Hadamard--de la Vall\'ee Poussin non-vanishing on $\Re(s) = 1$.},
+}
+
+@book{HardyWright2008,
+  author    = {Hardy, G.~H. and Wright, E.~M.},
+  title     = {An Introduction to the Theory of Numbers},
+  edition   = {6th},
+  publisher = {Oxford University Press},
+  year      = {2008},
+  note      = {Theorem 304: the Ramanujan-sum identity at primes.},
+}
+
+@article{Inoue2021,
+  author  = {Inoue, Sh\={o}ta},
+  title   = {Some explicit formulas for partial sums of {M\"obius} functions},
+  journal = {Journal de Th\'eorie des Nombres de Bordeaux},
+  volume  = {33},
+  number  = {2},
+  year    = {2021},
+  pages   = {273--315},
+  doi     = {10.5802/jtnb.1162},
+  note    = {arXiv:1805.05015. Theorem 1 and eq.~(4.1): the truncated explicit formula for $M^*(x, \chi)$ used in Appendix~B \S{}B.1, \S{}B.3 to set up the contour integration for Theorem~X.4.2. The paper's explicit formulas are UNCONDITIONAL (its stated purpose: results otherwise known only under GRH are made unconditional). Volume/issue/pages primary-verified (Centre Mersenne / NUMDAM) 2026-05-16.},
+}
+
+@book{MontgomeryVaughan2007,
+  author    = {Montgomery, Hugh L. and Vaughan, Robert C.},
+  title     = {Multiplicative Number Theory I.~Classical Theory},
+  publisher = {Cambridge University Press},
+  year      = {2007},
+  note      = {Theorem 9.4: textbook bad-prime correction structure.},
+}
+
+@article{Ng2004,
+  author  = {Ng, Nathan},
+  title   = {The distribution of the summatory function of the {Möbius} function},
+  journal = {Proc. London Math. Soc.},
+  volume  = {89},
+  number  = {3},
+  year    = {2004},
+  pages   = {361--389},
+  note    = {Discussed alongside Soundararajan 2009 for the off-target zero aggregate of \S{}X.7 Question Q:Perron.},
+}
+
+@article{Polya1913,
+  author  = {P\'olya, George},
+  title   = {{\"U}ber die Nullstellen gewisser ganzer Funktionen},
+  journal = {Mathematische Zeitschrift},
+  volume  = {2},
+  year    = {1913},
+  note    = {Discreteness of the zero set of a finite exponential polynomial; used in \texttt{DPAC\_closure\_attempt.lean} for the obstruction certificate.},
+}
+
+@article{Soundararajan2009,
+  author  = {Soundararajan, K.},
+  title   = {Partial sums of the {Möbius} function},
+  journal = {Journal f\"ur die reine und angewandte Mathematik (Crelle's Journal)},
+  volume  = {631},
+  year    = {2009},
+  pages   = {141--152},
+  doi     = {10.1515/CRELLE.2009.044},
+  note    = {arXiv:0705.0723. Theorem 1: the RH-conditional rate bound $M(x) \ll \sqrt{x}\exp((\log x)^{1/2}(\log\log x)^{14})$ for the Möbius partial sum, used (via the character analogue at numerically-verified RH heights) in Theorem~X.4.2 and Appendix~B \S{}B.4.},
+}
+
+@book{Tenenbaum2015,
+  author    = {Tenenbaum, G\'erald},
+  title     = {Introduction to Analytic and Probabilistic Number Theory},
+  edition   = {3rd},
+  series    = {Graduate Studies in Mathematics},
+  volume    = {163},
+  publisher = {American Mathematical Society},
+  year      = {2015},
+  note      = {Chapter II.5: Hadamard--de la Vall\'ee Poussin treatment.},
+}
+
+@book{Titchmarsh1986RZF,
+  author    = {Titchmarsh, E.~C.},
+  title     = {The Theory of the Riemann Zeta-Function},
+  edition   = {2nd},
+  publisher = {Oxford University Press},
+  year      = {1986},
+  note      = {Heath-Brown revision. \S{}3.11: the polynomial-growth bound on $1/\zeta(s)$ used in \texttt{SmoothedDwfFormula\_full.lean} and cited as a Mathlib prerequisite in \S{}X.6.},
+}
+
+% ---- Classical context (cited in the Introduction) -----------------
+
+@article{RubinsteinSarnak1994,
+  author  = {Rubinstein, Michael and Sarnak, Peter},
+  title   = {{Chebyshev's} bias},
+  journal = {Experimental Mathematics},
+  volume  = {3},
+  number  = {3},
+  year    = {1994},
+  pages   = {173--197},
+  note    = {Foundational paper introducing the logarithmic-density framework for Chebyshev's bias under GRH and the Grand Simplicity Hypothesis.},
+}
+
+@article{Littlewood1914,
+  author  = {Littlewood, J.~E.},
+  title   = {Distribution des Nombres Premiers},
+  journal = {Comptes Rendus de l'Acad\'emie des Sciences Paris},
+  volume  = {158},
+  year    = {1914},
+  pages   = {1869--1872},
+  note    = {Infinite sign changes of $\pi(x; 4, 3) - \pi(x; 4, 1)$ and other classical prime-counting differences.},
+}
+
+@article{HardyLittlewood1918,
+  author  = {Hardy, G.~H. and Littlewood, J.~E.},
+  title   = {Contributions to the theory of the {Riemann} zeta-function and the theory of the distribution of primes},
+  journal = {Acta Mathematica},
+  volume  = {41},
+  year    = {1918},
+  pages   = {119--196},
+}
+
+@article{Stark1971,
+  author  = {Stark, H.~M.},
+  title   = {A problem in comparative prime number theory},
+  journal = {Acta Arithmetica},
+  volume  = {XVIII},
+  year    = {1971},
+  pages   = {311--320},
+  note    = {Generalisation of Littlewood's sign-change theorem to arbitrary modulus $N$, under the assumption that $L(s, \chi)$ has no real nontrivial zeros.},
+}
+
+@article{Ingham1942,
+  author  = {Ingham, A.~E.},
+  title   = {On two conjectures in the theory of numbers},
+  journal = {American Journal of Mathematics},
+  volume  = {64},
+  year    = {1942},
+  pages   = {313--319},
+}
+
+@article{FeuervergerMartin2000,
+  author  = {Feuerverger, A. and Martin, G.},
+  title   = {Biases in the {Shanks--R\'enyi} Prime Number Race},
+  journal = {Experimental Mathematics},
+  volume  = {9},
+  number  = {4},
+  year    = {2000},
+  pages   = {535--570},
+  note    = {Computes the logarithmic densities $\delta_{N; a_1, a_2, a_3}$ of triples of residue classes; reveals fine bias structure among quadratic non-residues that motivates the Dominance-of-$-1$ framework.},
+}
+
+@article{ShimadaKoyama2025,
+  author  = {Shimada, K. and Koyama, S.},
+  title   = {Weighted prime number theorem on arithmetic progressions with refinements},
+  journal = {Mathematics},
+  volume  = {13},
+  year    = {2025},
+  pages   = {2564},
+  note    = {Proves that for $0 \le w < 1/2$ the weighted prime-counting difference $\pi_w(x; N, b) - \pi_w(x; N, a)$ is unbounded and changes sign infinitely often, complementing Aoki--Koyama 2023 for $w = 1/2$ and $w > 1/2$.},
+}

@@ -1,0 +1,38 @@
+# Aristotle project IDs to poll. Format: <project-id> <label>
+# Lines starting with # are ignored. The label is used in --download <label>
+# and to find the right SmoothedDwfFormula vs R1_B_plus result file.
+424973ae-8e9a-4ef1-8a6d-970ffa3b88ad SmoothedDwfFormula
+8e608890-f0ba-4a89-bbb0-a63b5bcab697 R1_B_plus
+59d181d5-b207-4882-a5ba-0786ec51d361 DPAC
+
+# 2026-05-12 — second-round dispatches against remaining sorries
+885c640c-55cd-48f4-9ce5-1168566619d6 SmoothedDwfFormula_sorries_round2
+bb0cd153-0364-48e2-85fd-564fd8ce4679 DPAC_sorries_round2
+
+# 2026-05-12 — third-round dispatch on remaining 5 sorries
+dc276a90-66ac-4070-b5cb-de34d0ea5c5c remaining_5_sorries_round3
+
+# 2026-05-12 — fourth-round dispatch: DPAC headline closure attempt (long shot)
+4b194281-8fb6-474c-aaf3-15d227c445e3 DPAC_headline_round4
+
+# 2026-05-12 — fifth-round dispatch: CorrectedBInfty (Thm X.4.1) closure attempt
+85006714-72d5-4107-ba71-ee5d69590a80 CorrectedBInfty_round5
+
+# 2026-05-12 — sixth-round dispatch: MertensSpectroscope + FareyBridge + SmoothedDwf
+# (three remaining "blocked-on-named-input" sorries, conditional-closure pattern)
+92f977df-43c5-4fa7-9399-d3dad6988cb7 ThreeFiles_round6
+
+# 2026-05-13 — seventh-round dispatch: Ramanujan-sum-at-primes formalization
+# (would discharge FareyBridgeIdentity's h_ramanujan_decomp hypothesis)
+0873e8c7-b210-43a4-b2d1-d723f727e6cd RamanujanSum_round7
+
+# 2026-05-13 — eighth-round dispatch: Mertens spectroscope universality unconditional
+# (would discharge h_explicit_formula via Soundararajan 2009 Thm 1)
+a25797bf-bbe0-4a56-84d6-49a2c4b2487f MertensUnconditional_round8
+
+# 2026-05-14 — ninth-round dispatch: SignedVsAbsoluteResidueGadget (halo structural
+# lemma — pure complex analysis, two small sorries: absolute residue sum diverges
+# as poles collide; signed residue sum tends to divided-difference derivative).
+# Research-track Aristotle dispatch motivated by Stage 0 of the halo unconditional
+# plan.  Not in DPAC lineage; new module file.
+61469dcd-30b5-4f73-a237-efe5316d1679 SignedVsAbsoluteGadget_round9

@@ -1,0 +1,86 @@
+======================================================================
+D1 BCZ-cocycle verification (exact arithmetic)
+======================================================================
+[V1] BCZ map = Farey neighbour first-return orbit
+  V1 Q=10: orbit len 31 (=|F_Q|-1=31), T-consistent=True, Omega(k+k'>Q)=True
+  V1 Q=25: orbit len 199 (=|F_Q|-1=199), T-consistent=True, Omega(k+k'>Q)=True
+  V1 Q=50: orbit len 773 (=|F_Q|-1=773), T-consistent=True, Omega(k+k'>Q)=True
+  V1 Q=100: orbit len 3043 (=|F_Q|-1=3043), T-consistent=True, Omega(k+k'>Q)=True
+  V1 Q=200: orbit len 12231 (=|F_Q|-1=12231), T-consistent=True, Omega(k+k'>Q)=True
+  V1 Q=500: orbit len 76115 (=|F_Q|-1=76115), T-consistent=True, Omega(k+k'>Q)=True
+[V2] Mertens identity for A_Q(m) + prime-step Delta A
+  V2 Q=20: Mertens identity match=True; Delta A = -1 + p*[p|m] match=True
+  V2 Q=50: Mertens identity match=True; Delta A = -1 + p*[p|m] match=True
+  V2 Q=97: Mertens identity match=True; Delta A = -1 + p*[p|m] match=True
+[V3] Mikolas L^2 second moment and N*W(N) -> C
+  V3 Mikolas second moment + asymptotic N*W(N):
+     Q    J(float)   J_exact(<=400)  Mikolas(tail)  Phi     N*W(N)
+      50     7.88439     7.88439       7.61883       774  0.509327
+     100    15.89970    15.89970      15.61740      3044  0.522329
+     200    39.26910    39.26910      38.96230     12232  0.642072
+     400    75.99094    75.99094      75.66148     48678  0.624438
+     800   153.63504       --        153.26535    194750  0.631107
+    1600   313.39059       --        312.90490    778232  0.644313
+    3200   634.71007       --        633.91073   3113268  0.652392
+[V4] Discrepancy as Birkhoff sum of BCZ cocycle
+  V4 Q=10: interior gap=1/(k k')=True; E_Q(f_j)=Birkhoff sum S_j=True; closed-orbit S_end=0=True
+  V4 Q=50: interior gap=1/(k k')=True; E_Q(f_j)=Birkhoff sum S_j=True; closed-orbit S_end=0=True
+  V4 Q=100: interior gap=1/(k k')=True; E_Q(f_j)=Birkhoff sum S_j=True; closed-orbit S_end=0=True
+  V4 Q=300: interior gap=1/(k k')=True; E_Q(f_j)=Birkhoff sum S_j=True; closed-orbit S_end=0=True
+  V4 Q=600: interior gap=1/(k k')=True; E_Q(f_j)=Birkhoff sum S_j=True; closed-orbit S_end=0=True
+[V5] Prime/composite dichotomy via section primitivity
+  V5 #new points at denominator Q = phi(Q) (visibility/primitivity):
+    Q=  2: phi=  1  PRIME -> all new, retrace=0
+    Q=  3: phi=  2  PRIME -> all new, retrace=0
+    Q=  4: phi=  2  COMPOSITE -> retrace=1 (>0)
+    Q=  5: phi=  4  PRIME -> all new, retrace=0
+    Q=  6: phi=  2  COMPOSITE -> retrace=3 (>0)
+    Q=  7: phi=  6  PRIME -> all new, retrace=0
+    Q=  8: phi=  4  COMPOSITE -> retrace=3 (>0)
+    Q=  9: phi=  6  COMPOSITE -> retrace=2 (>0)
+    Q= 10: phi=  4  COMPOSITE -> retrace=5 (>0)
+    Q= 11: phi= 10  PRIME -> all new, retrace=0
+    Q= 12: phi=  4  COMPOSITE -> retrace=7 (>0)
+    Q= 13: phi= 12  PRIME -> all new, retrace=0
+    Q= 30: phi=  8  COMPOSITE -> retrace=21 (>0)
+    Q= 31: phi= 30  PRIME -> all new, retrace=0
+[V6] Green-Kubo autocovariance pre-check (RAW cocycle)
+  V6 Q=200: orbit n=12232, c_0=1.57016
+    L=  1: GreenKubo sigma2(L)=2.30491  c_1=3.674e-01
+    L=  2: GreenKubo sigma2(L)=1.94839  c_2=-1.783e-01
+    L=  4: GreenKubo sigma2(L)=1.56782  c_4=-8.169e-02
+    L=  8: GreenKubo sigma2(L)=1.17475  c_8=-4.534e-02
+    L= 16: GreenKubo sigma2(L)=0.81457  c_16=-2.256e-02
+    L= 40: GreenKubo sigma2(L)=0.37415  c_40=-8.118e-03
+  V6 Q=800: orbit n=194750, c_0=2.07934
+    L=  1: GreenKubo sigma2(L)=3.31139  c_1=6.160e-01
+    L=  2: GreenKubo sigma2(L)=2.94448  c_2=-1.835e-01
+    L=  4: GreenKubo sigma2(L)=2.54502  c_4=-8.623e-02
+    L=  8: GreenKubo sigma2(L)=2.11651  c_8=-5.025e-02
+    L= 16: GreenKubo sigma2(L)=1.69901  c_16=-1.952e-02
+    L= 40: GreenKubo sigma2(L)=1.12640  c_40=-6.448e-03
+  V6 Q=2000: orbit n=1216588, c_0=2.41814
+    L=  1: GreenKubo sigma2(L)=3.98624  c_1=7.841e-01
+    L=  2: GreenKubo sigma2(L)=3.61729  c_2=-1.845e-01
+    L=  4: GreenKubo sigma2(L)=3.21379  c_4=-8.729e-02
+    L=  8: GreenKubo sigma2(L)=2.77691  c_8=-5.138e-02
+    L= 16: GreenKubo sigma2(L)=2.34197  c_16=-2.108e-02
+    L= 40: GreenKubo sigma2(L)=1.72628  c_40=-7.141e-03
+[V7] TRUNCATED-cocycle Green-Kubo (sharpened (R) target)
+  V7 Q=500 T=  2: c_0=1.4525  sigma2(L=40)=0.4926
+  V7 Q=500 T=  4: c_0=1.1694  sigma2(L=40)=0.2555
+  V7 Q=500 T=  8: c_0=0.9137  sigma2(L=40)=0.1694
+  V7 Q=500 T= 16: c_0=0.6697  sigma2(L=40)=0.2520
+  V7 Q=1000 T=  2: c_0=1.7073  sigma2(L=40)=0.8652
+  V7 Q=1000 T=  4: c_0=1.4221  sigma2(L=40)=0.5225
+  V7 Q=1000 T=  8: c_0=1.1629  sigma2(L=40)=0.2683
+  V7 Q=1000 T= 16: c_0=0.9120  sigma2(L=40)=0.1815
+  V7 Q=2000 T=  2: c_0=1.9628  sigma2(L=40)=1.2983
+  V7 Q=2000 T=  4: c_0=1.6766  sigma2(L=40)=0.8982
+  V7 Q=2000 T=  8: c_0=1.4158  sigma2(L=40)=0.5293
+  V7 Q=2000 T= 16: c_0=1.1614  sigma2(L=40)=0.2694
+  V7 Q=4000 T=  2: c_0=2.2183  sigma2(L=40)=1.7684
+  V7 Q=4000 T=  4: c_0=1.9318  sigma2(L=40)=1.3386
+  V7 Q=4000 T=  8: c_0=1.6702  sigma2(L=40)=0.9074
+  V7 Q=4000 T= 16: c_0=1.4140  sigma2(L=40)=0.5297
+======================================================================

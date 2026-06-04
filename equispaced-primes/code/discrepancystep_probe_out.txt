@@ -1,0 +1,43 @@
+DiscrepancyStep probe  PMAX=3000  primes(M<=-3,p>=11)=210  elapsed=94.9s
+
+=== EXTREMES (over M<=-3 primes) ===
+N/A:           min=0.971385  max=1.181201
+C/A:           min=0.122828  max=0.254984
+B/A:           min=0.030571  max=2.683280
+(B+C+N)/A - 1: min(worst margin)=0.401403 at p=13 (M=-3)
+B>0 fraction:  210/210 positive, 0 non-positive
+DeltaW>=0 (FAILS sign) count: 0  (should be 0 for theorem)
+
+=== FIT  N/A - 1  vs 1/p ===
+no-intercept  N/A = 1 + c/p : c=2.5040   SSres=4.424e-02  RMS=1.451e-02
+with-intercept N/A = 1 + a + c/p : a=-5.956e-03  c=2.7566  SSres=3.760e-02 RMS=1.338e-02
+  (a~0 would support a clean 1+O(1/p); large |a| => offset/messy)
+
+=== SAMPLE ROWS (largest 12 M<=-3 primes) ===
+        p     M       N/A       B/A       C/A   (B+C+N)/A
+     2897   -19   0.98812   2.30484   0.12561     3.41856
+     2903   -17   0.99461   2.16282   0.12596     3.28339
+     2909   -18   0.99165   2.29720   0.12560     3.41445
+     2917   -18   0.98118   2.34811   0.12615     3.45544
+     2927   -17   0.98433   2.28595   0.12609     3.39637
+     2939   -17   0.99410   2.15471   0.12611     3.27492
+     2953   -15   0.98963   1.97338   0.12752     3.09053
+     2957   -18   0.99176   2.16731   0.12619     3.28526
+     2963   -16   0.99211   2.11354   0.12634     3.23199
+     2969   -16   0.99218   2.14600   0.12609     3.26427
+     2971   -17   0.97751   2.26871   0.12623     3.37245
+     2999    -6   0.99829   1.31848   0.12791     2.44468
+
+=== (B+C+N)/A by Mertens depth ===
+M= -25  n=   2  mean(B+C+N)/A=3.7279  min=3.6743
+M= -24  n=   1  mean(B+C+N)/A=3.7187  min=3.7187
+M= -23  n=   5  mean(B+C+N)/A=3.6204  min=3.5533
+M= -22  n=   1  mean(B+C+N)/A=3.6398  min=3.6398
+M= -21  n=   1  mean(B+C+N)/A=3.4740  min=3.4740
+M= -20  n=   2  mean(B+C+N)/A=3.4059  min=3.3597
+M=  -8  n=  13  mean(B+C+N)/A=2.4189  min=2.0647
+M=  -7  n=  13  mean(B+C+N)/A=2.2555  min=1.9398
+M=  -6  n=  21  mean(B+C+N)/A=2.1657  min=1.8362
+M=  -5  n=  17  mean(B+C+N)/A=2.0523  min=1.7204
+M=  -4  n=  22  mean(B+C+N)/A=1.9103  min=1.5796
+M=  -3  n=  41  mean(B+C+N)/A=1.8727  min=1.4014
