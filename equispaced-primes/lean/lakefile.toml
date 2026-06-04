@@ -1,0 +1,103 @@
+name = "FareyKoyamaProject"
+defaultTargets = ["FormalConjectures"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.28.0"
+
+# Lean library targets at the root, one per Lean file.
+# Each entry maps a module name (PascalCase, valid Lean identifier) to the
+# .lean file via a single-file glob.
+
+# The corrected B_∞ identity (Theorem X.4.1) statement.
+[[lean_lib]]
+name = "CorrectedBInfty"
+globs = ["CorrectedBInfty"]
+srcDir = "formal-conjectures"
+
+# Local Perron double-pole residue (Lemma X.3.1) statement.
+[[lean_lib]]
+name = "LocalPerronResidue"
+globs = ["LocalPerronResidue"]
+srcDir = "formal-conjectures"
+
+# DPAC (Dirichlet Polynomial Avoidance Conjecture) — extended formalization.
+[[lean_lib]]
+name = "DPAC_full"
+globs = ["DPAC_full"]
+srcDir = "formal-conjectures"
+
+# DPAC statement-only file.
+[[lean_lib]]
+name = "DirichletPolynomialAvoidance"
+globs = ["DirichletPolynomialAvoidance"]
+srcDir = "formal-conjectures"
+
+# Smoothed Δw_f explicit formula with R_0 = -2 anchor.
+[[lean_lib]]
+name = "SmoothedDwfFormula_full"
+globs = ["SmoothedDwfFormula_full"]
+srcDir = "formal-conjectures"
+
+# Mertens spectroscope universality conjecture.
+[[lean_lib]]
+name = "MertensSpectroscopeUniversality"
+globs = ["MertensSpectroscopeUniversality"]
+srcDir = "formal-conjectures"
+
+# Farey bridge identity (R1).
+[[lean_lib]]
+name = "FareyBridgeIdentity"
+globs = ["FareyBridgeIdentity"]
+srcDir = "formal-conjectures"
+
+# Farey sign pattern (negative result; B+ Mertens-restricted positivity falsified).
+[[lean_lib]]
+name = "FareySignPattern"
+globs = ["FareySignPattern"]
+srcDir = "formal-conjectures"
+
+# DPAC partial closure: K ≤ 4 unconditionally, FLRLI bridge, obstruction certificate.
+[[lean_lib]]
+name = "DPAC_closure_attempt"
+globs = ["DPAC_closure_attempt"]
+srcDir = "formal-conjectures"
+
+# Roll-up target: build everything together.
+[[lean_lib]]
+name = "FormalConjectures"
+globs = [
+  "CorrectedBInfty",
+  "LocalPerronResidue",
+  "DPAC_full",
+  "DirichletPolynomialAvoidance",
+  "SmoothedDwfFormula_full",
+  "MertensSpectroscopeUniversality",
+  "FareyBridgeIdentity",
+  "FareySignPattern",
+  "DPAC_closure_attempt",
+  "RamanujanSum",
+  "SignedVsAbsoluteResidueGadget",
+]
+srcDir = "formal-conjectures"
+
+# Ramanujan sum at primes (Saar's hand-written formalisation, racing
+# Aristotle round-7).
+[[lean_lib]]
+name = "RamanujanSum"
+globs = ["RamanujanSum"]
+srcDir = "formal-conjectures"
+
+# Halo-residue structural lemma — signed vs absolute residue gadget
+# (Aristotle round-9 target, dispatched 2026-05-14).
+[[lean_lib]]
+name = "SignedVsAbsoluteResidueGadget"
+globs = ["SignedVsAbsoluteResidueGadget"]
+srcDir = "formal-conjectures"
+
+# Cumulative axiom check (transient).
+[[lean_lib]]
+name = "_AxiomCheck"
+globs = ["_AxiomCheck"]
+srcDir = "formal-conjectures"

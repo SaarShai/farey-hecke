@@ -1,0 +1,231 @@
+{
+  "BCZ_chain_1M": {
+    "0.95": {
+      "threshold": 6.917308195057087,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 50000,
+      "n_clusters": 26572,
+      "hist": {
+        "1": 3144,
+        "2": 23428
+      },
+      "size2_frac": 0.8816799638717447
+    },
+    "0.99": {
+      "threshold": 14.681533652600338,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 10000,
+      "n_clusters": 5139,
+      "hist": {
+        "1": 278,
+        "2": 4861
+      },
+      "size2_frac": 0.945903872348706
+    }
+  },
+  "Poisson_1M": {
+    "0.95": {
+      "threshold": 3.0013325411461773,
+      "p_size_ge_3": 0.00706,
+      "max_size": 4,
+      "n_extreme": 50000,
+      "n_clusters": 47552,
+      "hist": {
+        "1": 45227,
+        "2": 2210,
+        "3": 107,
+        "4": 8
+      },
+      "size2_frac": 0.04647543741588156
+    },
+    "0.99": {
+      "threshold": 4.620364339958922,
+      "p_size_ge_3": 0.0003,
+      "max_size": 3,
+      "n_extreme": 10000,
+      "n_clusters": 9893,
+      "hist": {
+        "1": 9787,
+        "2": 105,
+        "3": 1
+      },
+      "size2_frac": 0.010613565147073688
+    }
+  },
+  "GOE_N300_x500": {
+    "0.95": {
+      "threshold": 1.979737856174828,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 6384,
+      "n_clusters": 6343,
+      "hist": {
+        "1": 6302,
+        "2": 41
+      },
+      "size2_frac": 0.0064638183824688635
+    },
+    "0.99": {
+      "threshold": 2.473966062138604,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 1277,
+      "n_clusters": 1277,
+      "hist": {
+        "1": 1277
+      },
+      "size2_frac": 0.0
+    }
+  },
+  "GUE_N300_x500": {
+    "0.95": {
+      "threshold": 1.7595467524635864,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 6394,
+      "n_clusters": 6352,
+      "hist": {
+        "1": 6310,
+        "2": 42
+      },
+      "size2_frac": 0.006612090680100755
+    },
+    "0.99": {
+      "threshold": 2.117118755062112,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 1279,
+      "n_clusters": 1279,
+      "hist": {
+        "1": 1279
+      },
+      "size2_frac": 0.0
+    }
+  },
+  "GSE_N200_x300": {
+    "0.95": {
+      "threshold": 1.5661997846171765,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 2555,
+      "n_clusters": 2542,
+      "hist": {
+        "1": 2529,
+        "2": 13
+      },
+      "size2_frac": 0.0051140833988985055
+    },
+    "0.99": {
+      "threshold": 1.814360099449261,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 511,
+      "n_clusters": 511,
+      "hist": {
+        "1": 511
+      },
+      "size2_frac": 0.0
+    }
+  },
+  "COE_N400_x500": {
+    "0.95": {
+      "threshold": 1.9864213299619018,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 9975,
+      "n_clusters": 9908,
+      "hist": {
+        "1": 9841,
+        "2": 67
+      },
+      "size2_frac": 0.006762212353653613
+    },
+    "0.99": {
+      "threshold": 2.4806694477297953,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 1995,
+      "n_clusters": 1995,
+      "hist": {
+        "1": 1995
+      },
+      "size2_frac": 0.0
+    }
+  },
+  "CUE_N400_x500": {
+    "0.95": {
+      "threshold": 1.7566690165949252,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 9975,
+      "n_clusters": 9908,
+      "hist": {
+        "1": 9841,
+        "2": 67
+      },
+      "size2_frac": 0.006762212353653613
+    },
+    "0.99": {
+      "threshold": 2.119782087255765,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 1995,
+      "n_clusters": 1995,
+      "hist": {
+        "1": 1995
+      },
+      "size2_frac": 0.0
+    }
+  },
+  "CSE_N200_x300": {
+    "0.95": {
+      "threshold": 1.5632691501902316,
+      "p_size_ge_3": 0.0,
+      "max_size": 2,
+      "n_extreme": 2985,
+      "n_clusters": 2963,
+      "hist": {
+        "1": 2941,
+        "2": 22
+      },
+      "size2_frac": 0.007424907188660142
+    },
+    "0.99": {
+      "threshold": 1.8211562190912693,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 597,
+      "n_clusters": 597,
+      "hist": {
+        "1": 597
+      },
+      "size2_frac": 0.0
+    }
+  },
+  "Delta_L_lowzeros": {
+    "0.95": {
+      "threshold": 1.2146831476579778,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 1,
+      "n_clusters": 1,
+      "hist": {
+        "1": 1
+      },
+      "size2_frac": 0.0
+    },
+    "0.99": {
+      "threshold": 1.239686123275462,
+      "p_size_ge_3": 0.0,
+      "max_size": 1,
+      "n_extreme": 1,
+      "n_clusters": 1,
+      "hist": {
+        "1": 1
+      },
+      "size2_frac": 0.0
+    }
+  }
+}

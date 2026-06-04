@@ -1,0 +1,36 @@
+======================================================================================
+Q1 PROBE: FF Farey-discrepancy COCYCLE Birkhoff variance & correlation decay
+Char-0 baseline (D1): c0 grows w/ Q, c_l~1/l (alpha~0.5), sigma^2 drifts, NO CLT.
+FF discriminator: Deligne spectral gap => expect summable corr (alpha>=1),
+c0 D-stable, sigma^2 converges  =>  QUALITATIVELY different statistic.
+======================================================================================
+
+--- q=2 ---
+ D     Phi  S==E        W_D   (q^D)W_D       c0                  c_l: l=1,2,4,8,16  alpha        GK sig(8/16/32)
+ 2      11  True    0.24539     0.9816   0.5663  -0.086 -0.058 -0.239 +0.021 +0.000     nan        -1.012/+nan/+nan
+ 3      43  True    0.13650     1.0920   0.9157  -0.196 +0.120 +0.014 -0.266 -0.043   0.493    -0.081/-0.142/+0.608
+ 4     171  True    0.06967     1.1147   1.1086  -0.140 +0.046 -0.034 +0.024 -0.106  -0.402    +0.537/+0.177/+0.061
+ 5     683  True    0.03881     1.2420   1.4101  -0.090 +0.039 -0.034 -0.028 -0.006   0.909    +0.898/+0.585/+0.240
+
+--- q=3 ---
+ D     Phi  S==E        W_D   (q^D)W_D       c0                  c_l: l=1,2,4,8,16  alpha        GK sig(8/16/32)
+ 2      61  True    0.14775     1.3298   0.8659  -0.101 +0.009 -0.113 -0.126 +0.014  -0.189    +0.429/+0.046/-0.353
+ 3     547  True    0.05482     1.4801   1.2943  -0.078 -0.001 -0.022 +0.003 -0.005  -1.007    +0.858/+0.673/+0.525
+ 4    4921  True    0.01900     1.5388   1.6398  +0.025 +0.015 -0.026 -0.013 -0.013   0.072    +1.396/+1.095/+0.836
+
+--- q=5 ---
+ D     Phi  S==E        W_D   (q^D)W_D       c0                  c_l: l=1,2,4,8,16  alpha        GK sig(8/16/32)
+ 2     521  True    0.08119     2.0298   1.1870  -0.032 -0.004 -0.001 -0.037 -0.013  -0.570    +0.986/+0.746/+0.610
+ 3   13021  True    0.01737     2.1706   1.6815  +0.054 -0.001 -0.033 -0.022 +0.010  -1.153    +1.552/+1.349/+1.181
+
+======================================================================================
+READING / DECISION:
+ - S==E True everywhere  => FF discrepancy IS the Birkhoff sum of the cocycle (structural, [PROVEN]-exact).
+ - If c0 D-STABLE & alpha>=~1 & GK sigma^2 CONVERGES: FF cocycle is uniformly
+   L2 with SUMMABLE correlations -> a CLT/variance theorem is reachable here
+   (UNLIKE char-0 where theorem (R) died). Then compare (q^D)W_D growth law
+   vs twisted-Mobius q^n: same exponent => same statistic (KR); different
+   exponent/structure => candidate NEW statistic (proceed Q3).
+ - If c0 grows with D & alpha~0.5: FF reproduces the char-0 obstruction =>
+   no new theorem; D3 stays dictionary-tier (proceed Q4 only).
+======================================================================================

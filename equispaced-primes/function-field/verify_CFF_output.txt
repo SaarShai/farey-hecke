@@ -1,0 +1,32 @@
+==============================================================================
+(1) closed-form R_D  vs  Q6 independent exact enumeration (q=2):
+   D=1: closed=2  Q6=127/64  MISMATCH
+   D=2: closed=32/11  Q6=2037/704  MISMATCH
+   D=3: closed=184/43  Q6=11733/2752  MISMATCH
+   D=4: closed=320/57  Q6=20423/3648  MISMATCH
+   D=5: closed=4576/683  Q6=292181/43712  MISMATCH
+   D=6: closed=20480/2731  Q6=1307989/174784  MISMATCH
+   => closed form FAILS
+   q=3 spot: R_1 closed= 33/7  Q6=2666/567 ; R_2 closed= 531/61  Q6=42950/4941
+   match: False
+==============================================================================
+Traceback (most recent call last):
+  File "/Users/za/Documents/Farey NOW/primes-equispaced/handoff-2026-05-16-D3-functionfield/verify_ff_CFF_closedform.py", line 81, in <module>
+    lim=sp.limit(Rs, Ds, sp.oo)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/series/limits.py", line 66, in limit
+    return Limit(e, z, z0, dir).doit(deep=False)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/series/limits.py", line 384, in doit
+    r = gruntz(e, z, z0, dir)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/series/gruntz.py", line 695, in gruntz
+    r = limitinf(e0, z)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/core/cache.py", line 72, in wrapper
+    retval = cfunc(*args, **kwargs)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/series/gruntz.py", line 452, in limitinf
+    c0, e0 = mrv_leadterm(e, x)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/core/cache.py", line 72, in wrapper
+    retval = cfunc(*args, **kwargs)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/series/gruntz.py", line 513, in mrv_leadterm
+    f, logw = rewrite(exps, Omega, x, w)
+  File "/Users/za/Library/Python/3.9/lib/python/site-packages/sympy/series/gruntz.py", line 611, in rewrite
+    raise NotImplementedError('Result depends on the sign of %s' % sig)
+NotImplementedError: Result depends on the sign of sign(log(q))

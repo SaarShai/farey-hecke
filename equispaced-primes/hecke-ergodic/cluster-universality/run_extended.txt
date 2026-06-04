@@ -1,0 +1,85 @@
+Generating BCZ chain (1M, control) ...
+
+=== BCZ Farey-gap chain (1M)   [Farey universality class]
+     M = 1000000 gaps,  mean = 3.289978,  std = 4.9549
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   6.9173 |   50000 |   26572 |  88.168 |  0.0000 |     2 | 1:3144, 2:23428
+  0.9900 |  14.6815 |   10000 |    5139 |  94.590 |  0.0000 |     2 | 1:278, 2:4861
+
+Generating Poisson (1M) ...
+
+=== Poisson exponential gaps   [generic uncorrelated]
+     M = 1000000 gaps,  mean = 1.001027,  std = 1.0011
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   3.0013 |   50000 |   47552 |   4.648 |  0.0071 |     4 | 1:45227, 2:2210, 3:107, 4:8
+  0.9900 |   4.6204 |   10000 |    9893 |   1.061 |  0.0003 |     3 | 1:9787, 2:105, 3:1
+
+Simulating GOE (N=300, 500 mats) ...
+
+=== GOE eigenvalue gaps   [L-functions w/ orthogonal symmetry: rank-0 ECs, Dirichlet L of real chi]
+     M = 127678 gaps,  mean = 1.000000,  std = 0.5343
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.9797 |    6384 |    6343 |   0.646 |  0.0000 |     2 | 1:6302, 2:41
+  0.9900 |   2.4740 |    1277 |    1277 |   0.000 |  0.0000 |     1 | 1:1277
+
+Simulating GUE (N=300, 500 mats) ...
+
+=== GUE eigenvalue gaps   [L-functions w/ unitary symmetry: generic Dirichlet L, modular L, zeta]
+     M = 127871 gaps,  mean = 1.000000,  std = 0.4253
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.7595 |    6394 |    6352 |   0.661 |  0.0000 |     2 | 1:6310, 2:42
+  0.9900 |   2.1171 |    1279 |    1279 |   0.000 |  0.0000 |     1 | 1:1279
+
+Simulating GSE (N=200, 300 mats) ...
+
+=== GSE eigenvalue gaps   [L-functions w/ symplectic symmetry: Sym^2 of modular forms]
+     M = 51094 gaps,  mean = 1.000000,  std = 0.3224
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.5662 |    2555 |    2542 |   0.511 |  0.0000 |     2 | 1:2529, 2:13
+  0.9900 |   1.8144 |     511 |     511 |   0.000 |  0.0000 |     1 | 1:511
+
+Simulating COE (N=400, 500 mats) ...
+
+=== COE eigenphase gaps   [orthogonal circular -- finite-N analogue of GOE family]
+     M = 199500 gaps,  mean = 0.999326,  std = 0.5350
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.9864 |    9975 |    9908 |   0.676 |  0.0000 |     2 | 1:9841, 2:67
+  0.9900 |   2.4807 |    1995 |    1995 |   0.000 |  0.0000 |     1 | 1:1995
+
+Simulating CUE (N=400, 500 mats) ...
+
+=== CUE eigenphase gaps   [unitary circular -- finite-N analogue of GUE family]
+     M = 199500 gaps,  mean = 0.999532,  std = 0.4244
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.7567 |    9975 |    9908 |   0.676 |  0.0000 |     2 | 1:9841, 2:67
+  0.9900 |   2.1198 |    1995 |    1995 |   0.000 |  0.0000 |     1 | 1:1995
+
+Simulating CSE (N=200, 300 mats) ...
+
+=== CSE eigenphase gaps   [symplectic circular -- finite-N analogue of GSE family]
+     M = 59700 gaps,  mean = 0.999563,  std = 0.3227
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.5633 |    2985 |    2963 |   0.742 |  0.0000 |     2 | 1:2941, 2:22
+  0.9900 |   1.8212 |     597 |     597 |   0.000 |  0.0000 |     1 | 1:597
+
+=== L(s, Delta) low zeros (LMFDB, N=10)   [modular weight-12, level 1; predicted GUE universality]
+     M = 9 gaps,  mean = 0.958177,  std = 0.1716
+       q |      thr |  n_extr |   n_clu |  size2% |    p>=3 | maxsz | hist
+  0.9500 |   1.2147 |       1 |       1 |   0.000 |  0.0000 |     1 | 1:1
+  0.9900 |   1.2397 |       1 |       1 |   0.000 |  0.0000 |     1 | 1:1
+
+Saved JSON to cluster_diagnostic_extended.json
+
+==============================================================================
+UNIVERSALITY TABLE  (cluster-size diagnostic, q=0.99)
+class                        |    N_gaps |  size2% |  size>=3% | family / L-function correspondence
+------------------------------------------------------------------------------
+BCZ_chain_1M                 |      5139 |  94.590 |     0.000 | Farey fractions
+Poisson_1M                   |      9893 |   1.061 |     0.030 | generic uncorrelated
+GOE_N300_x500                |      1277 |   0.000 |     0.000 | rank-0 EC L, real-char Dirichlet L
+GUE_N300_x500                |      1279 |   0.000 |     0.000 | zeta, generic Dirichlet L, modular L
+GSE_N200_x300                |       511 |   0.000 |     0.000 | Sym^2 of modular forms
+COE_N400_x500                |      1995 |   0.000 |     0.000 | finite-N orthogonal
+CUE_N400_x500                |      1995 |   0.000 |     0.000 | finite-N unitary
+CSE_N200_x300                |       597 |   0.000 |     0.000 | finite-N symplectic
+Delta_L_lowzeros             |         1 |   0.000 |     0.000 | modular weight-12 (data, n=199)

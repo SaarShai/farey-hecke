@@ -1,0 +1,40 @@
+arXiv Submission Package
+========================
+
+Title: The Geometric Signature of Primes in Farey Sequences
+
+Authors:
+  Saar Shai (Independent Researcher, saar.shai@gmail.com)
+  Anthropic's Claude Opus 4.6 (AI research assistant)
+
+MSC 2020 Classification:
+  Primary:   11B57 (Farey sequences; the sequences 1^k, 2^k, ...)
+  Secondary: 11N37 (Asymptotic results on arithmetic functions)
+             11A25 (Arithmetic functions; related numbers; inversion formulas)
+             11Y35 (Analytic computations)
+
+Keywords: Farey sequence, Mertens function, rank deviation, Ramanujan sums,
+          formal verification, Lean 4
+
+Abstract:
+  We study the per-step behavior of the Farey sequence's uniformity and
+  find that primes and composites play fundamentally different geometric
+  roles. The direction of each prime's effect correlates strongly with the
+  Mertens function M(p). We prove exact formulas (bridge identity, universal
+  Farey exponential sum, injection principle) and a Sign Theorem showing
+  that M(p) <= -3 implies Delta W(p) < 0 for all primes up to 100,000.
+  All core identities (256 results across 14 Lean 4 files) are formally
+  verified, with the bridge-identity proof chain constructed autonomously
+  by the Aristotle theorem prover.
+
+Files:
+  main.tex          -- LaTeX source (article class, 11pt)
+  figures/          -- 10 PNG figure files referenced in the paper
+
+Compilation:
+  pdflatex main.tex
+  pdflatex main.tex   (run twice for references)
+
+Repository: https://github.com/SaarShai/Primes-Equispaced
+
+Date: March 2026
