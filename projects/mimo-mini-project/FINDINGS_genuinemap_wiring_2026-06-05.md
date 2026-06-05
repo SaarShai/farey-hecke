@@ -108,7 +108,42 @@ proofs came from the agent's scratch `APPENDED_BLOCK.lean`, then re-verified).
 G3 (the prior session's suspected analytic crux) is CLOSED. The single hard gate is now (1) the L1
 1-D trig bound over the full range; (3) is assembly plumbing.
 
+## 6. Workflow round 3 (wf_f6eabedd-f90) + ★ FIRST UNCONDITIONAL BOUND ★
+Genuine map file now **2011 lines, 129 decls**; recompiled whole, **EXIT=0, 0 sorryAx, all 53 new
+decls axiom-clean** `[propext, Classical.choice, Quot.sound]`.
+- **torsion (hyp 4) — CLOSED (single-corridor).** `cheb_sin` proves `cheb(2cosθ)n·sinθ=sin(nθ)`
+  (induction); `torsion_quantization_cos`: each realizable single-corridor trace is literally
+  `2cos(jπ/q)`. Real trig bridge, not renaming.
+- **hf_cusp_link — KEY direction-fix.** Round-1's "floor⟹cusp" was BACKWARDS: the truth is
+  **cusp⟹floor**. On the cusp branch the guards force `a>1/3`, which forces `K=⌊(1+a)/(λb)⌋≥2`
+  automatically (`floor_ge_two_of_branch`). So hyp(3)'s high-floor premise is a FREE consequence of
+  cusp-branch membership — `cusp_branch_floor_and_kick` gives `(K≥2) ∧ (Pgen≥1/λ³)` residue-free.
+  One dynamical residue remains (orbit actually reaches the cusp branch).
+- **L1 — advanced, not closed.** `peak_touch`: the peak-touch hypothesis `htouch` is DISCHARGED
+  unconditionally (`peak_phase_at_floor`, `n₀=⌊ψ/J⌋` pigeonhole) — for windows containing the peak
+  (inner case). `l1_widen`: the 1-D crux `2(1+2λ²)cos²H≤λ⁴` widened to ALL λ>0 (`inner_trig_genuine`,
+  cusp-tangent SOS), conditional on the genuine `cos²H≤B(λ)` ceiling. Remaining: OUTER case
+  (window away from peak) + the energy envelope `ρ≤r²`.
+- **perq_cprime — the (C′) assembly.** Inlined the abstract engine; `perq_essSup_ge_q17..21`:
+  any `Tmap`-invariant prob measure on the F-corridor domain `Dcorr`, the F-window cert ⟹
+  `essSup(gap-product) ≥ 1/λ³` (carrying the window as hyp `hF`). LEVEL-2 multi-branch = conditional.
+
+### ★ BREAKTHROUGH: first fully UNCONDITIONAL lower bound (no `hF`) ★
+`lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean` — **`Xomega_corridor_lb_q18`**: I discharged
+the F-window hypothesis with the proven `g18_no_window_below_genuine` (the type-match is exact:
+`g18_no_window_below_genuine : FwindowHyp mpoly_q18`). Self-recompiled: **EXIT=0, axioms exactly
+`[propext, Classical.choice, Quot.sound]`, NO sorryAx, NO `hF`.**
+> For **q=18**: every `Tmap`-invariant probability measure on the F-corridor domain `Dcorr` has
+> `essSup(a·b) ≥ 1/λ³`.  The conjectured lower bound `X_Ω ≥ 1/λ³`, **machine-checked unconditionally
+> on the dominant corridor** — the first concrete genuine instance past q≤15, assembled from the
+> degree-6 window cert + the abstract ergodic engine + the orbit→sequence bridge.
+
+Honest scope: this is the lower bound **restricted to F-corridor-supported invariant measures** (the
+dominant corridor), NOT yet the full multi-branch Taha-triangle inf (needs LEVEL-2 (C′)), nor the
+upper bound / no-ground-state, nor uniform all-q. Extension to q=17,20,21 in progress (combined
+window-inline capstone).
+
 ## Artifacts
-`lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (1119 lines, 76 decls),
-`code/Lgoal_buildcore_q17tmp.py`. Workflows `wf_77bfaa59-31f` (4 agents) + `wf_c488930b-1d7` (5 agents),
-scratch `/tmp/WF*.lean`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
+`lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (2011 lines, 129 decls),
+`lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean`, `code/Lgoal_buildcore_q17tmp.py`. Workflows
+`wf_77bfaa59-31f`, `wf_c488930b-1d7`, `wf_f6eabedd-f90`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).

@@ -1956,56 +1956,407 @@ theorem torsion_quantization_cos (θ : ℝ) (hθ : Real.sin θ ≠ 0) (m : ℕ)
 end
 end HeckeGenuine
 
-#print axioms HeckeGenuine.cusp_tangent_trig
-#print axioms HeckeGenuine.cusp_tangent_le_threshold
-#print axioms HeckeGenuine.inner_trig_genuine
-#print axioms HeckeGenuine.inner_trig_box_wide
-#print axioms HeckeGenuine.l1window_inner_genuine
-#print axioms HeckeGenuine.peak_phase_at_floor
-#print axioms HeckeGenuine.peak_touch_exists
-#print axioms HeckeGenuine.l1window_inner_peaktouch
-#print axioms HeckeGenuine.peak_touch_exists_qcorridor
-#print axioms HeckeGenuine.two_lb_le_one_add_a_of_floor
-#print axioms HeckeGenuine.floor_ge_two_of_two_lb
-#print axioms HeckeGenuine.a_lb_of_cusp
-#print axioms HeckeGenuine.a_gt_third
-#print axioms HeckeGenuine.floor_ge_two_of_cusp_guards
-#print axioms HeckeGenuine.floor_ge_two_of_branch
-#print axioms HeckeGenuine.branchIdx_eq_cusp
-#print axioms HeckeGenuine.cusp_landing_and_floor
-#print axioms HeckeGenuine.cusp_branch_floor_and_kick
-#print axioms HeckeGenuine.essSup_ge_of_no_sustained_strict
-#print axioms HeckeGenuine.Tmap
-#print axioms HeckeGenuine.Tmap_snd
-#print axioms HeckeGenuine.Pprod
-#print axioms HeckeGenuine.Dcorr
-#print axioms HeckeGenuine.orbit_to_cseq_hyps
-#print axioms HeckeGenuine.FwindowHyp
-#print axioms HeckeGenuine.perq_no_sustained_orbit
-#print axioms HeckeGenuine.perq_essSup_ge
-#print axioms HeckeGenuine.mpoly_q17
-#print axioms HeckeGenuine.mpoly_q18
-#print axioms HeckeGenuine.mpoly_q19
-#print axioms HeckeGenuine.mpoly_q20
-#print axioms HeckeGenuine.mpoly_q21
-#print axioms HeckeGenuine.perq_essSup_ge_q17
-#print axioms HeckeGenuine.perq_essSup_ge_q18
-#print axioms HeckeGenuine.perq_essSup_ge_q19
-#print axioms HeckeGenuine.perq_essSup_ge_q20
-#print axioms HeckeGenuine.perq_essSup_ge_q21
-#print axioms HeckeGenuine.perq_no_sustained_cseq
-#print axioms HeckeGenuine.perq_deepmid_eject
-#print axioms HeckeGenuine.perq_switch_escape
-#print axioms HeckeGenuine.perq_general_no_sustained
-#print axioms HeckeGenuine.chebCos
-#print axioms HeckeGenuine.chebCos_one
-#print axioms HeckeGenuine.cheb_sin
-#print axioms HeckeGenuine.cheb_qm2_eq_l
-#print axioms HeckeGenuine.chebCos_qm1
-#print axioms HeckeGenuine.trace_F3_quantized
-#print axioms HeckeGenuine.trace_F1_quantized
-#print axioms HeckeGenuine.trace_F2_zero
-#print axioms HeckeGenuine.trace_F2_quantized
-#print axioms HeckeGenuine.chebCos_eq_two_cos
-#print axioms HeckeGenuine.torsion_quantization
-#print axioms HeckeGenuine.torsion_quantization_cos
+set_option maxHeartbeats 40000000
+noncomputable section
+open Int
+
+/-- Interior-floor contradiction (K>=2 impossible inside a sub-threshold window): if a
+middle coord `m` has `lam^4 m^2 < 1` (= the K>=2 bound) and a neighbour `n` with `lam^4 n^2
+< 2` and edge `1 - lam m < n`, then False.  Uses only `9/5 < lam < 2` via `(lam^2-lam)^2
+>= 2` — field-independent. -/
+lemma g18_floor_helper (lam m n : ℝ) (h2 : (1:ℝ) < lam) (h3 : lam < 2)
+    (hlo : (9:ℝ)/5 < lam) (hm : 0 < m) (hn : 0 < n)
+    (hms : lam^4 * m^2 < 1) (hns : lam^4 * n^2 < 2) (hedge : 1 - lam*m < n) : False := by
+  have hpos : (0:ℝ) < lam := by linarith
+  have hl2 : (1:ℝ) < lam^2 := by nlinarith [h2]
+  have hlm : lam^2 * m < 1 := by nlinarith [hms, mul_pos (mul_pos hpos hpos) hm, sq_nonneg (lam^2*m)]
+  have hlm1 : lam*m < 1 := by nlinarith [hlm, hl2, hm, mul_pos hpos hm]
+  have h1lm : (0:ℝ) < 1 - lam*m := by linarith
+  have hnsq : (1 - lam*m)^2 < n^2 := by nlinarith [hedge, h1lm, hn]
+  have hml : (36:ℝ)/25 ≤ lam^2 - lam := by nlinarith [mul_pos (show (0:ℝ)<lam-9/5 by linarith) (show (0:ℝ)<lam+4/5 by linarith)]
+  have hKey : (2:ℝ) ≤ lam^4 - 2*lam^3 + lam^2 := by nlinarith [hml, sq_nonneg (lam^2-lam), mul_pos hpos (show (0:ℝ)<lam-1 by linarith)]
+  have hA : lam^4 * (1 - lam*m)^2 < 2 := by nlinarith [hnsq, hns, mul_pos (mul_pos (mul_pos hpos hpos) hpos) hpos]
+  nlinarith [hA, hKey, h1lm, hlm, hpos, hl2, mul_pos hpos h1lm, sq_nonneg (lam - lam^2*m), sq_nonneg (lam*(1-lam*m))]
+
+lemma case_q18 (a b c d e f g lam : ℝ) (hps : lam^6 = 6*lam^4 - 9*lam^2 + 3) (h2 : (1:ℝ) < lam) (h3 : lam < 2)
+    (hpa : 0 < a) (hpb : 0 < b) (hpc : 0 < c) (hpd : 0 < d) (hpe : 0 < e) (hpf : 0 < f) (hpg : 0 < g)
+    (hca : a ≤ 1) (hcb : b ≤ 1) (hcc : c ≤ 1) (hcd : d ≤ 1) (hce : e ≤ 1) (hcf : f ≤ 1) (hcg : g ≤ 1)
+    (hr0 : a+lam*b > 1) (hr1 : b+lam*c > 1) (hr2 : c+lam*d > 1) (hr3 : d+lam*e > 1) (hr4 : e+lam*f > 1) (hr5 : f+lam*g > 1)
+    (hg0 : lam*a+b > 1) (hg1 : lam*b+c > 1) (hg2 : lam*c+d > 1) (hg3 : lam*d+e > 1) (hg4 : lam*e+f > 1) (hg5 : lam*f+g > 1)
+    (hk0 : a+c = 1*lam*b) (hk1 : b+d = 1*lam*c) (hk2 : c+e = 1*lam*d) (hk3 : d+f = 1*lam*e) (hk4 : e+g = 1*lam*f)
+    (hf0 : 1+a < (1+1)*(lam*b)) (hf1 : 1+b < (1+1)*(lam*c)) (hf2 : 1+c < (1+1)*(lam*d)) (hf3 : 1+d < (1+1)*(lam*e)) (hf4 : 1+e < (1+1)*(lam*f))
+    (hP0 : a*b < 1/lam^3) (hP1 : b*c < 1/lam^3) (hP2 : c*d < 1/lam^3) (hP3 : d*e < 1/lam^3) (hP4 : e*f < 1/lam^3) (hP5 : f*g < 1/lam^3) :
+    False := by
+  have hpos : (0:ℝ) < lam := by linarith
+  have hp3 : (0:ℝ) < lam^3 := by positivity
+  have pos0 : (0:ℝ) ≤ a := le_of_lt hpa
+  have pos1 : (0:ℝ) ≤ b := le_of_lt hpb
+  have pos2 : (0:ℝ) ≤ c := le_of_lt hpc
+  have pos3 : (0:ℝ) ≤ d := le_of_lt hpd
+  have pos4 : (0:ℝ) ≤ e := le_of_lt hpe
+  have pos5 : (0:ℝ) ≤ f := le_of_lt hpf
+  have pos6 : (0:ℝ) ≤ g := le_of_lt hpg
+  have cap0 : (0:ℝ) ≤ 1 - a := by nlinarith [hca]
+  have cap1 : (0:ℝ) ≤ 1 - b := by nlinarith [hcb]
+  have cap2 : (0:ℝ) ≤ 1 - c := by nlinarith [hcc]
+  have cap3 : (0:ℝ) ≤ 1 - d := by nlinarith [hcd]
+  have cap4 : (0:ℝ) ≤ 1 - e := by nlinarith [hce]
+  have cap5 : (0:ℝ) ≤ 1 - f := by nlinarith [hcf]
+  have cap6 : (0:ℝ) ≤ 1 - g := by nlinarith [hcg]
+  have reg0 : (0:ℝ) ≤ a + b*lam - 1 := by nlinarith [hr0]
+  have reg1 : (0:ℝ) ≤ b + c*lam - 1 := by nlinarith [hr1]
+  have reg2 : (0:ℝ) ≤ c + d*lam - 1 := by nlinarith [hr2]
+  have reg3 : (0:ℝ) ≤ d + e*lam - 1 := by nlinarith [hr3]
+  have reg4 : (0:ℝ) ≤ e + f*lam - 1 := by nlinarith [hr4]
+  have reg5 : (0:ℝ) ≤ f + g*lam - 1 := by nlinarith [hr5]
+  have gen0 : (0:ℝ) ≤ a*lam + b - 1 := by nlinarith [hg0]
+  have gen1 : (0:ℝ) ≤ b*lam + c - 1 := by nlinarith [hg1]
+  have gen2 : (0:ℝ) ≤ c*lam + d - 1 := by nlinarith [hg2]
+  have gen3 : (0:ℝ) ≤ d*lam + e - 1 := by nlinarith [hg3]
+  have gen4 : (0:ℝ) ≤ e*lam + f - 1 := by nlinarith [hg4]
+  have gen5 : (0:ℝ) ≤ f*lam + g - 1 := by nlinarith [hg5]
+  have slk0 : (0:ℝ) ≤ -a*b*lam^3 + 1 := by
+    have hh : (a*b)*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP0
+    nlinarith [hh]
+  have slk1 : (0:ℝ) ≤ -b*c*lam^3 + 1 := by
+    have hh : (b*c)*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP1
+    nlinarith [hh]
+  have slk2 : (0:ℝ) ≤ -c*d*lam^3 + 1 := by
+    have hh : (c*d)*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP2
+    nlinarith [hh]
+  have slk3 : (0:ℝ) ≤ -d*e*lam^3 + 1 := by
+    have hh : (d*e)*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP3
+    nlinarith [hh]
+  have slk4 : (0:ℝ) ≤ -e*f*lam^3 + 1 := by
+    have hh : (e*f)*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP4
+    nlinarith [hh]
+  have slk5 : (0:ℝ) ≤ -f*g*lam^3 + 1 := by
+    have hh : (f*g)*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP5
+    nlinarith [hh]
+  have flu0 : (0:ℝ) ≤ -a + 2*b*lam - 1 := by nlinarith [hf0]
+  have flu1 : (0:ℝ) ≤ -b + 2*c*lam - 1 := by nlinarith [hf1]
+  have flu2 : (0:ℝ) ≤ -c + 2*d*lam - 1 := by nlinarith [hf2]
+  have flu3 : (0:ℝ) ≤ -d + 2*e*lam - 1 := by nlinarith [hf3]
+  have flu4 : (0:ℝ) ≤ -e + 2*f*lam - 1 := by nlinarith [hf4]
+  have qq0 : (0:ℝ) ≤ a^2*lam^2 + a*b*lam - a*lam := by
+    have hr : (0:ℝ) ≤ lam*((a)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg pos0 gen0)
+    have he : lam*((a)*(a*lam + b - 1)) = a^2*lam^2 + a*b*lam - a*lam := by linear_combination 0
+    linarith [hr, he]
+  have qq1 : (0:ℝ) ≤ -a^2*lam^3 + a*b*lam^4 - 2*a*b*lam^2 + a*lam^2 + b^2*lam^3 - b^2*lam - b*lam^3 + b*lam := by
+    have hr : (0:ℝ) ≤ lam*((d)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg pos3 gen0)
+    have he : lam*((d)*(a*lam + b - 1)) = -a^2*lam^3 + a*b*lam^4 - 2*a*b*lam^2 + a*lam^2 + b^2*lam^3 - b^2*lam - b*lam^3 + b*lam := by linear_combination (a*lam^3 + b*lam^2 - lam^2)*hk0 + (a*lam^2 + b*lam - lam)*hk1
+    linarith [hr, he]
+  have qq2 : (0:ℝ) ≤ 6*a^3*lam^4 - 9*a^3*lam^2 + 3*a^3 - 16*a^2*b*lam^5 + 27*a^2*b*lam^3 - 9*a^2*b*lam + 58*a*b^2*lam^4 - 117*a*b^2*lam^2 + 42*a*b^2 - a*lam^2 - 16*b^3*lam^5 + 33*b^3*lam^3 - 12*b^3*lam + b*lam^3 - b*lam := by
+    have hr : (0:ℝ) ≤ lam*((d)*(-c*d*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg pos3 slk2)
+    have he : lam*((d)*(-c*d*lam^3 + 1)) = 6*a^3*lam^4 - 9*a^3*lam^2 + 3*a^3 - 16*a^2*b*lam^5 + 27*a^2*b*lam^3 - 9*a^2*b*lam + 58*a*b^2*lam^4 - 117*a*b^2*lam^2 + 42*a*b^2 - a*lam^2 - 16*b^3*lam^5 + 33*b^3*lam^3 - 12*b^3*lam + b*lam^3 - b*lam := by linear_combination (-a^2*lam^6 + 2*a*b*lam^7 - a*b*lam^5 + a*d*lam^5 - b^2*lam^8 + b^2*lam^6 - b*d*lam^6 - d^2*lam^4 + lam^2)*hk0 + (-a^2*lam^5 + 2*a*b*lam^6 - a*b*lam^4 + a*d*lam^4 - b^2*lam^7 + b^2*lam^5 - b*d*lam^5 + lam)*hk1 + (a^3 - 3*a^2*b*lam + 3*a*b^2*lam^2 + 14*a*b^2 - b^3*lam^3 - 4*b^3*lam)*hps
+    linarith [hr, he]
+  have qq3 : (0:ℝ) ≤ 21*a^3*lam^4 - 42*a^3*lam^2 + 15*a^3 - 47*a^2*b*lam^5 + 99*a^2*b*lam^3 - 36*a^2*b*lam + 131*a*b^2*lam^4 - 279*a*b^2*lam^2 + 102*a*b^2 - a*lam^2 - 31*b^3*lam^5 + 66*b^3*lam^3 - 24*b^3*lam + b*lam^3 - b*lam := by
+    have hr : (0:ℝ) ≤ lam*((d)*(-d*e*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg pos3 slk3)
+    have he : lam*((d)*(-d*e*lam^3 + 1)) = 21*a^3*lam^4 - 42*a^3*lam^2 + 15*a^3 - 47*a^2*b*lam^5 + 99*a^2*b*lam^3 - 36*a^2*b*lam + 131*a*b^2*lam^4 - 279*a*b^2*lam^2 + 102*a*b^2 - a*lam^2 - 31*b^3*lam^5 + 66*b^3*lam^3 - 24*b^3*lam + b*lam^3 - b*lam := by linear_combination (-a^2*lam^8 + a^2*lam^6 + 2*a*b*lam^9 - 4*a*b*lam^7 + 2*a*b*lam^5 + a*e*lam^6 - b^2*lam^10 + 3*b^2*lam^8 - 3*b^2*lam^6 + b^2*lam^4 - b*e*lam^7 + b*e*lam^5 - d*e*lam^5 + lam^2)*hk0 + (-a^2*lam^7 + 2*a*b*lam^8 - 2*a*b*lam^6 + a*e*lam^5 - b^2*lam^9 + 2*b^2*lam^7 - b^2*lam^5 - b*e*lam^6 + b*e*lam^4 - d*e*lam^4 + lam)*hk1 + (-a^2*lam^6 + 2*a*b*lam^7 - 2*a*b*lam^5 - b^2*lam^8 + 2*b^2*lam^6 - b^2*lam^4)*hk2 + (a^3*lam^2 + 5*a^3 - 3*a^2*b*lam^3 - 12*a^2*b*lam + 3*a*b^2*lam^4 + 9*a*b^2*lam^2 + 34*a*b^2 - b^3*lam^5 - 2*b^3*lam^3 - 8*b^3*lam)*hps
+    linarith [hr, he]
+  have qq4 : (0:ℝ) ≤ 4*a^2*lam^4 - 10*a^2*lam^2 + 3*a^2 - 3*a*b*lam^5 + 9*a*b*lam^3 - 4*a*b*lam - 4*a*lam^4 + 10*a*lam^2 + a*lam - 3*a + 3*b*lam^5 - 9*b*lam^3 + 4*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - a)*(f + g*lam - 1)) := mul_nonneg hpos.le (mul_nonneg cap0 reg5)
+    have he : lam*((1 - a)*(f + g*lam - 1)) = 4*a^2*lam^4 - 10*a^2*lam^2 + 3*a^2 - 3*a*b*lam^5 + 9*a*b*lam^3 - 4*a*b*lam - 4*a*lam^4 + 10*a*lam^2 + a*lam - 3*a + 3*b*lam^5 - 9*b*lam^3 + 4*b*lam - lam := by linear_combination (-a*lam^6 + 2*a*lam^4 + a*lam^2 + lam^6 - 2*lam^4 - lam^2)*hk0 + (-a*lam^5 + a*lam^3 + a*lam + lam^5 - lam^3 - lam)*hk1 + (-a*lam^4 + lam^4)*hk2 + (-a*lam^3 - a*lam + lam^3 + lam)*hk3 + (-a*lam^2 + lam^2)*hk4 + (a^2 - a*b*lam - a + b*lam)*hps
+    linarith [hr, he]
+  have qq5 : (0:ℝ) ≤ -a^2*lam^2 - a*b*lam + a*lam^2 + a*lam + b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - a)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg cap0 gen0)
+    have he : lam*((1 - a)*(a*lam + b - 1)) = -a^2*lam^2 - a*b*lam + a*lam^2 + a*lam + b*lam - lam := by linear_combination 0
+    linarith [hr, he]
+  have qq6 : (0:ℝ) ≤ 4*a*b*lam^4 - 10*a*b*lam^2 + 3*a*b - 4*a*lam^4 + 10*a*lam^2 - 3*a - 3*b^2*lam^5 + 9*b^2*lam^3 - 4*b^2*lam + 3*b*lam^5 - 9*b*lam^3 + 5*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - b)*(f + g*lam - 1)) := mul_nonneg hpos.le (mul_nonneg cap1 reg5)
+    have he : lam*((1 - b)*(f + g*lam - 1)) = 4*a*b*lam^4 - 10*a*b*lam^2 + 3*a*b - 4*a*lam^4 + 10*a*lam^2 - 3*a - 3*b^2*lam^5 + 9*b^2*lam^3 - 4*b^2*lam + 3*b*lam^5 - 9*b*lam^3 + 5*b*lam - lam := by linear_combination (-b*lam^6 + 2*b*lam^4 + b*lam^2 + lam^6 - 2*lam^4 - lam^2)*hk0 + (-b*lam^5 + b*lam^3 + b*lam + lam^5 - lam^3 - lam)*hk1 + (-b*lam^4 + lam^4)*hk2 + (-b*lam^3 - b*lam + lam^3 + lam)*hk3 + (-b*lam^2 + lam^2)*hk4 + (a*b - a - b^2*lam + b*lam)*hps
+    linarith [hr, he]
+  have qq7 : (0:ℝ) ≤ -a*b*lam^2 + a*lam^2 - b^2*lam + 2*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - b)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg cap1 gen0)
+    have he : lam*((1 - b)*(a*lam + b - 1)) = -a*b*lam^2 + a*lam^2 - b^2*lam + 2*b*lam - lam := by linear_combination 0
+    linarith [hr, he]
+  have qq8 : (0:ℝ) ≤ a^2*b*lam^5 - a^2*lam^5 - 11*a*b^2*lam^4 + 18*a*b^2*lam^2 - 6*a*b^2 + 11*a*b*lam^4 - 18*a*b*lam^2 + 6*a*b + 5*b^3*lam^5 - 9*b^3*lam^3 + 3*b^3*lam - 5*b^2*lam^5 + 9*b^2*lam^3 - 3*b^2*lam - b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - b)*(-c*d*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg cap1 slk2)
+    have he : lam*((1 - b)*(-c*d*lam^3 + 1)) = a^2*b*lam^5 - a^2*lam^5 - 11*a*b^2*lam^4 + 18*a*b^2*lam^2 - 6*a*b^2 + 11*a*b*lam^4 - 18*a*b*lam^2 + 6*a*b + 5*b^3*lam^5 - 9*b^3*lam^3 + 3*b^3*lam - 5*b^2*lam^5 + 9*b^2*lam^3 - 3*b^2*lam - b*lam + lam := by linear_combination (-a*b*lam^5 + a*lam^5 + b^2*lam^6 + b*d*lam^4 - b*lam^6 - d*lam^4)*hk0 + (-a*b*lam^4 + a*lam^4 + b^2*lam^5 - b*lam^5)*hk1 + (-2*a*b^2 + 2*a*b + b^3*lam - b^2*lam)*hps
+    linarith [hr, he]
+  have qq9 : (0:ℝ) ≤ 5*a^2*b*lam^5 - 9*a^2*b*lam^3 + 3*a^2*b*lam - 5*a^2*lam^5 + 9*a^2*lam^3 - 3*a^2*lam - 31*a*b^2*lam^4 + 66*a*b^2*lam^2 - 24*a*b^2 + 31*a*b*lam^4 - 66*a*b*lam^2 + 24*a*b + 11*b^3*lam^5 - 24*b^3*lam^3 + 9*b^3*lam - 11*b^2*lam^5 + 24*b^2*lam^3 - 9*b^2*lam - b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - b)*(-d*e*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg cap1 slk3)
+    have he : lam*((1 - b)*(-d*e*lam^3 + 1)) = 5*a^2*b*lam^5 - 9*a^2*b*lam^3 + 3*a^2*b*lam - 5*a^2*lam^5 + 9*a^2*lam^3 - 3*a^2*lam - 31*a*b^2*lam^4 + 66*a*b^2*lam^2 - 24*a*b^2 + 31*a*b*lam^4 - 66*a*b*lam^2 + 24*a*b + 11*b^3*lam^5 - 24*b^3*lam^3 + 9*b^3*lam - 11*b^2*lam^5 + 24*b^2*lam^3 - 9*b^2*lam - b*lam + lam := by linear_combination (-a*b*lam^7 + a*b*lam^5 + a*lam^7 - a*lam^5 + b^2*lam^8 - 2*b^2*lam^6 + b^2*lam^4 + b*e*lam^5 - b*lam^8 + 2*b*lam^6 - b*lam^4 - e*lam^5)*hk0 + (-a*b*lam^6 + a*lam^6 + b^2*lam^7 - b^2*lam^5 + b*e*lam^4 - b*lam^7 + b*lam^5 - e*lam^4)*hk1 + (-a*b*lam^5 + a*lam^5 + b^2*lam^6 - b^2*lam^4 - b*lam^6 + b*lam^4)*hk2 + (a^2*b*lam - a^2*lam - 2*a*b^2*lam^2 - 8*a*b^2 + 2*a*b*lam^2 + 8*a*b + b^3*lam^3 + 3*b^3*lam - b^2*lam^3 - 3*b^2*lam)*hps
+    linarith [hr, he]
+  have qq10 : (0:ℝ) ≤ a^2*lam^2 - a*b*lam^3 + a*b*lam + a*lam^2 - a*lam - b^2*lam^2 + b*lam^2 + b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - c)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg cap2 gen0)
+    have he : lam*((1 - c)*(a*lam + b - 1)) = a^2*lam^2 - a*b*lam^3 + a*b*lam + a*lam^2 - a*lam - b^2*lam^2 + b*lam^2 + b*lam - lam := by linear_combination (-a*lam^2 - b*lam + lam)*hk0
+    linarith [hr, he]
+  have qq11 : (0:ℝ) ≤ -10*a^2*lam^4 + 23*a^2*lam^2 - 9*a^2 + 12*a*b*lam^5 - 27*a*b*lam^3 + 11*a*b*lam - 4*a*lam^4 - a*lam^3 + 10*a*lam^2 + a*lam - 3*a - 13*b^2*lam^4 + 26*b^2*lam^2 - 9*b^2 + 3*b*lam^5 + b*lam^4 - 9*b*lam^3 - 2*b*lam^2 + 4*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - e)*(f + g*lam - 1)) := mul_nonneg hpos.le (mul_nonneg cap4 reg5)
+    have he : lam*((1 - e)*(f + g*lam - 1)) = -10*a^2*lam^4 + 23*a^2*lam^2 - 9*a^2 + 12*a*b*lam^5 - 27*a*b*lam^3 + 11*a*b*lam - 4*a*lam^4 - a*lam^3 + 10*a*lam^2 + a*lam - 3*a - 13*b^2*lam^4 + 26*b^2*lam^2 - 9*b^2 + 3*b*lam^5 + b*lam^4 - 9*b*lam^3 - 2*b*lam^2 + 4*b*lam - lam := by linear_combination (a*lam^8 - 3*a*lam^6 + a*lam^4 + a*lam^2 - b*lam^9 + 4*b*lam^7 - 3*b*lam^5 - 2*b*lam^3 - f*lam^3 + f*lam - g*lam^4 + g*lam^2 + lam^6 - 2*lam^4 + lam^3 - lam^2 - lam)*hk0 + (a*lam^7 - 2*a*lam^5 + a*lam - b*lam^8 + 3*b*lam^6 - b*lam^4 - 2*b*lam^2 - f*lam^2 - g*lam^3 + lam^5 - lam^3 + lam^2 - lam)*hk1 + (a*lam^6 - a*lam^4 - b*lam^7 + 2*b*lam^5 - f*lam - g*lam^2 + lam^4 + lam)*hk2 + (a*lam^5 - a*lam - b*lam^6 + b*lam^4 + 2*b*lam^2 + lam^3 + lam)*hk3 + (a*lam^4 - a*lam^2 - b*lam^5 + 2*b*lam^3 + lam^2)*hk4 + (-a^2*lam^2 - 3*a^2 + 2*a*b*lam^3 + 4*a*b*lam - a - b^2*lam^4 - b^2*lam^2 - 3*b^2 + b*lam)*hps
+    linarith [hr, he]
+  have qq12 : (0:ℝ) ≤ a^2*lam^4 - a^2*lam^2 - a*b*lam^5 + 3*a*b*lam^3 - a*b*lam - a*lam^3 + a*lam^2 + a*lam - b^2*lam^4 + 2*b^2*lam^2 + b*lam^4 - 2*b*lam^2 + b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - e)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg cap4 gen0)
+    have he : lam*((1 - e)*(a*lam + b - 1)) = a^2*lam^4 - a^2*lam^2 - a*b*lam^5 + 3*a*b*lam^3 - a*b*lam - a*lam^3 + a*lam^2 + a*lam - b^2*lam^4 + 2*b^2*lam^2 + b*lam^4 - 2*b*lam^2 + b*lam - lam := by linear_combination (-a*lam^4 + a*lam^2 - b*lam^3 + b*lam + lam^3 - lam)*hk0 + (-a*lam^3 - b*lam^2 + lam^2)*hk1 + (-a*lam^2 - b*lam + lam)*hk2
+    linarith [hr, he]
+  have qq13 : (0:ℝ) ≤ -6*a^2*lam^5 + 13*a^2*lam^3 - 6*a^2*lam + 26*a*b*lam^4 - 51*a*b*lam^2 + 18*a*b - 5*a*lam^4 + 12*a*lam^2 - 3*a - 7*b^2*lam^5 + 12*b^2*lam^3 - 4*b^2*lam + 4*b*lam^5 - 12*b*lam^3 + 5*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - f)*(f + g*lam - 1)) := mul_nonneg hpos.le (mul_nonneg cap5 reg5)
+    have he : lam*((1 - f)*(f + g*lam - 1)) = -6*a^2*lam^5 + 13*a^2*lam^3 - 6*a^2*lam + 26*a*b*lam^4 - 51*a*b*lam^2 + 18*a*b - 5*a*lam^4 + 12*a*lam^2 - 3*a - 7*b^2*lam^5 + 12*b^2*lam^3 - 4*b^2*lam + 4*b*lam^5 - 12*b*lam^3 + 5*b*lam - lam := by linear_combination (a*lam^9 - 4*a*lam^7 + 3*a*lam^5 + 2*a*lam^3 - b*lam^10 + 5*b*lam^8 - 6*b*lam^6 - b*lam^4 + b*lam^2 - f*lam^4 + 2*f*lam^2 - g*lam^5 + 2*g*lam^3 + lam^6 - lam^4 - 3*lam^2)*hk0 + (a*lam^8 - 3*a*lam^6 + a*lam^4 + 2*a*lam^2 - b*lam^9 + 4*b*lam^7 - 3*b*lam^5 - 2*b*lam^3 + b*lam - f*lam^3 + f*lam - g*lam^4 + g*lam^2 + lam^5 - 2*lam)*hk1 + (a*lam^7 - 2*a*lam^5 - b*lam^8 + 3*b*lam^6 - b*lam^4 - f*lam^2 - g*lam^3 + lam^4 + lam^2)*hk2 + (a*lam^6 - a*lam^4 - 2*a*lam^2 - b*lam^7 + 2*b*lam^5 + 2*b*lam^3 - b*lam - f*lam - g*lam^2 + lam^3 + 2*lam)*hk3 + (a*lam^5 - 2*a*lam^3 - b*lam^6 + 3*b*lam^4 - b*lam^2 + lam^2)*hk4 + (-a^2*lam^3 - 2*a^2*lam + 2*a*b*lam^4 + 2*a*b*lam^2 + 6*a*b - a - b^2*lam^5 - b^2*lam + b*lam)*hps
+    linarith [hr, he]
+  have qq14 : (0:ℝ) ≤ a^2*lam^5 - 2*a^2*lam^3 - 2*a*b*lam^4 + 6*a*b*lam^2 - 3*a*b - a*lam^4 + 3*a*lam^2 - b^2*lam^5 + 3*b^2*lam^3 - b^2*lam + b*lam^5 - 3*b*lam^3 + 2*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - f)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg cap5 gen0)
+    have he : lam*((1 - f)*(a*lam + b - 1)) = a^2*lam^5 - 2*a^2*lam^3 - 2*a*b*lam^4 + 6*a*b*lam^2 - 3*a*b - a*lam^4 + 3*a*lam^2 - b^2*lam^5 + 3*b^2*lam^3 - b^2*lam + b*lam^5 - 3*b*lam^3 + 2*b*lam - lam := by linear_combination (-a*lam^5 + 2*a*lam^3 - b*lam^4 + 2*b*lam^2 + lam^4 - 2*lam^2)*hk0 + (-a*lam^4 + a*lam^2 - b*lam^3 + b*lam + lam^3 - lam)*hk1 + (-a*lam^3 - b*lam^2 + lam^2)*hk2 + (-a*lam^2 - b*lam + lam)*hk3 + (-a*b)*hps
+    linarith [hr, he]
+  have qq15 : (0:ℝ) ≤ -15*a^3*lam^4 + 33*a^3*lam^2 - 12*a^3 + 36*a^2*b*lam^5 - 81*a^2*b*lam^3 + 30*a^2*b*lam - a^2*lam^5 - 104*a*b^2*lam^4 + 228*a*b^2*lam^2 - 84*a*b^2 + 11*a*b*lam^4 - 18*a*b*lam^2 + 6*a*b + a*lam^4 - 2*a*lam^2 + 26*b^3*lam^5 - 57*b^3*lam^3 + 21*b^3*lam - 5*b^2*lam^5 + 9*b^2*lam^3 - 3*b^2*lam - b*lam^5 + 3*b*lam^3 - b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - f)*(-c*d*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg cap5 slk2)
+    have he : lam*((1 - f)*(-c*d*lam^3 + 1)) = -15*a^3*lam^4 + 33*a^3*lam^2 - 12*a^3 + 36*a^2*b*lam^5 - 81*a^2*b*lam^3 + 30*a^2*b*lam - a^2*lam^5 - 104*a*b^2*lam^4 + 228*a*b^2*lam^2 - 84*a*b^2 + 11*a*b*lam^4 - 18*a*b*lam^2 + 6*a*b + a*lam^4 - 2*a*lam^2 + 26*b^3*lam^5 - 57*b^3*lam^3 + 21*b^3*lam - 5*b^2*lam^5 + 9*b^2*lam^3 - 3*b^2*lam - b*lam^5 + 3*b*lam^3 - b*lam + lam := by linear_combination (a^2*lam^8 - 2*a^2*lam^6 - 2*a*b*lam^9 + 5*a*b*lam^7 - 2*a*b*lam^5 - a*f*lam^5 + a*lam^5 + b^2*lam^10 - 3*b^2*lam^8 + 2*b^2*lam^6 + b*f*lam^6 - b*lam^6 + d*f*lam^4 - d*lam^4 - lam^4 + 2*lam^2)*hk0 + (a^2*lam^7 - a^2*lam^5 - 2*a*b*lam^8 + 3*a*b*lam^6 - a*b*lam^4 - a*f*lam^4 + a*lam^4 + b^2*lam^9 - 2*b^2*lam^7 + b^2*lam^5 + b*f*lam^5 - b*lam^5 - lam^3 + lam)*hk1 + (a^2*lam^6 - 2*a*b*lam^7 + a*b*lam^5 + b^2*lam^8 - b^2*lam^6 - lam^2)*hk2 + (a^2*lam^5 - 2*a*b*lam^6 + a*b*lam^4 + b^2*lam^7 - b^2*lam^5 - lam)*hk3 + (-a^3*lam^2 - 4*a^3 + 3*a^2*b*lam^3 + 10*a^2*b*lam - 3*a*b^2*lam^4 - 8*a*b^2*lam^2 - 28*a*b^2 + 2*a*b + b^3*lam^5 + 2*b^3*lam^3 + 7*b^3*lam - b^2*lam)*hps
+    linarith [hr, he]
+  have qq16 : (0:ℝ) ≤ -42*a^3*lam^4 + 90*a^3*lam^2 - 33*a^3 + 84*a^2*b*lam^5 - 180*a^2*b*lam^3 + 66*a^2*b*lam - 5*a^2*lam^5 + 9*a^2*lam^3 - 3*a^2*lam - 214*a*b^2*lam^4 + 453*a*b^2*lam^2 - 165*a*b^2 + 31*a*b*lam^4 - 66*a*b*lam^2 + 24*a*b + a*lam^4 - 2*a*lam^2 + 47*b^3*lam^5 - 99*b^3*lam^3 + 36*b^3*lam - 11*b^2*lam^5 + 24*b^2*lam^3 - 9*b^2*lam - b*lam^5 + 3*b*lam^3 - b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - f)*(-d*e*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg cap5 slk3)
+    have he : lam*((1 - f)*(-d*e*lam^3 + 1)) = -42*a^3*lam^4 + 90*a^3*lam^2 - 33*a^3 + 84*a^2*b*lam^5 - 180*a^2*b*lam^3 + 66*a^2*b*lam - 5*a^2*lam^5 + 9*a^2*lam^3 - 3*a^2*lam - 214*a*b^2*lam^4 + 453*a*b^2*lam^2 - 165*a*b^2 + 31*a*b*lam^4 - 66*a*b*lam^2 + 24*a*b + a*lam^4 - 2*a*lam^2 + 47*b^3*lam^5 - 99*b^3*lam^3 + 36*b^3*lam - 11*b^2*lam^5 + 24*b^2*lam^3 - 9*b^2*lam - b*lam^5 + 3*b*lam^3 - b*lam + lam := by linear_combination (a^2*lam^10 - 3*a^2*lam^8 + 2*a^2*lam^6 - 2*a*b*lam^11 + 8*a*b*lam^9 - 9*a*b*lam^7 + 2*a*b*lam^5 - a*f*lam^7 + a*f*lam^5 + a*lam^7 - a*lam^5 + b^2*lam^12 - 5*b^2*lam^10 + 8*b^2*lam^8 - 4*b^2*lam^6 + b*f*lam^8 - 2*b*f*lam^6 + b*f*lam^4 - b*lam^8 + 2*b*lam^6 - b*lam^4 + e*f*lam^5 - e*lam^5 - lam^4 + 2*lam^2)*hk0 + (a^2*lam^9 - 2*a^2*lam^7 + a^2*lam^5 - 2*a*b*lam^10 + 6*a*b*lam^8 - 5*a*b*lam^6 + a*b*lam^4 - a*f*lam^6 + a*lam^6 + b^2*lam^11 - 4*b^2*lam^9 + 5*b^2*lam^7 - 2*b^2*lam^5 + b*f*lam^7 - b*f*lam^5 - b*lam^7 + b*lam^5 + e*f*lam^4 - e*lam^4 - lam^3 + lam)*hk1 + (a^2*lam^8 - a^2*lam^6 - 2*a*b*lam^9 + 4*a*b*lam^7 - a*b*lam^5 - a*f*lam^5 + a*lam^5 + b^2*lam^10 - 3*b^2*lam^8 + 2*b^2*lam^6 + b*f*lam^6 - b*f*lam^4 - b*lam^6 + b*lam^4 - lam^2)*hk2 + (a^2*lam^7 - a^2*lam^5 - 2*a*b*lam^8 + 4*a*b*lam^6 - a*b*lam^4 + b^2*lam^9 - 3*b^2*lam^7 + 2*b^2*lam^5 - lam)*hk3 + (-a^3*lam^4 - 3*a^3*lam^2 - 11*a^3 + 3*a^2*b*lam^5 + 6*a^2*b*lam^3 + 22*a^2*b*lam - a^2*lam - 3*a*b^2*lam^6 - 3*a*b^2*lam^4 - 14*a*b^2*lam^2 - 55*a*b^2 + 2*a*b*lam^2 + 8*a*b + b^3*lam^7 + 3*b^3*lam^3 + 12*b^3*lam - b^2*lam^3 - 3*b^2*lam)*hps
+    linarith [hr, he]
+  have qq17 : (0:ℝ) ≤ -13*a^2*lam^4 + 25*a^2*lam^2 - 9*a^2 + 14*a*b*lam^5 - 24*a*b*lam^3 + 7*a*b*lam - a*lam^5 - 4*a*lam^4 + 3*a*lam^3 + 10*a*lam^2 - a*lam - 3*a - 17*b^2*lam^4 + 33*b^2*lam^2 - 12*b^2 + 3*b*lam^5 + 2*b*lam^4 - 9*b*lam^3 - 6*b*lam^2 + 4*b*lam + 3*b - lam := by
+    have hr : (0:ℝ) ≤ lam*((1 - g)*(f + g*lam - 1)) := mul_nonneg hpos.le (mul_nonneg cap6 reg5)
+    have he : lam*((1 - g)*(f + g*lam - 1)) = -13*a^2*lam^4 + 25*a^2*lam^2 - 9*a^2 + 14*a*b*lam^5 - 24*a*b*lam^3 + 7*a*b*lam - a*lam^5 - 4*a*lam^4 + 3*a*lam^3 + 10*a*lam^2 - a*lam - 3*a - 17*b^2*lam^4 + 33*b^2*lam^2 - 12*b^2 + 3*b*lam^5 + 2*b*lam^4 - 9*b*lam^3 - 6*b*lam^2 + 4*b*lam + 3*b - lam := by linear_combination (a*lam^10 - 5*a*lam^8 + 6*a*lam^6 + a*lam^4 - a*lam^2 - b*lam^11 + 6*b*lam^9 - 10*b*lam^7 + 2*b*lam^5 + 3*b*lam^3 - b*lam - g*lam^6 + 2*g*lam^4 + g*lam^2 + lam^6 + lam^5 - 2*lam^4 - 3*lam^3 - lam^2 + lam)*hk0 + (a*lam^9 - 4*a*lam^7 + 3*a*lam^5 + 2*a*lam^3 - b*lam^10 + 5*b*lam^8 - 6*b*lam^6 - b*lam^4 + 2*b*lam^2 - g*lam^5 + g*lam^3 + g*lam + lam^5 + lam^4 - lam^3 - 2*lam^2 - lam)*hk1 + (a*lam^8 - 3*a*lam^6 + a*lam^4 + a*lam^2 - b*lam^9 + 4*b*lam^7 - 3*b*lam^5 - b*lam^3 + b*lam - g*lam^4 + lam^4 + lam^3 - lam)*hk2 + (a*lam^7 - 2*a*lam^5 - a*lam^3 - b*lam^8 + 3*b*lam^6 - b*lam^2 - g*lam^3 - g*lam + lam^3 + lam^2 + lam)*hk3 + (a*lam^6 - 2*a*lam^4 - a*lam^2 - b*lam^7 + 3*b*lam^5 - b*lam - g*lam^2 + lam^2 + lam)*hk4 + (-a^2*lam^4 - a^2*lam^2 - 3*a^2 + 2*a*b*lam^5 + 2*a*b*lam - a - b^2*lam^6 + b^2*lam^4 - 4*b^2 + b*lam + b)*hps
+    linarith [hr, he]
+  have qq18 : (0:ℝ) ≤ a^2 + 2*a*b*lam - 2*a + b^2*lam^2 - 2*b*lam + 1 := by
+    have hr : (0:ℝ) ≤ (a + b*lam - 1)*(a + b*lam - 1) := mul_nonneg reg0 reg0
+    have he : (a + b*lam - 1)*(a + b*lam - 1) = a^2 + 2*a*b*lam - 2*a + b^2*lam^2 - 2*b*lam + 1 := by linear_combination 0
+    linarith [hr, he]
+  have qq19 : (0:ℝ) ≤ a^2*lam + 2*a*b*lam^2 - 2*a*lam + b^2*lam^3 - 2*b*lam^2 + lam := by
+    have hr : (0:ℝ) ≤ lam*((a + b*lam - 1)*(a + b*lam - 1)) := mul_nonneg hpos.le (mul_nonneg reg0 reg0)
+    have he : lam*((a + b*lam - 1)*(a + b*lam - 1)) = a^2*lam + 2*a*b*lam^2 - 2*a*lam + b^2*lam^3 - 2*b*lam^2 + lam := by linear_combination 0
+    linarith [hr, he]
+  have qq20 : (0:ℝ) ≤ -a^2*lam + a*b*lam^2 + 2*b^2*lam^3 - 3*b*lam^2 + lam := by
+    have hr : (0:ℝ) ≤ lam*((a + b*lam - 1)*(b*lam + c - 1)) := mul_nonneg hpos.le (mul_nonneg reg0 gen1)
+    have he : lam*((a + b*lam - 1)*(b*lam + c - 1)) = -a^2*lam + a*b*lam^2 + 2*b^2*lam^3 - 3*b*lam^2 + lam := by linear_combination (a*lam + b*lam^2 - lam)*hk0
+    linarith [hr, he]
+  have qq21 : (0:ℝ) ≤ -2*a^2*lam - a*b + 2*a*lam - a + 2*b^2*lam^3 - b^2*lam - 2*b*lam^2 - b*lam + b + 1 := by
+    have hr : (0:ℝ) ≤ (a + b*lam - 1)*(c*lam + d - 1) := mul_nonneg reg0 gen2
+    have he : (a + b*lam - 1)*(c*lam + d - 1) = -2*a^2*lam - a*b + 2*a*lam - a + 2*b^2*lam^3 - b^2*lam - 2*b*lam^2 - b*lam + b + 1 := by linear_combination (2*a*lam + 2*b*lam^2 - 2*lam)*hk0 + (a + b*lam - 1)*hk1
+    linarith [hr, he]
+  have qq22 : (0:ℝ) ≤ -2*a^2*lam^3 + a^2*lam - 2*a*b*lam^2 + 2*a*lam^3 - 2*a*lam + 2*b^2*lam^5 - 3*b^2*lam^3 - 2*b*lam^4 + 2*b*lam^2 + lam := by
+    have hr : (0:ℝ) ≤ lam*((a + b*lam - 1)*(d*lam + e - 1)) := mul_nonneg hpos.le (mul_nonneg reg0 gen3)
+    have he : lam*((a + b*lam - 1)*(d*lam + e - 1)) = -2*a^2*lam^3 + a^2*lam - 2*a*b*lam^2 + 2*a*lam^3 - 2*a*lam + 2*b^2*lam^5 - 3*b^2*lam^3 - 2*b*lam^4 + 2*b*lam^2 + lam := by linear_combination (2*a*lam^3 - a*lam + 2*b*lam^4 - b*lam^2 - 2*lam^3 + lam)*hk0 + (2*a*lam^2 + 2*b*lam^3 - 2*lam^2)*hk1 + (a*lam + b*lam^2 - lam)*hk2
+    linarith [hr, he]
+  have qq23 : (0:ℝ) ≤ -2*a^2*lam^4 + 5*a^2*lam^2 - a^2 - 2*a*b*lam^3 + 3*a*b*lam + 2*a*lam^4 - 5*a*lam^2 + 5*b^2*lam^4 - 14*b^2*lam^2 + 6*b^2 - 2*b*lam^5 + 7*b*lam^3 - 5*b*lam + 1 := by
+    have hr : (0:ℝ) ≤ (a + b*lam - 1)*(f*lam + g - 1) := mul_nonneg reg0 gen5
+    have he : (a + b*lam - 1)*(f*lam + g - 1) = -2*a^2*lam^4 + 5*a^2*lam^2 - a^2 - 2*a*b*lam^3 + 3*a*b*lam + 2*a*lam^4 - 5*a*lam^2 + 5*b^2*lam^4 - 14*b^2*lam^2 + 6*b^2 - 2*b*lam^5 + 7*b*lam^3 - 5*b*lam + 1 := by linear_combination (2*a*lam^4 - 5*a*lam^2 + a + 2*b*lam^5 - 5*b*lam^3 + b*lam - 2*lam^4 + 5*lam^2 - 1)*hk0 + (2*a*lam^3 - 3*a*lam + 2*b*lam^4 - 3*b*lam^2 - 2*lam^3 + 3*lam)*hk1 + (2*a*lam^2 - a + 2*b*lam^3 - b*lam - 2*lam^2 + 1)*hk2 + (2*a*lam + 2*b*lam^2 - 2*lam)*hk3 + (a + b*lam - 1)*hk4 + (2*b^2)*hps
+    linarith [hr, he]
+  have qq24 : (0:ℝ) ≤ a^2*lam^3 - 2*a*b*lam^4 - 2*a*b*lam^2 + 2*a*lam^2 + b^2*lam^5 + 2*b^2*lam^3 + b^2*lam - 2*b*lam^3 - 2*b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((b + c*lam - 1)*(b + c*lam - 1)) := mul_nonneg hpos.le (mul_nonneg reg1 reg1)
+    have he : lam*((b + c*lam - 1)*(b + c*lam - 1)) = a^2*lam^3 - 2*a*b*lam^4 - 2*a*b*lam^2 + 2*a*lam^2 + b^2*lam^5 + 2*b^2*lam^3 + b^2*lam - 2*b*lam^3 - 2*b*lam + lam := by linear_combination (-a*lam^3 + b*lam^4 + 2*b*lam^2 + c*lam^3 - 2*lam^2)*hk0
+    linarith [hr, he]
+  have qq25 : (0:ℝ) ≤ 4*a^2*lam^4 - 10*a^2*lam^2 + 3*a^2 - 8*a*b*lam^5 + 21*a*b*lam^3 - 6*a*b*lam + a*lam^5 - 2*a*lam^3 + 12*b^2*lam^4 - 32*b^2*lam^2 + 13*b^2 - 3*b*lam^4 + 8*b*lam^2 - 5*b + 1 := by
+    have hr : (0:ℝ) ≤ (b + c*lam - 1)*(f + g*lam - 1) := mul_nonneg reg1 reg5
+    have he : (b + c*lam - 1)*(f + g*lam - 1) = 4*a^2*lam^4 - 10*a^2*lam^2 + 3*a^2 - 8*a*b*lam^5 + 21*a*b*lam^3 - 6*a*b*lam + a*lam^5 - 2*a*lam^3 + 12*b^2*lam^4 - 32*b^2*lam^2 + 13*b^2 - 3*b*lam^4 + 8*b*lam^2 - 5*b + 1 := by linear_combination (-a*lam^6 + 2*a*lam^4 + a*lam^2 + b*lam^7 - b*lam^5 - 3*b*lam^3 - b*lam + f*lam + g*lam^2 - lam^5 + 2*lam^3)*hk0 + (-a*lam^5 + a*lam^3 + a*lam + b*lam^6 - 2*b*lam^2 - b - lam^4 + lam^2 + 1)*hk1 + (-a*lam^4 + b*lam^5 + b*lam^3 - lam^3)*hk2 + (-a*lam^3 - a*lam + b*lam^4 + 2*b*lam^2 + b - lam^2 - 1)*hk3 + (-a*lam^2 + b*lam^3 + b*lam - lam)*hk4 + (a^2 - 2*a*b*lam + b^2*lam^2 + 4*b^2 - b)*hps
+    linarith [hr, he]
+  have qq26 : (0:ℝ) ≤ 2*a^2*lam^5 - 3*a^2*lam^3 - 18*a*b*lam^4 + 38*a*b*lam^2 - 12*a*b + 2*a*lam^4 - 2*a*lam^2 + 9*b^2*lam^5 - 22*b^2*lam^3 + 7*b^2*lam - 2*b*lam^5 + 4*b*lam^3 - 2*b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((b + c*lam - 1)*(e*lam + f - 1)) := mul_nonneg hpos.le (mul_nonneg reg1 gen4)
+    have he : lam*((b + c*lam - 1)*(e*lam + f - 1)) = 2*a^2*lam^5 - 3*a^2*lam^3 - 18*a*b*lam^4 + 38*a*b*lam^2 - 12*a*b + 2*a*lam^4 - 2*a*lam^2 + 9*b^2*lam^5 - 22*b^2*lam^3 + 7*b^2*lam - 2*b*lam^5 + 4*b*lam^3 - 2*b*lam + lam := by linear_combination (-2*a*lam^5 + 3*a*lam^3 + 2*b*lam^6 - b*lam^4 - 3*b*lam^2 + e*lam^3 + f*lam^2 - 2*lam^4 + 2*lam^2)*hk0 + (-2*a*lam^4 + a*lam^2 + 2*b*lam^5 + b*lam^3 - b*lam - 2*lam^3 + lam)*hk1 + (-2*a*lam^3 + 2*b*lam^4 + 2*b*lam^2 - 2*lam^2)*hk2 + (-a*lam^2 + b*lam^3 + b*lam - lam)*hk3 + (-4*a*b + 2*b^2*lam)*hps
+    linarith [hr, he]
+  have qq27 : (0:ℝ) ≤ -a^2*b*lam^5 - a^2*b*lam^3 + 13*a*b^2*lam^4 - 18*a*b^2*lam^2 + 6*a*b^2 - a*b*lam^3 - a*lam^2 - a - 6*b^3*lam^5 + 9*b^3*lam^3 - 3*b^3*lam + b^2*lam^4 + b*lam^3 - 1 := by
+    have hr : (0:ℝ) ≤ (c + d*lam - 1)*(-b*c*lam^3 + 1) := mul_nonneg reg2 slk1
+    have he : (c + d*lam - 1)*(-b*c*lam^3 + 1) = -a^2*b*lam^5 - a^2*b*lam^3 + 13*a*b^2*lam^4 - 18*a*b^2*lam^2 + 6*a*b^2 - a*b*lam^3 - a*lam^2 - a - 6*b^3*lam^5 + 9*b^3*lam^3 - 3*b^3*lam + b^2*lam^4 + b*lam^3 - 1 := by linear_combination (a*b*lam^5 + a*b*lam^3 - b^2*lam^6 - b^2*lam^4 - b*c*lam^3 - b*d*lam^4 + b*lam^3 + lam^2 + 1)*hk0 + (a*b*lam^4 - b^2*lam^5 + lam)*hk1 + (2*a*b^2 - b^3*lam)*hps
+    linarith [hr, he]
+  have qq28 : (0:ℝ) ≤ 19*a^2*lam^5 - 38*a^2*lam^3 + 15*a^2*lam - 86*a*b*lam^4 + 170*a*b*lam^2 - 60*a*b + 8*a*lam^4 - 20*a*lam^2 + 6*a + 24*b^2*lam^5 - 45*b^2*lam^3 + 16*b^2*lam - 6*b*lam^5 + 18*b*lam^3 - 8*b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((f + g*lam - 1)*(f + g*lam - 1)) := mul_nonneg hpos.le (mul_nonneg reg5 reg5)
+    have he : lam*((f + g*lam - 1)*(f + g*lam - 1)) = 19*a^2*lam^5 - 38*a^2*lam^3 + 15*a^2*lam - 86*a*b*lam^4 + 170*a*b*lam^2 - 60*a*b + 8*a*lam^4 - 20*a*lam^2 + 6*a + 24*b^2*lam^5 - 45*b^2*lam^3 + 16*b^2*lam - 6*b*lam^5 + 18*b*lam^3 - 8*b*lam + lam := by linear_combination (-a*lam^11 + 4*a*lam^9 - 2*a*lam^7 - 4*a*lam^5 - a*lam^3 + b*lam^12 - 5*b*lam^10 + 5*b*lam^8 + 4*b*lam^6 - 2*b*lam^4 + f*lam^4 - 2*f*lam^2 + g*lam^7 - g*lam^5 - 3*g*lam^3 - 2*lam^6 + 4*lam^4 + 2*lam^2)*hk0 + (-a*lam^10 + 3*a*lam^8 - 3*a*lam^4 - 2*a*lam^2 + b*lam^11 - 4*b*lam^9 + 2*b*lam^7 + 4*b*lam^5 - b*lam + f*lam^3 - f*lam + g*lam^6 - 2*g*lam^2 - 2*lam^5 + 2*lam^3 + 2*lam)*hk1 + (-a*lam^9 + 2*a*lam^7 + a*lam^5 - a*lam^3 + b*lam^10 - 3*b*lam^8 + 2*b*lam^4 - b*lam^2 + f*lam^2 + g*lam^5 + g*lam^3 - 2*lam^4)*hk2 + (-a*lam^8 + a*lam^6 + 2*a*lam^4 + 2*a*lam^2 + b*lam^9 - 2*b*lam^7 - 2*b*lam^5 - b*lam^3 + b*lam + f*lam + g*lam^4 + 2*g*lam^2 - 2*lam^3 - 2*lam)*hk3 + (-a*lam^7 + a*lam^5 + 3*a*lam^3 + b*lam^8 - 2*b*lam^6 - 3*b*lam^4 + 2*b*lam^2 + g*lam^3 - 2*lam^2)*hk4 + (a^2*lam^5 + 2*a^2*lam^3 + 5*a^2*lam - 2*a*b*lam^6 - 2*a*b*lam^4 - 4*a*b*lam^2 - 20*a*b + 2*a + b^2*lam^7 + 5*b^2*lam - 2*b*lam)*hps
+    linarith [hr, he]
+  have qq29 : (0:ℝ) ≤ -4*a^2*lam^4 + 10*a^2*lam^2 - 3*a^2 + 2*a*b*lam^5 - 7*a*b*lam^3 + 5*a*b*lam + a*lam^5 - 2*a*lam^3 - 2*a*lam + 3*b^2*lam^4 - 9*b^2*lam^2 + 4*b^2 - 3*b*lam^4 + 9*b*lam^2 - 5*b + 1 := by
+    have hr : (0:ℝ) ≤ (f + g*lam - 1)*(a*lam + b - 1) := mul_nonneg reg5 gen0
+    have he : (f + g*lam - 1)*(a*lam + b - 1) = -4*a^2*lam^4 + 10*a^2*lam^2 - 3*a^2 + 2*a*b*lam^5 - 7*a*b*lam^3 + 5*a*b*lam + a*lam^5 - 2*a*lam^3 - 2*a*lam + 3*b^2*lam^4 - 9*b^2*lam^2 + 4*b^2 - 3*b*lam^4 + 9*b*lam^2 - 5*b + 1 := by linear_combination (a*lam^6 - 2*a*lam^4 - a*lam^2 + b*lam^5 - 2*b*lam^3 - b*lam - lam^5 + 2*lam^3 + lam)*hk0 + (a*lam^5 - a*lam^3 - a*lam + b*lam^4 - b*lam^2 - b - lam^4 + lam^2 + 1)*hk1 + (a*lam^4 + b*lam^3 - lam^3)*hk2 + (a*lam^3 + a*lam + b*lam^2 + b - lam^2 - 1)*hk3 + (a*lam^2 + b*lam - lam)*hk4 + (-a^2 + a*b*lam + b^2 - b)*hps
+    linarith [hr, he]
+  have qq30 : (0:ℝ) ≤ -4*a^2*lam^5 + 10*a^2*lam^3 - 3*a^2*lam + 5*a*b*lam^4 - 13*a*b*lam^2 + 6*a*b + 4*a*lam^4 - 11*a*lam^2 + 3*a + 3*b^2*lam^5 - 9*b^2*lam^3 + 4*b^2*lam - 3*b*lam^5 + 9*b*lam^3 - 5*b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((f + g*lam - 1)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg reg5 gen0)
+    have he : lam*((f + g*lam - 1)*(a*lam + b - 1)) = -4*a^2*lam^5 + 10*a^2*lam^3 - 3*a^2*lam + 5*a*b*lam^4 - 13*a*b*lam^2 + 6*a*b + 4*a*lam^4 - 11*a*lam^2 + 3*a + 3*b^2*lam^5 - 9*b^2*lam^3 + 4*b^2*lam - 3*b*lam^5 + 9*b*lam^3 - 5*b*lam + lam := by linear_combination (a*lam^7 - 2*a*lam^5 - a*lam^3 + b*lam^6 - 2*b*lam^4 - b*lam^2 - lam^6 + 2*lam^4 + lam^2)*hk0 + (a*lam^6 - a*lam^4 - a*lam^2 + b*lam^5 - b*lam^3 - b*lam - lam^5 + lam^3 + lam)*hk1 + (a*lam^5 + b*lam^4 - lam^4)*hk2 + (a*lam^4 + a*lam^2 + b*lam^3 + b*lam - lam^3 - lam)*hk3 + (a*lam^3 + b*lam^2 - lam^2)*hk4 + (-a^2*lam + a*b*lam^2 + 2*a*b + a + b^2*lam - b*lam)*hps
+    linarith [hr, he]
+  have qq31 : (0:ℝ) ≤ 14*a^2*b*lam^5 - 33*a^2*b*lam^3 + 12*a^2*b*lam - 31*a*b^2*lam^4 + 72*a*b^2*lam^2 - 27*a*b^2 + a*b*lam^4 - 4*a*lam^4 + 10*a*lam^2 - 3*a + 3*b*lam^5 - 9*b*lam^3 + 4*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((f + g*lam - 1)*(-a*b*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg reg5 slk0)
+    have he : lam*((f + g*lam - 1)*(-a*b*lam^3 + 1)) = 14*a^2*b*lam^5 - 33*a^2*b*lam^3 + 12*a^2*b*lam - 31*a*b^2*lam^4 + 72*a*b^2*lam^2 - 27*a*b^2 + a*b*lam^4 - 4*a*lam^4 + 10*a*lam^2 - 3*a + 3*b*lam^5 - 9*b*lam^3 + 4*b*lam - lam := by linear_combination (-a*b*lam^9 + 2*a*b*lam^7 + a*b*lam^5 + lam^6 - 2*lam^4 - lam^2)*hk0 + (-a*b*lam^8 + a*b*lam^6 + a*b*lam^4 + lam^5 - lam^3 - lam)*hk1 + (-a*b*lam^7 + lam^4)*hk2 + (-a*b*lam^6 - a*b*lam^4 + lam^3 + lam)*hk3 + (-a*b*lam^5 + lam^2)*hk4 + (a^2*b*lam^3 + 4*a^2*b*lam - a*b^2*lam^4 - 3*a*b^2*lam^2 - 9*a*b^2 - a + b*lam)*hps
+    linarith [hr, he]
+  have qq32 : (0:ℝ) ≤ 402*a^3*lam^4 - 855*a^3*lam^2 + 312*a^3 - 711*a^2*b*lam^5 + 1518*a^2*b*lam^3 - 555*a^2*b*lam + 16*a^2*lam^5 - 33*a^2*lam^3 + 12*a^2*lam + 1618*a*b^2*lam^4 - 3450*a*b^2*lam^2 + 1260*a*b^2 - 73*a*b*lam^4 + 150*a*b*lam^2 - 54*a*b - 4*a*lam^4 + 10*a*lam^2 - 3*a - 318*b^3*lam^5 + 681*b^3*lam^3 - 249*b^3*lam + 21*b^2*lam^5 - 42*b^2*lam^3 + 15*b^2*lam + 3*b*lam^5 - 9*b*lam^3 + 4*b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((f + g*lam - 1)*(-f*g*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg reg5 slk5)
+    have he : lam*((f + g*lam - 1)*(-f*g*lam^3 + 1)) = 402*a^3*lam^4 - 855*a^3*lam^2 + 312*a^3 - 711*a^2*b*lam^5 + 1518*a^2*b*lam^3 - 555*a^2*b*lam + 16*a^2*lam^5 - 33*a^2*lam^3 + 12*a^2*lam + 1618*a*b^2*lam^4 - 3450*a*b^2*lam^2 + 1260*a*b^2 - 73*a*b*lam^4 + 150*a*b*lam^2 - 54*a*b - 4*a*lam^4 + 10*a*lam^2 - 3*a - 318*b^3*lam^5 + 681*b^3*lam^3 - 249*b^3*lam + 21*b^2*lam^5 - 42*b^2*lam^3 + 15*b^2*lam + 3*b*lam^5 - 9*b*lam^3 + 4*b*lam - lam := by linear_combination (-a^2*lam^16 + 7*a^2*lam^14 - 16*a^2*lam^12 + 11*a^2*lam^10 + 3*a^2*lam^8 - 2*a^2*lam^6 + 2*a*b*lam^17 - 16*a*b*lam^15 + 44*a*b*lam^13 - 44*a*b*lam^11 + 3*a*b*lam^9 + 11*a*b*lam^7 - 3*a*b*lam^5 + a*g*lam^12 - 4*a*g*lam^10 + 3*a*g*lam^8 + 2*a*g*lam^6 - a*lam^11 + 5*a*lam^9 - 7*a*lam^7 + 2*a*lam^5 - b^2*lam^18 + 9*b^2*lam^16 - 29*b^2*lam^14 + 38*b^2*lam^12 - 13*b^2*lam^10 - 8*b^2*lam^8 + 6*b^2*lam^6 - b^2*lam^4 - b*g*lam^13 + 5*b*g*lam^11 - 6*b*g*lam^9 - b*g*lam^7 + b*g*lam^5 + b*lam^12 - 6*b*lam^10 + 11*b*lam^8 - 6*b*lam^6 + b*lam^4 - f*g*lam^7 + 2*f*g*lam^5 - g^2*lam^8 + 2*g^2*lam^6 + g*lam^7 - 2*g*lam^5 + lam^6 - 2*lam^4 - lam^2)*hk0 + (-a^2*lam^15 + 6*a^2*lam^13 - 11*a^2*lam^11 + 4*a^2*lam^9 + 4*a^2*lam^7 + 2*a*b*lam^16 - 14*a*b*lam^14 + 32*a*b*lam^12 - 22*a*b*lam^10 - 7*a*b*lam^8 + 6*a*b*lam^6 + a*g*lam^11 - 3*a*g*lam^9 + a*g*lam^7 + 2*a*g*lam^5 - a*lam^10 + 4*a*lam^8 - 4*a*lam^6 - b^2*lam^17 + 8*b^2*lam^15 - 22*b^2*lam^13 + 22*b^2*lam^11 - b^2*lam^9 - 7*b^2*lam^7 + 2*b^2*lam^5 - b*g*lam^12 + 4*b*g*lam^10 - 3*b*g*lam^8 - 2*b*g*lam^6 + b*g*lam^4 + b*lam^11 - 5*b*lam^9 + 7*b*lam^7 - 2*b*lam^5 - f*g*lam^6 + f*g*lam^4 - g^2*lam^7 + g^2*lam^5 + g*lam^6 - g*lam^4 + lam^5 - lam^3 - lam)*hk1 + (-a^2*lam^14 + 5*a^2*lam^12 - 7*a^2*lam^10 + a^2*lam^8 + 2*a^2*lam^6 + 2*a*b*lam^15 - 12*a*b*lam^13 + 22*a*b*lam^11 - 10*a*b*lam^9 - 5*a*b*lam^7 + 3*a*b*lam^5 + a*g*lam^10 - 2*a*g*lam^8 - a*lam^9 + 3*a*lam^7 - 2*a*lam^5 - b^2*lam^16 + 7*b^2*lam^14 - 16*b^2*lam^12 + 12*b^2*lam^10 + b^2*lam^8 - 4*b^2*lam^6 + b^2*lam^4 - b*g*lam^11 + 3*b*g*lam^9 - b*g*lam^7 + b*lam^10 - 4*b*lam^8 + 4*b*lam^6 - b*lam^4 - f*g*lam^5 - g^2*lam^6 + g*lam^5 + lam^4)*hk2 + (-a^2*lam^13 + 4*a^2*lam^11 - 3*a^2*lam^9 - 2*a^2*lam^7 + 2*a*b*lam^14 - 10*a*b*lam^12 + 12*a*b*lam^10 + 2*a*b*lam^8 - 3*a*b*lam^6 + a*g*lam^9 - a*g*lam^7 - 2*a*g*lam^5 - a*lam^8 + 2*a*lam^6 - b^2*lam^15 + 6*b^2*lam^13 - 10*b^2*lam^11 + 2*b^2*lam^9 + 3*b^2*lam^7 - b^2*lam^5 - b*g*lam^10 + 2*b*g*lam^8 + 2*b*g*lam^6 - b*g*lam^4 + b*lam^9 - 3*b*lam^7 + b*lam^5 - f*g*lam^4 - g^2*lam^5 + g*lam^4 + lam^3 + lam)*hk3 + (-a^2*lam^12 + 4*a^2*lam^10 - 3*a^2*lam^8 - 2*a^2*lam^6 + 2*a*b*lam^13 - 10*a*b*lam^11 + 12*a*b*lam^9 + 2*a*b*lam^7 - 3*a*b*lam^5 + a*g*lam^8 - 2*a*g*lam^6 - a*lam^7 + 2*a*lam^5 - b^2*lam^14 + 6*b^2*lam^12 - 10*b^2*lam^10 + 2*b^2*lam^8 + 3*b^2*lam^6 - b^2*lam^4 - b*g*lam^9 + 3*b*g*lam^7 - b*g*lam^5 + b*lam^8 - 3*b*lam^6 + b*lam^4 + lam^2)*hk4 + (a^3*lam^10 - a^3*lam^8 + a^3*lam^6 + 7*a^3*lam^4 + 27*a^3*lam^2 + 104*a^3 - 3*a^2*b*lam^11 + 6*a^2*b*lam^9 - 3*a^2*b*lam^7 - 15*a^2*b*lam^5 - 49*a^2*b*lam^3 - 185*a^2*b*lam + a^2*lam^5 + a^2*lam^3 + 4*a^2*lam + 3*a*b^2*lam^12 - 9*a*b^2*lam^10 + 6*a*b^2*lam^8 + 12*a*b^2*lam^6 + 29*a*b^2*lam^4 + 110*a*b^2*lam^2 + 420*a*b^2 - 2*a*b*lam^6 - 4*a*b*lam^2 - 18*a*b - a - b^3*lam^13 + 4*b^3*lam^11 - 4*b^3*lam^9 - 3*b^3*lam^7 - 5*b^3*lam^5 - 22*b^3*lam^3 - 83*b^3*lam + b^2*lam^7 - b^2*lam^5 + b^2*lam^3 + 5*b^2*lam + b*lam)*hps
+    linarith [hr, he]
+  have qq33 : (0:ℝ) ≤ a^2*lam^3 + 2*a*b*lam^2 - 2*a*lam^2 + b^2*lam - 2*b*lam + lam := by
+    have hr : (0:ℝ) ≤ lam*((a*lam + b - 1)*(a*lam + b - 1)) := mul_nonneg hpos.le (mul_nonneg gen0 gen0)
+    have he : lam*((a*lam + b - 1)*(a*lam + b - 1)) = a^2*lam^3 + 2*a*b*lam^2 - 2*a*lam^2 + b^2*lam - 2*b*lam + lam := by linear_combination 0
+    linarith [hr, he]
+  have qq34 : (0:ℝ) ≤ -2*a^2*lam^4 + 3*a^2*lam^2 + 2*a*b*lam^5 - 7*a*b*lam^3 + 4*a*b*lam + 2*a*lam^3 - 4*a*lam + 2*b^2*lam^4 - 5*b^2*lam^2 + b^2 - 2*b*lam^4 + 5*b*lam^2 - 2*b + 1 := by
+    have hr : (0:ℝ) ≤ (a*lam + b - 1)*(e*lam + f - 1) := mul_nonneg gen0 gen4
+    have he : (a*lam + b - 1)*(e*lam + f - 1) = -2*a^2*lam^4 + 3*a^2*lam^2 + 2*a*b*lam^5 - 7*a*b*lam^3 + 4*a*b*lam + 2*a*lam^3 - 4*a*lam + 2*b^2*lam^4 - 5*b^2*lam^2 + b^2 - 2*b*lam^4 + 5*b*lam^2 - 2*b + 1 := by linear_combination (2*a*lam^4 - 3*a*lam^2 + 2*b*lam^3 - 3*b*lam - 2*lam^3 + 3*lam)*hk0 + (2*a*lam^3 - a*lam + 2*b*lam^2 - b - 2*lam^2 + 1)*hk1 + (2*a*lam^2 + 2*b*lam - 2*lam)*hk2 + (a*lam + b - 1)*hk3
+    linarith [hr, he]
+  have qq35 : (0:ℝ) ≤ -6*a^3*lam^4 + 9*a^3*lam^2 - 3*a^3 + 10*a^2*b*lam^5 - 18*a^2*b*lam^3 + 6*a^2*b*lam + a^2*lam^5 - 10*a*b^2*lam^4 + 24*a*b^2*lam^2 - 9*a*b^2 - 11*a*b*lam^4 + 18*a*b*lam^2 - 6*a*b + a*lam^2 - 5*b^3*lam^5 + 9*b^3*lam^3 - 3*b^3*lam + 5*b^2*lam^5 - 9*b^2*lam^3 + 3*b^2*lam + b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((a*lam + b - 1)*(-c*d*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg gen0 slk2)
+    have he : lam*((a*lam + b - 1)*(-c*d*lam^3 + 1)) = -6*a^3*lam^4 + 9*a^3*lam^2 - 3*a^3 + 10*a^2*b*lam^5 - 18*a^2*b*lam^3 + 6*a^2*b*lam + a^2*lam^5 - 10*a*b^2*lam^4 + 24*a*b^2*lam^2 - 9*a*b^2 - 11*a*b*lam^4 + 18*a*b*lam^2 - 6*a*b + a*lam^2 - 5*b^3*lam^5 + 9*b^3*lam^3 - 3*b^3*lam + 5*b^2*lam^5 - 9*b^2*lam^3 + 3*b^2*lam + b*lam - lam := by linear_combination (a^2*lam^6 - a*b*lam^7 + a*b*lam^5 - a*d*lam^5 - a*lam^5 - b^2*lam^6 - b*d*lam^4 + b*lam^6 + d*lam^4)*hk0 + (a^2*lam^5 - a*b*lam^6 + a*b*lam^4 - a*lam^4 - b^2*lam^5 + b*lam^5)*hk1 + (-a^3 + 2*a^2*b*lam - a*b^2*lam^2 - 3*a*b^2 - 2*a*b - b^3*lam + b^2*lam)*hps
+    linarith [hr, he]
+  have qq36 : (0:ℝ) ≤ -63*a^3*lam^4 + 132*a^3*lam^2 - 48*a^3 + 57*a^2*b*lam^5 - 117*a^2*b*lam^3 + 42*a^2*b*lam + 16*a^2*lam^5 - 33*a^2*lam^3 + 12*a^2*lam - 11*a*b^2*lam^4 + 24*a*b^2*lam^2 - 9*a*b^2 - 73*a*b*lam^4 + 150*a*b*lam^2 - 54*a*b + a*lam^2 - 21*b^3*lam^5 + 42*b^3*lam^3 - 15*b^3*lam + 21*b^2*lam^5 - 42*b^2*lam^3 + 15*b^2*lam + b*lam - lam := by
+    have hr : (0:ℝ) ≤ lam*((a*lam + b - 1)*(-f*g*lam^3 + 1)) := mul_nonneg hpos.le (mul_nonneg gen0 slk5)
+    have he : lam*((a*lam + b - 1)*(-f*g*lam^3 + 1)) = -63*a^3*lam^4 + 132*a^3*lam^2 - 48*a^3 + 57*a^2*b*lam^5 - 117*a^2*b*lam^3 + 42*a^2*b*lam + 16*a^2*lam^5 - 33*a^2*lam^3 + 12*a^2*lam - 11*a*b^2*lam^4 + 24*a*b^2*lam^2 - 9*a*b^2 - 73*a*b*lam^4 + 150*a*b*lam^2 - 54*a*b + a*lam^2 - 21*b^3*lam^5 + 42*b^3*lam^3 - 15*b^3*lam + 21*b^2*lam^5 - 42*b^2*lam^3 + 15*b^2*lam + b*lam - lam := by linear_combination (a^2*lam^12 - 5*a^2*lam^10 + 7*a^2*lam^8 - 2*a^2*lam^6 - a*b*lam^13 + 7*a*b*lam^11 - 16*a*b*lam^9 + 13*a*b*lam^7 - 3*a*b*lam^5 - a*g*lam^8 + 2*a*g*lam^6 - a*lam^11 + 5*a*lam^9 - 7*a*lam^7 + 2*a*lam^5 - b^2*lam^12 + 6*b^2*lam^10 - 11*b^2*lam^8 + 6*b^2*lam^6 - b^2*lam^4 - b*g*lam^7 + 2*b*g*lam^5 + b*lam^12 - 6*b*lam^10 + 11*b*lam^8 - 6*b*lam^6 + b*lam^4 + g*lam^7 - 2*g*lam^5)*hk0 + (a^2*lam^11 - 4*a^2*lam^9 + 4*a^2*lam^7 - a*b*lam^12 + 6*a*b*lam^10 - 11*a*b*lam^8 + 6*a*b*lam^6 - a*g*lam^7 + a*g*lam^5 - a*lam^10 + 4*a*lam^8 - 4*a*lam^6 - b^2*lam^11 + 5*b^2*lam^9 - 7*b^2*lam^7 + 2*b^2*lam^5 - b*g*lam^6 + b*g*lam^4 + b*lam^11 - 5*b*lam^9 + 7*b*lam^7 - 2*b*lam^5 + g*lam^6 - g*lam^4)*hk1 + (a^2*lam^10 - 3*a^2*lam^8 + 2*a^2*lam^6 - a*b*lam^11 + 5*a*b*lam^9 - 7*a*b*lam^7 + 3*a*b*lam^5 - a*g*lam^6 - a*lam^9 + 3*a*lam^7 - 2*a*lam^5 - b^2*lam^10 + 4*b^2*lam^8 - 4*b^2*lam^6 + b^2*lam^4 - b*g*lam^5 + b*lam^10 - 4*b*lam^8 + 4*b*lam^6 - b*lam^4 + g*lam^5)*hk2 + (a^2*lam^9 - 2*a^2*lam^7 - a*b*lam^10 + 4*a*b*lam^8 - 3*a*b*lam^6 - a*g*lam^5 - a*lam^8 + 2*a*lam^6 - b^2*lam^9 + 3*b^2*lam^7 - b^2*lam^5 - b*g*lam^4 + b*lam^9 - 3*b*lam^7 + b*lam^5 + g*lam^4)*hk3 + (a^2*lam^8 - 2*a^2*lam^6 - a*b*lam^9 + 4*a*b*lam^7 - 3*a*b*lam^5 - a*lam^7 + 2*a*lam^5 - b^2*lam^8 + 3*b^2*lam^6 - b^2*lam^4 + b*lam^8 - 3*b*lam^6 + b*lam^4)*hk4 + (-a^3*lam^6 - a^3*lam^4 - 4*a^3*lam^2 - 16*a^3 + 2*a^2*b*lam^7 - a^2*b*lam^5 + 3*a^2*b*lam^3 + 14*a^2*b*lam + a^2*lam^5 + a^2*lam^3 + 4*a^2*lam - a*b^2*lam^8 + 3*a*b^2*lam^6 - a*b^2*lam^4 - a*b^2*lam^2 - 3*a*b^2 - 2*a*b*lam^6 - 4*a*b*lam^2 - 18*a*b - b^3*lam^7 + b^3*lam^5 - b^3*lam^3 - 5*b^3*lam + b^2*lam^7 - b^2*lam^5 + b^2*lam^3 + 5*b^2*lam)*hps
+    linarith [hr, he]
+  have qq37 : (0:ℝ) ≤ 4*a^2*lam^5 - 10*a^2*lam^3 + 2*a^2*lam - 22*a*b*lam^4 + 57*a*b*lam^2 - 23*a*b + 2*a*lam^4 - 5*a*lam^2 + 2*a*lam + a + 8*b^2*lam^5 - 21*b^2*lam^3 + 8*b^2*lam - 2*b*lam^5 + 7*b*lam^3 - 2*b*lam^2 - 4*b*lam + b + 1 := by
+    have hr : (0:ℝ) ≤ (c*lam + d - 1)*(f*lam + g - 1) := mul_nonneg gen2 gen5
+    have he : (c*lam + d - 1)*(f*lam + g - 1) = 4*a^2*lam^5 - 10*a^2*lam^3 + 2*a^2*lam - 22*a*b*lam^4 + 57*a*b*lam^2 - 23*a*b + 2*a*lam^4 - 5*a*lam^2 + 2*a*lam + a + 8*b^2*lam^5 - 21*b^2*lam^3 + 8*b^2*lam - 2*b*lam^5 + 7*b*lam^3 - 2*b*lam^2 - 4*b*lam + b + 1 := by linear_combination (-4*a*lam^5 + 10*a*lam^3 - 2*a*lam + 4*b*lam^6 - 12*b*lam^4 + 7*b*lam^2 - b + 2*f*lam^2 + 2*g*lam - 2*lam^4 + 5*lam^2 - 2*lam - 1)*hk0 + (-4*a*lam^4 + 6*a*lam^2 + 4*b*lam^5 - 8*b*lam^3 + 3*b*lam + f*lam + g - 2*lam^3 + 3*lam - 1)*hk1 + (-4*a*lam^3 + 2*a*lam + 4*b*lam^4 - 4*b*lam^2 + b - 2*lam^2 + 1)*hk2 + (-4*a*lam^2 + 4*b*lam^3 - 2*b*lam - 2*lam)*hk3 + (-2*a*lam + 2*b*lam^2 - b - 1)*hk4 + (-8*a*b + 4*b^2*lam)*hps
+    linarith [hr, he]
+  have qq38 : (0:ℝ) ≤ -2*a^2*b*lam^5 + a^2*b*lam^3 + 20*a*b^2*lam^4 - 36*a*b^2*lam^2 + 12*a*b^2 - a*b*lam^3 - 2*a*lam^2 + a - 9*b^3*lam^5 + 18*b^3*lam^3 - 6*b^3*lam + b^2*lam^4 + 2*b*lam^3 - 3*b*lam - 1 := by
+    have hr : (0:ℝ) ≤ (d*lam + e - 1)*(-b*c*lam^3 + 1) := mul_nonneg gen3 slk1
+    have he : (d*lam + e - 1)*(-b*c*lam^3 + 1) = -2*a^2*b*lam^5 + a^2*b*lam^3 + 20*a*b^2*lam^4 - 36*a*b^2*lam^2 + 12*a*b^2 - a*b*lam^3 - 2*a*lam^2 + a - 9*b^3*lam^5 + 18*b^3*lam^3 - 6*b^3*lam + b^2*lam^4 + 2*b*lam^3 - 3*b*lam - 1 := by linear_combination (2*a*b*lam^5 - a*b*lam^3 - 2*b^2*lam^6 + b^2*lam^4 - b*d*lam^4 - b*e*lam^3 + b*lam^3 + 2*lam^2 - 1)*hk0 + (2*a*b*lam^4 - 2*b^2*lam^5 + 2*lam)*hk1 + (a*b*lam^3 - b^2*lam^4 + 1)*hk2 + (4*a*b^2 - 2*b^3*lam)*hps
+    linarith [hr, he]
+  have qq39 : (0:ℝ) ≤ 17*a^2*lam^4 - 34*a^2*lam^2 + 13*a^2 - 18*a*b*lam^5 + 30*a*b*lam^3 - 8*a*b*lam + 4*a*lam^4 - 10*a*lam^2 + 2*a + 22*b^2*lam^4 - 41*b^2*lam^2 + 15*b^2 - 4*b*lam^5 + 14*b*lam^3 - 8*b*lam + 1 := by
+    have hr : (0:ℝ) ≤ (f*lam + g - 1)*(f*lam + g - 1) := mul_nonneg gen5 gen5
+    have he : (f*lam + g - 1)*(f*lam + g - 1) = 17*a^2*lam^4 - 34*a^2*lam^2 + 13*a^2 - 18*a*b*lam^5 + 30*a*b*lam^3 - 8*a*b*lam + 4*a*lam^4 - 10*a*lam^2 + 2*a + 22*b^2*lam^4 - 41*b^2*lam^2 + 15*b^2 - 4*b*lam^5 + 14*b*lam^3 - 8*b*lam + 1 := by linear_combination (-4*a*lam^8 + 20*a*lam^6 - 29*a*lam^4 + 10*a*lam^2 - a + 4*b*lam^9 - 24*b*lam^7 + 45*b*lam^5 - 27*b*lam^3 + 5*b*lam + f*lam^5 - 2*f*lam^3 + 3*g*lam^4 - 7*g*lam^2 + g - 4*lam^4 + 10*lam^2 - 2)*hk0 + (-4*a*lam^7 + 16*a*lam^5 - 17*a*lam^3 + 2*a*lam + 4*b*lam^8 - 20*b*lam^6 + 29*b*lam^4 - 11*b*lam^2 + f*lam^4 - f*lam^2 + 3*g*lam^3 - 4*g*lam - 4*lam^3 + 6*lam)*hk1 + (-4*a*lam^6 + 12*a*lam^4 - 8*a*lam^2 + a + 4*b*lam^7 - 16*b*lam^5 + 16*b*lam^3 - 5*b*lam + f*lam^3 + 3*g*lam^2 - g - 4*lam^2 + 2)*hk2 + (-4*a*lam^5 + 9*a*lam^3 - a*lam + 4*b*lam^6 - 13*b*lam^4 + 6*b*lam^2 + f*lam^2 + 3*g*lam - 4*lam)*hk3 + (-3*a*lam^4 + 7*a*lam^2 - a + 3*b*lam^5 - 10*b*lam^3 + 5*b*lam + g - 2)*hk4 + (4*a^2*lam^2 + 4*a^2 - 8*a*b*lam^3 + 4*b^2*lam^4 - 4*b^2*lam^2 + 5*b^2)*hps
+    linarith [hr, he]
+  linarith [qq0, qq1, qq2, qq3, qq4, qq5, qq6, qq7, qq8, qq9, qq10, qq11, qq12, qq13, qq14, qq15, qq16, qq17, qq18, qq19, qq20, qq21, qq22, qq23, qq24, qq25, qq26, qq27, qq28, qq29, qq30, qq31, qq32, qq33, qq34, qq35, qq36, qq37, qq38, qq39, h2, h3]
+
+/-- **q=18 window-6 core.** 7 coords of a genuine scalar orbit (both Taha edges + cap
++ 5 integer floors K_i>=1 with recurrence and floor-upper) cannot have all 6 products
+`< 1/lam^3`.  Each interior floor is forced to 1 (floor-helper), reducing to the single
+Chebyshev case `case_q18`. -/
+theorem g18_core (a b c d e f g lam : ℝ) (hps : lam^6 = 6*lam^4 - 9*lam^2 + 3) (h2 : (1:ℝ) < lam) (h3 : lam < 2)
+    (hlo : (9:ℝ)/5 < lam)
+    (hpa : 0 < a) (hpb : 0 < b) (hpc : 0 < c) (hpd : 0 < d) (hpe : 0 < e) (hpf : 0 < f) (hpg : 0 < g)
+    (hca : a ≤ 1) (hcb : b ≤ 1) (hcc : c ≤ 1) (hcd : d ≤ 1) (hce : e ≤ 1) (hcf : f ≤ 1) (hcg : g ≤ 1)
+    (hr0 : a+lam*b > 1) (hr1 : b+lam*c > 1) (hr2 : c+lam*d > 1) (hr3 : d+lam*e > 1) (hr4 : e+lam*f > 1) (hr5 : f+lam*g > 1)
+    (hg0 : lam*a+b > 1) (hg1 : lam*b+c > 1) (hg2 : lam*c+d > 1) (hg3 : lam*d+e > 1) (hg4 : lam*e+f > 1) (hg5 : lam*f+g > 1)
+    (K0 K1 K2 K3 K4 : ℤ)
+    (hk0 : a+c = (K0:ℝ)*lam*b) (hk1 : b+d = (K1:ℝ)*lam*c) (hk2 : c+e = (K2:ℝ)*lam*d) (hk3 : d+f = (K3:ℝ)*lam*e) (hk4 : e+g = (K4:ℝ)*lam*f)
+    (hKge0 : 1 ≤ K0) (hKge1 : 1 ≤ K1) (hKge2 : 1 ≤ K2) (hKge3 : 1 ≤ K3) (hKge4 : 1 ≤ K4)
+    (hf0 : 1+a < ((K0:ℝ)+1)*(lam*b)) (hf1 : 1+b < ((K1:ℝ)+1)*(lam*c)) (hf2 : 1+c < ((K2:ℝ)+1)*(lam*d)) (hf3 : 1+d < ((K3:ℝ)+1)*(lam*e)) (hf4 : 1+e < ((K4:ℝ)+1)*(lam*f))
+    (hP0 : a*b < 1/lam^3) (hP1 : b*c < 1/lam^3) (hP2 : c*d < 1/lam^3) (hP3 : d*e < 1/lam^3) (hP4 : e*f < 1/lam^3) (hP5 : f*g < 1/lam^3) :
+    False := by
+  have hpos : (0:ℝ) < lam := by linarith
+  have hp3 : (0:ℝ) < lam^3 := by positivity
+  have hp4nn : (0:ℝ) ≤ lam^4 := by positivity
+  have hP0c : a*b*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP0
+  have hP1c : b*c*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP1
+  have hP2c : c*d*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP2
+  have hP3c : d*e*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP3
+  have hP4c : e*f*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP4
+  have hP5c : f*g*lam^3 < 1 := (lt_div_iff₀ hp3).mp hP5
+  have hKr0 : (1:ℝ) ≤ (K0:ℝ) := by exact_mod_cast hKge0
+  have heng0 : a*b + b*c = (K0:ℝ)*lam*b^2 := by linear_combination b*hk0
+  have hK0b : (K0:ℝ)*lam^4*b^2 < 2 := by
+    have h : (a*b+b*c)*lam^3 = (K0:ℝ)*lam^4*b^2 := by linear_combination lam^3*heng0
+    nlinarith [hP0c, hP1c, h]
+  have hbU0 : lam^4*b^2 < 2 := by
+    have hn : (0:ℝ) ≤ lam^4*b^2 := mul_nonneg hp4nn (sq_nonneg _)
+    nlinarith [hK0b, hKr0, mul_nonneg (by linarith : (0:ℝ) ≤ (K0:ℝ)-1) hn]
+  have hKr1 : (1:ℝ) ≤ (K1:ℝ) := by exact_mod_cast hKge1
+  have heng1 : b*c + c*d = (K1:ℝ)*lam*c^2 := by linear_combination c*hk1
+  have hK1b : (K1:ℝ)*lam^4*c^2 < 2 := by
+    have h : (b*c+c*d)*lam^3 = (K1:ℝ)*lam^4*c^2 := by linear_combination lam^3*heng1
+    nlinarith [hP1c, hP2c, h]
+  have hbU1 : lam^4*c^2 < 2 := by
+    have hn : (0:ℝ) ≤ lam^4*c^2 := mul_nonneg hp4nn (sq_nonneg _)
+    nlinarith [hK1b, hKr1, mul_nonneg (by linarith : (0:ℝ) ≤ (K1:ℝ)-1) hn]
+  have hKr2 : (1:ℝ) ≤ (K2:ℝ) := by exact_mod_cast hKge2
+  have heng2 : c*d + d*e = (K2:ℝ)*lam*d^2 := by linear_combination d*hk2
+  have hK2b : (K2:ℝ)*lam^4*d^2 < 2 := by
+    have h : (c*d+d*e)*lam^3 = (K2:ℝ)*lam^4*d^2 := by linear_combination lam^3*heng2
+    nlinarith [hP2c, hP3c, h]
+  have hbU2 : lam^4*d^2 < 2 := by
+    have hn : (0:ℝ) ≤ lam^4*d^2 := mul_nonneg hp4nn (sq_nonneg _)
+    nlinarith [hK2b, hKr2, mul_nonneg (by linarith : (0:ℝ) ≤ (K2:ℝ)-1) hn]
+  have hKr3 : (1:ℝ) ≤ (K3:ℝ) := by exact_mod_cast hKge3
+  have heng3 : d*e + e*f = (K3:ℝ)*lam*e^2 := by linear_combination e*hk3
+  have hK3b : (K3:ℝ)*lam^4*e^2 < 2 := by
+    have h : (d*e+e*f)*lam^3 = (K3:ℝ)*lam^4*e^2 := by linear_combination lam^3*heng3
+    nlinarith [hP3c, hP4c, h]
+  have hbU3 : lam^4*e^2 < 2 := by
+    have hn : (0:ℝ) ≤ lam^4*e^2 := mul_nonneg hp4nn (sq_nonneg _)
+    nlinarith [hK3b, hKr3, mul_nonneg (by linarith : (0:ℝ) ≤ (K3:ℝ)-1) hn]
+  have hKr4 : (1:ℝ) ≤ (K4:ℝ) := by exact_mod_cast hKge4
+  have heng4 : e*f + f*g = (K4:ℝ)*lam*f^2 := by linear_combination f*hk4
+  have hK4b : (K4:ℝ)*lam^4*f^2 < 2 := by
+    have h : (e*f+f*g)*lam^3 = (K4:ℝ)*lam^4*f^2 := by linear_combination lam^3*heng4
+    nlinarith [hP4c, hP5c, h]
+  have hbU4 : lam^4*f^2 < 2 := by
+    have hn : (0:ℝ) ≤ lam^4*f^2 := mul_nonneg hp4nn (sq_nonneg _)
+    nlinarith [hK4b, hKr4, mul_nonneg (by linarith : (0:ℝ) ≤ (K4:ℝ)-1) hn]
+  have hKle0 : K0 ≤ 1 := by
+    by_contra hcon; push_neg at hcon
+    have h2K : (2:ℝ) ≤ (K0:ℝ) := by exact_mod_cast (by omega : (2:ℤ) ≤ K0)
+    have hn : (0:ℝ) ≤ lam^4*b^2 := mul_nonneg hp4nn (sq_nonneg _)
+    have hms : lam^4*b^2 < 1 := by nlinarith [hK0b, h2K, mul_nonneg (by linarith : (0:ℝ) ≤ (K0:ℝ)-2) hn]
+    exact g18_floor_helper lam b c h2 h3 hlo hpb hpc hms hbU1 (by linarith [hg1])
+  have hKle1 : K1 ≤ 1 := by
+    by_contra hcon; push_neg at hcon
+    have h2K : (2:ℝ) ≤ (K1:ℝ) := by exact_mod_cast (by omega : (2:ℤ) ≤ K1)
+    have hn : (0:ℝ) ≤ lam^4*c^2 := mul_nonneg hp4nn (sq_nonneg _)
+    have hms : lam^4*c^2 < 1 := by nlinarith [hK1b, h2K, mul_nonneg (by linarith : (0:ℝ) ≤ (K1:ℝ)-2) hn]
+    exact g18_floor_helper lam c d h2 h3 hlo hpc hpd hms hbU2 (by linarith [hg2])
+  have hKle2 : K2 ≤ 1 := by
+    by_contra hcon; push_neg at hcon
+    have h2K : (2:ℝ) ≤ (K2:ℝ) := by exact_mod_cast (by omega : (2:ℤ) ≤ K2)
+    have hn : (0:ℝ) ≤ lam^4*d^2 := mul_nonneg hp4nn (sq_nonneg _)
+    have hms : lam^4*d^2 < 1 := by nlinarith [hK2b, h2K, mul_nonneg (by linarith : (0:ℝ) ≤ (K2:ℝ)-2) hn]
+    exact g18_floor_helper lam d e h2 h3 hlo hpd hpe hms hbU3 (by linarith [hg3])
+  have hKle3 : K3 ≤ 1 := by
+    by_contra hcon; push_neg at hcon
+    have h2K : (2:ℝ) ≤ (K3:ℝ) := by exact_mod_cast (by omega : (2:ℤ) ≤ K3)
+    have hn : (0:ℝ) ≤ lam^4*e^2 := mul_nonneg hp4nn (sq_nonneg _)
+    have hms : lam^4*e^2 < 1 := by nlinarith [hK3b, h2K, mul_nonneg (by linarith : (0:ℝ) ≤ (K3:ℝ)-2) hn]
+    exact g18_floor_helper lam e f h2 h3 hlo hpe hpf hms hbU4 (by linarith [hg4])
+  have hKle4 : K4 ≤ 1 := by
+    by_contra hcon; push_neg at hcon
+    have h2K : (2:ℝ) ≤ (K4:ℝ) := by exact_mod_cast (by omega : (2:ℤ) ≤ K4)
+    have hn : (0:ℝ) ≤ lam^4*f^2 := mul_nonneg hp4nn (sq_nonneg _)
+    have hms : lam^4*f^2 < 1 := by nlinarith [hK4b, h2K, mul_nonneg (by linarith : (0:ℝ) ≤ (K4:ℝ)-2) hn]
+    exact g18_floor_helper lam f e h2 h3 hlo hpf hpe hms hbU3 (by linarith [hr4])
+  interval_cases K0 <;> interval_cases K1 <;> interval_cases K2 <;> interval_cases K3 <;> interval_cases K4 <;>
+    push_cast at hk0 hf0 hk1 hf1 hk2 hf2 hk3 hf3 hk4 hf4 <;>
+    exact case_q18 a b c d e f g lam hps h2 h3 hpa hpb hpc hpd hpe hpf hpg hca hcb hcc hcd hce hcf hcg hr0 hr1 hr2 hr3 hr4 hr5 hg0 hg1 hg2 hg3 hg4 hg5 hk0 hk1 hk2 hk3 hk4 hf0 hf1 hf2 hf3 hf4 hP0 hP1 hP2 hP3 hP4 hP5
+
+/-- **q=18 window-6, orbit form.** Along any genuine scalar orbit (both Taha edges + cap +
+genuine floor recurrence), no 6 consecutive products are all `< 1/lam^3`. -/
+theorem g18_no_window_below_genuine
+    (lam : ℝ) (hps : lam^6 = 6*lam^4 - 9*lam^2 + 3) (h2 : (1:ℝ) < lam) (h3 : lam < 2)
+    (hlo : (9:ℝ)/5 < lam)
+    (c : ℕ → ℝ) (hposc : ∀ n, 0 < c n) (hcap : ∀ n, c n ≤ 1)
+    (hreg : ∀ n, c n + lam * c (n+1) > 1) (hgen : ∀ n, lam * c n + c (n+1) > 1)
+    (hrec : ∀ n, c n + c (n+2) = (⌊(1 + c n)/(lam*c (n+1))⌋ : ℝ)*lam*c (n+1)) :
+    ∀ i, ¬ (c (i+0) * c (i+1) < 1/lam^3 ∧
+            c (i+1) * c (i+2) < 1/lam^3 ∧
+            c (i+2) * c (i+3) < 1/lam^3 ∧
+            c (i+3) * c (i+4) < 1/lam^3 ∧
+            c (i+4) * c (i+5) < 1/lam^3 ∧
+            c (i+5) * c (i+6) < 1/lam^3) := by
+  have hpos' : 0 < lam := by linarith
+  intro i hcon
+  obtain ⟨hh0, hh1, hh2, hh3, hh4, hh5⟩ := hcon
+  have flr : ∀ n, (1:ℤ) ≤ ⌊(1 + c n)/(lam*c (n+1))⌋ := by
+    intro n
+    have hden : 0 < lam*c (n+1) := mul_pos hpos' (hposc (n+1))
+    have hsum : 0 < (⌊(1 + c n)/(lam*c (n+1))⌋ : ℝ)*lam*c (n+1) := by
+      rw [← hrec n]; linarith [hposc n, hposc (n+2)]
+    have h0' : (0:ℝ) < (⌊(1 + c n)/(lam*c (n+1))⌋ : ℝ) := by nlinarith [hsum, hden]
+    have : (0:ℤ) < ⌊(1 + c n)/(lam*c (n+1))⌋ := by exact_mod_cast h0'
+    omega
+  have flrUB : ∀ n, 1 + c n < ((⌊(1 + c n)/(lam*c (n+1))⌋ : ℝ)+1)*(lam*c (n+1)) := by
+    intro n
+    have hden : 0 < lam*c (n+1) := mul_pos hpos' (hposc (n+1))
+    have := Int.lt_floor_add_one ((1 + c n)/(lam*c (n+1)))
+    rw [div_lt_iff₀ hden] at this
+    linarith [this]
+  exact g18_core (c (i+0)) (c (i+1)) (c (i+2)) (c (i+3)) (c (i+4)) (c (i+5)) (c (i+6)) lam hps h2 h3 hlo
+    (hposc (i+0)) (hposc (i+1)) (hposc (i+2)) (hposc (i+3)) (hposc (i+4)) (hposc (i+5)) (hposc (i+6))
+    (hcap (i+0)) (hcap (i+1)) (hcap (i+2)) (hcap (i+3)) (hcap (i+4)) (hcap (i+5)) (hcap (i+6))
+    (hreg (i+0)) (hreg (i+1)) (hreg (i+2)) (hreg (i+3)) (hreg (i+4)) (hreg (i+5))
+    (hgen (i+0)) (hgen (i+1)) (hgen (i+2)) (hgen (i+3)) (hgen (i+4)) (hgen (i+5))
+    (⌊(1 + c (i+0))/(lam*c (i+1))⌋) (⌊(1 + c (i+1))/(lam*c (i+2))⌋) (⌊(1 + c (i+2))/(lam*c (i+3))⌋) (⌊(1 + c (i+3))/(lam*c (i+4))⌋) (⌊(1 + c (i+4))/(lam*c (i+5))⌋)
+    (hrec (i+0)) (hrec (i+1)) (hrec (i+2)) (hrec (i+3)) (hrec (i+4))
+    (flr (i+0)) (flr (i+1)) (flr (i+2)) (flr (i+3)) (flr (i+4))
+    (flrUB (i+0)) (flrUB (i+1)) (flrUB (i+2)) (flrUB (i+3)) (flrUB (i+4))
+    hh0 hh1 hh2 hh3 hh4 hh5
+
+
+
+/-! ## UNCONDITIONAL CAPSTONE (q=18): discharge the F-window hypothesis with the proven
+`g18_no_window_below_genuine` (degree-6 principal Hecke minimal polynomial of 2cos(π/18)).  `hF` is
+GONE — a NON-conditional lower bound `X_Ω-corridor(18) ≥ 1/λ³` for every Tmap-invariant probability
+measure on the F-corridor domain `Dcorr`. -/
+open MeasureTheory in
+theorem Xomega_corridor_lb_q18
+    (l : ℝ) (hmp : l ^ 6 = 6 * l ^ 4 - 9 * l ^ 2 + 3) (h2 : l < 2) (hlo : (9:ℝ)/5 < l)
+    (μ : Measure (ℝ × ℝ)) [IsProbabilityMeasure μ]
+    (hμD : μ (HeckeGenuine.Dcorr l)ᶜ = 0)
+    (hinv : MeasurePreserving (HeckeGenuine.Tmap l) μ μ)
+    (M : ℝ) (hPbdd : ∀ᵐ x ∂μ, HeckeGenuine.Pprod x ≤ M) :
+    1 / l ^ 3 ≤ essSup (HeckeGenuine.Pprod) μ := by
+  have hF : HeckeGenuine.FwindowHyp HeckeGenuine.mpoly_q18 :=
+    fun lam hp => g18_no_window_below_genuine lam hp
+  exact HeckeGenuine.perq_essSup_ge_q18 l hF hmp h2 hlo μ hμD hinv M hPbdd
+
+#print axioms Xomega_corridor_lb_q18
