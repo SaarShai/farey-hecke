@@ -5,7 +5,22 @@
 read this file to connect to M1/M2 for compute. It physically lives in the `Farey NOW` repo
 but is a shared infra reference. (Supersedes the blank template `m1-m2-handoff.md`.)
 
-_Last updated: 2026-06-02. Per-machine values below are PENDING a control test — see STATUS._
+_Last updated: 2026-06-05. M1 & M2 RE-VERIFIED CONTROL_OK from M3 (passwordless). See STATUS._
+
+> **2026-06-05 re-verification + two durable gotchas:**
+> 1. **Wi-Fi client isolation can silently block M3↔node even on the same `192.168.1.x`.**
+>    Symptom: node self-reports its IP + Remote Login ON, but from M3 `ping` = 100% loss and
+>    `arp -n <ip>` = **(incomplete)** while *another* node on the same /24 pings fine. Cause = node
+>    joined a different SSID / guest net / mesh-leg with station isolation. NOT a key/sleep problem —
+>    no paste on the node fixes it. Fix is router-side: put the node on the **same un-isolated SSID**
+>    as M3 (or wire it). Same root cause also kills mDNS (`*.local`) across the boundary.
+> 2. **mDNS `*.local` did NOT resolve from M3** even when the node was reachable by IP (resolver
+>    quirk). Once on the same network, **connect by IP** (`new@192.168.1.22`, `alicia@192.168.1.92`);
+>    treat `.local` as best-effort, not the primary handle.
+> 3. **Never-sleep is now enforced by a root LaunchDaemon** `com.farey.keepawake`
+>    (`/Library/LaunchDaemons/com.farey.keepawake.plist`, runs `caffeinate -dimsu`, RunAtLoad+KeepAlive)
+>    **+ `sudo pmset -a sleep 0 … disablesleep 1`**. Loads at boot, no login needed. If a node sleeps
+>    again, re-check the daemon is `loaded` and `pmset -g | grep disablesleep` = 1.
 
 ## Topology (current)
 - **M3** = primary workstation / Claude-Code host = `Saaars-MacBook-Pro.local`, currently `192.168.1.134`.
@@ -24,7 +39,7 @@ _Last updated: 2026-06-02. Per-machine values below are PENDING a control test �
 - Usernames (historical — CONFIRM via report block; accounts may differ now):
   M1 = `new`, M2 = `saar`, M1B = `za`.
 
-## Verified values — STATUS: M1 ✅ · M2 ✅ verified (2026-06-02) · M1B offline
+## Verified values — STATUS: M1 ✅ · M2 ✅ RE-VERIFIED CONTROL_OK 2026-06-05 (key passwordless, both up at .22/.92) · M1B offline
 | node | IP | user | ssh | cores / RAM | macOS | toolchain | verified |
 |---|---|---|---|---|---|---|---|
 | M1  | `192.168.1.22` | `new` | `ssh -i ~/.ssh/id_ed25519 new@192.168.1.22` | M1 Max 10c / 32GB | 26.3.1 | cc, make, python3.9, mpmath1.3, numpy2.0 (no gp) | ✅ 2026-06-02 |
