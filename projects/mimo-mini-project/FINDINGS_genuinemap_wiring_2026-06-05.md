@@ -72,7 +72,43 @@ Quot.sound]`, no `sorryAx` — Hard Rule 1, did NOT trust agent claims).
 The Casorati/analytic/selector-spec/cusp/L2 core is all machine-checked; residuals (1)-(3) are the
 genuine-map *geometry* (selector existence + cusp upper edge + numeric containment).
 
+## 5. Workflow round 2 (5 parallel tracks, wf_c488930b-1d7) — integrated + MY-re-verified
+Appended to `lean/BCZHeckeGenuineMap_allq_WIP.lean` (now **1119 lines, 76 decls**); I recompiled the
+WHOLE file in `/tmp/lean-minus1`: **LEAN EXIT=0, 0 sorryAx, all 34 new decls axiom-clean** `[propext,
+Classical.choice, Quot.sound]` (Hard Rule 1 — caught + fixed a truncated agent leanCode; the box q17..21
+proofs came from the agent's scratch `APPENDED_BLOCK.lean`, then re-verified).
+- **selectorexist — CLOSED.** `branch_exists` (witness i=q−1: at boundary `L_{q−1}=b≤1`) + `branchIdx'`
+  / `branchIdx'_spec`: `branchIdx` now fully discharged (NO free existence hyp) from boundary data.
+- **cuspguard — CLOSED → residual G3 RESOLVED.** `cusp_guards_of_branch`: on cusp branch i=q−2, the
+  three cusp guards = `{L_{q−3}>1 (entry), L_{q−2}≤1 (=G3, active), Taha edge (=G2)}`, via boundary
+  X-values `X(q−2)=1, X(q−3)=λ, X(q−4)=λ²−1` (`cheb_cusp_m1/m2`, `L_cusp_active/entry`).
+  `kick_bound_of_branch`: cusp-branch membership ⟹ `Pgen≥1/λ³`. **G3 is a branch-membership fact, now
+  proven** — the highfloor counterexample obstruction is dissolved (it was the wrong route).
+- **genmapdef — CLOSED.** `genStep` = selector(`branchIdx`)∘scalar-successor(`succA/succB`);
+  `genStep_fst_le_one` (non-trivial, consumes `branchIdx_spec`: emitted a′ inherits the active band).
+- **boxcontain — CLOSED (l + thr parts), q=16..21.** `cheb_lwin_q16..q21`: from the algebraic encoding
+  `cheb l q=0 ∧ cheb l (q−1)=1` + localization `1.81<l<2`, prove the tight `l∈[4903/2500,989/500]`
+  (degree-(q−1) cheb unfold + Bézout gcd cert + factored endpoint nlinarith); `thr_in_box_of_lwin`:
+  that ⟹ `1/l³∈[129/1000,663/5000]`. r-range (cheb ratios) NOT done (honest).
+- **l1window — PARTIAL (real dent in the hard crux).** `pseq_closed`: corridor product closed form
+  `p_n=(r²/2)[cosJ+cos((2n+1)J−2ψ)]` (new clean Lean lemma). `winMax_ge_thr`: master reduction
+  (peak-touch + energy envelope ⟹ window-max ≥1/λ³). **Reduced the uniform crux to ONE explicit 1-D
+  inequality** `inner_trig_box` (`λ⁴≥2(1+2λ²)cos²H`), PROVEN on the box `λ≥1.98, cos²H≤0.865`
+  (margin ~0.075). Assembled `l1window_inner_box`. Still assumed: the peak-touch "inner" hypothesis +
+  full λ-range. Not closed, but the obstruction is now a single named 1-D bound.
+
+### Net remaining for unconditional q≥18 (after round 2)
+1. **L1 uniform F-window** — reduced to `inner_trig_box` (1-D, proven on a sub-box); remaining =
+   the peak-touch/lattice "inner" hypothesis for all q + extend the box to full λ-range. THE gate.
+2. **r-range box-containment** for q=16..21 (cheb ratios) — numeric, not yet Lean.
+3. **Per-q closure q=17..21** — now CLOSE: window (q≤21 ✓), `genuine_ejection_floor1` ✓, L2 ✓, cusp
+   guards / G3 ✓, selector ✓ — remaining glue = package `genStep` orbit + the assembly's
+   measure-theoretic hyps (`hinv`, `hPbdd`) into `essSup_genuine_ge_via_cusp`.
+4. **Torsion-quant (hyp4)** — still numeric.
+G3 (the prior session's suspected analytic crux) is CLOSED. The single hard gate is now (1) the L1
+1-D trig bound over the full range; (3) is assembly plumbing.
+
 ## Artifacts
-`lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (574 lines, 41 decls),
-`code/Lgoal_buildcore_q17tmp.py`. Workflow `wf_77bfaa59-31f` (4 agents, scratch `/tmp/WF_*.lean`).
-Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
+`lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (1119 lines, 76 decls),
+`code/Lgoal_buildcore_q17tmp.py`. Workflows `wf_77bfaa59-31f` (4 agents) + `wf_c488930b-1d7` (5 agents),
+scratch `/tmp/WF*.lean`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
