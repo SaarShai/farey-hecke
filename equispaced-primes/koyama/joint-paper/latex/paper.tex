@@ -1,0 +1,108 @@
+% Minimal wrapper for the Saar–Koyama §X technical/computational
+% section. Designed for drop-in compilation while the host paper
+% structure is being assembled; on integration the host paper will
+% replace this preamble and \input the three subfiles.
+%
+% Compile: pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
+
+\documentclass[11pt]{amsart}
+
+% ---------- packages ---------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{booktabs, longtable, array}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+% Wide tables (esp. §X.6 Lean inventory, §X.5 numerical residuals)
+% overflow the text width at \normalsize. Render them at \small with
+% tightened column spacing and a generous \emergencystretch so TeX
+% can find acceptable line breaks inside narrow cells.
+\AtBeginEnvironment{longtable}{\small\setlength{\emergencystretch}{3em}}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.05}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=MidnightBlue, citecolor=MidnightBlue, urlcolor=MidnightBlue}
+
+% ---------- theorem environments --------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{hypothesis}{Hypothesis}
+
+% ---------- macros used in §X / appendices ----------------------------------
+% Note: the markdown source writes \mathrm{Re}(...) directly, so we don't
+% redefine \Re.
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\BPC}{\mathrm{BPC}}
+\newcommand{\dps}{\mathrm{dps}}
+
+% ---------- bibliography ----------------------------------------------------
+\usepackage[backend=bibtex,style=alphabetic,maxbibnames=4]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- meta -------------------------------------------------------------
+\title[Technical / Computational section]{Methodology, formalization, and numerical evidence \\
+       \large (Technical / Computational section --- draft)}
+\author{Shin-ya Koyama \and Saar Shai}
+\date{\today}
+
+% Allow TeX more flexibility with line breaks. Long inline-code
+% tokens (e.g. `formal-conjectures/LocalPerronResidue.lean`) and code
+% identifiers are otherwise unbreakable and cause overfull boxes.
+\sloppy
+\setlength{\emergencystretch}{4em}
+\hyphenpenalty=1000
+\exhyphenpenalty=1000
+% Presentation-only line-breaking tolerance (does not alter content):
+% lets TeX accept slightly looser lines instead of emitting overfull
+% \hbox rules inside the dense \S X.5/\S X.6 tables.
+\tolerance=2000
+\hbadness=2000
+% Permit breaks inside long unbreakable code tokens (Lean module
+% paths/identifiers) as a last resort, which is the dominant source
+% of the residual overfull boxes in the inventory tables.
+\appto\ttfamily{\hyphenchar\font=`\-}
+
+\begin{document}
+
+\begin{abstract}
+This is the technical and computational section (\S X) and its two
+proof appendices of the joint manuscript, circulated as a
+self-contained draft. It records the corrected $B_\infty$
+framework: the four-component $B_\infty$ identity
+(Theorem~X.4.1, unconditional given simplicity of the zero
+$\rho$; full proof in Appendix~A), the leading-plus-%
+subleading partial-M\"obius identity (Theorem~X.4.2, Appendix~B),
+the local Perron double-pole residue (Lemma~X.3.1), a double-%
+verified numerical study at two rigorously separated scales (the
+Phase-1 Dominance-of-$-1$ replication at $x = 1.3\cdot10^{13}$ and
+the analytic-identity verification to $K = 10^{8}$), and a Lean~4
+/ Mathlib formalisation inventory with a cumulative axiom audit.
+The full paper's abstract and introduction are drafted jointly and
+are not part of this technical draft.
+\end{abstract}
+
+\maketitle
+
+\input{section_X}
+
+\appendix
+\input{appendix_A}
+\input{appendix_B}
+
+\printbibliography
+
+\end{document}

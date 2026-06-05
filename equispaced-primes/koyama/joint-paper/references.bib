@@ -1,0 +1,222 @@
+% references.bib — bibliography for the Saar–Koyama joint paper Technical/Computational section
+% (handoff-2026-05-12-paper-prep/SECTION_DRAFT_2026-05-12.md)
+%
+% Each entry is cross-referenced against Appendix C of the section draft.
+% Where a key fact from the entry is used in the body, the §X.Y label is recorded
+% in a `note` field.
+
+% ==================== Primary external citations (analytic) ====================
+
+@article{AokiKoyama2023,
+  author  = {Aoki, Miho and Koyama, Shin-ya},
+  title   = {Chebyshev's bias against splitting and principal primes in global fields},
+  journal = {Journal of Number Theory},
+  volume  = {245},
+  year    = {2023},
+  pages   = {233--262},
+  doi     = {10.1016/j.jnt.2022.10.005},
+  note    = {Equation (1.4), p.\ 235, is the Dirichlet-$L$ generalization of the
+             Akatsuka 2013 limit; specializes (at $m = 1$, $\rho \ne \tfrac12$)
+             to Hypothesis AK of §X.4.3.}
+}
+
+@article{Akatsuka2013,
+  author  = {Akatsuka, Hirotaka},
+  title   = {The {E}uler product for the {R}iemann zeta-function in the critical strip},
+  year    = {2013},
+  month   = feb,
+  note    = {Preprint dated 2013-02-14, 26 pp.\ Equation (2.5), p.\ 7
+             (within the proof of Lemma 2.1), gives the unconditional
+             boundary-line Mertens estimate
+             $\sum_{p \le X} p^{-1-2it_0} = c(t_0) + O((\log X)^{-1})$
+             for $t_0 \ne 0$. Used in Appendix A §A.2.3 and §A.6.}
+}
+
+@article{Inoue2021,
+  author  = {Inoue, Shota},
+  title   = {Some explicit formulas for partial sums of {M\"o}bius functions},
+  journal = {Journal de Th\'eorie des Nombres de Bordeaux},
+  volume  = {33},
+  number  = {2},
+  year    = {2021},
+  pages   = {273--315},
+  url     = {https://www.numdam.org/item/JTNB\_2021\_\_33\_2\_273\_0.pdf},
+  eprint  = {1805.05015},
+  archivePrefix = {arXiv},
+  note    = {Theorem 1, p.\ 3, is the unconditional truncated explicit formula
+             for $M^*(x,\chi)$ used in Appendix B §B.1.3.}
+}
+
+@article{Soundararajan2009,
+  author  = {Soundararajan, Kannan},
+  title   = {Partial sums of the {M\"o}bius function},
+  journal = {Annals of Mathematics},
+  volume  = {170},
+  year    = {2009},
+  pages   = {981--993},
+  eprint  = {0705.0723},
+  archivePrefix = {arXiv},
+  note    = {Theorem 1, p.\ 1, gives the RH-conditional rate
+             $M(x) \ll \sqrt{x}\,\exp((\log x)^{1/2}(\log\log x)^{14})$,
+             used in Appendix B §B.3-B.4.}
+}
+
+@article{Ng2004,
+  author  = {Ng, Nathan},
+  title   = {The distribution of the summatory function of the {M\"o}bius function},
+  journal = {Proceedings of the London Mathematical Society},
+  series  = {3rd},
+  volume  = {89},
+  year    = {2004},
+  pages   = {361--389},
+  note    = {Cited in Appendix B §B.4 for the conditional rate
+             $M(x) \ll x^{1/2}(\log x)^{5/4}$ under RH plus a Gonek–Hejhal bound.}
+}
+
+@article{Bartz1991,
+  author  = {Bartz, Klemens},
+  title   = {On some complex explicit formulae connected with the {M\"o}bius function},
+  journal = {Acta Arithmetica},
+  volume  = {57},
+  year    = {1991},
+  pages   = {283--293}
+}
+
+% ==================== Textbook references ====================
+
+@book{MontgomeryVaughan2007,
+  author    = {Montgomery, Hugh L. and Vaughan, Robert C.},
+  title     = {Multiplicative Number Theory {I}: {C}lassical Theory},
+  publisher = {Cambridge University Press},
+  series    = {Cambridge Studies in Advanced Mathematics},
+  volume    = {97},
+  year      = {2007},
+  pages     = {xviii+552},
+  note      = {Theorem 9.4 / Corollary 9.5 for the primitive-character induction
+               identity (Appendix A §A.2.1); Theorem 12.5 for the explicit
+               formula for $\psi(x)$ used in Appendix B §B.3.}
+}
+
+@book{Tenenbaum2015,
+  author    = {Tenenbaum, G\'erald},
+  title     = {Introduction to Analytic and Probabilistic Number Theory},
+  edition   = {3rd},
+  publisher = {American Mathematical Society},
+  series    = {Graduate Studies in Mathematics},
+  volume    = {163},
+  year      = {2015},
+  note      = {Chapter II.5 for the Hadamard–de la Vall\'ee Poussin
+               non-vanishing of $L(s, \chi)$ on $\mathrm{Re}(s) = 1$
+               (Appendix A §A.2.3); Theorem II.2.3 for the truncated
+               Perron formula (Appendix B §B.1.2).}
+}
+
+@book{Titchmarsh1986,
+  author    = {Titchmarsh, Edward Charles},
+  title     = {The Theory of the {R}iemann Zeta-Function},
+  edition   = {2nd},
+  publisher = {Oxford University Press},
+  year      = {1986},
+  note      = {Theorem 3.11 for polynomial bounds on $1/\zeta(s)$ off
+               $\mathrm{Re}\,s = 1$, named as a Mathlib prerequisite for
+               `inv\_zeta\_polynomial\_growth` in §X.6 of the section
+               (the second remaining `sorry` in
+               `SmoothedDwfFormula\_full.lean`).}
+}
+
+% ==================== Lean 4 and verification tooling ====================
+
+@manual{LeanMathlib,
+  title  = {{M}athlib: the {L}ean mathematical library},
+  organization = {Lean prover community},
+  year   = {2026},
+  note   = {Used at Mathlib v4.28.0 (commit 8f9d9cff6bd728b17a24e163c9402775d9e6a365),
+            with Lean toolchain leanprover/lean4:v4.28.0 (§X.6).}
+}
+
+@inproceedings{TaoPFRBlueprint2023,
+  author    = {Tao, Terence and others},
+  title     = {Formalizing the proof of {PFR} in {L}ean 4 using {B}lueprint},
+  year      = {2023},
+  note      = {Tao's PFR formalization project; the manuscript adopts the
+               Massot blueprint convention used there.}
+}
+
+% ==================== Numerical software ====================
+
+@manual{primesieve,
+  author = {Walisch, Kim},
+  title  = {primesieve: a fast prime number generator},
+  year   = {2024},
+  url    = {https://github.com/kimwalisch/primesieve},
+  note   = {Version 12.13 used in the Phase-1 Dominance-of-$-1$
+            replication (§X.5.1, `koyama\_replication\_bundle/replicate.cpp`).}
+}
+
+@manual{PARI,
+  title  = {{PARI/GP, version 2.17.3}},
+  author = {{{The PARI~Group, Univ.\ Bordeaux}}},
+  year   = {2026},
+  url    = {http://pari.math.u-bordeaux.fr/},
+  note   = {Cross-language L2 verifier (§X.2, §X.5.2;
+            handoff-2026-05-12-paper-prep/pari\_L2\_crosscheck.gp
+            and pari\_L2\_K10M.gp).}
+}
+
+@misc{FLINT,
+  author = {Hart, William and others},
+  title  = {{FLINT: Fast Library for Number Theory}},
+  year   = {2026},
+  note   = {Used at FLINT 3.3 bundled with Arb, accessed via python-flint
+            0.8.0 for the 250-bit interval-arithmetic spot check (§X.5.2;
+            handoff-2026-05-12-paper-prep/arb\_L2\_spot.py).}
+}
+
+@misc{mpmath,
+  author = {Johansson, Fredrik and others},
+  title  = {{mpmath: a Python library for arbitrary-precision floating-point arithmetic}},
+  year   = {2026},
+  note   = {Used at version 1.4.1 for the L1 primary lane and the L1b
+            in-language cross-check (§X.2, §X.5;
+            handoff-2026-05-12-paper-prep/mpmath\_L2\_crosscheck.py).}
+}
+
+% ==================== Phase-1 source paper ====================
+
+@unpublished{KoyamaDominance,
+  author = {Koyama, Shin-ya},
+  title  = {A hidden hierarchy of {C}hebyshev's bias and the Dominance of $-1 \pmod N$},
+  year   = {2026},
+  month  = apr,
+  note   = {Preprint sent by S. Koyama on 2026-04-26 (project copy:
+            \texttt{nontriv.pdf}). Tables 3–7 are independently
+            replicated in §X.5.1 of the present manuscript via the
+            \texttt{koyama\_replication\_bundle/}.}
+}
+
+% ==================== Internal project artifacts ====================
+
+@unpublished{SaarKoyama2026Replication,
+  author = {Shai, Saar},
+  title  = {{K}oyama {T}ables 3-7 Independent Replication Report},
+  year   = {2026},
+  month  = may,
+  note   = {Internal reproducibility bundle for the Phase-1
+            Dominance-of-$-1$ replication; located in the repository
+            at \texttt{koyama\_replication\_bundle/REPLICATION\_REPORT.md}
+            with source code \texttt{replicate.cpp} (primesieve-based)
+            and \texttt{independent\_sieve.c} (hand-rolled C segmented
+            Eratosthenes), wall-clock 68.8 min on Apple M1 Max single
+            core for the full pass to $x = 1.3 \cdot 10^{13}$.}
+}
+
+@unpublished{HaloPlan2026,
+  author = {Shai, Saar},
+  title  = {Halo-Residue Route — Documentation and Unconditional Plan},
+  year   = {2026},
+  month  = may,
+  note   = {Internal: \texttt{handoff-2026-05-12-halo-unconditional-plan/HALO\_UNCONDITIONAL\_PLAN\_2026-05-12.md}.
+            Source of §X.7.1 of the manuscript. Door B (HaloShiftComparison)
+            is proved (§5.1 of the halo plan) as an absolute constant
+            under the framework's GRH; Doors A, C, D remain open.}
+}

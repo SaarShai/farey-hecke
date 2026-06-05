@@ -1,0 +1,36 @@
+====================================================================================
+Q1c EXACT: R_D = q^D * (Wtot_D/Phi_D),  Wtot_D=(q-1) sum_{m monic} A_D(m)^2 q^{-2deg m}
+A_D(m) exact via G0. Pure Fraction arithmetic. Decisive: does R_D converge?
+====================================================================================
+
+--- q=2 ---
+ D      Phi_D         Wtot_D       W_D^pf   R_D=q^D W^pf        dR
+ 1          3         2.9766 9.921875e-01       1.984375          
+ 2         11         7.9570 7.233665e-01       2.893466  +0.90909
+ 3         43        22.9160 5.329306e-01       4.263445  +1.36998
+ 4        171        59.8330 3.499006e-01       5.598410  +1.33497
+ 5        683       142.6665 2.088821e-01       6.684229  +1.08582
+ 6       2731       319.3333 1.169291e-01       7.483460  +0.79923
+ 7      10923       685.6666 6.277274e-02       8.034911  +0.55145
+
+--- q=3 ---
+ D      Phi_D         Wtot_D       W_D^pf   R_D=q^D W^pf        dR
+ 1          7        10.9712 1.567313e+00       4.701940          
+ 2         61        58.9163 9.658414e-01       8.692572  +3.99063
+ 3        547       242.7499 4.437841e-01      11.982170  +3.28960
+ 4       4921       850.2500 1.727799e-01      13.995173  +2.01300
+ 5      44287      2744.7500 6.197643e-02      15.060272  +1.06510
+
+--- q=5 ---
+ D      Phi_D         Wtot_D       W_D^pf   R_D=q^D W^pf        dR
+ 1         21        68.9664 3.284114e+00      16.420571          
+ 2        521       580.8333 1.114843e+00      27.871079 +11.45051
+ 3      13021      3460.1667 2.657374e-01      33.217175  +5.34610
+
+====================================================================================
+READING: R_D rising & dR shrinking (geometric) => converges to finite C_FF(q),
+EXACT and UNCONDITIONAL (M_A constant; no RH). Consistent w/ Q1a radix sim.
+By G2(b) orthogonality this is the Keating-Rudnick/Mikolas object =>
+CONFIRMS dictionary-tier: exact unconditional collapse, NOT a new statistic.
+If dR not shrinking / R_D ~ q^D => growth, re-examine (would be surprising).
+====================================================================================

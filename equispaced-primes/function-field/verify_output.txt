@@ -1,0 +1,37 @@
+========================================================================
+GATE 0  -- exact FF Farey-Mertens identity   A_D(m) = sum_{e|m} q^deg e * M_A(D-deg e)
+========================================================================
+q=2: M_A(0..4) = [1, -1, -1, -1, -1]  predicted [1, -1, -1, -1, -1]  OK
+  -> 116 (m,D) cases checked, all match: YES
+q=3: M_A(0..4) = [1, -2, -2, -2, -2]  predicted [1, -2, -2, -2, -2]  OK
+  -> 174 (m,D) cases checked, all match: YES
+q=5: M_A(0..4) = [1, -4, -4, -4, -4]  predicted [1, -4, -4, -4, -4]  OK
+  -> 187 (m,D) cases checked, all match: YES
+
+========================================================================
+GATE 1  -- global trivialization:  D > deg m  =>  A_D(m) = (1-q) * sigma_A(m), D-independent
+========================================================================
+q=2 m=deg1(0, 1): A_D for D=deg m+1..+3 = [-3, -3, -3] ; (1-q)*sigma_A = -3 ; STABLE
+q=2 m=deg1(1, 1): A_D for D=deg m+1..+3 = [-3, -3, -3] ; (1-q)*sigma_A = -3 ; STABLE
+q=2 m=deg2(0, 0, 1): A_D for D=deg m+1..+3 = [-7, -7, -7] ; (1-q)*sigma_A = -7 ; STABLE
+q=2 m=deg2(0, 1, 1): A_D for D=deg m+1..+3 = [-9, -9, -9] ; (1-q)*sigma_A = -9 ; STABLE
+q=2 m=deg2(1, 0, 1): A_D for D=deg m+1..+3 = [-7, -7, -7] ; (1-q)*sigma_A = -7 ; STABLE
+q=3 m=deg1(0, 1): A_D for D=deg m+1..+3 = [-8, -8, -8] ; (1-q)*sigma_A = -8 ; STABLE
+q=3 m=deg1(1, 1): A_D for D=deg m+1..+3 = [-8, -8, -8] ; (1-q)*sigma_A = -8 ; STABLE
+q=3 m=deg1(2, 1): A_D for D=deg m+1..+3 = [-8, -8, -8] ; (1-q)*sigma_A = -8 ; STABLE
+q=3 m=deg2(0, 0, 1): A_D for D=deg m+1..+3 = [-26, -26, -26] ; (1-q)*sigma_A = -26 ; STABLE
+q=3 m=deg2(0, 1, 1): A_D for D=deg m+1..+3 = [-32, -32, -32] ; (1-q)*sigma_A = -32 ; STABLE
+q=3 m=deg2(0, 2, 1): A_D for D=deg m+1..+3 = [-32, -32, -32] ; (1-q)*sigma_A = -32 ; STABLE
+q=5 m=deg1(0, 1): A_D for D=deg m+1..+3 = [-24, -24, -24] ; (1-q)*sigma_A = -24 ; STABLE
+q=5 m=deg1(1, 1): A_D for D=deg m+1..+3 = [-24, -24, -24] ; (1-q)*sigma_A = -24 ; STABLE
+q=5 m=deg1(2, 1): A_D for D=deg m+1..+3 = [-24, -24, -24] ; (1-q)*sigma_A = -24 ; STABLE
+q=5 m=deg1(3, 1): A_D for D=deg m+1..+3 = [-24, -24, -24] ; (1-q)*sigma_A = -24 ; STABLE
+q=5 m=deg1(4, 1): A_D for D=deg m+1..+3 = [-24, -24, -24] ; (1-q)*sigma_A = -24 ; STABLE
+q=5 m=deg2(0, 0, 1): A_D for D=deg m+1..+3 = [-124, -124, -124] ; (1-q)*sigma_A = -124 ; STABLE
+q=5 m=deg2(0, 1, 1): A_D for D=deg m+1..+3 = [-144, -144, -144] ; (1-q)*sigma_A = -144 ; STABLE
+q=5 m=deg2(0, 2, 1): A_D for D=deg m+1..+3 = [-144, -144, -144] ; (1-q)*sigma_A = -144 ; STABLE
+
+========================================================================
+GATE 0 (identity exact):        PASS
+GATE 1 (global trivializes):    PASS
+========================================================================

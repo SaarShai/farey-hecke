@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mathematics Connections Map — Farey Spectroscope Research</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: #0a0a1a; color: #e0e0e0; margin: 0; padding: 20px; }
+h1 { text-align: center; color: #ffd700; font-size: 1.8em; }
+h2 { text-align: center; color: #888; font-weight: normal; font-size: 1em; margin-top: -5px; }
+svg { display: block; margin: 20px auto; }
+.node circle { stroke: #fff; stroke-width: 2; cursor: pointer; }
+.node text { font-size: 11px; fill: #ccc; pointer-events: none; }
+.link { stroke-opacity: 0.6; }
+.tooltip { position: absolute; background: #1a1a4e; border: 1px solid #555; border-radius: 8px; padding: 12px; font-size: 12px; max-width: 300px; pointer-events: none; display: none; }
+.legend { position: fixed; bottom: 20px; left: 20px; background: rgba(10,10,26,0.9); padding: 15px; border-radius: 10px; border: 1px solid #333; font-size: 11px; }
+.legend div { margin: 4px 0; }
+.legend span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<h1>🔬 Mathematics Connections Map</h1>
+<h2>How Farey Spectroscope Research Bridges 15 Areas of Mathematics</h2>
+
+<svg id="graph" width="1000" height="700"></svg>
+
+<div class="tooltip" id="tooltip"></div>
+
+<div class="legend">
+<div><b>Node Colors:</b></div>
+<div><span style="background:#4444ff"></span> Number Theory (core)</div>
+<div><span style="background:#44aa44"></span> Analysis / Harmonic</div>
+<div><span style="background:#ff6644"></span> Physics / Dynamics</div>
+<div><span style="background:#aa44aa"></span> Logic / CS</div>
+<div><span style="background:#ff4444"></span> Signal Processing</div>
+<div style="margin-top:8px"><b>Edge Thickness:</b> Bridge strength</div>
+<div><b>Gold edges:</b> Novel bridges</div>
+</div>
+
+<script>
+const nodes = [
+  {id:"11M", label:"ζ & L-functions", strength:10, color:"#4444ff", result:"20/20 zeros, universality, dichotomy", x:500, y:350},
+  {id:"11N", label:"Prime Distribution", strength:9, color:"#4444ff", result:"M(p)/√p spectroscope, R=0.952"},
+  {id:"11A", label:"Farey Sequences", strength:9, color:"#4444ff", result:"ΔW new object, 434 Lean, four-term"},
+  {id:"42A", label:"Harmonic Analysis", strength:8, color:"#44aa44", result:"γ² matched filter, 2→20 detection"},
+  {id:"94A", label:"Signal Processing", strength:7, color:"#ff4444", result:"Detection theory for zero-finding"},
+  {id:"11K", label:"Probabilistic NT", strength:7, color:"#4444ff", result:"Chebyshev bias for Farey, R=0.77"},
+  {id:"15B", label:"Random Matrices", strength:7, color:"#44aa44", result:"GUE RMSE=0.066 from prime data"},
+  {id:"11Y", label:"Computational NT", strength:7, color:"#4444ff", result:"Batch 12-141x, class numbers 5-14x"},
+  {id:"03B", label:"Formal Verification", strength:6, color:"#aa44aa", result:"434 Lean results, Mathlib"},
+  {id:"11L", label:"Dirichlet L-functions", strength:6, color:"#4444ff", result:"108 characters, batch detection"},
+  {id:"70F", label:"Three-Body Problem", strength:6, color:"#ff6644", result:"Figure-eight = φ, periodic table"},
+  {id:"11R", label:"Algebraic NT", strength:5, color:"#4444ff", result:"Number fields, Lucas/Pell"},
+  {id:"37A", label:"Ergodic Theory", strength:5, color:"#44aa44", result:"Horocycle chain identified"},
+  {id:"11J", label:"Diophantine Approx", strength:5, color:"#4444ff", result:"Baker's theorem on cancellation"},
+  {id:"62M", label:"Statistical Inference", strength:4, color:"#44aa44", result:"Chowla spectroscopic test"}
+];
+
+const bridges = [
+  {source:"94A", target:"11M", width:8, color:"#ffd700", label:"γ² matched filter"},
+  {source:"70F", target:"11R", width:7, color:"#ffd700", label:"Figure-eight = φ"},
+  {source:"11K", target:"11A", width:6, color:"#ffd700", label:"Chebyshev bias for Farey"},
+  {source:"15B", target:"11A", width:5, color:"#ffd700", label:"GUE from arithmetic data"},
+  {source:"03B", target:"11M", width:4, color:"#ffd700", label:"434 Lean results"},
+  {source:"11J", target:"42A", width:3, color:"#ffd700", label:"Baker on cancellation"},
+  {source:"94A", target:"11M", width:2, color:"#888888", label:"Upper RIP = large sieve", dash:"5,5"},
+];
+
+const classicalLinks = [
+  {source:"11M", target:"11N", width:3, color:"#333366"},
+  {source:"11M", target:"11A", width:3, color:"#333366"},
+  {source:"11M", target:"42A", width:2, color:"#333366"},
+  {source:"11M", target:"11K", width:2, color:"#333366"},
+  {source:"11M", target:"15B", width:2, color:"#333366"},
+  {source:"11M", target:"11Y", width:2, color:"#333366"},
+  {source:"11M", target:"11L", width:2, color:"#333366"},
+  {source:"11A", target:"11N", width:2, color:"#333366"},
+  {source:"11A", target:"11J", width:1, color:"#333366"},
+  {source:"11M", target:"37A", width:1, color:"#333366"},
+  {source:"11M", target:"62M", width:1, color:"#333366"},
+  {source:"11R", target:"11M", width:1, color:"#333366"},
+];
+
+const svg = document.getElementById('graph');
+const w = 1000, h = 700;
+
+// Position nodes in a hub-and-spoke layout
+const cx = w/2, cy = h/2;
+const positions = {
+  "11M": {x:cx, y:cy},
+  "11N": {x:cx-80, y:cy-100}, "11A": {x:cx+80, y:cy-100},
+  "42A": {x:cx+150, y:cy-30}, "11K": {x:cx-150, y:cy-30},
+  "15B": {x:cx+200, y:cy+80}, "11Y": {x:cx-200, y:cy+80},
+  "11L": {x:cx-120, y:cy+130}, "03B": {x:cx-300, y:cy-150},
+  "94A": {x:cx+350, y:cy-150}, "70F": {x:cx+300, y:cy+200},
+  "11R": {x:cx+150, y:cy+250}, "37A": {x:cx-250, y:cy+200},
+  "11J": {x:cx-350, y:cy+50}, "62M": {x:cx+50, y:cy+200}
+};
+
+nodes.forEach(n => { n.x = positions[n.id].x; n.y = positions[n.id].y; });
+
+// Draw classical links
+classicalLinks.forEach(l => {
+  const s = nodes.find(n=>n.id===l.source), t = nodes.find(n=>n.id===l.target);
+  const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+  line.setAttribute("x1",s.x); line.setAttribute("y1",s.y);
+  line.setAttribute("x2",t.x); line.setAttribute("y2",t.y);
+  line.setAttribute("stroke",l.color); line.setAttribute("stroke-width",l.width);
+  line.setAttribute("stroke-opacity","0.3");
+  svg.appendChild(line);
+});
+
+// Draw bridges (gold = novel)
+bridges.forEach(l => {
+  const s = nodes.find(n=>n.id===l.source), t = nodes.find(n=>n.id===l.target);
+  if(!s||!t) return;
+  const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+  line.setAttribute("x1",s.x); line.setAttribute("y1",s.y);
+  line.setAttribute("x2",t.x); line.setAttribute("y2",t.y);
+  line.setAttribute("stroke",l.color); line.setAttribute("stroke-width",l.width);
+  if(l.dash) line.setAttribute("stroke-dasharray",l.dash);
+  svg.appendChild(line);
+
+  // Label
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.setAttribute("x",(s.x+t.x)/2); text.setAttribute("y",(s.y+t.y)/2 - 8);
+  text.setAttribute("text-anchor","middle"); text.setAttribute("fill","#ffd700");
+  text.setAttribute("font-size","9px"); text.setAttribute("font-style","italic");
+  text.textContent = l.label;
+  svg.appendChild(text);
+});
+
+// Draw nodes
+const tooltip = document.getElementById('tooltip');
+nodes.forEach(n => {
+  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+  g.setAttribute("transform",`translate(${n.x},${n.y})`);
+
+  const circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+  circle.setAttribute("r", 8 + n.strength * 2);
+  circle.setAttribute("fill", n.color);
+  circle.setAttribute("stroke","#fff"); circle.setAttribute("stroke-width","2");
+  circle.style.cursor = "pointer";
+
+  circle.addEventListener('mouseover', (e) => {
+    tooltip.style.display = 'block';
+    tooltip.style.left = (e.pageX + 15) + 'px';
+    tooltip.style.top = (e.pageY - 10) + 'px';
+    tooltip.innerHTML = `<b>${n.id}: ${n.label}</b><br>Strength: ${n.strength}/10<br><br>${n.result}`;
+  });
+  circle.addEventListener('mouseout', () => { tooltip.style.display = 'none'; });
+
+  g.appendChild(circle);
+
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.setAttribute("dy", 8 + n.strength * 2 + 14);
+  text.setAttribute("text-anchor","middle"); text.setAttribute("fill","#ccc");
+  text.setAttribute("font-size","11px");
+  text.textContent = n.label;
+  g.appendChild(text);
+
+  const code = document.createElementNS("http://www.w3.org/2000/svg","text");
+  code.setAttribute("dy", -8 - n.strength * 2 - 4);
+  code.setAttribute("text-anchor","middle"); code.setAttribute("fill","#666");
+  code.setAttribute("font-size","9px");
+  code.textContent = n.id;
+  g.appendChild(code);
+
+  svg.appendChild(g);
+});
+</script>
+</body>
+</html>

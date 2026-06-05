@@ -1,0 +1,60 @@
+{
+  "day": 1,
+  "agents": [
+    {
+      "name": "agent_A_sieve_xcheck",
+      "model": "mimo-v2.5",
+      "stop_reason": "max_tokens",
+      "usage": {
+        "input_tokens": 39,
+        "output_tokens": 12000,
+        "cache_read_input_tokens": 1280
+      },
+      "elapsed_s": 159.51468896865845,
+      "thinking_chars": 32462,
+      "json": null,
+      "json_parse_status": "no ```json``` fence found"
+    },
+    {
+      "name": "agent_B_asymptotic",
+      "model": "mimo-v2.5-pro",
+      "stop_reason": "max_tokens",
+      "usage": {
+        "input_tokens": 8,
+        "output_tokens": 16000,
+        "cache_read_input_tokens": 1408
+      },
+      "elapsed_s": 189.16872692108154,
+      "thinking_chars": 40666,
+      "json": null,
+      "json_parse_status": "no ```json``` fence found"
+    },
+    {
+      "name": "agent_C_lvalue_cert",
+      "model": "mimo-v2.5-pro",
+      "stop_reason": "max_tokens",
+      "usage": {
+        "input_tokens": 1094,
+        "output_tokens": 16000
+      },
+      "elapsed_s": 168.26624822616577,
+      "thinking_chars": 29526,
+      "json": null,
+      "json_parse_status": "no ```json``` fence found"
+    },
+    {
+      "name": "agent_D_deltaff_null",
+      "model": "mimo-v2.5",
+      "stop_reason": "max_tokens",
+      "usage": {
+        "input_tokens": 18,
+        "output_tokens": 12000,
+        "cache_read_input_tokens": 1280
+      },
+      "elapsed_s": 182.0387511253357,
+      "thinking_chars": 30637,
+      "json": null,
+      "json_parse_status": "no ```json``` fence found"
+    }
+  ]
+}

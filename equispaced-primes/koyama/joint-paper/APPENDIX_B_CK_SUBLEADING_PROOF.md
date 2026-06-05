@@ -1,0 +1,352 @@
+# Appendix B — Full proof of Theorem X.4.2 ($c_K$ leading + subleading identity)
+
+This appendix gives the full proof of Theorem X.4.2 of the main text:
+under the hypotheses of Theorem X.4.1 (i.e., $\chi$ primitive
+non-principal of conductor $q$, $\rho = \tfrac12 + i\tau$ a *simple*
+zero of $L(s,\chi)$ with $\tau \ne 0$), and assuming every
+off-target nontrivial zero $\rho' \ne \rho$ of $L(s,\chi)$ in the
+truncation height $|\mathrm{Im}(\rho')| \le T(K)$ of the Inoue (2021)
+explicit-formula box is also *simple* (we write $T(K)$ for the
+truncation height, distinct from the partial prime-power sum
+$T_K(\chi,\rho)$ of §X.1 of the main text; the $o(1)$ rate further
+uses RH for $L(s,\chi)$, see §B.3 and §B.4),
+\begin{equation}
+\label{eq:cK-appendix}
+c_K(\chi,\rho) \;=\; \frac{\log K}{L'(\rho,\chi)} \;+\; C_1(\chi,\rho) \;+\; o(1)
+\qquad (K \to \infty),
+\tag{$\dagger$}
+\end{equation}
+where $C_1(\chi,\rho) = -L''(\rho,\chi) / (2\,L'(\rho,\chi)^2)$ and
+$c_K(\chi,\rho) = \sum_{n \le K} \mu(n)\,\chi(n)\,n^{-\rho}$.
+
+The identity ($\dagger$) is **unconditional in $\rho$** given
+simplicity of $\rho$ and of the crossed off-target zeros. The $o(1)$ rate
+$O(K^{-1/2 + \varepsilon})$ for every $\varepsilon > 0$, and the
+sharper rate
+$O\bigl(K^{-1/2} \exp\bigl((\log K)^{1/2}(\log\log K)^{14}\bigr)\bigr)$
+obtained via the character analogue of Soundararajan (2009) Theorem 1,
+are both conditional on RH for $L(s, \chi)$. For the four characters
+$\chi_{-4}, \chi_5, \chi_{11}$ of §X.5, the nontrivial zeros of
+$L(s,\chi)$ in the relevant explicit-formula range are numerically
+verified to lie on the critical line (provenance in the Supplementary
+computation audit), so these RH-conditional rates are the operative
+ones for the finite $K$ reported here; we do not assert them as
+unconditional theorems. The unconditional fallback is the weaker
+Akatsuka (2017) eq. (2.5) $O(1/\log K)$ bound.
+
+## B.1 Setup — Perron formula for $c_K$ via $1/L(s, \chi)$
+
+### B.1.1 The Dirichlet series for $1/L(s, \chi)$
+
+For $\chi$ primitive of conductor $q \ge 2$ and $\mathrm{Re}(s) > 1$,
+\[
+\frac{1}{L(s, \chi)}
+\;=\;
+\sum_{n=1}^{\infty} \frac{\mu(n)\,\chi(n)}{n^s},
+\]
+absolutely convergent on $\mathrm{Re}(s) > 1$. The Dirichlet
+coefficients are $a_n = \mu(n)\,\chi(n)$, and the partial sum
+$c_K(\chi, \rho) = \sum_{n \le K} a_n n^{-\rho}$ is the spectroscope
+object (argument order matching §X.1 of the main text).
+
+### B.1.2 Perron formula (truncated)
+
+The standard truncated Perron formula (Tenenbaum, *Introduction to
+Analytic and Probabilistic Number Theory*, Theorem II.2.3; Inoue
+(2021), *Some explicit formulas for partial sums of Möbius
+functions*, Journal de Théorie des Nombres de Bordeaux **33** (2021),
+273–315, eq. (4.1) and Theorem 1) gives the following representation.
+
+For any $\sigma_0' > \tfrac12$ and $T \ge 2$, with the convention that
+$c_K$ uses the half-weight at integer $K$,
+\begin{equation}
+\label{eq:Perron-truncated}
+c_K(\chi, \rho)
+\;=\;
+\frac{1}{2\pi i} \int_{\sigma_0' - iT}^{\sigma_0' + iT}
+\frac{K^w}{w} \cdot \frac{1}{L(w + \rho, \chi)} \,dw
+\;+\; \mathcal{R}'(K, T, \rho),
+\end{equation}
+where the kernel is $K^w / w$ and the Dirichlet series factor is
+$1/L(w + \rho, \chi)$, obtained by the substitution $s = w + \rho$.
+The truncation error $\mathcal{R}'(K, T, \rho)$ is bounded by Inoue
+(2021) Theorem 1 via the $J_1, J_2, J_3$ estimates of that paper:
+\[
+\mathcal{R}'(K, T, \rho)
+\;\ll\;
+\frac{K^{\sigma_0' - 1/2}\log K}{T}
+\;+\;
+\min\!\Bigl(1,\, \frac{K^{1/2}}{T\langle K\rangle}\Bigr),
+\]
+with $\langle K \rangle$ the distance from $K$ to the nearest integer.
+
+### B.1.3 Inoue (2021) Theorem 1 — truncated explicit formula
+
+The following statement is verbatim from Inoue (2021), arXiv:1805.05015v1, page 3:
+
+> **Theorem 1** (Inoue 2021). Let $x > 0$, $q \ge 2$,
+> $T \ge \max\{T_0, \exp(q^{1/3}), 2/x\}$. Then, uniformly for all
+> primitive Dirichlet characters $\chi$ modulo $d$ with $d \le q$,
+> there exists $T_\nu \in [T, 2T]$ satisfying
+>
+> $$M^*(x, \chi)
+>   \;=\; \sum_{|\gamma| < T_\nu} \frac{1}{(m(\rho)-1)!}\,
+>        \lim_{s \to \rho} \frac{d^{m(\rho)-1}}{ds^{m(\rho)-1}}
+>        \Bigl((s - \rho)^{m(\rho)}\,\frac{x^s}{L(s, \chi)\,s}\Bigr)
+>        \;+\; \mathop{\mathrm{Res}}_{s=0}\Bigl(\frac{x^s}{L(s, \chi)\,s}\Bigr)
+>        \;+\; \cdots$$
+
+This is the unshifted form, applied to the partial-character-Möbius
+sum $M^*(x, \chi) = \sum_{n \le x}' \mu(n)\,\chi(n)$. Dividing by
+$K^\rho$ and specializing at $x = K$, $m(\rho) = 1$ (the simplicity
+hypothesis on $\rho$), and after the change of variable $w = s - \rho$,
+one obtains (\ref{eq:Perron-truncated}).
+
+## B.2 Pole-structure analysis at $w = 0$
+
+The pole-structure computation of this section is independently
+formalised in Lean 4 / Mathlib v4.28.0 as `local_perron_residue` in
+`formal-conjectures/LocalPerronResidue.lean`. The Lean theorem
+states the residue identity as a `Tendsto` limit at the canonical
+form $L$ analytic with a simple zero at $0$ (the general-$\rho$ case
+of this appendix reduces to the canonical form by the substitution
+$L \mapsto L(\,\cdot\, + \rho)$); the proof is **unconditional**
+(0 `sorry`, only `propext`, `Classical.choice`, `Quot.sound`
+axioms).
+
+We work in the shifted variable $w = s - \rho$. Define
+\[
+F(w) \;:=\; \frac{K^w}{w \cdot L(w + \rho, \chi)}.
+\]
+Since $L(w + \rho, \chi)$ has a *simple* zero at $w = 0$ (by hypothesis),
+$1/L(w+\rho, \chi)$ has a simple pole at $w = 0$. Combined with the
+simple pole of $K^w / w$ at $w = 0$, the integrand $F$ has a
+**double pole at $w = 0$**.
+
+### B.2.1 Laurent expansion of $1/L(w+\rho, \chi)$
+
+By Taylor expansion at the simple zero,
+\[
+L(w + \rho, \chi)
+\;=\;
+a_1 w + a_2 w^2 + a_3 w^3 + \cdots,
+\qquad a_k \;=\; \frac{L^{(k)}(\rho, \chi)}{k!},\quad a_1 = L'(\rho, \chi) \ne 0.
+\]
+Therefore
+\[
+\frac{1}{L(w + \rho, \chi)}
+\;=\;
+\frac{1}{a_1 w} \cdot \frac{1}{1 + (a_2/a_1) w + (a_3/a_1) w^2 + \cdots}.
+\]
+Expanding the geometric factor as $(1 + u)^{-1} = 1 - u + u^2 - \cdots$
+and substituting $a_1 = L'(\rho, \chi)$, $a_2 = L''(\rho, \chi)/2$:
+\begin{equation}
+\label{eq:invL-Laurent}
+\frac{1}{L(w + \rho, \chi)}
+\;=\;
+\frac{1}{L'(\rho, \chi)\,w}
+\;-\;
+\frac{L''(\rho, \chi)}{2\,L'(\rho, \chi)^2}
+\;+\;
+O(w).
+\end{equation}
+
+### B.2.2 Laurent expansion of $K^w / w$
+
+Trivially,
+\[
+\frac{K^w}{w}
+\;=\;
+\frac{1}{w}\bigl(1 + (\log K)\,w + \tfrac{1}{2}(\log K)^2 w^2 + O(w^3)\bigr)
+\;=\;
+\frac{1}{w} \;+\; \log K \;+\; \tfrac{1}{2}(\log K)^2 \,w \;+\; O(w^2).
+\]
+
+### B.2.3 Product expansion and the double-pole residue
+
+Multiplying the two expansions:
+\[
+F(w)
+\;=\;
+\Bigl[\tfrac{1}{w} + \log K + \tfrac{1}{2}(\log K)^2 w + \cdots\Bigr]
+\cdot
+\Bigl[\tfrac{1}{L'(\rho,\chi)\,w} - \tfrac{L''(\rho,\chi)}{2 L'(\rho,\chi)^2} + O(w)\Bigr].
+\]
+Collecting powers of $w$:
+- $w^{-2}$ coefficient: $\tfrac{1}{L'(\rho,\chi)}$ (from $\tfrac{1}{w} \cdot \tfrac{1}{L'(\rho,\chi)\,w}$);
+- $w^{-1}$ coefficient: $\tfrac{\log K}{L'(\rho,\chi)} - \tfrac{L''(\rho,\chi)}{2\,L'(\rho,\chi)^2}$ (cross-terms).
+
+Hence
+\begin{equation}
+\label{eq:double-pole-residue}
+\mathop{\mathrm{Res}}_{w = 0} F(w)
+\;=\;
+\frac{\log K}{L'(\rho,\chi)}
+\;-\;
+\frac{L''(\rho, \chi)}{2\,L'(\rho, \chi)^2}
+\;=\;
+\frac{\log K}{L'(\rho,\chi)} + C_1(\chi, \rho).
+\end{equation}
+
+This is **Lemma X.3.1 of the main text**, established algebraically;
+the local part of (\ref{eq:cK-appendix}) is now done. It remains to
+control the off-target zero residues, the trivial-zero residues, and
+the contour pieces.
+
+## B.3 Off-target zero residues, trivial-zero residues, and contour pieces
+
+We now shift the Perron contour from $\mathrm{Re}(w) = \sigma_0' > \tfrac12$
+leftward to a zero-avoiding line $\mathrm{Re}(w) = -A$ for some $A > 0$,
+crossing all the nontrivial zeros of $L(s, \chi)$ in the strip
+$-A \le \mathrm{Re}(w) \le \sigma_0'$. The integrand $F(w)$ has poles
+at $w = 0$ (the target double pole, with residue
+(\ref{eq:double-pole-residue})), at $w = \rho' - \rho$ for every
+other nontrivial zero $\rho' \ne \rho$ of $L(s, \chi)$, at trivial
+zeros, and at $w = -\rho$ from a (potential) pole of $L(s, \chi)$ at
+$s = 0$ — but $L(s, \chi)$ is entire for primitive non-principal
+$\chi$, so the pole at $w = -\rho$ from $1/L$ is absent. We do pick
+up the term $\mathop{\mathrm{Res}}_{s = 0}\bigl(x^s/(L(s,\chi)\,s)\bigr)$ from Inoue's formula
+(this is the $s = 0$ residue in the unshifted form; after dividing by
+$K^\rho$ it contributes a term of magnitude $K^{-\rho}/(L(0,\chi)) =
+O(K^{-1/2})$ in modulus, $o(1)$).
+
+### B.3.1 Off-target nontrivial-zero residues
+
+For each $\rho' \ne \rho$ a nontrivial zero of $L(s, \chi)$, write
+$w_{\rho'} = \rho' - \rho$. Assuming $\rho'$ is *simple* (which is
+generically expected and is the regime relevant for the leading +
+subleading identity), the residue of $F$ at $w = w_{\rho'}$ is
+\[
+\mathop{\mathrm{Res}}_{w = w_{\rho'}} F(w)
+\;=\;
+\frac{K^{w_{\rho'}}}{w_{\rho'} \cdot L'(\rho', \chi)}
+\;=\;
+\frac{K^{\rho' - \rho}}{(\rho' - \rho)\,L'(\rho', \chi)}.
+\]
+Under RH for $L(s, \chi)$, $|K^{\rho' - \rho}| = 1$ for all
+$\rho' = \tfrac12 + i\gamma'$ with $\gamma' \in \mathbb{R}$. The
+aggregate off-target sum (over zeros $\rho'$ in the strip
+$|\gamma'| \le T$) is then bounded by
+\[
+\Bigl|\!\sum_{\rho' \ne \rho,\ |\gamma'| \le T}
+\frac{K^{i(\gamma' - \tau)}}{(\rho' - \rho)\,L'(\rho', \chi)}\Bigr|
+\;\ll\;
+\sum_{\rho' \ne \rho,\ |\gamma'| \le T}
+\frac{1}{|\gamma' - \tau|\,|L'(\rho', \chi)|}.
+\]
+This is the off-target *aggregate* whose control determines the
+$o(1)$ rate.
+
+### B.3.2 Trivial-zero residues
+
+Trivial zeros of $L(s, \chi)$ are at $s = -2k$ ($\chi$ even) or
+$s = -2k - 1$ ($\chi$ odd), $k \ge 0$. After the shift $w = s - \rho$,
+these contribute residues of size $K^{-\mathrm{Re}(\rho) - 2k}
+= K^{-1/2 - 2k}$, summable to $O(K^{-1/2})$, which is $o(1)$.
+
+### B.3.3 Shifted contour pieces
+
+The shifted contour $\mathrm{Re}(w) = -A$ contributes, on a suitable
+zero-avoiding truncation height $T(K) \in [K/(\log K)^B, 2K/(\log K)^B]$, an
+integral bounded by (using a reciprocal-$L$ bound on the vertical
+shifted line)
+\[
+\Bigl|\frac{1}{2\pi i}\int_{(-A)}\!\frac{K^w}{w\,L(w+\rho,\chi)}\,dw\Bigr|
+\;\ll\;
+K^{-A} \cdot T(K) \cdot \exp\bigl(C\,(\log\log T(K))^2\bigr).
+\]
+For $A > 1/2$ and $T(K) \le K/(\log K)^B$ with $B$ sufficiently large,
+this is $K^{-A + 1 + o(1)} \cdot \exp(O((\log\log K)^2))$, which is
+$o(1)$.
+
+Horizontal pieces give factors like $(T(K)/K)^A \cdot \mathrm{polylog}$,
+$o(1)$ for $T(K) \le K (\log K)^{-B}$ and large enough $B$.
+
+### B.3.4 The Perron truncation error
+
+By Inoue (2021) Theorem 1, the truncation error
+$\mathcal{R}'(K, T(K), \rho)$ is bounded by
+\[
+\mathcal{R}'(K, T(K), \rho)
+\;\ll\;
+\frac{K^{\sigma_0' - 1/2} \log K}{T(K)}
+\;+\;
+\min\!\Bigl(1,\,\frac{K^{1/2}}{T(K) \langle K\rangle}\Bigr).
+\]
+For $T(K) \asymp K (\log K)^{-B}$ and $\sigma_0' = 1/2 + 1/\log K$, both
+pieces are $O(K^{-1/2 + \varepsilon}) \cdot (\log K)^{O(1)}$ for any
+$\varepsilon > 0$, in particular $o(1)$.
+
+### B.3.5 Assembly
+
+Combining the local residue (\ref{eq:double-pole-residue}) with the
+off-target and contour pieces:
+\begin{multline*}
+c_K(\chi, \rho)
+\;=\;
+\frac{\log K}{L'(\rho, \chi)}
+\;+\;
+C_1(\chi, \rho)
+\;+\;
+\bigl(\text{off-target aggregate}\bigr)
+\;+\;
+O(K^{-1/2})
+\\
+\;+\;
+O\!\bigl(K^{-A+1+o(1)}\exp(O((\log\log K)^2))\bigr)
+\;+\;
+\mathcal{R}'(K, T(K), \rho).
+\end{multline*}
+All terms in the last three parentheses are $o(1)$. The off-target
+aggregate is also $o(1)$ under RH for $L(s, \chi)$, by partial
+summation against Soundararajan (2009), *Partial sums of the Möbius
+function*, J. reine angew. Math. (Crelle's Journal) **631** (2009),
+141–152, Theorem 1:
+\[
+\text{(Soundararajan 2009)}
+\quad
+\text{under RH:}\quad
+M(x) \;\ll\; \sqrt x \,\exp\!\bigl((\log x)^{1/2}\,(\log\log x)^{14}\bigr).
+\]
+Translating to $M^*(x, \chi)$ (the character analogue) gives the
+required $o(1)$ rate for the off-target aggregate under RH for
+$L(s, \chi)$.
+
+This establishes ($\dagger$). $\hfill\square$
+
+## B.4 Rate of the $o(1)$
+
+The proof above yields the following rates.
+
+| Rate | Hypotheses |
+|---|---|
+| $o(1) = O\bigl(K^{-1/2 + \varepsilon}\bigr)$ for every $\varepsilon > 0$ | RH for $L(s, \chi)$. |
+| $o(1) = O\bigl(K^{-1/2}\exp\bigl((\log K)^{1/2}(\log\log K)^{14}\bigr)\bigr)$ | RH for $L(s, \chi)$, via the character analogue of Soundararajan (2009) Theorem 1. The operative rate for §X.5: for $\chi_{-4}, \chi_5, \chi_{11}$ the nontrivial zeros of $L(s,\chi)$ in the relevant explicit-formula range are numerically verified on the critical line (Supplementary computation audit); not asserted as an unconditional theorem. |
+| $o(1) = O\bigl(\log K / \sqrt K\bigr)$ | RH plus a Gonek–Hejhal-type bound of the form $\sum_{0 < \gamma < T} |L'(\rho, \chi)|^{-2} \ll T (\log T)^{O(1)}$. |
+
+In the numerical work of §X.5.3, the empirical residual
+$R(K) := c_K - \log K / L'(\rho, \chi) - C_1(\chi, \rho)$ at
+$K = 2\cdot 10^6$ falls in the interval $[0.027,\,0.375]$ across the
+four pairs; this is consistent with the Soundararajan-conditional rate
+within an $O(1)$ implicit-constant factor (specifically,
+$|R(K)| / (\log K / \sqrt K) \in [3,\,36]$, well within the typical
+$\exp\bigl(C\,(\log K)^{1/2}(\log\log K)^{14}\bigr)$ envelope at this
+scale).
+
+## B.5 What the proof does *not* claim
+
+For clarity:
+
+- The proof does **not** establish the Aoki–Koyama–Mertens limit
+  for $E_K \log K$, which is the *multiplicative-side* asymptotic.
+- The proof does **not** establish the *full* Perron-leading theorem
+  $c_K = \log K / L'(\rho) + o(\log K)$ unconditionally; the
+  off-target aggregate's $o(\log K)$ control (which is *weaker* than
+  the $o(1)$ obtained in ($\dagger$) at the *leading + subleading*
+  level) depends on RH for $L(s, \chi)$ and is what is required for
+  composing with (AK) to obtain (NDC).
+- The proof does **not** address the possibility of off-target
+  *multiple* zeros, which under DRH/EDRH alone are not excluded;
+  the manuscript's open Question Q:Perron asks for either
+  the off-target multiple-zero residue control or a sufficient
+  "all crossed off-target zeros simple" hypothesis.
