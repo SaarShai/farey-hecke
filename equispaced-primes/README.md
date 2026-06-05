@@ -68,6 +68,15 @@ H1/halo/Theorem-B wave saga (~500M of `experiments/`, `archive/`, and ~40
   name-use on independent identity verification + written terms. The research has standalone
   value regardless.
 
+**Rescued artifacts (post-audit):**
+- `research-notes/bplus/` — the **reproducible B+ counterexample** bundle (`B_plus_direct_verify.c`
+  + certified `.out` for p=237733, 243799 + writeup). B+ Mertens-restricted positivity is FALSE;
+  this is the artifact behind that prose claim.
+- `koyama/followup-proofs/` — Koyama B∞ + C₁-subleading proof notes (companions to the joint-paper appendices).
+- `papers/sign-theorem/figures/*.png` — the 12 figures the paper `\includegraphics` (were absent;
+  `\graphicspath` patched to `{figures/}{../figures/}` so it builds self-contained).
+- `function-field/seed/{d1-cm-tower,d3-central-zero-map,mimo-sprint}/` — small D2/D3 seed siblings.
+
 **Lean trust base:** kept `formal-conjectures` headline theorems use only
 `{propext, Classical.choice, Quot.sound}` (plus `Lean.ofReduceBool, Lean.trustCompiler`
 for `dpac_le_4`). No `axiom` declarations. Re-run `lake build _AxiomCheck` after any change.

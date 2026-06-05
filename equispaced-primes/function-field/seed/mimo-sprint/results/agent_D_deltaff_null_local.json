@@ -1,0 +1,37 @@
+{
+  "null_hypothesis": "Function-field LI: phases of zeros of nontrivial quadratic L-functions are iid uniform on [0, 2pi). For real quadratic char, zeros come in conjugate pairs.",
+  "interpretation_note": "delta_ff(N) = #{n in [1,N]: cumulative bias > 0} / N. Cumulative bias = signed running sum of sign(Re sum_j e^{i*n*theta_j}). This matches rs_density.py unweighted convention.",
+  "cases": [
+    {
+      "label": "(q=2, M=T^2) chi_quad, n_zeros=1",
+      "n_zeros": 1,
+      "n_trials": 200000,
+      "N": 22,
+      "E_delta_ff_N": 0.28173954545459906,
+      "stddev_delta_ff_N": 0.26694204576963676,
+      "P_delta_ff_eq_1": 0.04147,
+      "P_delta_ff_eq_0": 0.207535
+    },
+    {
+      "label": "(q=2, M=T^3) chi_quad, n_zeros=2 unconstrained",
+      "n_zeros": 2,
+      "n_trials": 200000,
+      "N": 22,
+      "E_delta_ff_N": 0.34979681818191144,
+      "stddev_delta_ff_N": 0.33002024737244323,
+      "P_delta_ff_eq_1": 0.07957,
+      "P_delta_ff_eq_0": 0.22696
+    },
+    {
+      "label": "(q=2, M=T^3) chi_quad, conjugate-constrained 1 free phase",
+      "n_zeros": "2 (conjugate pair, 1 free)",
+      "n_trials": 200000,
+      "N": 22,
+      "E_delta_ff_N": 0.2820072727273267,
+      "stddev_delta_ff_N": 0.2673476576101588,
+      "P_delta_ff_eq_1": 0.0414,
+      "P_delta_ff_eq_0": 0.20772
+    }
+  ],
+  "verdict_template": "If P(delta_ff(22)=1 | null) >= 0.05, the observed delta_ff=1.0000 at n<=22 is CONSISTENT WITH NULL and must be downgraded in the paper."
+}
