@@ -1,4 +1,14 @@
 import Mathlib
+/-
+⚠️⚠️ VACUOUS RESULT — DO NOT CITE AS A BOUND. (honest correction, 2026-06-05) ⚠️⚠️
+`Xomega_corridor_lb_q18` below is axiom-clean and TRUE, but its hypothesis class is EMPTY:
+the scalar `Tmap` does NOT preserve `Dcorr` (every orbit escapes in ≤16 steps; 0 periodic cycles;
+`test_invariance(18)` esc_scalar=1.0), so NO `Tmap`-invariant probability measure with `μ(Dcorr)ᶜ=0`
+exists. The theorem therefore constrains nothing. The genuine map DOES preserve Taha
+(esc_genuine=0.0); the correct non-vacuous statement is over `genStep`-invariant measures on Taha,
+which needs the LEVEL-2 multi-branch (C′) (still open). Kept only as a record of the vacuity lesson.
+See FINDINGS_genuinemap_wiring_2026-06-05.md §6.
+-/
 set_option maxHeartbeats 4000000
 /-!
 # Genuine all-q Hecke–BCZ branch map — foundational + wiring layer (hyp (1) of the qge18 assembly).

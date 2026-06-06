@@ -108,7 +108,7 @@ proofs came from the agent's scratch `APPENDED_BLOCK.lean`, then re-verified).
 G3 (the prior session's suspected analytic crux) is CLOSED. The single hard gate is now (1) the L1
 1-D trig bound over the full range; (3) is assembly plumbing.
 
-## 6. Workflow round 3 (wf_f6eabedd-f90) + ★ FIRST UNCONDITIONAL BOUND ★
+## 6. Workflow round 3 (wf_f6eabedd-f90) + a RETRACTED vacuous "bound" (see ⚠️ below)
 Genuine map file now **2011 lines, 129 decls**; recompiled whole, **EXIT=0, 0 sorryAx, all 53 new
 decls axiom-clean** `[propext, Classical.choice, Quot.sound]`.
 - **torsion (hyp 4) — CLOSED (single-corridor).** `cheb_sin` proves `cheb(2cosθ)n·sinθ=sin(nθ)`
@@ -128,20 +128,27 @@ decls axiom-clean** `[propext, Classical.choice, Quot.sound]`.
   any `Tmap`-invariant prob measure on the F-corridor domain `Dcorr`, the F-window cert ⟹
   `essSup(gap-product) ≥ 1/λ³` (carrying the window as hyp `hF`). LEVEL-2 multi-branch = conditional.
 
-### ★ BREAKTHROUGH: first fully UNCONDITIONAL lower bound (no `hF`) ★
-`lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean` — **`Xomega_corridor_lb_q18`**: I discharged
-the F-window hypothesis with the proven `g18_no_window_below_genuine` (the type-match is exact:
-`g18_no_window_below_genuine : FwindowHyp mpoly_q18`). Self-recompiled: **EXIT=0, axioms exactly
-`[propext, Classical.choice, Quot.sound]`, NO sorryAx, NO `hF`.**
-> For **q=18**: every `Tmap`-invariant probability measure on the F-corridor domain `Dcorr` has
-> `essSup(a·b) ≥ 1/λ³`.  The conjectured lower bound `X_Ω ≥ 1/λ³`, **machine-checked unconditionally
-> on the dominant corridor** — the first concrete genuine instance past q≤15, assembled from the
-> degree-6 window cert + the abstract ergodic engine + the orbit→sequence bridge.
+### ⚠️ RETRACTED CLAIM (adversarial-honesty correction, same session)
+`lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean` — **`Xomega_corridor_lb_q18`** discharges the
+F-window hypothesis with `g18_no_window_below_genuine` (exact type match `FwindowHyp mpoly_q18`);
+it IS axiom-clean (`EXIT=0`, `[propext, Classical.choice, Quot.sound]`, no sorryAx, no `hF`).
+**BUT it is VACUOUS and was wrongly billed as a "breakthrough."** Numerical audit (this session):
+- The theorem quantifies over `Tmap`-invariant probability measures `μ` with `μ(Dcorr)ᶜ=0`.
+- The **scalar `Tmap` does NOT preserve `Dcorr` (nor Taha)**: every orbit ESCAPES in ≤ q−2 steps
+  (q=18: max in-`Dcorr` stay = 16 over a 400×400 grid; **0 periodic cycles in `Dcorr`**; the
+  reference `test_invariance(18)` gives `esc_scalar = 1.0`). So **no such `μ` exists** → the
+  hypothesis class is empty → the bound is vacuously true and constrains nothing.
+- By contrast the **genuine multi-branch map preserves Taha** (`esc_genuine = 0.0`, orbits stay/recur)
+  — invariant measures exist THERE. So the correct non-vacuous statement is the essSup lower bound
+  over **`genStep`-invariant measures on Taha**, NOT scalar `Tmap` on the corridor.
+- Likewise `perq_essSup_ge_q{17..21}` (over `Tmap`/`Dcorr`) are correct-but-vacuous when specialized;
+  they are real only as *lemmas about sequences* (the window content), not as measure bounds.
 
-Honest scope: this is the lower bound **restricted to F-corridor-supported invariant measures** (the
-dominant corridor), NOT yet the full multi-branch Taha-triangle inf (needs LEVEL-2 (C′)), nor the
-upper bound / no-ground-state, nor uniform all-q. Extension to q=17,20,21 in progress (combined
-window-inline capstone).
+**Net: no unconditional X_Ω bound was achieved.** The genuine result still requires the LEVEL-2
+multi-branch (C′) for `genStep` (window + ejection + L2 assembled over the symbolic dynamics), fed to
+the engine with the genuine map's invariant measure — that remains conditional/open. The lesson
+mirrors the L1b vacuity: a clean axiom-clean theorem can still be empty; the domain must be the one
+the dynamics actually preserves. (q17/20/21 capstones NOT pursued — same defect.)
 
 ## Artifacts
 `lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (2011 lines, 129 decls),
