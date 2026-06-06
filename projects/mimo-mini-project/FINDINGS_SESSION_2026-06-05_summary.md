@@ -41,14 +41,18 @@ scalar-form products bounded by the IDENTICAL scalar F-window law. So the single
 **uniform all-q scalar F-window inequality** (the standing (L1) crux), plus step-classification exhaustiveness
 (~1e-48 numerical). See `FINDINGS_gate2_progress_2026-06-05.md`.
 
-## All-q crux (uniform F-window) — ATTACK IN PROGRESS
-The standing (L1) crux. This session's framing (verified numerically, genuine map):
-- Sustained sub-threshold = the W_q period-3 (S,S,W) corridor, floors (3,0,0), trace λ, rotation θ=π/q.
-- Genuine product is NEARLY FLAT just below thr (the scalar-sinusoid model is WRONG — the trap the goal warns
-  of); max dwell D(q) ≈ 0.39·q.
-- Escape margin = thr − max product ~ O(1/q²) (vanishing — fools cheap tests); worst orbit is near-cusp
-  (random seeds miss it). Reduction sketch: dwell = overlap of a sub-threshold phase-arc and a domain
-  phase-arc; O(1/q²) margin enters via cosθ=1−θ²/2.
-- Two dynamic workflows attacking (broad 5-strategy; focused W_q-renormalization). Results to be integrated.
-PAYOFF if cracked: completes the paper's main theorem X_Ω(q)=1/λ³ ∀q, machine-verified. Significance:
-complete novel-formulation result adjacent to Athreya–Cheung IMRN 2014 §8; NOT a famous-problem result.
+## All-q crux (uniform F-window) — ALGEBRAIC HEART PROVEN (Lean), strong-partial
+The standing (L1) crux. **Major advance this session** (`FINDINGS_allq_Fwindow_2026-06-05.md`):
+- **The O(1/q²) "vanishing margin" the goal feared is an ARTIFACT** of choosing the window at the exact
+  crossing L*(q). With a fixed window `L_win=⌊q/4⌋+3`, the F-window value exceeds thr by a UNIFORM POSITIVE
+  margin (~+0.0053 asymptote; verified by me, q=5..2000, `/tmp/margin_check.py`).
+- **Algebraic heart PROVEN in Lean** (5 files, self-recompiled, axiom-clean): the crux reduces to a rational
+  quartic `Q_rat(t)≥0` (`BCZHeckeFWindowPositivstellensatz_VERIFIED`, exact Handelman cert) + arc-phase inner
+  + tail quadratic (`BCZHeckeArcPhaseInner/PhiTailMono/RenormFWindowInner/FWindowBridge_VERIFIED`).
+- **C2=W_q trace = λ EXACTLY** (8 minpolys) ⇒ reduces to the IDENTICAL scalar window; no separate problem.
+- **Honest remaining gap:** two elementary discrete-analysis links — [L4] `g_closed≥inner` (min-over-lattice,
+  the residual O(1/q²) tightness, interval-certified, not yet in Lean) and [L5] `g≥g_closed` (structural). So
+  NOT a complete end-to-end Lean theorem yet, but the algebraic obstruction is dissolved + verified.
+PAYOFF if finished (now elementary formalization, not open analysis): completes the paper's main theorem
+X_Ω(q)=1/λ³ ∀q, machine-verified. Significance: complete novel-formulation result adjacent to Athreya–Cheung
+IMRN 2014 §8; NOT a famous-problem result.
