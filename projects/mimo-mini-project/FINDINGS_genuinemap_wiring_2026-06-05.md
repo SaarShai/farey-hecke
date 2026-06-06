@@ -181,9 +181,40 @@ genuine map + `Pgen`** (NOT Dcorr/Tmap/`Pprod`). Self-recompiled `BCZHeckeCuspNo
   interior measure is the remaining combinatorial core.
 No unconditional `X_Ω` bound yet; but the non-vacuity foundation + correct architecture are now in place.
 
+## 8. Workflow round 5 (wf_aa1c7c1e-f10) — CORRECT conditional bound over Taha/Pgen, non-vacuity certified
+The Pgen realignment the round-4 audit demanded. 5 agents (Align / Assemble / adversarial Audit), all
+re-verified by me, axiom-clean. NON-CIRCULARITY: audit PASS ((C′) is derived, not assumed-equivalent).
+- **`obs_align`** (`BCZHeckeObsAlign_Pgen_VERIFIED.lean`, 10 decls): `Pgen = a·b + a²/λ`, so `a·b ≤ Pgen`
+  ⇒ **Pgen-sub-threshold ⟹ product-sub-threshold** (`prod_lt_of_Pgen_lt`) — lets the F-window fire on a
+  Pgen-run. The slack `a²/λ` is exactly what's nonzero at the cusp (the round-4 Pprod-vacuity is repaired).
+- **`avoid_cusp`** (`BCZHeckeAvoidCusp_VERIFIED.lean`, 6 decls): the NEW Pgen ingredient — `Pgen(s,0)=s²/λ
+  > 1/λ³` (cusp is SUPER-threshold), so **a sub-threshold orbit must avoid the cusp branch**
+  (`subthreshold_branchIdx_ne_cusp`) and is confined to the F-corridor/deep-mid interior. (`Pprod` could
+  not state this — it vanishes on the cusp line.)
+- **`full_bound`** (`BCZHeckeFullBound_Taha_Pgen_VERIFIED.lean`, 10 decls): for ANY map `T`, ANY
+  `T`-invariant prob measure `μ` on Taha with `Pgen` bounded, **IF (C′) [no T-orbit on Taha keeps every
+  `Pgen<1/λ³`] THEN `1/λ³ ≤ essSup Pgen μ`**. The correct conditional X_Ω lower bound (Taha + Pgen).
+  **Non-vacuity CERTIFIED** (`full_bound_hyp_class_inhabited`): the cusp Dirac `δ_{(s,0)}` inhabits the
+  full hypothesis class (incl. a discharged (C′) for the genuine cusp self-map) with `essSup=s²/λ>1/λ³`.
+
+### Honest status after round 5 (final this session)
+- **What's solid & non-vacuous:** the lower-bound architecture is now CORRECT (Taha/Pgen), the
+  conditional bound `full_bound` holds, its hypothesis class is non-empty (cusp Dirac, certified), and
+  all (C′) ingredients are verified: obs_align transfer, avoid_cusp interior-confinement, deep-mid
+  ejection, L2 switch-escape, the F-window, the 4-tag dichotomy.
+- **What is NOT proven (the open core):** the **(C′) for the full genuine multi-branch map** — the audit
+  confirmed `full_bound`'s (C′) was discharged only for the *degenerate cusp-shear* `Tcusp`, NOT the real
+  BCZ_q map. The unconditional `X_Ω(q) ≥ 1/λ³` still needs the genuine piecewise-map definition + branch
+  confinement (the standing `BCZHeckeGenuineAssembly_qge18` §6 items). The pieces are all present; the
+  missing step is the genuine map's branch-symbolic-dynamics assembly.
+- **No unconditional bound achieved this session.** But: the vacuity was caught+corrected, the correct
+  architecture is in place and adversarially certified, and the open problem is now reduced to a single
+  named assembly (genuine multi-branch (C′)) with every ingredient verified.
+
 ## Artifacts
 `lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (2011 lines, 129 decls),
 `lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean` (⚠️ VACUOUS, kept as record),
-`lean/BCZHeckeCuspNonVacuity_VERIFIED.lean` (395 lines — non-vacuity witness + formal vacuity diagnosis),
+`lean/BCZHeckeCuspNonVacuity_VERIFIED.lean`, `lean/BCZHeckeObsAlign_Pgen_VERIFIED.lean`,
+`lean/BCZHeckeAvoidCusp_VERIFIED.lean`, `lean/BCZHeckeFullBound_Taha_Pgen_VERIFIED.lean`,
 `code/Lgoal_buildcore_q17tmp.py`. Workflows `wf_77bfaa59-31f`, `wf_c488930b-1d7`, `wf_f6eabedd-f90`,
-`wf_ef33f63c-a56`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
+`wf_ef33f63c-a56`, `wf_aa1c7c1e-f10`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
