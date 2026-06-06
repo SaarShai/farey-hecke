@@ -54,6 +54,36 @@ links:
 - The workflow additionally interval-CERTIFIED `g_closed(⌈7q/25⌉,q)≥thr` (mpmath.iv guaranteed enclosure)
   for q=18..200 contiguous + samples to 2000, 0 failures.
 
+## The conserved W-invariant — the rigorous escape MECHANISM (focused workflow, my-verified symbolically)
+A second workflow (`wq-corridor-renormalization`) derived the genuine W_q period-3 corridor exactly and found
+the structural reason for escape. **I independently re-verified the load-bearing symbolic claims** (sympy
+`expand`, `/tmp/verify_Ginvariant.py` + `/tmp/Gconv.py`):
+- W_q monodromy matrix `W = M_{q-1,3}·M_{q-1,0}·M_{q-3,0} = [[−2t, −1],[8t²+1, 4t]]` (t=cosθ): **trace = λ
+  EXACTLY, det = 1** (`expand → 0`). Elliptic rotation by θ=π/q.
+- **Conserved invariant `G = a² − 6ab·cosθ + (8cos²θ+1)·b²`** (positive-definite "ellipse radius²"):
+  `G(v·W) − G(v) = 0` identically (`expand → 0`). This is the KAM-wall / area-preservation made concrete —
+  the corridor orbit lives on an ellipse `{G = const}`.
+- The three per-cycle products are exact quadratic forms; their peak over the rotation is `max_n P_j =
+  F_j(θ)·G` with explicit `F1(θ), F3(θ)`. P3 (branch q-3) is the binding product (`F3/F1 = 1+O(1/q²)`).
+- **Escape mechanism (exact):** the binding lower Taha edge `a+λb=1` forces `G` up to `thr/F3(θ)`, so
+  `max_n P3 = F3·G → thr` — the in-domain corridor CANNOT keep all products below thr. The continuum sup over
+  the corridor equals `thr` EXACTLY (= X_Ω(q)=1/λ³, approached not exceeded).
+- HONEST gap (focused workflow): the fully rigorous derivation of `G_max(θ)` from the simultaneous
+  (edge + floor-window + 3-in-domain) semialgebraic system was NOT completed symbolically (sympy timed out);
+  one more pass needed.
+
+## Reconciling the two workflows (no contradiction — the two halves)
+The broad workflow reports a NON-vanishing margin; the focused reports a VANISHING O(1/q²) margin. Both are
+correct — they are different objects:
+- **Focused (sharp):** at the orbit's TRUE sub-threshold dwell, `max P → thr` with O(1/q²) vanishing margin —
+  this is the UPPER bound (X_Ω ≤ 1/λ³) and the escape mechanism (sup = thr exactly). Matches the goal's
+  original O(1/q²) and my earlier dwell measurement.
+- **Broad (window):** at a FIXED window `L_win=⌊q/4⌋+3` longer (in rotation units) than the dwell,
+  `g(L_win,q) ≥ thr` with a positive constant margin — this BOUNDS the dwell (`dwell < L_win`) and is the
+  LOWER bound (X_Ω ≥ 1/λ³). The positive margin is real because the window outruns the dwell.
+Together: dwell-bounded (broad, Lean-verified algebraic heart) + sup=thr (focused, G-invariant mechanism) =
+the full X_Ω(q)=1/λ³ picture, modulo the L4/L5 formalization links and the G_max symbolic pass.
+
 ## Bottom line
 The standing all-q F-window crux is no longer a "hard vanishing-margin analysis" problem. Its **algebraic
 heart is a Lean-verified Positivstellensatz certificate with a uniform positive margin**, and C2=W_q reduces
