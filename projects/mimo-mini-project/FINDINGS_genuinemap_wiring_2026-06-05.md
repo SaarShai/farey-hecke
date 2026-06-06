@@ -150,7 +150,40 @@ the engine with the genuine map's invariant measure — that remains conditional
 mirrors the L1b vacuity: a clean axiom-clean theorem can still be empty; the domain must be the one
 the dynamics actually preserves. (q17/20/21 capstones NOT pursued — same defect.)
 
+## 7. Workflow round 4 (wf_ef33f63c-a56) — NON-VACUITY established + vacuity FORMALLY diagnosed
+7 agents (Foundation / Cprime / adversarial Audit). The fix to the §6 vacuity: restate over **Taha +
+genuine map + `Pgen`** (NOT Dcorr/Tmap/`Pprod`). Self-recompiled `BCZHeckeCuspNonVacuity_VERIFIED.lean`
+(395 lines, 19 decls), **EXIT=0, 0 sorryAx, all axiom-clean**.
+- **✅ NON-VACUITY (real, all-q):** `cusp_bound_nonvacuous` CONSTRUCTS the witness — `Measure.dirac (s,0)`
+  for any cusp `s∈(1/λ,1]` is a probability measure, **genuine-map-invariant** (the cusp point is a
+  genuine FIXED point, `cusp_is_fixed` generalizing `G5_fixes_cusp` to all q), **supported on Taha**
+  (`μ(Taha)ᶜ=0`), with **`essSup Pgen = s²/λ > 1/λ³ ≥ 1/λ³`**. So the lower-bound hypothesis class is
+  NON-EMPTY — the thing whose absence made §6 vacuous is now exhibited.
+- **✅ VACUITY FORMALLY PROVEN (not just argued):** `cusp_not_in_Dcorr`, `cusp_dirac_misses_Dcorr`
+  (`δ(Dcorrᶜ)=1`), `Tmap_not_fix_cusp` (`Tmap(s,0)=(0,−s)`), `Tmap_cusp_escapes_Taha`. The §6 Dcorr/Tmap
+  bound has NO invariant-measure witness — machine-checked confirmation of the retraction.
+  Also: `Pprod(s,0)=0 < 1/λ³`, so the observable must be `Pgen` (gap-product), not `Pprod`.
+- **Foundation (also closed, axiom-clean, in `WF4_*` scratch):** `genMapTrue` (faithful map, floor
+  COMPUTED via `genFloor`, generalizing G5's branch cascade) + `genMapTrue_fixes_cusp`; Taha-invariance
+  `genSucc_in_Taha` (edges E2/E3/E4 = pure floor/selector facts; E1 `0<a'` per-branch).
+- **Cprime (closed but Dcorr/Pprod-wired ⇒ must be realigned to Taha/Pgen):** orbit-form F-window
+  (`frun_window`), ejection (`eject_orbit_dwell_le1`), switch-escape, and a (C′) assembly
+  (`genuine_no_sustained_orbit`). Real machinery; the audit flags the domain/observable realignment.
+
+### Honest status after round 4
+- **Done & non-vacuous:** the genuine map preserves Taha and FIXES the cusp segment ⇒ an explicit
+  invariant measure with `essSup Pgen > 1/λ³` exists (all q). The framework is provably non-trivial.
+  The §6 vacuity is both retracted AND formally proven.
+- **Still OPEN (the hard direction):** the FULL `X_Ω ≥ 1/λ³` = ALL genuine-map-invariant measures on
+  Taha have `essSup Pgen ≥ 1/λ³`. Needs the (C′) **realigned to Taha + `Pgen`** (the cprime pieces are
+  currently Dcorr/`Pprod`), plus the BCZ/Haar interior invariant measure for completeness. The cusp
+  measures (the inf-approaching ones) are handled (`> 1/λ³`); ruling out a hypothetical sub-threshold
+  interior measure is the remaining combinatorial core.
+No unconditional `X_Ω` bound yet; but the non-vacuity foundation + correct architecture are now in place.
+
 ## Artifacts
 `lean/BCZHeckeG17_window_VERIFIED.lean`, `lean/BCZHeckeGenuineMap_allq_WIP.lean` (2011 lines, 129 decls),
-`lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean`, `code/Lgoal_buildcore_q17tmp.py`. Workflows
-`wf_77bfaa59-31f`, `wf_c488930b-1d7`, `wf_f6eabedd-f90`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
+`lean/BCZHeckeXOmega_corridor_q18_UNCONDITIONAL.lean` (⚠️ VACUOUS, kept as record),
+`lean/BCZHeckeCuspNonVacuity_VERIFIED.lean` (395 lines — non-vacuity witness + formal vacuity diagnosis),
+`code/Lgoal_buildcore_q17tmp.py`. Workflows `wf_77bfaa59-31f`, `wf_c488930b-1d7`, `wf_f6eabedd-f90`,
+`wf_ef33f63c-a56`. Compiled in `/tmp/lean-minus1` (Mathlib v4.28.0).
