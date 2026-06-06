@@ -18,6 +18,16 @@ Nothing outward (Hecke = user's OWN paper). PROVEN / NUMERICAL / OPEN kept separ
 - **Bedrock (Aristotle d5e000f9, pending):** casorati det=1 + two-generator trace classification.
 
 ## (L1) — the open crux, stated sharply
+> ⚠ CORRECTION (2026-06-05, exact symbolic — /tmp/verify_wq_trace.py): C2=W_q is **j=1**, the SAME
+> slowest rotation θ=π/q as the scalar corridor C1 (monodromy M=[[−λ,2λ²+1],[−1,2λ]], det 1,
+> trace = λ EXACTLY, NOT λ²−2 — confirmed mod the distinct minpolys of 2cos(π/q), q=7..23). The W_q
+> word-START product P0=a·b is EXACTLY a scalar product c_m·c_{m+1} of the rotation-by-θ sequence
+> (a_{m+2}=λa_{m+1}−a_m), so a C2 sub-threshold run of W words gives W consecutive scalar-form products
+> and is bounded by the IDENTICAL scalar window law (W ≤ L*(q)−1 in rotation/word units; ~8 genuine
+> steps = 3-steps-per-rotation packing). So (L1) is the SAME inequality as goal-N's scalar window, not a
+> separate harder "genuine corridor" object; the hardness below is the scalar window's own uniform-in-q
+> O(1/q²) margin, not an extra W_q-specific difficulty.
+
 Staying in one corridor = iterating the elliptic rotation `R=W_q` (angle θ=π/q). The sub-threshold
 ∩ in-domain region is a bounded **angular arc** of the rotation. (L1) =
 > **the sub-threshold arc width `Δ(q)` satisfies `Δ(q) < (escape angle)` with a margin, uniformly
@@ -41,8 +51,11 @@ O(1/q²)** — so the inequality is true but by a vanishing margin. A crude boun
 ## Attack plan (two sub-targets)
 **(L1a) per-q corridor-escape certs, q=18..30 — ATP/emitter-tractable (extends proven band).**
 For each q: the genuine corridor word has a fixed itinerary; "no sub-threshold full arc" is a finite
-2-variable semialgebraic emptiness in (a,b) over ℚ(λ) — the goal-L window shape but on the genuine
-2-branch corridor (not the scalar reduction, which fails q≥16). Emit per-q Positivstellensatz certs
+2-variable semialgebraic emptiness in (a,b) over ℚ(λ) — the goal-L window shape on the genuine
+2-branch corridor. (The thing that "fails q≥16" was the WRONG 3-step W_q block-map model
+`b_n=(a_{n+1}+λa_n)/(2λ²+1)`, refuted in `FINDINGS_GATE2_L1b_REFUTED` — NOT the rotation-unit reduction:
+since W_q is j=1, the word-start product IS scalar-form, so the genuine corridor reduces to goal-N's
+scalar window in word units.) Emit per-q Positivstellensatz certs
 (adapt `code/Lgoal_buildcore.py` to the corridor itinerary; reuse the verified W=6 machinery). Each
 verified q extends the genuine band past 17 concretely. STAGE for Aristotle.
 

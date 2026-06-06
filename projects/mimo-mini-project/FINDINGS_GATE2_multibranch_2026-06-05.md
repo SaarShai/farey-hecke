@@ -22,9 +22,20 @@ obstruction are **provably dominated** — they cannot sustain a sub-threshold r
   are F-to-F = already covered by the PROVEN (L2) `switch_forces_nonelliptic`.
 
 ## Genuine observable on middle branches (E2, derived)
-P_i = a·L_i/X(i−1); min over the branch cell = X(i−1)/(1+X(i−2))² (matches goal-F). Every corridor
-j has the SAME sinusoid product p_n=(r²/2)[cos J + cos((2n+1)J−2ψ)], J=jπ/q, cos J=tr_j/2 —
-goal-N's j=1 form with θ→J. Deeper j rotate faster.
+P_i = a·L_i/X(i−1); min over the branch cell = X(i−1)/(1+X(i−2))² (matches goal-F). A corridor of
+index j has sinusoid product p_n=(r²/2)[cos J + cos((2n+1)J−2ψ)], J=jπ/q, cos J=tr_j/2 — goal-N's
+j=1 form with θ→J. Deeper j (j≥2) rotate faster ⇒ shorter dwell; this generic-j family is exactly
+the DEEP-MID corridors, and it is why they are dominated/eliminated.
+**Both sustained F-family corridors are j=1 (J=π/q), NOT just C1.** ⚠ CORRECTION (2026-06-05, exact
+symbolic, /tmp/verify_wq_trace.py): the C2 word W_q=(q−1,3)(q−1,0)(q−3,0) has monodromy
+M=M_{q−3,0}·M_{q−1,0}·M_{q−1,3}=[[−λ, 2λ²+1],[−1, 2λ]], det 1, **trace = λ EXACTLY** (T(λ)−λ≡0 as a
+polynomial in λ; verified mod the distinct minpolys of 2cos(π/q) for q=7,8,11,13,17,18,19,23). So C2
+rotates by θ=π/q — the SAME slowest rotation as the scalar C1 — and is **j=1, NOT j=2** (its trace is
+λ, NOT λ²−2=2cos(2π/q)). C2 reaches ~8 GENUINE steps only because the word packs 3 genuine steps
+(q−1,q−1,q−3) per single π/q rotation; in ROTATION UNITS it is dominated by C1 and reduces to the
+IDENTICAL scalar F-window inequality (the word-start product P0=a·b is exactly a scalar c_m·c_{m+1} of
+the rotation-by-θ sequence a_{m+2}=λa_{m+1}−a_m). Confirmed on genuine orbits q=17..25 (rotation-units
+≤ L*(q)−1 in every case).
 
 ## Re-localized GATE-2 (q≥17) — the remaining program
 GATE-2 (no sustained sub-threshold orbit) = conjunction of:
