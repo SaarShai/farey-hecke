@@ -5,6 +5,28 @@
 sweeps (web + arXiv + PDF full-text extraction). Every citation's author/venue/year/volume/pages
 verified against the source it is cited from. Nothing sent outward (internal audit; USER-gated).
 
+> **UPDATE 2026-06-06 — residual risks #2 and #3 CLOSED.**
+> - **#2 Riquelme–Velozo publication status — RESOLVED.** No longer a preprint: published as
+>   *Ergodic Optimization and Zero Temperature Limits in Negative Curvature*, **Annales Henri Poincaré
+>   23 (2022) 2949–2977**, DOI 10.1007/s00023-022-01161-5 (arXiv:2001.01694, Jan 2020). Citable as
+>   published; Claim 3's load-bearing prior art is firm.
+> - **#3 Haas–Series `h_q` — CONFIRMED + conclusion recomputed first-hand.** The formula
+>   `h_q = 2` (q even), `h_q = 2√(1+(1−λ_q/2)²)` (q odd), `λ_q=2cos(π/q)` is independently corroborated
+>   by a second web source (beyond the audit's Zbl/MR), matches the audit verbatim, and passes
+>   `h_3 = 2√(1.25) = √5` (15 digits). The decisive disambiguation was **recomputed directly**
+>   (`code/` ad-hoc): `1/h_q ≠ 1/λ³` at every integer q=3..100 (e.g. q=3: 0.4472 vs 1.0; q=4: 0.5 vs
+>   0.3536; q→∞: 0.5 vs 1/8), so the Hurwitz-constant overlap is refuted *pointwise per q* (NB: the
+>   ranges [0.447,0.5] and [0.125,1] do overlap, but the values never coincide at an integer q — state
+>   it pointwise, not as disjoint ranges). The original JLMS (2) 34 (1986) 219–234 PDF remains paywalled
+>   and unopened, but the formula is now corroborated and the refutation independently verified.
+> - Remaining before write-up: only the **2/9 / JMU-2007 footnote** (drafting task, not a verification).
+
+> **GATE 2026-06-06 — focused sweep on the *abstract* objective (L∞ ergodic opt + the dimension bridge). Result: the BROAD framings are NOT green fields; the NARROW realization survives. Net: confirms the original "novelty-of-realization" verdict — do NOT over-claim a new sub-area.**
+> - **NEW CLOSEST COMPETITOR (must cite):** Huang, **O. Jenkinson**, Z. Li, *Ergodic Optimization for Gauss's Continued Fraction Map*, **arXiv:2512.21394 (24 Dec 2025)**. Extends ergodic optimization to the (non-compact) Gauss CF map: characterizes the non-weak*-closed measure space, Mañé lemma, escape, essential-compactness, TPO. **Misses the project on every specific axis** — it is the *average* (`∫f dμ`) objective, the *Gauss* map (not BCZ/Hecke), no arithmetic gap-product observable, no closed-form constants, no cusp/escape *constants*, no dimension/survivor bridge. ⇒ project's specifics still unclaimed, BUT the broad area is now **actively developed by the field's leader** — treat as time-sensitive and position explicitly against HJL-2025.
+> - **The L∞ object `inf_μ ess-sup_μ f` is unstudied — but likely because it is near-trivial on COMPACT systems** (= `inf` over minimal sets of `max f`); its interest is *only* the non-compact arithmetic instance. So it is NOT a rich untouched theory to "found"; the previous turn's "introduce a new variational sub-area" framing is **WITHDRAWN as over-claim.**
+> - **The dimension "bridge" (dim of the maximal invariant set inside `{P≤c}` vs `c`) = open-systems / SURVIVOR-SET theory** (Pianigiani–Yorke; Urbański; badly-approximable = Gauss-map survivor sets — standard) crossed with the **CF Khintchine/Lyapunov multifractal spectrum** (Fan–Liao–Wang–Wu, ETDS 2009, arXiv:0802.3433; Iommi–Jordan). Frameworks EXIST; the contribution can only be the *specific identity* `X(q)=escape/spectral edge` on BCZ/Hecke **with closed forms**, cited to these.
+> - **Surviving defensible contribution (sharpened):** first worked **arithmetic family of L∞/sup-norm ergodic optimization**, realized as a **survivor-set / cusp-escape threshold** on the **Taha Hecke-BCZ horocycle section** (observable = Farey gap-product = Taha roof), **exact constants `2/9,√2/8,1/λ³`**, **Lean-verified** (the real differentiator — neither ergodic optimization nor open-dynamics ships formal proofs). Ceiling: a solid specialized paper, NOT field-founding. Position against HJL-2025 (average/Gauss) as the complementary L∞/BCZ/constants/escape case.
+
 > **One-line bottom line.** The single highest-risk overlap — "`1/λ³` IS the known Hecke-group Hurwitz
 > constant" — is **REFUTED** (the real Hecke Hurwitz constant is `2`/`2√(1+(1−λ/2)²)` ∈ [0.447, 0.5],
 > numerically disjoint from `1/λ³` ∈ [1, 0.125] at every q). A **defensible novel contribution survives**,
