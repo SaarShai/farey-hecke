@@ -36,14 +36,14 @@ Load only when triggered:
 |---|---|
 | Terse style details | `skills/caveman-ultra/SKILL.md` |
 | Task >3 steps | `skills/plan-first-execute/SKILL.md` |
-| Need wiki memory | `skills/wiki-retrieve/SKILL.md` |
-| Writing memory | `skills/wiki-write/SKILL.md` |
-| Context refresh/clear/`summ` | `skills/context-refresh/SKILL.md` |
-| Need subagents | `skills/subagent-orchestrator/SKILL.md`; `prompts/subagents/lifecycle.prompt.md` |
+| Need wiki memory | `skills/wiki-memory/SKILL.md` |
+| Writing memory | `skills/write-gate/SKILL.md`; `skills/wiki-memory/SKILL.md` |
+| Context refresh/clear/`summ` | `./te context status` / `./te context checkpoint` |
+| Need subagents | `./te delegate plan`; `prompts/subagents/lifecycle.prompt.md` |
 | Simplify/lean/prune | `skills/lean-execution/SKILL.md` |
 | GitHub repo maintenance | `prompts/subagents/repo-maintainer.prompt.md` |
-| `/pa` or `/btw` prompt | `skills/personal-assistant/SKILL.md` |
-| Before completion claim | `skills/verification-before-completion/SKILL.md` |
+| `/pa` or `/btw` prompt | `./te pa --directive` |
+| Before completion claim | `skills/verify-before-completion/SKILL.md` |
 | Delegation policy | `prompts/delegation-matrix.md` |
 | New wiki page | `templates/page.template.md` |
 

@@ -47,11 +47,12 @@ git sparse-checkout set --no-cone \
   '/prompts/*.md' '/prompts/subagents/*' \
   '/projects/agents-triage/*' '/projects/compound-compression-pipeline/*' \
   '/projects/context-keeper/*' '/projects/semdiff/*' \
-  '/skills/caveman-ultra/*' '/skills/context-refresh/*' \
-  '/skills/lean-execution/*' '/skills/personal-assistant/*' \
-  '/skills/plan-first-execute/*' '/skills/relay-sessions/*' \
-  '/skills/subagent-orchestrator/*' '/skills/verification-before-completion/*' \
-  '/skills/wiki-retrieve/*' '/skills/wiki-write/*' \
+  '/skills/cache-lint/*' '/skills/caveman-ultra/*' '/skills/compliance-canary/*' \
+  '/skills/context-keeper/*' '/skills/index-first/*' '/skills/lean-execution/*' \
+  '/skills/output-filter/*' '/skills/plan-first-execute/*' '/skills/prompt-triage/*' \
+  '/skills/semantic-diff/*' '/skills/skill-pulse/*' '/skills/think/*' \
+  '/skills/verify-before-completion/*' '/skills/wiki-memory/*' '/skills/wiki-refresh/*' \
+  '/skills/write-gate/*' '/skills/SKILLS_INDEX.md' \
   '/stable/INSTALL.sh' '/stable/*'
 rm -rf .git
 git init
