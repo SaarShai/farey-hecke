@@ -1,8 +1,11 @@
 # Goal 1 — the bridge `X(q) = cluster-onset threshold` across the Hecke family
 
-**Date:** 2026-06-09. **Branch:** `hecke-goalL-2026-06-03`. **Status:** q=3 + q=4
-**machine-proved**; q≥5 characterized numerically (a sharper, arithmeticity-flavoured
-picture than first conjectured). Nothing sent outward (USER-gated).
+**Date:** 2026-06-09. **Branch:** `hecke-goalL-2026-06-03`. **Status:** q=3 + q=4 + **q=6**
+(the arithmetic trio) **machine-proved**; q≥5 characterized numerically. **UPDATE 2026-06-09
+(Goal 1.5):** the cluster ceiling `B(q)` **grows** (=2 only for {3,4,6}; 3 for q=5,7..12;
+**4 by q=13**, ~q/3) — so uniform `cluster_size_le_two_allq` is FALSE; the uniform object is
+`X(q)=1/λ³` as the cluster-ONSET value, proof open (goal-L/M). See
+`research_notes/goal1.5_uniform_obstruction.md`. Nothing sent outward (USER-gated).
 
 ## 0. One-paragraph summary
 
@@ -11,16 +14,18 @@ gap-product observable coincides with the **extreme-gap cluster-onset threshold*
 product threshold `T = X(q)` is exactly the value at which consecutive "extreme" orbit
 points of the Taha G_q-BCZ map first form a run **longer than `B(q)`** — equivalently,
 `X(q)` is the largest `T` with maximal cluster size `≤ B(q)`. Numerics (q=3..12,
-junction-safe) show this identity holds **for every q**, with the cluster bound
-`B(q) = 2` for `q ∈ {3,4,6}` and `B(q) = 3` for `q ∈ {5,7,8,9,10,11,12}`. The bound-2 set
-`{3,4,6}` is **precisely the finite arithmetic Hecke triangle groups** (Takeuchi 1977:
-arithmetic iff `q ∈ {3,4,6,∞}`, `λ ∈ {1,√2,√3,2}`). Both provable bound-2 cases are now
-**machine-verified in Lean** (sorry-free, `#print axioms` = `[propext, Classical.choice,
-Quot.sound]` only, no axiom stubs, no heavy automation): q=3 (`cluster_size_le_two_clean`,
-Aristotle v8, `X(3)=2/9`) and q=4 (`cluster_size_le_two_q4`, Aristotle v11, `X(4)=√2/8`,
-COMPLETE 2026-06-09). So: **`X(q)` = cluster-onset is universal; the size ceiling it marks
-is 2 iff `G_q` is arithmetic** — a sharp *observation/conjecture* with the two arithmetic
-cases q=3,4 fully proved.
+junction-safe, re-verified q=3..16) show this identity holds **for every q**, with the
+cluster bound `B(q) = 2` only for `q ∈ {3,4,6}`, `= 3` for `q ∈ {5,7..12}`, and **`= 4` by
+q=13** (it GROWS ~q/3). The bound-2 set `{3,4,6}` is **precisely the finite arithmetic Hecke
+triangle groups** (Takeuchi 1977: arithmetic iff `q ∈ {3,4,6,∞}`, `λ ∈ {1,√2,√3,2}`). All
+three arithmetic bound-2 cases are now **machine-verified in Lean** (sorry-free, `#print axioms`
+= `[propext, Classical.choice, Quot.sound]` only, no axiom stubs, no heavy automation): q=3
+(`cluster_size_le_two_clean`, Aristotle v8, `X(3)=2/9`), q=4 (`cluster_size_le_two_q4`, v11,
+`X(4)=√2/8`), and q=6 (`cluster_size_le_two_q6`, v12, `X(6)=√3/9=1/λ³`, self-built 2026-06-09).
+So: **`X(q)` = cluster-onset is universal, but the size ceiling it marks is 2 iff `G_q` is
+arithmetic** — `cluster_size_le_two_allq` is therefore FALSE (ceiling grows); the arithmetic
+trio {3,4,6} is the complete bound-2 family. (See `goal1.5_uniform_obstruction.md` for the
+uniform verdict + the open `X_Ω(q)=1/λ³` frontier.)
 
 ## 1. Geometry (Taha, arXiv:1810.10668, Thm 2.2)
 
