@@ -1,0 +1,54 @@
+{
+  "farey_pressure": {
+    "method": "Gauss-map induced Chebyshev N=60 A_max=200",
+    "convergence_Amax_at_beta0.8": {
+      "30": 1.5077891507376742,
+      "50": 1.5761061841297224,
+      "80": 1.62348795618106,
+      "120": 1.6550793195832165,
+      "200": 1.6854495646619296
+    },
+    "convergence_N_at_beta0.8": {
+      "20": 1.6418054673862994,
+      "30": 1.6418054673862967,
+      "40": 1.6418054673862976,
+      "56": 1.641805467386298,
+      "72": 1.6418054673862992,
+      "90": 1.6418054673862987
+    },
+    "key_values": {
+      "beta_0.6": {
+        "lambda": 3.4903496504631786,
+        "P": 1.25000191757515
+      },
+      "beta_0.8": {
+        "lambda": 1.6854495646619296,
+        "P": 0.5220323321721472
+      },
+      "beta_1.0": {
+        "lambda": 0.9928302711786403,
+        "P": -0.007195554844806882
+      },
+      "beta_1.5": {
+        "lambda": 0.3964079035367682,
+        "P": -0.9253115384385702
+      }
+    },
+    "phase_transition": "beta=1/2 (neutral fixed point): lambda diverges with A_max for beta<=1/2"
+  },
+  "bcz_pressure": {
+    "method": "Exact analytic E[(xy)^beta] = 2/(beta+1) * [1/(beta+1) - B(beta+1,beta+2)]",
+    "E_xy": 0.41666666666666663,
+    "2_9": 0.2222222222222222,
+    "q_star": 0.8618087927927428,
+    "bcz_cluster_prob": 0.13819120720725722,
+    "beta_star_where_E_equals_2_9": 1.9155988549092897,
+    "beta_star_where_E_equals_qstar": 0.1519786431992306,
+    "K_beta_0": 0.0,
+    "K_beta_1": -0.8754687373539001,
+    "K_is_analytic": true,
+    "no_phase_transition": true
+  },
+  "verdict": "INVARIANT-MEASURE-ONLY",
+  "verdict_reason": "BCZ invariant density = constant 2 on T. E[(xy)^beta] = analytic integral, no non-analyticity. 2/9 arises as level set of BCZ measure (Pr(xy<2/9)=(8ln(3/2)-2)/9), not as pressure zero or pressure special value."
+}

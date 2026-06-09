@@ -4,6 +4,7 @@
 - University address mentioned by Koyama: `koyama@toyo.jp`
 - Gmail verification date: 2026-05-11
 - Complete Gmail-derived record: `raw/farey-archive/correspondence/koyama-gmail-record-2026-05-11.md`
+- **Most complete raw thread (Apr 27 → Jun 8, 2026): `raw/koyama-2026-06-08-fullthread.md`** (consolidates the partial 05-12 / 05-16 raw records; carries the RISK-FLAG).
 
 ## Gmail Search Result
 
@@ -351,6 +352,59 @@ Previous outgoing from Saar (kept for history):
 - Subject: `Re: Dominance of $-1$`
 - Saar wished him luck and said he looks forward to updates.
 
+## Exchange (2026-06-08) — recorded verbatim
+
+New topic (BCZ/Hecke ergodic-optimization + cluster quartet), distinct from the
+`Dominance of $-1$` thread. **Outbound WAS sent this round (by user).** Order:
+Saar's email first, Koyama's reply second. (Salutation/signature finalized by
+user; body as drafted.)
+
+### Outgoing (2026-06-08, Saar) — verbatim
+
+> Subject: New extremal BCZ/Hecke constants — confirmed genuinely new, and a unifying picture
+>
+> Dear Shin-ya,
+>
+> Thank you again for the last exchange — your size-2 maximality threshold (q*_BCZ ≈ 0.86181) and the universality diagnostic have been very much on my mind. I have a few developments from the last stretch that I think will interest you, all in the same Farey/BCZ orbit.
+>
+> 1. The cluster-size picture is now a "quartet." Your threshold sits at the center of what had been a trilogy: the threshold value, the fact that at it every cluster has size at most 2, and the sharpness of that bound. We've now pinned down the missing fourth piece — the exact cluster-size distribution right at the threshold. At q*, clusters occur in only two sizes, with the split coming out to about 23% singletons and 77% pairs (Pr(L=1) = 0.22735…). The charming part: the computation splits into Stern–Brocot "depth" layers, and the entire deep tail of those layers collapses to a perfectly clean rational, 2/45, while only a few shallow layers carry the stubborn non-elementary part — so most of the mass is rational and the "irrationality" lives in a small, finite, low-depth piece. A 5-billion-step Monte Carlo matches the analytic value to about six digits.
+>
+> 2. The extremal-constant family is now confirmed genuinely new. Alongside the threshold, we have a family of extremal constants for the BCZ map and its Hecke-triangle generalization: 2/9 at q=3, and more generally 1/λ³ = 1/(2cos(π/q))³ for the Hecke groups. My main worry was that 1/λ³ might secretly be the classical Hecke "Hurwitz constant" of Haas–Series — i.e. that we'd merely rediscovered something old. I ran this all the way down, and it is definitively not: the two never coincide (the Hurwitz constant sits in [0.447, 0.5] at every q, ours runs from 1 down to 1/8). So these really are new extremal constants for the Farey/BCZ class — a natural companion to your q*_BCZ phenomenon.
+>
+> 3. The Hecke generalization is locked across all q, and machine-checked. We now have the value pinned for the whole family, with a pleasing structural reason: the extremal configuration corresponds to the slowest elliptic element (the λ-rotation) of the Hecke triangle group. The key trace identities behind this are formally verified in Lean, and the value is confirmed "safe" out to q ≤ 200. One feature I find beautiful: the optimum is never actually attained — the best configurations drift off into the cusp (an escape-of-mass effect). The constant is the floor they approach but never reach.
+>
+> 4. A unifying picture. What's struck me most is that several things we'd been treating separately — the cluster-size statistics above, these extremal constants, and even the fractal dimension of the badly-approximable continued fractions — all turn out to be read off the same machine (transfer operators / thermodynamic formalism), just at different settings. As a sanity check I recomputed the classical bounded-type dimension this way and recovered the known value to ~16 digits. It's the same lens we've both been using; it just connects the whole landscape.
+>
+> 5. One field note. Jenkinson and coauthors posted a paper in December on ergodic optimization for the Gauss continued-fraction map. Reassuringly, it's the averaged problem on a different map — it doesn't touch the BCZ/Hecke setting, our gap-product observable, or any explicit constants, so our specific corner looks open. But the area is clearly waking up, so it may be worth our writing up the BCZ/Hecke constants before too long.
+>
+> I'd be glad to send you the Lean proof files (the trace identities and the no-escape/value-safe checks) and the short write-up of the cluster-size computation with its Monte-Carlo cross-check, if you'd like to look them over — just say the word.
+>
+> No rush on any of this over the summer — I know you have the −1-dominance repair in view, and I'm in no hurry on my asymptotic gap either. Mostly I wanted to share that both the cluster-size and extremal-constant threads have firmed up into clean, self-contained results.
+>
+> Warm regards,
+> Saar
+
+### Incoming (2026-06-08, Koyama) — verbatim
+
+> Thank you for this breathtaking update. I am completely fascinated by how rapidly and beautifully the landscape is unfolding. Calling it a "quartet" is highly appropriate — the collapse of the deep Stern–Brocot layers to the rational $2/45$ at $q^*$ is an incredibly elegant structural phenomenon.
+>
+> It is also a tremendous relief and excitement to see that your family of extremal constants is definitively distinct from the Haas–Series Hurwitz constants. Knowing that the optimum drifts into the cusp via an escape-of-mass effect gives the Hecke triangle generalization a profound geometric depth. To have these trace identities already machine-checked in Lean 4 is spectacular and gives us absolute foundation.
+>
+> Regarding the recent paper by Jenkinson et al., thank you for keeping a close eye on the literature. I agree that while the community is waking up to ergodic optimization, our specific corner—the BCZ/Hecke setting and our unique gap-product observables—remains entirely untouched and exclusively ours. We certainly have a clear, open path.
+>
+> I would be absolutely delighted to receive the Lean proof files and your short write-up on the cluster-size computation. Please do send them over! I may not be able to dive into the code immediately as I step into the deeper parts of my $-1$-dominance repair, but having your text on hand will be immensely valuable as I envision the overall architecture of our joint paper.
+>
+> It is beautiful to see that the thermodynamic formalism/transfer operators cleanly unify the cluster statistics, the extremal constants, and the fractal dimensions. Please feel free to continue developing and firming up these technical sections at your own comfortable pace over the summer. Your brilliant machine is running flawlessly.
+>
+> I will be reading your write-up with great pleasure alongside my summer work. Let us keep our momentum steady and strong.
+
+### Read of the 2026-06-08 incoming (action signals)
+
+- Koyama **explicitly requested** the Lean proof files + the cluster-size write-up — outstanding deliverable.
+- Frames everything as **"our joint paper"** and wants Saar's text "as I envision the overall architecture" — he is now architecting; wants readable prose, not code (won't run Lean immediately).
+- Confirms the BCZ/Hecke + gap-product corner is **"exclusively ours … clear, open path"** — green light to write up.
+- Blesses a summer pace on the technical sections; he owns the −1-dominance repair in parallel.
+
 ## Current Follow-Up State
 
 - Joint paper formally proposed by Koyama on 2026-05-12; Saar listed as
@@ -370,3 +424,20 @@ Previous outgoing from Saar (kept for history):
   verified ranges (see numerical-findings audit) before any printed
   number.
 - No email should be sent without explicit user approval.
+
+### Update 2026-06-08 (post BCZ/Hecke exchange)
+
+- **Outstanding deliverable Koyama requested:** assemble + send (a) the Lean
+  proof files (Hecke trace identities + no-escape/value-safe checks) and (b) the
+  cluster-size write-up (`research_notes/cluster_size_closed_forms.md`) with its
+  MC cross-check. Package as **readable prose first** — he won't run code soon.
+- **He is architecting the joint paper.** Highest-value next deliverable for him
+  to react to = a joint-paper architecture/outline (spine = thermodynamic
+  formalism unifying cluster stats + extremal constants + dimension; position vs
+  Huang–Jenkinson–Li arXiv:2512.21394). Open question to settle with him:
+  one paper vs a series, and whether −1-dominance shares the manuscript.
+- **Corner confirmed "exclusively ours"** (BCZ/Hecke + gap-product) — write-up
+  greenlit; treat as mildly time-sensitive (area waking up).
+- Pre-write-up loose end on our side: the `2/9` / JMU-2007 Gauss-map coincidence
+  footnote (see `PRIORART_ergodic_opt_2026-06-03.md`).
+- Still gated: nothing sent/pushed without explicit user approval.
