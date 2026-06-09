@@ -1,0 +1,88 @@
+{
+  "experiment": "app_wildcard_sim",
+  "industry": "Network traffic anomaly detection",
+  "incumbent": "Hurst exponent (R/S analysis)",
+  "our_method": "D2 bounded-extremal-clustering (f_ge3)",
+  "n_trials": 30,
+  "n_traffic": 50000,
+  "q_d2": 0.95,
+  "regime_results": {
+    "A_farey": {
+      "d2_mean": 0.0,
+      "d2_std": 0.0,
+      "h_mean": 0.4371206537191604,
+      "h_std": 0.0008401889925107529
+    },
+    "B_heavy_tail": {
+      "d2_mean": 0.0022593338474844195,
+      "d2_std": 0.0009433628466981803,
+      "h_mean": 0.5111841763837699,
+      "h_std": 0.017998871137049312
+    },
+    "C_ddos": {
+      "d2_mean": 0.3524998922831386,
+      "d2_std": 0.022884127156823905,
+      "h_mean": 0.5571257797404029,
+      "h_std": 0.018197201202580147
+    },
+    "D_poisson": {
+      "d2_mean": 0.002245550618179287,
+      "d2_std": 0.0007516724238323823,
+      "h_mean": 0.5185494156236741,
+      "h_std": 0.015832098149142465
+    }
+  },
+  "pair_separation": {
+    "A vs B": {
+      "d2": {
+        "cohen_d": 3.3300826309258866,
+        "auroc": 1.0
+      },
+      "h": {
+        "cohen_d": 5.715310247100273,
+        "auroc": 1.0
+      },
+      "winner": "Hurst"
+    },
+    "A vs C": {
+      "d2": {
+        "cohen_d": 21.417955197083497,
+        "auroc": 1.0
+      },
+      "h": {
+        "cohen_d": 9.159803345410637,
+        "auroc": 1.0
+      },
+      "winner": "Hurst"
+    },
+    "B vs C": {
+      "d2": {
+        "cohen_d": 21.262618780693916,
+        "auroc": 1.0
+      },
+      "h": {
+        "cohen_d": 2.4957814264887377,
+        "auroc": 0.9602
+      },
+      "winner": "D2"
+    },
+    "A vs D": {
+      "d2": {
+        "cohen_d": 4.153819308563771,
+        "auroc": 1.0
+      },
+      "h": {
+        "cohen_d": 7.1413782716547916,
+        "auroc": 1.0
+      },
+      "winner": "Hurst"
+    }
+  },
+  "gap_filled": false,
+  "edge_demonstrated": false,
+  "A_vs_B": {
+    "d2_auroc": 1.0,
+    "h_auroc": 1.0,
+    "d2_wins": false
+  }
+}

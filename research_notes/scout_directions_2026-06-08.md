@@ -184,3 +184,19 @@ larger N on M1/M2.
 - **D2** — verified (Lean onset=q* + ζ 3σ). Lead; write-up-ready.
 - **D3** — Hecke/Rosen dimension spectrum operator validated; finding = **Hensley `6/(π²λ_q)` is q-dependent, holds small-q, breaks large-q** (precision-limited at large q). Real result; next = high-precision JP-determinant pass for a definitive large-q verdict.
 - **D1** — closed (invariant-measure-only).
+
+## D3 round-4 (JP Fredholm-determinant) — IN PROGRESS / verdict pending (wf_470d79aa-b54)
+Built `code/d3_jp_dimension.py`; M2 ran the large-q high-precision sweep (q=12–20, dps=50,
+`/tmp/d3_jp_largeB_m2.json`). **Preliminary, NOT converged:** at large q with B≤8 / cycle-length 4,
+JP gives `B·(1−D)≈0.6`, `ratio≈2×C_conj` and *rising* — the OPPOSITE sign of round-3's collocation
+(which read *below*). Two methods disagreeing ⇒ neither has reached the B→∞ limit ⇒ **large-q `C_q`
+is numerically delicate; still not definitively pinned.** Final synthesis/verify finishing; conclusion
++ the d3_jp code/note to be committed when the workflow lands. Honest current read: the `C_q(λ_q)`
+law is harder to nail at large q than hoped; the *small-q* confirmation (q=3,4 ≈ `6/(π²λ_q)`) stands.
+
+## Applications (separate scouts) — NEGATIVE, documented
+`research_notes/applications_scout_2026-06-08.md`: D2 has no transferable industrial edge — loses to
+spectral (TRNG), Ferro–Segers (extremal clustering), Hurst (network), Sobol (QMC). Value is mathematical.
+
+## Breakthrough goals — `research_notes/breakthroughs_2026-06-08.md`
+Goal 1 (q=4 cluster≤2, spawned session) · Goal 2 (fully-formal X(3)=2/9) · Goal 1.5 (uniform all-q).
