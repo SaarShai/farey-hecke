@@ -123,3 +123,64 @@ zeros) and the D2 threshold (invariant-measure integral).
 - **KEEP: D3** — transfer-operator + `D_q(B)` invariant verified; X(q)-edge dropped; next = the `C_q(λ_q)` Hensley law + the true Rosen map.
 - **CLOSED: D1** — settled negative (invariant-measure-only); remains the lens, not a third direction.
 Two strong promising directions remain; D1 resolved. Goal satisfied.
+
+---
+
+## WEEK-2 ROUND (workflow wf_a2b66e0b-8c3, 2026-06-08; fleet-wired: Aristotle + Kaggle live)
+
+### D2-Lean — onset=q* **PROVED in Lean by Aristotle**. ✅
+Dispatched `projects/aristotle_dispatch_v10/BCZOnsetQStar.lean` (toolchain v4.28.0, mathlib
+v4.28.0) via `aristotle submit`. Aristotle returned **COMPLETE, 0 errors / 0 sorries**:
+`theorem bczOnsetEqualsQStar` proved, incl. the hard real-analysis lemmas it generated
+(`log(3/2)>1/4` via `exp(1/4)⁴=exp 1<3≤(3/2)⁴`; `log(3/2)<1`). Rests on exactly two axiom
+stubs — `bczProb_eq_value` (v5) and `cluster_size_le_two_clean` (v8), both proved in prior
+dispatches — plus standard Lean axioms. Solved project saved under
+`projects/aristotle_dispatch_v10/solved/`. (Aristotle project id 6f498ae0-…; ~21 min.)
+Honest note: the agent correctly REMOVED a wrong lemma mid-build (`1−bczOnset ≠ 2/9` — the
+quantile and product thresholds are different objects), keeping the clean statement.
+
+### D2-ζ — bound tightened, **CONFIRMED** (verifier high-confidence). ✅
+Real **2,001,052 Odlyzko zeros** (zeros6 table, authenticity re-verified), unfolded. At q=0.99:
+19,611 clusters, **0 size-2** (max-run 1) → Clopper–Pearson one-sided 3σ upper bound
+**f(size2) < 0.0337%**, i.e. **>2794× below** Farey/BCZ's ~94%. ζ sits firmly in the RMT/GUE
+class. `code/d2_zeta_bigsample.py`, §8 of `d2_diagnostic_2026-06.md`.
+
+### D3-Rosen — **UNRESOLVED; research agent's "C_q refuted" FALSIFIED by the verifier (bug caught).** ⚠
+The compute agent reported `C_q=6/(π²λ_q)` REFUTED — but the adversarial verifier found its
+`D_q^Rosen(B)` was **mislabeled**: it bisected leading-eigenvalue = 0.5 via a bogus
+"factor-2 symmetry" (the both-sign branches have *unequal* weights `(aλ∓x)^{-2}` and different
+images). Recomputing with the **correct** full operator (bisect eigenvalue = 1, summing both
+branches with individual weights) gives q=5: B=1→0, B=2→0.696, B=4→0.881, B=8→0.949, and
+`B·(1−D)` decreasing monotonically (0.997→0.407 at B=8) **toward** `C_conj=0.376` — i.e.
+*consistent with Hensley convergence from above*, NOT refuted. **Verdict at B≤8: INDETERMINATE.**
+Solid sub-results that DO hold: (a) q=3 positive-only Hensley confirmed to ~9% (Richardson
+C_3=0.660 vs 6/π²=0.608); (b) positive-only `D_q^{pos}(∞)<1` for q≥4 (IFS doesn't cover domain).
+⇒ needs a round-3 with the corrected operator pushed to large B. (Local-feasible — operator is
+N×N regardless of B.) `code/d3_rosen_full.py` (buggy bisect; to be superseded).
+
+## Week-2 net
+- **D2 = strongly verified on two fronts** (machine-proved onset=q*; ζ 3σ bound 2794× below). Lead, near write-up-ready.
+- **D3 = still open** (C_q law indeterminate; the "refuted" was a bug — verification saved it). Round-3 with the correct operator at large B will settle it.
+
+### D3 round-3 (wf_85c9325a-7b7) — operator FIXED & validated; C_q verdict = MODIFIED-FORM (not universal)
+The corrected full-Rosen operator (`code/d3_rosen_round3.py`) bisects leading-eigenvalue=1 (no
+0.5 relapse) with per-branch restricted-domain indicators. **Both guardrail anchors pass**: q=3
+Gauss dim{1,2}=0.531280506277204 (residual 1e-15); q=5 full Rosen B=2/4/8 = 0.696/0.881/0.949.
+Independent verifier re-implemented the operator and confirmed anchors + ev→1.
+
+**Verified verdict (reliable range B≤24):** `C_q = 6/(π²λ_q)` is **CONFIRMED** for q=3 (ratio 1.06),
+q=4 (0.98), q=7 (0.93); **BORDERLINE** q=5 (0.82), q=6 (0.88), q=8 (0.85); **REFUTED** q=9 (0.75),
+q=10 (0.79), q=11 (0.68), q=12 (0.76). For q=3,4 `B·(1−D)→C_conj` from above (convergent); for
+q≥9 it sits 20–35% below C_conj at B=24 with no reversal → the conjectured coefficient is NOT the
+universal Hensley constant; it deviates (downward) as q grows.
+**Precision caveat (the open edge):** large-B (≥32, q≥5) eigenvalues are unresolved at N=80
+collocation (leading ev too close to 1); the compute agent's harsher refutations came from that
+corrupted data and were discarded by the verifier. A DEFINITIVE large-q verdict needs a
+higher-accuracy method — the **Jenkinson–Pollicott periodic-orbit / Fredholm-determinant** scheme
+(super-exponential accuracy, the right tool for dims near 1) or extended precision (mpmath), and/or
+larger N on M1/M2.
+
+## Standing state (post week-2 + D3r3)
+- **D2** — verified (Lean onset=q* + ζ 3σ). Lead; write-up-ready.
+- **D3** — Hecke/Rosen dimension spectrum operator validated; finding = **Hensley `6/(π²λ_q)` is q-dependent, holds small-q, breaks large-q** (precision-limited at large q). Real result; next = high-precision JP-determinant pass for a definitive large-q verdict.
+- **D1** — closed (invariant-measure-only).

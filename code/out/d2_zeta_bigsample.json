@@ -1,0 +1,44 @@
+{
+  "source": "Odlyzko zeros6",
+  "url": "https://www-users.cse.umn.edu/~odlyzko/zeta_tables/zeros6",
+  "n_raw_zeros": 2001052,
+  "t_min": 14.134725142,
+  "t_max": 1132490.658714411,
+  "n_gaps_used": 1961031,
+  "farey_f2_reference": {
+    "q0.95": 0.883,
+    "q0.99": 0.9413
+  },
+  "results": {
+    "0.95": {
+      "nclu": 97699,
+      "maxrun": 2,
+      "f2_hat": 0.0036131383125722885,
+      "f2_se": 0.00019196021617505125,
+      "f2_upper3sigma": 0.004189018961097442,
+      "fge3": 0.0,
+      "hist": [
+        97346,
+        353,
+        0,
+        0,
+        0
+      ]
+    },
+    "0.99": {
+      "nclu": 19611,
+      "maxrun": 1,
+      "f2_hat": 0.0,
+      "f2_se": 0.0,
+      "f2_upper3sigma": 0.00033688303334900027,
+      "fge3": 0.0,
+      "hist": [
+        19611,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  }
+}
