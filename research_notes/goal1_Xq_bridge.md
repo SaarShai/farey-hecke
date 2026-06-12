@@ -143,8 +143,30 @@ needs `λ²(2−√2) ≥ 2√2` (i.e. `λ ≳ 2.2`) when `X=1/λ³`, which fail
   "iff"); q=7's bound-2 failure is mild (`onset₂/X=0.98`) but `mr@X=3` is robust at
   n=15M. Whether `B(q)` stays 3 or grows for `q→∞` (λ→2) is untested beyond q=12.
 * **Next proofs.** (i) `cluster_size_le_two_q6` (λ=√3) would machine-verify the full
-  arithmetic trio. (ii) A `cluster_size_le_three` for one non-arithmetic q (e.g. q=5,
-  `onset₃≈X(5)`) would verify the other half of the dichotomy.
+  arithmetic trio. — **DONE 2026-06-09 (v12).** (ii) A `cluster_size_le_three` for one
+  non-arithmetic q (e.g. q=5, `onset₃≈X(5)`) would verify the other half of the dichotomy.
+  — **Reverse-direction witness DONE 2026-06-12 (v13):** `three_cluster_q5` +
+  `X5_eq_inv_phi5_cubed` in `projects/aristotle_dispatch_v13/BCZ5Witness.lean`, sorry-free,
+  `#print axioms` = `[propext, Classical.choice, Quot.sound]` (build 8027 jobs). Explicit
+  exact 3-cluster from rational start `(3/5, 1/3)`: points `(3/5,1/3) → (1/3, −4/15+√5/3)
+  → (−4/15+√5/3, 11/30+√5/30)`, k-pattern `(2,1)` (the k=1 step is exactly what the q=4
+  proof excludes — mechanism confirmed), all `P < X(5)=√5−2` with exact margins
+  `√5−11/5, −86/45+8√5/9, −881/450+133√5/150`. Sympy exact certificate:
+  `code/goal1_q5_witness_exact.py` + `code/out/goal1_q5_witness_exact.{json,md}`.
+  Proved directly by a sonnet subagent — no Aristotle dispatch consumed (5a2764aa
+  cancelled). **Dichotomy now machine-checked in both directions through q=6.**
+  Next rung: q=7 witness (first cubic field, λ₇ root of x³−x²−2x+1).
+  — **q=7 DONE 2026-06-12 (v14, first NON-quadratic case):** `three_cluster_q7` +
+  `X7_eq_inv_lam7_cubed` in `projects/aristotle_dispatch_v14/BCZ7Witness.lean`, sorry-free,
+  `#print axioms` = `[propext, Classical.choice, Quot.sound]` (build 8027 jobs, self-verified).
+  Exact witness in Q(λ₇), reduction λ₇³=λ₇²+2λ₇−1, from rational start `(20/61, 25/61)`:
+  k-pattern `(1,1)`, all `P=ab < X(7)=1/λ₇³≈0.170915` with tightest margin ≈0.00168
+  (point 1), certified by exact rational-interval arithmetic at λ₇∈(18019/10000,18020/10000)
+  (minpoly sign-check on both endpoints). Sympy certificate: `code/goal1_q7_witness_exact.py`
+  + `code/out/goal1_q7_witness_exact.{json,md}`. Proved directly by sonnet subagent — no
+  Aristotle dispatch. **Significance: the cubic-field witness certifies cleanly — the
+  margin-positivity recipe (quadratic-in-λ, neg leading coeff, evaluate at rational interval
+  endpoint) mechanizes for any q; witness-family program tractable up the tower.**
 
 ## 5. Prior-art positioning (per `PRIORART_ergodic_opt_2026-06-03.md`)
 

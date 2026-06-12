@@ -1,0 +1,159 @@
+{
+  "witness": "exact_3_cluster_q7_G7_BCZ",
+  "q": 7,
+  "lambda": "lambda7 = 2*cos(pi/7) = root of L^3-L^2-2L+1 in (1.8019, 1.8020)",
+  "lambda_interval": {
+    "lo": "18019/10000",
+    "hi": "18020/10000",
+    "f_lo_sign": "negative",
+    "f_hi_sign": "positive"
+  },
+  "X_q7": {
+    "expr": "-5*L^2 + 3*L + 11",
+    "float": 0.17091518882717946,
+    "identity": "X(7) = 1/lambda7^3",
+    "verification": "X7 * L^3 = 1 verified symbolically"
+  },
+  "field": "Q(lambda7) with basis {1, L, L^2}, L^3 = L^2+2L-1",
+  "start_rational": {
+    "a": "20/61",
+    "b": "25/61",
+    "denominator": 61
+  },
+  "points": [
+    {
+      "index": 0,
+      "a": {
+        "c0_const": "20/61",
+        "c1_L": 0,
+        "c2_L2": 0,
+        "expr": "20/61",
+        "float": 0.32786885245901637
+      },
+      "b": {
+        "c0_const": "25/61",
+        "c1_L": 0,
+        "c2_L2": 0,
+        "expr": "25/61",
+        "float": 0.4098360655737705
+      },
+      "k": 1,
+      "k_ratio": {
+        "float": 1.7980643479630827,
+        "formula": "81/(25*L)",
+        "k_lo": "1 <= 81/(25L) since L < 81/25=3.24",
+        "k_hi": "81/(25L) < 2 since L > 81/50=1.62"
+      },
+      "P": {
+        "c0_const": "500/3721",
+        "c1_L": 0,
+        "c2_L2": 0,
+        "expr": "500/3721",
+        "float": 0.13437248051599032
+      },
+      "X_minus_P": {
+        "c0_const": "40431/3721",
+        "c1_L": "3",
+        "c2_L2": "-5",
+        "expr": "-5*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2 + 3*CRootOf(x**3 - x**2 - 2*x + 1, 2) + 40431/3721",
+        "float": 0.03654270831118913,
+        "strictly_positive": true
+      },
+      "on_last_branch": true,
+      "a_plus_L_b": {
+        "c0_const": "20/61",
+        "c1_L": "25/61",
+        "c2_L2": 0,
+        "expr": "20/61 + 25*CRootOf(x**3 - x**2 - 2*x + 1, 2)/61",
+        "float": 1.0663679245101796
+      }
+    },
+    {
+      "index": 1,
+      "a": {
+        "c0_const": "25/61",
+        "c1_L": 0,
+        "c2_L2": 0,
+        "expr": "25/61",
+        "float": 0.4098360655737705
+      },
+      "b": {
+        "c0_const": "-20/61",
+        "c1_L": "25/61",
+        "c2_L2": 0,
+        "expr": "-20/61 + 25*CRootOf(x**3 - x**2 - 2*x + 1, 2)/61",
+        "float": 0.41063021959214685
+      },
+      "k": 1,
+      "k_ratio": {
+        "float": 1.9053638825640669
+      },
+      "P": {
+        "c0_const": "-500/3721",
+        "c1_L": "625/3721",
+        "c2_L2": 0,
+        "expr": "-500/3721 + 625*CRootOf(x**3 - x**2 - 2*x + 1, 2)/3721",
+        "float": 0.16829107360333886
+      },
+      "X_minus_P": {
+        "c0_const": "41431/3721",
+        "c1_L": "10538/3721",
+        "c2_L2": "-5",
+        "expr": "-5*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2 + 10538*CRootOf(x**3 - x**2 - 2*x + 1, 2)/3721 + 41431/3721",
+        "float": 0.0026241152238405895,
+        "strictly_positive": true
+      },
+      "on_last_branch": true,
+      "a_plus_L_b": {
+        "c0_const": "25/61",
+        "c1_L": "-20/61",
+        "c2_L2": "25/61",
+        "expr": "-20*CRootOf(x**3 - x**2 - 2*x + 1, 2)/61 + 25/61 + 25*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2/61",
+        "float": 1.1497661537186872
+      }
+    },
+    {
+      "index": 2,
+      "a": {
+        "c0_const": "-20/61",
+        "c1_L": "25/61",
+        "c2_L2": 0,
+        "expr": "-20/61 + 25*CRootOf(x**3 - x**2 - 2*x + 1, 2)/61",
+        "float": 0.41063021959214685
+      },
+      "b": {
+        "c0_const": "-25/61",
+        "c1_L": "-20/61",
+        "c2_L2": "25/61",
+        "expr": "-20*CRootOf(x**3 - x**2 - 2*x + 1, 2)/61 - 25/61 + 25*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2/61",
+        "float": 0.33009402257114606
+      },
+      "k": null,
+      "P": {
+        "c0_const": "500/3721",
+        "c1_L": "-225/3721",
+        "c2_L2": "-1000/3721",
+        "expr": "-1000*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2/3721 - 225*CRootOf(x**3 - x**2 - 2*x + 1, 2)/3721 + 500/3721 + 625*CRootOf(x**3 - x**2 - 2*x + 1, 2)**3/3721",
+        "float": 0.13554658097444477
+      },
+      "X_minus_P": {
+        "c0_const": "40431/3721",
+        "c1_L": "11388/3721",
+        "c2_L2": "-17605/3721",
+        "expr": "-17605*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2/3721 - 625*CRootOf(x**3 - x**2 - 2*x + 1, 2)**3/3721 + 11388*CRootOf(x**3 - x**2 - 2*x + 1, 2)/3721 + 40431/3721",
+        "float": 0.035368607852734664,
+        "strictly_positive": true
+      },
+      "on_last_branch": true,
+      "a_plus_L_b": {
+        "c0_const": "-20/61",
+        "c1_L": "0",
+        "c2_L2": "-20/61",
+        "expr": "-20*CRootOf(x**3 - x**2 - 2*x + 1, 2)**2/61 - 20/61 + 25*CRootOf(x**3 - x**2 - 2*x + 1, 2)**3/61",
+        "float": 1.005439095226709
+      }
+    }
+  ],
+  "all_checks_passed": true,
+  "method": "sympy exact arithmetic over Q(lambda7); rational interval bounds"
+}
