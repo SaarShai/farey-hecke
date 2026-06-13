@@ -8,7 +8,7 @@ parameter box is widened (verified to (a) CONTAIN every genuine non-F sub-thresh
 q=16..21 and (b) keep the conclusion margin strictly positive, min `λv²−uv−thr ≈ 0.053` over the
 whole relaxed box — both checks in `/tmp/box_final.py`).
 
-Setup (validated genuine Taha map, `code/Bgoal_taha_genuine.py`). On a NON-F branch
+Setup (validated genuine Taha map, `projects/mimo-mini-project/code/Bgoal_taha_genuine.py`). On a NON-F branch
 `i ∈ {q−4, …}` write `u = L_{i−1}, v = L_i, r = x_{i−2}/x_{i−1}`. Via the Casorati identity
 `x_{i−1}² − x_i x_{i−2} = 1`, the genuine observable is EXACTLY `P_i = a·L_i/x_{i−1} = uv − rv²`.
 The genuine successor lands on the scalar branch `q−1` (numerically verified, q=16..21), where the

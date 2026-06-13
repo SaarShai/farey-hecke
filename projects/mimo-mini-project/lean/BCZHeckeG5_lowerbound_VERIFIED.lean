@@ -14,7 +14,7 @@ measure form (`essSup_g5Product_ge`: any `g5Map`-invariant prob. measure has `es
 **What this is NOT.** This is *not* the sharp value `V(5) = 1/4`. The sharp bound is genuinely
 harder and is **not** reachable by the q = 3,4 "window" template, because q = 5 is the first
 *connected-regime* case (`V(5) = 1/4 > 1/(4λ) = (√5−1)/8 ≈ 0.1545`). Concretely (see
-`code/g5_window_precheck.py`, `g5_maxrun_refine.py`, `g5_sustained_search.py` and
+`projects/mimo-mini-project/code/g5_window_precheck.py`, `g5_maxrun_refine.py`, `g5_sustained_search.py` and
 `research_notes/g5_window4_refutation_2026-06-02.md`):
 
 * The proposed **4-window** bound ("no 4 consecutive products `< 1/4`") is **FALSE**: there is an

@@ -4,7 +4,7 @@ import Mathlib
 
 For q=16,17 the only sub-threshold steps off the scalar branch occur on branches `i∈{q−4,…,q−7}` with
 floor `k=0`, and their successor lands on the scalar branch `q−1` (numerically verified,
-`code/Mgoal_two_consec.py`, `code/Mgoal_subthr_branches.py`). Writing `u=L_{i−1}, v=L_i` and
+`projects/mimo-mini-project/code/Mgoal_two_consec.py`, `projects/mimo-mini-project/code/Mgoal_subthr_branches.py`). Writing `u=L_{i−1}, v=L_i` and
 `r=x_{i−2}/x_{i−1}`, the successor product (on branch `q−1`) is `L_i·L_{i+1}=v(λv−u)=λv²−uv`, and the
 source/successor domain constraints are
   `u>1` (source on branch i: `L_{i−1}>1`),  `v≤1` (branch: `L_i≤1`),

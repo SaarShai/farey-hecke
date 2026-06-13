@@ -2,7 +2,7 @@ import Mathlib
 /-!
 # q=5 genuine per-branch envelope (goal D, the lower-bound reduction's key static input)
 
-The genuine `G₅`-BCZ map has branches `i = 2,3,4`.  Numerically (`code/Dgoal_perbranch.py`) the
+The genuine `G₅`-BCZ map has branches `i = 2,3,4`.  Numerically (`projects/mimo-mini-project/code/Dgoal_perbranch.py`) the
 observable `P` is `< 1/φ³` ONLY on the scalar branch `i = q−1 = 4`; on the non-scalar branches
 `i = 2,3` one has `P ≥ 1/φ³` pointwise.  This file machine-checks that **per-branch envelope** for
 `i = 2,3`:

@@ -120,7 +120,7 @@ a SINGLE explicit window hypothesis.
 - **`g5_tpoint_excl` (UNCONDITIONAL, machine-checked):** in any in-`D` orbit (`λ=φ`, `φ²=φ+1`) with
   every product `≤ 1/4`, no exact t-point `c_m c_{m+1} = 1/4` (m≥1) is sustainable — a forward
   product exceeds `1/4` within ≤3 steps. Proof = the full case structure (paper:
-  `../research_notes/TrackA_q5_q6_lower_bound_2026-06-02.md` §2; numerics `code/q5_exclusion_verify.py`,
+  `../research_notes/TrackA_q5_q6_lower_bound_2026-06-02.md` §2; numerics `projects/mimo-mini-project/code/q5_exclusion_verify.py`,
   0 fails):
   - **Case I** (forward floor `K_m≥2`): `P_{m+1}=K_m φ y²−1/4 ≥ 2φy²−1/4 ≥ φ/4 > 1/4` (uses the
     engine coord bound `2φx²≤1`, `2φy²≤1` ⇒ `y²≥φ/8`).
@@ -137,8 +137,8 @@ a SINGLE explicit window hypothesis.
   (no ground state) — fed through the proven engine `essSup_ge_of_no_sustained` (from
   `BCZHeckeG5_lowerbound_VERIFIED.lean`, re-included).
 - **The ONE remaining gap = `Q5Window`** (no 5 consecutive in-`D` products `<1/4`, i.e. `X(5)≥1/4`
-  itself). NUMERICALLY CERTIFIED: longest sub-1/4 run = **4** (hill-climb `code/maxrun_hillclimb.py`,
-  probe `code/rotation_sweep_probe.py`); analog of q=3's machine-checked v8 cluster bound; the
+  itself). NUMERICALLY CERTIFIED: longest sub-1/4 run = **4** (hill-climb `projects/mimo-mini-project/code/maxrun_hillclimb.py`,
+  probe `projects/mimo-mini-project/code/rotation_sweep_probe.py`); analog of q=3's machine-checked v8 cluster bound; the
   connected-regime multi-step dynamics, not yet hand/Lean-discharged.
 
 **Also refuted this session (goal A "rotation-sweep" premise):** the proposed *uniform window = q−2*
@@ -212,7 +212,7 @@ edge is added). Corrected lemma uses BOTH edges; worst margin +0.0107 at K=(2,1,
 
 **Method note (reusable):** `nlinarith` times out on the tight degree-4 / irrational-`1/φ³` cases;
 solved by exact ℚ(φ) certificates found via sympy nullspace + small float-LP, emitted as φ-reduced
-`have`s + `linarith` (no product-forming). Scripts `code/emit5.py`, `code/build_core.py`. φ MUST be a
+`have`s + `linarith` (no product-forming). Scripts `projects/mimo-mini-project/code/emit5.py`, `projects/mimo-mini-project/code/build_core.py`. φ MUST be a
 free variable (`phi^2=phi+1`), not a `noncomputable def` (def-unfold → whnf timeouts on `phi^3`).
 
 ---
@@ -241,7 +241,7 @@ for multi-root q). `Real.pi_lt_d2 : π<3.15` is the π bound (not `pi_lt_315`).
 
 **NUMERICAL (Objective B value safety):** adversarial min-esssup ≥ 1/λ³ for q=17,19,23,29,37,50,75,100,150
 (ratio 1.00000–1.00011; minimiser = cusp word) — no orbit below threshold; extends prior q≤50 to q≤150
-(`code/Lgoal_value_safety.py`). q≥17 uniform LB proof remains partial (L1-piecewise + corridor
+(`projects/mimo-mini-project/code/Lgoal_value_safety.py`). q≥17 uniform LB proof remains partial (L1-piecewise + corridor
 characterisation open); composite-trace dichotomy proven for the dominant W_q-family.
 
 ---
@@ -268,14 +268,14 @@ general `(T,P,D,t,M,μ)+hNS ⇒ t≤essSup`.)
 **CLASSIFICATION (NUMERICAL, structural).** The corridor monodromies = elliptic torsion of the Hecke
 triangle group `G_q=(2,q,∞)`: every elliptic trace ∈ `{0}∪{±2cos(jπ/q)}` (HP residual ≤1e-45, q=5..100),
 `λ` extremal (slowest rotation = F-family). q=100 "slower-than-λ" hits all parabolic float artifacts (HP
-trace −2). `code/Mgoal_corridor_classify.py`.
+trace −2). `projects/mimo-mini-project/code/Mgoal_corridor_classify.py`.
 
 **NUMERICAL (refutation hunt — value SURVIVES).** Value-safe min-esssup ≥ 1/λ³ to **q≤200** (ratio
 ≤1.00008, minimiser=cusp; extends prior q≤150); single-corridor HP min-max-P margin O(1/q²)>0 to q=100.
 No sub-threshold invariant set to **q≤70** via the DECISIVE per-cell true-map escape test (grid survivor
 COUNT alone unreliable at fine grid — discretization cycles; q=60/70 counts refuted by escape: every
 survivor cell exits S within ≤0.3q steps). Per-q corridor no-cycle certificate passes q=17..30.
-`code/Mgoal_refute_certify.py`, `code/Mgoal_q60_probe.py`.
+`projects/mimo-mini-project/code/Mgoal_refute_certify.py`, `projects/mimo-mini-project/code/Mgoal_q60_probe.py`.
 
 **OPEN:** uniform analytic (C′) for q≥17 = (L1) closed form (single-ellipse shortcut ill-posed) +
 classification-as-Lean-theorem (identify `⟨M_{i,k}⟩=G_q`, then `lam_is_max_elliptic_trace` closes the
@@ -315,7 +315,7 @@ t_{n+2}=l t_{n+1}−t_n`) equals `2cos(nπ/q)` for `l=2cos(π/q)` (Chebyshev ind
 `linear_combination`). ⇒ `⟨R⟩` realises EXACTLY the trace spectrum `{2cos(jπ/q)}` — "values realised" half
 of the classification (complement to `lam_is_max_elliptic_trace` = "j=1 extremal"). File now 9 theorems.
 
-**NEW NUMERICAL (robust, key reduction)** — `code/Mgoal_subthr_branches.py`, `code/Mgoal_collapse_robust.py`
+**NEW NUMERICAL (robust, key reduction)** — `projects/mimo-mini-project/code/Mgoal_subthr_branches.py`, `projects/mimo-mini-project/code/Mgoal_collapse_robust.py`
 (40k seeds): every sub-threshold RUN of length ≥3 uses ONLY branch offsets `{1,3}` (= branches `q−1,q−3`),
 floors `{0..4}` = the F-family alphabet. ⇒ genuine (C′) reduces to the 2-branch F-family (already the
 Lean-covered (L2) family) ⇒ classification OFF the critical path. Sharp boundary:
@@ -330,7 +330,7 @@ feasibility) + the confinement lemma. KAM-obstacle; value decisive (survivor+esc
 Not session-closable; sharply isolated.
 
 ### Goal M — q=16,17 reduced to a clean bounded target (2-consec⟹scalar)
-`code/Mgoal_two_consec.py`: at q=16,17, **(2-consec⟹scalar)** "if `P(a,b)<thr` and `P(T(a,b))<thr` then
+`projects/mimo-mini-project/code/Mgoal_two_consec.py`: at q=16,17, **(2-consec⟹scalar)** "if `P(a,b)<thr` and `P(T(a,b))<thr` then
 `(a,b)` is on scalar branch `q−1`" holds on a 2400² grid with LARGE margin (worst successor `P−thr` =
 +0.106 (q16), +0.099 (q17)); breaks at q=18 on branch `q−3`. Chaining: 5 consec sub-thr ⟹ steps 0..3
 scalar ⟹ scalar recurrence ⟹ `P_0..P_4=c_0c_1..c_4c_5<thr` ⟹ contradicts goal-L `g{16,17}` ⟹ no 5

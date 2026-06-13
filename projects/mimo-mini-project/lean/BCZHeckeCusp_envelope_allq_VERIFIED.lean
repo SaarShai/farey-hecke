@@ -8,7 +8,7 @@ The genuine `G_q`-BCZ cusp branch is `i = q−2`, with `x_{q-2}=1, x_{q-3}=l, x_
 
   `cusp_envelope` :  on the cusp branch,  `P = a(a+l b)/l ≥ 1/l³`  (tight at the cusp vertex `(1/l,0)`).
 
-Certificate (general `l`, verified symbolically in `code/Fgoal_cusp_cert_verify.py`), with
+Certificate (general `l`, verified symbolically in `projects/mimo-mini-project/code/Fgoal_cusp_cert_verify.py`), with
 `W := l²·a(a+l b) − 1`, `G := l a + (l²−1) b − 1 > 0` [branch guard `L_{q-3}>1`],
 `d := l a + b − 1 > 0` [domain]:
 * case `a ≥ 1/l` :  `(l²−2)·W = (l³−l−1)·a·G + (l²−2)(l a−1)(1−a) + (l²−l−1)·a·d`,

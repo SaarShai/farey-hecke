@@ -13,7 +13,7 @@ remaining analytic inequality:
 
 where `λ = 2 cos(π/q)`, `L_blk q = ⌈33 q / 256⌉ + 2`, and `g_corr` is the genuine-corridor
 window-min functional (the arc-width analog of goal-N's `g_closed(⌈7q/25⌉,q) ≥ 1/λ³`), defined
-verbatim below from `code/GATE2_L1b_arcwidth_interval.py`.
+verbatim below from `projects/mimo-mini-project/code/GATE2_L1b_arcwidth_interval.py`.
 
 Everything except (L1b) compiles with no `sorry`.  (L1b) is the ONE genuine-open crux
 (the uniform `O(1/q²)` escape-margin), clearly labelled `sorry` and re-exposed as
@@ -133,7 +133,7 @@ theorem switch_13_hyperbolic (hl : 0 < l) : tr (mul (F l 3) (F l 1)) < -2 := by
 
 /-! ## §2.  The genuine-corridor window functional `g_corr` and the block length `L_blk`.
 
-Definitions verbatim from `code/GATE2_L1b_arcwidth_interval.py` (closed forms machine-verified to
+Definitions verbatim from `projects/mimo-mini-project/code/GATE2_L1b_arcwidth_interval.py` (closed forms machine-verified to
 `~1e-43` against the true `BCZ_q` map this session).  `θ=π/q`, `λ=2cos θ`, `A2=1+2λ²`,
 `η = atan2(sin θ, 3 cos θ)`, `Blam = √(12λ⁴+8λ²+1)/(2λ²+1)`, `ξ = atan2(λ sin θ, 3λ²+1+λ cos θ)`,
 `H = (L-1)θ/2`.  Domain-centered variable `μc = μ + ξ`. -/
@@ -188,7 +188,7 @@ def g_corr (L q : ℕ) (hL : 0 < L) : ℝ :=
 
 `g_corr` is a RIGOROUS LOWER BOUND on the true genuine-corridor block-window max-product
 (machine-verified `g_corr ≤ g_true` at every tested `q,L`; the interval-arithmetic certificate in
-`code/GATE2_L1b_arcwidth_interval.py` proves the displayed inequality on finite ranges).  The
+`projects/mimo-mini-project/code/GATE2_L1b_arcwidth_interval.py` proves the displayed inequality on finite ranges).  The
 uniform statement — the `O(1/q²)` escape-margin — is the open crux.  It is NOT an ATP search
 target; it is one-dimensional calculus (sharp `max cos` + uniform arc-endpoint control), staged
 for Aristotle / human proof. -/

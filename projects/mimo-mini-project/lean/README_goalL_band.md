@@ -44,6 +44,6 @@ Total ~20–30 min single-threaded (q=16's degree-8 / 84-product certificate is 
 2. **Single case:** with all floors `=1` the recurrence is the linear Chebyshev/rotation map, so the
    window core is ONE Positivstellensatz infeasibility certificate (`case_q{q}`) — a nonnegative
    combination of products of the domain generators that reduces (mod the minimal polynomial `hps`) to a
-   negative rational, closed by `linarith`. Certificates are produced by `code/Lgoal_buildcore.py`.
+   negative rational, closed by `linarith`. Certificates are produced by `projects/mimo-mini-project/code/Lgoal_buildcore.py`.
 3. **Glue:** `g{q}_core` proves each `K_n=1` then dispatches `case_q{q}`; `g{q}_no_window_below_genuine`
    lifts it to orbits.

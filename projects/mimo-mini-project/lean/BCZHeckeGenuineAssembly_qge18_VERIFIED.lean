@@ -522,7 +522,7 @@ To discharge them and obtain an unconditional `X_Ω(q) ≥ 1/l³` for `q ≥ 18`
 
 2.  **`hstep` / `hrec` (scalar recurrence along the orbit).**  In §5 we hypothesize the orbit obeys
     the scalar floor recurrence.  Genuinely this is the **2‑branch reduction** (`FINDINGS_goalM` §4b,
-    `code/Mgoal_subthr_branches.py`): every *sustained* sub‑threshold run uses only branches
+    `projects/mimo-mini-project/code/Mgoal_subthr_branches.py`): every *sustained* sub‑threshold run uses only branches
     `{q−1, q−3}` (the F‑family), and on the dominant scalar branch the recurrence is exactly `hrec`.
     Formalizing this needs: the branch‑membership predicate and the proof that a sub‑threshold run
     stays on the `{q−1,q−3}` alphabet (the *confinement lemma*, numerically robust q≤30/40, OPEN in

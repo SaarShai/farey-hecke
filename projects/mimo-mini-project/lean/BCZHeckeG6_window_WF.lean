@@ -13,7 +13,7 @@ of the verified window-3 engine `essSup_ge_of_window`).
 
 CRITICAL (goal-E lesson): the lemma needs BOTH Taha edges `c_n + lam c_{n+1} > 1` (reg) AND
 `lam c_n + c_{n+1} > 1` (gen); the cap `c_n <= 1` is NOT the load-bearing hypothesis. Numerically
-pre-tested (`code/Kgoal_q6_window3_pretest.py`): genuine longest below-thr run = 2 (=> window 3);
+pre-tested (`projects/mimo-mini-project/code/Kgoal_q6_window3_pretest.py`): genuine longest below-thr run = 2 (=> window 3);
 every feasible floor word has margin > 0; dropping the gen edge makes K=(1,1) FALSE (6 witnesses).
 Tightest case K=(1,1), margin +0.0025: closed by a minimized exact ℚ(sqrt3) cert. -/
 
