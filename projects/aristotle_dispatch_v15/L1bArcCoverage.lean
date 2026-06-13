@@ -16,13 +16,24 @@ where `g_corr(L,q) = sInf_{μc ∈ (-(π/2-H), π/2-H)} fcorr(L,q,μc)` and
 3. **denom_cos_pos**: cos(|μc|+H) > 0 for μc in domain
 4. **arc_coverage_ineq**: `2·arccos(2√6/5)/π < 33/256`
 
+## Corrected / removed
+
+5. **windowMaxCos_lb** (windowMaxCos ≥ 2√6/5): **FALSE** — removed (commented out).
+   windowMaxCos drops to ≈ -0.68 near the domain endpoints; the arc-coverage
+   pigeonhole bound does not hold uniformly.  See the note where it stood.
+
 ## What is left as a sorry
 
-5. **windowMaxCos_lb**: windowMaxCos ≥ 2√6/5 for all μc in domain (arc-coverage pigeonhole)
-6. **fcorr_lb**: fcorr ≥ 1/λ³ pointwise on domain (from windowMaxCos_lb + algebra)
-7. **B1_target**: sInf ≥ 1/λ³ (from fcorr_lb + csInf argument)
+6. **fcorr_lb**: fcorr ≥ 1/λ³ pointwise on domain.  This is TRUE (the minimum of
+   fcorr over the domain is at μc = 0), but the proof is a delicate two-regime
+   argument with a razor-thin q-uniform core tied to `cos_sq_lt`; see its docstring.
+7. **B1_target**: sInf ≥ 1/λ³ (follows from fcorr_lb + csInf argument; the csInf
+   reduction itself is fully proved).
 
 AXIOMS on proved results: [propext, Classical.choice, Quot.sound].
+
+Helper `arg_eq_arctan` (Complex.arg → Real.arctan for positive real part) is proved
+below for use in the ξ/η correction bounds.
 -/
 
 namespace L1bArcCoverage
@@ -236,9 +247,18 @@ theorem arc_coverage_ineq : 2 * Real.arccos (2 * Real.sqrt 6 / 5) / Real.pi < 33
   -- From harccos_lt: arccos(2√6/5) < 33π/512, so 2*arccos < 33π/256 = (33/256)*π
   nlinarith [harccos_lt, hpi_pos]
 
-/-! ### B1a: windowMaxCos ≥ C_D (SORRY) -/
+/-! ### B1a: windowMaxCos_lb — REMOVED (the claim is FALSE). See note below. -/
 
-/-- **(B1a — sorry)** For all q ≥ 18 and μc in the domain,
+/- DISPROVED — the statement below is FALSE.  Counterexample: q = 18 gives
+   L_blk 18 = 5, H = π/9 ≈ 0.349, domain = (-1.222, 1.222).  At μc = 1.2 (in the
+   domain) the window phases give windowMaxCos ≈ -0.14, which is far below
+   2√6/5 ≈ 0.98.  Indeed near the endpoints windowMaxCos can be as low as ≈ -0.68.
+   The intended downstream consumer (`fcorr_lb`) does NOT need this uniform bound:
+   the minimum of `fcorr` over the domain occurs at μc = 0 where windowMaxCos ≈ 1,
+   and away from μc = 0 the denominator factor cos²(|μc|+H) shrinks fast enough.
+   Hence this lemma is removed (commented out) rather than left as an unprovable sorry.
+
+   Original (false) claim: For all q ≥ 18 and μc in the domain,
     `windowMaxCos (L_blk q) q hL μc ≥ 2√6/5`.
 
     **Proof strategy for Aristotle/human**:
@@ -276,34 +296,181 @@ theorem arc_coverage_ineq : 2 * Real.arccos (2 * Real.sqrt 6 / 5) / Real.pi < 33
     The ξ_q / η_q correction bounds for q ≥ 18 require explicit estimates from
     `Complex.arg` bounds (via `Real.arctan` bounds). This is the hardest sub-step.
 -/
-theorem windowMaxCos_lb (q : ℕ) (hq : 18 ≤ q) (hL : 0 < L_blk q)
-    {muc : ℝ} (hmuc : muc ∈ Set.Ioo (-(Real.pi / 2 - Hq (L_blk q) q)) (Real.pi / 2 - Hq (L_blk q) q)) :
-    2 * Real.sqrt 6 / 5 ≤ windowMaxCos (L_blk q) q hL muc := by
-  sorry
+/-
+   theorem windowMaxCos_lb (q : ℕ) (hq : 18 ≤ q) (hL : 0 < L_blk q)
+       {muc : ℝ} (hmuc : muc ∈ Set.Ioo (-(Real.pi / 2 - Hq (L_blk q) q)) (Real.pi / 2 - Hq (L_blk q) q)) :
+       2 * Real.sqrt 6 / 5 ≤ windowMaxCos (L_blk q) q hL muc
+-/
+
+/-! ### Helper: Complex.arg → Real.arctan (for positive real part) -/
+
+/-- **PROVED (0 sorry)**: For `x > 0`, `arg ⟨x, y⟩ = arctan (y / x)`.
+    This reduces `atan2'`, and hence `xiq`/`etaq` (whose `x`-arguments are positive),
+    to `Real.arctan`, enabling the standard `arctan_le`/`arctan_nonneg` bounds. -/
+theorem arg_eq_arctan (x y : ℝ) (hx : 0 < x) :
+    Complex.arg ⟨x, y⟩ = Real.arctan (y / x) := by
+  have harg : |(Complex.mk x y).arg| < Real.pi / 2 := by
+    rw [Complex.abs_arg_lt_pi_div_two_iff]; left; exact hx
+  rw [abs_lt] at harg
+  have h2 := Complex.tan_arg (⟨x, y⟩ : ℂ)
+  rw [← h2, Real.arctan_tan harg.1 harg.2]
+
+/-! ### Verified analytic building blocks toward the `fcorr_lb` regime-A core
+
+The following lemmas (all sorry-free) are the verified components of the q-uniform
+"regime A" core inequality
+  (A)  λ³·(3λ/2 + √A₂·cos(θ+2ξ+η)) ≥ 2·A₂·Blam²·cos²(H)
+for the large-q range (q ≥ 23, t = π/q ∈ (0, π/23], loose bound H ≥ 33π/512 + t/2).
+They provide: Taylor envelopes for sin/cos, tight numeric bounds for cos/sin at
+β = 33π/512, the LHS cosine upper bound `cosb_ub`, and the RHS window-cosine lower
+bound `cos_arg_ge`.
+
+**Remaining obstruction (documented).**  Combining these reduces (A) to a polynomial
+inequality in `c = cos t` and `t`.  Numerically its continuous margin is only ~0.0022
+(it is the limiting headroom `24/25 - cos²(33π/512) ≈ 5·10⁻⁴`, i.e. `cos_sq_lt`), and
+the inequality is tight *exactly along* the curve `c = cos t`: it becomes FALSE if `c`
+is relaxed to any interval `[L(t), 1]` with `L(t) < cos t` (even by 10⁻⁵).  Hence a
+generic `nlinarith`/`polyrith` over a `c`-interval cannot close it; a successful proof
+must keep the exact relation `c = cos t` (e.g. tight two-sided cos-power envelopes in
+`t` alone, with matching signs).  This final assembly, together with the regime-A
+pigeonhole index, the regime-B endpoint estimate, and the five concrete small-q cases
+(q = 18..22, where `L_blk q = 5` and `H = 2θ` exactly), is what remains for `fcorr_lb`. -/
+
+/-- Taylor lower bound for `sin` on `[0,1]` (from `Real.sin_bound`). -/
+theorem sin_lower (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x ≤ 1) :
+    x - x^3/6 - x^4*(5/96) ≤ Real.sin x := by
+  have h := Real.sin_bound (show |x| ≤ 1 by rwa [abs_of_nonneg hx0])
+  rw [abs_le, abs_of_nonneg hx0] at h; nlinarith [h.1]
+
+/-- Taylor upper bound for `cos` on `[-1,1]` (from `Real.cos_bound`). -/
+theorem cos_upper (x : ℝ) (hx1 : |x| ≤ 1) :
+    Real.cos x ≤ 1 - x^2/2 + x^4*(5/96) := by
+  have h := Real.cos_bound hx1; rw [abs_le] at h
+  have hax : |x|^4 = x^4 := by rw [← abs_pow]; exact abs_of_nonneg (by positivity)
+  nlinarith [h.2, hax]
+
+/-- Taylor lower bound for `cos` on `[-1,1]` (from `Real.cos_bound`). -/
+theorem cos_lower (x : ℝ) (hx1 : |x| ≤ 1) :
+    1 - x^2/2 - x^4*(5/96) ≤ Real.cos x := by
+  have h := Real.cos_bound hx1; rw [abs_le] at h
+  have hax : |x|^4 = x^4 := by rw [← abs_pow]; exact abs_of_nonneg (by positivity)
+  nlinarith [h.1, hax]
+
+theorem beta_lo : (0.2024854:ℝ) ≤ 33*Real.pi/512 := by nlinarith [Real.pi_gt_d6]
+theorem beta_hi : 33*Real.pi/512 ≤ (0.2024855:ℝ) := by nlinarith [Real.pi_lt_d6]
+theorem beta_abs : |33 * Real.pi / 512| ≤ 1 := by
+  rw [abs_of_nonneg (by positivity)]; nlinarith [Real.pi_lt_d6]
+
+/-- Tight upper bound `cos(33π/512) ≤ 0.97960`. -/
+theorem cos_beta_le : Real.cos (33 * Real.pi / 512) ≤ 0.97960 := by
+  have h := cos_upper (33*Real.pi/512) beta_abs
+  have hs2 : (33*Real.pi/512)^2 ≥ (0.2024854:ℝ)^2 := by gcongr; exact beta_lo
+  have hs4 : (33*Real.pi/512)^4 ≤ (0.2024855:ℝ)^4 := by gcongr; exact beta_hi
+  nlinarith [h, hs2, hs4]
+
+/-- Tight lower bound `sin(33π/512) ≥ 0.2010`. -/
+theorem sin_beta_ge : (0.2010:ℝ) ≤ Real.sin (33 * Real.pi / 512) := by
+  have h := sin_lower (33*Real.pi/512) (by linarith [Real.pi_pos]) (by nlinarith [Real.pi_lt_d6])
+  have hs3 : (33*Real.pi/512)^3 ≤ (0.2024855:ℝ)^3 := by gcongr; exact beta_hi
+  have hs4 : (33*Real.pi/512)^4 ≤ (0.2024855:ℝ)^4 := by gcongr; exact beta_hi
+  nlinarith [h, beta_lo, hs3, hs4]
+
+/-- `tan t ≤ 1.02 t` for `t ∈ (0, π/23]`. -/
+theorem tan_le (t : ℝ) (ht0 : 0 < t) (ht : t ≤ Real.pi/23) : Real.tan t ≤ 1.02 * t := by
+  have htle : t ≤ 0.1367 := by nlinarith [Real.pi_lt_d4]
+  have hcos : Real.cos t ≥ 0.99 := by
+    have hb : |t| ≤ 1 := by rw [abs_of_nonneg ht0.le]; linarith
+    have hc := Real.cos_bound hb; rw [abs_le] at hc
+    have hax : |t|^4 = t^4 := by rw [← abs_pow]; exact abs_of_nonneg (by positivity)
+    have ht4 : t^4 ≤ (0.1367:ℝ)^4 := by gcongr
+    nlinarith [hc.1, hax, ht4]
+  have hsin : Real.sin t ≤ t := (Real.sin_lt ht0).le
+  rw [Real.tan_eq_sin_div_cos, div_le_iff₀ (by linarith)]
+  nlinarith [hsin, hcos, ht0.le]
+
+/-- RHS window-cosine lower bound: `cos(t + 2(t/5) + tan t/3) ≥ 1 - 1.52 t²`,
+    for `t ∈ (0, π/23]`.  (This bounds `windowMaxCos ≥ cos(θ+2ξ+η)` after the
+    pigeonhole step, using `ξ ≤ θ/5`, `η ≤ tan θ/3`.) -/
+theorem cos_arg_ge (t : ℝ) (ht0 : 0 < t) (ht : t ≤ Real.pi/23) :
+    1 - 1.52 * t^2 ≤ Real.cos (t + 2*(t/5) + Real.tan t/3) := by
+  have htle : t ≤ 0.1367 := by nlinarith [Real.pi_lt_d4]
+  have htan := tan_le t ht0 ht
+  have hcosnn : 0 ≤ Real.cos t := Real.cos_nonneg_of_mem_Icc ⟨by linarith [Real.pi_pos], by linarith⟩
+  have htan0 : 0 ≤ Real.tan t := by
+    rw [Real.tan_eq_sin_div_cos]
+    exact div_nonneg (Real.sin_nonneg_of_nonneg_of_le_pi ht0.le (by linarith [Real.pi_pos])) hcosnn
+  set a := t + 2*(t/5) + Real.tan t/3 with ha
+  have ha_nn : 0 ≤ a := by rw [ha]; positivity
+  have ha_ub : a ≤ 1.74 * t := by rw [ha]; nlinarith [htan]
+  have hmono : Real.cos (1.74*t) ≤ Real.cos a :=
+    Real.cos_le_cos_of_nonneg_of_le_pi ha_nn (by linarith) ha_ub
+  have hcb : 1 - (1.74*t)^2/2 ≤ Real.cos (1.74*t) := by
+    linarith [Real.one_sub_sq_div_two_le_cos (x := 1.74*t)]
+  nlinarith [hmono, hcb]
+
+/-- LHS cosine upper bound: `cos(33π/512 + t/2) ≤ U(t)`, the quadratic Taylor
+    envelope, for `t ∈ (0, π/23]`.  (This bounds `cos²(H) ≤ cos²(33π/512 + t/2)`
+    after `H ≥ 33π/512 + t/2`.) -/
+theorem cosb_ub (t : ℝ) (ht0 : 0 < t) (ht : t ≤ Real.pi/23) :
+    Real.cos (33 * Real.pi / 512 + t/2)
+      ≤ 0.97960*(1 - (t/2)^2/2 + (t/2)^4*(5/96))
+        - 0.2010*(t/2 - (t/2)^3/6 - (t/2)^4*(5/96)) := by
+  have htle : t ≤ 0.1367 := by nlinarith [Real.pi_lt_d6]
+  have hu0 : 0 ≤ t/2 := by linarith
+  have hu1 : t/2 ≤ 1 := by linarith
+  rw [Real.cos_add]
+  have hcosβle := cos_beta_le
+  have hsinβge := sin_beta_ge
+  have hcosβpos : 0 ≤ Real.cos (33*Real.pi/512) := by
+    apply Real.cos_nonneg_of_mem_Icc; constructor <;> nlinarith [Real.pi_gt_d6, Real.pi_lt_d6]
+  have hcosu_ub : Real.cos (t/2) ≤ 1 - (t/2)^2/2 + (t/2)^4*(5/96) :=
+    cos_upper (t/2) (by rw [abs_of_nonneg hu0]; exact hu1)
+  have hcosu_pos : 0 ≤ Real.cos (t/2) := Real.cos_nonneg_of_mem_Icc ⟨by linarith [Real.pi_pos], by linarith⟩
+  have hsinu_lb : t/2 - (t/2)^3/6 - (t/2)^4*(5/96) ≤ Real.sin (t/2) := sin_lower (t/2) hu0 hu1
+  have hsinu_pos : 0 ≤ Real.sin (t/2) := Real.sin_nonneg_of_nonneg_of_le_pi hu0 (by linarith [Real.pi_pos])
+  have hterm1 : Real.cos (33*Real.pi/512) * Real.cos (t/2)
+      ≤ 0.97960*(1 - (t/2)^2/2 + (t/2)^4*(5/96)) := by
+    calc Real.cos (33*Real.pi/512) * Real.cos (t/2)
+        ≤ 0.97960 * Real.cos (t/2) := by nlinarith [hcosu_pos, hcosβle]
+      _ ≤ 0.97960*(1 - (t/2)^2/2 + (t/2)^4*(5/96)) := by nlinarith [hcosu_ub]
+  have hterm2 : 0.2010*(t/2 - (t/2)^3/6 - (t/2)^4*(5/96))
+      ≤ Real.sin (33*Real.pi/512) * Real.sin (t/2) := by
+    calc 0.2010*(t/2 - (t/2)^3/6 - (t/2)^4*(5/96))
+        ≤ 0.2010 * Real.sin (t/2) := by nlinarith [hsinu_lb]
+      _ ≤ Real.sin (33*Real.pi/512) * Real.sin (t/2) := by nlinarith [hsinu_pos, hsinβge]
+  linarith [hterm1, hterm2]
 
 /-! ### B1b: fcorr ≥ 1/λ³ pointwise (SORRY) -/
 
 /-- **(B1b — sorry)** For all q ≥ 18 and μc in the domain,
     `fcorr (L_blk q) q hL μc ≥ 1 / lamq q ^ 3`.
 
-    **Proof strategy**:
+    **Corrected proof architecture** (the old `windowMaxCos_lb` route is invalid:
+    windowMaxCos is NOT ≥ 2√6/5 — it can be ≈ -0.68 near the endpoints).
 
-    From `windowMaxCos_lb`: numerator = 3λ/2 + √A₂·W ≥ 3λ/2 + √A₂·C_D.
-    From `denom_cos_sq_pos` + `H_lt_half_pi`: denominator > 0.
-    So fcorr ≥ (3λ/2 + √A₂·C_D) / (2·A₂·Blam²·1) (using cos² ≤ 1),
-    and it suffices to show:
-      (3λ/2 + √A₂·C_D) / (2·A₂·Blam²) ≥ 1/λ³,
-    i.e. λ³·(3λ/2 + √A₂·C_D) ≥ 2·A₂·Blam².
+    Write L = L_blk q, θ = π/q, λ = 2cosθ, A₂ = 1+2λ², H = (L-1)θ/2, ξ = xiq q, η = etaq q.
+    The denominator `2·A₂·Blam²·cos²(|μc|+H)` is positive (`denom_cos_sq_pos`,
+    `H_lt_half_pi`), so `1/λ³ ≤ fcorr` is equivalent to the pointwise inequality
+      (P)  2·A₂·Blam²·cos²(|μc|+H) ≤ λ³·(3λ/2 + √A₂ · W),   W := windowMaxCos … μc.
+    Lower-bound W by ONE window index n* (via `Finset.le_sup'`), chosen so that the
+    phase φ_{n*} = 2(μc-ξ) + (2n*-(L-1))θ + η is as close to 0 as possible:
+      • Regime A (|μc| ≤ H):  some n* gives |2μc + (2n*-(L-1))θ| ≤ θ (the offsets
+        (2n*-(L-1))θ are 2θ-spaced and cover [-2H,2H] ∋ -2μc), hence
+        |φ_{n*}| ≤ θ + 2ξ + η and W ≥ cos(θ+2ξ+η).  Since cos²(|μc|+H) ≤ cos²(H),
+        (P) reduces to the q-only inequality
+            (A)  λ³·(3λ/2 + √A₂·cos(θ+2ξ+η)) ≥ 2·A₂·Blam²·cos²(H).
+      • Regime B (H < |μc| < π/2-H):  the endpoint index (n=0 for μc>0, n=L-1 for
+        μc<0) gives φ = 2(μc-ξ)+η ∓ 2H with cos(φ) comfortably above the required
+        value (numerically the slack is ≥ 0.24), because cos²(|μc|+H) is small there.
+    Bounds used: 0 ≤ ξ ≤ θ/5 and 0 ≤ η ≤ tanθ/3 (via `arg_eq_arctan` + `arctan_le`),
+    λ ∈ [2cos(π/18), 2), H ≥ 33π/512 + θ/2.
 
-    Substituting λ = 2cos(π/q), A₂ = 1 + 8cos²(π/q), √A₂ as a polynomial, Blam² = (12λ⁴+8λ²+1)/(2λ²+1)²,
-    C_D = 2√6/5: this becomes a polynomial identity in c = cos(π/q) for c ∈ (−1,1), q ≥ 18
-    (c ∈ [cos(π/18), 1) = [cos(10°), 1)).
-
-    For the cos²(|μc|+H) ≤ 1 step: use that cos² ≤ 1 always.
-    For the exact H-dependent bound: use cos²(|μc|+H) ≤ cos²(H) ≤ 24/25 (from cos_sq_lt, H ≥ 33π/512)
-    to improve numerics further; or just use cos² ≤ 1 as a coarse bound.
-
-    The polynomial inequality at the end needs `nlinarith` with explicit witnesses in c.
+    The hard core is (A): a razor-thin transcendental inequality in q whose limiting
+    (q→∞) margin is exactly the `cos_sq_lt` gap (24/25 - cos²(33π/512) ≈ 5·10⁻⁴).
+    Because L involves ⌈33q/256⌉, the clean lower bound H ≥ 33π/512+θ/2 is only tight
+    for large q, so (A) must be split into finitely many small-q cases (q ≲ 21, where
+    L is a concrete integer) plus an asymptotic tail handled with tight Taylor
+    (`cos_bound`) estimates.  This remains to be formalized.
 -/
 theorem fcorr_lb (q : ℕ) (hq : 18 ≤ q) (hL : 0 < L_blk q)
     {muc : ℝ} (hmuc : muc ∈ Set.Ioo (-(Real.pi / 2 - Hq (L_blk q) q)) (Real.pi / 2 - Hq (L_blk q) q)) :
@@ -345,5 +512,4 @@ end
 
 
 end L1bArcCoverage
-
 
