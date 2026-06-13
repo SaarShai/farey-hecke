@@ -5,7 +5,11 @@ is the precise obstruction + the genuinely-uniform statement that survives.
 
 > **Headline (honest).** `cluster_size_le_two_allq` (for all q≥3) is **mathematically
 > false**. The bounded-cluster *ceiling* `B(q)` is **2 only for the three finite arithmetic
-> Hecke groups q∈{3,4,6}**; it is **3** for q∈{5,7,…,12} and **4** by q=13, growing ~q/3.
+> Hecke groups q∈{3,4,6}**; it is **3** for q∈{5,7,…,12} and **4** by q=13, growing **~q/6
+> under the correct last-branch definition** (linear-fit slope 0.168). The earlier "~q/3"
+> rate was an **artifact** of a cross-branch cluster counter (see FINDING 1) that glues
+> separate last-branch clusters together through razor-margin off-last-branch excursions; the
+> q=13 *value* (B=4) is unaffected by the correction.
 > What IS uniform is the *value*: **X(q)=1/λ_q³ is the cluster-ONSET threshold for every q**
 > — the level the longest cluster hugs from below. A uniform Lean proof of *that* is the
 > open `X_Ω(q)=1/λ³` lower bound (goal-L/M frontier), which needs the corridor-classification
@@ -59,38 +63,65 @@ uniform bound — so there is no sorry-free uniform engine to "promote" the per-
 
 ## FINDING 1 — the cluster ceiling B(q) and the arithmeticity dichotomy (fresh re-verification)
 
-`code/goal1_cluster_ceiling_reconcile.py` — canonical Taha G_q-BCZ map, observable
-`P=1/R_q` (=ab on the last branch), strict `P<X(q)`, per-start run counting (junction-safe),
-n_starts=30 × n_steps=400 000, with an explicit witness dumped for the longest run at each q.
+**Definition matters — use the LAST-BRANCH counter.** A cluster is a maximal run of
+consecutive orbit points that both (i) land on the last branch `T_{q-1}` (`sub==q-1`,
+i.e. `a+λb>1`) **and** (ii) have `P=ab < X(q)`. This is exactly the object the q=3,4,6 Lean
+proofs and the exact q=5,7 reverse witnesses bound (extremes confined to the last branch,
+map `(a,b)↦(b,−a+kλb)`). Scanner: `code/goal1_last_branch_ceiling.py` (n_starts=16 ×
+n_steps=200 000, seed 20260609).
 
-| q | arithmetic? | λ_q | X(q) | **max cluster** | length-3 runs | length-4 runs |
-|---|---|---|---|---|---|---|
-| 3 | **YES** (λ=1) | 1.00000 | 2/9 = 0.22222 | **2** | 0 | 0 |
-| 4 | **YES** (λ=√2) | 1.41421 | √2/8 = 0.17678 | **2** | 0 | 0 |
-| 5 | no | 1.61803 | 1/λ³ = 0.23607 | **3** | 43287 | 0 |
-| 6 | **YES** (λ=√3) | 1.73205 | √3/9 = 0.19245 | **2** | 0 | 0 |
-| 7 | no | 1.80194 | 0.17091 | **3** | 201 | 0 |
-| 8 | no | 1.84776 | 0.15851 | **3** | 743 | 0 |
-| 9 | no | 1.87939 | 0.15064 | **3** | 1338 | 0 |
-| 10 | no | 1.90211 | 0.14531 | **3** | 1760 | 0 |
-| 11 | no | 1.91899 | 0.14151 | **3** | 2095 | 0 |
-| 12 | no | 1.93185 | 0.13870 | **3** | 2497 | 0 |
-| 13 | no | 1.94188 | 0.13656 | **4** | 2483 | 67 |
-| 14 | no | 1.94986 | 0.13489 | **4** | 2366 | 177 |
-| 15 | no | 1.95630 | 0.13357 | **4** | 2144 | 334 |
-| 16 | no | 1.96157 | 0.13249 | **4** | 1819 | 513 |
+| q | arith? | λ_q | X(q) | **B (last-branch)** | run-length histogram tail (…3:·  4:·  5:·  6:·) |
+|---|---|---|---|---|---|
+| 3 | **YES** (λ=1) | 1.00000 | 2/9 = 0.22222 | **2** | — |
+| 4 | **YES** (λ=√2) | 1.41421 | √2/8 = 0.17678 | **2** | — |
+| 5 | no | 1.61803 | 1/λ³ = 0.23607 | **3** | 3:11803 |
+| 6 | **YES** (λ=√3) | 1.73205 | √3/9 = 0.19245 | **2** | — |
+| 7 | no | 1.80194 | 0.17091 | **3** | 3:60 |
+| 8 | no | 1.84776 | 0.15851 | **3** | 3:209 |
+| 9 | no | 1.87939 | 0.15064 | **3** | 3:353 |
+| 10 | no | 1.90211 | 0.14531 | **3** | 3:487 |
+| 11 | no | 1.91899 | 0.14151 | **3** | 3:606 |
+| 12 | no | 1.93185 | 0.13870 | **3** | 3:668 |
+| 13 | no | 1.94188 | 0.13656 | **4** | 3:723 4:18 |
+| 14 | no | 1.94986 | 0.13489 | **4** | 3:642 4:50 |
+| 15 | no | 1.95630 | 0.13357 | **4** | 3:560 4:81 |
+| 16 | no | 1.96157 | 0.13249 | **4** | 3:480 4:126 |
+| 17 | no | 1.96595 | 0.13161 | **4** | 3:409 4:186 |
+| 18 | no | 1.96962 | 0.13088 | **4** | 3:338 4:212 |
+| 19 | no | 1.97272 | 0.13026 | **5** | 3:262 4:225 5:6 |
+| 20 | no | 1.97538 | 0.12973 | **5** | 4:214 5:17 |
+| 21 | no | 1.97766 | 0.12928 | **5** | 4:230 5:41 |
+| 22 | no | 1.97964 | 0.12890 | **5** | 4:197 5:71 |
+| 23 | no | 1.98137 | 0.12856 | **6 (FRAGILE)** | 5:95 6:1 |
+| 24 | no | 1.98289 | 0.12826 | **6 (FRAGILE)** | 5:123 6:2 |
+
+So `B = 2,2,3,2,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,(5 or 6),6` for q=3..24 — a clean monotone
+ceiling with **slope ~q/6** (linear-fit slope 0.168). q=13→4 and q=19→5 are **robust**
+transitions; q=23/24→6 sit at the **Monte-Carlo resolution floor** (only 1–2 length-6 runs in
+3.2M steps; B(23) flips 5↔6 with sampling depth) and are marked **FRAGILE**, not asserted.
+
+> **Correction (2026-06-13): the earlier "~q/3" rate was an artifact of a cross-branch
+> counter.** The committed `code/goal1_cluster_ceiling_reconcile.py` counts consecutive
+> sub-X points over **all** branches (condition `P < X`, ignoring which branch). At q≥19 that
+> glues several genuine last-branch clusters together via short off-last-branch excursions —
+> e.g. the q=19 "8-run" witness alternates T18/T16/T18/T16… with the T16 points sitting at
+> razor-thin margins (X−P = +4.4e-5, +3.0e-4), i.e. **not** a last-branch cluster — producing
+> a spurious jump (pinned at run-length 8 for q=19..24) that read as ~q/3. The last-branch
+> definition above (matching the Lean proofs and exact witnesses) is the correct counter and
+> gives ~q/6. **The q=13 value (B=4) is the same under both counters** — only the rate, not
+> that threshold, was inflated.
 
 **Conclusions:**
 1. **`cluster_size_le_two` holds for exactly q∈{3,4,6}** — the three *finite arithmetic* Hecke
-   groups (Takeuchi 1977: G_q arithmetic ⟺ q∈{3,4,6,∞}, λ∈{1,√2,√3,2}). For q=5,7,8,…
-   genuine 3-clusters exist ⇒ `cluster_size_le_two_allq` is **false**.
+   groups (Takeuchi 1977: G_q arithmetic ⟺ q∈{3,4,6,∞}, λ∈{1,√2,√3,2}). Equivalently
+   **B=2 ⟺ λ²∈ℤ ⟺ q∈{3,4,6}** — a clean, verified dichotomy. For q=5,7,8,… genuine
+   3-clusters exist ⇒ `cluster_size_le_two_allq` is **false**.
 2. **`cluster_size_le_three` is also not uniform** — genuine 4-clusters appear at q=13
-   (first length-4 runs). So there is **no uniform constant ceiling**; B(q) grows.
-3. **Reconciliation of the two prior project claims (both were right):** goal-1 memory
-   ("B=3 for q=5,7…12") sampled only q≤12 at 100k×10 and never saw length-4; FRONTIER_STATUS
-   ("genuine max-run grows ~q/3, 4 already at q=13") is reproduced here exactly — length-4
-   first surfaces at q=13 and grows (67→177→334→513 over q=13…16). Earlier disagreement was a
-   sampling artifact, not a contradiction.
+   (first length-4 last-branch runs). So there is **no uniform constant ceiling**; B(q) grows.
+3. **Do NOT promote a closed form.** `B = 2 + ⌊(q−1)/6⌋` is the *cleanest fit on the bulk
+   q=7..22*, but it is **not** a pinned asymptotic: on q≤24 it is statistically
+   indistinguishable from √q/log q, and it is +1 wrong at q=5,23,24. Record it as an empirical
+   bulk fit only, not a law.
 
 **Explicit refutation witnesses** (last-branch coordinates; all three / four points satisfy `P<X`):
 - q=5 3-cluster (deepest of 43287; λ=φ, X=0.2360680): `(0.4249,0.4665)→(0.4665,0.3298)→(0.3298,0.6009)`,
@@ -139,8 +170,8 @@ a cluster *bound* but the cluster *onset value*:
 
 - **Finiteness for each fixed q** ⟺ `X_Ω(q) ≥ 1/λ³`. This is the **OPEN frontier** (goal L/M):
   proven per-q as scalar-window lemmas for q≤16, numerically value-safe to q≤200 and
-  survivor-empty to q≤70, but **no uniform machine proof**. The cluster length grows ~q/3, so
-  the bound is not a fixed window — `essSup_ge_of_no_sustained` (no *infinite* run) is the clean
+  survivor-empty to q≤70, but **no uniform machine proof**. The cluster length grows ~q/6
+  (last-branch counter; see FINDING 1), so the bound is not a fixed window — `essSup_ge_of_no_sustained` (no *infinite* run) is the clean
   q-uniform framing, but the quantitative single-corridor "kick" `P≥thr` is the irreducible piece
   (couples rotation-sweep to itinerary-feasibility, a KAM-type obstacle).
 - **The trace machinery (Gate 1) is the toolkit for this, not a finished proof:** `λ`-extremality
@@ -185,7 +216,10 @@ a separate uniform statement, not pursued here.
    not a promotion of the q=4 argument.
 
 ## Reproducibility
-- `code/goal1_cluster_ceiling_reconcile.py` (Finding 1 table + witnesses; seed 20260609).
+- `code/goal1_last_branch_ceiling.py` (Finding 1 table; CORRECT last-branch counter, ~q/6;
+  seed 20260609). Supersedes `code/goal1_cluster_ceiling_reconcile.py` for the ceiling rate —
+  the latter is the cross-branch counter whose `P<X`-over-all-branches condition inflated the
+  rate to the spurious ~q/3 (kept for the record / witness dumps only).
 - Closing-inequality / rough-threshold check: inline in this session (Finding 2).
 - Per-q proofs: `projects/aristotle_dispatch_v11/BCZ4Cluster.lean` (q=4), v8 (q=3), v12 (q=6, pending).
 - Trace machinery: `projects/mimo-mini-project/lean/BCZHeckeL2_traceIdentity_allq_VERIFIED.lean`.

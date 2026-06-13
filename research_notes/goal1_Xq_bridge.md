@@ -3,7 +3,9 @@
 **Date:** 2026-06-09. **Branch:** `hecke-goalL-2026-06-03`. **Status:** q=3 + q=4 + **q=6**
 (the arithmetic trio) **machine-proved**; q≥5 characterized numerically. **UPDATE 2026-06-09
 (Goal 1.5):** the cluster ceiling `B(q)` **grows** (=2 only for {3,4,6}; 3 for q=5,7..12;
-**4 by q=13**, ~q/3) — so uniform `cluster_size_le_two_allq` is FALSE; the uniform object is
+**4 by q=13**, ~q/6 under the last-branch counter — the earlier "~q/3" was a cross-branch-counter
+artifact, corrected 2026-06-13; the q=13 value B=4 is unaffected) — so uniform
+`cluster_size_le_two_allq` is FALSE; the uniform object is
 `X(q)=1/λ³` as the cluster-ONSET value, proof open (goal-L/M). See
 `research_notes/goal1.5_uniform_obstruction.md`. Nothing sent outward (USER-gated).
 
@@ -16,7 +18,9 @@ points of the Taha G_q-BCZ map first form a run **longer than `B(q)`** — equiv
 `X(q)` is the largest `T` with maximal cluster size `≤ B(q)`. Numerics (q=3..12,
 junction-safe, re-verified q=3..16) show this identity holds **for every q**, with the
 cluster bound `B(q) = 2` only for `q ∈ {3,4,6}`, `= 3` for `q ∈ {5,7..12}`, and **`= 4` by
-q=13** (it GROWS ~q/3). The bound-2 set `{3,4,6}` is **precisely the finite arithmetic Hecke
+q=13** (it GROWS ~q/6 under the last-branch counter; the old "~q/3" was a cross-branch-counter
+artifact — see `code/goal1_last_branch_ceiling.py` and `goal1.5_uniform_obstruction.md` FINDING 1).
+The bound-2 set `{3,4,6}` is **precisely the finite arithmetic Hecke
 triangle groups** (Takeuchi 1977: arithmetic iff `q ∈ {3,4,6,∞}`, `λ ∈ {1,√2,√3,2}`). All
 three arithmetic bound-2 cases are now **machine-verified in Lean** (sorry-free, `#print axioms`
 = `[propext, Classical.choice, Quot.sound]` only, no axiom stubs, no heavy automation): q=3
