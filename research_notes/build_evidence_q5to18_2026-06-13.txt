@@ -1,0 +1,35 @@
+# Build evidence: UniformOnset_q5to18 (lake build UniformOnsetQ5to18, EXIT=0)
+# env: projects/aristotle_dispatch_v15/uniform_q5to18, Mathlib v4.28.0 (shared from v15)
+# date: 2026-06-13
+
+## Build milestones (window files + wiring):
+⚠ [8026/8040] Built BCZHeckeG8_window_VERIFIED (215s)
+⚠ [8027/8040] Built BCZHeckeG10_window_VERIFIED (235s)
+⚠ [8028/8040] Built BCZHeckeG9_window_VERIFIED (277s)
+⚠ [8029/8040] Built BCZHeckeG7_window_VERIFIED (296s)
+⚠ [8030/8040] Built BCZHeckeG11_window_VERIFIED (343s)
+⚠ [8031/8040] Built BCZHeckeG5_window_core_VERIFIED (432s)
+⚠ [8032/8040] Built BCZHeckeG12_window_VERIFIED (536s)
+⚠ [8033/8040] Built BCZHeckeG15_window_VERIFIED (601s)
+⚠ [8034/8040] Built BCZHeckeG13_window_VERIFIED (652s)
+⚠ [8035/8040] Built BCZHeckeG18_window_VERIFIED (699s)
+⚠ [8036/8040] Built BCZHeckeG14_window_VERIFIED (830s)
+⚠ [8037/8040] Built BCZHeckeG16_window_VERIFIED (1039s)
+⚠ [8038/8040] Built BCZHeckeG17_window_VERIFIED (2290s)
+⚠ [8039/8040] Built UniformOnset_q5to18 (49s)
+
+## #print axioms for the 14 top-level theorems (from UniformOnset_q5to18.lean):
+info: UniformOnset_q5to18.lean:538:0: 'Xomega_lb_q5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:539:0: 'Xomega_lb_q7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:540:0: 'Xomega_lb_q8' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:541:0: 'Xomega_lb_q9' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:542:0: 'Xomega_lb_q10' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:543:0: 'Xomega_lb_q11' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:544:0: 'Xomega_lb_q12' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:545:0: 'Xomega_lb_q13' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:546:0: 'Xomega_lb_q14' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:547:0: 'Xomega_lb_q15' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:548:0: 'Xomega_lb_q16' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:549:0: 'Xomega_lb_q17' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:550:0: 'Xomega_lb_q18' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: UniformOnset_q5to18.lean:551:0: 'Xomega_lb_q5to18' depends on axioms: [propext, Classical.choice, Quot.sound]

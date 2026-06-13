@@ -1,0 +1,14 @@
+name = "UniformQ5to18"
+defaultTargets = ["UniformOnsetQ5to18"]
+
+[[require]]
+name = "mathlib"
+path = ".lake/packages/mathlib"
+
+[[lean_lib]]
+name = "WindowFiles"
+globs = ["BCZHeckeG5_window_core_VERIFIED", "BCZHeckeG7_window_VERIFIED", "BCZHeckeG8_window_VERIFIED", "BCZHeckeG9_window_VERIFIED", "BCZHeckeG10_window_VERIFIED", "BCZHeckeG11_window_VERIFIED", "BCZHeckeG12_window_VERIFIED", "BCZHeckeG13_window_VERIFIED", "BCZHeckeG14_window_VERIFIED", "BCZHeckeG15_window_VERIFIED", "BCZHeckeG16_window_VERIFIED", "BCZHeckeG17_window_VERIFIED", "BCZHeckeG18_window_VERIFIED"]
+
+[[lean_lib]]
+name = "UniformOnsetQ5to18"
+globs = ["UniformOnset_q5to18"]
