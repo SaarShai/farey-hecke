@@ -315,6 +315,110 @@ theorem arg_eq_arctan (x y : ℝ) (hx : 0 < x) :
   have h2 := Complex.tan_arg (⟨x, y⟩ : ℂ)
   rw [← h2, Real.arctan_tan harg.1 harg.2]
 
+/-! ### Verified ξ/η correction bounds and λ lower bound (NEW, sorry-free)
+
+These are the explicit correction bounds that the `fcorr_lb` regime-A pigeonhole
+needs (B1_RESULT lists `0 ≤ ξ ≤ θ/5`, `0 ≤ η ≤ tan θ/3`, `λ ∈ [2cos(π/18),2)` as
+required but previously unformalized).  All proved with axioms
+`[propext, Classical.choice, Quot.sound]`. -/
+
+/-- `arctan x ≤ x` for `x ≥ 0` (from `Real.lt_tan` at `arctan x`). -/
+theorem arctan_le_self (x : ℝ) (hx : 0 ≤ x) : Real.arctan x ≤ x := by
+  rcases eq_or_lt_of_le hx with h | h
+  · simp [← h]
+  · have h1 := Real.arctan_lt_pi_div_two x
+    have h2 : 0 < Real.arctan x := Real.arctan_pos.mpr h
+    have h3 : Real.arctan x < Real.tan (Real.arctan x) := Real.lt_tan h2 h1
+    rw [Real.tan_arctan] at h3; linarith
+
+/-- `λ = 2cos(π/q) ≥ 1.9` for `q ≥ 18` (via `cos` monotone + `cos_bound` at `π/18`). -/
+theorem lamq_ge (q : ℕ) (hq : 18 ≤ q) : (1.9 : ℝ) ≤ lamq q := by
+  have hqr : (0:ℝ) < (q:ℝ) := by exact_mod_cast (by omega : 0 < q)
+  have h18 : (18:ℝ) ≤ (q:ℝ) := by exact_mod_cast hq
+  have hle : Real.pi / q ≤ Real.pi / 18 :=
+    div_le_div_of_nonneg_left Real.pi_pos.le (by norm_num) h18
+  have hpos : 0 ≤ Real.pi / q := by positivity
+  have hmono : Real.cos (Real.pi/18) ≤ Real.cos (Real.pi/q) :=
+    Real.cos_le_cos_of_nonneg_of_le_pi hpos (by linarith [Real.pi_le_four, Real.pi_pos]) hle
+  have hb : |Real.pi/18| ≤ 1 := by rw [abs_of_nonneg (by positivity)]; nlinarith [Real.pi_lt_d4]
+  have hcb := Real.cos_bound hb; rw [abs_le] at hcb
+  have hax : |Real.pi/18|^4 = (Real.pi/18)^4 := by rw [← abs_pow]; exact abs_of_nonneg (by positivity)
+  rw [hax] at hcb
+  have hp18_lo : (0.1745:ℝ) ≤ Real.pi/18 := by nlinarith [Real.pi_gt_d4]
+  have hp18_hi : Real.pi/18 ≤ (0.1746:ℝ) := by nlinarith [Real.pi_lt_d4]
+  have hsq : (Real.pi/18)^2 ≤ (0.1746:ℝ)^2 := by nlinarith [hp18_lo, hp18_hi, sq_nonneg (Real.pi/18)]
+  have hqt : (Real.pi/18)^4 ≤ (0.1746:ℝ)^4 := by nlinarith [hsq, sq_nonneg ((Real.pi/18)^2)]
+  have hcos18 : (0.95:ℝ) ≤ Real.cos (Real.pi/18) := by nlinarith [hcb.1, hsq, hqt]
+  unfold lamq; linarith [hmono, hcos18]
+
+/-- `0 ≤ η` for `q ≥ 18` (η = arctan(tan θ/3), positive real part). -/
+theorem etaq_nonneg (q : ℕ) (hq : 18 ≤ q) : 0 ≤ etaq q := by
+  have hqr : (0:ℝ) < (q:ℝ) := by exact_mod_cast (by omega : 0 < q)
+  have ht_pos : 0 < thetaq q := by unfold thetaq; positivity
+  have ht_lt : thetaq q < Real.pi / 2 := by
+    unfold thetaq; rw [div_lt_div_iff₀ hqr (by norm_num)]
+    have : (18:ℝ) ≤ (q:ℝ) := by exact_mod_cast hq
+    nlinarith [Real.pi_pos]
+  have hcos_pos : 0 < 3 * Real.cos (thetaq q) := by
+    have := Real.cos_pos_of_mem_Ioo (show thetaq q ∈ Set.Ioo (-(π/2)) (π/2) from ⟨by linarith, ht_lt⟩); linarith
+  unfold etaq atan2'; rw [arg_eq_arctan _ _ hcos_pos]
+  apply Real.arctan_nonneg.mpr
+  have hsin : 0 ≤ Real.sin (thetaq q) := Real.sin_nonneg_of_nonneg_of_le_pi ht_pos.le (by linarith [Real.pi_pos])
+  positivity
+
+/-- `η ≤ tan θ / 3` for `q ≥ 18` (η = arctan(tan θ/3) ≤ tan θ/3). -/
+theorem etaq_le (q : ℕ) (hq : 18 ≤ q) : etaq q ≤ Real.tan (thetaq q) / 3 := by
+  have hqr : (0:ℝ) < (q:ℝ) := by exact_mod_cast (by omega : 0 < q)
+  have ht_pos : 0 < thetaq q := by unfold thetaq; positivity
+  have ht_lt : thetaq q < Real.pi / 2 := by
+    unfold thetaq; rw [div_lt_div_iff₀ hqr (by norm_num)]
+    have : (18:ℝ) ≤ (q:ℝ) := by exact_mod_cast hq
+    nlinarith [Real.pi_pos]
+  have hcos_pos : 0 < 3 * Real.cos (thetaq q) := by
+    have := Real.cos_pos_of_mem_Ioo (show thetaq q ∈ Set.Ioo (-(π/2)) (π/2) from ⟨by linarith, ht_lt⟩); linarith
+  have hsin : 0 ≤ Real.sin (thetaq q) := Real.sin_nonneg_of_nonneg_of_le_pi ht_pos.le (by linarith [Real.pi_pos])
+  unfold etaq atan2'; rw [arg_eq_arctan _ _ hcos_pos]
+  have hrw : Real.sin (thetaq q) / (3 * Real.cos (thetaq q)) = Real.tan (thetaq q) / 3 := by
+    rw [Real.tan_eq_sin_div_cos]; field_simp
+  rw [hrw]; apply arctan_le_self
+  rw [Real.tan_eq_sin_div_cos]
+  have : 0 ≤ Real.sin (thetaq q) / Real.cos (thetaq q) := div_nonneg hsin (by linarith)
+  linarith
+
+/-- `ξ ≤ θ / 5` for `q ≥ 18`.  Reduces (via `arctan_le_self`) to
+    `5λ sin θ ≤ θ(3λ²+1+λ cos θ)`, then to `5λ ≤ 3λ²+1` (using `sin θ ≤ θ`,
+    `λ cos θ ≥ 0`), which holds for `λ ≥ 1.9` (`lamq_ge`). -/
+theorem xiq_le (q : ℕ) (hq : 18 ≤ q) : xiq q ≤ thetaq q / 5 := by
+  have hqr : (0:ℝ) < (q:ℝ) := by exact_mod_cast (by omega : 0 < q)
+  have ht_pos : 0 < thetaq q := by unfold thetaq; positivity
+  have ht_lt : thetaq q < Real.pi / 2 := by
+    unfold thetaq; rw [div_lt_div_iff₀ hqr (by norm_num)]
+    have : (18:ℝ) ≤ (q:ℝ) := by exact_mod_cast hq
+    nlinarith [Real.pi_pos]
+  have hcos_pos : 0 < Real.cos (thetaq q) := Real.cos_pos_of_mem_Ioo ⟨by linarith, ht_lt⟩
+  have hlam_pos : 0 < lamq q := by unfold lamq; positivity
+  have hlam_ge : (1.9:ℝ) ≤ lamq q := lamq_ge q hq
+  have hsin_le : Real.sin (thetaq q) ≤ thetaq q := (Real.sin_lt ht_pos).le
+  have hsin_pos : 0 ≤ Real.sin (thetaq q) := Real.sin_nonneg_of_nonneg_of_le_pi ht_pos.le (by linarith [Real.pi_pos])
+  have hcoslam : lamq q * Real.cos (thetaq q) ≥ 0 := mul_nonneg hlam_pos.le hcos_pos.le
+  have hden_pos : 0 < 3 * lamq q ^ 2 + 1 + lamq q * Real.cos (thetaq q) := by positivity
+  unfold xiq atan2'; rw [arg_eq_arctan _ _ hden_pos]
+  refine le_trans (arctan_le_self _ (by positivity)) ?_
+  rw [div_le_div_iff₀ hden_pos (by norm_num)]
+  have hkey : 5 * lamq q ≤ 3 * lamq q ^ 2 + 1 := by nlinarith [hlam_ge]
+  nlinarith [hsin_le, hsin_pos, ht_pos, hlam_pos, hcoslam, hkey,
+             mul_nonneg hlam_pos.le hsin_pos,
+             mul_le_mul_of_nonneg_left hsin_le (by linarith : (0:ℝ) ≤ 5 * lamq q)]
+
+/-- **Worst-case core identity (the through-line).**  The q→∞ limit of the regime-A
+    core (A) `λ³(3λ/2 + √A₂·W) ≥ 2·A₂·Blam²·cos²(H)` is, after `λ→2, A₂→9,
+    Blam²→25/9, W→1, H→33π/512`, exactly `48 ≥ 50·cos²(33π/512)`, i.e. equivalent
+    to `cos_sq_lt` (`cos²(33π/512) < 24/25`).  The finite-q core has strictly larger
+    margin (numerically infimum ≈ 0.02215 = `48 − 50·cos²(33π/512)`, attained as
+    q→∞), so this limiting form is the binding constraint of the whole theorem. -/
+theorem core_limit : 50 * Real.cos (33 * Real.pi / 512) ^ 2 < 48 := by
+  linarith [cos_sq_lt]
+
 /-! ### Verified analytic building blocks toward the `fcorr_lb` regime-A core
 
 The following lemmas (all sorry-free) are the verified components of the q-uniform
@@ -440,7 +544,32 @@ theorem cosb_ub (t : ℝ) (ht0 : 0 < t) (ht : t ≤ Real.pi/23) :
       _ ≤ Real.sin (33*Real.pi/512) * Real.sin (t/2) := by nlinarith [hsinu_pos, hsinβge]
   linarith [hterm1, hterm2]
 
-/-! ### B1b: fcorr ≥ 1/λ³ pointwise (SORRY) -/
+/-! ### B1b: fcorr ≥ 1/λ³ pointwise (SORRY) — precise residual stated below -/
+
+/-- **Precise residual core (regime-A worst case), as a standalone `Prop`.**
+    This is the exact single-variable inequality a human/Aristotle must close to
+    discharge `fcorr_lb`'s regime A.  Stated with EXACT `H = Hq (L_blk q) q` (NOT the
+    loose `33π/512 + θ/2` bound — the loose bound is FALSE for q ∈ {18,19,20,21},
+    verified on M1: loose-H margin = −0.283/−0.172/−0.081/−0.005 there).  With exact
+    H, the margin is comfortably positive for every q (M1 scan q=18..10⁶: infimum
+    ≈ +0.02215, attained as q→∞).  The phase argument `θ + 2ξ + η` is the pigeonhole
+    worst alignment at μc = 0, using `xiq_le`/`etaq_le` (`ξ ≤ θ/5`, `η ≤ tan θ/3`). -/
+def RegimeACore (q : ℕ) : Prop :=
+  2 * A2q q * Blamq q ^ 2 * Real.cos (Hq (L_blk q) q) ^ 2
+    ≤ lamq q ^ 3 * (3 * lamq q / 2
+        + Real.sqrt (A2q q) * Real.cos (thetaq q + 2 * xiq q + etaq q))
+
+/-- **Precise residual core (regime-B endpoint), as a standalone `Prop`.**
+    For the endpoint index at `|μc| > H`, with `φ = 2(μc-ξ)+η ∓ 2H`.  CORRECTION to
+    B1_RESULT: the regime-B slack is NOT ≥ 0.24 — M1 shows the true minimum slack over
+    `|μc| ∈ (H, π/2−H)` is only ≈ +0.0175 (q=1000), attained near the inner boundary
+    `|μc| ↓ H` (continuity with regime A).  The crude bound `W ≥ −1` FAILS here
+    (`3λ/2 − √A₂ ≈ −0.005 < 0`), so the endpoint phase must be tracked. -/
+def RegimeBCore (q : ℕ) (muc : ℝ) : Prop :=
+  Hq (L_blk q) q < |muc| →
+    2 * A2q q * Blamq q ^ 2 * Real.cos (|muc| + Hq (L_blk q) q) ^ 2
+      ≤ lamq q ^ 3 * (3 * lamq q / 2
+          + Real.sqrt (A2q q) * Real.cos (2 * (|muc| - xiq q) + etaq q - 2 * Hq (L_blk q) q))
 
 /-- **(B1b — sorry)** For all q ≥ 18 and μc in the domain,
     `fcorr (L_blk q) q hL μc ≥ 1 / lamq q ^ 3`.
@@ -457,20 +586,22 @@ theorem cosb_ub (t : ℝ) (ht0 : 0 < t) (ht : t ≤ Real.pi/23) :
       • Regime A (|μc| ≤ H):  some n* gives |2μc + (2n*-(L-1))θ| ≤ θ (the offsets
         (2n*-(L-1))θ are 2θ-spaced and cover [-2H,2H] ∋ -2μc), hence
         |φ_{n*}| ≤ θ + 2ξ + η and W ≥ cos(θ+2ξ+η).  Since cos²(|μc|+H) ≤ cos²(H),
-        (P) reduces to the q-only inequality
-            (A)  λ³·(3λ/2 + √A₂·cos(θ+2ξ+η)) ≥ 2·A₂·Blam²·cos²(H).
-      • Regime B (H < |μc| < π/2-H):  the endpoint index (n=0 for μc>0, n=L-1 for
-        μc<0) gives φ = 2(μc-ξ)+η ∓ 2H with cos(φ) comfortably above the required
-        value (numerically the slack is ≥ 0.24), because cos²(|μc|+H) is small there.
-    Bounds used: 0 ≤ ξ ≤ θ/5 and 0 ≤ η ≤ tanθ/3 (via `arg_eq_arctan` + `arctan_le`),
-    λ ∈ [2cos(π/18), 2), H ≥ 33π/512 + θ/2.
+        (P) reduces to `RegimeACore q` (above).
+      • Regime B (H < |μc| < π/2-H):  the endpoint index gives `RegimeBCore q muc`.
 
-    The hard core is (A): a razor-thin transcendental inequality in q whose limiting
-    (q→∞) margin is exactly the `cos_sq_lt` gap (24/25 - cos²(33π/512) ≈ 5·10⁻⁴).
-    Because L involves ⌈33q/256⌉, the clean lower bound H ≥ 33π/512+θ/2 is only tight
-    for large q, so (A) must be split into finitely many small-q cases (q ≲ 21, where
-    L is a concrete integer) plus an asymptotic tail handled with tight Taylor
-    (`cos_bound`) estimates.  This remains to be formalized.
+    **Status (2026-06-13, M1-verified ground truth).**
+    Foundational correction bounds are now PROVED in this file (sorry-free):
+    `xiq_le` (ξ ≤ θ/5), `etaq_le` (η ≤ tan θ/3), `etaq_nonneg`, `lamq_ge` (λ ≥ 1.9).
+    The through-line `core_limit` (`50·cos²(33π/512) < 48`) is PROVED: it is exactly
+    the q→∞ form of `RegimeACore` and equals `cos_sq_lt`.  The min of `fcorr` over the
+    domain is at μc=0 (M1: argmin = 0 for every q), achieved by the central window
+    index (pigeonhole offset 0 if L odd, θ if L even).
+
+    **Remaining** (the actual sorry): assemble `RegimeACore`/`RegimeBCore` (each a
+    single-variable transcendental inequality, EXACT-H, never intervalizing c=cos θ)
+    + the `Finset.le_sup'` pigeonhole index selection + the regime split.  RegimeA
+    margin ≥ +0.022; RegimeB margin ≥ +0.0175.  Dispatched to Aristotle (see
+    `research_notes/fcorr_lb_status_2026-06-13.md`).
 -/
 theorem fcorr_lb (q : ℕ) (hq : 18 ≤ q) (hL : 0 < L_blk q)
     {muc : ℝ} (hmuc : muc ∈ Set.Ioo (-(Real.pi / 2 - Hq (L_blk q) q)) (Real.pi / 2 - Hq (L_blk q) q)) :
@@ -512,4 +643,5 @@ end
 
 
 end L1bArcCoverage
+
 
