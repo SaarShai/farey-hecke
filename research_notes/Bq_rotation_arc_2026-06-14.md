@@ -856,6 +856,10 @@ longer assumed.
 | 17,20 | OPEN — degree-8 minpoly |
 | 19 | OPEN — degree-9 minpoly (tightest margin, ratio 107) |
 
+> **SUPERSEDED below (Update 2026-06-14 later): q = 10, 12, 13 are now CLOSED** in
+> `BCZHeckeRotationArcR2hi2.lean` — see the new section at the end of this note. The "OPEN" rows for
+> 10/12/13 in the table above are stale; remaining-open is now {11,14,15,16,17,18,19,20,21}.
+
 **Closed this session: q = 8, 9** (in addition to the prior q = 5, 7). **Remaining q ∈
 {10,11,12,13,14,15,16,17,18,19,20,21}** — each is mechanical (identical realization body; the ONLY
 nontrivial leg is the per-q `2cos(π/q)` minimal-polynomial identity), but was not reached under the
@@ -869,3 +873,64 @@ so the rotation-arc count is the clean continuous value. q=8,9 each took one ~8 
   (6 audited thms, axiom-clean); lakefile target `RotationArcR2hi` added.
 - Witness data: `code/out/goal1_qladder_witness_exact.json` (q=8..16),
   `code/out/goal1_qladder_hi_witness_exact.json` (q=17..24).
+
+---
+
+## Update 2026-06-14 (later) — q = 10, 12, 13 CLOSED (`BCZHeckeRotationArcR2hi2.lean`, NEW)
+
+Replicated the R2-realization pattern for three more `q`, in a fresh self-contained companion file
+`BCZHeckeRotationArcR2hi2.lean` (imports `BCZHeckeRotationArc`; touches NO sealed file; new lakefile
+target `RotationArcR2hi2`). Build: `lake build RotationArcR2hi2` → "Build completed successfully
+(8028 jobs)"; per-file `lake env lean` ≈ 11 s.
+
+| q  | minpoly of `λ_q = 2cos(π/q)`            | deg | start (ℚ)     | `N+1 = B(q)` | derivation of minpoly |
+|----|-----------------------------------------|-----|---------------|--------------|-----------------------|
+| 10 | `x⁴ − 5x² + 5`                          | 4   | `(1/3, 3/8)`  | 3            | double-angle `λ²=2+2cos(π/5)=(5+√5)/2`, square out `√5` |
+| 12 | `x⁴ − 4x² + 1`                          | 4   | `(1/3, 11/30)`| 3            | double-angle `λ²=2+2cos(π/6)=2+√3`, square out `√3` |
+| 13 | `x⁶ − x⁵ − 5x⁴ + 4x³ + 6x² − 3x − 1`    | 6   | `(31/94,17/47)`| **4**       | **Chebyshev** `T₁₃(cosθ)=cos13θ`; at θ=π/13, `T₁₃(c)=cosπ=−1`; factorization `(λ+2)·minpoly²=2(T₁₃(λ/2)+1)=0`, λ+2>0 ⟹ minpoly=0 |
+
+### q = 13 is the milestone: the FIRST length-4 rotation arc (B = 4)
+`run13` has length `N+1 = 4` (interior k-pattern `[1,1,1]`), realizing the `3 → 4` cluster-ceiling
+transition exactly where the arithmeticity-dichotomy witness ladder predicts it (B≥4 first at q=13).
+The degree-6 minimal polynomial of `2cos(π/13)` is obtained machine-verified via Mathlib's
+`Polynomial.Chebyshev.T_real_cos` plus an explicit stepwise unfolding of `T₁₃` (helper
+`T13_eval`, built from the `T_add_two` recurrence; reusable for any `2cos(π/q)` minpoly going forward).
+
+### Verification (VERIFY-BEFORE-COMPLETION)
+`lake env lean BCZHeckeRotationArcR2hi2.lean` compiles with NO errors. `#print axioms` on every
+key result is exactly `[propext, Classical.choice, Quot.sound]` (NO `sorryAx`):
+
+```
+'HeckeRotArcR2hi2.lam13_minpoly'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'HeckeRotArcR2hi2.Bq_eq_rotation_arc_q10'  depends on axioms: [propext, Classical.choice, Quot.sound]
+'HeckeRotArcR2hi2.Bq_eq_rotation_arc_q12'  depends on axioms: [propext, Classical.choice, Quot.sound]
+'HeckeRotArcR2hi2.Bq_eq_rotation_arc_q13'  depends on axioms: [propext, Classical.choice, Quot.sound]
+'HeckeRotArcR2hi2.run13_isClusterRun'      depends on axioms: [propext, Classical.choice, Quot.sound]
+'HeckeRotArcR2hi2.rotationArcCount13_realized' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+(q=10/q=12 `run*_isClusterRun`, `rotationArcCount*_realized` likewise clean.)
+
+### Implementation notes (reusable per-q recipe refinements)
+- Biquadratic `q` (10, 12): `λ < 2` from `λ² < 4` via the minpoly + `λ² ≥ 2` (lemma `λ_ge_sqrt2`
+  from `cos(π/4) ≤ cos(π/q)`), avoiding the q=8-style `cos 4θ` expansion.
+- q=13 rational two-sided λ-bound `19418/10000 < λ < 19419/10000`: the degree-6 cofactor sign
+  argument was brittle for `nlinarith`; replaced by a DIRECT `nlinarith` certificate — assume the
+  negation, feed minpoly=0 + a crude pin `λ ≥ λ₁₀ > 1.897` (lemma `lam13_ge_lam10` via
+  `cos(π/13) ≥ cos(π/10)`) + the product hint `(λ − bound)·(other-side) ≥ 0`. This pins the LARGER
+  of the two minpoly roots in (1.94,1.95). General lesson: for high-degree minpolys, a crude
+  monotone lower bound from a smaller-q neighbor + product hints beats explicit Horner-cofactor sign.
+- P-lemmas (`Pn·λ³ < 1`): for q=13 the last point `P3` reduces to degree 5; supplied as
+  `hP : (a·b)·λ³ = (deg≤5 poly) + (coeff)·minpoly`, then `rw [hP, lam13_minpoly]` collapses the
+  minpoly term and `nlinarith` closes the degree-5 residual with the tight λ-bounds.
+
+## Status across the onset range — UPDATED
+**Closed (full `B(q) = rotation-arc count`, bridge discharged, axiom-clean):**
+q = 5 (lower bd), 7, 8, 9 (prior) **+ 10, 12, 13 (this update)**.
+**Still OPEN:** q = 11, 14, 15, 16, 17, 18, 19, 20, 21 — all mechanical; the `T13_eval`-style
+Chebyshev recipe now makes the higher-degree minpolys (deg 5–9) routine. q=13 demonstrates the
+length-4 regime; the next ceiling step (B=5) lands near q≈19.
+
+## Files (this update)
+- `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR2hi2.lean` — NEW, q=10/12/13
+  (16 audited theorems incl. `lam13_minpoly`, `T13_eval`; all axiom-clean).
+- `lakefile.toml` — added `[[lean_lib]] RotationArcR2hi2`.
