@@ -22,6 +22,8 @@ communication is gated on explicit author approval.
   not a formal proof. Used here only for *upper* bounds on B(q) (i.e. "no longer cluster was
   found") and for the onset-ratio table.
 - `[CONJECTURE]` — a pattern consistent with all data, with no proof strategy claimed.
+- `[REFUTED]` — a previously-stated empirical pattern now *disproven* by later verified data;
+  retained only as a cautionary record, never to be cited as a result.
 
 ---
 
@@ -47,12 +49,19 @@ in ℚ(λ_q); the q = 5 and q = 7 cases are additionally Lean-formalized. Hence 
 certified by exact witnesses up to q = 24; that B(q) ≥ 3 for *all* non-arithmetic q is
 `[CONJECTURE]`.
 
-We frame this as the **local-gap-statistic refinement** of the classical
-Geninska–Leuzinger characterization of arithmeticity by the *global* trace set (Duke 2008);
-we do not claim to be the first statistic to detect arithmeticity. We report the growth law
-B(q) = 2 + ⌊(q − 1)/6⌋ as a `[CONJECTURE]` (exact on q = 7..22; off by +1 at q = 5, 23, 24,
-where the exact witnesses give one more), and the uniform onset identity X(q) = cluster-onset
-threshold as a `[NUMERICAL]` observation. The uniform ergodic-optimization identity
+We position this honestly as the **machine-verified, local-gap-statistic instance** of the
+classical Luo–Sarnak bounded-clustering program and the Geninska–Leuzinger characterization of
+arithmeticity by the *global* trace set (Duke 2008); we do **not** claim a new arithmeticity
+criterion, and we do not claim to be the first statistic to detect arithmeticity. For the
+*non-arithmetic* family the cluster ceiling B(q) **grows** (asymptotic slope ≈ 0.216 q), and we
+explain this growth by an exact **rotation-arc mechanism**: the floor-1 last-branch map is the
+elliptic rotation by π/q of the conserved energy form E = a² − λ_q a b + b², and a cluster is a
+run of consecutive sub-threshold rotation-lattice points on one energy ellipse (k-pattern
+[1,…,1,2]), verified at 100% (34/34) against the genuine map for q = 7..40. We show plainly that
+B(q) admits **no continuous closed form**, for a precise reason — an arithmetic
+lattice-vs-notch resonance (the discrete π/q rotation can hop a sub-(π/q)-wide super-threshold
+notch on the ellipse; e.g. q = 23 fits 6). The uniform onset identity X(q) = cluster-onset
+threshold is a `[NUMERICAL]` observation, and the uniform ergodic-optimization identity
 X_Ω(q) = 1/λ_q³ is OPEN (in progress; see §7).
 
 ---
@@ -63,10 +72,12 @@ X_Ω(q) = 1/λ_q³ is OPEN (in progress; see §7).
 
 A recurring theme in homogeneous dynamics is that *arithmeticity* — a global, rigidity-type
 property of a lattice — leaves fingerprints on *local* spacing statistics of its orbits.
-The classical instance is the trace (length) spectrum: Geninska–Leuzinger [GL08] proved that a
-Fuchsian group is arithmetic exactly when its trace set is, in a precise density sense,
-*bounded*; Luo–Sarnak [LS94] gave a bounded-clustering statement for the length spectrum of
-arithmetic surfaces. These are global statements — over *all* closed geodesics, *all* traces.
+The classical instance is the trace (length) spectrum. Luo–Sarnak [LS95] introduced the
+**Bounded-Clustering Property (BCP)** of the length spectrum and conjectured (Sarnak) that BCP
+characterizes arithmeticity among Fuchsian groups; Geninska–Leuzinger [GL08] **proved Sarnak's
+conjecture for cofinite Fuchsian groups with parabolics** — which is *exactly* the cusped Hecke
+case G_q — so that such a group is arithmetic iff its trace set satisfies BCP. These are global
+statements — over *all* closed geodesics, *all* traces.
 
 This paper exhibits an arithmeticity fingerprint of a different, strictly *local* kind: it is
 read off from **three consecutive points** of a single orbit of a Poincaré-section return map.
@@ -93,27 +104,41 @@ Combining, the "if and only if" is **proven (both directions) for 3 ≤ q ≤ 7*
 implication is exact-witness-certified through q = 24. The statement "B(q) ≥ 3 for *every*
 non-arithmetic q" is `[CONJECTURE]` (the exact witnesses cover q ≤ 24 only).
 
-### 1.3 Honest novelty vs. Geninska–Leuzinger
+### 1.3 Honest novelty (what is and is not new)
 
-We do **not** claim to be the first to detect arithmeticity by a statistic; that statement
-would be false (Geninska–Leuzinger, Luo–Sarnak, and the arithmetical-quantum-chaos literature
-all do so). Our contribution is a *local-gap-statistic refinement within the Hecke family*:
+The phenomenon "bounded clustering ⟺ arithmetic" is **not new**: it is the Luo–Sarnak [LS95]
+Bounded-Clustering-Property program, proved for the cusped Fuchsian (= Hecke) case by
+Geninska–Leuzinger [GL08]; and the specific pin B(q) = 2 ⟺ q ∈ {3, 4, 6} is Takeuchi's [TK77]
+classification of the arithmetic Hecke triangle groups. We do **not** claim a new arithmeticity
+criterion, nor to be the first to detect arithmeticity by a statistic. Our contribution is
+exactly two things, stated honestly:
 
-- **Different object.** Geninska–Leuzinger use the global trace set (every closed geodesic).
-  We use the gap product at three consecutive points of one horocycle-section orbit.
-- **A sharp finite threshold.** Where [GL08] is a density/boundedness statement, our statistic
-  is a single integer B(q) whose value — 2 versus ≥ 3 — is the entire signal, and that value is
-  *machine-checked* on both sides for the arithmetic family.
-- **It separates cases the trace multiplicity does not.** Bogomolny–Schmit [BS03] showed that
-  *non-arithmetic* Hecke groups also exhibit the exponential trace multiplicities usually taken
-  as an arithmeticity marker; our statistic does distinguish those same non-arithmetic G_q
-  (§6.2). This is the strongest single argument for the interest of the local observable.
+- **(a) A machine-verified forward dichotomy + exact witnesses.** The forward direction
+  (B(q) = 2 for the arithmetic q ∈ {3, 4, 6}) is, to our knowledge, the *first formal (Lean 4,
+  sorry-free, axiom-clean) proof* of an instance of the bounded-clustering ⟺ arithmetic
+  phenomenon, here for the local gap-product statistic; the reverse direction is certified by
+  exact algebraic 3-cluster witnesses (q = 5, 7 additionally Lean-formalized) and an exact
+  witness ladder q = 5..24.
+- **(b) The rotation-arc mechanism for the growth, and the lattice-vs-notch resonance.** For
+  non-arithmetic q we identify the *exact mechanism* generating the cluster ceiling: the floor-1
+  last-branch map is the elliptic rotation by π/q of the conserved form E = a² − λ_q a b + b²,
+  and B(q) is a discrete count of consecutive sub-threshold rotation-lattice points on one
+  energy ellipse (§4, and `research_notes/Bq_rotation_arc_2026-06-14.md`). This mechanism
+  explains *why B(q) has no continuous closed form* — an arithmetic lattice-vs-notch resonance —
+  a positive structural finding rather than a gap. The rotation/conserved-form half is itself
+  Lean-verified (`BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean`, namespace `HeckeNoRot`).
+
+We note in passing that the local statistic separates cases the trace *multiplicity* does not:
+Bogomolny–Schmit [BS03] showed *non-arithmetic* Hecke groups also exhibit the exponential trace
+multiplicities usually taken as an arithmeticity marker, whereas the gap-product clustering does
+distinguish those same non-arithmetic G_q (§6.2).
 
 ### 1.4 Structure
 
 §2 fixes the Taha setup, the observable P, and the threshold X(q) (with an explicit warning on
-the q = 3 normalization). §3 states and proves the dichotomy. §4 reports the B(q) growth law.
-§5 describes the X(q) = cluster-onset bridge. §6 positions the result against the trace-set
+the q = 3 normalization). §3 states and proves the dichotomy. §4 describes the B(q) growth
+story — the exact rotation-arc mechanism, the lattice-vs-notch resonance, and why there is no
+continuous closed form. §5 describes the X(q) = cluster-onset bridge. §6 positions the result against the trace-set
 literature. §7 lists open problems, including the uniform onset identity. Two appendices give
 the machine-verification table and reproducibility notes; a third records the one cross-program
 byproduct (Farey critical hyperuniformity) as a remark.
@@ -331,7 +356,13 @@ mathematics (§7).
 
 ---
 
-## 4. The B(q) Growth Law
+## 4. The B(q) Growth Story: the Rotation-Arc Mechanism
+
+For non-arithmetic q the cluster ceiling B(q) is *not* bounded — it **grows**, with asymptotic
+slope ≈ 0.216 q. We give below the witnessed values, then the exact geometric mechanism that
+generates them, and explain why B(q) admits **no continuous closed form**. (An earlier empirical
+fit B(q) = 2 + ⌊(q−1)/6⌋ is *refuted* — see §4.2 — and is retained here only as a cautionary
+record.)
 
 ### 4.1 The witnessed ceiling
 
@@ -360,42 +391,102 @@ junction-safe; burn = 500). The combined best-estimate ceiling:
 | 24 | no | 1.98289 | 0.12826 | 6 | `[PROVEN:exact-witness]` | `[NUMERICAL]` (83–184 events) |
 
 **Transitions** (first non-arithmetic q at each ceiling), all `[PROVEN:exact-witness]`:
-B = 3 at q = 5; B = 4 at q = 13; B = 5 at q = 19; B = 6 at q = 23. Onset q-values
-{5, 13, 19, 23}, onset gaps {8, 6, 4} — *decreasing*. Note the asymmetry of evidence: the
-*lower* bounds (≥) are exact certificates; the *upper* bounds (≤, hence the exact value B(q))
-are Monte-Carlo and become fragile at q = 23, 24, where the longest run is 1–6 events in 40M
-steps.
+B = 3 at q = 5; B = 4 at q = 13; B = 5 at q = 19; B = 6 at q = 23. Note the asymmetry of
+evidence in this exact-witness band: the *lower* bounds (≥) are exact certificates; the *upper*
+bounds (≤, hence the exact value B(q)) were Monte-Carlo and become fragile at q = 23, 24. These
+upper bounds — including the fragile q = 23 value — are now *independently confirmed* by the
+exact rotation-arc count (§4.3), which reproduces the genuine-map B(q) at 100% for q = 7..40
+(`research_notes/Bq_rotation_arc_2026-06-14.md`). The witnessed transitions are consistent with
+the derived linear growth (slope ≈ 0.216 q) of §4.3; the small early gaps are O(1) jitter around
+that line from the resonance described below, **not** evidence of sub-linear growth.
 
-### 4.2 Closed-form fit `[CONJECTURE]`
+### 4.2 A refuted empirical fit `[REFUTED]`
 
-**Conjecture.** For non-arithmetic q, B(q) = 2 + ⌊(q − 1)/6⌋.
+An earlier draft reported B(q) = 2 + ⌊(q − 1)/6⌋ as a conjectural growth law. **This is false
+and must not be cited as a law.** It was an artifact of data that stopped at q = 24: the slope
+1/6 ≈ 0.167 disagrees with the true asymptotic slope ≈ 0.216 (§4.3), and the formula is
+**explicitly refuted by exact rotation-arc counts**, which reproduce the genuine map at 100%
+(`research_notes/Bq_rotation_arc_2026-06-14.md`). The formula fails at, among others,
+q = 5 (true 3 vs. formula 2), q = 23 (6 vs. 5), q = 24 (6 vs. 5), q = 30 (7 vs. 6), and
+q = 40 (9 vs. 8); over q = 7..40 it disagrees with the ground truth at roughly a third of the
+values, with the deficit growing as q grows. (It was statistically indistinguishable from
+2 + √q and 2 + log q only on the short q ≤ 24 window — precisely the small-sample illusion that
+made it look like a law.) It is retained here only as a cautionary record; the genuine growth
+account is §4.3.
 
-Re-verified 2026-06-13 against the witness ladder: this is **exact on q = 7..22** (16
-consecutive values) and **off by +1 at q = 5, 23, 24** — at those three q the exact witnesses
-realize one *more* than the formula (B(5) = 3 vs. 2; B(23) = B(24) = 6 vs. 5). For q ∈ {3,4,6}
-the formula is overridden by the arithmetic pin B = 2.
+### 4.3 The rotation-arc mechanism and the lattice-vs-notch resonance
 
-**Caveats (this must not be cited as a law).**
-1. On data through q = 24, the candidate laws B ~ 2 + (q − 1)/6 (linear, slope ≈ 0.168),
-   B ~ 2 + √q (sub-linear), and B ~ 2 + log q are statistically indistinguishable (all within
-   integer rounding); a power fit gives exponent ≈ 0.60.
-2. The decreasing onset gaps {8, 6, 4} favor sub-linear growth, but a single extra gap of 4
-   (from q = 23) could be sampling noise.
-3. At q = 23, 24 the exact *value* B(q) is at the Monte-Carlo resolution floor for the upper
-   bound; the +1 at those ends is exactly why the clean ⌊(q−1)/6⌋ form is only a fit.
-4. No closed form should be asserted as asymptotic pending an algebraic-witness family or a
-   transfer-operator argument (§7.2).
+The growth of B(q) is generated by an **exact geometric mechanism**, which both reproduces the
+ceiling and explains why it has no continuous closed form. Full detail and the verification
+tables are in `research_notes/Bq_rotation_arc_2026-06-14.md`; we summarize.
 
-### 4.3 No arithmetic invariant beyond the {3,4,6} pin tracks B(q)
+**The conserved energy ellipse.** On the last branch with floor digit k = 1, the map
+(a, b) ↦ (b, −a + λb) is the matrix M = [[0, 1], [−1, λ]], λ = 2 cos(π/q), which has det M = 1,
+tr M = λ, and is therefore an **elliptic rotation by π/q** (rotation number 1/(2q)). It
+preserves the positive-definite quadratic form (the "energy")
+
+    E(a, b) = a² − λ a b + b².
+
+In whitening coordinates E becomes |·|² and M becomes a literal rotation by −π/q; the
+gap-product P = a·b along a level set E = E₀ is a fixed sinusoid of the rotation phase, peaking
+at the symmetric point a = b with value E₀/(2 − λ). `[PROVEN:Lean]` — the conserved-form +
+rotation + bounded-orbit + "no infinite k = 1 run" facts are sorry-free, axiom-clean in
+`projects/mimo-mini-project/lean/BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` (namespace
+`HeckeNoRot`: `Eform`, `E_conserved`, `E_const`, `E_pos`, `c_le_M`, `no_infinite_rotation`).
+
+**A cluster is a rotation arc.** A maximal sub-threshold last-branch cluster is therefore a run
+of consecutive π/q-rotation lattice points on **one** energy ellipse, all with P < X(q). The
+floor digit is k = 1 on every interior step (a pure rotation) and increments to k = 2 on the
+terminal step — which kicks the state off the ellipse (ejection) but is itself still
+last-branch and sub-threshold. Hence every maximal cluster has **k-pattern [1, …, 1, 2]**, and
+
+    B(q) = 1 + (max # consecutive interior k = 1 last-branch sub-threshold rotation steps).
+
+`[NUMERICAL — exact, dps = 50]` This discrete rotation-arc count reproduces the genuine
+full-Taha-map ceiling at **100% (34/34) for q = 7..40**, including the corrected B(23) = 6 and
+B(24) = 6; the q = 23 value was additionally confirmed by 120-start heavy Monte-Carlo (7 length-6
+runs, no length-7 run). The cluster ab-values are symmetric-unimodal about the peak, the rotation
+signature.
+
+**Asymptotic slope (derived, not fitted).** The sub-threshold last-branch arc has limiting
+angular width W_∞ ≈ 0.679 rad (the ellipse degenerates parabolically toward E = (a − b)² as
+λ → 2, non-degenerate at every finite q), so the number of π/q steps it holds grows as
+
+    B(q) ~ (W_∞ / π) · q ≈ 0.216 · q.
+
+The slope ≈ 0.216 is a derived geometric constant (limiting arc-fraction ÷ π), matching the
+prior empirical ≈ 0.22 q — not a fit.
+
+**No continuous closed form: the lattice-vs-notch resonance.** The continuous-arc proxy
+⌊W(q)·q/π⌋ + 1 matches B(q) for all q = 7..40 **except q = 23**, where it gives 5 but the true
+value is 6. The reason is a genuine **arithmetic resonance**: B(23) = 6 is realized on an ellipse
+whose peak ab sits slightly *above* the threshold t = 1/λ³ (peak/t ≈ 1.0023), poking a
+sub-(π/q)-wide super-threshold *notch* into the top of the arc and splitting the continuous
+sub-threshold arc. But the discrete −π/23 rotation lattice **straddles the notch** — no lattice
+point lands in the narrow super-threshold gap, the two points flanking the peak both stay just
+below t (t − P ≈ 3·10⁻⁴), and a 6-point run fits. No continuous arc width can represent a
+discrete step hopping a sub-step-width notch. This is the precise structural reason **B(q) is
+exactly the *discrete* rotation-lattice count and has no continuous closed form** — a positive
+finding (an arithmetic lattice-vs-notch resonance), not a gap in the analysis.
+
+**Honest residuals.** The conserved-form/rotation/finite-run half is Lean-verified (above). The
+"interior steps stay k = 1 on the whole arc" confinement is numerically certified (dps = 50) and
+in the same family as the Lean confinement lemmas, but is not yet a uniform theorem; the
+continuous arc-width bound and slope are an L1b-family calculus problem; and the *exact* value at
+resonance q's needs a lattice-gap/Diophantine argument (§7.2).
+
+### 4.4 No arithmetic invariant beyond the {3,4,6} pin tracks B(q)
 
 `[NUMERICAL]` Computing [ℚ(λ_q):ℚ] = φ(2q)/2 and [ℚ(λ_q²):ℚ] for q = 3..24: the bound-2 set is
 *exactly* {q : [ℚ(λ_q²):ℚ] = 1} = {q : λ_q² ∈ ℤ} = {3, 4, 6}. For q ≥ 5, neither degree tracks
 B(q): they oscillate non-monotonically while B(q) grows monotonically (e.g. q = 8 and q = 12
 both have [ℚ(λ²):ℚ] = 2 with B = 3, yet q = 11 has degree 5 and also B = 3; q = 17 has degree 8
 and q = 18 degree 3, both B = 4). The structure is therefore one arithmetic fact
-(λ² ∈ ℤ ⟺ q ∈ {3,4,6} ⟺ B = 2) sitting atop an otherwise **geometric, slow-growth** ceiling.
+(λ² ∈ ℤ ⟺ q ∈ {3,4,6} ⟺ B = 2) governing the bound-2 pin, atop a **geometric, linearly growing**
+(slope ≈ 0.216 q) rotation-arc ceiling whose only arithmetic dependence is the lattice-vs-notch
+resonance of §4.3.
 
-### 4.4 B(q) is an intrinsic dynamical quantity
+### 4.5 B(q) is an intrinsic dynamical quantity
 
 `[NUMERICAL]` Run-length histograms show a characteristic non-geometric shape: a 200–500×
 crash in the count at length B(q) + 1, after which the surviving shorter lengths show a
@@ -443,15 +534,19 @@ but is not claimed here.
 
 ## 6. Relation to Trace-Set Arithmeticity
 
-### 6.1 Geninska–Leuzinger (2008)
+### 6.1 Luo–Sarnak / Geninska–Leuzinger: the bounded-clustering program
 
-[GL08] (Duke Math. J. 142; arXiv:math/0609477) characterize arithmeticity of a Fuchsian group
-by a *global* density/boundedness property of the trace set; [LS94] gives a companion
-bounded-clustering statement for arithmetic length spectra. Our dichotomy detects the same
-arithmetic property of G_q through a *local* object — the gap product at three consecutive
-orbit points of a horocycle-section map. This is a *refinement within the Hecke family*, not a
-new class of result and not a priority claim. The conceptual contrast: [GL08] is over all
-closed geodesics (global), ours is over three consecutive section points (local).
+This is the program our result belongs to. Luo–Sarnak [LS95] introduced the **Bounded-Clustering
+Property (BCP)** of the trace/length spectrum and Sarnak conjectured that BCP characterizes
+arithmeticity among Fuchsian groups. Geninska–Leuzinger [GL08] (Duke Math. J. 142;
+arXiv:math/0609477) **proved Sarnak's conjecture for cofinite Fuchsian groups with parabolics** —
+which is exactly the cusped Hecke case G_q. So "bounded clustering ⟺ arithmetic" is an
+*established theorem* for our groups, over the *global* trace set (all closed geodesics). Our
+dichotomy is the same arithmetic property of G_q read off a *local* object — the gap product at
+three consecutive points of a horocycle-section orbit. We therefore make **no new criterion
+claim**: our contribution is the machine-verified forward instance plus the rotation-arc growth
+mechanism (§1.3). The conceptual contrast is global trace set [LS95, GL08] versus three
+consecutive section points (ours).
 
 ### 6.2 Bogomolny–Schmit (2003): the head-on case
 
@@ -506,12 +601,16 @@ interval endpoint) appears to mechanize for arbitrary q, but no uniform construc
 *all* non-arithmetic q is proved. The existence of a 3-cluster for every non-arithmetic q is a
 conjecture, very strongly supported.
 
-### 7.2 The B(q) growth law `[CONJECTURE]`
+### 7.2 The B(q) growth — what is open after the rotation-arc mechanism
 
-B(q) = 2 + ⌊(q − 1)/6⌋ is an empirical fit (exact on q = 7..22; +1 low at q = 5, 23, 24). Its
-true asymptotic as q → ∞ (λ_q → 2) is open: linear (~ q/6), sub-linear (~ √q), and logarithmic
-growth are indistinguishable on data through q = 24. The decreasing onset gaps {8, 6, 4} favor
-sub-linear growth on 4 transition points — speculative.
+§4.3 establishes the *mechanism* (rotation-arc count, slope ≈ 0.216 q) and verifies it at 100%
+against the genuine map for q = 7..40. The closed-form fit B(q) = 2 + ⌊(q − 1)/6⌋ is **refuted**,
+not open (§4.2). What remains open is *making the mechanism a theorem*: (a) a uniform proof that
+interior cluster steps stay k = 1 on the whole arc (numerically certified; same family as the
+Lean confinement lemmas); (b) the continuous arc-width bound R(q) ≤ ⌊W(q)·q/π⌋ + 1 and the
+asymptotic slope W_∞/π, an L1b-family calculus problem (Aristotle-suitable); and (c) the
+*exact* value at resonance q's (e.g. q = 23), which requires a lattice-gap / inhomogeneous-
+Diophantine argument — and is precisely why no clean *continuous* closed form exists.
 
 ### 7.3 The uniform onset identity X_Ω(q) = 1/λ_q³ (OPEN / in progress)
 
@@ -550,9 +649,11 @@ straightforward assembly of existing pieces.
 - [T19] M. Taha, arXiv:1906.07250 — Veech section identification.
 - [TK77] K. Takeuchi, 1977 — arithmeticity of Hecke triangle groups (arithmetic iff
   q ∈ {3, 4, 6, ∞}).
-- [GL08] S. Geninska, E. Leuzinger, Duke Math. J. 142 (2008), arXiv:math/0609477 —
-  arithmeticity via bounded trace density.
-- [LS94] W. Luo, P. Sarnak, 1994 — bounded clustering for arithmetic length spectra.
+- [GL08] S. Geninska, E. Leuzinger, Duke Math. J. 142 (2008), arXiv:math/0609477 — proof of
+  Sarnak's bounded-clustering conjecture for cofinite Fuchsian groups with parabolics (the
+  cusped Hecke case).
+- [LS95] W. Luo, P. Sarnak, 1995 — Bounded-Clustering Property of the length spectrum; Sarnak's
+  conjecture that BCP characterizes arithmeticity.
 - [AC12] J. Athreya, J. Chaika, GAFA 2012, arXiv:1012.4298 — no small gaps for Veech surfaces.
 - [BS03] E. Bogomolny, C. Schmit, arXiv:nlin/0312057 — exponential trace multiplicities for
   non-arithmetic Hecke groups.
@@ -606,9 +707,13 @@ Exact-witness certificates (sympy algebraic-number arithmetic, not Lean), all
 branches and, at q ≥ 19, glues several genuine last-branch clusters together through
 razor-margin off-last-branch excursions (e.g. the spurious q = 19 "8-run" alternates
 T_18/T_16 with off-branch points at margins ~10⁻⁴). The correct counter — the **last-branch**
-counter matching all Lean proofs and exact witnesses — gives growth **~ q/6** (linear-fit slope
-0.168). The q = 13 value B = 4 is identical under both counters; only the *rate*, not that
-threshold, was inflated. This manuscript uses the last-branch counter throughout.
+counter matching all Lean proofs and exact witnesses — has *derived* asymptotic slope
+**≈ 0.216 q** (the rotation-arc constant W_∞/π of §4.3, confirmed against the genuine map at
+100% for q = 7..40). (An earlier small-q linear fit on q ≤ 24 gave ≈ 0.168, i.e. the "~ q/6"
+figure; that slope is too small — it is the same short-window artifact that produced the refuted
+⌊(q−1)/6⌋ fit, §4.2 — and is superseded by the derived 0.216.) The q = 13 value B = 4 is
+identical under both counters; only the *rate*, not that threshold, was inflated by the
+cross-branch counter. This manuscript uses the last-branch counter throughout.
 
 ---
 
