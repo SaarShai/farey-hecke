@@ -519,3 +519,85 @@ axiom-clean Lean theorem family. A full closed-form `B(q)` is NOT claimed — R1
 - Reused machinery (unmodified): `BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` (HeckeNoRot),
   `GenuineSelfMap.lean`/`GenuineMapP2.lean` (`genStep`/`branchIdx`/scalar form `(b,−a+kλb)`),
   `BCZHeckeConfinement_VERIFIED.lean` (`subthreshold_forces_scalar` — R1 family).
+
+---
+
+# R1 STATUS (2026-06-14, this session) — the LOWER bracket of interior-k=1 is now a THEOREM; the residual is the UPPER bracket (R3/phase-lattice family)
+
+**New file (touches NO sealed file):** `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR1.lean`
+(`namespace HeckeRotArcR1`, lake lib target `RotationArcR1`, Mathlib v4.28.0). **Build:**
+`lake env lean BCZHeckeRotationArcR1.lean` → exit 0; `lake build RotationArcR1` → `Build completed
+successfully (8027 jobs)`. **All 16 declarations `sorry`-free, `#print axioms` = exactly
+`[propext, Classical.choice, Quot.sound]`** (no `sorryAx`, no `nativeDecide`).
+
+## What R1 ACTUALLY is (determined this session — the prior "same family as subthreshold_forces_scalar" framing is CORRECTED)
+
+R1's interior bracket `λb ≤ 1+a < 2λb` splits into a **lower** half (`k≥1`) and an **upper** half (`k<2`).
+Three numerical determinations pin down exactly what is provable and reclassify R1:
+
+1. **The full bracket is NOT pointwise / box-implied.** Random corridor+sub-threshold last-branch
+   points violate it ~82–95% of the time (q=7..30, `/tmp/r1_probe.py`) — it is genuinely dynamical.
+2. **It is NOT the `subthreshold_forces_scalar` family.** That engine partitions steps into
+   scalar / deep-mid / cusp BRANCHES (a coarse cut) and its legs (`cusp_envelope`, `ejection_kick`)
+   are pointwise facts. CRUCIAL finding: `ejection_kick`/`genuine_ejection` already ASSUME floor=1
+   (their `htop`/`hbot` ARE the k=1 bracket on `(u=L_n, v=L_{n+1})`) and conclude the SUCCESSOR
+   ejects — so the verified ejection machinery is DOWNSTREAM of the bracket, not a source of it.
+   The k=1-vs-k≥2 distinction lives *within* the scalar branch and is a finer cut than the trichotomy.
+3. **It is the R3 / phase-lattice family.** On the conserved-E ellipse the sub-threshold last-branch
+   domain decomposes (dps=50 angular dump, `/tmp/r1_arc2.py`) into ONE contiguous `k=2` sub-arc
+   ADJACENT to ONE contiguous `k=1` sub-arc — e.g. q=23 governing ellipse: `…[k=2 ×105][k=1 ×670]…`;
+   at the resonance ellipse frac=1.0023 a super-threshold NOTCH splits the k=1 arc
+   (`…[2×105][1×232][N×107][1×338]…`) — the SAME notch that drives R3. "Interior k=1, terminal k=2"
+   is therefore a statement about WHICH contiguous angular sub-arc the −π/q rotation-LATTICE points
+   occupy — a phase/lattice fact, not a branch-confinement fact.
+
+## What is PROVED (the largest non-circular sub-part of R1)
+
+**The LOWER bracket `λb ≤ 1+a` (k≥1) is an inductive invariant of the rotation `M` on the
+sub-threshold ellipse** — `lower_bracket_preserved_on_ellipse` / `kfloor_succ_ge_one`:
+> If `(a,b)` lies on a conserved-E ellipse with `E ≤ (2−λ)/λ³`, `0<b`, and the corridor edge
+> `λa+b>1` holds, then `k(M(a,b)) ≥ 1` (the successor lower bracket holds).
+
+Non-circular kernel (the missing ingredient random off-arc points violate): the algebraic identity
+`1 + a' − λb' = (λa+b−1) + (2 − λ²b)` (`lower_bracket_slack_eq`, pure `ring`), where the first
+summand ≥0 by the corridor edge and the second >0 by the **ellipse confinement** `λ²b < 2`
+(`lsq_b_lt_two`): from `coord_sq_le` ⇒ `b² ≤ 2/λ³` on the sub-threshold ellipse, so
+`(λ²b)² = λ⁴b² ≤ 2λ < 4` (uses `λ<2`), hence `λ²b < 2`. (Numerically `λ²b ≈ 1.38→1.41 < 2` on the
+actual arc, → 2 as q→∞ — the bound is tight but holds for every finite q.)
+
+**Consequence — the reduced R1 (`arc_interior_kfloor_eq_one`, `cluster_is_rotation_arc'`):** along an
+`M`-rotation arc whose 0-th state is on the sub-threshold ellipse (E propagated by `Mmap_preserves_E`
+via `arc_E_const`), with the corridor edge + positive b at every interior state, the floor digit is
+`≥ 1` at every interior step (THEOREM), hence `= 1` exactly when its **upper** bracket still holds.
+So `cluster_is_rotation_arc'` reproduces `BCZHeckeRotationArc.run_isMRotArc_of_brackets`/
+`cluster_is_rotation_arc` **carrying ONLY the upper bracket `hUpper`** (not the full two-sided
+`hbracket`): interior steps have `kfloor = 1` and the genuine `kstep (kfloor)` step IS `M`.
+
+## What is now hypothesis-free vs the irreducible residual
+
+- **Discharged (now a theorem):** the LOWER half of `hbracket` — `k≥1` at every interior point,
+  from the on-ellipse geometry. The `hbracket` of `run_isMRotArc_of_brackets` is strictly reduced:
+  `cluster_is_rotation_arc'` needs only `hUpper : ∀ n<N, ¬(2 ≤ kfloor (run(n+1)))` plus the
+  on-ellipse + corridor-edge + positivity structure (all of which the realized cluster has).
+- **IRREDUCIBLE residual (honest):** the UPPER bracket `1+a' < 2λb'` surviving until the terminal
+  step. This is precisely "no −π/q rotation-lattice point lands in the `k≥2` sub-arc before the
+  terminal one" — a discrete phase-lattice statement about `{φ₀ − nπ/q mod 2π}` vs the k=1/k=2 arc
+  boundary, the SAME inhomogeneous-Diophantine character as R3 (the notch-straddle). It does NOT
+  reduce to a pointwise/box fact (the upper bracket also has ~40–50% random-point violations) and
+  genuinely needs the lattice-gap argument. R1 is thus reclassified: **its lower half is closed; its
+  upper half is an R3-family lattice residual, NOT a `subthreshold_forces_scalar`-family lemma.**
+
+**Verdict: R1 PARTIAL — lower bracket CLOSED (axiom-clean Lean), upper bracket is the irreducible
+phase-lattice residual (R3 family).** `cluster_is_rotation_arc'` is the hypothesis-free-in-the-lower-
+bracket forward characterization; with R2 (realization bridge) and R3 (resonance value) still open.
+
+## Files (R1 status)
+- `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR1.lean` — this work (16 thms,
+  axiom-clean): `coord_sq_le`, `b_sq_le`, `lsq_b_lt_two` (λ²b<2 ellipse confinement),
+  `lower_bracket_slack_eq`, `lower_bracket_preserved_on_ellipse`, `kfloor_succ_ge_one`,
+  `succ_floor_one_or_increment`, `interior_k1_of_no_premature_increment`, `arc_E_const`,
+  `arc_interior_kfloor_ge_one` (k≥1 THEOREM), `arc_interior_kfloor_eq_one`, `kstep_one_eq_Mmap`,
+  `cluster_is_rotation_arc'` (reduced reduction).
+- Probes: `/tmp/r1_probe.py` (full-bracket not box-implied), `/tmp/r1_arc2.py` (k=1/k=2 arc
+  decomposition, dps=50), `/tmp/r1_lower.py` + `/tmp/r1_cert.py` (M preserves lower bracket on arc,
+  not pointwise), `/tmp/r1_final.py` (the `λ²b<2` certificate via `b²≤2/λ³` + λ<2).

@@ -301,6 +301,55 @@ theorem arc_interior_kfloor_eq_one (hl0 : 0 < l) (hl2 : l < 2)
   · exact absurd h (hUpper n hn)
   · exact le_antisymm (by omega) hge1
 
+/-! ## §5.  ★ THE REDUCED CHARACTERIZATION `cluster_is_rotation_arc'` — `hbracket` with its
+LOWER half discharged. ★
+
+The original `BCZHeckeRotationArc.run_isMRotArc_of_brackets` proved "a GENUINE-step run is an
+`M`-rotation arc" from the full two-sided bracket `hbracket : λb ≤ 1+a < 2λb` at every step.  We
+reproduce it taking only the **upper** half as a hypothesis, the **lower** half now being a
+THEOREM of the on-ellipse geometry.  The genuine last-branch step is
+`kstep k (a,b) = (b, −a + kλb)`; for `k=1` it equals `M`.  So we must (i) show the floor is `1`
+(from the lower-bracket theorem + the residual upper bracket), then (ii) the genuine step IS `M`. -/
+
+variable {l}
+
+/-- The genuine last-branch step with floor digit `k`: `(a,b) ↦ (b, −a + kλb)` (the `HeckeRotArc`
+`kstep` form). -/
+def kstep (k : ℝ) (p : ℝ × ℝ) : ℝ × ℝ := (p.2, -p.1 + k * l * p.2)
+
+/-- The `k=1` genuine step IS `M`. -/
+theorem kstep_one_eq_Mmap (p : ℝ × ℝ) : kstep (l := l) 1 p = Mmap l p := by
+  simp only [kstep, Mmap]; ring_nf
+
+variable (l)
+
+/-- **★ `cluster_is_rotation_arc'` — the reduced reduction.**  A run whose states already lie on
+ONE conserved-`E` sub-threshold ellipse (`E (run 0) ≤ (2−λ)/λ³`, propagated by `Mmap_preserves_E`
+along the established `M`-relation), with the corridor edge and positive `b`-coordinate at every
+interior state, takes a genuine `M`-step at every interior point — the floor digit being `1` from
+the **lower-bracket theorem** (`arc_interior_kfloor_ge_one`) plus the residual **upper** bracket
+`hUpper` (the only carried bracket hypothesis).  In particular the genuine-step coincides with the
+elliptic rotation `M` at every interior point.
+
+This is exactly `BCZHeckeRotationArc.run_isMRotArc_of_brackets`/`cluster_is_rotation_arc` with the
+LOWER half of `hbracket` removed and replaced by the proved on-ellipse invariant. -/
+theorem cluster_is_rotation_arc' (hl0 : 0 < l) (hl2 : l < 2)
+    (run : ℕ → ℝ × ℝ) (N : ℕ) (harc : IsMRotArc (l := l) run N)
+    (hE0 : Eform l (run 0) ≤ (2 - l) / l ^ 3)
+    (hbpos : ∀ n, n ≤ N → 0 < (run n).2)
+    (hedge : ∀ n, n < N → l * (run n).1 + (run n).2 > 1)
+    (hUpper : ∀ n, n < N → ¬ (2 ≤ kfloor l (run (n + 1)))) :
+    -- (a) every interior successor has floor digit exactly 1 …
+    (∀ n, n < N → kfloor l (run (n + 1)) = 1) ∧
+    -- (b) … so the genuine step `kstep (kfloor)` at every interior successor IS the rotation `M`.
+    (∀ n, n < N → kstep (l := l) ((kfloor l (run (n + 1)) : ℝ)) (run (n + 1))
+                    = Mmap l (run (n + 1))) := by
+  have hk1 : ∀ n, n < N → kfloor l (run (n + 1)) = 1 := fun n hn =>
+    arc_interior_kfloor_eq_one l hl0 hl2 run N harc hE0 hbpos hedge hUpper n hn
+  refine ⟨hk1, ?_⟩
+  intro n hn
+  rw [hk1 n hn]; push_cast; exact kstep_one_eq_Mmap (l := l) (run (n + 1))
+
 end
 
 -- ════════════ AXIOM AUDIT ════════════
@@ -318,5 +367,7 @@ end
 #print axioms HeckeRotArcR1.arc_E_const
 #print axioms HeckeRotArcR1.arc_interior_kfloor_ge_one
 #print axioms HeckeRotArcR1.arc_interior_kfloor_eq_one
+#print axioms HeckeRotArcR1.kstep_one_eq_Mmap
+#print axioms HeckeRotArcR1.cluster_is_rotation_arc'
 
 end HeckeRotArcR1
