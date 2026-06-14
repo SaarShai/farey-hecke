@@ -70,6 +70,7 @@ matching the stored 5e9 JSON, not 0.5.
 
 - [[index]]
 - [[schema]]
+- [[concepts/x-omega-q-equality-upper-bound-verdict-and-cusp-dirac-inadmissibility]]
 
 ## Open Questions
 

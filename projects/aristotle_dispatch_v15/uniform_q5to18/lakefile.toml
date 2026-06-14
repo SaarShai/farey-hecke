@@ -42,9 +42,25 @@ name = "GenuineMapP2"
 globs = ["GenuineMapP2"]
 
 [[lean_lib]]
+name = "GenuineMapP2Target"
+globs = ["GenuineMapP2_target"]
+
+[[lean_lib]]
+name = "GenuineSelfMap"
+globs = ["GenuineSelfMap"]
+
+[[lean_lib]]
+name = "ToplevelStitchGen"
+globs = ["ToplevelStitchGen"]
+
+[[lean_lib]]
 name = "ToplevelStitch"
 globs = ["ToplevelStitch"]
 
 [[lean_lib]]
 name = "ToplevelStitchQ5to21"
 globs = ["ToplevelStitchQ5to21"]
+
+[[lean_lib]]
+name = "EqualityUpperBound"
+globs = ["EqualityUpperBound"]

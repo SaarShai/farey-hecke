@@ -175,6 +175,78 @@ re-instantiated engine `perq_Xomega_lb_qge19_GEN` (the ergodic engine supplies
 Taha-membership of every orbit point a.e. from `μ (Taha)ᶜ = 0`), so the genuinely-hard
 geometric edges do not gate the headline theorem. -/
 
+/-- **The genuine floor-bracket inequality (lower edge), proved exactly.**  On the SCALAR
+branch `i = m+1` the genuine successor is `(a', b') = (b, −a + kλb)` with the genuine floor
+`k = ⌊(1+a)/(λb)⌋`.  The Taha lower edge `1 − λa' < b'` then reads `1 + a < (k+1)λb`, which
+follows EXACTLY from the floor bracket `(1+a)/(λb) < k+1` (using `λb > 0`).  This is the
+floor-bracket Taha lower-edge in the one branch where `Tgen` has a closed form; it is fully
+proved (no geometric-coupling hypothesis).
+
+Stated on the genuine successor coordinates `a' = b`, `b' = −a + kλb` directly (these ARE
+the scalar-branch `genStep` outputs, see `ToplevelStitchGen` §3 `hLm1`/`hLm2`). -/
+theorem genStep_scalar_Taha_lower (a b : ℝ) (hl : 0 < l) (hb : 0 < b) :
+    1 - l * b < -a + (genFloor l (a, b)) * l * b := by
+  -- genFloor (a,b) = ⌊(1+a)/(λb)⌋ ; the floor bracket gives (1+a)/(λb) < ⌊·⌋ + 1.
+  unfold genFloor
+  have hlb : 0 < l * b := mul_pos hl hb
+  have hfloor : (1 + a) / (l * b) < (⌊(1 + a) / (l * b)⌋ : ℝ) + 1 := Int.lt_floor_add_one _
+  -- multiply through by λb > 0 :  1 + a < (⌊·⌋ + 1)·λb.
+  have hkey : 1 + a < ((⌊(1 + a) / (l * b)⌋ : ℝ) + 1) * (l * b) := by
+    have := (div_lt_iff₀ hlb).mp hfloor
+    linarith [this]
+  -- rearrange to the Taha lower edge `1 − λb < −a + kλb`.
+  nlinarith [hkey, hlb]
+
+/-- **The genuine floor-bracket inequality (upper edge), proved exactly.**  On the scalar
+branch the successor second coordinate `b' = −a + kλb` satisfies `b' ≤ 1`, from the floor
+lower bracket `k ≤ (1+a)/(λb)` (i.e. `kλb ≤ 1+a`). -/
+theorem genStep_scalar_Taha_upper (a b : ℝ) (hl : 0 < l) (hb : 0 < b) :
+    -a + (genFloor l (a, b)) * l * b ≤ 1 := by
+  unfold genFloor
+  have hlb : 0 < l * b := mul_pos hl hb
+  have hfloor : (⌊(1 + a) / (l * b)⌋ : ℝ) ≤ (1 + a) / (l * b) := Int.floor_le _
+  have hkey : (⌊(1 + a) / (l * b)⌋ : ℝ) * (l * b) ≤ 1 + a :=
+    (le_div_iff₀ hlb).mp hfloor
+  nlinarith [hkey]
+
+/-- **Scalar-branch `genStep` closed form.**  When the active branch is the scalar branch
+`branchIdx = m+1`, the genuine successor is `(b, −a + kλb)` (the scalar `Tmap`-form), via the
+cusp-boundary `cheb` collapse `cheb(m+2)=0, cheb(m+1)=1 ⟹ cheb(m+3)=−1`. -/
+theorem genStep_scalar_eq (a b k : ℝ) (B : Boundary l m)
+    (h : ∃ i, 1 ≤ i ∧ L l a b i ≤ 1)
+    (hsc : branchIdx l a b h = m + 1) :
+    genStep l a b k h = (b, -a + k * l * b) := by
+  simp only [genStep, succA, succB, hsc]
+  have hLm1 : L l a b (m + 1) = b := by
+    simp only [L, show m + 1 + 1 = m + 2 from rfl, B.hq0, B.hq1]; ring
+  have hch3 : cheb l (m + 3) = -1 := by
+    have hrec3 : cheb l (m + 3) = l * cheb l (m + 2) - cheb l (m + 1) := cheb_rec l (m + 1)
+    rw [B.hq0, B.hq1] at hrec3; linarith
+  have hLm2 : L l a b (m + 1 + 1) = -a := by
+    simp only [L, show m + 1 + 1 + 1 = m + 3 from rfl, show m + 1 + 1 = m + 2 from rfl,
+      hch3, B.hq0]; ring
+  rw [hLm1, hLm2]
+
+/-- **`Tgen` maps Taha to Taha on the SCALAR branch — FULLY PROVED (no geometric hypothesis).**
+When the active branch is scalar (`branchIdx = m+1`), the genuine successor re-enters Taha:
+all four edges follow from `0 < b ≤ 1` (Taha) and the genuine floor bracket. -/
+theorem Tgen_scalar_maps_Taha (B : Boundary l m)
+    {p : ℝ × ℝ} (hl : 0 < l) (hp : p ∈ UniformOnset.Taha l)
+    (hbpos : 0 < p.2)
+    (hsc : branchIdx l p.1 p.2 (branch_exists l p.1 p.2 m B.hq0 B.hq1 hp.2.2.2) = m + 1) :
+    Tgen l m B p ∈ UniformOnset.Taha l := by
+  obtain ⟨ha, ha1, htaha, hb⟩ := hp
+  rw [Tgen_eq_genStep l m B p hb,
+      genStep_scalar_eq l m p.1 p.2 (genFloor l p) B (branch_exists l p.1 p.2 m B.hq0 B.hq1 hb) hsc]
+  -- successor = (b, −a + kλb).  Edges from the genuine floor bracket.
+  -- normalize `genFloor l (p.1, p.2)` to `genFloor l p` (Prod.eta).
+  have hpe : genFloor l (p.1, p.2) = genFloor l p := by rw [Prod.mk.eta]
+  have hlower : 1 - l * p.2 < -p.1 + (genFloor l p) * l * p.2 := by
+    have := genStep_scalar_Taha_lower l p.1 p.2 hl hbpos; rwa [hpe] at this
+  have hupper : -p.1 + (genFloor l p) * l * p.2 ≤ 1 := by
+    have := genStep_scalar_Taha_upper l p.1 p.2 hl hbpos; rwa [hpe] at this
+  exact ⟨hbpos, hb, hlower, hupper⟩
+
 /-- **`Tgen` maps Taha to Taha** (well-definedness), given the genuine corridor
 return-edge inputs.  The active-band edge `a' ≤ 1` is proved here; the genuine
 positivity / floor-bracket lower edge / next-cap upper edge are carried as named
@@ -196,3 +268,16 @@ theorem Tgen_maps_Taha (B : Boundary l m)
 end
 
 end GenuineSelfMap
+
+-- ════════════ AXIOM AUDIT ════════════
+#print axioms GenuineSelfMap.Tgen_eq_genStep
+#print axioms GenuineSelfMap.genFloor_nonneg
+#print axioms GenuineSelfMap.branchIdx_deepmid_entry
+#print axioms GenuineSelfMap.L_rec
+#print axioms GenuineSelfMap.target_at_branch_of_corridor
+#print axioms GenuineSelfMap.genuine_hEject_deepmid
+#print axioms GenuineSelfMap.genStep_scalar_Taha_lower
+#print axioms GenuineSelfMap.genStep_scalar_Taha_upper
+#print axioms GenuineSelfMap.genStep_scalar_eq
+#print axioms GenuineSelfMap.Tgen_scalar_maps_Taha
+#print axioms GenuineSelfMap.Tgen_maps_Taha
