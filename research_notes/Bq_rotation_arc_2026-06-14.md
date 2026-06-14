@@ -695,3 +695,113 @@ exact-value lattice-gap (R3) is the one shared residual.**
   (q=5 3-cluster), `aristotle_dispatch_v14/BCZ7Witness.lean` (q=7 3-cluster) — independent prior
   machine-verified genuine clusters, whose arithmetic this R2 file re-derives self-contained against
   the `HeckeRotArc` interface.
+
+---
+
+# R3 PARITY STATUS (2026-06-14, this session) — the PARITY GATE half of R3 is now a THEOREM (Lean, axiom-clean); the residual collapses to ONE decidable-per-q transcendental near-fit
+
+**New file (touches NO sealed file):** `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR3Parity.lean`
+(`namespace HeckeRotArcR3Parity`, lake lib target `RotationArcR3Parity`, Mathlib v4.28.0). **Build:**
+`lake env lean BCZHeckeRotationArcR3Parity.lean` → **exit 0**; `lake build RotationArcR3Parity` →
+**`Build completed successfully (8027 jobs)`**. **All 13 declarations `sorry`-free, `#print axioms` =
+exactly `[propext, Classical.choice, Quot.sound]`** (0 lines with `sorryAx`/`nativeDecide`; 13 clean
+axiom-audit lines). No `sorry`/`native_decide` token in the code body.
+
+## What was open vs what is now closed
+
+R3 = the exact-value / resonance residual: at the resonance set q∈{23,61,…} the discrete
+`rotationArcCount q` exceeds the continuous-arc proxy `⌊W(q)·q/π⌋+1` by 1 (the `−π/q` lattice "hops"
+a sub-`π/q` super-threshold notch). The resonance probe (`research_notes/resonance_threedistance_2026-06-14.md`,
+a8e0a3e9) established R3 is **NOT** an inhomogeneous-Diophantine / three-distance fact — because the
+rotation number is the **rational** `1/(2q)`, the orbit lattice is **exactly equally-spaced** (single
+gap, step `θ=π/q`), so the deciding arithmetic collapses to **PARITY** of the rotation-arc count,
+modulated by a transcendental near-fit window. R3 thus splits into:
+
+- **(R3-parity)** the parity gate: straddle-iff-even / impale-iff-odd. **← NOW A LEAN THEOREM.**
+- **(R3-nearfit)** the transcendental arc-width near-fit (the `L1b`-family window). **← single remaining residual.**
+
+## The PARITY GATE, proved (the precise theorem)
+
+**Statement.** For a symmetric equally-spaced lattice of step `θ` and `N` points centred on the peak
+`φ*` (the unique placement invariant under the reflection `i↦N−1−i`; offsets `rel N i = i−(N−1)/2` in
+`θ`-units), versus a **symmetric** super-threshold notch of half-width `w := δ/θ` with `0 < w < 1/2`
+(a sub-`θ/2` notch — the only width a `π/q` lattice can hope to hop):
+
+>   **the whole run avoids the notch (is all sub-threshold)  ⟺  `N` is EVEN.**
+
+`HeckeRotArcR3Parity.resonance_parity_gate : (∀ i, i<N → ¬ inNotch w (rel N i)) ↔ Even N`.
+
+**Proof structure (from equal-spacing + reflection symmetry alone).**
+- `rel_reflect` — the lattice is reflection-symmetric about the peak: `rel N (N−1−i) = − rel N i`.
+- `odd_center_on_peak` — `N=2m+1 ⟹ rel N m = 0`: the centre point sits EXACTLY on `φ*`.
+- `even_all_offpeak` — `N=2m ⟹ ∀i, |rel N i| ≥ 1/2`: every point is a half-step off the peak (the
+  offsets are the half-integers `±1/2,±3/2,…`; numerator `2i−(2m−1)` is an odd integer).
+- `straddle_of_even` (EVEN ⇒ every point `> w` off-peak, `w<1/2`) + `impale_of_odd` (ODD ⇒ centre
+  point `|rel|=0 < w` in the notch) ⟹ `parity_gate` and `resonance_parity_gate`.
+- `gain_requires_even` — the resonance gain `+1` (length-`B₀+1` run past a notch) is available **only
+  when the target `N=B₀+1` is EVEN**, i.e. only when `B₀(q)` is ODD.
+- `odd_always_impaled` — ODD `N` is impaled for ANY positive notch width (parity beats proximity).
+
+**Phrased on the genuine observable `P(φ)=E0·(c0+amp·cos2(φ−φ*))` (a single cosine, peak at `φ*`):**
+`Pphi_reflect` (`P(φ*+ψ)=P(φ*−ψ)`, the symmetry input), `Pphi_peak` (`P(φ*)=E0(c0+amp)`),
+`impale_observable` (peak `>t` at the resonance ellipse ⟹ the odd-run centre point is super-threshold),
+`superthreshold_iff_cos` (`P(φ*+ψ)>t ⟺ cos2ψ > (t/E0−c0)/amp` — the notch IS the symmetric interval
+`|ψ|<δ`, `cos2δ=(t/E0−c0)/amp`, by `cos` monotonicity). So "inside the notch ⟺ super-threshold" is
+exactly the symmetric `|rel|<w` set the gate consumes.
+
+## Cross-check against the numerics (parity gate confirmed)
+
+- **q=23** (B₀=5 ODD ⇒ target 6 EVEN): the 6-point symmetric run sits at `rel=±0.5θ,±1.5θ,±2.5θ` —
+  NO point at `rel=0`; the notch falls in the empty centre gap; all 6 sub-threshold ⇒ **B(23)=6**
+  (gain fires). `goal1_Bq_resonance_parity_proof_dps50.py` (re-run, dps=50): placement VALID.
+- **q=47** (B₀=10 EVEN ⇒ target 11 ODD): the 11-point symmetric run forces a point at `rel=0` with
+  `P=0.1259041 > t` (t−P=−6.3·10⁻⁵, IN the notch) ⇒ INVALID ⇒ **B(47)=10**, despite the arc being
+  the closest-to-integer fit in the range (s=9.997, ~0.003·θ short). "**Parity beats proximity.**"
+- **q=61** (B₀=13 ODD ⇒ target 14 EVEN): 14-point even run fits at frac=1.0002 (2δ=0.547·θ<θ); the
+  15-point odd run impales ⇒ **B(61)=14**. `goal1_Bq_resonance_q61_exact.py` (re-run): confirmed.
+- Parity model `goal1_Bq_resonance_parity.py`: **34/34** match vs genuine-map ground truth q=7..40.
+
+## The single irreducible residual after this work
+
+**R3-nearfit (one decidable-per-q transcendental fact).** The parity gate fires a resonance ONLY
+when ALSO the arc near-fits: with `s(q):=W(q)·q/π`, `B₀(q)=⌊s(q)⌋+1`, the gain occurs ⟺
+`B₀(q)` ODD (parity, NOW PROVED) **AND** `s(q)` is close enough to `⌊s⌋+1=B₀` from below that the
+integer-crossing ellipse `frac*>1` still has notch half-width `δ(frac*) < θ/2` (so `w<1/2`, feeding
+the gate). This second condition is governed by `W(q)=arccos((μ_max/frac − c0)/amp)/…` and the
+`√`-rate notch opening `2δ≈√(2(μ_max/amp)(frac−1))` — **transcendental in `λ=2cos(π/q)`**, an
+`L1b`-family arc-width inequality (same calculus class as the energy-route L1b lemma).
+
+- **Decidable per q? YES.** For any fixed `q` it is a finite interval-arithmetic check: compute `B₀(q)`
+  (its parity is exact arithmetic via the gate), compute `s(q)` and `δ(frac*)` to certified precision,
+  test `B₀(q)` odd ∧ `δ(frac*)<θ/2`. (This is how q=23, 47, 61 were each decided.)
+- **Uniform characterization of {23,61,…} reachable? GENUINELY ANALYTIC-OPEN.** There is no closed
+  arithmetic form: `W(q)` is a 1-D root-find with no closed expression, and the resonance is
+  `{q : B₀(q) odd ∧ s(q) within the √-rate window of ⌊s⌋+1 from below}`. Empirically the family is
+  rare/isolated with period ≈38 in q (s advances ≈2 per 38 q at slope ≈0.2127); predicting members
+  needs the numeric `s(q)`, not a formula. So R3-nearfit is decidable-per-q but its uniform
+  closed-form characterization is an analytic-open problem (transcendental, not number-theoretic).
+
+## VERDICT (one line)
+
+**The PARITY half of R3 is now a `sorry`-free axiom-clean Lean theorem** (`resonance_parity_gate` +
+`gain_requires_even` + `odd_always_impaled`, from equal-spacing + reflection symmetry, with the
+observable-side cosine notch lemmas). It is **removed from the residual list**. The exact `B(q)` is
+now `[continuous count B₀(q)] + [parity gate, PROVED] + [ONE decidable-per-q transcendental near-fit
+(R3-nearfit, L1b-family)]`. **The single irreducible residual is R3-nearfit**: per-q decidable by
+interval arithmetic; a uniform closed-form characterization of the resonance set {23,61,…} is
+genuinely analytic-open (transcendental `W(q)` near an odd integer), NOT an inhomogeneous-Diophantine
+/ three-distance fact. (Note R1's upper-bracket residual is the SAME phase-lattice family — the
+"no lattice point in the k≥2 sub-arc before the terminal step" — and the parity-gate argument
+applies verbatim to it once the k=1/k=2 boundary is read as the notch boundary; R1-upper ≡ R3 as
+flagged, so this gate is the shared parity engine for both.)
+
+## Files (R3 parity status)
+- `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR3Parity.lean` — this work
+  (13 thms, axiom-clean): `rel_reflect`, `odd_center_on_peak`, `even_all_offpeak`, `straddle_of_even`,
+  `impale_of_odd`, `parity_gate`, `Pphi_reflect`, `Pphi_peak`, `impale_observable`,
+  `superthreshold_iff_cos`, `resonance_parity_gate`, `gain_requires_even`, `odd_always_impaled`.
+- Numeric cross-checks (re-run this session): `code/goal1_Bq_resonance_parity_proof_dps50.py`
+  (q=23 even-straddle VALID, q=47 odd-impale INVALID, dps=50), `code/goal1_Bq_resonance_q61_exact.py`
+  (B(61)=14, 14 even-straddle fits / 15 odd impales), `code/goal1_Bq_resonance_parity.py` (34/34).
+- Parent: `research_notes/resonance_threedistance_2026-06-14.md` (parity argument + q=47),
+  `BCZHeckeRotationArc.lean` / `BCZHeckeRotationArcR1.lean` (the R3 / R1-upper residual shape).
