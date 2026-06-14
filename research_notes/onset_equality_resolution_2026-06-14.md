@@ -282,3 +282,81 @@ identity `branchIdx (s,0) = m` — the ONLY remaining q-by-q input, a finite che
 uniformly).  This supersedes the §5 status line "as currently Lean-verified only `≥`": the
 matching upper bound and the equality are now in the verified footprint for q=5 over the
 closed section.
+
+---
+
+## 9. UNIFORM DISCHARGE — the cusp-branch identity is now PROVED for ALL m;
+##    `X_Ω(q) = 1/λ³` machine-verified for q ∈ {7,…,21}.  [2026-06-14, this session]
+
+**New file (touches NO sealed/verified file):**
+`projects/aristotle_dispatch_v15/uniform_q5to18/OnsetEqualityUniform.lean`
+(registered in `lakefile.toml`; `lake build OnsetEqualityUniform` →
+`Build completed successfully (8055 jobs)`).
+
+### The §8 "ONLY remaining q-by-q input" is GONE — discharged uniformly
+
+The sine-arc bound is now formalised for EVERY m, so `hbranch_all` is no longer carried.
+
+* **`chebGeLambda_of_hecke`** — the uniform sine-arc bound: for `l = 2cos(π/(m+2))`,
+  `m ≥ 2`, and `2 ≤ k ≤ m`,  `λ ≤ cheb l k`.  Proved from the verified
+  `GenuineClassDischarge.cheb_sin` (Chebyshev sin closed form) +
+  `GenuineClassDischarge.sin_ge_sin_theta` (sin ≥ sinθ on `[θ,π−θ]`) applied at angle
+  `2θ`:  `cheb l k · sinθ = sin(kθ) ≥ sin(2θ) = cheb l 2 · sinθ = λ · sinθ`, dividing by
+  `sinθ > 0`.  The arc `kθ ∈ [2θ, mθ] = [2θ, π−2θ]` is exactly the sine-symmetry interval.
+* **`branchIdx_cusp_uniform`** — `branchIdx l s 0 (…) = m` for ALL `m ≥ 2` at the Hecke λ
+  and every cusp tip `s ∈ (1/λ,1]`.  `L_m = s·cheb(m+1) = s ≤ 1` is active (Boundary.hq1);
+  for `1 ≤ i ≤ m−1`, `L_i = s·cheb(i+1) ≥ s·λ > 1` by the sine-arc bound (`2 ≤ i+1 ≤ m`),
+  so no smaller index is active — minimality of `Nat.find` pins `branchIdx = m`.  This is
+  the GENERAL discharge of `hbranch_all` for every Hecke q (replaces the q=5-only
+  `branchIdx_cusp_q5`).
+* **`Xomega_eq_uniform`** — `X_Ω(q) = 1/λ³` for every Hecke `q = m+2` (`m ≥ 2`) given ONLY
+  the per-q window fact `Fwindow6 mpoly` (+ `mpoly l` + the standard band facts
+  `1<l, l<2, 9/5<l, l²≥l+1`).  No remaining q-concrete branch hypothesis.
+
+### Per-q corollaries and the honestly-non-vacuous verified range
+
+Per-q corollaries `Xomega_eq_q7 … Xomega_eq_q21` (15 indices) plug the verified window
+facts (`hF7…hF18` from `UniformOnset_q5to18`; `hF19/hF20/hF21` from `GenuineMapFacts`,
+all = `g{q}_no_window_below_genuine`, axiom-clean), lifted to the 6-window shape via
+`Fwindow6_of_Fwindow4` / `Fwindow6_of_Fwindow5`.  `Boundary l m` is built by
+`GenuineClassDischarge.boundary_of_hecke`.  The carried inputs are the per-q minimal
+polynomial + band facts — exactly what every per-q lower bound already carries.
+
+**HONESTY — q=5 is excluded, NOT discharged.**  The genuine-map lower-bound engine
+(`perq_Xomega_lb_qge19_GEN'`) carries `hlo : 9/5 < l`.  But `λ₅ = φ = 2cos(π/5) ≈ 1.61803
+< 1.8`, so this hypothesis is FALSE at the real golden ratio — `Xomega_eq_q5` (and the
+uniform theorem at `m=3`) is **vacuous when instantiated at the true λ₅**.  The first index
+where `9/5 < λ_q` genuinely holds is **q=7** (`λ₇ ≈ 1.80194`).  The `9/5` floor is a
+lower-bound-engine constraint, not a defect of the upper-bound / branch discharge
+(`branchIdx_cusp_uniform` itself holds for every m≥2, i.e. all q≥4).  Numerically confirmed
+(this session) that the minpoly identity AND all four band facts hold simultaneously at the
+real λ_q for q=7..21, so each corollary is non-vacuous.
+
+**Honestly non-vacuous machine-verified equality range: q ∈ {7,8,…,21} (15 Hecke indices).**
+
+### AXIOM AUDIT (verbatim `#print axioms` from the build)
+
+```
+'OnsetEqualityUniform.chebGeLambda_of_hecke'   depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.branchIdx_cusp_uniform'  depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_uniform'       depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q7'            depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q12'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q17'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q18'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q19'           depends on axioms: [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q21'           depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+**NO `sorryAx`.**  `grep -E 'sorry|admit|^axiom |native_decide' OnsetEqualityUniform.lean`
+→ none.  `lake build OnsetEqualityUniform` → `Build completed successfully (8055 jobs)`.
+
+### Verdict (updated, supersedes §8)
+
+The §8 caveat — "the cusp active-branch identity is the ONLY remaining q-by-q input, not
+yet formalised uniformly" — is RESOLVED.  The sine-arc bound and the cusp-branch identity
+are PROVED for every m≥2.  The onset EQUALITY `X_Ω(q) = 1/λ³` (non-attained infimum over
+the closed-cusp ergodic-optimization class) is now **MACHINE-VERIFIED, sorry-free and
+axiom-clean, for q ∈ {7,8,…,21}** (the full window-file range minus the engine-vacuous q=5),
+each delivered as a standalone per-q corollary plus the single uniform theorem
+`Xomega_eq_uniform` parameterised by the per-q window hypothesis.
