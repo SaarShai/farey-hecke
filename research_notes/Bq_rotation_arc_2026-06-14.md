@@ -601,3 +601,97 @@ bracket forward characterization; with R2 (realization bridge) and R3 (resonance
 - Probes: `/tmp/r1_probe.py` (full-bracket not box-implied), `/tmp/r1_arc2.py` (k=1/k=2 arc
   decomposition, dps=50), `/tmp/r1_lower.py` + `/tmp/r1_cert.py` (M preserves lower bracket on arc,
   not pointwise), `/tmp/r1_final.py` (the `λ²b<2` certificate via `b²≤2/λ³` + λ<2).
+
+---
+
+# R2 STATUS (2026-06-14, this session) — the REALIZATION / LOWER bound is now a THEOREM for q=5 and q=7; B(q) = rotation-arc count (mod the lattice-gap) machine-verified at those q
+
+**New file (touches NO sealed file; imports `BCZHeckeRotationArc`):**
+`projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR2.lean` (`namespace
+HeckeRotArcR2`, lake lib target `RotationArcR2`, Mathlib v4.28.0). **Build:**
+`lake env lean BCZHeckeRotationArcR2.lean` → exit 0; `lake build RotationArcR2` → `Build completed
+successfully (8028 jobs)`. **All 8 audited declarations `sorry`-free, `#print axioms` = exactly
+`[propext, Classical.choice, Quot.sound]`** (no `sorryAx`, no `nativeDecide`).
+
+## What R2 is and what is now closed
+
+`HeckeRotArc.Bq_eq_rotation_arc` proved the equivalence `clusterCeiling ↔ rotationArcCount` *given*
+the realization bridge `hrealize : rotationArcCount → clusterCeiling` (the converse / lower-bound
+inclusion `B(q) ≥ rotation-arc count`).  The forward `→` (`cluster_le_rotation_arc`) was the proved
+mechanism.  **R2 = supply `hrealize`** — exhibit an actual genuine sub-threshold last-branch cluster
+that ACHIEVES the rotation-arc count.  This is now done per-q from the exact algebraic witness ladder.
+
+**q = 7 (clean `M`-arc realization in the `IsClusterRun` interface) — R2 CLOSED.**
+Field `Q(λ₇)` (cubic `x³−x²−2x+1`), exact witness start `(20/61, 25/61)`, k-pattern `[1,1]`
+(both interior steps k=1 ⇒ each IS the elliptic rotation `M`), 3 points sub-threshold
+(`P < X(7)=1/λ₇³=−5λ₇²+3λ₇+11`) + last-branch (`a+λb>1`).  Proved:
+  • `run7_isClusterRun` — `run7` is an `HeckeRotArc.IsClusterRun lam7 X7 lastBranch7 run7 2` of length
+    `3 = B(7)`: sub-threshold + last-branch at n=0,1,2; positive `b` and the genuine step
+    `kstep (kfloor)` at the two interior points; the floor bracket `λb≤1+a<2λb` (k=1) at both.
+  • `clusterCeiling7 : clusterCeiling lam7 X7 lastBranch7 2` — `hrealize` discharged at N=2.
+  • **`Bq_eq_rotation_arc_q7 : clusterCeiling lam7 X7 lastBranch7 2 ↔ rotationArcCount … 2`** — the
+    full characterization with `hrealize` NO LONGER ASSUMED (it is now `clusterCeiling7`).  Forward =
+    `HeckeRotArc.cluster_le_rotation_arc`; converse = `clusterCeiling7`.
+  • `rotationArcCount7_realized` — the `≥` realized at length `3 = B(7)` by a genuine orbit.
+  • `X7_eq_inv_lam7_cubed` — `X(7)=1/λ₇³` (exact cubic-field identity), re-proved self-contained.
+
+**q = 5 (`Q(√5)` realization, raw genuine-cluster notion) — R2 lower bound `B(5) ≥ 3` PROVED.**
+Field `Q(√5)`, `λ₅=φ=(1+√5)/2`, exact witness start `(3/5, 1/3)`, k-pattern `[2,1]` (the FIRST step
+has k=2, so the cluster is NOT the all-interior-k=1 `M`-arc shape — it realizes the RAW genuine
+cluster, not the `M`-arc `IsClusterRun`).  Proved:
+  • `run5_isGenuineCluster : IsGenuineCluster phi5 X5 lastBranch5 run5 2` — genuine step
+    `kstep (kfloor)` at both interior points (floor digits 2 then 1, certified), 3 points
+    sub-threshold (`P < X(5)=1/φ³=√5−2`) + last-branch.
+  • `genuineCluster5_realized` — `B(5) ≥ 3` by an actual orbit.
+  • `X5_eq_inv_phi5_cubed` — `X(5)=1/φ³`, re-proved self-contained.
+
+## Exactly which q have `B(q) = rotation-arc count` (mod the lattice-gap) machine-verified
+
+| q | realized length `N+1 = B(q)` | interface                                  | R2 status                              |
+|---|------------------------------|--------------------------------------------|----------------------------------------|
+| 5 | 3                            | raw genuine-cluster (k-pattern `[2,1]`)    | lower bound `B(5) ≥ 3` PROVED          |
+| 7 | 3                            | `M`-arc `IsClusterRun` (k-pattern `[1,1]`) | full `clusterCeiling ↔ rotationArcCount` (R2 bridge discharged) |
+
+So for **q = 7** the cluster ceiling EQUALS the discrete rotation-arc count (`Bq_eq_rotation_arc_q7`),
+with the realization bridge no longer a hypothesis — modulo the SAME single residual that sits on the
+forward side: the upper-bracket / lattice-gap (R3, the `rotationArcCount` exact value at resonance q's
+∈ {23,61}; q=7 is below any resonance so the count is the clean continuous-arc value `3`).  For
+**q = 5** the realization lower bound `B(5) ≥ 3` is proved (the k=2 first step keeps it out of the
+`M`-arc interface, but it directly realizes the cluster ceiling).
+
+## Honest residual (R2)
+
+- **UNIFORM (all-q) R2 is OPEN.**  It needs a uniform witness FAMILY `q ↦ (a₀(q), b₀(q))` realizing
+  `B(q)` for every q, with uniform floor/branch/threshold certificates — the same shape of open
+  problem as the forward-side uniform residual.  We discharged R2 per-q where the exact algebraic
+  witnesses give explicit rational starts.
+- **Higher q (q=8..24) per-q is mechanical but field-degree-bound.**  The exact witnesses exist
+  (`code/out/goal1_qladder_witness_exact.json`, `..._hi_witness_exact.json`: q=8..24 all k-pattern
+  `[1,…,1,2]`, interior k=1, certified) and the realization body is the same as q=7; the only growing
+  cost is the per-q minimal-polynomial identity for `2cos(π/q)` (degrees 3–11 over q=8..24, proved via
+  Chebyshev as in q=7's cubic).  q=8 (`λ₈=√(2+√2)`, deg 4) and q=13 (sextic) are the next clean
+  targets; q=13 realizes a LENGTH-4 arc (`B(13)=4`).  Left as explicit per-q work / Aristotle-suitable
+  (the minpoly lemma is the only nontrivial leg).
+- **The lattice-gap residual is shared, not new.**  Combining R2(q) with the forward
+  `cluster_le_rotation_arc` gives `B(q) = rotationArcCount(q)` as a discrete count; the EXACT integer
+  value of `rotationArcCount(q)` at the resonance q's (the notch-straddle, R3) remains the single
+  unified open residual — identical on both directions.
+
+**Verdict: R2 CLOSED per-q for q=5 (lower bound `B(5)≥3`) and q=7 (full `B(7)=rotation-arc count`,
+bridge discharged), axiom-clean Lean; UNIFORM R2 open (needs a uniform witness family), and the
+exact-value lattice-gap (R3) is the one shared residual.**
+
+## Files (R2 status)
+- `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR2.lean` — this work (8 audited
+  thms, axiom-clean): q=7 `run7_isClusterRun`, `clusterCeiling7`, `Bq_eq_rotation_arc_q7`,
+  `rotationArcCount7_realized`, `X7_eq_inv_lam7_cubed`; q=5 `run5_isGenuineCluster`,
+  `genuineCluster5_realized`, `X5_eq_inv_phi5_cubed`.  Imports the sealed `BCZHeckeRotationArc`
+  (its `IsClusterRun` / `clusterCeiling` / `rotationArcCount` / `cluster_le_rotation_arc` /
+  `Bq_eq_rotation_arc` interface, used verbatim — `hrealize` discharged for q=7).
+- Witness data: `code/out/goal1_q7_witness_exact.json` (q=7), `code/out/goal1_q5_witness_exact.json`
+  (q=5), `code/out/goal1_qladder_witness_exact.json` + `..._hi_witness_exact.json` (q=8..24, the
+  higher-q realization data for the remaining per-q work).
+- Reused witness Lean (unmodified, in sibling dispatch dirs): `aristotle_dispatch_v13/BCZ5Witness.lean`
+  (q=5 3-cluster), `aristotle_dispatch_v14/BCZ7Witness.lean` (q=7 3-cluster) — independent prior
+  machine-verified genuine clusters, whose arithmetic this R2 file re-derives self-contained against
+  the `HeckeRotArc` interface.
