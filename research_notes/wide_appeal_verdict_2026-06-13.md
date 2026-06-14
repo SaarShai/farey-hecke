@@ -66,3 +66,16 @@ theorem + arithmeticity dichotomy (homogeneous dynamics / number theory), with t
 framing as the math-physics angle (modest audience). The ONE new true byproduct worth recording is
 the Farey critical-hyperuniformity observation (§2) — a standalone note, not a breakthrough.
 Do not manufacture a physics/materials/QC payoff; none survives adversarial vetting.
+
+## Independent corroboration (side session, 2026-06-13)
+`research_notes/physics_wildcard_scout_2026-06-13.md` (separate session, red-team mandate on the
+circuit-QED angle) reached the SAME verdict independently: physics value stays math-physics, NO
+wide-appeal/experimental hit. Adds hard detail: circuit-QED hyperbolic lattices DROP by *mechanism
+mismatch* (checked arXiv:2510.23827, the Oct-2025 genus-3 superconducting device, directly — the
+measurable spectrum is the tight-binding ADJACENCY-MATRIX band structure / compact-localized states
+of the {p,q} graph, NOT number-theoretic arithmeticity; our horocycle-section objects are not
+measured there; "both involve triangle groups" is geometric coincidence). Arithmetical quantum chaos
+(Bogomolny-Schmit-Steiner, arXiv:1508.02075) = a NEAR-MISS: same global property (arithmetic⇒Poisson
+vs GOE) but a DIFFERENT detector (length/geodesic-spectrum degeneracy, a Laplacian object) than our
+local horocycle gap statistic — so our dichotomy is a new-detector refinement for the math-physics
+audience, not a measurable effect. Two independent scouts ⇒ the wide-appeal-negative verdict is robust.
