@@ -1,0 +1,103 @@
+
+=== CONTROL 1: GAUSS MAP (known EXPONENTIAL, rate=GKW=0.30366) ===
+  C(n) (n=1..8): [9.102e-02 3.381e-04 3.743e-03 6.797e-04 3.367e-04 2.291e-04 2.658e-04
+ 6.205e-05]
+  EXP fit: rate=0.7300 (GKW=0.3037? exp(-rate)=0.4819), R^2=0.6289
+  POW fit: beta=2.752, R^2=0.7369
+  => decay PER LAG ratio C(n+1)/C(n): [3.7146e-03 1.1070e+01 1.8159e-01 4.9546e-01 6.8046e-01]
+
+=== CONTROL 2: DOUBLING MAP (known EXPONENTIAL/superexp for Fourier) ===
+  C(n) (n=1..9): [0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  (Fourier mode cos2pi x -> exact 0 in 1 step; residual = MC noise floor)
+
+=== CONTROL 3: POMEAU-MANNEVILLE alpha=0.5 (known POLYNOMIAL beta=1.000) ===
+  lags: [5, 6, 9, 12, 16, 22, 29, 40, 54, 74, 100, 136, 185, 252, 343, 466, 633, 861, 1171, 1592]
+  C(n): [0.021 0.018 0.012 0.009 0.007 0.005 0.004 0.003 0.002 0.002 0.001 0.001
+ 0.001 0.    0.    0.    0.    0.    0.    0.   ]
+  POW fit beta=0.978 (pred 1.000), R^2=0.9982, npts=20
+  EXP fit rate=0.00327, R^2=0.6652  (poly should beat exp in R^2)
+
+=== CONTROL 3: POMEAU-MANNEVILLE alpha=0.3 (known POLYNOMIAL beta=2.333) ===
+  lags: [5, 6, 9, 12, 16, 22, 29, 40, 54, 74, 100, 136, 185, 252, 343, 466, 633, 861, 1171, 1592]
+  C(n): [0.011 0.008 0.004 0.002 0.001 0.001 0.    0.    0.    0.    0.    0.
+ 0.    0.    0.    0.    0.    0.    0.    0.   ]
+  POW fit beta=1.493 (pred 2.333), R^2=0.8906, npts=20
+  EXP fit rate=0.00406, R^2=0.3938  (poly should beat exp in R^2)
+
+=== BCZ MAP q=4: decay of correlations ===
+  [a,a           ] floor~6.0e-06 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.018 0.002 0.007 0.003 0.005 0.   ]
+                   POW beta=0.669 R^2=0.5417 | EXP rate=0.00325 R^2=0.2749 | -> POLY (npts=18)
+  [b,b           ] floor~2.0e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.009 0.01  0.015 0.005 0.006 0.001]
+                   POW beta=0.657 R^2=0.5584 | EXP rate=0.00272 R^2=0.2185 | -> POLY (npts=15)
+  [ab,ab         ] floor~1.2e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.014 0.001 0.005 0.002 0.    0.   ]
+                   POW beta=0.508 R^2=0.5085 | EXP rate=0.00253 R^2=0.2606 | -> POLY (npts=14)
+  [cos2pi a      ] floor~7.8e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.031 0.084 0.001 0.035 0.026 0.003]
+                   POW beta=0.785 R^2=0.6678 | EXP rate=0.00335 R^2=0.2714 | -> POLY (npts=18)
+  [cos2pi(a+b)   ] floor~1.1e-04 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.092 0.037 0.024 0.003 0.016 0.024]
+                   POW beta=0.646 R^2=0.4713 | EXP rate=0.01293 R^2=0.4400 | -> POLY (npts=14)
+  [a,b           ] floor~1.1e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.009 0.001 0.005 0.009 0.005 0.   ]
+                   POW beta=0.761 R^2=0.6582 | EXP rate=0.00330 R^2=0.2772 | -> POLY (npts=17)
+
+=== BCZ MAP q=5: decay of correlations ===
+  [a,a           ] floor~4.7e-06 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.015 0.006 0.008 0.002 0.002 0.001]
+                   POW beta=0.893 R^2=0.7904 | EXP rate=0.00428 R^2=0.3558 | -> POLY (npts=16)
+  [b,b           ] floor~2.2e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.007 0.    0.022 0.003 0.001 0.   ]
+                   POW beta=0.622 R^2=0.6371 | EXP rate=0.00975 R^2=0.5316 | -> POLY (npts=13)
+  [ab,ab         ] floor~1.7e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.021 0.004 0.003 0.005 0.    0.001]
+                   POW beta=0.849 R^2=0.7109 | EXP rate=0.00914 R^2=0.4149 | -> POLY (npts=13)
+  [cos2pi a      ] floor~5.6e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.046 0.007 0.059 0.001 0.004 0.002]
+                   POW beta=0.566 R^2=0.4178 | EXP rate=0.00956 R^2=0.4459 | -> EXP (npts=14)
+  [cos2pi(a+b)   ] floor~9.2e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.084 0.093 0.021 0.022 0.011 0.003]
+                   POW beta=0.942 R^2=0.8182 | EXP rate=0.01703 R^2=0.6407 | -> POLY (npts=13)
+  [a,b           ] floor~8.3e-06 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.021 0.005 0.008 0.002 0.001 0.   ]
+                   POW beta=0.671 R^2=0.4641 | EXP rate=0.01629 R^2=0.4152 | -> POLY (npts=13)
+
+=== BCZ MAP q=7: decay of correlations ===
+  [a,a           ] floor~7.8e-06 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.011 0.006 0.003 0.001 0.004 0.003]
+                   POW beta=1.108 R^2=0.8212 | EXP rate=0.00714 R^2=0.4128 | -> POLY (npts=15)
+  [b,b           ] floor~2.3e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.025 0.011 0.03  0.005 0.012 0.001]
+                   POW beta=0.776 R^2=0.4521 | EXP rate=0.01120 R^2=0.2194 | -> POLY (npts=14)
+  [ab,ab         ] floor~1.8e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.009 0.017 0.009 0.006 0.003 0.004]
+                   POW beta=1.022 R^2=0.6612 | EXP rate=0.02316 R^2=0.5150 | -> POLY (npts=13)
+  [cos2pi a      ] floor~7.0e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.059 0.044 0.022 0.037 0.027 0.036]
+                   POW beta=1.100 R^2=0.6576 | EXP rate=0.01732 R^2=0.3907 | -> POLY (npts=13)
+  [cos2pi(a+b)   ] floor~8.7e-05 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.089 0.066 0.007 0.023 0.018 0.012]
+                   POW beta=1.036 R^2=0.7594 | EXP rate=0.01044 R^2=0.4553 | -> POLY (npts=13)
+  [a,b           ] floor~9.0e-06 C(n) sample n=[1, 2, 3, 4, 6, 8] -> [0.031 0.007 0.011 0.003 0.007 0.004]
+                   POW beta=1.075 R^2=0.9002 | EXP rate=0.00965 R^2=0.6529 | -> POLY (npts=16)
+
+=== BCZ MAP q=4: return-time tail to complement of cusp nbhd ===
+  delta=0.02: frac in Y=0.9053, total returns=108640665, max R seen=4001
+    P(R>n) tail: POW beta=1.743 R^2=0.9819 | EXP rate=0.00989 R^2=0.7756 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0019 0.0013 0.0007 0.0004 0.0004 0.0004]
+  delta=0.05: frac in Y=0.8898, total returns=106771522, max R seen=4001
+    P(R>n) tail: POW beta=1.942 R^2=0.9924 | EXP rate=0.01063 R^2=0.7307 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0028 0.0028 0.0028 0.0021 0.0013 0.0007]
+  delta=0.1: frac in Y=0.8578, total returns=102934981, max R seen=4001
+    P(R>n) tail: POW beta=2.088 R^2=0.9990 | EXP rate=0.01108 R^2=0.6905 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0114 0.0102 0.0051 0.0022 0.0013 0.0008]
+
+=== BCZ MAP q=5: return-time tail to complement of cusp nbhd ===
+  delta=0.02: frac in Y=0.8441, total returns=101292051, max R seen=4001
+    P(R>n) tail: POW beta=1.726 R^2=0.9830 | EXP rate=0.00977 R^2=0.7735 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0028 0.0019 0.0011 0.0006 0.0005 0.0005]
+  delta=0.05: frac in Y=0.8270, total returns=99244045, max R seen=4001
+    P(R>n) tail: POW beta=1.908 R^2=0.9884 | EXP rate=0.01051 R^2=0.7360 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0031 0.003  0.003  0.0029 0.0019 0.001 ]
+  delta=0.1: frac in Y=0.7931, total returns=95169224, max R seen=4001
+    P(R>n) tail: POW beta=2.075 R^2=0.9991 | EXP rate=0.01102 R^2=0.6922 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0126 0.0126 0.0077 0.0032 0.0019 0.0011]
+
+=== BCZ MAP q=7: return-time tail to complement of cusp nbhd ===
+  delta=0.02: frac in Y=0.7915, total returns=94985462, max R seen=4001
+    P(R>n) tail: POW beta=1.714 R^2=0.9836 | EXP rate=0.00968 R^2=0.7711 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0034 0.0023 0.0013 0.0007 0.0005 0.0005]
+  delta=0.05: frac in Y=0.7740, total returns=92876200, max R seen=4001
+    P(R>n) tail: POW beta=1.890 R^2=0.9870 | EXP rate=0.01042 R^2=0.7366 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0035 0.0032 0.0032 0.0032 0.0022 0.0012]
+  delta=0.1: frac in Y=0.7394, total returns=88733628, max R seen=4001
+    P(R>n) tail: POW beta=2.063 R^2=0.9983 | EXP rate=0.01095 R^2=0.6917 (npts=21)
+    sample P(R>n) at n=[5, 6, 8, 11, 14, 18]: [0.0135 0.0135 0.0095 0.0039 0.0023 0.0013]
+
+[elapsed 179s]
+wrote code/out/bcz_mixing_results.json

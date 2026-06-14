@@ -99,13 +99,14 @@ def bcz_correlations(q, N=80_000_000, n_starts=4):
     out = {}
     for (kf, kg, lbl) in obs_pairs:
         Cabs = acc[lbl] / n_starts
-        m = (Cabs > 0) & (lags >= 2)
-        win = (lags >= 4) & (lags <= 1000) & m
+        # noise-floor estimate from deep tail (signal gone); fit only ABOVE 3*floor
+        floor = np.median(Cabs[lags > 1500]) if (lags > 1500).any() else 0.0
+        win = (Cabs > 3 * floor) & (lags >= 4) & (lags <= 1000)
         beta, r2p, npt = fit_power(lags[win], Cabs[win])
         rate, r2e, _ = fit_exp(lags[win], Cabs[win])
         # which model wins on R^2
         verdict = "POLY" if r2p > r2e + 0.02 else ("EXP" if r2e > r2p + 0.02 else "AMBIG")
-        print(f"  [{lbl:14s}] C(n) sample n={lags[:6].tolist()} -> "
+        print(f"  [{lbl:14s}] floor~{floor:.1e} C(n) sample n={lags[:6].tolist()} -> "
               f"{np.array2string(Cabs[:6], precision=3, suppress_small=True)}")
         print(f"  {'':16s} POW beta={beta:.3f} R^2={r2p:.4f} | EXP rate={rate:.5f} R^2={r2e:.4f} | -> {verdict} (npts={npt})")
         out[lbl] = dict(beta=beta, pow_r2=r2p, exp_rate=rate, exp_r2=r2e,

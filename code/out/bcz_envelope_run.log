@@ -1,0 +1,33 @@
+
+=== q=4 ENVELOPE decay of correlations (8 starts x 80M) ===
+  [cos2pi_a    ] envelope POW beta=0.879 R2=0.9548 | EXP rate=0.00604 R2=0.7042 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0346 0.029  0.0102 0.0134 0.0134 0.0152 0.0152]
+  [sin2pi_a    ] envelope POW beta=0.952 R2=0.9004 | EXP rate=0.00574 R2=0.5105 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0414 0.0414 0.0176 0.0176 0.009  0.0123 0.0138]
+  [cos2pi(a+b) ] envelope POW beta=0.739 R2=0.7548 | EXP rate=0.00947 R2=0.6348 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0164 0.0164 0.0159 0.0011 0.0086 0.0086 0.0063]
+  [a,a         ] envelope POW beta=0.837 R2=0.9010 | EXP rate=0.00580 R2=0.6750 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0035 0.003  0.0018 0.0018 0.0007 0.0013 0.0021]
+
+=== q=5 ENVELOPE decay of correlations (8 starts x 80M) ===
+  [cos2pi_a    ] envelope POW beta=0.850 R2=0.7929 | EXP rate=0.00559 R2=0.5469 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0398 0.0398 0.0124 0.0035 0.0018 0.002  0.0097]
+  [sin2pi_a    ] envelope POW beta=0.920 R2=0.9541 | EXP rate=0.00629 R2=0.6963 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0167 0.0167 0.008  0.0125 0.0125 0.0053 0.0088]
+  [cos2pi(a+b) ] envelope POW beta=0.861 R2=0.8617 | EXP rate=0.00619 R2=0.4693 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0225 0.0105 0.0105 0.0055 0.0022 0.0024 0.0035]
+  [a,a         ] envelope POW beta=0.911 R2=0.9162 | EXP rate=0.00625 R2=0.6734 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0022 0.0025 0.0025 0.0004 0.0008 0.0011 0.0011]
+
+=== q=7 ENVELOPE decay of correlations (8 starts x 80M) ===
+  [cos2pi_a    ] envelope POW beta=1.183 R2=0.9142 | EXP rate=0.01622 R2=0.6122 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0373 0.0349 0.0169 0.0169 0.0124 0.0092 0.0092]
+  [sin2pi_a    ] envelope POW beta=1.089 R2=0.9565 | EXP rate=0.00887 R2=0.6811 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0317 0.0317 0.0296 0.0239 0.0111 0.0111 0.0049]
+  [cos2pi(a+b) ] envelope POW beta=1.039 R2=0.8999 | EXP rate=0.01233 R2=0.6488 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0227 0.0201 0.0235 0.0235 0.0139 0.0139 0.0055]
+  [a,a         ] envelope POW beta=0.984 R2=0.8193 | EXP rate=0.01371 R2=0.5663 -> POLY
+                 env(lags=[4, 5, 7, 9, 11, 15, 19]) = [0.0015 0.0028 0.0028 0.002  0.002  0.0008 0.0014]
+
+[elapsed 286s]
+wrote code/out/bcz_envelope_results.json
