@@ -177,6 +177,130 @@ identified and the reason FFT fails (neutral cusp ⇒ |det| = 1 ⇒ θ_FFT = 0) 
 
 ---
 
+## 8 · UPGRADE ASSESSMENT (2026-06-14) — does the EXACT involution rescue θ = 1/E[L], and how blocked is the REPP step?
+
+**Trigger.** Prior-art warning (arXiv:1808.02970, Azevedo–Freitas–Freitas–Rodrigues, "Dynamical
+counterexamples regarding the Extremal Index and the mean of the limiting cluster size distribution"):
+at an *indifferent* (parabolic) fixed point the textbook identity **θ = 1/E[L]** can FAIL. This section
+determines whether our exact cusp-swap places us inside or outside that failure mode, and re-scopes the
+REPP step against the actual mixing status of the BCZ map.
+
+### 8.1 What EXACTLY makes θ ≠ 1/E[L] in 1808.02970 (read from ar5iv)
+
+Two distinct cluster-size means must be separated:
+- the **finite-time** mean E[L_n] (mean run-length at threshold level n), and
+- the **mean of the LIMITING** cluster-size law E[D] = Σ_j j·π(j).
+
+The paper proves (their Thm 2.4, via ergodicity alone) that **θ⁻¹ = lim_n E[L_n]** holds *always*. The
+counterexample is that **lim_n E[L_n] ≠ E[D]** — i.e. the limit of the means is not the mean of the limit.
+This **requires** a specific construction: the observable is maximised at **≥ 2 points of DIFFERENT
+dynamical type** — *one indifferent (parabolic) periodic point AND one repelling/non-periodic point*. The
+indifferent point contributes the degenerate θ = 0 behaviour (cluster mass leaks toward infinity); the
+repelling point contributes θ > 0; the two limits do not commute and **probability mass escapes** in the
+cluster-size point process (non-uniform integrability of L_n). The failure is a **two-maximizer
+mass-escape** phenomenon — NOT a property of a lone parabolic point, and NOT requiring a literally
+infinite-mean cluster law (it is mass concentration "at infinity in the discrete sense").
+
+So the failure mode is precisely: **competing maximizers of mixed type + an unbounded / non-uniformly
+integrable cluster-size distribution**.
+
+### 8.2 Where OUR map sits — three measured structural facts (all NEW this session)
+
+All numerics use the exact Taha map, invariant-domain reject-sampled starts, 30–80M steps, numba.
+Repro: `/tmp/cusp_structure_probe.py`, `/tmp/maximizer_type.py`, `/tmp/renewal_tail.py`, `/tmp/fret.py`,
+`/tmp/single_min.py`, `/tmp/gaptail.py`, `/tmp/cusp_tail_probe.py`.
+
+1. **SINGLE maximizer, parabolic, no repelling competitor.** Every deep exceedance {P < 0.02·X(q)} lies in
+   the two cusp cells {a<0.05, b>0.95} ∪ {a>0.95, b<0.05}; the count OUTSIDE those cells is **exactly 0**
+   for q = 4,5,7,9 (`/tmp/single_min.py`). The two cells are the **two phases of ONE period-2 swap orbit**,
+   not two independent fixed structures: iterating from (a=ε, b≈1) → (a≈1, b≈−ε), P jumps 1e-4 → 0.62
+   (escape), and from (a≈1, b=ε) → (a≈ε, b≈1), P stays ≈1e-4 (the swap) — `/tmp/maximizer_type.py`. The
+   only maximizer of the rare event is the **parabolic cusp orbit p = (1,0)**. **There is NO second,
+   repelling/non-periodic maximizer.** This is the exact configuration 1808.02970 needs and we do **not**
+   have.
+
+2. **Cluster size is BOUNDED (essentially deterministic), not heavy-tailed.** The below-onset excursion
+   length (consecutive steps with P < X) has **maximum length 3** and is dominated by length 2:
+   counts (len→#) q=5 = {1:1.93M, 2:3.64M, 3:0.14M, ≥4:0}; q=7 = {1:1.56M, 2:1.79M, 3:680, ≥4:0}
+   (`/tmp/fret.py`). The cluster-size law is supported on {1,2,3} and collapses to δ₂ as u→0. **A bounded
+   cluster-size distribution is trivially uniformly integrable**, so lim_n E[L_n] = E[D] = 2 with NO mass
+   escape. This is the structural feature that the 1808.02970 failure cannot touch.
+
+3. **The cusp minimum of P is QUADRATIC (m({P<u}) ~ u²), and the inter-cluster (renewal) gap is only
+   approximately exponential.** The small-ball measure scales m({P<u}) ~ u² (slope d log m/d log u → 2.00
+   as u→0, both q; `/tmp/renewal_tail.py`). The inter-cluster gap is *roughly* exponential but heavier in
+   both tails than Exp(1) (e.g. S(2·mean) ≈ 0.05 vs e⁻² = 0.135; `/tmp/gaptail.py`) — the fingerprint of
+   sub-exponential / polynomial mixing through the neutral direction. This is the part the rigorous REPP
+   theorem must still control; it does NOT affect the cluster-size identity (8.2.2), only the
+   Poisson-positioning of clusters.
+
+### 8.3 VERDICT on the θ = 1/E[L] obstruction — we are OUTSIDE the 1808.02970 failure mode
+
+**YES, the exactness of the involution rescues θ = 1/E[L] = 1/2 — the 1808.02970 obstruction does NOT
+apply here.** Structural reason, precisely:
+
+- 1808.02970's mismatch lim_n E[L_n] ≠ E[D] is driven by **mass escaping to ∞ in the cluster-size law**,
+  which needs (i) competing maximizers of mixed (indifferent + repelling) type and (ii) a non-uniformly
+  integrable, unbounded cluster size. Our map has **NEITHER**: a single parabolic maximizer (8.2.1) and a
+  **bounded** cluster size ≤ 3 → δ₂ (8.2.2). A bounded L is uniformly integrable ⇒ lim_n E[L_n] = E[D] = 2
+  automatically ⇒ θ = 1/E[L] = 1/2 with no commutation gap. The very mechanism that could break the
+  equality is the random/heavy-tailed cluster size; our cluster size is **deterministic = 2**, the maximally
+  rigid case.
+
+So the θ = 1/E[L] step is **not the obstruction here** — it is, conversely, the part the exact involution
+makes *trivially safe*. (This downgrades the homdyn-audit caveat: that audit correctly flagged 1808.02970
+as a generic warning, but our deterministic, single-parabolic-orbit, bounded-cluster structure is outside
+its hypotheses.)
+
+### 8.4 RE-SCOPE of step (1), the REPP convergence theorem — HARDER than the note's §6 implied
+
+§6 named Gouëzel–Sarig / FFFV / Young-tower operator-renewal EVT as the off-the-shelf tool. **The mixing
+status of the BCZ map makes that NOT off-the-shelf**, and this is the corrected bottleneck:
+
+- The BCZ map (Athreya–Cheung) and its Taha G_q generalization are **zero measure-theoretic entropy,
+  weakly mixing, with STRONG MIXING and the DECAY-OF-CORRELATIONS RATE OPEN** (arXiv:2403.14976, "BCZ map
+  is weakly mixing", 2024; mixing & rigidity explicitly left open). There is **no established polynomial
+  (or any) mixing rate** for the BCZ map, and — being **zero-entropy parabolic, not non-uniformly
+  hyperbolic** — it does **not** present an obvious hyperbolic inducing sub-system / Young tower. The
+  Gouëzel–Sarig and FFFV programs *presuppose* (a) a known polynomial decay rate and (b) a hyperbolic base
+  to induce on. **For the BCZ map, BOTH inputs are themselves open problems**, so those theorems are NOT
+  applicable as cited — they would have to be *built*, on a map whose basic mixing rate is unknown.
+- Ratner's polynomial decay rates are for the horocycle **flow** with smooth observables, **not** the
+  discrete BCZ cross-section map with the (non-smooth, branch-defined) observable P; they do not transfer to
+  the section EVT directly.
+- The correct route is therefore not "apply FFFV" but **(i) first establish a quantitative mixing /
+  return-time-tail rate for the BCZ map** (an open problem in its own right — note our measured renewal-gap
+  is only approximately exponential, 8.2.3), **then (ii) build a renewal/REPP argument on it**. The
+  self-similarity / geodesic-renormalization technique of arXiv:2403.14976 (which proved weak mixing without
+  spectral methods) is the most likely native tool, not anisotropic Banach towers.
+
+### 8.5 FINAL VERDICT (replaces the §7 one-liner's optimism on the route, keeps its grade)
+
+**Grade: still (b) "open on the limit theorem", but the obstruction has SHIFTED and SPLIT:**
+
+- **θ = 1/E[L] obstruction (the 1808.02970 risk): CLOSED.** The exact involution puts us outside the
+  failure mode — single parabolic maximizer + bounded (→δ₂) cluster size ⇒ uniform integrability ⇒
+  θ = 1/E[L] = 1/2 with no mass escape. Named tool to *write this up* rigorously: Leadbetter/O'Brien
+  compound-Poisson identity **plus** a uniform-integrability lemma for the bounded run-length (elementary
+  once the REPP limit exists). This is no longer the hard part.
+
+- **REPP convergence obstruction: OPEN, and harder than §6 stated.** It is **not** discharged by a citable
+  off-the-shelf theorem, because the BCZ map's **mixing rate / decay of correlations is itself an open
+  problem** (arXiv:2403.14976) and the map is zero-entropy parabolic with no ready Young tower. Named tools:
+  **(1)** establish a quantitative mixing / return-time-tail estimate for the BCZ map (open; candidate
+  technique = the geodesic-renormalization self-similarity of arXiv:2403.14976, *not* FFFV towers); **(2)**
+  given that rate, an operator-renewal / REPP argument (Sarig operator-renewal arXiv:1008.4113;
+  FFFV-style EVT) to upgrade the deterministic clustering to the stochastic extremal index.
+
+**Honest one-line conclusion.** θ = 1/2 is **(b) blocked on ONE named, genuinely open analytic input — the
+quantitative mixing rate of the BCZ map — not on the θ = 1/E[L] equality** (which the exact involution
+rescues) and not on a missing-but-citable EVT theorem (the cited FFFV/Gouëzel–Sarig tools presuppose a
+mixing rate the BCZ map does not yet have). The deterministic content (cusp-swap ⇒ mean cluster size 2 ⇒
+θ = 1/2) is exact and now shown to be outside the 1808.02970 failure mode; the gap to a proof is the
+parabolic mixing-rate problem for the BCZ map. **No proof is claimed.**
+
+---
+
 ## Files
 - `code/goal1_bcz_hecke_cluster.py` — exact Taha G_q-BCZ map + observable P.
 - `code/cluster_size_distribution_at_threshold.py` + `…_results_5e9.json` — q = 3 threshold law (5×10⁹ steps).
@@ -185,3 +309,11 @@ identified and the reason FFT fails (neutral cusp ⇒ |det| = 1 ⇒ θ_FFT = 0) 
   λ-dependent family).
 - Repro for this note: `/tmp/deep_theta.py` (θ(u)→1/2 table, §4), `/tmp/swap_check.py` (swap mechanism, §2),
   `/tmp/probe_tail.py` (edge = 0, §1).
+- Repro for §8 (upgrade assessment, 2026-06-14): `/tmp/cusp_tail_probe.py` (θ(u)→1/2 re-verified, two
+  estimators agree, θ=0.5010±0.0003 at u=0.02X), `/tmp/single_min.py` (single parabolic maximizer: 0
+  deep exceedances outside cusp cells, q=4,5,7,9), `/tmp/maximizer_type.py` (two cells = two phases of one
+  swap orbit), `/tmp/fret.py` (below-onset excursion length ≤ 3, bounded cluster ⇒ δ₂), `/tmp/renewal_tail.py`
+  (m({P<u})~u², slope→2.00), `/tmp/gaptail.py` (inter-cluster gap ≈ exponential but heavier-tailed ⇒
+  sub-exponential mixing fingerprint). Key external: arXiv:1808.02970 (failure needs 2 mixed-type
+  maximizers + heavy-tailed cluster — we have neither), arXiv:2403.14976 (BCZ map weakly mixing, zero
+  entropy, mixing rate OPEN — the real bottleneck).

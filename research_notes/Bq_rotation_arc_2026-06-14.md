@@ -444,3 +444,78 @@ demoted to an O(1) proxy / asymptotic-slope tool, not the exact law.
 - `code/goal1_Bq_arc_width_asymptotic.py` — W(q) arc width and slope W_∞/π ≈ 0.216.
 - Lean reuse: `projects/mimo-mini-project/lean/BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` (HeckeNoRot:
   Eform/E_conserved/E_const/E_pos/c_le_M/no_infinite_rotation).
+
+---
+
+# Lean status (2026-06-14, this session) — the rotation-arc MECHANISM is now machine-verified
+
+**New file:** `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArc.lean`
+(`namespace HeckeRotArc`, lake lib target `RotationArc`, Mathlib v4.28.0). It touches NO sealed/
+verified file. **Build:** `lake build RotationArc` → `Build completed successfully (8027 jobs)`,
+exit 0. **Every one of the 18 theorems below is `sorry`-free with `#print axioms` = exactly
+`[propext, Classical.choice, Quot.sound]`** (no `sorryAx`, no `nativeDecide`). Verified by
+`lake env lean BCZHeckeRotationArc.lean` (exit 0) + the in-file axiom audit block.
+
+## What is now MACHINE-VERIFIED (the structural mechanism)
+
+The structural lemmas the CORRECTED SECTION (§C) flagged as "RIGOROUS now (exact, dps=50 + Lean)"
+are now actually proved IN Lean, parametric in `l = λ ∈ (0,2)` (and in `θ` with `λ = 2cosθ`):
+
+- **§1 Conserved-form / rotation algebra of `M = [[0,1],[−1,λ]]`** (Lemma (ii)):
+  `Mmap_preserves_E` (`E(M p)=E p`, `E=a²−λab+b²`), `det_M` (=1), `trace_M` (=λ), `E_posdef`
+  (positive-definite for `l<2`), `coord_sq_le` (ellipse confines the orbit).
+- **§1b `M` IS the rotation by exactly `−θ`** (the EXACT form of Lemma (ii), beyond det/trace):
+  `Mmat_conj_eq_rot` — in the whitening (Cholesky) coordinates that diagonalize `E`, the matrix
+  `M = ![![0,1],![−1,2cosθ]]` equals the literal planar rotation `R(−θ)` (`0<θ<π`). This is the
+  Lean/matrix incarnation of the dps=50 numeric "Rot angle = −π/q, det=1" check. (Self-contained 2×2
+  SL₂/trig algebra; was dispatched to Aristotle as a fallback, then closed locally and the job
+  canceled.)
+- **§2 The k=1 step IS `M`, + the floor characterization** (Lemma (i), algebraic core):
+  `kstep_eq_Mmap_of_k1` (k=1 step = `M`); `kfloor_eq_one_iff_bracket` (floor digit
+  `k=⌊(1+a)/(λb)⌋ = 1 ⟺ λb ≤ 1+a < 2λb`); `genuine_step_eq_Mmap_of_bracket` (interior bracket ⇒
+  genuine last-branch step = `M`); `kfloor_ge_two_iff` (floor increment `k≥2 ⟺ 2λb ≤ 1+a` — the
+  ejection criterion).
+- **§3 `E` constant along a k=1 run, + TERMINATION** (Lemma (iii), qualitative half):
+  `E_run_const` (`E` constant along the whole k=1 run), `E_run_pos`, and
+  `no_infinite_k1_run` (no positive sequence obeys the `M`-recurrence forever ⇒ every cluster must
+  reach a floor increment). Re-derived self-contained, mirroring `HeckeNoRot.no_infinite_rotation`.
+- **§4 The characterization theorem (reduction direction)**:
+  `run_isMRotArc_of_brackets` (an interior-bracket sub-threshold last-branch run IS an `M`-rotation
+  arc), `arc_E_const` (all cluster points on ONE `E`-ellipse), `cluster_is_rotation_arc`, and
+  `cluster_le_rotation_arc` / **`Bq_eq_rotation_arc`** — every achievable sub-threshold last-branch
+  cluster length is an achievable `M`-rotation-arc length (forward `→` PROVED; full `↔` with the
+  named realization bridge `hrealize`). I.e. **B(q) (the cluster ceiling) is captured by the
+  discrete rotation-arc lattice count**, as a machine-checked reduction, not an axiom.
+
+## The honest residual to a FULL B(q) theorem (explicitly flagged, NOT `sorry`'d)
+
+Carried as NAMED hypotheses in the Lean statements (not stubs), and as the `## RESIDUAL` block in the
+file:
+
+- **(R1) interior-k=1 confinement as a uniform lemma** — the floor bracket `λb ≤ 1+a < 2λb` at every
+  interior cluster point. CHECKED THIS SESSION: it is NOT implied by sub-threshold+corridor+last-
+  branch alone (random-point search finds ~50%/~40% lower/upper violations, q=7..30) — it holds only
+  along the realized ORBIT arc, so it is genuinely a dynamical confinement statement (same family as
+  the verified `HeckeConfine.subthreshold_forces_scalar` / `subthreshold_confined_interior`). It is
+  the hypothesis `hbracket` of `run_isMRotArc_of_brackets`. Numerically certified dps=50, q=7..40.
+- **(R2) geometric realization bridge** `hrealize` — the converse "every sub-threshold last-branch
+  `M`-rotation arc is realized by a genuine cluster". Numerically 34/34 (q=7..40); needs the
+  genuine-map measure assembly (GAP-3, energy-route note).
+- **(R3) the exact value / resonance** — `rotationArcCount q` is a DISCRETE lattice count; at the true
+  resonance set q∈{23,61} it exceeds the continuous-arc proxy `⌊W(q)·q/π⌋+1` by 1 (the `−π/q` lattice
+  hops a sub-`π/q` super-threshold notch). The exact integer needs an inhomogeneous-Diophantine
+  lattice-gap statement (`{nπ/q mod 2π}` vs the notch) — strictly harder than the continuous L1b
+  arc-width. **This is exactly why no clean continuous closed form for B(q) exists; only the discrete
+  characterization is claimed.**
+
+**One-line standing:** the rotation-arc *mechanism* (M = exact rotation by −θ on conserved E; k=1
+interior step = M; E constant along the run; termination at the first floor increment; cluster =
+rotation arc ⇒ cluster ceiling captured by the discrete rotation-arc count) is now a `sorry`-free,
+axiom-clean Lean theorem family. A full closed-form `B(q)` is NOT claimed — R1/R2/R3 remain, with R3
+(the resonance) being a genuine open Diophantine residual.
+
+## Files (Lean status)
+- `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArc.lean` — the new file (this work).
+- Reused machinery (unmodified): `BCZHeckeNoInfiniteRotation_allq_VERIFIED.lean` (HeckeNoRot),
+  `GenuineSelfMap.lean`/`GenuineMapP2.lean` (`genStep`/`branchIdx`/scalar form `(b,−a+kλb)`),
+  `BCZHeckeConfinement_VERIFIED.lean` (`subthreshold_forces_scalar` — R1 family).
