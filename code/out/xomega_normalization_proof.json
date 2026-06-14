@@ -1,8 +1,25 @@
 {
+  "status": "FALSIFICATION_RECORD",
+  "bug_id": 14,
   "lambda_5": 1.618033988749895,
-  "Hecke_support_edge_1_over_lam3": 0.2360679774997897,
-  "ACL_section_minR": 1.0,
-  "ratio_is_power_of_lambda": "lambda^(-3)",
-  "conjugation_t2": 0.6180339887498948,
-  "verdict": "mechanism PORTS; value is normalization artifact / trace-field-bound"
+  "hecke_gap_product_edge_P_1_over_lam3": 0.2360679774997897,
+  "acl_return_time_edge_R": 1.0,
+  "correct_cusp_branch_relation": "R = 1/P (reciprocal), NOT diagonal conjugation",
+  "inconsistency_1": {
+    "stated_diagonal_gap_scaling": 0.3819660112501051,
+    "asserted_edge_ratio": 0.2360679774997897,
+    "unexplained_extra_factor": 1.618033988749895,
+    "verdict": "1/lambda^2 != 1/lambda^3; single diagonal conjugation cannot give both"
+  },
+  "inconsistency_2_reciprocal_test": {
+    "1_over_P_edge": 4.23606797749979,
+    "acl_R_edge": 1.0,
+    "match": false,
+    "verdict": "R != 1/P in matched units -> different observables, different normalizations"
+  },
+  "survives": [
+    "mechanism: edge attained at cusp/parabolic-fixed point (qualitative, ports)",
+    "X_Omega is normalization-dependent -> NOT a new invariant, NOT a commensurability detector"
+  ],
+  "falsified": "lambda^3 diagonal-conjugacy Veech-bridge normalization (P,R reciprocal not conjugate)"
 }

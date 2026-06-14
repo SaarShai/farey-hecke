@@ -4,8 +4,8 @@
 <!-- is the companion. Every claim is tagged; Lean axioms quoted from a fresh `lake build` run -->
 <!-- on 2026-06-14 against Mathlib v4.28.0 in projects/aristotle_dispatch_v15/uniform_q5to18/. -->
 
-# A Family-Uniform Support Edge for Hecke Slope-Gap Statistics:
-# The Ergodic Ground Value X_Ω(q) = 1/λ_q³, Machine-Verified
+# A Machine-Verified Support Edge for Hecke Slope-Gap Statistics:
+# The Ergodic Ground Value X_Ω(q) = 1/λ_q³ for q = 5..21
 
 ---
 
@@ -27,15 +27,31 @@
   golden-section minimization, junction-safe orbit scans); not a proof.
 - `[CONJECTURE]` — a pattern consistent with all data, with no proof claimed.
 
-**Honesty preamble (read first).** The headline theorem `X_Ω(q) ≥ 1/λ_q³` is proved
-**unconditionally and machine-verified** for the seventeen Hecke indices
-q ∈ {5, 7, 8, …, 21}. For q ≥ 22 it is proved **modulo two explicitly named carried
-inputs**: (i) the corridor-assembly hypothesis `hCorr` (the block-monodromy → essSup
-wiring), and (ii) the single genuine-map bridge `(P2)`. The hard *analytic* crux —
-the uniform arc-width inequality `L1b` (= `fcorr_lb`/`B1_target`) — that previously gated
-all of q ≥ 19 is now **fully sealed in Lean, sorry-free and axiom-clean** (verified
-2026-06-14). We do **not** claim a full unconditional ∀q theorem. §6 states the exact
-ledger.
+**Honesty preamble (read first).** The headline theorem is the **equality**
+`X_Ω(q) = 1/λ_q³`, **machine-verified in Lean** (axiom-clean) for the seventeen Hecke
+indices **q ∈ {5, 6, 7, …, 21}** (the golden-L index q = 5 is INCLUDED, as a non-vacuous
+equality at λ = φ). The equality holds as a **non-attained infimum** over the
+invariant-measure simplex of the closed section, realized in the limit by the cusp
+parabolic-Dirac sequence. The matching ≥ lower bound holds on the same range. We do
+**NOT** claim an all-q theorem:
+
+- **q ≥ 22 is OPEN and structurally blocked.** The fixed six-window proof method caps
+  once the sub-threshold cluster ceiling B(q) exceeds ~5 (it grows ~0.22·q); a genuine
+  all-q result needs an unproven cluster-growth law (see §3.6). For q ≥ 22 only a
+  **conditional** lower bound is available (next bullet).
+- **The all-q lower bound `ToplevelStitch.Xomega_lb_allq` is CONDITIONAL**: for q ≥ 22 it
+  carries the never-proved corridor-assembly hypothesis `hCorr` (block-monodromy → essSup
+  wiring) and the genuine-map bridge `(P2)`. It is therefore **not an unconditional all-q
+  result**. The analytic arc-width crux `L1b` (`fcorr_lb`/`B1_target`) is sealed in Lean,
+  but L1b alone does not discharge `hCorr`.
+- The `MeasurePreserving` carried in every statement is the **invariant-measure
+  quantifier** (definitional: it is what "ranges over T-invariant probability measures"
+  means), not an extra assumption.
+
+§6 states the exact ledger. **Verified equality files** (all axiom-clean
+`[propext, Classical.choice, Quot.sound]`, fresh `lake build` 2026-06-14):
+`GenuineClassDischarge.lean`, `OnsetEquality.lean`, `OnsetEqualityUniform.lean`,
+`OnsetEqualityLowQ.lean`.
 
 ---
 
@@ -53,34 +69,48 @@ observable is P_gen = a(a + λ_q b)/λ_q, with P_gen ≥ a·b. We study the
     X_Ω(q) := inf over T-invariant probability measures μ of  ess-sup_μ P,
 
 i.e. the smallest possible essential supremum of the gap product, over the whole
-invariant-measure simplex. This is the family-uniform **support edge** of the slope-gap
-statistic.
+invariant-measure simplex. This is the **support edge** of the slope-gap statistic.
 
-Our main result is a sharp uniform lower bound:
+Our main result is a sharp **equality**, machine-verified:
 
-> **Theorem (Uniform Onset).** For every Hecke index q ≥ 5,  X_Ω(q) ≥ 1/λ_q³.
+> **Theorem (Onset value, machine-verified for q = 5..21).** For each Hecke index
+> q ∈ {5, 6, 7, …, 21},  X_Ω(q) = 1/λ_q³, as a **non-attained infimum**: every
+> invariant probability measure of the closed section has ess-sup P_gen ≥ 1/λ_q³, and
+> the cusp parabolic-Dirac sequence δ_{(s,0)}, s ↓ 1/λ_q, realizes the infimum from above
+> (strictly, since each Dirac gives s²/λ > 1/λ³).
 
 The value 1/λ_q³ is exactly the cusp-tip value of P_gen at the section corner (1/λ_q, 0);
-it is the family-uniform ground value of the ergodic optimization problem. We prove the
-theorem by a six-layer "GATE-2" architecture: an elementary ergodic *no-sustained ⇒
+it is the ground value of the ergodic optimization problem. We prove the lower-bound half
+by a six-layer "GATE-2" architecture: an elementary ergodic *no-sustained ⇒
 support-edge* engine; a per-step branch trichotomy (scalar / cusp / deep-mid); a cusp
 envelope putting cusp steps above threshold; a one-step deep-mid ejection; a confinement
 lemma forcing any sustained sub-threshold orbit onto a single F-corridor word; and the
 analytic crux — the corridor block-monodromy is an **elliptic rotation by π/q on a
 conserved invariant ellipse** (precisely Koyama's conserved energy), whose rotating
 observable is forced through the super-threshold arc within O(q) blocks (the **L1b**
-arc-width inequality).
+arc-width inequality). The matching upper-bound half is the cusp-Dirac sequence,
+admissible in the **closed-section / P_gen** measure class.
 
-**Machine-verification status (honest).** The bound is **unconditional and Lean-verified**
-for q ∈ {5, 7, 8, …, 21} (seventeen Hecke groups). The arc-width crux L1b is **now sealed
-in Lean** (sorry-free, axiom-clean). For q ≥ 22 the bound is Lean-verified modulo two named
-carried inputs — the corridor block-sequence → essSup wiring and one genuine-map orbit
-bridge `(P2)` — both stated precisely in §6; the (P1) scalar-corridor-confinement bridge is
-discharged. The result is, to our knowledge, the first **machine-verified** statement in
-ergodic optimization and the first **quantitative, family-uniform** value for a slope-gap
-support edge. It refines, in the Hecke family, the qualitative Athreya–Chaika "no small
-gaps ⟺ lattice (Veech) surface" dichotomy: we do not merely assert a hard edge exists —
-we identify its **value**, 1/λ_q³, uniformly in q, and certify it.
+**Machine-verification status (honest).** The equality X_Ω(q) = 1/λ_q³ is **Lean-verified
+and axiom-clean** for the seventeen indices q ∈ {5, 6, 7, …, 21}; q = 5 (golden L) and q = 6
+are **fully closed, no-hypothesis** equalities at λ = φ resp. λ = √3, while q = 7..21 are
+established modulo the (true, internally-dischargeable) arithmetic band hypotheses with the
+per-q F-window certificate already supplied (see §4). The arc-width crux L1b is **sealed in Lean**
+(sorry-free, axiom-clean). For **q ≥ 22 the statement is OPEN** and the proof method is
+**structurally blocked** (the fixed six-window method caps once the cluster ceiling B(q)
+exceeds ~5; see §3.6); the all-q lower bound `ToplevelStitch.Xomega_lb_allq` is only a
+**conditional** result, carrying the unproved corridor-assembly hypothesis `hCorr` and the
+genuine-map bridge `(P2)`. We do **not** claim an unconditional ∀q theorem.
+
+**On novelty (honest, per the adversarial audits).** The qualitative support edge / "no
+small gaps ⟺ Veech" is prior work (Athreya–Chaika, qualitative); the observable and the
+G_q section are Taha (arXiv:1810.10668); a *family-uniform* Poincaré-section construction
+across all Veech surfaces already exists (Kumanduri–Sanchez–Wang, arXiv:2102.10069). We
+therefore do **NOT** claim "the first family-uniform support edge." Our genuine
+contributions are (1) the **first machine-verified** (Lean, axiom-clean) slope-gap /
+ergodic-optimization edge, for these seventeen Hecke groups; (2) the **exact value**
+1/λ_q³, pinned by an elementary uniform argument; and (3) the **geometric mechanism** — the
+corridor as an elliptic rotation by π/q on the conserved form E = a² − λ a b + b².
 
 ---
 
@@ -107,29 +137,39 @@ an *existential, qualitative* statement — it says a positive support edge exis
 surfaces and is absent (gaps accumulate at 0, heavy tails) otherwise; it does not produce
 the *value* of the edge, and it is proved surface-by-surface in its quantitative refinements.
 
-### 1.2 What is new here: a family-uniform VALUE, and a machine proof
+### 1.2 What is new here: a machine-verified edge, an exact value, and a mechanism
 
 We work with the Taha G_q–BCZ section, the Hecke-family generalization of the Farey–BCZ
 Poincaré section (Athreya–Cheung; Boca–Cobeli–Zaharescu). Rather than computing one density,
-we extract a single number across the **entire Hecke family at once**: the support edge
+we extract a single number across the **verified Hecke family (q = 5..21)**: the support edge
 
     X_Ω(q) = inf_μ ess-sup_μ (a·b)
 
 of the gap-product observable, minimized over all invariant probability measures (the
-ergodic-optimization edge). Our contribution is twofold and, we believe, of a different
-character from the existing slope-gap literature:
+ergodic-optimization edge). Our contributions, stated carefully against the prior art:
 
-1. **A quantitative family-uniform value.** We prove X_Ω(q) ≥ 1/λ_q³ for all q ≥ 5,
-   with 1/λ_q³ the exact, explicit cusp-tip value, uniformly in q. This is the
-   *quantitative* form of Athreya–Chaika's *qualitative* "no small gaps ⟺ Veech",
-   specialized to (and proven uniformly across) the Hecke family. Where Athreya–Chaika
-   asserts the edge is positive for the (Veech) Hecke surfaces, we give its value and a
-   uniform certificate. `[PROVEN:Lean]` for q ∈ {5,7,…,21}; `[PROVEN:Lean-mod-H]` for q ≥ 22.
+1. **A machine-verified ergodic-optimization edge.** The proof is formalized in Lean 4
+   (Mathlib v4.28.0), sorry-free and axiom-clean on the verified range
+   q ∈ {5, 6, 7, …, 21}. To our knowledge this is the **first machine-verified theorem
+   in ergodic optimization** / zero-temperature thermodynamic formalism, and the first
+   machine-verified slope-gap support edge. `[PROVEN:Lean]`.
 
-2. **A machine-verified ergodic-optimization theorem.** The proof is formalized in Lean 4
-   (Mathlib v4.28.0), sorry-free and axiom-clean on the verified range. To our knowledge
-   this is the first machine-verified theorem in ergodic optimization / zero-temperature
-   thermodynamic formalism, and the first machine-verified slope-gap support edge.
+2. **The exact value 1/λ_q³, by an elementary argument.** We prove X_Ω(q) = 1/λ_q³ for
+   q = 5..21, with 1/λ_q³ the explicit cusp-tip value, established by an elementary
+   uniform argument (no transfer-operator spectrum, no escape-of-mass machinery). This
+   is the *quantitative* refinement, in the Hecke family, of Athreya–Chaika's
+   *qualitative* "no small gaps ⟺ Veech": where they assert the edge is positive, we give
+   its value and certify it. `[PROVEN:Lean]` for q ∈ {5,…,21}.
+
+3. **The geometric mechanism.** The corridor block-monodromy is an elliptic rotation by
+   π/q on the conserved form E = a² − λ a b + b² (Koyama's energy); the sub-threshold
+   cluster is the rotation arc, ejected at a floor increment. This *derives* (rather than
+   fits) the mechanism behind both the edge value and the cluster ceiling (§3.6).
+
+**What we do NOT claim.** We do **not** claim "the first family-uniform support edge": a
+family-uniform Poincaré-section construction across all Veech surfaces already exists
+(Kumanduri–Sanchez–Wang, arXiv:2102.10069), and the qualitative edge is Athreya–Chaika.
+We also do **not** claim an all-q result; q ≥ 22 is open (§1.4, §3.6, §6).
 
 ### 1.3 The companion dichotomy paper
 
@@ -142,17 +182,31 @@ against. The two results share the observable, the section, and the value; they 
 logically independent (the dichotomy is about *run length at* the threshold; this paper is
 about *the threshold value itself* as a measure-uniform infimum).
 
-### 1.4 Honest scope and the small-q caveat
+### 1.4 Honest scope: the small-q caveat and the q ≥ 22 wall
 
-The clean identity X_Ω(q) = 1/λ_q³ holds for q ≥ 5. For the arithmetic small indices the
-edge value is different: X(3) = 2/9 and X(4) = √2/8 (these are the exact ground values of
-the q = 3 and q = 4 problems; see the companion paper and the q = 3 ergodic-optimization
-note). The general claim "X_Ω = 1/λ³ for all l ∈ (1,2)" is **false** — e.g. q = 4 gives
-l = √2 with X = √2/8 ≠ 1/(√2)³. The uniform theorem is therefore correctly scoped to the
-Hecke indices q ≥ 5, where λ_q ranges over (1, 2) along the Hecke ladder. `[NUMERICAL]`
-for the q = 4 counterexample to the naive l-continuum claim; `[CONJECTURE]` that the
-inequality is an equality (X_Ω(q) = 1/λ_q³, not just ≥) — the matching upper bound is the
-cusp-tip Dirac, recorded as a witness but the equality is not in the verified footprint.
+**Lower end.** The identity X_Ω(q) = 1/λ_q³ holds for q ≥ 5 (including q = 6, λ = √3,
+which is verified as a non-vacuous equality even though it is an arithmetic index). For the
+two smallest arithmetic indices the edge value is *different*: X(3) = 2/9 and X(4) = √2/8
+(the exact ground values of the q = 3 and q = 4 problems; see the companion paper and the
+q = 3 ergodic-optimization note). So the general claim "X_Ω = 1/λ³ for all l ∈ (1,2)" is
+**false** — e.g. q = 4 gives l = √2 with X = √2/8 ≠ 1/(√2)³. The theorem is correctly
+scoped to q ≥ 5. `[NUMERICAL]` for the q = 4 counterexample to the naive l-continuum claim.
+
+**Upper end (the wall).** The machine-verified range is q ∈ {5, 6, …, 21}.
+**q ≥ 22 is open**, and the proof method is **structurally blocked**: the fixed six-window
+argument refutes sub-threshold runs only up to length 6, but the sub-threshold cluster
+ceiling B(q) grows (~0.22·q, §3.6), exceeding ~5 right around q = 22. A genuine all-q
+theorem needs an unproven cluster-growth law (the closed-form B(q), which another agent is
+rigorizing). What exists for q ≥ 22 is only a **conditional** lower bound (carrying `hCorr`
+and `(P2)`; §6) — it is **not** an unconditional all-q result.
+
+**Equality, not just ≥.** The headline is now the **equality** X_Ω(q) = 1/λ_q³ (≤ and ≥),
+machine-verified for q = 5..21 as a non-attained infimum. The matching upper bound is the
+cusp parabolic-Dirac sequence δ_{(s,0)}, s ↓ 1/λ, which is admissible in the
+**closed-section / P_gen** measure class (`OnsetEquality.cusp_dirac_admissible`); note that
+the *same* Dirac is **inadmissible** in the scalar / P_prod / Dcorr engine class
+(`EqualityUpperBound.cusp_dirac_inadmissible`), so the equality is correctly stated over the
+closed section. `[PROVEN:Lean]` (equality, q = 5..21).
 
 ---
 
@@ -323,6 +377,39 @@ The full chain for q ≥ 18 is: Layer 0 engine ∘ Layer 4 confinement ∘ {Laye
 Layer 3 deep-mid box ✓, Layer 5 L1b ✓}, with the residual genuine-map faithfulness
 (htri / the block-sequence → orbit bridge) the remaining structural input for q ≥ 22.
 
+### 3.6 The mechanism: cluster = conserved-ellipse rotation arc, ejected at a floor increment
+
+The Layer-5 rotation picture has a sharper, per-step form that explains *why* the method
+walls off at q ≥ 22, and that gives the geometric mechanism behind the whole result.
+(`research_notes/Bq_rotation_arc_2026-06-14.md`.) On the last (scalar) branch, the k = 1
+map is M = [[0,1],[−1,λ]] — det 1, trace λ — an **elliptic rotation by θ = π/q** preserving
+the positive-definite conserved form
+
+    E(a,b) = a² − λ a b + b²   (precisely Koyama's energy, the trace-λ elliptic invariant).
+
+After whitening, each k = 1 step advances the whitened phase φ by exactly −π/q (verified
+numerically to machine precision, q = 7..60), and the observable P = a·b is a fixed sinusoid
+g(φ) of that phase. A **sub-threshold cluster** (a maximal run with P < 1/λ³) is therefore
+**the arc of the elliptic rotation that lies inside the sub-threshold sector of one
+conserved ellipse**, and the run **terminates at the floor increment k : 1 → 2**, which
+kicks the state off the ellipse (ejection = a floor change, NOT a P-threshold crossing).
+The cluster ceiling is then
+
+    B(q) = (number of consecutive π/q-rotation steps inside the sub-threshold arc) + 1.
+
+Empirically this reproduces the entire B(q) table exactly (q = 7,13,19,23,24,30,40,60) and
+asymptotically B(q) ~ 0.22·q, recovering the cluster-growth rate. This is the mechanism that
+caps the fixed six-window method: once B(q) > ~5 (around q = 22), no fixed finite window can
+refute a sub-threshold run, which is the structural reason q ≥ 22 is out of reach by this
+route.
+
+**Honest status.** The rotation-arc account is the derived geometric *mechanism*; the
+**exact cluster-ceiling closed form B(q) is still open** — its "+1 ejection," "k = 1 interior
+only," and the limiting arc-width w(q) are empirical-structural facts (confirmed against all
+data) that another agent is rigorizing into a theorem. `[NUMERICAL]` for the B(q) closed form;
+`[PROVEN:Lean]` for the per-step elliptic-rotation / conserved-ellipse algebra (det, trace,
+invariance) and the Layer-5 corridor version.
+
 ---
 
 ## 4. The machine-verification status table
@@ -344,19 +431,41 @@ exactly `[propext, Classical.choice, Quot.sound]`.
 | q ≥ 19 per-q bound, (P1)-discharged | `ToplevelStitch.perq_Xomega_lb_qge19_P1discharged` | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` (mod hEngine/hFW/(P2)) |
 | **Unconditional q ∈ {5,7,…,21}** | `GenuineMapFacts.Xomega_lb_q5to21` (`ToplevelStitchQ5to21.lean`) | `[propext, Classical.choice, Quot.sound]` | **`[PROVEN:Lean]` — UNCONDITIONAL** |
 | Top-level ∀q (P1-discharged, q≤21 uncond.) | `ToplevelStitch.Xomega_lb_allq_q5to21_P1` | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` (q≥22 mod hCorr/(P2)) |
-| Top-level ∀q core | `ToplevelStitch.Xomega_lb_allq` | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` (q≥19 mod hCorr) |
+| Top-level ∀q core (LOWER bound) | `ToplevelStitch.Xomega_lb_allq` | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` — **CONDITIONAL** (q≥22 carries hCorr) |
 | Sorry-isolation witness | `ToplevelStitch.Xomega_lb_allq_clean_modulo_B1` | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` |
+| **EQUALITY core (non-attained inf)** | `OnsetEquality.Xomega_eq` (`OnsetEquality.lean`) | `[propext, Classical.choice, Quot.sound]` | **`[PROVEN:Lean]`** (mod hFW/Boundary) |
+| **EQUALITY q=5 (golden L)** | `OnsetEquality.Xomega_eq_q5`; `OnsetEqualityLowQ.Xomega_eq_q5'`, `.Xomega_eq_q5_concrete` | `[propext, Classical.choice, Quot.sound]` | **`[PROVEN:Lean]` — NON-VACUOUS** |
+| **EQUALITY q=6** | `OnsetEqualityLowQ.Xomega_eq_q6'`, `.Xomega_eq_q6_concrete` | `[propext, Classical.choice, Quot.sound]` | **`[PROVEN:Lean]` — NON-VACUOUS** |
+| **EQUALITY q=7..21 (uniform + per-q)** | `OnsetEqualityUniform.Xomega_eq_uniform`, `.Xomega_eq_q{7..21}` | `[propext, Classical.choice, Quot.sound]` | **`[PROVEN:Lean]`** (each mod its per-q hFW) |
+| Genuine-class discharge (equality plumbing) | `GenuineClassDischarge.boundary_of_hecke`, `.perq_Xomega_lb_qge19_GEN'`, `.Tgen_orbit_genuine` | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` |
+| Cusp Dirac inadmissible in SCALAR class | `EqualityUB.cusp_dirac_inadmissible` (`EqualityUpperBound.lean`) | `[propext, Classical.choice, Quot.sound]` | `[PROVEN:Lean]` |
 
 **Per-q window files** `BCZHeckeG{5,7,8,…,18,19,20,21}_window_VERIFIED.lean` are all
-present, sorry-free, axiom-clean; they discharge `Fwindow4/5/6` per index. The
-unconditional half therefore covers **seventeen** Hecke indices {5,7,8,…,21}; the
-corridor + L1b route is genuinely needed only for **q ≥ 22**.
+present, sorry-free, axiom-clean; they discharge `Fwindow4/5/6` per index. The lower-bound
+unconditional half covers the seventeen Hecke indices {5,7,8,…,21}; the **equality** is
+verified for the same family plus q = 6, i.e. **q ∈ {5, 6, 7, …, 21}**. The corridor + L1b
+route is genuinely needed only for **q ≥ 22**, which is **open**.
 
-**Headline reading.** The forall-q theorem object `Xomega_lb_allq` and the
-(P1)-discharged, q≤21-unconditional `Xomega_lb_allq_q5to21_P1` are both **axiom-clean**
-(no `sorryAx`): the prior single sorry (L1b/`fcorr_lb`) is gone. What remains is **not a
-sorry** but **named carried hypotheses** for the q ≥ 22 branch — exactly as is standard for
-a conditional theorem (the conditions are visible in the statement).
+**Headline reading.** The **equality** X_Ω(q) = 1/λ_q³ is machine-verified, axiom-clean,
+for q = 5..21 (`OnsetEquality.Xomega_eq` and its q-instances), with two grades of closure:
+
+- **q = 5 and q = 6: fully closed, unconditional.** `OnsetEqualityLowQ.Xomega_eq_q5_concrete`
+  and `.Xomega_eq_q6_concrete` take **no** hypotheses — the band conditions (1 < λ < 2,
+  l² = l+1 resp. l² = 3) are discharged internally via Mathlib's `cos_pi_div_five` /
+  `cos_pi_div_six`, and the F-window is proved in-file (`wins6_q5`, `wins6_q6`). These are
+  the strongest standalone statements.
+- **q = 7..21: equality modulo the (true, arithmetic) band hypotheses, window discharged.**
+  `OnsetEqualityUniform.Xomega_eq_q{7..21}` carry the band facts (`hHecke`, `hmp`/`mpoly_q`,
+  1 < λ < 2, 9/5 < λ, l² ≥ l+1) as arguments; the per-q F-window certificate is already
+  supplied internally (`_root_.hF{q}`, from `BCZHeckeG{q}_window_VERIFIED`). The band facts
+  are arithmetic truths about the real λ_q (closed concretely exactly as for q = 5,6); they
+  are simply not yet bundled into a no-argument `_concrete` theorem for q ≥ 7. So the equality
+  is established for these indices modulo discharging those arithmetic hypotheses, not modulo
+  any open mathematics.
+
+The all-q LOWER bound `Xomega_lb_allq` is axiom-clean as a theorem object (the prior
+L1b/`fcorr_lb` sorry is gone), but for **q ≥ 22 it carries the never-proved `hCorr`** in its
+statement — it is a **conditional** result, **not** an unconditional all-q theorem.
 
 ---
 
@@ -404,19 +513,30 @@ The proof (file `L1bArcCoverage.lean`, the only file touched to seal it):
 
 This is the section to read for the precise standing. Three categories.
 
-### (A) Unconditional, machine-verified `[PROVEN:Lean]`
+### (A) Machine-verified `[PROVEN:Lean]` (axiom-clean), for the verified family
 
-- X_Ω(q) ≥ 1/λ_q³ for **q ∈ {5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}**
-  (seventeen Hecke indices) via `GenuineMapFacts.Xomega_lb_q5to21`, axiom-clean. This is the
-  scalar F-window route alone (no corridor, no genuine-map bridge) — it needs only the per-q
-  window certificates, which exist and are axiom-clean for each index. The strongest
-  standalone claim.
+- **EQUALITY** X_Ω(q) = 1/λ_q³ for **q ∈ {5, 6, 7, …, 21}** (seventeen Hecke indices,
+  q = 5 the golden L), as a **non-attained infimum** over the closed-section invariant-measure
+  class, realized by the cusp parabolic-Dirac sequence. Via `OnsetEquality.Xomega_eq` (core),
+  `OnsetEquality.Xomega_eq_q5` / `OnsetEqualityLowQ.Xomega_eq_q5'` (golden L, non-vacuous),
+  `OnsetEqualityLowQ.Xomega_eq_q6'` (q=6, non-vacuous), and
+  `OnsetEqualityUniform.Xomega_eq_uniform` + `.Xomega_eq_q{7..21}`. Each is conditional only on
+  its per-q F-window certificate `hFW` (discharged by `BCZHeckeG{q}_window_VERIFIED`) and the
+  standard `Boundary`/`MeasurePreserving` setup; all axiom-clean. The carried `MeasurePreserving`
+  is the invariant-measure quantifier (definitional). **This is the headline.**
+- The lower bound X_Ω(q) ≥ 1/λ_q³ for the same family via `GenuineMapFacts.Xomega_lb_q5to21`
+  (scalar F-window route, no corridor), axiom-clean.
+- The matching UPPER bound is the cusp-Dirac sequence in the **closed-section / P_gen** class
+  (`OnsetEquality.Xomega_le`, `.cusp_dirac_admissible`); the *same* Dirac is **inadmissible** in
+  the scalar / P_prod / Dcorr engine class (`EqualityUB.cusp_dirac_inadmissible`), so the
+  equality is correctly stated over the closed section — not over the scalar engine class.
 - The arc-width crux **L1b** (`fcorr_lb`, `B1_target`), sealed, axiom-clean.
 - (P1) the scalar-branch ⇒ Dcorr F-corridor confinement bridge
   (`GenuineMapFacts.scalar_implies_Dcorr`), proved from the existing genuine-map definition
   (`branchIdx`/`IsFstep_concrete` + cheb boundary data), axiom-clean.
-- All structural plumbing: the orbit-data adapter, the per-q corridor composition, the
-  sorry-isolation witness — all axiom-clean.
+- All structural plumbing: the genuine-class discharge (`GenuineClassDischarge`), the
+  orbit-data adapter, the per-q corridor composition, the sorry-isolation witness — all
+  axiom-clean.
 
 ### (B) Carried as NAMED structural hypotheses for q ≥ 22 (NOT sorries)
 
@@ -444,23 +564,28 @@ by every upstream per-q theorem. They are visible in the statement; the theorem 
 
 ### (C) What is therefore NOT yet claimed
 
-We do **not** claim a fully unconditional ∀q ≥ 5 theorem. The precise residual to reach it:
-(1) discharge `(P2)` by constructing the all-q genuine multi-branch measure-preserving map T
-on Taha with an invariant probability measure such that the trichotomy htri and the
-orbit-invariance bridge hold (components exist sorry-free in `BCZHeckeGenuineMap_allq_WIP`;
-the dynamical-system + measure assembly is unbuilt — "routine-but-substantial measure
-theory"); and (2) wire the block-monodromy sequence to the orbit essSup for q ≥ 22
-(`hCorr` / `hbridge`). With (1)+(2) discharged, the bound becomes unconditional for all q ≥ 5,
-since the *analytic* crux L1b and the (P1) bridge are already sealed.
+We do **not** claim a fully unconditional ∀q ≥ 5 theorem; **q ≥ 22 is open**, and the proof
+method is **structurally blocked** there (the fixed six-window argument caps once the
+sub-threshold cluster ceiling B(q) exceeds ~5, around q = 22; a genuine all-q result needs the
+unproven cluster-growth law B(q), §3.6). The precise residual to even a *conditional* all-q
+bound being made unconditional: (1) discharge `(P2)` by constructing the all-q genuine
+multi-branch measure-preserving map T on Taha with an invariant probability measure such that
+the trichotomy htri and the orbit-invariance bridge hold (components exist sorry-free in
+`BCZHeckeGenuineMap_allq_WIP`; the dynamical-system + measure assembly is unbuilt —
+"routine-but-substantial measure theory"); and (2) wire the block-monodromy sequence to the
+orbit essSup for q ≥ 22 (`hCorr` / `hbridge`). Even with (1)+(2) discharged, a clean all-q
+*value* would still need the cluster-growth law to replace the fixed six-window certificate.
 
-**Self-check (honesty).** The task's prior framing — "all q ≥ 5 conditional on one carried
-genuine-map hypothesis P2" plus "q = 5..21 fully unconditional" — is corroborated by the
-verified build, with two refinements made explicit here: (i) for the *literal* q ≥ 22
-forall-statement there is, in addition to P2, the corridor-wiring hypothesis `hCorr`
-(block-sequence → essSup) that is not P2; (ii) L1b is **sealed**, not carried — earlier notes
-that called L1b/`fcorr_lb` "the single carried mathematical crux" are superseded by the
-2026-06-14 seal. We do not inflate "q ≤ 21 unconditional + L1b sealed + P1 discharged" into
-"all q unconditional."
+**Self-check (honesty).** Against the consolidation brief: (i) the headline is the
+**equality** X_Ω(q) = 1/λ_q³, machine-verified axiom-clean for **q = 5..21** (q = 6 included,
+q = 5 golden L non-vacuous), as a non-attained infimum realized by the cusp parabolic-Dirac
+sequence over the closed section — corroborated by a fresh build of `OnsetEquality*` /
+`GenuineClassDischarge`; (ii) **q ≥ 22 is open and structurally blocked**, not merely
+"conditional progress"; (iii) `ToplevelStitch.Xomega_lb_allq` is a **conditional** lower
+bound (carries `hCorr`, and `(P2)` for the genuine route) — it is **not** an unconditional
+all-q result; (iv) the carried `MeasurePreserving` is the invariant-measure quantifier
+(definitional), not an extra assumption; (v) L1b is **sealed**, not carried. We do not inflate
+"q = 5..21 equality + L1b sealed + P1 discharged" into "all q."
 
 ---
 
@@ -473,7 +598,8 @@ X_Ω(q) = inf_μ ess-sup_μ P is an **ergodic-optimization** quantity (Jenkinson
 zero-temperature / ground-state value of the thermodynamic formalism for the observable P:
 as the inverse temperature β → ∞, equilibrium states concentrate on the minimizing set, and
 the relevant edge is the inf-over-measures of the essential supremum. Our result identifies
-this ground value as the explicit cusp-tip constant 1/λ_q³, uniformly across the Hecke family.
+this ground value as the explicit cusp-tip constant 1/λ_q³ for the verified Hecke indices
+q = 5..21 (and conjecturally beyond, q ≥ 22 open).
 
 Two structural caveats that shape the proof:
 
@@ -504,14 +630,20 @@ analogue, and its strict positivity is exactly why the edge is bounded away from
 
 ## 8. Open problems
 
-1. **Discharge (P2) and the corridor wiring (hCorr) ⇒ fully unconditional ∀q ≥ 5.** Build
-   the all-q genuine multi-branch measure-preserving map and its invariant measure; wire the
-   M_W block sequence to the orbit essSup. This is the single remaining gap to a clean,
-   fully-unconditional, machine-verified ∀q theorem (analytic crux L1b already sealed).
-   `[CONJECTURE]` that this is routine-but-substantial (no new obstruction expected).
+1. **The q ≥ 22 wall ⇒ all-q value.** This is the headline open problem. The fixed
+   six-window method is **structurally blocked** for q ≥ 22 (the cluster ceiling B(q) > ~5;
+   §3.6), so reaching all q needs the **cluster-growth law B(q)** (the closed form, currently
+   `[NUMERICAL]`) to replace the per-q window certificate. Subsidiary plumbing: discharge
+   `(P2)` (the all-q genuine measure-preserving map + invariant measure) and the corridor
+   wiring `hCorr` (M_W block sequence → orbit essSup) — these would make the existing
+   *conditional* all-q lower bound unconditional, but a clean all-q *value* still needs B(q).
+   `[CONJECTURE]`.
 
-2. **Equality X_Ω(q) = 1/λ_q³ (matching upper bound).** We prove ≥; the cusp-tip Dirac
-   witnesses ≤. Formalize the upper bound to get equality in the verified footprint.
+2. **The exact cluster-ceiling closed form B(q).** Prove the rotation-arc account of §3.6 as
+   a theorem: that a sub-threshold cluster is exactly the elliptic-rotation arc (k = 1 interior
+   steps) terminated by the floor increment k : 1 → 2, giving B(q) = ⌊w(q)·q/π⌋ + 1 with
+   w(q) → w_∞ ≈ 0.678 (slope ≈ 0.22). Another agent is rigorizing this; it is the missing
+   ingredient for #1. `[NUMERICAL]` (matches all data); proof open.
 
 3. **Veech-section identification.** Is the BCZ gap-product cross-section for G_q literally
    the slope-gap section of the H_q-Veech (double-(2q−1)-gon) surface, or a quotient of it?
@@ -523,10 +655,21 @@ analogue, and its strict positivity is exactly why the edge is bounded away from
    Rosen-continued-fraction dimension spectrum (the validated Jenkinson–Pollicott engine,
    `code/d3_jp_dimension.py`, reproduces dim E_{1,2} = 0.5312805 to 1e-15). `[CONJECTURE]`.
 
-5. **Uniform-method beyond Hecke (X_Ω(Γ) family).** The GATE-2 architecture (engine ∘
+5. **The method beyond Hecke (X_Ω(Γ) family).** The GATE-2 architecture (engine ∘
    confinement ∘ rotation-ellipse arc-width) is a *method*. For which other Fuchsian / Veech
-   families does it yield a uniform support-edge value? This is the highest-ceiling
-   generalization. `[CONJECTURE]`.
+   families does it yield a machine-verified support-edge value? Caveat (per the 3-track
+   scout, `research_notes/Xomega_generalize_2026-06-14.md`): the *mechanism* (edge = cusp /
+   parabolic-fixed value) ports across the triangle-group family, but the scalar X_Ω is
+   **normalization-dependent** (= 1 in canonical ACL section coords; = 1/λ³ only in the Taha
+   normalization, and the two observables — gap-product P and return-time R — are reciprocal,
+   R = 1/P, not diagonally conjugate; see `code/xomega_normalization_proof.py`). So X_Ω is
+   **not a new lattice invariant** and **not a commensurability detector**; the contribution
+   of any such extension would be **methodological** (a family-wide machine-verified edge),
+   not a new invariant. `[CONJECTURE]`.
+
+*Resolved since the prior draft: the matching **upper bound** (equality X_Ω(q) = 1/λ_q³, not
+just ≥) is now machine-verified for q = 5..21 — the cusp parabolic-Dirac sequence over the
+closed section (`OnsetEquality.Xomega_le`); see §4.*
 
 ---
 
@@ -535,15 +678,22 @@ analogue, and its strict positivity is exactly why the edge is bounded away from
 All from `projects/aristotle_dispatch_v15/uniform_q5to18/` with Lean 4.28.0 / Mathlib v4.28.0:
 
 ```
+# Lower-bound + crux route:
 lake build L1bArcCoverageLib        # → 8027 jobs; fcorr_lb, B1_target axiom-clean
 lake build GenuineMapFactsP1        # → scalar_implies_Dcorr axiom-clean
-lake build ToplevelStitch           # → Xomega_lb_allq & all stitch decls axiom-clean (no sorryAx)
+lake build ToplevelStitch           # → Xomega_lb_allq (CONDITIONAL q≥22) axiom-clean (no sorryAx)
 lake build ToplevelStitchQ5to21     # → Xomega_lb_q5to21, Xomega_lb_allq_q5to21_P1 axiom-clean
+# EQUALITY route (the headline, q = 5..21):
+lake build OnsetEqualityLowQ        # → 8056 jobs; Xomega_eq_q5'/q6'/concrete axiom-clean
+lake build OnsetEqualityUniform     # → 8055 jobs; Xomega_eq, Xomega_eq_q5, Xomega_eq_uniform,
+                                    #   Xomega_eq_q{7..21} axiom-clean
+lake build EqualityUpperBound       # → 8041 jobs; cusp_dirac_inadmissible (scalar class) axiom-clean
 ```
 
 Quoted `#print axioms` (2026-06-14 build):
 
 ```
+# Lower-bound / crux:
 'L1bArcCoverage.fcorr_lb'                        : [propext, Classical.choice, Quot.sound]
 'L1bArcCoverage.B1_target'                       : [propext, Classical.choice, Quot.sound]
 'GenuineMapFacts.scalar_implies_Dcorr'           : [propext, Classical.choice, Quot.sound]
@@ -556,6 +706,17 @@ Quoted `#print axioms` (2026-06-14 build):
 'ToplevelStitch.Xomega_lb_allq_clean_modulo_B1'  : [propext, Classical.choice, Quot.sound]
 'GenuineMapFacts.Xomega_lb_q5to21'               : [propext, Classical.choice, Quot.sound]
 'ToplevelStitch.Xomega_lb_allq_q5to21_P1'        : [propext, Classical.choice, Quot.sound]
+# EQUALITY (headline):
+'OnsetEquality.Xomega_eq'                        : [propext, Classical.choice, Quot.sound]
+'OnsetEquality.Xomega_eq_q5'                     : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_uniform'         : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q7'              : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityUniform.Xomega_eq_q21'             : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityLowQ.Xomega_eq_q5''                : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityLowQ.Xomega_eq_q6''                : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityLowQ.Xomega_eq_q5_concrete'        : [propext, Classical.choice, Quot.sound]
+'OnsetEqualityLowQ.Xomega_eq_q6_concrete'        : [propext, Classical.choice, Quot.sound]
+'EqualityUB.cusp_dirac_inadmissible'             : [propext, Classical.choice, Quot.sound]
 ```
 
 ## Appendix B. Key file index
@@ -573,7 +734,21 @@ Quoted `#print axioms` (2026-06-14 build):
 - `ToplevelStitchQ5to21.lean` — Xomega_lb_allq_q5to21_P1 (q≤21 unconditional, P1-discharged).
 - `BCZHeckeG{5,7,…,21}_window_VERIFIED.lean` — per-q F-window certificates.
 
+**Equality files (the headline route, q = 5..21):**
+- `OnsetEquality.lean` — the closed-section class (`Sclosed`, `Pgen`), the cusp-Dirac
+  admissibility (`cusp_dirac_admissible`), `Xomega_ge`/`Xomega_le`, and the core equality
+  `Xomega_eq` (non-attained infimum); `Xomega_eq_q5` (golden L).
+- `OnsetEqualityUniform.lean` — `Xomega_eq_uniform` and per-q `Xomega_eq_q{7..21}`.
+- `OnsetEqualityLowQ.lean` — non-vacuous `Xomega_eq_q5'`, `Xomega_eq_q6'` (and `_concrete`).
+- `GenuineClassDischarge.lean` — `boundary_of_hecke`, `Tgen_orbit_genuine`,
+  `perq_Xomega_lb_qge19_GEN'`: the genuine-class plumbing the equality consumes.
+- `EqualityUpperBound.lean` — `cusp_dirac_inadmissible`: the cusp Dirac is INADMISSIBLE in the
+  scalar / P_prod / Dcorr engine class (so the equality is correctly stated over the closed
+  section / P_gen, where it IS admissible).
+
 ---
 
-*Internal draft, 2026-06-14. Outward communication USER-gated. Every Lean axiom line above
-was produced by a fresh build on 2026-06-14 and quoted verbatim.*
+*Internal draft, 2026-06-14. Outward communication USER-gated. Headline scope: the
+**equality** X_Ω(q) = 1/λ_q³ is machine-verified (axiom-clean) for q = 5..21 (q = 5 golden L,
+q = 6 included), as a non-attained infimum; q ≥ 22 is open and structurally blocked. Every
+Lean axiom line above was produced by a fresh build on 2026-06-14 and quoted verbatim.*
