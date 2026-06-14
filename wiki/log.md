@@ -14,3 +14,8 @@ Created `concepts/x-omega-q-equality-upper-bound-verdict-and-cusp-dirac-inadmiss
 ## 2026-06-14 — X_Omega(q) equality upper bound verdict
 Created concepts/x-omega-q-equality-upper-bound-verdict-and-cusp-dirac-inadmissibility.md (trust: verified).
 GOAL G-F: X_Ω(q)=1/λ³ NOT machine-verified; cusp-tip Dirac inadmissible in lower-bound class (3 machine-checked obstructions, EqualityUpperBound.lean, axiom-clean). Verified footprint stays X_Ω(q)≥1/λ³ for q∈{5,7,…,21}.
+## [2026-06-14] update | B(q) cluster ceiling: 2+floor((q-1)/6) is FALSE; true slope 2arccos(2sqrt2/3)/pi
+
+Created `concepts/b-q-cluster-ceiling-2-floor-q-1-6-is-false-true-slope-2arccos-2sqrt2-3-pi.md` from `page` template.
+
+2026-06-14 FALSIFIED B(q)=2+floor((q-1)/6); true slope 2arccos(2sqrt2/3)/pi=0.2163; exact witnesses q=5,23,24,30,40 exceed formula. concepts/b-q-cluster-ceiling-...
