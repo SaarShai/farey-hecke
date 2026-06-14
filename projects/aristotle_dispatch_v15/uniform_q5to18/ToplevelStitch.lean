@@ -4,6 +4,7 @@ import BCZHeckeS1_trichotomy
 import EjectionUniform
 import L1bArcCoverage
 import BCZHeckeUniformOnset
+import GenuineMapFactsP1
 
 set_option maxHeartbeats 4000000
 
@@ -132,6 +133,40 @@ structure GenuineClass (orbit : ℕ → ℝ × ℝ) (n : ℕ) (m : ℕ) : Prop w
       UniformOnset.Pgen l (orbit n) < 1 / l ^ 3 →
       1 / l ^ 3 ≤ UniformOnset.Pgen l (orbit (n + 1))
 
+/-! ### P1-DISCHARGED genuine-map class.
+
+`GenuineClassP2` carries the SAME per-point data as `GenuineClass` EXCEPT the (P1)
+field `hScalarDcorr` — because (P1) is now a PROVED lemma
+(`GenuineMapFacts.scalar_implies_Dcorr`), not a hypothesis.  The constructor
+`GenuineClassP2.toGenuineClass` (below) rebuilds a full `GenuineClass` by FILLING
+`hScalarDcorr` from that lemma, given `1 < l` and `1 ≤ m`.  So callers supply only
+the genuinely-carried (P2) bridge `hEject` — (P1) is no longer assumed. -/
+structure GenuineClassP2 (orbit : ℕ → ℝ × ℝ) (n : ℕ) (m : ℕ) : Prop where
+  hq0 : HeckeS1.cheb l (m + 2) = 0
+  hq1 : HeckeS1.cheb l (m + 1) = 1
+  hb  : (orbit n).2 ≤ 1
+  ha  : 0 < (orbit n).1
+  ha1 : (orbit n).1 ≤ 1
+  htaha : 1 - l * (orbit n).1 < (orbit n).2
+  -- (P2) deep-mid ejection bridge — the ONLY genuine-map fact still carried:
+  hEject :
+    HeckeS1.IsDeepMid_concrete l (orbit n).1 (orbit n).2 m
+        (HeckeS1.branch_exists l (orbit n).1 (orbit n).2 m hq0 hq1 hb) →
+      UniformOnset.Pgen l (orbit n) < 1 / l ^ 3 →
+      1 / l ^ 3 ≤ UniformOnset.Pgen l (orbit (n + 1))
+
+/-- **(P1) discharged at construction.**  Promote a `GenuineClassP2` (no `hScalarDcorr`)
+to a full `GenuineClass` by PROVING the (P1) field via `scalar_implies_Dcorr`.
+Requires `1 < l` and `1 ≤ m` — exactly the inputs (P1) needs.  No (P1) hypothesis. -/
+theorem GenuineClassP2.toGenuineClass
+    {orbit : ℕ → ℝ × ℝ} {n m : ℕ} (h1 : 1 < l) (hm1 : 1 ≤ m)
+    (G : GenuineClassP2 l orbit n m) : GenuineClass l orbit n m :=
+  { hq0 := G.hq0, hq1 := G.hq1, hb := G.hb, ha := G.ha, ha1 := G.ha1,
+    htaha := G.htaha, hEject := G.hEject,
+    hScalarDcorr := fun hsc =>
+      GenuineMapFacts.scalar_implies_Dcorr l (orbit n).1 (orbit n).2 m
+        G.hq0 G.hq1 h1 hm1 G.ha G.ha1 G.hb G.htaha hsc }
+
 end
 
 /-! ## §3.  THE ADAPTER `genuine_orbitdata` — the core plumbing.
@@ -229,6 +264,32 @@ theorem perq_Xomega_lb_qge19
   intro orbit hmem hstep
   exact genuine_orbitdata l h1 hlphi orbit hstep m hm (hGen orbit hmem hstep)
 
+open UniformOnset in
+/-- **q ≥ 19 lower bound, P1-DISCHARGED.**  Same as `perq_Xomega_lb_qge19`, but the
+genuine-map definition supplies only the (P2) bridge (`GenuineClassP2`); (P1)
+`hScalarDcorr` is DISCHARGED here by `GenuineClassP2.toGenuineClass` (which proves it
+from `scalar_implies_Dcorr`).  So the q ≥ 19 leg no longer carries (P1) as a
+hypothesis — only (P2). -/
+theorem perq_Xomega_lb_qge19_P1discharged
+    (hEngine : EssSupEngineType)
+    {mpoly : ℝ → Prop} (hFW : Fwindow6 mpoly)
+    {l : ℝ} (hmp : mpoly l) (h1 : 1 < l) (h2 : l < 2) (hlo : 9/5 < l)
+    (hlphi : l ^ 2 ≥ l + 1)
+    (μ : Measure (ℝ × ℝ)) [IsProbabilityMeasure μ]
+    (hμT : μ (Taha l)ᶜ = 0)
+    (hinv : MeasurePreserving (Tmap l) μ μ)
+    (M : ℝ) (hPbdd : ∀ᵐ x ∂μ, Pgen l x ≤ M)
+    (m : ℕ) (hm : 2 ≤ m)
+    -- genuine-map definition WITHOUT (P1): only the (P2) bridge is carried.
+    (hGen : ∀ (orbit : ℕ → ℝ × ℝ),
+        (∀ n, orbit n ∈ Taha l) → (∀ n, orbit (n + 1) = Tmap l (orbit n)) →
+        ∀ n, GenuineClassP2 l orbit n m) :
+    1 / l ^ 3 ≤ essSup (Pgen l) μ := by
+  have hm1 : 1 ≤ m := by omega
+  exact perq_Xomega_lb_qge19 hEngine hFW hmp h1 h2 hlo hlphi μ hμT hinv M hPbdd m hm
+    (fun orbit hmem hstep n =>
+      GenuineClassP2.toGenuineClass l h1 hm1 (hGen orbit hmem hstep n))
+
 /-! ## §5.  THE CARRIED CRUX — `fcorr_lb` re-exposed through `B1_target`.
 
 `L1bArcCoverage.B1_target` is `1/λ³ ≤ g_corr (L_blk q) q`, the (L1b) inequality.
@@ -302,10 +363,17 @@ theorem Xomega_lb_allq
 
 `#print axioms Xomega_lb_allq` must be
   `[propext, Classical.choice, Quot.sound, sorryAx]`
-with the `sorryAx` traceable ONLY to `L1bArcCoverage.fcorr_lb`. -/
+with the `sorryAx` traceable ONLY to `L1bArcCoverage.fcorr_lb`.
+
+The q ≤ 21-unconditional, (P1)-discharged top-level theorem
+`Xomega_lb_allq_q5to21_P1` lives in `ToplevelStitchQ5to21.lean` (it additionally
+imports the q19/20/21 window files); kept separate so this core file does not depend
+on those slow window compilations. -/
 
 #print axioms genuine_orbitdata
 #print axioms perq_Xomega_lb_qge19
+#print axioms perq_Xomega_lb_qge19_P1discharged
+#print axioms GenuineClassP2.toGenuineClass
 #print axioms L1b_carried
 #print axioms Xomega_lb_allq
 
