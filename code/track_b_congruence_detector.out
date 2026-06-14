@@ -1,0 +1,54 @@
+#involutions=232 #order3=106
+transitive index-7 diagrams: 7560
+cusp-width profile (1, 6)   count 2520
+cusp-width profile (2, 5)   count 1260
+cusp-width profile (3, 4)   count 1260
+cusp-width profile (7,)   count 2520
+
+--- profile (7,): monodromy group orders ---
+  |monodromy|=168  count=2520   (level N=7)
+
+--- ALL index-7 profiles: monodromy spectrum ---
+profile (1, 6): |G|=42(N=6):2520
+profile (2, 5): |G|=5040(N=10):1260
+profile (3, 4): |G|=5040(N=12):1260
+profile (7,): |G|=168(N=7):2520
+|PSL2(Z/2)| = 6
+|PSL2(Z/3)| = 12
+|PSL2(Z/4)| = 24
+|PSL2(Z/5)| = 60
+|PSL2(Z/6)| = 72
+|PSL2(Z/7)| = 168
+|PSL2(Z/12)| = 576
+
+=================  LIFTED-BCZ CROSS-SECTION CLUSTER CEILING  =================
+CONG rep level 7 cusp widths (7,)
+NONC rep level 6 cusp widths (1, 6)
+
+[CONGRUENCE (7,)  L2(7) level7] coset-label distribution: Counter({2: 57404, 3: 57336, 1: 57270, 5: 57120, 0: 56953, 4: 56913, 6: 56904})
+   coset 0: support_edge=0.004745  X(1%q)=0.068140  ceiling B=2  (#returns=56953)
+   coset 1: support_edge=0.003030  X(1%q)=0.069017  ceiling B=2  (#returns=57270)
+   coset 2: support_edge=0.003498  X(1%q)=0.068332  ceiling B=2  (#returns=57404)
+   coset 3: support_edge=0.001259  X(1%q)=0.066235  ceiling B=2  (#returns=57336)
+   coset 4: support_edge=0.002005  X(1%q)=0.068234  ceiling B=2  (#returns=56913)
+   coset 5: support_edge=0.002002  X(1%q)=0.068078  ceiling B=2  (#returns=57120)
+   coset 6: support_edge=0.001259  X(1%q)=0.068337  ceiling B=2  (#returns=56904)
+   --> MAX cluster ceiling over cosets = 2;  min support edge = 0.001259
+
+[NON-CONG (1,6) order42 level6] coset-label distribution: Counter({0: 57296, 4: 57220, 2: 57158, 3: 57130, 1: 57115, 5: 56991, 6: 56990})
+   coset 0: support_edge=0.002002  X(1%q)=0.066365  ceiling B=2  (#returns=57296)
+   coset 1: support_edge=0.003030  X(1%q)=0.069551  ceiling B=2  (#returns=57115)
+   coset 2: support_edge=0.002005  X(1%q)=0.068268  ceiling B=2  (#returns=57158)
+   coset 3: support_edge=0.001259  X(1%q)=0.067617  ceiling B=2  (#returns=57130)
+   coset 4: support_edge=0.004745  X(1%q)=0.070221  ceiling B=2  (#returns=57220)
+   coset 5: support_edge=0.002748  X(1%q)=0.068295  ceiling B=1  (#returns=56991)
+   coset 6: support_edge=0.001259  X(1%q)=0.066276  ceiling B=1  (#returns=56990)
+   --> MAX cluster ceiling over cosets = 2;  min support edge = 0.001259
+
+SUMMARY: ceiling cong=2  noncong=2   support-edge cong=0.00126 noncong=0.00126
+
+=== Independent congruence certificate (Wohlfahrt level + monodromy divisibility) ===
+profile (1, 6): level N=6, |monodromy|=42, |PSL2(Z/6)|=72, 42|72? False  -> *** NON-CONGRUENCE (certified) ***
+profile (7,): level N=7, |monodromy|=168, |PSL2(Z/7)|=168, 168|168? True  -> CONGRUENCE-compatible
+profile (2, 5): level N=10, |monodromy|=5040, |PSL2(Z/10)|=360, 5040|360? False  -> *** NON-CONGRUENCE (certified) ***
+profile (3, 4): level N=12, |monodromy|=5040, |PSL2(Z/12)|=576, 5040|576? False  -> *** NON-CONGRUENCE (certified) ***

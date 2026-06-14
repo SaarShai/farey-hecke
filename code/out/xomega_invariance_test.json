@@ -1,0 +1,185 @@
+{
+  "goldenL": {
+    "minR": 1.618033988749895,
+    "a*": 1.0,
+    "b*": 0.6180339887498948
+  },
+  "hecke": [
+    {
+      "q": 5,
+      "lambda": 1.618033988749895,
+      "1/lambda^3": 0.2360679774997897,
+      "1/lambda": 0.6180339887498949,
+      "lambda^2": 2.618033988749895,
+      "lambda^2_int_dist": 0.38196601125010515
+    },
+    {
+      "q": 7,
+      "lambda": 1.8019377358048383,
+      "1/lambda^3": 0.17091518882717946,
+      "1/lambda": 0.5549581320873712,
+      "lambda^2": 3.246979603717467,
+      "lambda^2_int_dist": 0.24697960371746705
+    },
+    {
+      "q": 8,
+      "lambda": 1.8477590650225735,
+      "1/lambda^3": 0.1585126677811072,
+      "1/lambda": 0.541196100146197,
+      "lambda^2": 3.414213562373095,
+      "lambda^2_int_dist": 0.41421356237309503
+    },
+    {
+      "q": 9,
+      "lambda": 1.8793852415718169,
+      "1/lambda^3": 0.15064425142615434,
+      "1/lambda": 0.532088886237956,
+      "lambda^2": 3.5320888862379562,
+      "lambda^2_int_dist": 0.4679111137620439
+    },
+    {
+      "q": 10,
+      "lambda": 1.902113032590307,
+      "1/lambda^3": 0.14530850560107217,
+      "1/lambda": 0.5257311121191336,
+      "lambda^2": 3.618033988749895,
+      "lambda^2_int_dist": 0.38196601125010515
+    },
+    {
+      "q": 11,
+      "lambda": 1.9189859472289947,
+      "1/lambda^3": 0.14150918078943928,
+      "1/lambda": 0.5211085581132027,
+      "lambda^2": 3.6825070656623624,
+      "lambda^2_int_dist": 0.31749293433763764
+    },
+    {
+      "q": 12,
+      "lambda": 1.9318516525781366,
+      "1/lambda^3": 0.1387007082420295,
+      "1/lambda": 0.5176380902050415,
+      "lambda^2": 3.732050807568877,
+      "lambda^2_int_dist": 0.2679491924311227
+    }
+  ],
+  "signatures": {
+    "Hecke H_3 = D(2,3,inf)": {
+      "lambda": 1.0,
+      "lambda^2": 1.0,
+      "lambda^2_is_int": true,
+      "arithmetic": true,
+      "type": "(2,3,inf)"
+    },
+    "Hecke H_4 = D(2,4,inf)": {
+      "lambda": 1.4142135623730951,
+      "lambda^2": 2.0000000000000004,
+      "lambda^2_is_int": true,
+      "arithmetic": true,
+      "type": "(2,4,inf)"
+    },
+    "Hecke H_5 = D(2,5,inf)": {
+      "lambda": 1.618033988749895,
+      "lambda^2": 2.618033988749895,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,5,inf)"
+    },
+    "Hecke H_6 = D(2,6,inf)": {
+      "lambda": 1.7320508075688772,
+      "lambda^2": 2.9999999999999996,
+      "lambda^2_is_int": true,
+      "arithmetic": true,
+      "type": "(2,6,inf)"
+    },
+    "Hecke H_7 = D(2,7,inf)": {
+      "lambda": 1.8019377358048383,
+      "lambda^2": 3.246979603717467,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,7,inf)"
+    },
+    "Hecke H_8 = D(2,8,inf)": {
+      "lambda": 1.8477590650225735,
+      "lambda^2": 3.414213562373095,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,8,inf)"
+    },
+    "Hecke H_9 = D(2,9,inf)": {
+      "lambda": 1.8793852415718169,
+      "lambda^2": 3.5320888862379562,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,9,inf)"
+    },
+    "Hecke H_10 = D(2,10,inf)": {
+      "lambda": 1.902113032590307,
+      "lambda^2": 3.6180339887498945,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,10,inf)"
+    },
+    "Hecke H_11 = D(2,11,inf)": {
+      "lambda": 1.9189859472289947,
+      "lambda^2": 3.682507065662362,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,11,inf)"
+    },
+    "Hecke H_12 = D(2,12,inf)": {
+      "lambda": 1.9318516525781366,
+      "lambda^2": 3.7320508075688776,
+      "lambda^2_is_int": false,
+      "arithmetic": false,
+      "type": "(2,12,inf)"
+    },
+    "2n-gon O_6 = D(3,inf,inf)": {
+      "cos(pi/n)": 0.5000000000000001,
+      "2cos(pi/n)": 1.0000000000000002,
+      "arithmetic": true,
+      "type": "(3,inf,inf)"
+    },
+    "2n-gon O_8 = D(4,inf,inf)": {
+      "cos(pi/n)": 0.7071067811865476,
+      "2cos(pi/n)": 1.4142135623730951,
+      "arithmetic": true,
+      "type": "(4,inf,inf)"
+    },
+    "2n-gon O_10 = D(5,inf,inf)": {
+      "cos(pi/n)": 0.8090169943749475,
+      "2cos(pi/n)": 1.618033988749895,
+      "arithmetic": false,
+      "type": "(5,inf,inf)"
+    },
+    "2n-gon O_12 = D(6,inf,inf)": {
+      "cos(pi/n)": 0.8660254037844387,
+      "2cos(pi/n)": 1.7320508075688774,
+      "arithmetic": true,
+      "type": "(6,inf,inf)"
+    },
+    "2n-gon O_14 = D(7,inf,inf)": {
+      "cos(pi/n)": 0.9009688679024191,
+      "2cos(pi/n)": 1.8019377358048383,
+      "arithmetic": false,
+      "type": "(7,inf,inf)"
+    },
+    "2n-gon O_16 = D(8,inf,inf)": {
+      "cos(pi/n)": 0.9238795325112867,
+      "2cos(pi/n)": 1.8477590650225735,
+      "arithmetic": false,
+      "type": "(8,inf,inf)"
+    },
+    "2n-gon O_18 = D(9,inf,inf)": {
+      "cos(pi/n)": 0.9396926207859084,
+      "2cos(pi/n)": 1.8793852415718169,
+      "arithmetic": false,
+      "type": "(9,inf,inf)"
+    },
+    "2n-gon O_20 = D(10,inf,inf)": {
+      "cos(pi/n)": 0.9510565162951535,
+      "2cos(pi/n)": 1.902113032590307,
+      "arithmetic": false,
+      "type": "(10,inf,inf)"
+    }
+  }
+}
