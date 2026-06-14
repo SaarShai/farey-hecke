@@ -483,5 +483,21 @@ P2 hypothesis, bringing the q≥19 leg to hypothesis-parity with the uncondition
   - `…/uniform_q5to18/GenuineSelfMap.lean` (`Tgen` + invariance lemmas)
   - `…/uniform_q5to18/GenuineMapP2_target.lean` (`target_of_corridor` = `PgenEjectTarget` discharge; separate because `GenuineMapP2.lean` is SEALED)
   - `…/uniform_q5to18/ToplevelStitchGen.lean` (`perq_Xomega_lb_qge19_GEN`)
+
+---
+
+## 9. EXECUTION DONE (2026-06-14) — see `tgen_execution_status_2026-06-14.md`
+
+All three files above are **BUILT and axiom-clean** (`lake build` over Mathlib v4.28.0, 8050 jobs,
+no `sorryAx`).  `perq_Xomega_lb_qge19_GEN` compiles with `#print axioms =
+[propext, Classical.choice, Quot.sound]`.  **P2 is DISCHARGED** (the deep-mid ejection is now
+PROVED via `target_of_corridor` + `genuine_hEject_deepmid`, not a carried `hEject`).  The
+floor-bracket Taha lower edge (G-E core) is proved exactly on the scalar branch
+(`genStep_scalar_Taha_lower` / `Tgen_scalar_maps_Taha`); the deep-mid geometric edges of
+`Tgen_maps_Taha` are carried as named inputs (not on the headline theorem's critical path — the
+ergodic engine supplies orbit Taha-membership a.e. from `μ(Taha)ᶜ=0`).  No Aristotle dispatch was
+needed.  Sole residual to literally-unconditional: the carried `MeasurePreserving(Tgen)`
+(hypothesis-parity with the unconditional q≤21 legs).  Full ledger + verbatim build/axiom output:
+`research_notes/tgen_execution_status_2026-06-14.md`.
 </content>
 </invoke>
