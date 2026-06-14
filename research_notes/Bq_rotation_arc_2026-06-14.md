@@ -805,3 +805,67 @@ flagged, so this gate is the shared parity engine for both.)
   (B(61)=14, 14 even-straddle fits / 15 odd impales), `code/goal1_Bq_resonance_parity.py` (34/34).
 - Parent: `research_notes/resonance_threedistance_2026-06-14.md` (parity argument + q=47),
   `BCZHeckeRotationArc.lean` / `BCZHeckeRotationArcR1.lean` (the R3 / R1-upper residual shape).
+
+# R2 EXTENSION (2026-06-14, this session) — realization ladder pushed to q = 8 and q = 9 (axiom-clean)
+
+**New file (touches NO sealed file; imports `BCZHeckeRotationArc`):**
+`projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR2hi.lean` (`namespace
+HeckeRotArcR2hi`, lake lib target `RotationArcR2hi`, Mathlib v4.28.0). **Build:**
+`lake build RotationArcR2hi` → `Build completed successfully (8028 jobs)` / `Built
+BCZHeckeRotationArcR2hi`. **All 6 audited declarations `sorry`-free, `#print axioms` = exactly
+`[propext, Classical.choice, Quot.sound]`** (no `sorryAx`, no `nativeDecide`):
+`run8_isClusterRun`, `Bq_eq_rotation_arc_q8`, `rotationArcCount8_realized`, `run9_isClusterRun`,
+`Bq_eq_rotation_arc_q9`, `rotationArcCount9_realized`.
+
+## Method (leaner than the q=7 file)
+The realization body is IDENTICAL per q to the q=7 pattern (`run{q}_isClusterRun` →
+`clusterCeiling{q}` → `Bq_eq_rotation_arc_q{q}` via `HeckeRotArc.Bq_eq_rotation_arc` +
+`cluster_le_rotation_arc`). Two simplifications vs the q=7 file:
+1. **Threshold kept as `Xq := 1/λ_q³` directly** (NOT reduced to a field polynomial). Sub-threshold
+   `P < 1/λ³` is proved by clearing the positive denominator `lt_div_iff₀ (pow_pos …)` → `P·λ³ < 1`,
+   a pure polynomial-in-λ goal closed by `nlinarith` with the minpoly (for power reduction) + the
+   tight rational two-sided bound `λ_gt`/`λ_lt`. This eliminates the `X_eq_inv_…` minpoly leg.
+2. **Minpoly cos-derivation hits a Mathlib-known cos value** so the multi-angle expansion terminates
+   cleanly:
+   - q=9 cubic `λ³ − 3λ − 1 = 0`: from `cos(3·π/9)=cos(π/3)=1/2` + triple-angle, `linear_combination 2*h`.
+   - q=8 quartic `λ⁴ − 4λ² + 2 = 0`: from `cos(4·π/8)=cos(π/2)=0` + `cos 4θ` expansion, `linear_combination 2*h`.
+   Tight bounds `λ_gt`/`λ_lt` (width 1e-4) by the same synthetic-division sign argument as q=7.
+
+## Witness coordinates (interior k=1, from `goal1_qladder_witness_exact.json`)
+| q | minpoly                 | deg | start (ℚ)      | realized `N+1=B(q)` | k-pattern |
+|---|-------------------------|-----|----------------|---------------------|-----------|
+| 8 | `x⁴ − 4x² + 2`          | 4   | `(1/3, 13/33)` | 3                   | `[1,1]`   |
+| 9 | `x³ − 3x − 1`           | 3   | `(1/3, 8/21)`  | 3                   | `[1,1]`   |
+
+For each: `(a₀,b₀)` rational; `a_{n+1}=b_n`, `b_{n+1}=−a_n+λ b_n` (k=1); all 3 points sub-threshold
+(`P<1/λ³`) and last-branch (`a+λb>1`); both interior steps genuine with floor bracket `λb≤1+a<2λb`
+(k=1, via the sealed `kfloor_eq_one_iff_bracket`). `run{q}_isClusterRun` is an
+`HeckeRotArc.IsClusterRun` of length 3; `clusterCeiling{q}` discharges `hrealize`;
+`Bq_eq_rotation_arc_q{q}` gives the full `clusterCeiling ↔ rotationArcCount` with the bridge no
+longer assumed.
+
+## Status across the onset-theorem range q ∈ {5,…,21}
+| q  | R2 realization status                                                              |
+|----|------------------------------------------------------------------------------------|
+| 5  | lower bound `B(5)≥3` PROVED (raw genuine-cluster, k-pattern `[2,1]`) — `…R2.lean`  |
+| 7  | full `B(7)=rotation-arc count`, bridge discharged — `…R2.lean`                     |
+| 8  | full `B(8)=rotation-arc count`, bridge discharged — `…R2hi.lean` (NEW)             |
+| 9  | full `B(9)=rotation-arc count`, bridge discharged — `…R2hi.lean` (NEW)             |
+| 10,11,12,14,15,16,18,21 | OPEN — minpoly cos-derivation not yet done (degrees 4–8; q=10 quartic `x⁴−5x²+5`, q=12 `x⁴−4x²+1`, q=15 `x⁴+x³−4x²−4x+1` are the next-cleanest deg-4) |
+| 13 | OPEN — sextic `x⁶−x⁵−5x⁴+4x³+6x²−3x−1`; realizes the first **length-4** arc (`B(13)=4`) |
+| 17,20 | OPEN — degree-8 minpoly |
+| 19 | OPEN — degree-9 minpoly (tightest margin, ratio 107) |
+
+**Closed this session: q = 8, 9** (in addition to the prior q = 5, 7). **Remaining q ∈
+{10,11,12,13,14,15,16,17,18,19,20,21}** — each is mechanical (identical realization body; the ONLY
+nontrivial leg is the per-q `2cos(π/q)` minimal-polynomial identity), but was not reached under the
+session time budget. Reason for non-closure is field-degree / minpoly-derivation time, NOT any
+mathematical obstruction: all witnesses are certified (`goal1_qladder_*_witness_exact.json`, interior
+k=1, sub-threshold margins 1e-4…3e-3 ≫ the 1e-6 bound interval width), and all q<23 are non-resonant
+so the rotation-arc count is the clean continuous value. q=8,9 each took one ~8 s incremental build.
+
+## Files
+- `projects/aristotle_dispatch_v15/uniform_q5to18/BCZHeckeRotationArcR2hi.lean` — this work
+  (6 audited thms, axiom-clean); lakefile target `RotationArcR2hi` added.
+- Witness data: `code/out/goal1_qladder_witness_exact.json` (q=8..16),
+  `code/out/goal1_qladder_hi_witness_exact.json` (q=17..24).
