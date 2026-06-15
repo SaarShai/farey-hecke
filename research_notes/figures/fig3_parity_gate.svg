@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 440" role="img">
+<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+<title>The parity gate: an even lattice straddles the forbidden zone and resonates, an odd lattice impales it and is blocked</title>
+<desc>Two circles of equally spaced rotation-lattice points with a red forbidden zone at the top. Left, 12 points (even) leave a gap over the zone so the cluster gains a point and resonates, as at q=23. Right, 11 points (odd) place a point inside the zone, blocking it, as at q=47 despite a closer fit.</desc>
+<text class="th" x="40" y="32">why there's no clean formula: a parity gate</text>
+
+<circle cx="190" cy="205" r="120" fill="none" stroke="#888780" stroke-width="1.3"/>
+<path d="M163 84 A120 120 0 0 1 217 84" fill="none" stroke="#E24B4A" stroke-width="13" opacity="0.30" stroke-linecap="round"/>
+<text class="ts" x="118" y="64" fill="#A32D2D">forbidden zone (a·b &gt; 1/λ³)</text>
+<g fill="#378ADD">
+<circle cx="306" cy="174" r="6"/><circle cx="275" cy="120" r="6"/><circle cx="221" cy="89" r="6"/><circle cx="159" cy="89" r="6"/>
+<circle cx="105" cy="120" r="6"/><circle cx="74" cy="174" r="6"/><circle cx="74" cy="236" r="6"/><circle cx="105" cy="290" r="6"/>
+<circle cx="159" cy="321" r="6"/><circle cx="221" cy="321" r="6"/><circle cx="275" cy="290" r="6"/><circle cx="306" cy="236" r="6"/>
+</g>
+<text class="th" x="176" y="200">12</text>
+<text class="ts" x="172" y="222">even</text>
+<text class="t" x="96" y="362" fill="#3B6D11">gap sits over the zone → +1</text>
+<text class="ts" x="110" y="384" fill="#3B6D11">resonance · e.g. q = 23 → B = 6</text>
+
+<circle cx="490" cy="205" r="120" fill="none" stroke="#888780" stroke-width="1.3"/>
+<path d="M463 84 A120 120 0 0 1 517 84" fill="none" stroke="#E24B4A" stroke-width="13" opacity="0.30" stroke-linecap="round"/>
+<g fill="#378ADD">
+<circle cx="425" cy="104" r="6"/><circle cx="381" cy="155" r="6"/><circle cx="371" cy="222" r="6"/><circle cx="399" cy="284" r="6"/>
+<circle cx="456" cy="320" r="6"/><circle cx="524" cy="320" r="6"/><circle cx="581" cy="284" r="6"/><circle cx="609" cy="222" r="6"/>
+<circle cx="599" cy="155" r="6"/><circle cx="555" cy="104" r="6"/>
+</g>
+<circle cx="490" cy="85" r="8.5" fill="#501313" stroke="#FCEBEB" stroke-width="1.6"/>
+<text class="th" x="476" y="200">11</text>
+<text class="ts" x="478" y="222">odd</text>
+<text class="t" x="398" y="362" fill="#A32D2D">a point lands in the zone</text>
+<text class="ts" x="406" y="384" fill="#A32D2D">blocked · e.g. q = 47 → B = 10</text>
+
+<text class="t" x="40" y="426">parity beats proximity — q = 47 fits closer, yet does not resonate</text>
+</svg>

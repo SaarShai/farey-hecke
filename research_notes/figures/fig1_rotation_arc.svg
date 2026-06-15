@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 400" role="img">
+<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+<title>A cluster of extreme gaps as a rotation arc on a conserved-energy ellipse</title>
+<desc>An ellipse for the conserved energy form. Six teal points along its top arc, each one rotation of pi over q apart, form a cluster where the gap-product stays below the onset threshold; the run ends at a red ejection point.</desc>
+<text class="th" x="40" y="34">the cluster is a rotation arc on a conserved-energy ellipse</text>
+
+<ellipse cx="340" cy="255" rx="210" ry="92" fill="none" stroke="#888780" stroke-width="1.5"/>
+
+<path d="M158 209 A 210 92 0 0 1 522 209" fill="none" stroke="#1D9E75" stroke-width="17" opacity="0.22" stroke-linecap="round"/>
+
+<line x1="150" y1="150" x2="530" y2="150" stroke="#BA7517" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text class="ts" x="206" y="142">onset threshold 1/λ³ — the peak a·b approaches it but stays below</text>
+
+<circle cx="158" cy="209" r="7" fill="#1D9E75"/>
+<circle cx="217" cy="181" r="7" fill="#1D9E75"/>
+<circle cx="296" cy="165" r="7" fill="#1D9E75"/>
+<circle cx="384" cy="165" r="7" fill="#1D9E75"/>
+<circle cx="463" cy="181" r="7" fill="#1D9E75"/>
+<circle cx="522" cy="209" r="7" fill="#1D9E75"/>
+
+<path d="M232 174 A 70 34 0 0 1 286 161" fill="none" stroke="#378ADD" stroke-width="1.7" marker-end="url(#ah)"/>
+<text class="ts" x="232" y="126">rotation by π/q each step</text>
+
+<circle cx="549" cy="245" r="7.5" fill="#E24B4A"/>
+<path d="M558 241 L 612 221" fill="none" stroke="#E24B4A" stroke-width="1.8" marker-end="url(#ar)"/>
+<text class="ts" x="500" y="276">ejects (k: 1 → 2)</text>
+
+<text class="t" x="232" y="312">E = a² − λab + b²  (conserved energy)</text>
+<text class="t" x="40" y="362">cluster = consecutive points with a·b &lt; 1/λ³ — its length is the ceiling B(q)</text>
+
+<defs>
+<marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#378ADD"/></marker>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#E24B4A"/></marker>
+</defs>
+</svg>

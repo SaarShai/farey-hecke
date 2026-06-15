@@ -1,0 +1,28 @@
+Warning: 256-color support not detected. Using a terminal with at least 256-color support is recommended for a better visual experience.
+Ripgrep is not available. Falling back to GrepTool.
+Skill conflict detected: "graphify" from "/Users/za/.agents/skills/graphify/SKILL.md" is overriding the same skill from "/Users/za/.gemini/skills/graphify/SKILL.md".
+### Fig 1: Rotation Arc
+*   **Collisions/Crowding:** "peak a·b" text is physically resting on the dashed threshold line. Red "ejection" text is shoved into the ellipse's margin.
+*   **Legibility:** The energy formula at the bottom right is truncated: "(conserv" ends mid-word.
+*   **Communication:** Fails to visually connect the blue "rotation" arrow to the actual spacing between points. The green highlight is too thin to emphasize the "cluster" as a distinct unit.
+*   **Misleading:** The orange threshold line is straight, but the "peak" of a·b on an ellipse doesn't necessarily follow a flat line in this projection.
+*   **Fix:** Expand the right canvas to un-clip the formula and move labels into whitespace.
+
+### Fig 2: Onset Value
+*   **Collisions/Crowding:** The rightmost label "1/8 (q→∞)" is a total pile-up with the q=21 point, the dashed line, and the axis edge.
+*   **Legibility:** The bottom caption is brutally truncated: "...one formu" is missing the end of the sentence. Y-axis label is rotated and cramped.
+*   **Communication:** Using a continuous line for discrete Hecke surface indices (integers) is lazy and mathematically imprecise. 
+*   **Misleading:** The visual weight of the "q=5" label suggests it's the most important, but the "1/8" limit is the actual punchline and it’s illegible.
+*   **Fix:** Remove the connecting line (use a scatter plot) and move the "1/8" label to the left of the Y-axis.
+
+### Fig 3: Parity Gate
+*   **Collisions/Crowding:** None, but the bottom text block is a "wall of words" that kills the visual momentum.
+*   **Legibility:** The "impaled" point on the right is dark blue on a thick red notch; the contrast is too low to see exactly *where* it landed.
+*   **Communication:** The viewer has to manually count the dots to verify "Even" vs "Odd," which is a cognitive tax.
+*   **Misleading:** The "notch" looks like a physical object rather than a mathematical "forbidden zone."
+*   **Fix:** Add a large digit in the center of each circle (e.g., "12" and "11") so the parity is instant.
+
+### Clarity Ranking
+1.  **Fig 3 (Parity Gate):** Most successful at "A vs B" comparison despite the counting chore.
+2.  **Fig 1 (Rotation Arc):** Technically informative but layout-sloppy.
+3.  **Fig 2 (Onset Value):** Failing grade; truncation and label collisions make it look like a draft.
