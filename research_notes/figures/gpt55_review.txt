@@ -1,0 +1,524 @@
+Reading additional input from stdin...
+OpenAI Codex v0.139.0
+--------
+workdir: /Users/za/Documents/farey-hecke/research_notes/figures
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019ecb8d-73ca-74a3-992a-cefb4bea7380
+--------
+user
+You are an ADVERSARIAL figure reviewer (non-expert legibility + honesty). Context: Three BEFORE/AFTER contrast figures (fig1_before_after.svg, fig2_before_after.svg, fig3_before_after.svg) for a verified math result, aimed at non-experts. Design intent: muted-gray LEFT panel = what was known BEFORE our work; colored RIGHT panel = what our work adds; a colored banner states the novelty. Honest framing they must respect: fig1 before = "gaps cluster, size bounded, CAUSE unknown" / after = "the cluster IS a rotation by pi/q on a conserved-energy ellipse, proven". fig2 before = a QUALITATIVE hard edge known case-by-case (Athreya-Chaika), no exact value / after = exact value 1/lambda^3 for all 17 surfaces, machine-verified, ->1/8. fig3 before = a tidy formula B=2+floor((q-1)/6) we ourselves had CONJECTURED / after = that formula is FALSE (a point jumps off at q=23) and the true rule is an even/odd PARITY gate, proven.  Read the three SVG sources in this directory. For EACH figure judge harshly and concretely (cite coordinates): (1) does the RIGHT panel + banner make the NEW contribution unmistakable to a non-mathematician, or is it vague? (2) is the BEFORE panel a FAIR representation (not a strawman, not overclaiming our novelty)? (3) visual/layout defects: label overlaps, the q=23 red dot semantics in fig3, the number-line metaphor in fig2, panel balance; (4) the single highest-impact fix. Then: is before/after the right device here, and which figure is weakest? Be terse, specific, no flattery.
+codex
+I’ll inspect the local instructions first, then read the three SVGs directly and judge against the stated mathematical framing.
+exec
+/bin/zsh -lc 'pwd && rg --files' in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+/Users/za/Documents/farey-hecke/research_notes/figures
+fig2_before_after.svg
+gpt55_review.txt
+fig3_before_after.svg.png
+codex_review.txt
+fig3_parity_gate.svg
+fig3_parity_gate.svg.png
+fig3_before_after.svg
+fig2_before_after.svg.png
+gemini_review.txt
+fig1_before_after.svg.png
+fig2_onset_value.svg.png
+fig2_onset_value.svg
+fig1_before_after.svg
+fig1_rotation_arc.svg.png
+fig1_rotation_arc.svg
+
+exec
+/bin/zsh -lc "sed -n '1,220p' start.md" in /Users/za/Documents/farey-hecke/research_notes/figures
+ exited 1 in 0ms:
+sed: start.md: No such file or directory
+
+codex
+`start.md` is not in the figures directory, so I’m checking the nearby repo tree for it instead of guessing. I’ll read the SVGs in parallel since the review depends on exact text positions and coordinates.
+exec
+/bin/zsh -lc "sed -n '1,260p' fig1_before_after.svg" in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+<title>The mechanism, before versus after our work</title>
+<desc>Left: previously, extreme gaps were known to cluster with bounded size but no known cause. Right: our work shows the cluster is a rotation on a conserved-energy oval.</desc>
+<text class="th" x="40" y="30">figure 1 — the mechanism: before vs after</text>
+<line x1="340" y1="48" x2="340" y2="252" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<text class="ts" x="56" y="62" fill="#5F5E5A">known before</text>
+<text class="ts" x="420" y="62" fill="#185FA5">what our work adds</text>
+<path d="M62 150 C100 130,130 170,170 138 S240 168,280 150" fill="none" stroke="#B4B2A9" stroke-width="1.5"/>
+<g fill="#B4B2A9"><circle cx="62" cy="150" r="6"/><circle cx="120" cy="138" r="6"/><circle cx="178" cy="150" r="6"/><circle cx="236" cy="142" r="6"/><circle cx="290" cy="151" r="6"/></g>
+<text x="196" y="116" fill="#888780" style="font:500 28px sans-serif">?</text>
+<text class="ts" x="56" y="206" fill="#5F5E5A">extreme gaps cluster, and the</text>
+<text class="ts" x="56" y="222" fill="#5F5E5A">cluster size is bounded —</text>
+<text class="ts" x="56" y="238" fill="#5F5E5A">but the CAUSE was unknown</text>
+<ellipse cx="500" cy="148" rx="105" ry="48" fill="none" stroke="#888780" stroke-width="1.3"/>
+<path d="M409 124 A105 48 0 0 1 591 124" fill="none" stroke="#1D9E75" stroke-width="11" opacity="0.24" stroke-linecap="round"/>
+<g fill="#1D9E75"><circle cx="409" cy="124" r="5"/><circle cx="464" cy="103" r="5"/><circle cx="536" cy="103" r="5"/><circle cx="591" cy="124" r="5"/></g>
+<text class="ts" x="470" y="92">π/q turn</text>
+<circle cx="598" cy="170" r="6" fill="#E24B4A"/>
+<text class="ts" x="405" y="206" fill="#185FA5">the cluster IS a rotation by π/q</text>
+<text class="ts" x="405" y="222" fill="#185FA5">on a conserved-energy oval —</text>
+<text class="ts" x="405" y="238" fill="#185FA5">proven by computer</text>
+<text class="t" x="40" y="284" fill="#3B6D11">new: the geometric cause — a rigid rotation on a conserved ellipse (no mechanism before)</text>
+</svg>
+
+exec
+/bin/zsh -lc "sed -n '1,300p' fig2_before_after.svg" in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+<title>The onset value, before versus after our work</title>
+<desc>Left: previously a hard edge was known to exist but only qualitatively, one surface at a time. Right: our work gives the exact value 1 over lambda cubed for all 17 surfaces, machine-verified.</desc>
+<text class="th" x="40" y="30">figure 2 — the onset value: before vs after</text>
+<line x1="340" y1="48" x2="340" y2="252" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<text class="ts" x="56" y="62" fill="#5F5E5A">known before</text>
+<text class="ts" x="420" y="62" fill="#185FA5">what our work adds</text>
+<rect x="62" y="142" width="58" height="20" fill="#B4B2A9" opacity="0.30"/>
+<line x1="62" y1="162" x2="300" y2="162" stroke="#888780" stroke-width="1.2"/>
+<circle cx="120" cy="162" r="6" fill="#B4B2A9"/>
+<text x="112" y="132" fill="#888780" style="font:500 24px sans-serif">?</text>
+<text class="ts" x="60" y="186" fill="#5F5E5A">"no small gaps" — an edge exists</text>
+<text class="ts" x="56" y="214" fill="#5F5E5A">but only case-by-case,</text>
+<text class="ts" x="56" y="230" fill="#5F5E5A">qualitative, no exact value</text>
+<line x1="400" y1="186" x2="624" y2="186" stroke="#BA7517" stroke-width="1.1" stroke-dasharray="5 3"/>
+<text class="ts" x="596" y="182">1/8</text>
+<path d="M400 100 L430 150 L466 168 L506 177 L556 183 L620 186" fill="none" stroke="#85B7EB" stroke-width="1.8"/>
+<g fill="#185FA5"><circle cx="400" cy="100" r="5"/><circle cx="430" cy="150" r="5"/><circle cx="466" cy="168" r="5"/><circle cx="506" cy="177" r="5"/><circle cx="556" cy="183" r="5"/><circle cx="620" cy="186" r="5"/></g>
+<text class="ts" x="405" y="214" fill="#185FA5">exact value 1/λ³ — all 17 surfaces,</text>
+<text class="ts" x="405" y="230" fill="#185FA5">each an exact computer-checked equality</text>
+<text class="t" x="40" y="284" fill="#185FA5">new: the exact value, one formula across the whole family, machine-verified</text>
+</svg>
+
+exec
+/bin/zsh -lc 'wc -l fig1_before_after.svg fig2_before_after.svg fig3_before_after.svg' in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+      24 fig1_before_after.svg
+      23 fig2_before_after.svg
+      21 fig3_before_after.svg
+      68 total
+
+exec
+/bin/zsh -lc "rg --files .. -g 'start.md'" in /Users/za/Documents/farey-hecke/research_notes/figures
+ exited 1 in 0ms:
+exec
+/bin/zsh -lc "sed -n '1,340p' fig3_before_after.svg" in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+<title>The cluster-size rule, before versus after our work</title>
+<desc>Left: a tidy formula for the cluster ceiling was conjectured. Right: our work disproves it (a point jumps off the line at q=23) and identifies an even-odd parity gate as the true rule.</desc>
+<text class="th" x="40" y="30">figure 3 — the cluster-size rule: before vs after</text>
+<line x1="340" y1="48" x2="340" y2="252" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<text class="ts" x="56" y="62" fill="#5F5E5A">believed before</text>
+<text class="ts" x="420" y="62" fill="#185FA5">what our work adds</text>
+<line x1="62" y1="205" x2="300" y2="105" stroke="#B4B2A9" stroke-width="1.5"/>
+<g fill="#B4B2A9"><circle cx="80" cy="197" r="5"/><circle cx="135" cy="174" r="5"/><circle cx="190" cy="151" r="5"/><circle cx="245" cy="128" r="5"/><circle cx="290" cy="109" r="5"/></g>
+<text class="ts" x="60" y="232" fill="#5F5E5A">a tidy formula B = 2 + ⌊(q−1)/6⌋</text>
+<text class="ts" x="150" y="248" fill="#5F5E5A">was conjectured</text>
+<line x1="402" y1="205" x2="640" y2="105" stroke="#B4B2A9" stroke-width="1.3" stroke-dasharray="5 4"/>
+<g fill="#185FA5"><circle cx="420" cy="197" r="5"/><circle cx="475" cy="174" r="5"/><circle cx="530" cy="151" r="5"/><circle cx="620" cy="109" r="5"/></g>
+<circle cx="575" cy="108" r="7" fill="#E24B4A"/>
+<circle cx="575" cy="108" r="13" fill="none" stroke="#E24B4A" stroke-width="1.5"/>
+<text class="ts" x="540" y="92" fill="#A32D2D">q=23 jumps off</text>
+<text class="ts" x="405" y="232" fill="#185FA5">formula is FALSE — the true rule is an</text>
+<text class="ts" x="405" y="248" fill="#185FA5">even/odd parity gate (proven)</text>
+<text class="t" x="40" y="284" fill="#A32D2D">new: we disproved the formula, then found and proved the even/odd cause</text>
+</svg>
+
+codex
+The three SVGs are short enough to review from source. I’m also checking the rendered PNGs so layout and label weight get judged as viewers will see them, not just as XML.
+codex
+The rendered views confirm the main issue is not tiny collisions; it is semantic ambiguity: the bottom “banner” is just text, and several visual metaphors require already knowing the math.
+exec
+/bin/zsh -lc 'nl -ba fig1_before_after.svg' in /Users/za/Documents/farey-hecke/research_notes/figures
+exec
+/bin/zsh -lc 'nl -ba fig2_before_after.svg' in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+     1	<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+     2	<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+     3	<title>The mechanism, before versus after our work</title>
+     4	<desc>Left: previously, extreme gaps were known to cluster with bounded size but no known cause. Right: our work shows the cluster is a rotation on a conserved-energy oval.</desc>
+     5	<text class="th" x="40" y="30">figure 1 — the mechanism: before vs after</text>
+     6	<line x1="340" y1="48" x2="340" y2="252" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+     7	<text class="ts" x="56" y="62" fill="#5F5E5A">known before</text>
+     8	<text class="ts" x="420" y="62" fill="#185FA5">what our work adds</text>
+     9	<path d="M62 150 C100 130,130 170,170 138 S240 168,280 150" fill="none" stroke="#B4B2A9" stroke-width="1.5"/>
+    10	<g fill="#B4B2A9"><circle cx="62" cy="150" r="6"/><circle cx="120" cy="138" r="6"/><circle cx="178" cy="150" r="6"/><circle cx="236" cy="142" r="6"/><circle cx="290" cy="151" r="6"/></g>
+    11	<text x="196" y="116" fill="#888780" style="font:500 28px sans-serif">?</text>
+    12	<text class="ts" x="56" y="206" fill="#5F5E5A">extreme gaps cluster, and the</text>
+    13	<text class="ts" x="56" y="222" fill="#5F5E5A">cluster size is bounded —</text>
+    14	<text class="ts" x="56" y="238" fill="#5F5E5A">but the CAUSE was unknown</text>
+    15	<ellipse cx="500" cy="148" rx="105" ry="48" fill="none" stroke="#888780" stroke-width="1.3"/>
+    16	<path d="M409 124 A105 48 0 0 1 591 124" fill="none" stroke="#1D9E75" stroke-width="11" opacity="0.24" stroke-linecap="round"/>
+    17	<g fill="#1D9E75"><circle cx="409" cy="124" r="5"/><circle cx="464" cy="103" r="5"/><circle cx="536" cy="103" r="5"/><circle cx="591" cy="124" r="5"/></g>
+    18	<text class="ts" x="470" y="92">π/q turn</text>
+    19	<circle cx="598" cy="170" r="6" fill="#E24B4A"/>
+    20	<text class="ts" x="405" y="206" fill="#185FA5">the cluster IS a rotation by π/q</text>
+    21	<text class="ts" x="405" y="222" fill="#185FA5">on a conserved-energy oval —</text>
+    22	<text class="ts" x="405" y="238" fill="#185FA5">proven by computer</text>
+    23	<text class="t" x="40" y="284" fill="#3B6D11">new: the geometric cause — a rigid rotation on a conserved ellipse (no mechanism before)</text>
+    24	</svg>
+
+ succeeded in 0ms:
+     1	<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+     2	<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+     3	<title>The onset value, before versus after our work</title>
+     4	<desc>Left: previously a hard edge was known to exist but only qualitatively, one surface at a time. Right: our work gives the exact value 1 over lambda cubed for all 17 surfaces, machine-verified.</desc>
+     5	<text class="th" x="40" y="30">figure 2 — the onset value: before vs after</text>
+     6	<line x1="340" y1="48" x2="340" y2="252" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+     7	<text class="ts" x="56" y="62" fill="#5F5E5A">known before</text>
+     8	<text class="ts" x="420" y="62" fill="#185FA5">what our work adds</text>
+     9	<rect x="62" y="142" width="58" height="20" fill="#B4B2A9" opacity="0.30"/>
+    10	<line x1="62" y1="162" x2="300" y2="162" stroke="#888780" stroke-width="1.2"/>
+    11	<circle cx="120" cy="162" r="6" fill="#B4B2A9"/>
+    12	<text x="112" y="132" fill="#888780" style="font:500 24px sans-serif">?</text>
+    13	<text class="ts" x="60" y="186" fill="#5F5E5A">"no small gaps" — an edge exists</text>
+    14	<text class="ts" x="56" y="214" fill="#5F5E5A">but only case-by-case,</text>
+    15	<text class="ts" x="56" y="230" fill="#5F5E5A">qualitative, no exact value</text>
+    16	<line x1="400" y1="186" x2="624" y2="186" stroke="#BA7517" stroke-width="1.1" stroke-dasharray="5 3"/>
+    17	<text class="ts" x="596" y="182">1/8</text>
+    18	<path d="M400 100 L430 150 L466 168 L506 177 L556 183 L620 186" fill="none" stroke="#85B7EB" stroke-width="1.8"/>
+    19	<g fill="#185FA5"><circle cx="400" cy="100" r="5"/><circle cx="430" cy="150" r="5"/><circle cx="466" cy="168" r="5"/><circle cx="506" cy="177" r="5"/><circle cx="556" cy="183" r="5"/><circle cx="620" cy="186" r="5"/></g>
+    20	<text class="ts" x="405" y="214" fill="#185FA5">exact value 1/λ³ — all 17 surfaces,</text>
+    21	<text class="ts" x="405" y="230" fill="#185FA5">each an exact computer-checked equality</text>
+    22	<text class="t" x="40" y="284" fill="#185FA5">new: the exact value, one formula across the whole family, machine-verified</text>
+    23	</svg>
+
+exec
+/bin/zsh -lc 'nl -ba fig3_before_after.svg' in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+     1	<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+     2	<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+     3	<title>The cluster-size rule, before versus after our work</title>
+     4	<desc>Left: a tidy formula for the cluster ceiling was conjectured. Right: our work disproves it (a point jumps off the line at q=23) and identifies an even-odd parity gate as the true rule.</desc>
+     5	<text class="th" x="40" y="30">figure 3 — the cluster-size rule: before vs after</text>
+     6	<line x1="340" y1="48" x2="340" y2="252" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+     7	<text class="ts" x="56" y="62" fill="#5F5E5A">believed before</text>
+     8	<text class="ts" x="420" y="62" fill="#185FA5">what our work adds</text>
+     9	<line x1="62" y1="205" x2="300" y2="105" stroke="#B4B2A9" stroke-width="1.5"/>
+    10	<g fill="#B4B2A9"><circle cx="80" cy="197" r="5"/><circle cx="135" cy="174" r="5"/><circle cx="190" cy="151" r="5"/><circle cx="245" cy="128" r="5"/><circle cx="290" cy="109" r="5"/></g>
+    11	<text class="ts" x="60" y="232" fill="#5F5E5A">a tidy formula B = 2 + ⌊(q−1)/6⌋</text>
+    12	<text class="ts" x="150" y="248" fill="#5F5E5A">was conjectured</text>
+    13	<line x1="402" y1="205" x2="640" y2="105" stroke="#B4B2A9" stroke-width="1.3" stroke-dasharray="5 4"/>
+    14	<g fill="#185FA5"><circle cx="420" cy="197" r="5"/><circle cx="475" cy="174" r="5"/><circle cx="530" cy="151" r="5"/><circle cx="620" cy="109" r="5"/></g>
+    15	<circle cx="575" cy="108" r="7" fill="#E24B4A"/>
+    16	<circle cx="575" cy="108" r="13" fill="none" stroke="#E24B4A" stroke-width="1.5"/>
+    17	<text class="ts" x="540" y="92" fill="#A32D2D">q=23 jumps off</text>
+    18	<text class="ts" x="405" y="232" fill="#185FA5">formula is FALSE — the true rule is an</text>
+    19	<text class="ts" x="405" y="248" fill="#185FA5">even/odd parity gate (proven)</text>
+    20	<text class="t" x="40" y="284" fill="#A32D2D">new: we disproved the formula, then found and proved the even/odd cause</text>
+    21	</svg>
+
+exec
+/bin/zsh -lc 'find /Users/za/Documents/farey-hecke -name start.md -maxdepth 4 -print' in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+/Users/za/Documents/farey-hecke/start.md
+
+codex
+I found `start.md` at the repo root and am reading it now to satisfy the project instruction before I finalize the critique.
+exec
+/bin/zsh -lc "sed -n '1,220p' /Users/za/Documents/farey-hecke/start.md" in /Users/za/Documents/farey-hecke/research_notes/figures
+ succeeded in 0ms:
+# Token Economy Start
+
+Startup glue. Goal: excellent work, minimal context.
+Work only inside the current working folder for the active project. If bootstrapped into a new folder, that folder is the working root. The repo-local markdown wiki is the source of truth.
+
+Default target project comes from the user prompt, handoff, imported summary, or project wiki. Token Economy is the local operating framework for it.
+
+## Prime Directive
+
+**Caveman Ultra** for surfaced output: terse, exact, high-signal. No filler, no softening, no lead-ins. Code/errors verbatim. Output style only — reasoning budget stays task-dependent (`high` for hard synthesis).
+
+Start non-trivial tasks in plan mode: short plan, inspect reality, execute.
+Smallest reversible action. Prune steps not tied to risk, implementation, verification, learning.
+
+## Boot Sequence
+
+1. Identify the active working folder / target project root.
+2. Run:
+   ```bash
+   ./te doctor
+   ```
+3. Read `token-economy.yaml`.
+4. Load only:
+   - this file
+   - `L0_rules.md` if present
+   - `L1_index.md` if present
+5. Do not load full wiki pages, raw sources, old sessions, or large docs until retrieval proves relevance.
+6. Determine target project from prompt, handoff, imported summary, or project wiki.
+7. Ignore stale external memory that conflicts with this file or the current user prompt.
+
+## On-Demand Loader
+
+Load only when triggered:
+
+| Trigger | Load |
+|---|---|
+| Terse style details | `skills/caveman-ultra/SKILL.md` |
+| Task >3 steps | `skills/plan-first-execute/SKILL.md` |
+| Need wiki memory | `skills/wiki-memory/SKILL.md` |
+| Writing memory | `skills/write-gate/SKILL.md`; `skills/wiki-memory/SKILL.md` |
+| Context refresh/clear/`summ` | `./te context status` / `./te context checkpoint` |
+| Need subagents | `./te delegate plan`; `prompts/subagents/lifecycle.prompt.md` |
+| Simplify/lean/prune | `skills/lean-execution/SKILL.md` |
+| GitHub repo maintenance | `prompts/subagents/repo-maintainer.prompt.md` |
+| `/pa` or `/btw` prompt | `./te pa --directive` |
+| Before completion claim | `skills/verify-before-completion/SKILL.md` |
+| Delegation policy | `prompts/delegation-matrix.md` |
+| New wiki page | `templates/page.template.md` |
+
+## Context Rules
+
+- Retrieve before reasoning about project/wiki facts.
+- Check relevant skills before action; load only matching skills.
+- Fetch all relevant information, and only relevant information.
+- Prefer pointers first: index, search hits, timelines, then full pages.
+- At `20%` estimated context used: `./te context status`, `./te context meter --transcript <file>`, `./te context checkpoint --handoff-template`.
+- For `summ`: use host-native clear/compact when available, then continue in fresh context. If the host cannot clear, open a fresh session with `./te context fresh-start` output + `start.md`.
+
+## Wiki Rules
+
+The LLM wiki is long-term memory for the current target project.
+
+- `raw/`: immutable sources. Never rewrite. Add new source notes only.
+- `concepts/`, `patterns/`, `projects/`, `people/`, `queries/`: synthesized wiki pages.
+- `index.md`: compact catalog. Read first.
+- `log.md`: append-only timeline.
+- `schema.md`: contract for page types, frontmatter, ingest/query/lint.
+- `L0_rules.md`: stable behavior rules.
+- `L1_index.md`: compact pointer index.
+- `L2_facts/`: durable facts.
+- `L3_sops/`: solved-task playbooks.
+- `L4_archive/`: cold session archives.
+
+Do not use external note apps, home-directory or machine-wide agent/MCP config, or external wikis unless the user explicitly asks.
+
+Use progressive retrieval:
+
+```bash
+./te wiki context "<task>"
+./te code map "<symbol/path>"
+./te wiki search "<query>"
+./te wiki timeline "<id>"
+./te wiki fetch "<id>"
+```
+
+Fetch full pages only after compact relevance. Cite wiki paths/IDs.
+
+## Documentation Rules
+
+Document after verified work, not after intentions.
+
+- Durable discovery: add/update a concept, pattern, project note, L2 fact, or L3 SOP.
+- Successful repeated workflow: crystallize into `L3_sops/`.
+- Important answer: file into `queries/`.
+- Every wiki operation updates `log.md`; material pages update `index.md`.
+- Claims need provenance: source path, URL, command, result, or linked note.
+
+## Delegation Rules
+
+Use cheapest capable worker. Keep main context clean.
+
+```bash
+./te delegate classify "<task>"
+./te delegate plan "<task>"
+```
+
+For personal-assistant bypass prompts, route instead of answering from the expensive full-context model:
+
+```bash
+./te pa --directive "/pa <prompt>"
+```
+
+Keep normal prompt hooks quiet unless `TOKEN_ECONOMY_CLASSIFY_ALL=1` is explicitly set. Use `/pa` or `/btw` when a prompt should bypass the full-context model.
+
+Delegate only independent work. Give compact briefs: scope, files, output, budget. Ask for compact result packets, not transcripts. Use cheap models for search, summaries, simple edits, extraction, lint, classification; frontier models for architecture, ambiguity, high-risk reasoning, final synthesis. Subagents are model-agnostic. Close only after results are captured and documented/merged.
+
+GitHub remote? Use `prompts/subagents/repo-maintainer.prompt.md` at verified save-points. No GitHub remote? Skip.
+
+## Done Means
+
+Before final response:
+
+- Verify with tests/checks when feasible.
+- Record durable facts only after successful execution.
+- Update wiki/log for meaningful discoveries.
+- Report changed files, verification, and remaining risk briefly.
+
+codex
+`start.md` asks for the Token Economy boot checks. I’m doing the read-only parts now; if the doctor command needs writes, I’ll treat that as unavailable under this session’s read-only sandbox.
+exec
+/bin/zsh -lc "sed -n '1,220p' token-economy.yaml" in /Users/za/Documents/farey-hecke
+ succeeded in 0ms:
+# Token Economy universal framework config.
+# Defaults favor project-scoped installs and low startup context.
+
+wiki_root: .
+agent_adapter: auto
+context_max_tokens: auto
+refresh_threshold: 0.20
+warn_threshold: 0.15
+default_scope: project
+model_registry: ./models.yaml
+profile: ultra
+reasoning_effort: high
+reply_style: ultra
+external_adapters: []
+output_filter_archive: true
+# Session-aware suppression: suppresses lines already seen in this TOKEN_ECONOMY_SESSION_ID.
+output_filter_session_aware: false
+output_filter_rules: .token-economy/output-filter-rules.txt
+
+exec
+/bin/zsh -lc "test -f L0_rules.md && sed -n '1,220p' L0_rules.md || true" in /Users/za/Documents/farey-hecke
+ succeeded in 0ms:
+# L0 Rules
+
+- Caveman Ultra by default for surfaced output: terse, exact, no filler, no softeners. Keep reasoning budget separate and task-dependent; use `high` only when the task needs deeper synthesis.
+- Start non-trivial work in plan mode before executing.
+- Before executing a plan, prune steps that do not reduce risk, gather needed facts, implement, verify, or preserve durable learning.
+- Check relevant skills before action; load only matching skills.
+- Retrieve before reasoning about project/wiki facts.
+- Load `L1_index.md` first; fetch full pages only after relevance is clear.
+- At 20% estimated context used, run `./te context checkpoint`.
+- Document durable facts only after verified execution.
+- Keep work repo-local unless the user explicitly asks otherwise.
+- Use `/pa` or `/btw` for context-light routing; keep normal prompt hooks quiet.
+- Use cheapest capable model/subagent; keep delegation briefs compact.
+
+exec
+/bin/zsh -lc "test -f L1_index.md && sed -n '1,220p' L1_index.md || true" in /Users/za/Documents/farey-hecke
+ succeeded in 0ms:
+# L1 Index
+
+Compact pointers. Fetch details on demand.
+
+- start -> `start.md`
+- config -> `token-economy.yaml`
+- model registry -> `models.yaml`
+- L0 rules -> `L0_rules.md`
+- schema -> `schema.md`
+- wiki catalog -> `index.md`
+- log -> `log.md`
+- raw sources -> `raw/` (search only; fetch after relevance)
+- koyama_replication_bundle/BUNDLE_README (page) -> `koyama_replication_bundle/BUNDLE_README.md`
+- koyama_replication_bundle/CREST_EXECUTIVE_ONEPAGE (page) -> `koyama_replication_bundle/CREST_EXECUTIVE_ONEPAGE.md`
+- koyama_replication_bundle/REPLICATION_REPORT (page) -> `koyama_replication_bundle/REPLICATION_REPORT.md`
+- primes-equispaced/.claude/CLAUDE (page) -> `primes-equispaced/.claude/CLAUDE.md`
+- primes-equispaced/.claude/RUN_GUIDELINES (page) -> `primes-equispaced/.claude/RUN_GUIDELINES.md`
+- primes-equispaced/.lake/packages/Cli/README (page) -> `primes-equispaced/.lake/packages/Cli/README.md`
+- primes-equispaced/.lake/packages/LeanSearchClient/README (page) -> `primes-equispaced/.lake/packages/LeanSearchClient/README.md`
+- primes-equispaced/.lake/packages/Qq/README (page) -> `primes-equispaced/.lake/packages/Qq/README.md`
+- primes-equispaced/.lake/packages/aesop/README (page) -> `primes-equispaced/.lake/packages/aesop/README.md`
+- primes-equispaced/.lake/packages/batteries/README (page) -> `primes-equispaced/.lake/packages/batteries/README.md`
+- primes-equispaced/.lake/packages/batteries/docs/README (page) -> `primes-equispaced/.lake/packages/batteries/docs/README.md`
+- primes-equispaced/.lake/packages/importGraph/README (page) -> `primes-equispaced/.lake/packages/importGraph/README.md`
+- primes-equispaced/.lake/packages/importGraph/html-template/README (page) -> `primes-equispaced/.lake/packages/importGraph/html-template/README.md`
+- primes-equispaced/.lake/packages/mathlib/.github/CONTRIBUTING (page) -> `primes-equispaced/.lake/packages/mathlib/.github/CONTRIBUTING.md`
+- primes-equispaced/.lake/packages/mathlib/.github/PULL_REQUEST_TEMPLATE (page) -> `primes-equispaced/.lake/packages/mathlib/.github/PULL_REQUEST_TEMPLATE.md`
+- primes-equispaced/.lake/packages/mathlib/Archive/Imo/README (page) -> `primes-equispaced/.lake/packages/mathlib/Archive/Imo/README.md`
+- primes-equispaced/.lake/packages/mathlib/Archive/README (page) -> `primes-equispaced/.lake/packages/mathlib/Archive/README.md`
+- primes-equispaced/.lake/packages/mathlib/Archive/Wiedijk100Theorems/README (page) -> `primes-equispaced/.lake/packages/mathlib/Archive/Wiedijk100Theorems/README.md`
+- primes-equispaced/.lake/packages/mathlib/CITATION (page) -> `primes-equispaced/.lake/packages/mathlib/CITATION.md`
+- primes-equispaced/.lake/packages/mathlib/CODE_OF_CONDUCT (page) -> `primes-equispaced/.lake/packages/mathlib/CODE_OF_CONDUCT.md`
+- primes-equispaced/.lake/packages/mathlib/Cache/README (page) -> `primes-equispaced/.lake/packages/mathlib/Cache/README.md`
+- primes-equispaced/.lake/packages/mathlib/DownstreamTest/README (page) -> `primes-equispaced/.lake/packages/mathlib/DownstreamTest/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/Notation/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/Notation/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Algebra/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/Cone/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/Cone/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Analysis/Convex/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/Cone/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/Cone/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Convex/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/Growth/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/Growth/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Geometry/Group/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Mathport/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Mathport/README.md`
+- primes-equispaced/.lake/packages/mathlib/Mathlib/Order/README (page) -> `primes-equispaced/.lake/packages/mathlib/Mathlib/Order/README.md`
+- primes-equispaced/.lake/packages/mathlib/README (page) -> `primes-equispaced/.lake/packages/mathlib/README.md`
+
+exec
+/bin/zsh -lc './te doctor' in /Users/za/Documents/farey-hecke
+ succeeded in 1759ms:
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-3TxAE9Nl' (errno=Operation not permitted)
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-IyWHdh84' (errno=Operation not permitted)
+{
+  "comcom_mcp": true,
+  "config": true,
+  "context_keeper": true,
+  "extensions": {
+    "comcom_mcp": true,
+    "context_keeper": true,
+    "semdiff_mcp": true
+  },
+  "ok": true,
+  "python": "3.9.6",
+  "refresh_threshold": 0.2,
+  "repo_root": "/Users/za/Documents/farey-hecke",
+  "semdiff_mcp": true,
+  "start_md": true,
+  "wiki_root": "/Users/za/Documents/farey-hecke",
+  "wiki_root_exists": true
+}
+
+codex
+**Common Defect**
+There is no colored banner. All three use one text line at `x=40 y=284`. If the novelty statement matters, make it an actual filled strip or top-right headline.
+
+**Fig 1**
+- New contribution: mostly clear. Right text at `x=405 y=206/222/238` says the result directly. Visual is weaker: the ellipse `cx=500 cy=148` plus green arc does not scream “rotation” without the label.
+- Before fairness: fair. Left text at `x=56 y=206-238` matches “cluster bounded, cause unknown.” But “no mechanism before” at `x=40 y=284` is harsher than “cause unknown.”
+- Defects: red dot at `cx=598 cy=170` is unexplained. It reads as an error/outlier. The `π/q turn` label at `x=470 y=92` is too math-local; no arrowhead, no step motion.
+- Highest-impact fix: add arrowheads around the ellipse and label the red/green points as “successive cluster points”; change banner wording to “cause was unknown” instead of “no mechanism before.”
+
+**Fig 2**
+- New contribution: text is clear: `x=405 y=214/230` gives `1/λ³`, all 17, computer-checked. Visual is not clear: the curve from `(400,100)` to `(620,186)` looks like empirical convergence, not exact equalities.
+- Before fairness: mostly fair in words, but the graphic overclaims. The dot at `cx=120 cy=162` on the number line looks like a known exact threshold, contradicting “no exact value.”
+- Defects: the shaded block `x=62 y=142 width=58` plus dot at `(120,162)` makes the “unknown edge” too precise. The `1/8` label at `x=596 y=182` crowds the final blue point `(620,186)` and reads as that point’s value, not a limit.
+- Highest-impact fix: remove the precise before-dot. Show a fuzzy/unknown edge band on the left; reserve precise markers for the after panel.
+
+**Fig 3**
+- New contribution: text is clear, but the visual only shows “formula false.” It does not show the even/odd parity gate at all.
+- Before fairness: “believed before” at `x=56 y=62` is too broad if this was your conjecture. Use “our conjecture before” or “conjectured rule.”
+- Defects: red `q=23` dot at `(575,108)` is semantically under-explained. The predicted formula value at `x=575` is not marked; on the dashed line from `(402,205)` to `(640,105)`, it would be around `y≈132`, so the jump is real but invisible unless inferred. The later blue dot `(620,109)` sits nearly level with the red dot, weakening “jumps off.”
+- Highest-impact fix: add a ghost gray predicted `q=23` point at approximately `(575,132)` and a vertical red arrow to actual `(575,108)`, then encode even/odd as two visibly different lanes or colors.
+
+**Device Verdict**
+Before/after is right for figs 1 and 2. For fig 3, “conjecture vs theorem” is more honest and sharper than before/after.
+
+Weakest: fig 3. It claims the true contribution is parity, but the picture shows only a counterexample.
+tokens used
+80,231
+**Common Defect**
+There is no colored banner. All three use one text line at `x=40 y=284`. If the novelty statement matters, make it an actual filled strip or top-right headline.
+
+**Fig 1**
+- New contribution: mostly clear. Right text at `x=405 y=206/222/238` says the result directly. Visual is weaker: the ellipse `cx=500 cy=148` plus green arc does not scream “rotation” without the label.
+- Before fairness: fair. Left text at `x=56 y=206-238` matches “cluster bounded, cause unknown.” But “no mechanism before” at `x=40 y=284` is harsher than “cause unknown.”
+- Defects: red dot at `cx=598 cy=170` is unexplained. It reads as an error/outlier. The `π/q turn` label at `x=470 y=92` is too math-local; no arrowhead, no step motion.
+- Highest-impact fix: add arrowheads around the ellipse and label the red/green points as “successive cluster points”; change banner wording to “cause was unknown” instead of “no mechanism before.”
+
+**Fig 2**
+- New contribution: text is clear: `x=405 y=214/230` gives `1/λ³`, all 17, computer-checked. Visual is not clear: the curve from `(400,100)` to `(620,186)` looks like empirical convergence, not exact equalities.
+- Before fairness: mostly fair in words, but the graphic overclaims. The dot at `cx=120 cy=162` on the number line looks like a known exact threshold, contradicting “no exact value.”
+- Defects: the shaded block `x=62 y=142 width=58` plus dot at `(120,162)` makes the “unknown edge” too precise. The `1/8` label at `x=596 y=182` crowds the final blue point `(620,186)` and reads as that point’s value, not a limit.
+- Highest-impact fix: remove the precise before-dot. Show a fuzzy/unknown edge band on the left; reserve precise markers for the after panel.
+
+**Fig 3**
+- New contribution: text is clear, but the visual only shows “formula false.” It does not show the even/odd parity gate at all.
+- Before fairness: “believed before” at `x=56 y=62` is too broad if this was your conjecture. Use “our conjecture before” or “conjectured rule.”
+- Defects: red `q=23` dot at `(575,108)` is semantically under-explained. The predicted formula value at `x=575` is not marked; on the dashed line from `(402,205)` to `(640,105)`, it would be around `y≈132`, so the jump is real but invisible unless inferred. The later blue dot `(620,109)` sits nearly level with the red dot, weakening “jumps off.”
+- Highest-impact fix: add a ghost gray predicted `q=23` point at approximately `(575,132)` and a vertical red arrow to actual `(575,108)`, then encode even/odd as two visibly different lanes or colors.
+
+**Device Verdict**
+Before/after is right for figs 1 and 2. For fig 3, “conjecture vs theorem” is more honest and sharper than before/after.
+
+Weakest: fig 3. It claims the true contribution is parity, but the picture shows only a counterexample.

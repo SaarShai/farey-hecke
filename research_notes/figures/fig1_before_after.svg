@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
+<style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
+<title>The mechanism: before versus after our work</title>
+<desc>Left: gaps were known to cluster with bounded size but unknown cause. Right: the cluster is a rigid rotation by pi over q on a conserved-energy ellipse, with successive points and a final ejection.</desc>
+<text class="th" x="40" y="30">figure 1 — the mechanism: before vs after</text>
+<line x1="340" y1="46" x2="340" y2="240" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<text class="ts" x="56" y="60" fill="#5F5E5A">known before</text>
+<text class="ts" x="420" y="60" fill="#0C447C">what our work adds</text>
+<path d="M62 150 C100 132,130 170,170 140 S240 166,280 150" fill="none" stroke="#B4B2A9" stroke-width="1.5"/>
+<g fill="#B4B2A9"><circle cx="62" cy="150" r="6"/><circle cx="120" cy="140" r="6"/><circle cx="178" cy="150" r="6"/><circle cx="236" cy="143" r="6"/><circle cx="290" cy="150" r="6"/></g>
+<text x="196" y="118" fill="#888780" style="font:500 26px sans-serif">?</text>
+<text class="ts" x="56" y="200" fill="#5F5E5A">extreme gaps cluster, and the size</text>
+<text class="ts" x="56" y="216" fill="#5F5E5A">is bounded — but the cause</text>
+<text class="ts" x="56" y="232" fill="#5F5E5A">was unknown</text>
+<ellipse cx="500" cy="150" rx="105" ry="46" fill="none" stroke="#888780" stroke-width="1.3"/>
+<path d="M409 127 A105 46 0 0 1 591 127" fill="none" stroke="#1D9E75" stroke-width="11" opacity="0.24" stroke-linecap="round"/>
+<g fill="#1D9E75"><circle cx="409" cy="127" r="5"/><circle cx="464" cy="107" r="5"/><circle cx="536" cy="107" r="5"/><circle cx="591" cy="127" r="5"/></g>
+<path d="M470 100 A 60 22 0 0 1 540 100" fill="none" stroke="#1D9E75" stroke-width="1.6" marker-end="url(#ar1)"/>
+<text class="ts" x="456" y="88">rotates by π/q each step</text>
+<circle cx="600" cy="168" r="6" fill="#E24B4A"/>
+<text class="ts" x="556" y="190" fill="#A32D2D">ejection</text>
+<text class="ts" x="400" y="216" fill="#0C447C">successive cluster points = one rigid</text>
+<text class="ts" x="400" y="232" fill="#0C447C">rotation on a conserved-energy oval</text>
+<rect x="40" y="258" width="600" height="30" rx="6" fill="#EAF3DE"/>
+<text class="t" x="54" y="278" fill="#27500A">new: the geometric cause — a rotation on a conserved ellipse, proven by computer</text>
+<defs><marker id="ar1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#1D9E75"/></marker></defs>
+</svg>
