@@ -1,25 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 300" role="img">
 <style>.th{font:500 22px -apple-system,sans-serif;fill:#1a1a1a}.t{font:400 16px -apple-system,sans-serif;fill:#2c2c2a}.ts{font:400 13px -apple-system,sans-serif;fill:#5f5e5a}</style>
-<title>The onset value: before versus after our work</title>
-<desc>Left: a fuzzy band shows the edge was known to exist but its value was not pinned. Right: exact equalities 1 over lambda cubed for all 17 surfaces, computer-verified, tending to the limit one eighth.</desc>
-<text class="th" x="40" y="30">figure 2 — the onset value: before vs after</text>
-<line x1="340" y1="46" x2="340" y2="240" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
-<text class="ts" x="56" y="60" fill="#5F5E5A">known before</text>
-<text class="ts" x="420" y="60" fill="#0C447C">what our work adds</text>
-<line x1="60" y1="160" x2="300" y2="160" stroke="#888780" stroke-width="1.2"/>
-<rect x="96" y="146" width="112" height="28" fill="#B4B2A9" opacity="0.20"/>
-<line x1="96" y1="142" x2="96" y2="178" stroke="#B4B2A9" stroke-width="1.4" stroke-dasharray="3 3"/>
-<line x1="208" y1="142" x2="208" y2="178" stroke="#B4B2A9" stroke-width="1.4" stroke-dasharray="3 3"/>
-<text x="146" y="138" fill="#888780" style="font:500 22px sans-serif">?</text>
-<text class="ts" x="58" y="202" fill="#5F5E5A">an edge lies somewhere in here —</text>
-<text class="ts" x="58" y="218" fill="#5F5E5A">value not pinned, one surface</text>
-<text class="ts" x="58" y="234" fill="#5F5E5A">at a time, qualitative</text>
+<title>The onset value: before versus after, with real numbers</title>
+<desc>Left: only q=5 was computed by hand (about 0.236); other surfaces unknown, no formula. Right: exact values 1 over lambda cubed for all 17 surfaces — 0.236 at q=5, 0.137 at q=13, 0.129 at q=21 — with limit one eighth.</desc>
+<text class="th" x="40" y="28">figure 2 — the onset value: before vs after</text>
+<line x1="340" y1="44" x2="340" y2="238" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+<text class="ts" x="56" y="58" fill="#5F5E5A">known before</text>
+<text class="ts" x="420" y="58" fill="#0C447C">what our work adds</text>
+<line x1="64" y1="80" x2="64" y2="186" stroke="#888780" stroke-width="1"/>
+<line x1="64" y1="186" x2="300" y2="186" stroke="#888780" stroke-width="1"/>
+<circle cx="84" cy="100" r="6" fill="#B4B2A9"/>
+<text class="ts" x="94" y="98">q=5 ≈ 0.236</text><text class="ts" x="94" y="114" fill="#888780">computed by hand (2013)</text>
+<text x="150" y="150" fill="#888780" style="font:500 20px sans-serif">?</text>
+<text x="210" y="166" fill="#888780" style="font:500 20px sans-serif">?</text>
+<text x="262" y="172" fill="#888780" style="font:500 20px sans-serif">?</text>
+<text class="ts" x="58" y="208" fill="#5F5E5A">a few surfaces by hand — no formula,</text>
+<text class="ts" x="58" y="224" fill="#5F5E5A">most q unknown, none verified</text>
 <line x1="400" y1="192" x2="624" y2="192" stroke="#BA7517" stroke-width="1.1" stroke-dasharray="5 3"/>
-<text class="ts" x="430" y="180">limit → 1/8</text>
-<path d="M400 102 L430 150 L466 168 L506 177 L556 184 L620 188" fill="none" stroke="#B5D4F4" stroke-width="1.2" stroke-dasharray="3 3"/>
-<g fill="#185FA5"><circle cx="400" cy="102" r="5"/><circle cx="430" cy="150" r="5"/><circle cx="466" cy="168" r="5"/><circle cx="506" cy="177" r="5"/><circle cx="556" cy="184" r="5"/><circle cx="620" cy="188" r="5"/></g>
-<text class="ts" x="400" y="218" fill="#0C447C">each dot = an exact equality 1/λ³</text>
-<text class="ts" x="400" y="234" fill="#0C447C">(computer-checked, not a fit) — all 17</text>
-<rect x="40" y="258" width="600" height="30" rx="6" fill="#E6F1FB"/>
-<text class="t" x="54" y="278" fill="#0C447C">new: the exact value 1/λ³ across the whole family, machine-verified (no exact value before)</text>
+<text class="ts" x="404" y="186">limit 1/8 = 0.125</text>
+<path d="M400 100 L430 150 L466 168 L506 177 L556 184 L620 188" fill="none" stroke="#B5D4F4" stroke-width="1.2" stroke-dasharray="3 3"/>
+<g fill="#185FA5"><circle cx="400" cy="100" r="5"/><circle cx="430" cy="150" r="5"/><circle cx="466" cy="168" r="5"/><circle cx="506" cy="177" r="5"/><circle cx="556" cy="184" r="5"/><circle cx="620" cy="188" r="5"/></g>
+<text class="ts" x="406" y="96">q=5: 0.236</text>
+<text class="ts" x="474" y="166">q=13: 0.137</text>
+<text class="ts" x="556" y="176">q=21: 0.129</text>
+<text class="ts" x="400" y="224" fill="#0C447C">all 17 = exact equalities 1/λ³ (computer-checked)</text>
+<rect x="40" y="250" width="600" height="30" rx="6" fill="#E6F1FB"/>
+<text class="t" x="54" y="270" fill="#0C447C">new: the exact value 1/λ³ for all 17 surfaces, machine-verified (no formula before)</text>
 </svg>
