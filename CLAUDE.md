@@ -48,7 +48,6 @@ notice when context matches one (e.g. `wiki-memory` for "have we done X").
 - `prompt-triage` — Use on every UserPromptSubmit (pre-model hook) to classify the prompt and emit a directive telling the main model which subagent/model should handle it
 - `requirements-ledger` — Use whenever the user states anything carrying intent — an ask, a question, a constraint, a preference, a compound "do X, Y, and Z" (one row per conjunct), or an implicit ask embedded in prose
 - `semantic-diff` — AST-node-level diff for file re-reads
-- `skill-pulse` — UserPromptSubmit hook that periodically re-injects active skill rules to fight instruction drift
 - `task-retrospective` — Use at the end of any non-trivial task (after the work is verified, before the final report); ALSO fire mid-task the moment the user corrects you — says you were wrong, that you skipped a step or claimed something without actually running it, calls out a mistake you have made before ("again", "second time", "you keep", "I told you", "stop doing that"), or pushes back on your approach; or when the user types /retro
 - `verify-before-completion` — Use before claiming work is done, fixed, passing, committed, or ready
 - `wiki-memory` — Repo-local markdown wiki with progressive retrieval (search → timeline → fetch) and gated writes (verified facts only)
