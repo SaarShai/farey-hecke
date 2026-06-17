@@ -28,7 +28,7 @@ while (( "$#" )); do
     --dry-run) DRY_RUN=1; shift ;;
     --no-graphify) INSTALL_GRAPHIFY=0; shift ;;
     -h|--help)
-      grep -E '^# ' "$0" | sed 's/^# //'
+      awk 'NR==1{next} !/^#/{exit} {sub(/^# ?/,"");print}' "$0"
       exit 0 ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
   esac
@@ -116,12 +116,14 @@ skill_is_slash_only() {
 # dependency. Enable one explicitly with: bash skills/<name>/tools/install.sh
 # Rationale: only measured-win or cheap load-bearing skills belong on the
 # default install path (see eval/FINDINGS.md).
-# skill-pulse + compliance-canary are now DEFAULT-ON (auto-install: true, set
-# 2026-06-09): they are the output-style drift defense — skill-pulse re-anchors
-# active skill rules every N turns, compliance-canary catches symptomatic drift
-# — that keeps caveman-ultra (and any pulse_reminder/drift_probes skill) from
-# decaying over a long session. Turn off per-project via env without uninstall:
-# SKILL_PULSE_DISABLED=1 / COMPLIANCE_CANARY_DISABLED=1.
+# compliance-canary is the DEFAULT-ON output-style drift defense (auto-install:
+# true since 2026-06-09; absorbed skill-pulse at v1.10, so it is now the SINGLE
+# drift watcher). One UserPromptSubmit hook runs both halves — a periodic
+# re-anchor of active skill rules every N turns AND symptomatic drift probes —
+# keeping caveman-ultra (and any pulse_reminder/drift_probes skill) from decaying
+# over a long session. Turn off per-project via env without uninstall:
+# COMPLIANCE_CANARY_DISABLED=1 (both) — SKILL_PULSE_DISABLED=1 still disables
+# just the re-anchor (back-compat alias).
 # NOTE: per-skill installers MERGE into .claude/settings.json (append-only).
 # A bare ./install.sh now AUTO-PRUNES hooks whose script is GONE (a skill that
 # was cut — see prune_dead_hooks below), so removed skills fully self-heal. But
@@ -228,6 +230,17 @@ inject_catalog_into_doc() {
       cat "$block_tmp"
     } > "$target"
     echo "    [write] $target (created with catalog)"
+    rm -f "$block_tmp"
+    return 0
+  fi
+
+  if grep -q 'brainer:skills-catalog:start' "$target" && ! grep -q 'brainer:skills-catalog:end' "$target"; then
+    # Start sentinel present but END sentinel missing (hand-edit removed it /
+    # interrupted write). The awk replace below sets skip=1 at the start and
+    # only clears it at the end sentinel — with no end sentinel, skip stays 1
+    # to EOF and ALL content after the start sentinel (including real user
+    # prose) is silently dropped. Refuse to rewrite; warn instead of truncate.
+    echo "    [skip] $target has catalog start sentinel but no end sentinel — refusing to rewrite (would truncate everything after it). Restore the end sentinel ($CATALOG_END) or remove the start sentinel, then re-run." >&2
     rm -f "$block_tmp"
     return 0
   fi
@@ -425,14 +438,23 @@ install_claude_code() {
   echo "[claude-code]"
   run "mkdir -p '$REPO_ROOT/.claude/skills'"
   prune_stale_skill_links "$REPO_ROOT/.claude/skills"
-  prune_dead_hooks "$REPO_ROOT/.claude/settings.json" "$REPO_ROOT"
   for skill in "$SRC"/*/; do
     name=$(basename "$skill")
     [ "$name" = "_shared" ] && continue
     link "$skill" "$REPO_ROOT/.claude/skills/$name"
   done
+  # Prune dead hooks AFTER (re)creating the skill symlinks: prune decides a
+  # managed hook is dead via os.path.exists(.claude/skills/<name>/...), which
+  # only resolves through those symlinks. Running it first (or with a
+  # settings.json rsync'd from another machine before its symlinks exist) made
+  # every live Brainer hook look missing and wiped it. With symlinks in place,
+  # prune removes only hooks whose skill is genuinely gone.
+  prune_dead_hooks "$REPO_ROOT/.claude/settings.json" "$REPO_ROOT"
   inject_catalog_into_doc "$REPO_ROOT/CLAUDE.md"
   ensure_global_output_style_hooks
+  # Regenerate the hooks map (pre-built index for hook-wiring questions;
+  # see skills/HOOKS_MAP.md + index-first). Non-fatal: map is an optimization.
+  run "python3 '$REPO_ROOT/scripts/gen_hooks_map.py'" || echo "    [warn] gen_hooks_map failed (non-fatal)"
 }
 
 install_codex() {

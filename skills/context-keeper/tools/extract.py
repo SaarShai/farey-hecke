@@ -21,18 +21,38 @@ import argparse, json, os, re, sys, time, urllib.request
 from collections import defaultdict
 from pathlib import Path
 
-PATH_RE = re.compile(r"(?<![\w\-])(?:~|\.{0,2})/[\w\-./]+\.(?:py|js|ts|tsx|jsx|rs|md|txt|json|yaml|yml|toml|sh|go|rb|java|c|cpp|h|hpp|css|html|sql|mjs|cjs|ini|conf)")
+# Linear-time path matcher. The strong leading negative-lookbehind (excludes
+# word/-/./~ chars) means a match can only START at a path-token boundary, not
+# at every interior segment — without it, the segment construction backtracks
+# O(n²) looking for an extension on a long slash-run (a 40KB '/'-heavy paste hit
+# ~3s and could blow hook.py's subprocess timeout, losing the snapshot). The
+# same lookbehind also stops `https://host/a/b.py` URL fragments (host/a/b.py)
+# from leaking into files_touched, since every interior segment is preceded by
+# '/' or '.'. Segment class keeps '.' so dotfile dirs (~/.config/x.py) match.
+PATH_RE = re.compile(r"(?<![\w\-./~])(?:~/|\.{1,2}/|/)?(?:[\w\-.]+/)+[\w\-.]+\.(?:py|js|ts|tsx|jsx|rs|md|txt|json|yaml|yml|toml|sh|go|rb|java|c|cpp|h|hpp|css|html|sql|mjs|cjs|ini|conf)")
 URL_RE = re.compile(r"https?://[^\s)\]'\"]+")
 NUM_RE = re.compile(r"\b\d+(?:\.\d+)?\s*(?:%|ms|s|x|tokens?|tok|GB|MB|KB|B|bytes?|lines?|items?|calls?)\b", re.I)
 ERROR_RE = re.compile(r"(?:Error|Exception|Traceback|fail(?:ed|ure)?|SIGKILL|exit code [1-9]|stderr)[^\n]{3,200}", re.I)
 IMPERATIVE_RE = re.compile(r"^(?:build|make|create|fix|find|implement|add|run|test|check|set up|design|write|measure|eval|compare|explain|research|install|deploy)\b", re.I)
+FAIL_WORD_RE = re.compile(r"didn't work|doesn't work|not work|broke|broken|bug|wrong|mismatch|incompat", re.I)
 
 
 def iter_events(path):
+    # TWIN: compliance-canary/tools/hook.py:read_transcript_tail does the same
+    # JSONL malformed-line guard — keep both in sync if you touch this one. (This
+    # copy streams line-by-line by design, per SKILL.md "read JSONL incrementally".)
     with open(path, encoding="utf-8", errors="replace") as f:
         for line in f:
-            try: yield json.loads(line)
+            try: obj = json.loads(line)
             except: continue
+            # Parseable-but-non-dict lines (`123`, `["a"]`) crashed regex_extract
+            # downstream — silently, behind hook.sh's `|| true`, costing the whole
+            # compaction snapshot (found by round-4 stress 2026-06-12). Same guard
+            # for message-as-non-dict.
+            if not isinstance(obj, dict): continue
+            if "message" in obj and not isinstance(obj["message"], dict):
+                obj["message"] = {}
+            yield obj
 
 
 def extract_text(content):
@@ -134,20 +154,47 @@ def regex_extract(events):
                 s = e.strip().rstrip(".")
                 if len(s) > 10: add("errors_seen", s[:200], limit=30)
 
-        # Bash commands: extract from tool_use blocks
-        if "TOOL:Bash" in text:
-            for m in re.finditer(r'TOOL:Bash INPUT:\{[^}]*"command"\s*:\s*"([^"]{5,300})"', text):
-                cmd = m.group(1).replace('\\"', '"').replace('\\n', '; ')
-                add("commands_run", cmd, limit=40)
+        # Bash commands / written files: walk tool_use blocks STRUCTURALLY.
+        # The old approach regex-scraped the flattened "TOOL:Bash INPUT:{...}"
+        # text; on multi-KB commands the bounded capture backtracked
+        # quadratically — 23s for a 10k-event transcript (round-4 profile,
+        # 2026-06-12). The content blocks are already parsed JSON; read them.
+        # For top-level-content events (no "message" key) msg is {} and content
+        # is None — fall back to ev["content"] so the walk still runs (else
+        # commands_run/files_created are silently lost for that shape).
+        walk_content = content if content is not None else ev.get("content")
+        if isinstance(walk_content, list):
+            for b in walk_content:
+                if not isinstance(b, dict) or b.get("type") != "tool_use":
+                    continue
+                inp = b.get("input")
+                if not isinstance(inp, dict):
+                    continue
+                if b.get("name") == "Bash":
+                    cmd = inp.get("command")
+                    if isinstance(cmd, str) and len(cmd) >= 5:
+                        add("commands_run",
+                            cmd[:300].replace("\n", "; "), limit=40)
+                elif b.get("name") == "Write":
+                    fp = inp.get("file_path")
+                    if isinstance(fp, str) and fp:
+                        add("files_created", fp)
 
-        # Written files from Write tool
-        if "TOOL:Write" in text:
-            for m in re.finditer(r'TOOL:Write INPUT:\{[^}]*"file_path"\s*:\s*"([^"]+)"', text):
-                add("files_created", m.group(1))
-
-        # Failed attempts: sentences near failure words
-        for m in re.finditer(r"[^.!?\n]{10,150}(?:didn't work|doesn't work|not work|broke|broken|bug|wrong|mismatch|incompat)[^.!?\n]{0,150}", text, re.I):
-            add("failed_attempts", m.group(0).strip()[:200], limit=20)
+        # Failed attempts: sentences near failure words. Keyword-first, then
+        # slice a window — the old single regex put a backtracking {10,150}
+        # prefix BEFORE the alternation, going quadratic on long unbroken
+        # lines (this was ~95% of a 23s extract on a 10k-event transcript;
+        # round-4 profile 2026-06-12).
+        for m in FAIL_WORD_RE.finditer(text):
+            lo = max(0, m.start() - 150)
+            hi = min(len(text), m.end() + 150)
+            window = text[lo:hi]
+            # trim to the sentence containing the keyword
+            head = window[:m.start() - lo].rsplit("\n", 1)[-1].rsplit(". ", 1)[-1]
+            tail = window[m.start() - lo:].split("\n", 1)[0].split(". ", 1)[0]
+            s = (head + tail).strip()
+            if len(s) >= 15:
+                add("failed_attempts", s[:200], limit=20)
 
     result = dict(out)
     result["_confidence"] = {k: dict(v) for k, v in confidence.items()}
@@ -258,6 +305,10 @@ def render_markdown(regex_out, llm_out, session_id, transcript_path):
     return "\n".join(lines)
 
 
+# `﻿?` tolerates a UTF-8 BOM before the opening fence; without it a
+# BOM-prefixed SKILL.md yields {} → the skill drops from the output-style /
+# pulse_reminder snapshot. (wiki-memory's parsers tolerate BOM; this + skill-pulse
+# did not — the fix-one-copy-not-the-sibling class.)
 _FM_RE = re.compile(r"^﻿?---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
 
@@ -296,10 +347,14 @@ def skills_dir():
 
 
 def active_output_styles(root):
-    """Skills whose frontmatter sets `output_style: true`. Returns [(name, rule)]
-    where rule is the `pulse_reminder` (fallback: first sentence of description).
-    These define the session's emitted-prose style; PreCompact would otherwise
-    drop them, so we surface them in the compaction pointer to survive the
+    """Installed skills whose frontmatter sets `output_style: true`. Returns
+    [(name, rule)] where rule is the `pulse_reminder` (fallback: first sentence
+    of description). NOTE: this scans disk only — it reports skills that *could*
+    be active, not transcript-confirmed activation. In Brainer the output style
+    is always-on (SessionStart), so installed == active; a consuming project
+    that gates an output_style skill on actual invocation should treat these as
+    candidates, not confirmed-active. PreCompact would otherwise drop these
+    prose rules, so we surface them in the compaction pointer to survive the
     summary. Generic over any output-style skill (e.g. caveman-ultra)."""
     if not root or not root.is_dir():
         return []
@@ -332,6 +387,7 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--llm", default=None, help="Ollama model for extraction (e.g. qwen3:8b)")
     ap.add_argument("--session-id", default=None)
+    ap.add_argument("--trigger", default=None, help="PreCompact trigger (auto/manual) — kept in snapshot filename to disambiguate same-second events")
     ap.add_argument("--pointer-only", action="store_true", help="print terse pointer to stdout for hook use")
     args = ap.parse_args()
 
@@ -344,7 +400,21 @@ def main():
     md = render_markdown(regex_out, llm_out, sid, args.transcript)
 
     repo_root = Path(os.environ.get("TOKEN_ECONOMY_ROOT", Path.cwd()))
-    out_path = Path(args.out) if args.out else repo_root / ".brainer" / "sessions" / f"{time.strftime('%Y-%m-%d-%H%M', time.gmtime())}-{sid[:8]}.md"
+    if args.out:
+        out_path = Path(args.out)
+    else:
+        # Seconds (%H%M%S) + trigger keep two PreCompact events for the same
+        # session in the same UTC minute from overwriting each other (minute
+        # granularity dropped the first checkpoint — data loss). A numeric
+        # suffix guarantees uniqueness if seconds+trigger still collide.
+        trig = re.sub(r"[^\w\-]", "", str(args.trigger or "auto"))[:12] or "auto"
+        stamp = time.strftime("%Y-%m-%d-%H%M%S", time.gmtime())
+        base = repo_root / ".brainer" / "sessions"
+        out_path = base / f"{stamp}-{sid[:8]}-{trig}.md"
+        n = 1
+        while out_path.exists():
+            out_path = base / f"{stamp}-{sid[:8]}-{trig}-{n}.md"
+            n += 1
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(md, encoding="utf-8")
 
@@ -353,13 +423,13 @@ def main():
     n_cmds = len(regex_out.get("commands_run", []))
     n_errs = len(regex_out.get("errors_seen", []))
     goals = regex_out.get("user_goals", [])[:3]
-    # Active output styles (e.g. caveman-ultra) define emitted-prose rules that
-    # PreCompact would otherwise drop — surface them FIRST and verbatim so the
-    # summarizer carries them into post-compaction context.
+    # Installed output styles (e.g. caveman-ultra) define emitted-prose rules
+    # that PreCompact would otherwise drop — surface them FIRST so the
+    # summarizer can carry them into post-compaction context if one was active.
     styles = active_output_styles(skills_dir())
     style_block = ""
     if styles:
-        sl = ["[context-keeper] ACTIVE OUTPUT STYLE — keep applying verbatim to every reply after compaction:"]
+        sl = ["[context-keeper] installed output styles — apply if one was active this session:"]
         for name, rule in styles:
             sl.append(f"  • {name}: {rule}")
         style_block = "\n".join(sl) + "\n"

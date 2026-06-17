@@ -26,7 +26,15 @@ Before any persistent write:
 - `mcp__memory__*` writes
 - any "save this for later" action
 
-Trigger phrases: "remember that …", "log this …", "add to memory", "record …", "write a note about …", "this should go in the wiki".
+Trigger phrases: "remember that …", "log this …", "add to memory", "record …", "write a note about …", "this should go in the wiki". (A `prompt_intent` drift probe fires on these so the gate isn't skipped.)
+
+## What earns a memory (and which store)
+
+The gate is about *quality*; the *contract* is about shape. Record **corrections AND confirmed approaches alike**, each with the **why** it mattered. Don't store what the repo, the code graph, or chat history already records. **Update an existing note rather than creating a duplicate** (`wiki.py overlap` flags near-matches). **Delete a note that turns out wrong** — git is the archive; a falsified non-protected page is removed via [`wiki-refresh`](../wiki-refresh/SKILL.md)'s Delete outcome.
+
+Two stores, two shapes — don't conflate them:
+- **The cross-session memory dir** (`~/.claude/projects/<proj>/memory/`, harness-owned): **one fact per file**, with a **one-line summary at the top** (the frontmatter `description:`). Atomic by contract.
+- **The repo wiki** (`wiki/`): prefers **fewer, richer domain-level pages** over many thin one-off pages — consolidation, not atomicity. Same why-clause + signal gate; different granularity.
 
 ## How it scores
 
@@ -82,16 +90,6 @@ Before persistent write:
 2. On exit 0: proceed with write.
 3. On exit 1: read the explanation. Either revise the candidate (add the reason, cite evidence, drop the filler) or drop the write entirely. Do not bypass.
 4. Bypass is only legitimate when the user explicitly says "save it anyway" or "I know it's thin, save it" — record the override in `wiki/log.md`.
-
-## What this prevents
-
-Without a content gate, memory fills with:
-- "We decided to use library X" with no reason → can't be re-evaluated later
-- Recaps of conversation already in the transcript
-- Speculation cached as fact
-- Trivia inflated into procedures
-
-Result: noisy memory → wrong context injected → worse answers. This skill makes write-side quality the bottleneck instead of post-hoc cleanup.
 
 ## Anti-patterns
 

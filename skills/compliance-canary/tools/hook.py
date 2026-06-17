@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
-"""compliance-canary UserPromptSubmit hook.
+"""compliance-canary UserPromptSubmit hook — the single drift watcher.
 
-Detects per-skill drift symptoms in recent assistant messages and injects
-a corrective <system-reminder> on the next user turn. Complement to
-skill-pulse: pulse re-anchors unconditionally; canary intervenes only
-when symptoms appear.
+Two ORTHOGONAL anti-drift mechanisms in ONE hook process (skill-pulse was
+folded in here 2026-06-16 — one reactive hook instead of two, the leaner
+target the eval notes had flagged):
+
+  1. SYMPTOMATIC probes (every turn) — detect per-skill drift symptoms in
+     recent assistant messages / tool results and inject a targeted,
+     evidence-quoting corrective. Silent until a symptom shows.
+  2. PERIODIC re-anchor (every Nth turn) — unconditionally re-state the
+     active skills' rules before they fade from attention. Paper-calibrated
+     cadence (arXiv 2510.07777). Covers rules that have NO symptom probe.
+
+One process, one dir-walk, one transcript read, one state file, one injected
+<system-reminder>. The re-anchor YIELDS to fired probes on a shared turn
+(symptom correction is higher-signal and itself re-anchors) — a single global
+budget, so the two mechanisms never double-nag.
 
 Per-skill probes are declared in `<.claude/skills>/<name>/drift_probes.json`:
 
@@ -33,6 +44,7 @@ import hashlib
 import json
 import os
 import re
+import signal
 import sys
 import time
 from contextlib import contextmanager
@@ -42,9 +54,24 @@ from pathlib import Path
 COOLDOWN_TURNS_DEFAULT = 3
 MSG_WINDOW_DEFAULT = 3            # number of recent assistant messages to scan
 TRANSCRIPT_LINE_CAP = 400         # max trailing lines read from transcript
-MAX_PROBES_TRIGGERED = 4          # cap pulse payload
+MAX_PROBES_TRIGGERED = 4          # cap symptomatic payload
 GC_AGE_SECONDS = 7 * 24 * 3600
 GC_SCAN_MAX = 500
+
+# Periodic re-anchor (absorbed skill-pulse). Cadence is paper-calibrated:
+# arXiv 2510.07777 tested reminder injections at turns 4 + 7 of 10-turn convos.
+CADENCE_DEFAULT = 4
+CADENCE_FLOOR = 2                 # a cadence below 2 re-anchors every turn — noise
+MAX_SKILLS_IN_PULSE = 8          # cap re-anchor payload
+MAX_REMINDER_CHARS = 280         # cap one re-anchor line (a runaway pulse_reminder)
+
+# Hard wall-clock budget for the probe phase. drift_probes.json regexes are
+# author-supplied; a catastrophic-backtracking pattern (e.g. `(a+)+$`) would
+# otherwise wedge the user's prompt — and this is the single mandatory drift
+# hook, so a wedge is the worst failure. A length cap does NOT help exponential
+# backtracking; only a timeout does. On budget exceed we emit nothing and exit 0
+# (the always-exit-0 contract holds; the regex just doesn't run this turn).
+PROBE_TIMEOUT_SECONDS = 1.5
 
 # Strip fenced + inline code from assistant text before running detectors —
 # otherwise a literal string like `print("Certainly!")` triggers caveman's
@@ -58,6 +85,15 @@ def strip_code(text: str) -> str:
     text = _CODE_BLOCK_RE.sub(" ", text)
     text = _INLINE_CODE_RE.sub(" ", text)
     return text
+
+
+def _as_int(value, default: int = 0) -> int:
+    """Coerce a persisted/state value to int without ever raising — a corrupted
+    or null field must NOT crash the hook (the always-exit-0 contract)."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
 
 
 def log_err(msg: str) -> None:
@@ -86,7 +122,10 @@ def state_path(session_id: str) -> Path:
 
 
 def skills_root() -> Path:
-    override = os.environ.get("COMPLIANCE_CANARY_SKILLS_ROOT")
+    # SKILL_PULSE_SKILLS_ROOT honored as a back-compat alias (skill-pulse merged
+    # into this hook 2026-06-16).
+    override = (os.environ.get("COMPLIANCE_CANARY_SKILLS_ROOT")
+                or os.environ.get("SKILL_PULSE_SKILLS_ROOT"))
     if override:
         return Path(override)
     return Path(".claude/skills")
@@ -204,6 +243,86 @@ def discover_probes(root: Path) -> list[dict]:
     return out
 
 
+# -------------------------- periodic re-anchor (absorbed skill-pulse) -------
+# The probes above are SYMPTOMATIC. This second mechanism is UNCONDITIONAL: on
+# every Nth turn it re-states the active skills' `pulse_reminder:` rules so they
+# stay in effective attention. Curated, not noisy — a skill participates only if
+# its frontmatter declares `pulse_reminder:` (or it's force-listed via env).
+
+# `﻿?` tolerates a UTF-8 BOM before the opening fence — without it a
+# BOM-prefixed SKILL.md silently yields {} and the skill drops from the
+# re-anchor (the fix-one-copy-not-the-sibling divergence class).
+_FRONTMATTER_RE = re.compile(r"^﻿?---\s*\n(.*?)\n---\s*\n", re.DOTALL)
+
+
+def parse_frontmatter(text: str) -> dict:
+    """Minimal `key: value` frontmatter parser (no PyYAML dep). Handles plain
+    and quoted scalars — all this catalog's SKILL.md files use."""
+    m = _FRONTMATTER_RE.match(text)
+    if not m:
+        return {}
+    out: dict = {}
+    for raw in m.group(1).splitlines():
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        if ":" not in raw:
+            continue
+        key, _, val = raw.partition(":")
+        key = key.strip()
+        val = val.strip()
+        if len(val) >= 2 and val[0] == val[-1] and val[0] in ('"', "'"):
+            val = val[1:-1]
+        out[key] = val
+    return out
+
+
+def first_sentence(text: str) -> str:
+    if not text:
+        return ""
+    # Split on sentence-final punctuation + space so decimals / "e.g." survive.
+    parts = re.split(r"(?<=[.!?])\s+", text.strip(), maxsplit=1)
+    return parts[0].rstrip(".") if parts else text.strip()
+
+
+def discover_pulse_skills(root: Path, allowlist: set[str]) -> list[tuple[str, str]]:
+    """[(name, reminder), ...] for skills to re-anchor. Included iff frontmatter
+    has `pulse_reminder:`, OR the skill is named in `allowlist` (then fall back
+    to the first sentence of `description`). Deduped by the `name:` field."""
+    if not root.is_dir():
+        return []
+    seen: set[str] = set()
+    out: list[tuple[str, str]] = []
+    try:
+        for entry in sorted(root.iterdir()):
+            if not entry.is_dir():
+                continue
+            skill_md = entry / "SKILL.md"
+            if not skill_md.is_file():
+                continue
+            try:
+                text = skill_md.read_text(encoding="utf-8", errors="replace")
+            except OSError as e:
+                log_err(f"skill-read-fail path={skill_md} err={e!r}")
+                continue
+            fm = parse_frontmatter(text)
+            name = fm.get("name") or entry.name
+            if name in seen:
+                continue
+            reminder = fm.get("pulse_reminder")
+            if reminder:
+                out.append((name, reminder))
+                seen.add(name)
+                continue
+            if name in allowlist:
+                hint = first_sentence(fm.get("description", ""))
+                if hint:
+                    out.append((name, hint))
+                    seen.add(name)
+    except OSError as e:
+        log_err(f"discover-pulse-fail root={root} err={e!r}")
+    return out[:MAX_SKILLS_IN_PULSE]
+
+
 # -------------------------- transcript reading ------------------------------
 
 def read_transcript_tail(path: str, cap: int = TRANSCRIPT_LINE_CAP) -> list[dict]:
@@ -292,6 +411,22 @@ def recent_tool_uses(events: list[dict], n: int = 10) -> list[dict]:
             break
     out.reverse()
     return out
+
+
+def final_assistant_has_tool_use(events: list[dict]) -> bool:
+    """True iff the MOST-RECENT assistant event contained a tool_use block.
+    Used by the early_stop detector: a closing turn that called a tool DID work
+    (no early stop); a closing turn that was pure prose may be a narrate-then-
+    yield. Looks only at the last assistant event (the agent's final message)."""
+    for e in reversed(events):
+        if e.get("type") != "assistant":
+            continue
+        msg = e.get("message") or {}
+        content = msg.get("content")
+        if not isinstance(content, list):
+            return False
+        return any(isinstance(b, dict) and b.get("type") == "tool_use" for b in content)
+    return False
 
 
 def _tool_result_text(content) -> str:
@@ -544,6 +679,412 @@ def detect_user_correction(probe: dict, _messages, _tool_uses, _tool_errors=None
 
 DETECTORS["user_correction"] = detect_user_correction
 
+# Same mechanism (regex the CURRENT user prompt) but for a PRE-TASK INTENT nudge
+# rather than a correction: a skill fires the moment the prompt describes the
+# situation it governs — e.g. loop-engineering on a "build a self-correcting
+# automation" prompt. Measured rationale: spontaneous Skill-tool invocation is
+# unreliable (blind agents don't auto-load loop-engineering even with a strong
+# description), so a mechanical trigger beats hoping the model remembers.
+DETECTORS["prompt_intent"] = detect_user_correction
+
+
+# Default patterns for early_stop (each overridable per-probe).
+_EARLY_STOP_PROMISE = (
+    r"(?i)\b(?:i'?ll|i will|i'?m going to|i am going to|let me|let'?s|next,?\s+i)\b"
+    r"[^.?!\n]{0,70}\b(?:now|next|then|go ahead|proceed|start|begin|continue|"
+    r"implement|run|create|write|add|fix|build|draft|set up|wire|tackle|"
+    r"check|look|examine|review|investigate|verify|test|explore|search|read|"
+    r"do (?:this|that|it))\b"
+)
+# A message that ALSO reports completed work → the promise is a legit "next
+# steps" note, not an early stop. Suppress.
+_EARLY_STOP_DONE = (
+    r"(?i)\b(?:done|fixed|completed?|passes|passing|verified|shipped|committed|"
+    r"implemented|merged|deployed|exit 0|all (?:pass|green|set|done)|"
+    r"tests? (?:pass|green)|results?:)\b"
+)
+# The agent is ASKING the user (a question / permission request), not promising-
+# then-yielding. That is a legitimate pause (over-pausing is an autonomy concern,
+# handled in lean-execution, not an early stop). Suppress.
+_EARLY_STOP_QUESTION = (
+    r"(?i)(?:\?|\blet me know\b|\bwant me to\b|\bshould i\b|\bshall i\b|"
+    r"\bdo you (?:want|prefer)\b|\bwould you like\b|\bwhich (?:option|approach|one)\b)"
+)
+
+
+def detect_early_stop(probe: dict, messages: list[dict], _tool_uses, _tool_errors=None,
+                      user_prompt: str = "", traj_stats: dict | None = None) -> dict | None:
+    """Fire when the agent's LAST turn ended on a forward-looking PROMISE
+    ("I'll now implement…", "let me start…") with no completion claim, no
+    question, and no tool call that turn — i.e. it narrated the next step
+    instead of doing it. The anti-early-stop reflex: if your final paragraph is
+    a plan or a promise, do that work NOW. Suppressed when the closing turn
+    actually called a tool (work happened), reported completion (legit 'next
+    steps'), or asked the user a question (a legitimate pause)."""
+    if not messages:
+        return None
+    # The closing turn did real work → not an early stop.
+    if traj_stats and traj_stats.get("final_assistant_has_tool_use"):
+        return None
+    last = messages[-1]["text"]
+    if not last.strip():
+        return None
+    try:
+        promise = re.compile(probe.get("pattern", _EARLY_STOP_PROMISE))
+        done = re.compile(probe.get("done_pattern", _EARLY_STOP_DONE))
+        question = re.compile(probe.get("question_pattern", _EARLY_STOP_QUESTION))
+    except re.error as e:
+        log_err(f"bad-regex probe={probe.get('_probe_id')} err={e!r}")
+        return None
+    # Only the CLOSING window — a promise after a completed-work report up top is
+    # a legit "next steps" note, not an early stop.
+    tail = last[-400:]
+    m = promise.search(tail)
+    if not m:
+        return None
+    if done.search(last) or question.search(tail):
+        return None
+    return {"matched": m.group(0).strip().replace("\n", " ")[:80],
+            "snippet": tail[max(0, m.start() - 20): m.end() + 40].replace("\n", " ")}
+
+
+DETECTORS["early_stop"] = detect_early_stop
+
+
+# ---- completion_without_closure (the closure gate) --------------------------
+# Requirement: when the agent believes the WHOLE task is finished it must
+# EXPLAIN what it did against what was asked and ASK the user whether the task
+# can be closed — never self-close. This is the mirror of early_stop: early_stop
+# catches "promised, didn't do it"; this catches "did it, closed it myself
+# without asking". Distinct from claim_without_evidence (which is about EVIDENCE)
+# — this fires even when verification ran, because a verified-done still must be
+# offered to the user for closure.
+
+# A TERMINAL "whole task is finished" claim — deliberately tighter than verify-
+# before-completion's claim regex (which fires on any sub-step "done"), to avoid
+# nagging on mid-task milestones. Overridable per-probe via `claim_pattern`.
+_COMPLETION_CLAIM_DEFAULT = (
+    r"(?i)(?:\ball done\b|\btask (?:is )?(?:complete|completed|done|finished)\b|"
+    r"\b(?:fully|now) (?:complete|completed|done|finished|implemented)\b|"
+    r"\bthat'?s (?:it|all|everything)\b(?!\s+(?:from\b|for (?:now|today|tonight)\b))|\bwrapped up\b|"
+    r"\bready to (?:go|ship|merge|review)\b|\bgood to go\b|"
+    r"\b(?:this|it|everything) is (?:now )?(?:done|complete|completed|finished|ready)\b|"
+    r"\bimplementation (?:is )?complete\b|\ball (?:set|green)\b|"
+    r"\beverything(?:'?s| is) (?:done|working|complete)\b|"
+    # A bare standalone "Done"/"Finished"/"Complete" at the START of the final
+    # message — the single most common phrasing ("Done!", "Done.", "Done —
+    # added the flag"). Negative-lookahead excludes mid-task "done with/the X"
+    # so a sub-step report doesn't trip the terminal gate.
+    r"^\s*(?:done|finished|complete|completed)\b"
+    r"(?!\s+(?:with|the|implementing|fixing|adding|writing|updating|making|building|setting|wiring|on)\b))"
+)
+# The message already invites the user to confirm closure → contract satisfied,
+# suppress. Kept conservative: a FALSE suppression (thinking it asked when it
+# didn't) is the failure to avoid. Overridable per-probe via `ask_pattern`.
+_CLOSURE_ASK_DEFAULT = (
+    r"(?i)(?:close (?:it|this|that|the task|out)|ok(?:ay)? to close|safe to close|"
+    r"can (?:i|we) close|shall i (?:close|wrap up|mark)|should i (?:close|mark)|"
+    r"mark (?:this|it|that) (?:as )?(?:done|closed|complete)|anything else|"
+    r"is (?:this|that) (?:everything|all you needed|complete\?)|may i close|"
+    r"confirm (?:i can )?clos(?:e|ing)|"
+    r"let me know if (?:there'?s|there is) (?:anything|more)|"
+    r"can (?:this|it) be closed)"
+)
+# The agent is CONTINUING to a next step → a milestone note, not a terminal
+# close; suppress. Verb-agnostic (unlike early_stop's promise regex, which lists
+# specific verbs) so "Task complete. Next I will refactor…" is caught.
+_CLOSURE_CONTINUE_DEFAULT = (
+    r"(?i)(?:\bnext,?\s+i\b|\bthen i\b|\bnow i'?ll\b|"
+    r"\bi'?ll (?:now|next|then|also|go|start|continue|move)\b|\blet me\b|"
+    r"\bi'?m going to\b|\bi am going to\b|"
+    r"\bi will (?:now|next|then|also|continue|start|go|refactor|implement|add|write|create)\b|"
+    r"\bmoving on\b|\bnext step\b|\bafter (?:this|that),? i\b)"
+)
+
+
+def detect_completion_without_closure(probe: dict, messages: list[dict], _tool_uses, _tool_errors=None,
+                                      user_prompt: str = "", traj_stats: dict | None = None) -> dict | None:
+    """Fire when the last assistant message makes a TERMINAL completion claim
+    but neither asks the user to confirm closure nor promises further work (a
+    milestone note, not a close). The contract: enumerate what was asked, map
+    each item to what you did, then ASK the user whether it can be closed."""
+    if not messages:
+        return None
+    last = messages[-1]["text"]
+    if not last.strip():
+        return None
+    try:
+        claim = re.compile(probe.get("claim_pattern", _COMPLETION_CLAIM_DEFAULT))
+        ask = re.compile(probe.get("ask_pattern", _CLOSURE_ASK_DEFAULT))
+        promise = re.compile(probe.get("promise_pattern", _CLOSURE_CONTINUE_DEFAULT))
+    except re.error as e:
+        log_err(f"bad-regex probe={probe.get('_probe_id')} err={e!r}")
+        return None
+    m = claim.search(last)
+    if not m:
+        return None
+    if ask.search(last):
+        return None  # already inviting closure confirmation — contract met
+    if promise.search(last):
+        return None  # still promising more work — a milestone, not a terminal close
+    return {"claim": m.group(0).strip(),
+            "snippet": last[max(0, m.start() - 20): m.end() + 40].replace("\n", " ")}
+
+
+DETECTORS["completion_without_closure"] = detect_completion_without_closure
+
+
+# ---- Mechanism 3: request ledger (never silently drop a user request) -------
+# Persistent, across-turn tracker. Each substantive user request is recorded as
+# OPEN and stays open until the USER closes it ("open until completed or the
+# user says so"). The hook NEVER judges semantic completion itself — it tracks
+# text + turns mechanically and surfaces open items to the model (which has the
+# semantics) at wrap-up turns and on cadence. Closure is user-driven: a closure
+# phrase in the user's prompt prunes the ledger; the completion gate above is
+# what prompts the agent to ASK for that closure. The two interlock.
+LEDGER_STORE_CAP = 50      # hard cap on stored items (bound state-file size)
+LEDGER_SHOW_MAX = 8        # max items surfaced in one reminder
+LEDGER_TEXT_CAP = 140      # chars kept per remembered request
+
+# Pure acknowledgements / answers — not new trackable requests. Skipped.
+_LEDGER_TRIVIAL_RE = re.compile(
+    r"(?i)^\s*(?:ok(?:ay)?|k|yes|yep|yeah|sure|got it|sounds good|thanks?(?: you)?|"
+    r"ty|cool|nice|great|perfect|go on|go ahead|continue|proceed|please do|do it|"
+    r"next|y|n|no|nope)\s*[.!]*\s*$"
+)
+# The user closing/dismissing work → prune the ledger (don't append).
+_LEDGER_CLOSE_RE = re.compile(
+    r"(?i)(?:\bclose (?:it|this|that|the task|out|them|all|everything)\b|"
+    r"\byou can close\b|\bok(?:ay)? to close\b|\bsafe to close\b|\bwe can close\b|"
+    r"\bmark (?:it|this|that|them) (?:as )?(?:done|closed|complete)\b|"
+    r"\bthat'?s all\b|\bthat'?s everything\b|\bnothing else\b|\bno(?:thing)? further\b|"
+    r"\bwe'?re done\b|\ball done\b|\bdone with (?:it|that|this|everything)\b|"
+    r"\bdrop (?:it|that|this)\b|\bnever ?mind\b|\bforget (?:it|that)\b|"
+    r"\bcancel (?:it|that|this)\b|\bship it\b|\byes,? close\b|\byou can stop\b)"
+)
+# Distinguishes "close everything" from "close the last thing".
+_LEDGER_CLOSE_ALL_RE = re.compile(
+    r"(?i)\b(?:all|everything|both|all of (?:it|them)|the rest)\b"
+)
+# NOTE: there is intentionally NO opt-out / opt-in path. The no-drop guarantee is
+# UNCONDITIONAL — by user directive ("never switch off, never opt out"), nothing
+# in the normal conversation flow can disable the ledger. (The only kill is the
+# whole-hook operator valve COMPLIANCE_CANARY_DISABLED, which disables the entire
+# drift watcher, not the ledger specifically.) A prior design had a regex-detected
+# opt-out; it was removed because a misread would silently disable the very
+# guarantee this feature exists to provide — the one failure mode that must not
+# happen.
+
+# The user parking an EXISTING item — visibly deferred, NOT dropped.
+# CRITICAL (review B2): require an explicit deferral VERB on an item ("park that",
+# "defer the X", "leave it for later", "that can wait") — NOT bare adverbials
+# ("for now" / "not now" / "out of scope" / "later"), which appear incidentally in
+# prompts that ALSO carry a real ask ("for now this looks fine, also add X"). And
+# exclude "defer to (you|me|...)" (delegation, not parking).
+_LEDGER_DEFER_RE = re.compile(
+    r"(?i)(?:"
+    r"\b(?:defer|park|shelve|postpone|backlog)(?!\s+to\b)\s+(?:that|this|it|the\b[^\n]{0,40})"
+    r"|\bleave (?:that|this|it)\s+(?:for (?:later|now)|aside|until)\b"
+    r"|\b(?:that|this|it) can wait\b"
+    r"|\bput (?:that|this|it) (?:on the backlog|aside|on hold)\b"
+    r")"
+)
+# A meta-command (close / park) carries a co-occurring NEW request only when an
+# explicit conjunction introduces an imperative ("...and add X", "..., then pin
+# numpy"). Detecting THAT (rather than mere prompt length) is what lets a pure
+# verbose close ("perfect, that's everything — close it") terminate cleanly while
+# "close it and add a test" still captures the test (review B2/M3: never drop a
+# co-occurring ask, never junk-capture a pure meta-command).
+_LEDGER_COMPOUND_RE = re.compile(
+    r"(?i)(?:\b(?:and|also|plus|then)\b|[,;]\s)\s*(?:can you |could you |would you |please )?"
+    r"(?:add|create|write|fix|update|make|implement|build|remove|delete|rename|refactor|"
+    r"test|document|check|pin|install|set ?up|wire|handle|support|enable|ensure|include|"
+    r"generate|run|review|investigate|answer|explain)\b"
+)
+
+
+def _ledger_make_id(turn: int, text: str) -> str:
+    return f"r{turn}-" + hashlib.sha256(text.encode("utf-8", "replace")).hexdigest()[:6]
+
+
+def update_ledger(ledger: list, prompt: str, turn: int) -> tuple[list, list, str]:
+    """Pure mechanical lifecycle. Returns (new_ledger, closed_items, action).
+    NEVER judges semantic completion (the model does, via the surfaced reminder
+    + completion gate). An item leaves the OPEN set only when the USER says so;
+    a parked item is re-statused (deferred), never deleted. A meta-command that
+    ALSO contains a co-occurring imperative ("close it and add X") performs the
+    meta-action AND captures the prompt, rather than dropping the new ask. There
+    is NO opt-out — capture is unconditional (see note above the regexes).
+
+    Actions: add · close-one · close-all · close-noop · skip-trivial · none · defer."""
+    closed: list = []
+    p = (prompt or "").strip()
+    if not p:
+        return ledger, closed, "none"
+    has_new_ask = bool(_LEDGER_COMPOUND_RE.search(p))
+
+    meta = None
+    if _LEDGER_CLOSE_RE.search(p):
+        if not ledger:
+            meta = "close-noop"
+        elif _LEDGER_CLOSE_ALL_RE.search(p):
+            closed = list(ledger)
+            ledger = []
+            meta = "close-all"
+        else:
+            closed = [ledger[-1]]
+            ledger = ledger[:-1]
+            meta = "close-one"
+    elif _LEDGER_DEFER_RE.search(p):
+        for i in range(len(ledger) - 1, -1, -1):
+            if not ledger[i].get("deferred"):
+                ledger = [dict(it) for it in ledger]
+                ledger[i]["deferred"] = True
+                meta = "defer"
+                break
+
+    # Pure meta-command (no co-occurring imperative) → perform it, don't capture.
+    if meta and not has_new_ask:
+        return ledger, closed, meta
+    if not meta and _LEDGER_TRIVIAL_RE.match(p):
+        return ledger, closed, "skip-trivial"
+
+    # Capture the whole prompt (a real ask, or a meta+ask compound — over-capture
+    # is the safe direction; never drop). The meta effect above already applied.
+    item = {"id": _ledger_make_id(turn, p), "turn": turn, "text": p[:LEDGER_TEXT_CAP]}
+    ledger = (ledger + [item])[-LEDGER_STORE_CAP:]
+    return ledger, closed, (meta or "add")
+
+
+def has_completion_claim(events: list[dict]) -> bool:
+    """True iff the most-recent assistant message reads as a TERMINAL completion
+    claim (and isn't still promising more work). Drives ledger surfacing at the
+    exact wrap-up turn — 'you're closing but N requests are still open'."""
+    msgs = recent_assistant_messages(events, 1)
+    if not msgs:
+        return False
+    last = msgs[-1]["text"]
+    try:
+        return bool(re.search(_COMPLETION_CLAIM_DEFAULT, last)) and not re.search(_EARLY_STOP_PROMISE, last)
+    except re.error:
+        return False
+
+
+def build_ledger_lines(open_items: list, closed_now: list, completion_claim: bool, turn: int) -> list[str]:
+    # Deferred items are visibly parked, not open — exclude from the "still open"
+    # count so an agreed deferral never trips the wrap-up nag.
+    open_items = [it for it in open_items if not it.get("deferred")]
+    lines: list[str] = []
+    if closed_now:
+        tail = f"; {len(open_items)} still open." if open_items else " — ledger now empty."
+        lines.append(
+            f"compliance-canary ledger (turn {turn}): closed {len(closed_now)} request(s) "
+            f"on your say-so{tail}"
+        )
+    if open_items and (completion_claim or not closed_now):
+        if completion_claim:
+            lines.append(
+                f"compliance-canary ledger (turn {turn}): you appear to be wrapping up, but "
+                f"{len(open_items)} user request(s) are still OPEN. Do NOT self-close. For EACH item "
+                f"below, state what you did (with evidence) or why it's deferred, then ASK the user to "
+                f"confirm closure:"
+            )
+        else:
+            lines.append(
+                f"compliance-canary ledger (turn {turn}): {len(open_items)} user request(s) still open "
+                f"— none may be dropped. Make progress on each, or note explicitly why it's deferred:"
+            )
+        for it in open_items[:LEDGER_SHOW_MAX]:
+            lines.append(f"- [turn {it.get('turn','?')}] {it.get('text','')}")
+        extra = len(open_items) - LEDGER_SHOW_MAX
+        if extra > 0:
+            lines.append(f"- (+{extra} more still open)")
+        # This is the hidden cross-check (coarse, 1 row/prompt). Point the agent
+        # at the authoritative atomic ledger it should be curating + reconciling.
+        lines.append(
+            "- (these are the canary's COARSE captures — reconcile against your atomic "
+            "requirements ledger; each request/question/sub-item must be accounted for)"
+        )
+    return lines
+
+
+# Detector for the requirements-ledger skill: fire when the user has raised
+# trackable requests but the agent shows no sign of MATERIALIZING the visible
+# ledger (no Edit/Write to a *ledger*.md and no TaskCreate/TaskUpdate). The
+# cross-check direction is deliberate: the hidden capture is COARSE (≤1 row /
+# prompt), the visible ledger is ATOMIC (more rows) — so we NEVER compare counts
+# for equality (atomic > coarse is correct, not drift). We only alarm on absence
+# of maintenance activity. Reuses the existing request_ledger capture via
+# traj_stats; adds no new transcript scan.
+# Scope to the ACTUAL conversation ledger, not any *.md whose path happens to
+# contain "requirements/ledger/task/todo" (review M1: docs/requirements.md or a
+# project TASKS.md would otherwise turn the guard dark). Match a file under
+# .brainer/ledger/ OR a ledger-specific basename.
+_LEDGER_MAINT_PATH_DEFAULT = (
+    r"(?i)(?:(?:^|/)\.brainer/ledger/[^/\n]+\.md$|(?:^|/)(?:requirements[ _-]?)?ledger[^/\n]*\.md$)"
+)
+_LEDGER_MAINT_TOOLS = ("TaskCreate", "TaskUpdate")
+_LEDGER_MAINT_EDIT_TOOLS = ("Edit", "Write", "NotebookEdit")
+
+
+def detect_ledger_not_materialized(probe: dict, _messages, tool_uses: list[dict], _tool_errors=None,
+                                   user_prompt: str = "", traj_stats: dict | None = None) -> dict | None:
+    if not traj_stats:
+        return None
+    open_ct = _as_int(traj_stats.get("open_ledger_count"), 0)
+    if open_ct < int(probe.get("min_open", 2)):
+        return None
+    if int(traj_stats.get("substantive_add_count", 0)) < int(probe.get("substantive_turns", 2)):
+        return None
+    # Cold-start grace: don't demand a ledger before the session has any history.
+    if int(traj_stats.get("turn", 0)) < int(probe.get("grace_turns", 3)):
+        return None
+    try:
+        path_re = re.compile(probe.get("maintenance_path_pattern", _LEDGER_MAINT_PATH_DEFAULT))
+    except re.error as e:
+        log_err(f"bad-regex probe={probe.get('_probe_id')} err={e!r}")
+        path_re = re.compile(_LEDGER_MAINT_PATH_DEFAULT)
+    for tu in (tool_uses or []):
+        name = tu.get("name", "")
+        if name in _LEDGER_MAINT_TOOLS:
+            return None  # native-task mirror is being maintained
+        if name in _LEDGER_MAINT_EDIT_TOOLS:
+            fp = str((tu.get("input") or {}).get("file_path", ""))
+            if path_re.search(fp):
+                return None  # the visible markdown ledger is being maintained
+    return {"open_count": open_ct}
+
+
+DETECTORS["ledger_not_materialized"] = detect_ledger_not_materialized
+
+
+class _ProbeBudgetExceeded(BaseException):
+    """Raised by the SIGALRM handler to abort a runaway probe phase. Derives
+    from BaseException (not Exception) on purpose: run_probes' per-detector
+    `except Exception` must NOT swallow it — it has to unwind the whole phase."""
+
+
+@contextmanager
+def probe_time_limit(seconds: float):
+    """Hard wall-clock cap on the enclosed block via SIGALRM. Unix-only;
+    `UserPromptSubmit` is Claude-Code-only (macOS/Linux), and on any platform
+    without SIGALRM (or seconds<=0) this is a no-op — degrade to unbounded
+    rather than crash."""
+    if seconds <= 0 or not hasattr(signal, "SIGALRM"):
+        yield
+        return
+
+    def _handler(signum, frame):
+        raise _ProbeBudgetExceeded()
+
+    old = signal.signal(signal.SIGALRM, _handler)
+    try:
+        signal.setitimer(signal.ITIMER_REAL, seconds)
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, old)
+
 
 def run_probes(
     probes: list[dict],
@@ -599,14 +1140,32 @@ def format_one_probe(probe: dict) -> str:
     return f"- {skill} [{kind}]: triggered"
 
 
-def build_corrective(fired: list[dict], turn: int) -> str:
-    lines = [
-        "<system-reminder>",
-        f"compliance-canary (turn {turn}): drift signals detected in your recent output. "
-        f"Re-read each active rule and correct your next reply before continuing.",
-    ]
-    for probe in fired:
-        lines.append(format_one_probe(probe))
+def build_output(fired: list[dict], pulse_skills: list[tuple[str, str]], turn: int,
+                 ledger_lines: list[str] | None = None) -> str:
+    """One <system-reminder> carrying whichever mechanism(s) produced output.
+    Symptomatic correctives lead (higher signal); the request-ledger section
+    follows (it does NOT yield at a wrap-up turn — surfacing open requests as the
+    agent closes is the whole point); the periodic re-anchor comes last and only
+    when no probe fired this turn (it yields — see main)."""
+    lines = ["<system-reminder>"]
+    if fired:
+        lines.append(
+            f"compliance-canary (turn {turn}): drift signals detected in your recent "
+            f"output. Re-read each named rule and correct your next reply before continuing."
+        )
+        for probe in fired:
+            lines.append(format_one_probe(probe))
+    if ledger_lines:
+        lines.extend(ledger_lines)
+    if pulse_skills:
+        lines.append(
+            f"compliance-canary re-anchor (turn {turn}): these active skills' rules remain "
+            f"in force — re-read each and check your most recent reply against it."
+        )
+        for name, reminder in pulse_skills:
+            # Cap a runaway pulse_reminder so one skill can't flood the block.
+            r = reminder if len(reminder) <= MAX_REMINDER_CHARS else reminder[:MAX_REMINDER_CHARS - 1] + "…"
+            lines.append(f"- {name}: {r}")
     lines.append("</system-reminder>")
     return "\n".join(lines)
 
@@ -614,9 +1173,11 @@ def build_corrective(fired: list[dict], turn: int) -> str:
 # -------------------------- main --------------------------------------------
 
 def main() -> int:
-    if os.environ.get("COMPLIANCE_CANARY_DISABLED") == "1":
-        return 0
-
+    # NOTE: COMPLIANCE_CANARY_DISABLED is checked LATER (after the ledger capture
+    # block), not here — the kill silences drift detection + its reminders, but it
+    # must NEVER stop the ledger from RECORDING a request (user directive: the kill
+    # must not disable the ledger). Capture runs unconditionally; only the nagging
+    # is silenced.
     cooldown = COOLDOWN_TURNS_DEFAULT
     try:
         cooldown = max(0, int(os.environ.get("COMPLIANCE_CANARY_COOLDOWN", COOLDOWN_TURNS_DEFAULT)))
@@ -632,78 +1193,176 @@ def main() -> int:
         log_err(f"json-decode-fail: {e}")
         return 0
 
-    session_id = payload.get("session_id") or "unknown"
+    # Valid JSON that isn't an object (a bare number/string/array/null) would
+    # crash every downstream .get() — guard the always-exit-0 contract.
+    if not isinstance(payload, dict):
+        log_err(f"payload-not-object: {type(payload).__name__}")
+        return 0
+
+    # Coerce session_id to str: a non-string (number/array) would crash
+    # .encode() in state_path. `or "unknown"` keeps falsy ids out.
+    session_id = str(payload.get("session_id") or "unknown")
     transcript_path = payload.get("transcript_path", "")
 
     path = state_path(session_id)
     is_new_session = not path.exists()
 
+    # Mechanism 3 — request ledger lifecycle. UNCONDITIONAL (no opt-out / no
+    # per-ledger disable — user directive "never switch off, never opt out"; the
+    # only kill is the whole-hook COMPLIANCE_CANARY_DISABLED valve at the top of
+    # main). Mutates state inside the same lock as the turn bump; closed_now/ledger
+    # are reused for output below.
+    closed_now: list = []
+    ledger: list = []
+    ledger_action = "none"
+    substantive_add_count = 0
+    prompt_text = str(payload.get("prompt") or "")
+
     with state_lock(path):
         state = load_state(path)
-        turn = int(state.get("turn_count", 0)) + 1
+        turn = _as_int(state.get("turn_count"), 0) + 1  # guard: corrupt state must not crash (always-exit-0)
         state["turn_count"] = turn
         state["last_seen_iso"] = time.strftime("%FT%TZ", time.gmtime())
         if is_new_session:
             state["session_started_iso"] = state["last_seen_iso"]
-        # Persist counter early — if any later step errors, we still progress
+        ledger, closed_now, ledger_action = update_ledger(
+            state.get("request_ledger", []), prompt_text, turn)
+        state["request_ledger"] = ledger
+        if ledger_action == "add":
+            state["substantive_add_count"] = _as_int(state.get("substantive_add_count"), 0) + 1
+        substantive_add_count = _as_int(state.get("substantive_add_count"), 0)
+        # Persist counter + ledger early — if any later step errors, we still progress
         save_state(path, state)
 
     if is_new_session:
         gc_old_state(path.parent, time.time())
 
+    # Whole-hook break-glass valve. Checked HERE (not at entry) so the ledger
+    # capture above has already run — the kill silences drift detection + all
+    # reminders, but the request is still on the record. Re-enabling resumes with
+    # nothing lost.
+    if os.environ.get("COMPLIANCE_CANARY_DISABLED") == "1":
+        return 0
+
+    # --- periodic re-anchor cadence (absorbed skill-pulse) ---------------
+    # COMPLIANCE_CANARY_PULSE_EVERY is primary; SKILL_PULSE_EVERY is a
+    # back-compat alias. 0 (or *_PULSE_DISABLED / legacy SKILL_PULSE_DISABLED)
+    # disables JUST the re-anchor — symptomatic probes still run.
+    try:
+        raw_every = int(os.environ.get(
+            "COMPLIANCE_CANARY_PULSE_EVERY",
+            os.environ.get("SKILL_PULSE_EVERY", CADENCE_DEFAULT)))
+    except ValueError:
+        raw_every = CADENCE_DEFAULT
+    if (os.environ.get("COMPLIANCE_CANARY_PULSE_DISABLED") == "1"
+            or os.environ.get("SKILL_PULSE_DISABLED") == "1"):
+        raw_every = 0
+    pulse_every = 0 if raw_every <= 0 else max(CADENCE_FLOOR, raw_every)
+    is_pulse_turn = bool(pulse_every) and turn >= pulse_every and turn % pulse_every == 0
+
+    # --- symptomatic probes (every turn) --------------------------------
+    fired: list[dict] = []
     probes = discover_probes(skills_root())
-    if not probes:
+    # C4 — scope probes to a deployment's ACTIVE skills. Default (unset) = every
+    # discovered skill's probes run, exactly as before (no regression). Set
+    # COMPLIANCE_CANARY_PROBE_SKILLS=a,b,c to fire ONLY those skills' probes — so a
+    # session that never invoked caveman-ultra's terse style isn't nagged by its
+    # filler/word-count probes. Mirrors COMPLIANCE_CANARY_PULSE_SKILLS (re-anchor).
+    _probe_allow = {s.strip() for s in
+                    os.environ.get("COMPLIANCE_CANARY_PROBE_SKILLS", "").split(",") if s.strip()}
+    if _probe_allow:
+        probes = [p for p in probes if p.get("_skill") in _probe_allow]
+    # One transcript read feeds both the probes and the ledger's wrap-up check.
+    events: list[dict] = []
+    if probes or ledger:
+        events = read_transcript_tail(transcript_path)
+    if probes:
+        if events:
+            # Fetch enough messages for the LARGEST declared word_count window.
+            # Don't early-return on empty messages: tool_use-only turns (the norm
+            # during error loops) have no assistant TEXT, but that's exactly when
+            # the non-text detectors (trajectory_drift, repeated_tool_error,
+            # user_correction) must still run. Text detectors no-op on [].
+            WORD_COUNT_WINDOW_CAP = 50
+            max_window = max(
+                [MSG_WINDOW_DEFAULT]
+                + [
+                    min(int(p.get("window", MSG_WINDOW_DEFAULT)), WORD_COUNT_WINDOW_CAP)
+                    for p in probes
+                    if p.get("kind") == "word_count_per_message"
+                    and str(p.get("window", MSG_WINDOW_DEFAULT)).lstrip("-").isdigit()
+                ]
+            )
+            messages = recent_assistant_messages(events, max_window) or []
+            tool_uses = recent_tool_uses(events, n=10)
+            tool_errors = recent_tool_errors(events)
+
+            history = state.get("probe_history", [])
+            suppressed = {
+                h["probe_id"] for h in history
+                if isinstance(h, dict)
+                and turn - int(h.get("fired_at_turn", 0)) < cooldown
+            }
+
+            traj = trajectory_stats(events)
+            traj["final_assistant_has_tool_use"] = final_assistant_has_tool_use(events)
+            # Feed the requirements-ledger cross-check (ledger_not_materialized).
+            # open_ledger_count counts only items from PRIOR turns (this turn's
+            # fresh adds aren't a "drop" yet) and excludes parked/deferred items.
+            traj["turn"] = turn
+            traj["open_ledger_count"] = sum(
+                1 for it in ledger
+                if not it.get("deferred") and _as_int(it.get("turn"), turn) < turn)
+            traj["substantive_add_count"] = substantive_add_count
+            try:
+                with probe_time_limit(PROBE_TIMEOUT_SECONDS):
+                    fired = run_probes(probes, messages, tool_uses, suppressed, tool_errors,
+                                       user_prompt=str(payload.get("prompt") or ""),
+                                       traj_stats=traj)
+            except _ProbeBudgetExceeded:
+                # A drift_probes regex blew the time budget (likely ReDoS). Skip
+                # probes this turn rather than wedge the prompt. Re-anchor below
+                # still runs (it uses only fixed regexes).
+                log_err(f"probe-budget-exceeded: skipped probes (>{PROBE_TIMEOUT_SECONDS}s)")
+                fired = []
+            if fired:
+                with state_lock(path):
+                    state = load_state(path)
+                    history = state.get("probe_history", [])
+                    for probe in fired:
+                        history.append({"probe_id": probe["_probe_id"], "fired_at_turn": turn})
+                    state["probe_history"] = history[-50:]
+                    save_state(path, state)
+
+    # --- periodic re-anchor (yields to fired probes — no double-nag) -----
+    pulse_skills: list[tuple[str, str]] = []
+    if is_pulse_turn and not fired:
+        allow_raw = os.environ.get(
+            "COMPLIANCE_CANARY_PULSE_SKILLS",
+            os.environ.get("SKILL_PULSE_SKILLS", ""))
+        allowlist = {s.strip() for s in allow_raw.split(",") if s.strip()}
+        pulse_skills = discover_pulse_skills(skills_root(), allowlist)
+
+    # --- request-ledger surfacing (coupled to drift) --------------------
+    # The ledger reminder rides along with the canary's drift response: open
+    # requests are re-surfaced exactly when attention is being re-directed —
+    #   • a drift probe fired (DRIFT → "you're drifting; don't drop these"),
+    #   • the agent is wrapping up on a completion claim (don't self-close),
+    #   • the periodic re-anchor turn (preventive), or
+    #   • the user just closed something (confirm it).
+    # No drift, no wrap-up, no cadence → stay quiet. This is the "remind about
+    # ledger items IF there is drift" coupling.
+    ledger_lines: list[str] = []
+    if closed_now or ledger:
+        completion_claim = has_completion_claim(events) if ledger else False
+        show = bool(closed_now) or (bool(ledger) and (completion_claim or bool(fired) or is_pulse_turn))
+        if show:
+            ledger_lines = build_ledger_lines(ledger, closed_now, completion_claim, turn)
+
+    if not fired and not pulse_skills and not ledger_lines:
         return 0
 
-    events = read_transcript_tail(transcript_path)
-    if not events:
-        return 0
-
-    # Fetch enough messages for the LARGEST declared word_count window — and
-    # never early-return on empty: tool_use-only turns (the norm during error
-    # loops) have no assistant TEXT, but that's exactly when the non-text
-    # detectors (trajectory_drift, repeated_tool_error, user_correction) must
-    # still run. The text detectors already no-op on []. (probes are discovered
-    # above, so reading their windows here is safe.)
-    WORD_COUNT_WINDOW_CAP = 50
-    max_window = max(
-        [MSG_WINDOW_DEFAULT]
-        + [
-            min(int(p.get("window", MSG_WINDOW_DEFAULT)), WORD_COUNT_WINDOW_CAP)
-            for p in probes
-            if p.get("kind") == "word_count_per_message"
-            and str(p.get("window", MSG_WINDOW_DEFAULT)).lstrip("-").isdigit()
-        ]
-    )
-    messages = recent_assistant_messages(events, max_window) or []
-    tool_uses = recent_tool_uses(events, n=10)
-    tool_errors = recent_tool_errors(events)
-
-    # Build suppression set from probe_history
-    history = state.get("probe_history", [])
-    suppressed = {
-        h["probe_id"] for h in history
-        if isinstance(h, dict)
-        and turn - int(h.get("fired_at_turn", 0)) < cooldown
-    }
-
-    fired = run_probes(probes, messages, tool_uses, suppressed, tool_errors,
-                       user_prompt=str(payload.get("prompt") or ""),
-                       traj_stats=trajectory_stats(events))
-    if not fired:
-        return 0
-
-    # Persist new fire entries
-    with state_lock(path):
-        state = load_state(path)
-        history = state.get("probe_history", [])
-        for probe in fired:
-            history.append({"probe_id": probe["_probe_id"], "fired_at_turn": turn})
-        # bound history size
-        state["probe_history"] = history[-50:]
-        save_state(path, state)
-
-    sys.stdout.write(build_corrective(fired, turn))
+    sys.stdout.write(build_output(fired, pulse_skills, turn, ledger_lines))
     sys.stdout.write("\n")
     return 0
 
