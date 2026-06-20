@@ -1,0 +1,65 @@
+STAGE 1/3: q=3 regression ...
+==========================================================================
+q=3 REGRESSION  (validated scalar Gauss engine, unchanged)
+   published r=   9.533695  recovered=   9.533695  resid=-5.21e-08  [HIT]
+   published r=  12.173008  recovered=  12.173008  resid=+3.11e-07  [HIT]
+   published r=  13.779751  recovered=  13.779751  resid=+3.52e-07  [HIT]
+   published r=  14.358509  recovered=  14.358509  resid=+4.76e-07  [HIT]
+   published r=  16.138073  recovered=  16.138073  resid=+2.47e-07  [HIT]
+   REGRESSION VERDICT: PASS  (5/5, max resid 4.8e-07)
+  q3 saved (152s)
+STAGE 2/3: q=5 (non-arithmetic) ...
+==========================================================================
+q=5  lambda=1.618034  kappa_q=3  NON-ARITHMETIC  area=0.942478
+  basis sizes N=[25, 35, 45], n_head=5000, scan r in [0.5,12.0] grid=130
+
+  N-STABLE zeros (|det| minima; consensus r, sector, across-N spread, |det| depth at N=45):
+     r = 6.473700  (odd )  N-spread=0.0e+00  |det|=7.2e-08  lambda=1/4+r^2=42.1588
+     r = 8.636765  (odd )  N-spread=0.0e+00  |det|=3.8e-08  lambda=1/4+r^2=74.8437
+     r = 10.136450  (odd )  N-spread=0.0e+00  |det|=1.6e-07  lambda=1/4+r^2=102.9976
+     r = 11.015570  (odd )  N-spread=0.0e+00  |det|=1.8e-08  lambda=1/4+r^2=121.5928
+  (4 stable, 0 unstable/phantom rejected)
+
+  n_head series-truncation stability (r* of the |det| minimum):
+     r=6.47370: r* at n_head/2,n_head,2*n_head = 6.47370, 6.47370, 6.47370  (drift 5.4e-08)
+     r=8.63676: r* at n_head/2,n_head,2*n_head = 8.63676, 8.63676, 8.63676  (drift 3.3e-08)
+     r=10.13645: r* at n_head/2,n_head,2*n_head = 10.13645, 10.13645, 10.13645  (drift 8.7e-08)
+     r=11.01557: r* at n_head/2,n_head,2*n_head = 11.01557, 11.01557, 11.01557  (drift 1.1e-07)
+
+  WEYL LAW: counting N(lambda)=#{1/4+r^2 <= lambda} vs area*lambda/(4pi)
+     k= 1  r=  6.4737  lambda=  42.1588  N_counted= 1  N_weyl=  3.16  ratio=0.316
+     k= 2  r=  8.6368  lambda=  74.8437  N_counted= 2  N_weyl=  5.61  ratio=0.356
+     k= 3  r= 10.1364  lambda= 102.9976  N_counted= 3  N_weyl=  7.72  ratio=0.388
+     k= 4  r= 11.0156  lambda= 121.5928  N_counted= 4  N_weyl=  9.12  ratio=0.439
+  q5 saved (613s)
+STAGE 3/3: q=8 (non-arithmetic) ...
+==========================================================================
+q=8  lambda=1.847759  kappa_q=3  NON-ARITHMETIC  area=1.178097
+  basis sizes N=[25, 35, 45], n_head=5000, scan r in [0.5,12.0] grid=130
+
+  N-STABLE zeros (|det| minima; consensus r, sector, across-N spread, |det| depth at N=45):
+     r = 5.798144  (odd )  N-spread=0.0e+00  |det|=2.1e-08  lambda=1/4+r^2=33.8685
+     r = 7.767443  (odd )  N-spread=0.0e+00  |det|=6.7e-08  lambda=1/4+r^2=60.5832
+     r = 8.965946  (odd )  N-spread=0.0e+00  |det|=5.0e-08  lambda=1/4+r^2=80.6382
+     r = 10.057353  (odd )  N-spread=8.0e-08  |det|=7.7e-08  lambda=1/4+r^2=101.4004
+     r = 10.597145  (odd )  N-spread=1.7e-07  |det|=5.2e-08  lambda=1/4+r^2=112.5495
+     r = 11.570941  (odd )  N-spread=2.1e-07  |det|=3.7e-07  lambda=1/4+r^2=134.1367
+  (6 stable, 0 unstable/phantom rejected)
+
+  n_head series-truncation stability (r* of the |det| minimum):
+     r=5.79814: r* at n_head/2,n_head,2*n_head = 5.79814, 5.79814, 5.79814  (drift 3.3e-08)
+     r=7.76744: r* at n_head/2,n_head,2*n_head = 7.76744, 7.76744, 7.76744  (drift 3.3e-08)
+     r=8.96595: r* at n_head/2,n_head,2*n_head = 8.96595, 8.96595, 8.96595  (drift 0.0e+00)
+     r=10.05735: r* at n_head/2,n_head,2*n_head = 10.05735, 10.05735, 10.05735  (drift 5.4e-08)
+     r=10.59714: r* at n_head/2,n_head,2*n_head = 10.59714, 10.59714, 10.59714  (drift 3.3e-08)
+     r=11.57094: r* at n_head/2,n_head,2*n_head = 11.57094, 11.57094, 11.57094  (drift 1.4e-07)
+
+  WEYL LAW: counting N(lambda)=#{1/4+r^2 <= lambda} vs area*lambda/(4pi)
+     k= 1  r=  5.7981  lambda=  33.8685  N_counted= 1  N_weyl=  3.18  ratio=0.315
+     k= 2  r=  7.7674  lambda=  60.5832  N_counted= 2  N_weyl=  5.68  ratio=0.352
+     k= 3  r=  8.9659  lambda=  80.6382  N_counted= 3  N_weyl=  7.56  ratio=0.397
+     k= 4  r= 10.0574  lambda= 101.4004  N_counted= 4  N_weyl=  9.51  ratio=0.421
+     k= 5  r= 10.5971  lambda= 112.5495  N_counted= 5  N_weyl= 10.55  ratio=0.474
+     k= 6  r= 11.5709  lambda= 134.1367  N_counted= 6  N_weyl= 12.58  ratio=0.477
+  q8 saved (1272s)
+ALL DONE (1272s) -> code/out/zeta_mayer_rosen.json

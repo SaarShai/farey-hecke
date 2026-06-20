@@ -1,0 +1,262 @@
+{
+  "backend": "python-flint (Arb balls)",
+  "prec_bits": 280,
+  "Z0": "(sqrt5-1)/2",
+  "operator": "L_s f(z)=sum_n (z+n)^{-2s} f(1/(z+n)); Z=det(1-L)det(1+L)",
+  "rigor": {
+    "branch_tail": "EXACT via Hurwitz zeta(2s+i, z+n_head+1) (binomial expansion); conditionally-convergent sum at Re s=1/2 given its true analytic value, certified ball.",
+    "taylor_extraction": "acb_series rigorous power-series AD (no FFT).",
+    "finite_N": "acb_mat.det in Arb ball arithmetic; rounding in radius.",
+    "dimension_tail": "certified det-increment geometric Cauchy tail: g_last*q/(1-q) with q<1 the rigorously-certified max contraction of the last det-increments D_{N}-D_{N-2} over a short window (eigenvalue-decay regime)."
+  },
+  "params": {
+    "N": 44,
+    "n_head": 8,
+    "target_width": 1e-05,
+    "initial_half_window": 0.05
+  },
+  "enclosures": [
+    {
+      "published": 9.533695261,
+      "det_host": "det(1+L_s)",
+      "r_lo": 9.533689157484375,
+      "r_hi": 9.533701364515625,
+      "width": 1.2207031250710543e-05,
+      "contains_published": true,
+      "published_strict_interior": true,
+      "rp_minus_rlo": 6.103515625355271e-06,
+      "rhi_minus_rp": 6.103515625355271e-06,
+      "proven_re_sign_change": true,
+      "endpoint_re_signs": [
+        1,
+        -1
+      ],
+      "endpoint_re_balls": [
+        [
+          7.45311667672643e-07,
+          7.453116676726445e-07
+        ],
+        [
+          -7.451287245932854e-07,
+          -7.45128724593284e-07
+        ]
+      ],
+      "im_at_midpoint_mid": -5.47999659800364e-10,
+      "im_at_midpoint_rad": 7.350925908386982e-22,
+      "dimension_certified": true,
+      "dim_tail_q_midpoint": 0.06627938170965454,
+      "dim_tail_radius_midpoint": 7.350925889060663e-22,
+      "bisection_log": [
+        "bracket [9.4836952610,9.5836952610] Re-signs (+1,-1) ReZlo=[9.291e-03,9.291e-03] ReZhi=[-2.812e-03,-2.812e-03]"
+      ]
+    },
+    {
+      "published": 12.173008,
+      "det_host": "det(1+L_s)",
+      "r_lo": 12.173001896484374,
+      "r_hi": 12.173014103515625,
+      "width": 1.2207031250710543e-05,
+      "contains_published": true,
+      "published_strict_interior": true,
+      "rp_minus_rlo": 6.103515625355271e-06,
+      "rhi_minus_rp": 6.103515625355271e-06,
+      "proven_re_sign_change": true,
+      "endpoint_re_signs": [
+        1,
+        -1
+      ],
+      "endpoint_re_balls": [
+        [
+          4.631263831466631e-06,
+          4.631263831506544e-06
+        ],
+        [
+          -4.163137201580745e-06,
+          -4.1631372015408294e-06
+        ]
+      ],
+      "im_at_midpoint_mid": -9.731968868206006e-07,
+      "im_at_midpoint_rad": 1.9957335508965285e-17,
+      "dimension_certified": true,
+      "dim_tail_q_midpoint": 0.08106060249742258,
+      "dim_tail_radius_midpoint": 1.9957335448986456e-17,
+      "bisection_log": [
+        "bracket [12.1230080000,12.2230080000] Re-signs (+1,-1) ReZlo=[4.596e-02,4.596e-02] ReZhi=[-2.554e-02,-2.554e-02]"
+      ]
+    },
+    {
+      "published": 13.779751,
+      "det_host": "det(1-L_s)",
+      "r_lo": 13.779744896484374,
+      "r_hi": 13.779757103515625,
+      "width": 1.2207031250710543e-05,
+      "contains_published": true,
+      "published_strict_interior": true,
+      "rp_minus_rlo": 6.103515625355271e-06,
+      "rhi_minus_rp": 6.103515625355271e-06,
+      "proven_re_sign_change": true,
+      "endpoint_re_signs": [
+        1,
+        -1
+      ],
+      "endpoint_re_balls": [
+        [
+          5.250411389968376e-06,
+          5.250411393831631e-06
+        ],
+        [
+          -4.677717986497401e-06,
+          -4.677717982633972e-06
+        ]
+      ],
+      "im_at_midpoint_mid": -8.678928041936981e-07,
+      "im_at_midpoint_rad": 1.9316712457546897e-15,
+      "dimension_certified": true,
+      "dim_tail_q_midpoint": 0.09220377557391309,
+      "dim_tail_radius_midpoint": 1.9316712382643004e-15,
+      "bisection_log": [
+        "bracket [13.7297510000,13.8297510000] Re-signs (+1,-1) ReZlo=[5.026e-02,5.026e-02] ReZhi=[-3.017e-02,-3.017e-02]"
+      ]
+    },
+    {
+      "published": 14.358509,
+      "det_host": "det(1+L_s)",
+      "r_lo": 14.358502896484374,
+      "r_hi": 14.358515103515625,
+      "width": 1.2207031250710543e-05,
+      "contains_published": true,
+      "published_strict_interior": true,
+      "rp_minus_rlo": 6.103515625355271e-06,
+      "rhi_minus_rp": 6.103515625355271e-06,
+      "proven_re_sign_change": true,
+      "endpoint_re_signs": [
+        -1,
+        1
+      ],
+      "endpoint_re_balls": [
+        [
+          -7.2109863021238215e-06,
+          -7.210986235653645e-06
+        ],
+        [
+          6.0827796087569884e-06,
+          6.082779675229636e-06
+        ]
+      ],
+      "im_at_midpoint_mid": -2.182285365533251e-06,
+      "im_at_midpoint_rad": 3.323570588376388e-14,
+      "dimension_certified": true,
+      "dim_tail_q_midpoint": 0.0968364296091942,
+      "dim_tail_radius_midpoint": 3.32357057638435e-14,
+      "bisection_log": [
+        "bracket [14.3085090000,14.4085090000] Re-signs (-1,+1) ReZlo=[-3.427e-02,-3.427e-02] ReZhi=[7.400e-02,7.400e-02]"
+      ]
+    },
+    {
+      "published": 16.138073,
+      "det_host": "det(1+L_s)",
+      "r_lo": 16.138066896484375,
+      "r_hi": 16.138079103515622,
+      "width": 1.2207031247157829e-05,
+      "contains_published": true,
+      "published_strict_interior": true,
+      "rp_minus_rlo": 6.1035156235789145e-06,
+      "rhi_minus_rp": 6.1035156235789145e-06,
+      "proven_re_sign_change": true,
+      "endpoint_re_signs": [
+        -1,
+        1
+      ],
+      "endpoint_re_balls": [
+        [
+          -9.99226429007945e-06,
+          -9.99226059205193e-06
+        ],
+        [
+          9.446054502623391e-06,
+          9.446058200655276e-06
+        ]
+      ],
+      "im_at_midpoint_mid": -2.3189680444813507e-07,
+      "im_at_midpoint_rad": 1.849014851277274e-12,
+      "dimension_certified": true,
+      "dim_tail_q_midpoint": 0.11211033478300193,
+      "dim_tail_radius_midpoint": 1.8490148437835745e-12,
+      "bisection_log": [
+        "bracket [16.0880730000,16.1880730000] Re-signs (-1,+1) ReZlo=[-7.656e-02,-7.656e-02] ReZhi=[7.993e-02,7.993e-02]"
+      ]
+    },
+    {
+      "published": 16.644258,
+      "det_host": "det(1+L_s)",
+      "r_lo": 16.644251896484377,
+      "r_hi": 16.644264103515624,
+      "width": 1.2207031247157829e-05,
+      "contains_published": true,
+      "published_strict_interior": true,
+      "rp_minus_rlo": 6.1035156235789145e-06,
+      "rhi_minus_rp": 6.1035156235789145e-06,
+      "proven_re_sign_change": true,
+      "endpoint_re_signs": [
+        1,
+        -1
+      ],
+      "endpoint_re_balls": [
+        [
+          1.4514932006263493e-05,
+          1.4514945342886315e-05
+        ],
+        [
+          -9.738962964226089e-06,
+          -9.738949626534406e-06
+        ]
+      ],
+      "im_at_midpoint_mid": -1.2961253089942721e-06,
+      "im_at_midpoint_rad": 6.6685786260416505e-12,
+      "dimension_certified": true,
+      "dim_tail_q_midpoint": 0.11670314321118468,
+      "dim_tail_radius_midpoint": 6.668578606070262e-12,
+      "bisection_log": [
+        "bracket [16.5942580000,16.6942580000] Re-signs (+1,-1) ReZlo=[9.524e-02,9.524e-02] ReZhi=[-1.003e-01,-1.003e-01]"
+      ]
+    }
+  ],
+  "not_certified": [],
+  "dim_tail_probe_s_half_plus_12i": {
+    "tail_radius": 9.4552183234188e-18,
+    "info": {
+      "dims": [
+        36,
+        38,
+        40,
+        42,
+        44
+      ],
+      "increment_mag": [
+        2.2054807199951883e-13,
+        1.7712752445102596e-14,
+        1.4022661680883436e-15,
+        1.0827522351658518e-16
+      ],
+      "ratios": [
+        0.08031243385859768,
+        0.07916703925233577,
+        0.07721445898120233
+      ],
+      "q_cap": 0.75,
+      "q": 0.08031243385859768,
+      "tail_radius": 9.4552183234188e-18
+    }
+  },
+  "verdict": {
+    "n_published": 6,
+    "n_enclosures": 6,
+    "n_contains_published": 6,
+    "n_proven_sign_change": 6,
+    "n_published_strict_interior": 6,
+    "n_dimension_certified": 6,
+    "max_width": 1.2207031250710543e-05,
+    "all_contained_proven_dimcert": true
+  },
+  "wall_seconds": 735.5440979003906
+}

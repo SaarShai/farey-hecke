@@ -1,0 +1,71 @@
+[grid] 11220 cells; Y_max=8.0, nx=60, ny_arc=90, ny_cusp=110; FD corner y=0.86603
+
+=== q=3 odd r=9.533695261  (M=16, Q=40, Y0=0.65) ===
+  [coeffs] sigma_min=5.143e-10 sigma_max=1.371e+01 ratio=3.751e-11  null-resid=5.14e-10
+  [coeffs] b_1..b_6 (L2-normed)= [ 7.1921e-02 -9.9598e-01 -5.3354e-02  6.3825e-04 -3.4793e-05  1.3008e-06]
+  [sanity] automorphy mean-rel-err=9.27e-08 max=6.76e-07
+  [sanity] eigen-eq mean-rel-err=2.45e-06 max=3.86e-06
+  [metric] TV=0.6341  L1ratio=1.2682  rho_std=1.6731
+  [metric] cusp nu=0.0000 vs area 0.2975 (excess -0.2975)
+  [scar]  imag-axis nu/mu=0.027  mirror-wall=0.027  unit-arc=0.141
+
+=== q=3 odd r=12.173008  (M=16, Q=40, Y0=0.65) ===
+  [coeffs] sigma_min=2.164e-07 sigma_max=1.841e+00 ratio=1.175e-07  null-resid=2.16e-07
+  [coeffs] b_1..b_6 (L2-normed)= [ 7.0270e-01  4.7852e-02  7.0842e-01  4.5279e-02 -7.7309e-05  1.9465e-05]
+  [sanity] automorphy mean-rel-err=1.85e-04 max=9.60e-04
+  [sanity] eigen-eq mean-rel-err=6.35e-06 max=1.18e-05
+  [metric] TV=0.5858  L1ratio=1.1716  rho_std=1.5992
+  [metric] cusp nu=0.0007 vs area 0.2975 (excess -0.2968)
+  [scar]  imag-axis nu/mu=0.026  mirror-wall=0.029  unit-arc=0.194
+
+=== q=3 odd r=14.358509  (M=17, Q=42, Y0=0.65) ===
+  [coeffs] sigma_min=6.926e-07 sigma_max=1.966e+00 ratio=3.522e-07  null-resid=6.93e-07
+  [coeffs] b_1..b_6 (L2-normed)= [ 6.4952e-01  1.0997e-01  7.1365e-01 -2.3732e-01 -2.0371e-02 -9.5225e-05]
+  [sanity] automorphy mean-rel-err=3.80e-04 max=2.93e-03
+  [sanity] eigen-eq mean-rel-err=6.47e-06 max=1.51e-05
+  [metric] TV=0.5326  L1ratio=1.0652  rho_std=1.5214
+  [metric] cusp nu=0.0141 vs area 0.2975 (excess -0.2834)
+  [scar]  imag-axis nu/mu=0.025  mirror-wall=0.032  unit-arc=0.243
+
+=== q=3 odd r=16.138073  (M=17, Q=42, Y0=0.65) ===
+  [coeffs] sigma_min=1.090e-07 sigma_max=2.207e+00 ratio=4.941e-08  null-resid=1.09e-07
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.3736 -0.8296  0.3655 -0.1916  0.0427  0.0042]
+  [sanity] automorphy mean-rel-err=8.84e-05 max=7.41e-04
+  [sanity] eigen-eq mean-rel-err=4.16e-06 max=8.89e-06
+  [metric] TV=0.5213  L1ratio=1.0427  rho_std=1.3026
+  [metric] cusp nu=0.0519 vs area 0.2975 (excess -0.2456)
+  [scar]  imag-axis nu/mu=0.054  mirror-wall=0.069  unit-arc=0.363
+
+=== q=3 even r=13.779751  (M=17, Q=42, Y0=0.65) ===
+  [coeffs] sigma_min=5.564e-08 sigma_max=1.623e+00 ratio=3.429e-08  null-resid=5.56e-08
+  [coeffs] b_1..b_6 (L2-normed)= [ 4.6078e-01 -8.5532e-01  1.6925e-01  1.6565e-01  4.7681e-03  8.6294e-05]
+  [sanity] automorphy mean-rel-err=7.52e-06 max=4.14e-05
+  [sanity] eigen-eq mean-rel-err=1.01e-05 max=3.05e-05
+  [metric] TV=0.5109  L1ratio=1.0219  rho_std=1.4836
+  [metric] cusp nu=0.0041 vs area 0.2975 (excess -0.2935)
+  [scar]  imag-axis nu/mu=2.190  mirror-wall=1.674  unit-arc=3.599
+
+Wrote /Users/za/Documents/farey-hecke/code/out/que_q3_control.json  (67.1s)
+
+========= q=3 (modular, PROVEN-QUE) MASS-DISTRIBUTION CONTROL =========
+          r   par       TV    L1dev  cusp_exc  rho_std   wall/μ    arc/μ   eig_err
+    9.53370   odd   0.6341   1.2682   -0.2975   1.6731    0.027    0.141  2.45e-06
+   12.17301   odd   0.5858   1.1716   -0.2968   1.5992    0.029    0.194  6.35e-06
+   14.35851   odd   0.5326   1.0652   -0.2834   1.5214    0.032    0.243  6.47e-06
+   16.13807   odd   0.5213   1.0427   -0.2456   1.3026    0.069    0.363  4.16e-06
+   13.77975  even   0.5109   1.0219   -0.2935   1.4836    1.674    3.599  1.01e-05
+
+--------- SIDE-BY-SIDE: G_5 (non-arith) vs q=3 (proven QUE), matched r ---------
+    G5 r     q3 r     dr |   TV g5   TV q3       Δ |   L1 g5   L1 q3       Δ | cuspE g5 cuspE q3
+   6.474    9.534   3.06 |  0.5947  0.6341 -0.0394 |  1.1894  1.2682 -0.0787 |   0.2631   0.2975
+   8.637    9.534   0.90 |  0.5363  0.6341 -0.0978 |  1.0726  1.2682 -0.1956 |   0.2471   0.2975
+  10.136    9.534   0.60 |  0.5183  0.6341 -0.1157 |  1.0367  1.2682 -0.2315 |   0.2037   0.2975
+  11.016   12.173   1.16 |  0.5261  0.5858 -0.0597 |  1.0522  1.1716 -0.1194 |   0.1330   0.2968
+  12.084   12.173   0.09 |  0.4764  0.5858 -0.1094 |  0.9527  1.1716 -0.2188 |   0.0720   0.2968
+  12.851   12.173   0.68 |  0.4831  0.5858 -0.1027 |  0.9662  1.1716 -0.2054 |   0.0138   0.2968
+
+  overlap pairs: 5
+  mean (G_5 - q3)  TV=-0.0971  L1=-0.1941  rho_std=-0.3004  |cuspE|=-0.1632
+  q3 baseline:  TV_mean=0.5684  L1_mean=1.1369  => G_5 fractional excess  TV=-17.1%  L1=-17.1%
+
+  VERDICT: NORMAL / QUE-CONSISTENT: at matched r, G_5's mass-distribution deviations are at or below the proven-QUE q=3 baseline (within ~12%). The G_5 equidistribution trend looks like generic low-r lumpiness of a QUE surface, not an anomaly.

@@ -1,0 +1,15 @@
+q=5 sign=-1 (mms-/ODD)  N=30  n_head=8000
+scan r in [0.2,6.5] grid=320 (spacing 0.0197)
+global |det| floor over grid = 1.444e-02 at r=6.4803
+global |det| max  over grid  = 1.785e+00
+
+ALL local minima of |det| in [0.2,6.5]:
+   r*=  2.8223   |det|=5.953e-01
+   r*=  6.4737   |det|=5.222e-08  <== CANDIDATE ZERO (below 1e-2)
+
+N candidate zeros (|det|<1e-2) below 6.47: 1
+
+--- control: mms+ (even/+1) sector, same window ---
+mms+ global |det| floor = 1.676e-01 at r=5.7693
+
+Saved: /Users/za/Documents/farey-hecke/code/out/lowr_scan_q5.json

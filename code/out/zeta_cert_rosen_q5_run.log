@@ -1,0 +1,25 @@
+==============================================================================
+CERTIFIED Selberg-zeta (MMS Rosen) zero enclosures, q=5 ODD (mms-)
+backend=python-flint (Arb balls)  prec=300 bits  N/comp=22  matrix=66x66  n_head=4
+==============================================================================
+dimension-tail radius (s=1/2+6.4737i): 2.916e-13 q=0.04044470963979918
+  det-increment mags over per-comp dims [14, 16, 18, 20, 22]: ['1.33e-07', '5.37e-09', '1.99e-10', '6.92e-12']
+
+r~6.4737: ON-LINE [6.47369471,6.47370479] w=1.01e-05 r*=6.4736997 matches-published-4dp [PROVEN Re&Im flip, dim-cert] |det|_mid<=5.52e-06
+        WINDING box r0=6.47369975 +-(6.0e-05dx,6.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (contains published)
+r~8.6368: ON-LINE [8.63675994,8.63677002] w=1.01e-05 r*=8.6367650 matches-published-4dp [PROVEN Re&Im flip, dim-cert] |det|_mid<=7.51e-06
+        WINDING box r0=8.63676498 +-(6.0e-05dx,6.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (contains published)
+r~10.1365: ON-LINE [10.13644449,10.13645457] w=1.01e-05 r*=10.1364495 OFF-published? [PROVEN Re&Im flip, dim-cert] |det|_mid<=1.48e-05
+        WINDING box r0=10.13644953 +-(6.0e-05dx,6.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (contains published)
+r~11.0156: ON-LINE [11.01556533,11.01557541] w=1.01e-05 r*=11.0155704 matches-published-4dp [PROVEN Re&Im flip, dim-cert] |det|_mid<=1.24e-05
+        WINDING box r0=11.01557037 +-(6.0e-05dx,6.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (contains published)
+r~12.0841: ON-LINE [12.08406172,12.08407180] w=1.01e-05 r*=12.0840668 matches-published-4dp [PROVEN Re&Im flip, dim-cert] |det|_mid<=1.60e-05
+        WINDING box r0=12.08406676 +-(6.0e-05dx,6.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (contains published)
+r~12.8513: ON-LINE [12.85128411,12.85129418] w=1.01e-05 r*=12.8512891 matches-published-4dp [PROVEN Re&Im flip, dim-cert] |det|_mid<=2.99e-05
+        WINDING box r0=12.85128914 +-(6.0e-05dx,6.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (contains published)
+
+==============================================================================
+VERDICT: 6/6 have an enclosure; 6 PROVEN on-line Re&Im flip (dim-cert); 5 consistent w/ published (4dp); 6 winding=1 (genuine complex det zero in box); 6 published inside winding box; max width 1.01e-05
+==============================================================================
+
+wrote code/out/zeta_cert_rosen_q5.json   (263.6s)

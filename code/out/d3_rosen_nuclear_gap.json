@@ -1,0 +1,310 @@
+{
+  "description": "NUCLEAR (holomorphic disc-algebra) spectral gap of the 1-D Rosen lambda_q-CF transfer operator, alpha_q=-log|lambda_2/lambda_1| at s=D_q(B). Replaces the non-convergent barycentric-collocation run.",
+  "caveat": "1-D CF-map decay-of-correlations gap ONLY; does NOT imply horocycle effective equidistribution (2-D BCZ section is parabolic/zero-entropy, no gap, 1 in essential spectrum). No interval certification, no Lean.",
+  "method": "MMS even/odd reduced transfer operator (eqs 32-34, arXiv:0912.2236) on per-cell Taylor bases via Cauchy-FFT; digit tails truncated at l<=B (bounded-type survivor set); gap from the union of even+odd reduced spectra.",
+  "B": 12,
+  "N_grid": [
+    20,
+    30,
+    40,
+    50
+  ],
+  "N_ref": 50,
+  "q3_gauss_anchor": {
+    "D_3_B2_nuclear": 0.5312805062772044,
+    "known": 0.5312805062772051,
+    "residual": -7.771561172376096e-16
+  },
+  "per_q_gap": {
+    "5": {
+      "lambda": 1.618033988749895,
+      "kappa": 3,
+      "B": 12,
+      "D_q_nuclear": 0.9672025938854962,
+      "D_q_collocation_xcheck": 0.9684037983511082,
+      "lambda1": 1.0000000000000002,
+      "lambda2": 0.21611897537232017,
+      "lambda3": 0.21611897537232017,
+      "lambda1_even": 1.0000000000000002,
+      "lambda1_odd": 0.1152697413040694,
+      "gap": 0.2161189753723201,
+      "alpha": 1.531926211030281,
+      "lambda1_sanity_ok": true,
+      "collocation_gap": 0.23631241067032221
+    },
+    "7": {
+      "lambda": 1.8019377358048383,
+      "kappa": 5,
+      "B": 12,
+      "D_q_nuclear": 0.9731415461641428,
+      "D_q_collocation_xcheck": 0.972271792686835,
+      "lambda1": 1.0000000000000007,
+      "lambda2": 0.3458725759908095,
+      "lambda3": 0.34587257599080923,
+      "lambda1_even": 1.0000000000000007,
+      "lambda1_odd": 0.17095597341791605,
+      "gap": 0.3458725759908093,
+      "alpha": 1.0616848492384294,
+      "lambda1_sanity_ok": true,
+      "collocation_gap": 0.35134060324504496
+    },
+    "8": {
+      "lambda": 1.8477590650225735,
+      "kappa": 3,
+      "B": 12,
+      "D_q_nuclear": 0.9746843424360128,
+      "D_q_collocation_xcheck": 0.974733258223349,
+      "lambda1": 0.9999999999999991,
+      "lambda2": 0.3878307939327497,
+      "lambda3": 0.3878307939327497,
+      "lambda1_even": 0.9999999999999991,
+      "lambda1_odd": 0.1810155107910489,
+      "gap": 0.38783079393275005,
+      "alpha": 0.9471861325887689,
+      "lambda1_sanity_ok": true,
+      "collocation_gap": 0.3825453560306088
+    },
+    "13": {
+      "lambda": 1.941883634852104,
+      "kappa": 11,
+      "B": 12,
+      "D_q_nuclear": 0.9778326592879536,
+      "D_q_collocation_xcheck": 0.9775948664595058,
+      "lambda1": 0.9999999999999984,
+      "lambda2": 0.5741368817800834,
+      "lambda3": 0.5741368817800829,
+      "lambda1_even": 0.9999999999999984,
+      "lambda1_odd": 0.3330927872843695,
+      "gap": 0.5741368817800843,
+      "alpha": 0.5548874410918747,
+      "lambda1_sanity_ok": true,
+      "collocation_gap": 0.5806700073226013
+    }
+  },
+  "N_convergence": {
+    "5": {
+      "rows": [
+        {
+          "N": 20,
+          "lambda1": 1.0000000000000002,
+          "lambda2": 0.21611897537232022,
+          "lambda3": 0.2161189753723202,
+          "lambda1_even": 1.0000000000000002,
+          "lambda1_odd": 0.11526974130405034,
+          "gap": 0.21611897537232017,
+          "alpha": 1.5319262110302805,
+          "delta_gap": null
+        },
+        {
+          "N": 30,
+          "lambda1": 1.0000000000000007,
+          "lambda2": 0.21611897537232008,
+          "lambda3": 0.21611897537232008,
+          "lambda1_even": 1.0000000000000007,
+          "lambda1_odd": 0.11526974130406942,
+          "gap": 0.21611897537231994,
+          "alpha": 1.5319262110302816,
+          "delta_gap": 2.220446049250313e-16
+        },
+        {
+          "N": 40,
+          "lambda1": 1.0000000000000002,
+          "lambda2": 0.21611897537232005,
+          "lambda3": 0.21611897537232003,
+          "lambda1_even": 1.0000000000000002,
+          "lambda1_odd": 0.11526974130406854,
+          "gap": 0.21611897537232,
+          "alpha": 1.5319262110302814,
+          "delta_gap": 5.551115123125783e-17
+        },
+        {
+          "N": 50,
+          "lambda1": 1.0000000000000002,
+          "lambda2": 0.21611897537232017,
+          "lambda3": 0.21611897537232017,
+          "lambda1_even": 1.0000000000000002,
+          "lambda1_odd": 0.1152697413040694,
+          "gap": 0.2161189753723201,
+          "alpha": 1.531926211030281,
+          "delta_gap": 1.1102230246251565e-16
+        }
+      ],
+      "max_drift": 2.220446049250313e-16,
+      "fine_drift": 1.1102230246251565e-16,
+      "stable_1e6": true,
+      "stable_1e4": true
+    },
+    "7": {
+      "rows": [
+        {
+          "N": 20,
+          "lambda1": 0.9999999999999964,
+          "lambda2": 0.34587257599080845,
+          "lambda3": 0.3458725759908081,
+          "lambda1_even": 0.9999999999999964,
+          "lambda1_odd": 0.17095597341800753,
+          "gap": 0.34587257599080967,
+          "alpha": 1.0616848492384283,
+          "delta_gap": null
+        },
+        {
+          "N": 30,
+          "lambda1": 0.9999999999999989,
+          "lambda2": 0.3458725759908098,
+          "lambda3": 0.3458725759908094,
+          "lambda1_even": 0.9999999999999989,
+          "lambda1_odd": 0.17095597341791618,
+          "gap": 0.34587257599081017,
+          "alpha": 1.061684849238427,
+          "delta_gap": 4.996003610813204e-16
+        },
+        {
+          "N": 40,
+          "lambda1": 0.9999999999999996,
+          "lambda2": 0.3458725759908103,
+          "lambda3": 0.3458725759908103,
+          "lambda1_even": 0.9999999999999996,
+          "lambda1_odd": 0.17095597341791702,
+          "gap": 0.34587257599081045,
+          "alpha": 1.061684849238426,
+          "delta_gap": 2.7755575615628914e-16
+        },
+        {
+          "N": 50,
+          "lambda1": 1.0000000000000007,
+          "lambda2": 0.3458725759908095,
+          "lambda3": 0.34587257599080923,
+          "lambda1_even": 1.0000000000000007,
+          "lambda1_odd": 0.17095597341791605,
+          "gap": 0.3458725759908093,
+          "alpha": 1.0616848492384294,
+          "delta_gap": 1.1657341758564144e-15
+        }
+      ],
+      "max_drift": 1.1657341758564144e-15,
+      "fine_drift": 1.1657341758564144e-15,
+      "stable_1e6": true,
+      "stable_1e4": true
+    },
+    "8": {
+      "rows": [
+        {
+          "N": 20,
+          "lambda1": 0.9999999999998617,
+          "lambda2": 0.38783079393209524,
+          "lambda3": 0.38783079393209513,
+          "lambda1_even": 0.9999999999998617,
+          "lambda1_odd": 0.1810155108053934,
+          "gap": 0.38783079393214887,
+          "alpha": 0.947186132590319,
+          "delta_gap": null
+        },
+        {
+          "N": 30,
+          "lambda1": 0.9999999999999996,
+          "lambda2": 0.38783079393274994,
+          "lambda3": 0.38783079393274994,
+          "lambda1_even": 0.9999999999999996,
+          "lambda1_odd": 0.18101551079104847,
+          "gap": 0.3878307939327501,
+          "alpha": 0.9471861325887688,
+          "delta_gap": 6.012412789857535e-13
+        },
+        {
+          "N": 40,
+          "lambda1": 0.9999999999999991,
+          "lambda2": 0.3878307939327493,
+          "lambda3": 0.38783079393274916,
+          "lambda1_even": 0.9999999999999991,
+          "lambda1_odd": 0.1810155107910494,
+          "gap": 0.3878307939327496,
+          "alpha": 0.94718613258877,
+          "delta_gap": 4.996003610813204e-16
+        },
+        {
+          "N": 50,
+          "lambda1": 0.9999999999999991,
+          "lambda2": 0.3878307939327497,
+          "lambda3": 0.3878307939327497,
+          "lambda1_even": 0.9999999999999991,
+          "lambda1_odd": 0.1810155107910489,
+          "gap": 0.38783079393275005,
+          "alpha": 0.9471861325887689,
+          "delta_gap": 4.440892098500626e-16
+        }
+      ],
+      "max_drift": 6.012412789857535e-13,
+      "fine_drift": 4.440892098500626e-16,
+      "stable_1e6": true,
+      "stable_1e4": true
+    },
+    "13": {
+      "rows": [
+        {
+          "N": 20,
+          "lambda1": 0.9999999999999998,
+          "lambda2": 0.5741368817800829,
+          "lambda3": 0.5741368817800829,
+          "lambda1_even": 0.9999999999999998,
+          "lambda1_odd": 0.3330927872845491,
+          "gap": 0.574136881780083,
+          "alpha": 0.5548874410918768,
+          "delta_gap": null
+        },
+        {
+          "N": 30,
+          "lambda1": 0.9999999999999964,
+          "lambda2": 0.5741368817800852,
+          "lambda3": 0.5741368817800837,
+          "lambda1_even": 0.9999999999999964,
+          "lambda1_odd": 0.3330927872843706,
+          "gap": 0.5741368817800871,
+          "alpha": 0.5548874410918697,
+          "delta_gap": 4.107825191113079e-15
+        },
+        {
+          "N": 40,
+          "lambda1": 0.9999999999999996,
+          "lambda2": 0.5741368817800844,
+          "lambda3": 0.574136881780084,
+          "lambda1_even": 0.9999999999999996,
+          "lambda1_odd": 0.3330927872843709,
+          "gap": 0.5741368817800846,
+          "alpha": 0.5548874410918742,
+          "delta_gap": 2.55351295663786e-15
+        },
+        {
+          "N": 50,
+          "lambda1": 0.9999999999999984,
+          "lambda2": 0.5741368817800834,
+          "lambda3": 0.5741368817800829,
+          "lambda1_even": 0.9999999999999984,
+          "lambda1_odd": 0.3330927872843695,
+          "gap": 0.5741368817800843,
+          "alpha": 0.5548874410918747,
+          "delta_gap": 3.3306690738754696e-16
+        }
+      ],
+      "max_drift": 4.107825191113079e-15,
+      "fine_drift": 3.3306690738754696e-16,
+      "stable_1e6": true,
+      "stable_1e4": true
+    }
+  },
+  "verdict": {
+    "stable_1e6_qs": [
+      5,
+      7,
+      8,
+      13
+    ],
+    "stable_1e4_qs": [
+      5,
+      7,
+      8,
+      13
+    ],
+    "worst_fine_drift": 1.1657341758564144e-15,
+    "collocation_comparison": "collocation fine drift ~1e-2, none stable to 1e-6"
+  }
+}

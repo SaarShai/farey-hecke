@@ -10,3 +10,4 @@ Compact pointers. Fetch details on demand.
 - wiki catalog -> `index.md`
 - log -> `log.md`
 - raw sources -> `raw/` (search only; fetch after relevance)
+- L2_facts/hejhal-confirms-g5-maass-eigenvalues (fact tags=hecke,G_5,maass,hejhal,transfer-operator,spectrum,verification,golden-ratio) -> `L2_facts/hejhal-confirms-g5-maass-eigenvalues.md`

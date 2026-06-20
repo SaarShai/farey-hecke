@@ -1,24 +1,86 @@
 {
   "hooks": {
-    "PreCompact": [
+    "PostCompact": [
       {
-        "matcher": "*",
         "hooks": [
           {
-            "type": "command",
-            "command": "bash ./.claude/skills/context-keeper/hook.sh"
+            "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event PostCompact",
+            "type": "command"
           }
-        ]
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event PostToolUse",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "command": "bash ./.claude/skills/context-keeper/hook.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      },
+      {
+        "hooks": [
+          {
+            "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event PreCompact",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event PreToolUse",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event Stop",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
       }
     ],
     "UserPromptSubmit": [
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "bash /Users/za/Documents/Farey NOW/projects/agents-triage/hook.sh"
+            "command": "bash /Users/za/Documents/Farey NOW/projects/agents-triage/hook.sh",
+            "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event UserPromptSubmit",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
       }
     ]
   }

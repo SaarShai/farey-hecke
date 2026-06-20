@@ -1,0 +1,764 @@
+{
+  "ANY_NORMALIZATION_PASSES": false,
+  "q_list": [
+    5,
+    7,
+    8,
+    9,
+    11,
+    13
+  ],
+  "arithmetic_q": [
+    3,
+    4,
+    6
+  ],
+  "ground_truth": "arithmetic <=> q in {3,4,6} (Takeuchi); inv trace field Q(cos(2pi/q)) is the commensurability invariant",
+  "engages_bug_id_14": "code/out/xomega_normalization_proof.json: raw edge normalization-dependent (P,R reciprocal). This script tests area / systole / cusp-width canonical fixes.",
+  "table": [
+    {
+      "family": "Hecke",
+      "q": 3,
+      "type": "(2,3,inf)",
+      "arithmetic": true,
+      "lambda": 1.0,
+      "raw_edge_1/lam3": 1.0,
+      "inv_trace_field": "Q(cos(2pi/3))",
+      "inv_trace_field_deg": 1,
+      "area": 0.5235987755982989,
+      "systole": 0.0,
+      "cusp_width": 1.0,
+      "norm_i_area": 1.909859317102744,
+      "norm_ii_systole_k2": 0.0,
+      "norm_ii_systole_k3": 0.0,
+      "norm_iii_cuspwidth": 1.0
+    },
+    {
+      "family": "Hecke",
+      "q": 4,
+      "type": "(2,4,inf)",
+      "arithmetic": true,
+      "lambda": 1.4142135623730951,
+      "raw_edge_1/lam3": 0.3535533905932738,
+      "inv_trace_field": "Q(cos(2pi/4))",
+      "inv_trace_field_deg": 1,
+      "area": 0.7853981633974483,
+      "systole": 1.762747174039086,
+      "cusp_width": 1.4142135623730951,
+      "norm_i_area": 0.45015815807855303,
+      "norm_ii_systole_k2": 1.098588530847022,
+      "norm_ii_systole_k3": 1.9365338281823397,
+      "norm_iii_cuspwidth": 0.5
+    },
+    {
+      "family": "Hecke",
+      "q": 5,
+      "type": "(2,5,inf)",
+      "arithmetic": false,
+      "lambda": 1.618033988749895,
+      "raw_edge_1/lam3": 0.2360679774997897,
+      "inv_trace_field": "Q(cos(2pi/5))",
+      "inv_trace_field_deg": 2,
+      "area": 0.9424777960769379,
+      "systole": 2.1225501238100715,
+      "cusp_width": 1.618033988749895,
+      "norm_i_area": 0.2504759034986524,
+      "norm_ii_systole_k2": 1.0635379441538655,
+      "norm_ii_systole_k3": 2.257412595040496,
+      "norm_iii_cuspwidth": 0.38196601125010515
+    },
+    {
+      "family": "Hecke",
+      "q": 6,
+      "type": "(2,6,inf)",
+      "arithmetic": true,
+      "lambda": 1.7320508075688772,
+      "raw_edge_1/lam3": 0.19245008972987526,
+      "inv_trace_field": "Q(cos(2pi/6))",
+      "inv_trace_field_deg": 1,
+      "area": 1.0471975511965979,
+      "systole": 2.2924316695611777,
+      "cusp_width": 1.7320508075688772,
+      "norm_i_area": 0.18377629847393068,
+      "norm_ii_systole_k2": 1.0113719791286717,
+      "norm_ii_systole_k3": 2.3185011546613334,
+      "norm_iii_cuspwidth": 0.3333333333333333
+    },
+    {
+      "family": "Hecke",
+      "q": 7,
+      "type": "(2,7,inf)",
+      "arithmetic": false,
+      "lambda": 1.8019377358048383,
+      "raw_edge_1/lam3": 0.17091518882717946,
+      "inv_trace_field": "Q(cos(2pi/7))",
+      "inv_trace_field_deg": 3,
+      "area": 1.121997376282069,
+      "systole": 2.3884088567910102,
+      "cusp_width": 1.8019377358048383,
+      "norm_i_area": 0.15233118404744964,
+      "norm_ii_systole_k2": 0.9749851592211554,
+      "norm_ii_systole_k3": 2.3286631895236005,
+      "norm_iii_cuspwidth": 0.30797852836990414
+    },
+    {
+      "family": "Hecke",
+      "q": 8,
+      "type": "(2,8,inf)",
+      "arithmetic": false,
+      "lambda": 1.8477590650225735,
+      "raw_edge_1/lam3": 0.1585126677811072,
+      "inv_trace_field": "Q(cos(2pi/8))",
+      "inv_trace_field_deg": 2,
+      "area": 1.1780972450961724,
+      "systole": 2.4484524476780756,
+      "cusp_width": 1.8477590650225735,
+      "norm_i_area": 0.13454973130691536,
+      "norm_ii_systole_k2": 0.9502706654102799,
+      "norm_ii_systole_k3": 2.326692536680474,
+      "norm_iii_cuspwidth": 0.2928932188134525
+    },
+    {
+      "family": "Hecke",
+      "q": 9,
+      "type": "(2,9,inf)",
+      "arithmetic": false,
+      "lambda": 1.8793852415718169,
+      "raw_edge_1/lam3": 0.15064425142615434,
+      "inv_trace_field": "Q(cos(2pi/9))",
+      "inv_trace_field_deg": 3,
+      "area": 1.2217304763960306,
+      "systole": 2.488677519365646,
+      "cusp_width": 1.8793852415718169,
+      "norm_i_area": 0.12330399735180393,
+      "norm_ii_systole_k2": 0.9330175506934849,
+      "norm_ii_systole_k3": 2.321979803584473,
+      "norm_iii_cuspwidth": 0.28311858285794855
+    },
+    {
+      "family": "Hecke",
+      "q": 11,
+      "type": "(2,11,inf)",
+      "arithmetic": false,
+      "lambda": 1.9189859472289947,
+      "raw_edge_1/lam3": 0.14150918078943928,
+      "inv_trace_field": "Q(cos(2pi/11))",
+      "inv_trace_field_deg": 5,
+      "area": 1.2851969946503699,
+      "systole": 2.5377349213871505,
+      "cusp_width": 1.9189859472289947,
+      "norm_i_area": 0.11010699634256146,
+      "norm_ii_systole_k2": 0.9113330673573237,
+      "norm_ii_systole_k3": 2.3127217500475488,
+      "norm_iii_cuspwidth": 0.27155412933882117
+    },
+    {
+      "family": "Hecke",
+      "q": 13,
+      "type": "(2,13,inf)",
+      "arithmetic": false,
+      "lambda": 1.941883634852104,
+      "raw_edge_1/lam3": 0.1365621654571488,
+      "inv_trace_field": "Q(cos(2pi/13))",
+      "inv_trace_field_deg": 6,
+      "area": 1.3291353534418355,
+      "systole": 2.5654696173247076,
+      "cusp_width": 1.941883634852104,
+      "norm_i_area": 0.10274511553960024,
+      "norm_ii_systole_k2": 0.898802240095924,
+      "norm_ii_systole_k3": 2.3058498389494804,
+      "norm_iii_cuspwidth": 0.26518783424120257
+    },
+    {
+      "family": "Polygon",
+      "q": 3,
+      "type": "(3,inf,inf)",
+      "arithmetic": true,
+      "lambda": 1.0,
+      "raw_edge_1/lam3": 1.0,
+      "inv_trace_field": "Q(cos(2pi/3))",
+      "inv_trace_field_deg": 1,
+      "area": 2.0943951023931957,
+      "systole": 0.0,
+      "cusp_width": 1.0,
+      "norm_i_area": 0.477464829275686,
+      "norm_ii_systole_k2": 0.0,
+      "norm_ii_systole_k3": 0.0,
+      "norm_iii_cuspwidth": 1.0
+    },
+    {
+      "family": "Polygon",
+      "q": 4,
+      "type": "(4,inf,inf)",
+      "arithmetic": true,
+      "lambda": 1.4142135623730951,
+      "raw_edge_1/lam3": 0.3535533905932738,
+      "inv_trace_field": "Q(cos(2pi/4))",
+      "inv_trace_field_deg": 2,
+      "area": 2.356194490192345,
+      "systole": 1.762747174039086,
+      "cusp_width": 1.4142135623730951,
+      "norm_i_area": 0.15005271935951767,
+      "norm_ii_systole_k2": 1.098588530847022,
+      "norm_ii_systole_k3": 1.9365338281823397,
+      "norm_iii_cuspwidth": 0.5
+    },
+    {
+      "family": "Polygon",
+      "q": 5,
+      "type": "(5,inf,inf)",
+      "arithmetic": false,
+      "lambda": 1.618033988749895,
+      "raw_edge_1/lam3": 0.2360679774997897,
+      "inv_trace_field": "Q(cos(2pi/5))",
+      "inv_trace_field_deg": 2,
+      "area": 2.5132741228718345,
+      "systole": 2.1225501238100715,
+      "cusp_width": 1.618033988749895,
+      "norm_i_area": 0.09392846381199464,
+      "norm_ii_systole_k2": 1.0635379441538655,
+      "norm_ii_systole_k3": 2.257412595040496,
+      "norm_iii_cuspwidth": 0.38196601125010515
+    },
+    {
+      "family": "Polygon",
+      "q": 6,
+      "type": "(6,inf,inf)",
+      "arithmetic": true,
+      "lambda": 1.7320508075688772,
+      "raw_edge_1/lam3": 0.19245008972987526,
+      "inv_trace_field": "Q(cos(2pi/6))",
+      "inv_trace_field_deg": 2,
+      "area": 2.6179938779914944,
+      "systole": 2.2924316695611777,
+      "cusp_width": 1.7320508075688772,
+      "norm_i_area": 0.07351051938957227,
+      "norm_ii_systole_k2": 1.0113719791286717,
+      "norm_ii_systole_k3": 2.3185011546613334,
+      "norm_iii_cuspwidth": 0.3333333333333333
+    },
+    {
+      "family": "Polygon",
+      "q": 7,
+      "type": "(7,inf,inf)",
+      "arithmetic": false,
+      "lambda": 1.8019377358048383,
+      "raw_edge_1/lam3": 0.17091518882717946,
+      "inv_trace_field": "Q(cos(2pi/7))",
+      "inv_trace_field_deg": 3,
+      "area": 2.6927937030769655,
+      "systole": 2.3884088567910102,
+      "cusp_width": 1.8019377358048383,
+      "norm_i_area": 0.06347132668643735,
+      "norm_ii_systole_k2": 0.9749851592211554,
+      "norm_ii_systole_k3": 2.3286631895236005,
+      "norm_iii_cuspwidth": 0.30797852836990414
+    },
+    {
+      "family": "Polygon",
+      "q": 8,
+      "type": "(8,inf,inf)",
+      "arithmetic": false,
+      "lambda": 1.8477590650225735,
+      "raw_edge_1/lam3": 0.1585126677811072,
+      "inv_trace_field": "Q(cos(2pi/8))",
+      "inv_trace_field_deg": 4,
+      "area": 2.748893571891069,
+      "systole": 2.4484524476780756,
+      "cusp_width": 1.8477590650225735,
+      "norm_i_area": 0.05766417056010658,
+      "norm_ii_systole_k2": 0.9502706654102799,
+      "norm_ii_systole_k3": 2.326692536680474,
+      "norm_iii_cuspwidth": 0.2928932188134525
+    },
+    {
+      "family": "Polygon",
+      "q": 9,
+      "type": "(9,inf,inf)",
+      "arithmetic": false,
+      "lambda": 1.8793852415718169,
+      "raw_edge_1/lam3": 0.15064425142615434,
+      "inv_trace_field": "Q(cos(2pi/9))",
+      "inv_trace_field_deg": 3,
+      "area": 2.792526803190927,
+      "systole": 2.488677519365646,
+      "cusp_width": 1.8793852415718169,
+      "norm_i_area": 0.053945498841414224,
+      "norm_ii_systole_k2": 0.9330175506934849,
+      "norm_ii_systole_k3": 2.321979803584473,
+      "norm_iii_cuspwidth": 0.28311858285794855
+    },
+    {
+      "family": "Polygon",
+      "q": 11,
+      "type": "(11,inf,inf)",
+      "arithmetic": false,
+      "lambda": 1.9189859472289947,
+      "raw_edge_1/lam3": 0.14150918078943928,
+      "inv_trace_field": "Q(cos(2pi/11))",
+      "inv_trace_field_deg": 5,
+      "area": 2.8559933214452666,
+      "systole": 2.5377349213871505,
+      "cusp_width": 1.9189859472289947,
+      "norm_i_area": 0.04954814835415266,
+      "norm_ii_systole_k2": 0.9113330673573237,
+      "norm_ii_systole_k3": 2.3127217500475488,
+      "norm_iii_cuspwidth": 0.27155412933882117
+    },
+    {
+      "family": "Polygon",
+      "q": 13,
+      "type": "(13,inf,inf)",
+      "arithmetic": false,
+      "lambda": 1.941883634852104,
+      "raw_edge_1/lam3": 0.1365621654571488,
+      "inv_trace_field": "Q(cos(2pi/13))",
+      "inv_trace_field_deg": 6,
+      "area": 2.8999316802367323,
+      "systole": 2.5654696173247076,
+      "cusp_width": 1.941883634852104,
+      "norm_i_area": 0.047091511288983444,
+      "norm_ii_systole_k2": 0.898802240095924,
+      "norm_ii_systole_k3": 2.3058498389494804,
+      "norm_iii_cuspwidth": 0.26518783424120257
+    }
+  ],
+  "grades": {
+    "raw_edge_1/lam3": {
+      "normalization": "raw_edge_1/lam3",
+      "P1_distinguish_noncommensurable": {
+        "pass": false,
+        "pairs": [
+          {
+            "q": 3,
+            "hecke": 1.0,
+            "polygon": 1.0,
+            "differ": false
+          },
+          {
+            "q": 4,
+            "hecke": 0.3535533905932738,
+            "polygon": 0.3535533905932738,
+            "differ": false
+          },
+          {
+            "q": 5,
+            "hecke": 0.2360679774997897,
+            "polygon": 0.2360679774997897,
+            "differ": false
+          },
+          {
+            "q": 6,
+            "hecke": 0.19245008972987526,
+            "polygon": 0.19245008972987526,
+            "differ": false
+          },
+          {
+            "q": 7,
+            "hecke": 0.17091518882717946,
+            "polygon": 0.17091518882717946,
+            "differ": false
+          },
+          {
+            "q": 8,
+            "hecke": 0.1585126677811072,
+            "polygon": 0.1585126677811072,
+            "differ": false
+          },
+          {
+            "q": 9,
+            "hecke": 0.15064425142615434,
+            "polygon": 0.15064425142615434,
+            "differ": false
+          },
+          {
+            "q": 11,
+            "hecke": 0.14150918078943928,
+            "polygon": 0.14150918078943928,
+            "differ": false
+          },
+          {
+            "q": 13,
+            "hecke": 0.1365621654571488,
+            "polygon": 0.1365621654571488,
+            "differ": false
+          }
+        ]
+      },
+      "P2_constant_on_commensurable": {
+        "pass": false,
+        "status": "VACUOUS (no non-singleton commensurability class in sample; H_3,H_4,H_6 pairwise non-commensurable)"
+      },
+      "P3_distinguished_on_3_4_6": {
+        "pass": false,
+        "constant_on_arith": false,
+        "clean_threshold": false,
+        "arith_values": {
+          "3": 1.0,
+          "4": 0.3535533905932738,
+          "6": 0.19245008972987526
+        },
+        "nonarith_values": {
+          "5": 0.2360679774997897,
+          "7": 0.17091518882717946,
+          "8": 0.1585126677811072,
+          "9": 0.15064425142615434,
+          "11": 0.14150918078943928,
+          "13": 0.1365621654571488
+        }
+      },
+      "overall_pass": false,
+      "overall_pass_ignoring_vacuous_P2": false
+    },
+    "norm_i_area": {
+      "normalization": "norm_i_area",
+      "P1_distinguish_noncommensurable": {
+        "pass": true,
+        "pairs": [
+          {
+            "q": 3,
+            "hecke": 1.909859317102744,
+            "polygon": 0.477464829275686,
+            "differ": true
+          },
+          {
+            "q": 4,
+            "hecke": 0.45015815807855303,
+            "polygon": 0.15005271935951767,
+            "differ": true
+          },
+          {
+            "q": 5,
+            "hecke": 0.2504759034986524,
+            "polygon": 0.09392846381199464,
+            "differ": true
+          },
+          {
+            "q": 6,
+            "hecke": 0.18377629847393068,
+            "polygon": 0.07351051938957227,
+            "differ": true
+          },
+          {
+            "q": 7,
+            "hecke": 0.15233118404744964,
+            "polygon": 0.06347132668643735,
+            "differ": true
+          },
+          {
+            "q": 8,
+            "hecke": 0.13454973130691536,
+            "polygon": 0.05766417056010658,
+            "differ": true
+          },
+          {
+            "q": 9,
+            "hecke": 0.12330399735180393,
+            "polygon": 0.053945498841414224,
+            "differ": true
+          },
+          {
+            "q": 11,
+            "hecke": 0.11010699634256146,
+            "polygon": 0.04954814835415266,
+            "differ": true
+          },
+          {
+            "q": 13,
+            "hecke": 0.10274511553960024,
+            "polygon": 0.047091511288983444,
+            "differ": true
+          }
+        ]
+      },
+      "P2_constant_on_commensurable": {
+        "pass": false,
+        "status": "VACUOUS (no non-singleton commensurability class in sample; H_3,H_4,H_6 pairwise non-commensurable)"
+      },
+      "P3_distinguished_on_3_4_6": {
+        "pass": false,
+        "constant_on_arith": false,
+        "clean_threshold": false,
+        "arith_values": {
+          "3": 1.909859317102744,
+          "4": 0.45015815807855303,
+          "6": 0.18377629847393068
+        },
+        "nonarith_values": {
+          "5": 0.2504759034986524,
+          "7": 0.15233118404744964,
+          "8": 0.13454973130691536,
+          "9": 0.12330399735180393,
+          "11": 0.11010699634256146,
+          "13": 0.10274511553960024
+        }
+      },
+      "overall_pass": false,
+      "overall_pass_ignoring_vacuous_P2": false
+    },
+    "norm_ii_systole_k2": {
+      "normalization": "norm_ii_systole_k2",
+      "P1_distinguish_noncommensurable": {
+        "pass": false,
+        "pairs": [
+          {
+            "q": 3,
+            "hecke": 0.0,
+            "polygon": 0.0,
+            "differ": false
+          },
+          {
+            "q": 4,
+            "hecke": 1.098588530847022,
+            "polygon": 1.098588530847022,
+            "differ": false
+          },
+          {
+            "q": 5,
+            "hecke": 1.0635379441538655,
+            "polygon": 1.0635379441538655,
+            "differ": false
+          },
+          {
+            "q": 6,
+            "hecke": 1.0113719791286717,
+            "polygon": 1.0113719791286717,
+            "differ": false
+          },
+          {
+            "q": 7,
+            "hecke": 0.9749851592211554,
+            "polygon": 0.9749851592211554,
+            "differ": false
+          },
+          {
+            "q": 8,
+            "hecke": 0.9502706654102799,
+            "polygon": 0.9502706654102799,
+            "differ": false
+          },
+          {
+            "q": 9,
+            "hecke": 0.9330175506934849,
+            "polygon": 0.9330175506934849,
+            "differ": false
+          },
+          {
+            "q": 11,
+            "hecke": 0.9113330673573237,
+            "polygon": 0.9113330673573237,
+            "differ": false
+          },
+          {
+            "q": 13,
+            "hecke": 0.898802240095924,
+            "polygon": 0.898802240095924,
+            "differ": false
+          }
+        ]
+      },
+      "P2_constant_on_commensurable": {
+        "pass": false,
+        "status": "VACUOUS (no non-singleton commensurability class in sample; H_3,H_4,H_6 pairwise non-commensurable)"
+      },
+      "P3_distinguished_on_3_4_6": {
+        "pass": false,
+        "constant_on_arith": false,
+        "clean_threshold": false,
+        "arith_values": {
+          "3": 0.0,
+          "4": 1.098588530847022,
+          "6": 1.0113719791286717
+        },
+        "nonarith_values": {
+          "5": 1.0635379441538655,
+          "7": 0.9749851592211554,
+          "8": 0.9502706654102799,
+          "9": 0.9330175506934849,
+          "11": 0.9113330673573237,
+          "13": 0.898802240095924
+        }
+      },
+      "overall_pass": false,
+      "overall_pass_ignoring_vacuous_P2": false
+    },
+    "norm_ii_systole_k3": {
+      "normalization": "norm_ii_systole_k3",
+      "P1_distinguish_noncommensurable": {
+        "pass": false,
+        "pairs": [
+          {
+            "q": 3,
+            "hecke": 0.0,
+            "polygon": 0.0,
+            "differ": false
+          },
+          {
+            "q": 4,
+            "hecke": 1.9365338281823397,
+            "polygon": 1.9365338281823397,
+            "differ": false
+          },
+          {
+            "q": 5,
+            "hecke": 2.257412595040496,
+            "polygon": 2.257412595040496,
+            "differ": false
+          },
+          {
+            "q": 6,
+            "hecke": 2.3185011546613334,
+            "polygon": 2.3185011546613334,
+            "differ": false
+          },
+          {
+            "q": 7,
+            "hecke": 2.3286631895236005,
+            "polygon": 2.3286631895236005,
+            "differ": false
+          },
+          {
+            "q": 8,
+            "hecke": 2.326692536680474,
+            "polygon": 2.326692536680474,
+            "differ": false
+          },
+          {
+            "q": 9,
+            "hecke": 2.321979803584473,
+            "polygon": 2.321979803584473,
+            "differ": false
+          },
+          {
+            "q": 11,
+            "hecke": 2.3127217500475488,
+            "polygon": 2.3127217500475488,
+            "differ": false
+          },
+          {
+            "q": 13,
+            "hecke": 2.3058498389494804,
+            "polygon": 2.3058498389494804,
+            "differ": false
+          }
+        ]
+      },
+      "P2_constant_on_commensurable": {
+        "pass": false,
+        "status": "VACUOUS (no non-singleton commensurability class in sample; H_3,H_4,H_6 pairwise non-commensurable)"
+      },
+      "P3_distinguished_on_3_4_6": {
+        "pass": false,
+        "constant_on_arith": false,
+        "clean_threshold": false,
+        "arith_values": {
+          "3": 0.0,
+          "4": 1.9365338281823397,
+          "6": 2.3185011546613334
+        },
+        "nonarith_values": {
+          "5": 2.257412595040496,
+          "7": 2.3286631895236005,
+          "8": 2.326692536680474,
+          "9": 2.321979803584473,
+          "11": 2.3127217500475488,
+          "13": 2.3058498389494804
+        }
+      },
+      "overall_pass": false,
+      "overall_pass_ignoring_vacuous_P2": false
+    },
+    "norm_iii_cuspwidth": {
+      "normalization": "norm_iii_cuspwidth",
+      "P1_distinguish_noncommensurable": {
+        "pass": false,
+        "pairs": [
+          {
+            "q": 3,
+            "hecke": 1.0,
+            "polygon": 1.0,
+            "differ": false
+          },
+          {
+            "q": 4,
+            "hecke": 0.5,
+            "polygon": 0.5,
+            "differ": false
+          },
+          {
+            "q": 5,
+            "hecke": 0.38196601125010515,
+            "polygon": 0.38196601125010515,
+            "differ": false
+          },
+          {
+            "q": 6,
+            "hecke": 0.3333333333333333,
+            "polygon": 0.3333333333333333,
+            "differ": false
+          },
+          {
+            "q": 7,
+            "hecke": 0.30797852836990414,
+            "polygon": 0.30797852836990414,
+            "differ": false
+          },
+          {
+            "q": 8,
+            "hecke": 0.2928932188134525,
+            "polygon": 0.2928932188134525,
+            "differ": false
+          },
+          {
+            "q": 9,
+            "hecke": 0.28311858285794855,
+            "polygon": 0.28311858285794855,
+            "differ": false
+          },
+          {
+            "q": 11,
+            "hecke": 0.27155412933882117,
+            "polygon": 0.27155412933882117,
+            "differ": false
+          },
+          {
+            "q": 13,
+            "hecke": 0.26518783424120257,
+            "polygon": 0.26518783424120257,
+            "differ": false
+          }
+        ]
+      },
+      "P2_constant_on_commensurable": {
+        "pass": false,
+        "status": "VACUOUS (no non-singleton commensurability class in sample; H_3,H_4,H_6 pairwise non-commensurable)"
+      },
+      "P3_distinguished_on_3_4_6": {
+        "pass": false,
+        "constant_on_arith": false,
+        "clean_threshold": false,
+        "arith_values": {
+          "3": 1.0,
+          "4": 0.5,
+          "6": 0.3333333333333333
+        },
+        "nonarith_values": {
+          "5": 0.38196601125010515,
+          "7": 0.30797852836990414,
+          "8": 0.2928932188134525,
+          "9": 0.28311858285794855,
+          "11": 0.27155412933882117,
+          "13": 0.26518783424120257
+        }
+      },
+      "overall_pass": false,
+      "overall_pass_ignoring_vacuous_P2": false
+    }
+  },
+  "notes": {
+    "P2_vacuous": "H_3,H_4,H_6 are pairwise non-commensurable distinct arithmetic Fuchsian groups; no non-singleton commensurability class exists in the sample, so 'constant on commensurable' has no positive content. It cannot be a genuine pass -> ANY_NORMALIZATION_PASSES requires P1 & P3 AND a genuine P2, which is unattainable here.",
+    "systole_formula": "length = 2*arccosh(lambda), trace=2*lambda (repo memory).",
+    "cusp_width_formula": "cusp width = lambda_q (parabolic translation length).",
+    "area_formula": "A = pi*(1 - 1/p - 1/q - 1/r), 1/inf=0."
+  }
+}

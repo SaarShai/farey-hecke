@@ -1,0 +1,641 @@
+{
+  "surface": "q=3 = SL(2,Z) modular surface (ARITHMETIC; QUE PROVEN, Lindenstrauss 2006)",
+  "role": "ARITHMETIC CONTROL for the QUE mass-distribution test: a proven-QUE baseline to calibrate whether the G_5 trend is meaningful or generic low-r lumpiness.",
+  "lambda_q3": 1.0,
+  "kappa": 6.283185307179586,
+  "y_corner": 0.8660254037844386,
+  "Vol_FD_exact": 1.0471975511965976,
+  "Y0_horocycle": 0.65,
+  "Y_max_cusp_cutoff": 8.0,
+  "Y_c_cusp_region": 2.5,
+  "grid": {
+    "n_cells": 11220,
+    "nx": 60,
+    "ny_arc": 90,
+    "ny_cusp": 110,
+    "y_cusp_split": 1.5
+  },
+  "measure": "dmu = dx dy / y^2 ; prob nu = |u_r|^2 dmu / Z",
+  "r_odd": [
+    9.533695261,
+    12.173008,
+    14.358509,
+    16.138073
+  ],
+  "r_even": [
+    13.779751
+  ],
+  "method": "IDENTICAL machinery to que_g5_massdist.py, parametrized for lambda=1: coeffs {a_n} = right singular vector of smallest singular value of the column-normalized Hejhal matrix W(r); u_r reconstructed via the O(1) ratio K_{ir}(kappa n y)/K_{ir}(kappa n Y0); |u_r|^2 dmu compared to uniform dmu/Vol.",
+  "forms": [
+    {
+      "r": 9.533695261,
+      "n_cells": 11220,
+      "grid_Vol_FD_numeric": 0.921802412432645,
+      "total_mass_Z": 0.1432613303041639,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 6.952743942058453e-06,
+        "mu_area_frac": 0.29752156646619876,
+        "excess": -0.2975146137222567
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.020127792700756375,
+          "avg_mu": -0.03198110391572077,
+          "abs_dev": 0.011853311214964392,
+          "rel_dev": 0.3706348363146317
+        },
+        "inv_y": {
+          "avg_nu": 0.7778590226153101,
+          "avg_mu": 0.5869596348937938,
+          "abs_dev": 0.19089938772151638,
+          "rel_dev": 0.32523426888811235
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.9315130211272593,
+          "avg_mu": 0.5123010634461165,
+          "abs_dev": 0.41921195768114283,
+          "rel_dev": 0.8182921871393602
+        }
+      },
+      "global": {
+        "total_variation": 0.6340821863629986,
+        "L1_density_ratio_dev": 1.268164372725997,
+        "rho_weighted_std": 1.6731304288677367
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.02660741955290693,
+        "imag_axis_nu_mass": 0.0016851722927362462,
+        "imag_axis_mu_area": 0.06333467585555988,
+        "mirror_wall_ratio_nu_over_mu": 0.026949081132731832,
+        "mirror_wall_nu_mass": 0.0019817946735803107,
+        "mirror_wall_mu_area": 0.07353848778069325,
+        "unit_arc_ratio_nu_over_mu": 0.1412445497769798,
+        "unit_arc_nu_mass": 0.009928790556587852,
+        "unit_arc_mu_area": 0.07029503490410825
+      },
+      "parity": "odd",
+      "coeffs": {
+        "M": 16,
+        "Q": 40,
+        "Y0": 0.65,
+        "dps": 30,
+        "sigma_min": 5.142550202615977e-10,
+        "sigma_max": 13.708895638983064,
+        "sigma_ratio": 3.7512505296141096e-11,
+        "null_residual": 5.142554826625003e-10,
+        "b_normalized_first8": [
+          0.07192121888097909,
+          -0.9959820419141713,
+          -0.05335449259609593,
+          0.0006382528898462465,
+          -3.479253458918585e-05,
+          1.3007786738149924e-06,
+          -4.033109596375019e-08,
+          9.22420122358649e-10
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 9.265745610543308e-08,
+        "max_rel_automorphy_err": 6.756393843685217e-07,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 2.4525722861062303e-06,
+        "max_rel_eigeneq_err": 3.857443809662873e-06,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 12.173008,
+      "n_cells": 11220,
+      "grid_Vol_FD_numeric": 0.921802412432645,
+      "total_mass_Z": 0.17143819559580997,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.000694560286485251,
+        "mu_area_frac": 0.29752156646619876,
+        "excess": -0.2968270061797135
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.03171200561069674,
+          "avg_mu": -0.03198110391572077,
+          "abs_dev": 0.0002690983050240292,
+          "rel_dev": 0.008414290692815957
+        },
+        "inv_y": {
+          "avg_nu": 0.6803811081536145,
+          "avg_mu": 0.5869596348937938,
+          "abs_dev": 0.09342147325982075,
+          "rel_dev": 0.1591616658217472
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.7148407700554735,
+          "avg_mu": 0.5123010634461165,
+          "abs_dev": 0.20253970660935705,
+          "rel_dev": 0.39535289122166745
+        }
+      },
+      "global": {
+        "total_variation": 0.5857783879291627,
+        "L1_density_ratio_dev": 1.1715567758583254,
+        "rho_weighted_std": 1.599177083489559
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.02571460526587606,
+        "imag_axis_nu_mass": 0.0016286261892679333,
+        "imag_axis_mu_area": 0.06333467585555988,
+        "mirror_wall_ratio_nu_over_mu": 0.028656968762857383,
+        "mirror_wall_nu_mass": 0.0021073901471990956,
+        "mirror_wall_mu_area": 0.07353848778069325,
+        "unit_arc_ratio_nu_over_mu": 0.19392115716003144,
+        "unit_arc_nu_mass": 0.013631694511209472,
+        "unit_arc_mu_area": 0.07029503490410825
+      },
+      "parity": "odd",
+      "coeffs": {
+        "M": 16,
+        "Q": 40,
+        "Y0": 0.65,
+        "dps": 30,
+        "sigma_min": 2.1635607128406094e-07,
+        "sigma_max": 1.84109541061905,
+        "sigma_ratio": 1.1751486100946467e-07,
+        "null_residual": 2.163560711128057e-07,
+        "b_normalized_first8": [
+          0.7027047850925806,
+          0.04785238213577537,
+          0.7084249489733504,
+          0.045279353442808694,
+          -7.730860235534957e-05,
+          1.9465009320056467e-05,
+          -5.630663001272305e-07,
+          -2.2166865376687922e-08
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.0001853677381084541,
+        "max_rel_automorphy_err": 0.0009602336097318657,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 6.353527430122294e-06,
+        "max_rel_eigeneq_err": 1.1764688849627772e-05,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 14.358509,
+      "n_cells": 11220,
+      "grid_Vol_FD_numeric": 0.921802412432645,
+      "total_mass_Z": 0.2231144982350971,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.01407388032131331,
+        "mu_area_frac": 0.29752156646619876,
+        "excess": -0.28344768614488547
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.04782820874088214,
+          "avg_mu": -0.03198110391572077,
+          "abs_dev": 0.01584710482516137,
+          "rel_dev": 0.4955146284794597
+        },
+        "inv_y": {
+          "avg_nu": 0.6297896353341783,
+          "avg_mu": 0.5869596348937938,
+          "abs_dev": 0.04283000044038454,
+          "rel_dev": 0.07296924335884585
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.5586556449136628,
+          "avg_mu": 0.5123010634461165,
+          "abs_dev": 0.04635458146754634,
+          "rel_dev": 0.09048308655799206
+        }
+      },
+      "global": {
+        "total_variation": 0.5325875029567348,
+        "L1_density_ratio_dev": 1.0651750059134697,
+        "rho_weighted_std": 1.5214150235680217
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.025261324837023535,
+        "imag_axis_nu_mass": 0.0015999178202348897,
+        "imag_axis_mu_area": 0.06333467585555988,
+        "mirror_wall_ratio_nu_over_mu": 0.03218150322240566,
+        "mirror_wall_nu_mass": 0.0023665790814852185,
+        "mirror_wall_mu_area": 0.07353848778069325,
+        "unit_arc_ratio_nu_over_mu": 0.2434547806793035,
+        "unit_arc_nu_mass": 0.01711366230542366,
+        "unit_arc_mu_area": 0.07029503490410825
+      },
+      "parity": "odd",
+      "coeffs": {
+        "M": 17,
+        "Q": 42,
+        "Y0": 0.65,
+        "dps": 30,
+        "sigma_min": 6.925749067554032e-07,
+        "sigma_max": 1.966464480959101,
+        "sigma_ratio": 3.5219293989872356e-07,
+        "null_residual": 6.925749071755283e-07,
+        "b_normalized_first8": [
+          0.6495217623569461,
+          0.10996565501466243,
+          0.71364822040649,
+          -0.2373189302693151,
+          -0.020370779380539838,
+          -9.522538523966673e-05,
+          -8.241551178275987e-06,
+          1.1793914611969723e-07
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.0003804065497254475,
+        "max_rel_automorphy_err": 0.0029334340489860196,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 6.471424548642464e-06,
+        "max_rel_eigeneq_err": 1.5053115307794012e-05,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 16.138073,
+      "n_cells": 11220,
+      "grid_Vol_FD_numeric": 0.921802412432645,
+      "total_mass_Z": 0.3099298890293763,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.051933653369626465,
+        "mu_area_frac": 0.29752156646619876,
+        "excess": -0.2455879130965723
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.06003276146846137,
+          "avg_mu": -0.03198110391572077,
+          "abs_dev": 0.028051657552740604,
+          "rel_dev": 0.8771322474253745
+        },
+        "inv_y": {
+          "avg_nu": 0.7079782082446793,
+          "avg_mu": 0.5869596348937938,
+          "abs_dev": 0.1210185733508855,
+          "rel_dev": 0.20617869808506162
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.6774069048445452,
+          "avg_mu": 0.5123010634461165,
+          "abs_dev": 0.16510584139842877,
+          "rel_dev": 0.32228283948466663
+        }
+      },
+      "global": {
+        "total_variation": 0.5213346165553648,
+        "L1_density_ratio_dev": 1.0426692331107297,
+        "rho_weighted_std": 1.3026248805985239
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.05382414344303758,
+        "imag_axis_nu_mass": 0.0034089346781679434,
+        "imag_axis_mu_area": 0.06333467585555988,
+        "mirror_wall_ratio_nu_over_mu": 0.06946391437506712,
+        "mirror_wall_nu_mass": 0.005108271218469995,
+        "mirror_wall_mu_area": 0.07353848778069325,
+        "unit_arc_ratio_nu_over_mu": 0.3626678034580242,
+        "unit_arc_nu_mass": 0.025493745902678083,
+        "unit_arc_mu_area": 0.07029503490410825
+      },
+      "parity": "odd",
+      "coeffs": {
+        "M": 17,
+        "Q": 42,
+        "Y0": 0.65,
+        "dps": 30,
+        "sigma_min": 1.090202661279822e-07,
+        "sigma_max": 2.2065600749999184,
+        "sigma_ratio": 4.940734102967318e-08,
+        "null_residual": 1.0902026619277406e-07,
+        "b_normalized_first8": [
+          0.3736358051355916,
+          -0.8296225986371982,
+          0.3654594586408853,
+          -0.19163437399052424,
+          0.04267101266287119,
+          0.004178942705678494,
+          2.9294285901729897e-05,
+          2.0836097146671106e-06
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 8.840619330616478e-05,
+        "max_rel_automorphy_err": 0.0007413603294536539,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 4.164366759746106e-06,
+        "max_rel_eigeneq_err": 8.889225432341704e-06,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 13.779751,
+      "n_cells": 11220,
+      "grid_Vol_FD_numeric": 0.921802412432645,
+      "total_mass_Z": 0.1702336635284204,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.004064055079298516,
+        "mu_area_frac": 0.29752156646619876,
+        "excess": -0.29345751138690024
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": 0.0306386063756038,
+          "avg_mu": -0.03198110391572077,
+          "abs_dev": 0.06261971029132457,
+          "rel_dev": 1.9580221638485393
+        },
+        "inv_y": {
+          "avg_nu": 0.7729976298955837,
+          "avg_mu": 0.5869596348937938,
+          "abs_dev": 0.18603799500178997,
+          "rel_dev": 0.31695194003494337
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.7343954739562328,
+          "avg_mu": 0.5123010634461165,
+          "abs_dev": 0.22209441051011636,
+          "rel_dev": 0.43352322756494943
+        }
+      },
+      "global": {
+        "total_variation": 0.5109391923642702,
+        "L1_density_ratio_dev": 1.0218783847285404,
+        "rho_weighted_std": 1.4835816579090566
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 2.1899175163320046,
+        "imag_axis_nu_mass": 0.13869771604730027,
+        "imag_axis_mu_area": 0.06333467585555988,
+        "mirror_wall_ratio_nu_over_mu": 1.6735551202565528,
+        "mirror_wall_nu_mass": 0.12307071276130313,
+        "mirror_wall_mu_area": 0.07353848778069325,
+        "unit_arc_ratio_nu_over_mu": 3.5988171073421946,
+        "unit_arc_nu_mass": 0.25297897417412146,
+        "unit_arc_mu_area": 0.07029503490410825
+      },
+      "parity": "even",
+      "coeffs": {
+        "M": 17,
+        "Q": 42,
+        "Y0": 0.65,
+        "dps": 30,
+        "sigma_min": 5.5637445192198046e-08,
+        "sigma_max": 1.622550626956924,
+        "sigma_ratio": 3.429011352116973e-08,
+        "null_residual": 5.563744513496779e-08,
+        "b_normalized_first8": [
+          0.4607783316706061,
+          -0.8553200958075485,
+          0.16925337717134498,
+          0.16565450514054603,
+          0.004768077595770924,
+          8.629448996576376e-05,
+          -1.6271609677768722e-06,
+          9.153473217780016e-08
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 7.517972496044132e-06,
+        "max_rel_automorphy_err": 4.144045672647011e-05,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 1.0054449535496671e-05,
+        "max_rel_eigeneq_err": 3.0466136274321257e-05,
+        "n_pts": 6
+      }
+    }
+  ],
+  "comparison_vs_G5": {
+    "q3_odd_control_metrics": [
+      {
+        "r": 9.533695261,
+        "TV": 0.6340821863629986,
+        "L1dev": 1.268164372725997,
+        "rho_std": 1.6731304288677367,
+        "cusp_excess": -0.2975146137222567,
+        "abs_cusp_excess": 0.2975146137222567,
+        "wall_ratio": 0.026949081132731832,
+        "arc_ratio": 0.1412445497769798
+      },
+      {
+        "r": 12.173008,
+        "TV": 0.5857783879291627,
+        "L1dev": 1.1715567758583254,
+        "rho_std": 1.599177083489559,
+        "cusp_excess": -0.2968270061797135,
+        "abs_cusp_excess": 0.2968270061797135,
+        "wall_ratio": 0.028656968762857383,
+        "arc_ratio": 0.19392115716003144
+      },
+      {
+        "r": 14.358509,
+        "TV": 0.5325875029567348,
+        "L1dev": 1.0651750059134697,
+        "rho_std": 1.5214150235680217,
+        "cusp_excess": -0.28344768614488547,
+        "abs_cusp_excess": 0.28344768614488547,
+        "wall_ratio": 0.03218150322240566,
+        "arc_ratio": 0.2434547806793035
+      },
+      {
+        "r": 16.138073,
+        "TV": 0.5213346165553648,
+        "L1dev": 1.0426692331107297,
+        "rho_std": 1.3026248805985239,
+        "cusp_excess": -0.2455879130965723,
+        "abs_cusp_excess": 0.2455879130965723,
+        "wall_ratio": 0.06946391437506712,
+        "arc_ratio": 0.3626678034580242
+      }
+    ],
+    "matched_rows": [
+      {
+        "g5_r": 6.4737,
+        "q3_ctrl_r": 9.533695261,
+        "dr": 3.059995261,
+        "TV": {
+          "g5": 0.5947108862871668,
+          "q3": 0.6340821863629986,
+          "g5_minus_q3": -0.03937130007583178
+        },
+        "L1dev": {
+          "g5": 1.1894217725743337,
+          "q3": 1.268164372725997,
+          "g5_minus_q3": -0.07874260015166334
+        },
+        "rho_std": {
+          "g5": 1.546461494002413,
+          "q3": 1.6731304288677367,
+          "g5_minus_q3": -0.1266689348653236
+        },
+        "abs_cusp_excess": {
+          "g5": 0.2631375093137568,
+          "q3": 0.2975146137222567,
+          "g5_minus_q3": -0.03437710440849989
+        }
+      },
+      {
+        "g5_r": 8.6368,
+        "q3_ctrl_r": 9.533695261,
+        "dr": 0.8968952610000009,
+        "TV": {
+          "g5": 0.5362884266488754,
+          "q3": 0.6340821863629986,
+          "g5_minus_q3": -0.09779375971412319
+        },
+        "L1dev": {
+          "g5": 1.0725768532977509,
+          "q3": 1.268164372725997,
+          "g5_minus_q3": -0.19558751942824615
+        },
+        "rho_std": {
+          "g5": 1.4687573018672626,
+          "q3": 1.6731304288677367,
+          "g5_minus_q3": -0.20437312700047405
+        },
+        "abs_cusp_excess": {
+          "g5": 0.2470870298541776,
+          "q3": 0.2975146137222567,
+          "g5_minus_q3": -0.05042758386807908
+        }
+      },
+      {
+        "g5_r": 10.1365,
+        "q3_ctrl_r": 9.533695261,
+        "dr": 0.6028047389999998,
+        "TV": {
+          "g5": 0.5183452980088501,
+          "q3": 0.6340821863629986,
+          "g5_minus_q3": -0.11573688835414853
+        },
+        "L1dev": {
+          "g5": 1.0366905960177002,
+          "q3": 1.268164372725997,
+          "g5_minus_q3": -0.23147377670829683
+        },
+        "rho_std": {
+          "g5": 1.3073797056443541,
+          "q3": 1.6731304288677367,
+          "g5_minus_q3": -0.36575072322338253
+        },
+        "abs_cusp_excess": {
+          "g5": 0.20366502116547947,
+          "q3": 0.2975146137222567,
+          "g5_minus_q3": -0.09384959255677722
+        }
+      },
+      {
+        "g5_r": 11.0156,
+        "q3_ctrl_r": 12.173008,
+        "dr": 1.1574080000000002,
+        "TV": {
+          "g5": 0.5260957890279272,
+          "q3": 0.5857783879291627,
+          "g5_minus_q3": -0.059682598901235506
+        },
+        "L1dev": {
+          "g5": 1.0521915780558544,
+          "q3": 1.1715567758583254,
+          "g5_minus_q3": -0.11936519780247101
+        },
+        "rho_std": {
+          "g5": 1.3390419966483356,
+          "q3": 1.599177083489559,
+          "g5_minus_q3": -0.26013508684122333
+        },
+        "abs_cusp_excess": {
+          "g5": 0.13298337314207173,
+          "q3": 0.2968270061797135,
+          "g5_minus_q3": -0.1638436330376418
+        }
+      },
+      {
+        "g5_r": 12.0841,
+        "q3_ctrl_r": 12.173008,
+        "dr": 0.08890799999999999,
+        "TV": {
+          "g5": 0.47636928191578476,
+          "q3": 0.5857783879291627,
+          "g5_minus_q3": -0.10940910601337794
+        },
+        "L1dev": {
+          "g5": 0.9527385638315693,
+          "q3": 1.1715567758583254,
+          "g5_minus_q3": -0.2188182120267561
+        },
+        "rho_std": {
+          "g5": 1.2435628731364832,
+          "q3": 1.599177083489559,
+          "g5_minus_q3": -0.3556142103530757
+        },
+        "abs_cusp_excess": {
+          "g5": 0.0719550019478318,
+          "q3": 0.2968270061797135,
+          "g5_minus_q3": -0.22487200423188172
+        }
+      },
+      {
+        "g5_r": 12.8513,
+        "q3_ctrl_r": 12.173008,
+        "dr": 0.6782920000000008,
+        "TV": {
+          "g5": 0.48308852941532443,
+          "q3": 0.5857783879291627,
+          "g5_minus_q3": -0.10268985851383827
+        },
+        "L1dev": {
+          "g5": 0.9661770588306489,
+          "q3": 1.1715567758583254,
+          "g5_minus_q3": -0.20537971702767654
+        },
+        "rho_std": {
+          "g5": 1.283182882653002,
+          "q3": 1.599177083489559,
+          "g5_minus_q3": -0.3159942008365568
+        },
+        "abs_cusp_excess": {
+          "g5": 0.013813530429510779,
+          "q3": 0.2968270061797135,
+          "g5_minus_q3": -0.28301347575020275
+        }
+      }
+    ],
+    "overlap_window": {
+      "q3_r_lo": 9.533695261,
+      "q3_r_hi": 16.138073,
+      "n_overlap_pairs": 5
+    },
+    "aggregate_signed_diff_g5_minus_q3": {
+      "n_overlap_pairs": 5,
+      "mean_TV_g5_minus_q3": -0.09706244229934469,
+      "mean_L1dev_g5_minus_q3": -0.19412488459868932,
+      "mean_rho_std_g5_minus_q3": -0.30037346965094247,
+      "mean_abs_cusp_excess_g5_minus_q3": -0.1632012578889165
+    },
+    "q3_baseline_levels": {
+      "TV_mean": 0.5684456734510652,
+      "L1dev_mean": 1.1368913469021305,
+      "frac_TV_g5_over_q3": -0.17075060438066705,
+      "frac_L1_g5_over_q3": -0.170750604380667
+    },
+    "verdict": "NORMAL / QUE-CONSISTENT: at matched r, G_5's mass-distribution deviations are BELOW the proven-QUE q=3 baseline (G_5 fractional excess TV=-17.1%, L1=-17.1%). The G_5 equidistribution trend looks like generic low-r lumpiness of a QUE surface, not an anomaly -- if anything G_5 is marginally FLATTER than the modular control at these r."
+  }
+}

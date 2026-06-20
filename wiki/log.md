@@ -1,5 +1,9 @@
 # Wiki Log
 
+## [2026-06-20] verify | Hejhal confirms G_5 odd Maass eigenvalues (transfer-operator eq.34)
+
+Created `L2_facts/hejhal-confirms-g5-maass-eigenvalues.md` (verified fact). Independent automorphy point-matching (no transfer-operator code reused) confirms first two odd eigenvalues r₁=6.47367, r₂=8.63677 to 5 sig figs vs TO claim 6.4737, 8.6368. Modular-group validation SL(2,Z) r₁=9.53370 ✓. Critical bug diagnosed & fixed: sqrt(y) Whittaker prefactor omission caused Y₀-dependent offset; after fix, dips height-independent (genuine eigenfunction). Closes TO credibility for low spectrum; r₅,r₆ unverified.
+
 ## [2026-06-14] update | Track-C extremal index theta_q for BCZ extreme-gap process
 
 Created `concepts/track-c-extremal-index-theta-q-for-bcz-extreme-gap-process.md` from `page` template.

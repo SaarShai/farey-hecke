@@ -1,0 +1,72 @@
+[grid] 10290 cells; Y_max=8.0, nx=60, ny_arc=90, ny_cusp=110
+
+=== r=6.4737  (M=17, Q=42, Y0=0.5) ===
+  [coeffs] sigma_min=4.053e-07 sigma_max=2.240e+00 ratio=1.809e-07  null-resid=4.05e-07
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.4825 -0.3636 -0.7744 -0.1731  0.0706 -0.0184]
+  [sanity] automorphy mean-rel-err=3.01e-04 max=2.09e-03
+  [sanity] eigen-eq mean-rel-err=7.09e-07 max=1.64e-06
+  [metric] TV=0.5947  L1ratio=1.1894  rho_std=1.5465
+  [metric] cusp nu=0.0005 vs area 0.2637 (excess -0.2631)
+  [scar]  imag-axis nu/mu=0.026  mirror-wall=0.025  unit-arc=0.058
+
+=== r=8.6368  (M=18, Q=44, Y0=0.5) ===
+  [coeffs] sigma_min=1.735e-05 sigma_max=2.323e+00 ratio=7.467e-06  null-resid=1.73e-05
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.6371  0.2087  0.2052  0.638   0.3174 -0.0257]
+  [sanity] automorphy mean-rel-err=9.37e-04 max=3.54e-03
+  [sanity] eigen-eq mean-rel-err=1.95e-05 max=7.91e-05
+  [metric] TV=0.5363  L1ratio=1.0726  rho_std=1.4688
+  [metric] cusp nu=0.0166 vs area 0.2637 (excess -0.2471)
+  [scar]  imag-axis nu/mu=0.023  mirror-wall=0.037  unit-arc=0.099
+
+=== r=10.1365  (M=19, Q=46, Y0=0.5) ===
+  [coeffs] sigma_min=3.748e-06 sigma_max=1.942e+00 ratio=1.931e-06  null-resid=3.75e-06
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.4742 -0.5359 -0.5474  0.1887 -0.2199 -0.3219]
+  [sanity] automorphy mean-rel-err=1.83e-01 max=1.91e+00
+  [sanity] eigen-eq mean-rel-err=3.32e-06 max=3.76e-06
+  [metric] TV=0.5183  L1ratio=1.0367  rho_std=1.3074
+  [metric] cusp nu=0.0600 vs area 0.2637 (excess -0.2037)
+  [scar]  imag-axis nu/mu=0.046  mirror-wall=0.084  unit-arc=0.176
+
+=== r=11.0156  (M=19, Q=46, Y0=0.5) ===
+  [coeffs] sigma_min=6.039e-05 sigma_max=6.565e+00 ratio=9.198e-06  null-resid=6.04e-05
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.6394 -0.1849 -0.551   0.0581  0.2705  0.336 ]
+  [sanity] automorphy mean-rel-err=2.39e-02 max=2.17e-01
+  [sanity] eigen-eq mean-rel-err=3.96e-06 max=1.18e-05
+  [metric] TV=0.5261  L1ratio=1.0522  rho_std=1.3390
+  [metric] cusp nu=0.1307 vs area 0.2637 (excess -0.1330)
+  [scar]  imag-axis nu/mu=0.065  mirror-wall=0.050  unit-arc=0.135
+
+=== r=12.0841  (M=20, Q=48, Y0=0.5) ===
+  [coeffs] sigma_min=2.133e-05 sigma_max=3.491e+00 ratio=6.109e-06  null-resid=2.13e-05
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.1803  0.5642 -0.0503 -0.3052  0.6139  0.3615]
+  [sanity] automorphy mean-rel-err=4.30e-01 max=2.00e+00
+  [sanity] eigen-eq mean-rel-err=5.05e-06 max=6.90e-06
+  [metric] TV=0.4764  L1ratio=0.9527  rho_std=1.2436
+  [metric] cusp nu=0.1917 vs area 0.2637 (excess -0.0720)
+  [scar]  imag-axis nu/mu=0.051  mirror-wall=0.098  unit-arc=0.225
+
+=== r=12.8513  (M=20, Q=48, Y0=0.5) ===
+  [coeffs] sigma_min=2.491e-06 sigma_max=2.139e+01 ratio=1.165e-07  null-resid=2.49e-06
+  [coeffs] b_1..b_6 (L2-normed)= [ 0.4196 -0.0228  0.404   0.7238 -0.1898  0.0446]
+  [sanity] automorphy mean-rel-err=3.16e-03 max=1.70e-02
+  [sanity] eigen-eq mean-rel-err=1.00e-05 max=3.25e-05
+  [metric] TV=0.4831  L1ratio=0.9662  rho_std=1.2832
+  [metric] cusp nu=0.2775 vs area 0.2637 (excess +0.0138)
+  [scar]  imag-axis nu/mu=0.048  mirror-wall=0.125  unit-arc=0.265
+
+Wrote /Users/za/Documents/farey-hecke/code/out/que_g5_massdist.json  (109.6s)
+
+================ QUE MASS-DISTRIBUTION SUMMARY (G_5 odd) ================
+        r       TV    L1dev  cusp_exc  rho_std   wall/μ    arc/μ  auto_err
+   6.4737   0.5947   1.1894   -0.2631   1.5465    0.025    0.058  3.01e-04
+   8.6368   0.5363   1.0726   -0.2471   1.4688    0.037    0.099  9.37e-04
+  10.1365   0.5183   1.0367   -0.2037   1.3074    0.084    0.176  1.83e-01
+  11.0156   0.5261   1.0522   -0.1330   1.3390    0.050    0.135  2.39e-02
+  12.0841   0.4764   0.9527   -0.0720   1.2436    0.098    0.225  4.30e-01
+  12.8513   0.4831   0.9662   +0.0138   1.2832    0.125    0.265  3.16e-03
+
+Trend (slope vs r ; want <0 for QUE-consistent shrinkage):
+         total_variation: slope=-0.01736  first=0.5947 last=0.4831 last/first=0.812
+    L1_density_ratio_dev: slope=-0.03473  first=1.1894 last=0.9662 last/first=0.812
+         abs_cusp_excess: slope=-0.03984  first=0.2631 last=0.0138 last/first=0.052
+        rho_weighted_std: slope=-0.04720  first=1.5465 last=1.2832 last/first=0.830

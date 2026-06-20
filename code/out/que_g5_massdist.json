@@ -1,0 +1,555 @@
+{
+  "surface": "G_5 = (2,5,inf) Hecke triangle group (NON-arithmetic)",
+  "lambda_5": 1.618033988749895,
+  "kappa": 3.8832220774509327,
+  "Vol_FD_exact": 1.8849555921538759,
+  "Y0_horocycle": 0.5,
+  "Y_max_cusp_cutoff": 8.0,
+  "Y_c_cusp_region": 2.5,
+  "grid": {
+    "n_cells": 10290,
+    "nx": 60,
+    "ny_arc": 90,
+    "ny_cusp": 110,
+    "y_cusp_split": 1.5
+  },
+  "measure": "dmu = dx dy / y^2 ; prob nu = |u_r|^2 dmu / Z",
+  "r_validated": [
+    6.4737,
+    8.6368,
+    10.1365,
+    11.0156,
+    12.0841,
+    12.8513
+  ],
+  "method": "coeffs {a_n} = right singular vector of smallest singular value of the validated Hejhal matrix W(r*) (column-normalized, then de-normalized by K_{ir}(kappa n Y0)); u_r reconstructed on an FD midpoint grid; |u_r|^2 dmu compared to uniform dmu/Vol.",
+  "forms": [
+    {
+      "r": 6.4737,
+      "n_cells": 10290,
+      "grid_Vol_FD_numeric": 1.6830791980640722,
+      "total_mass_Z": 0.6091477266258281,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.0005195356085092569,
+        "mu_area_frac": 0.26365704492226605,
+        "excess": -0.2631375093137568
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.06092508436906674,
+          "avg_mu": -0.10948739874081595,
+          "abs_dev": 0.04856231437174921,
+          "rel_dev": 0.4435424983171657
+        },
+        "inv_y": {
+          "avg_nu": 0.7559623591063709,
+          "avg_mu": 0.6607500538592046,
+          "abs_dev": 0.09521230524716628,
+          "rel_dev": 0.1440973098542562
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.8772115653019549,
+          "avg_mu": 0.5387144628211855,
+          "abs_dev": 0.33849710248076936,
+          "rel_dev": 0.628342333168668
+        }
+      },
+      "global": {
+        "total_variation": 0.5947108862871668,
+        "L1_density_ratio_dev": 1.1894217725743337,
+        "rho_weighted_std": 1.546461494002413
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.025995024373691156,
+        "imag_axis_nu_mass": 0.0014525887978884629,
+        "imag_axis_mu_area": 0.055879493591034585,
+        "mirror_wall_ratio_nu_over_mu": 0.024933748971658287,
+        "mirror_wall_nu_mass": 0.002367870392381728,
+        "mirror_wall_mu_area": 0.09496648077564432,
+        "unit_arc_ratio_nu_over_mu": 0.05801806001996615,
+        "unit_arc_nu_mass": 0.005163506573612195,
+        "unit_arc_mu_area": 0.08899826315866546
+      },
+      "coeffs": {
+        "M": 17,
+        "Q": 42,
+        "Y0": 0.5,
+        "dps": 30,
+        "sigma_min": 4.05336450811214e-07,
+        "sigma_max": 2.2402227295179253,
+        "sigma_ratio": 1.809357817284706e-07,
+        "null_residual": 4.053364508510704e-07,
+        "b_normalized_first8": [
+          0.4824871624637538,
+          -0.3636410064738244,
+          -0.7743814505348146,
+          -0.17313675199455186,
+          0.0706431765284699,
+          -0.01835749407309757,
+          0.0009032756660420251,
+          0.0003417509147368533
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.0003009660394725762,
+        "max_rel_automorphy_err": 0.0020883270538356704,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 7.092373860839013e-07,
+        "max_rel_eigeneq_err": 1.6375212953350048e-06,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 8.6368,
+      "n_cells": 10290,
+      "grid_Vol_FD_numeric": 1.6830791980640722,
+      "total_mass_Z": 0.2742869724258083,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.016570015068088435,
+        "mu_area_frac": 0.26365704492226605,
+        "excess": -0.2470870298541776
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.12736997064981545,
+          "avg_mu": -0.10948739874081595,
+          "abs_dev": 0.0178825719089995,
+          "rel_dev": 0.1633299549963007
+        },
+        "inv_y": {
+          "avg_nu": 0.6774813795815098,
+          "avg_mu": 0.6607500538592046,
+          "abs_dev": 0.01673132572230518,
+          "rel_dev": 0.02532171677411677
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.6178820600863636,
+          "avg_mu": 0.5387144628211855,
+          "abs_dev": 0.07916759726517808,
+          "rel_dev": 0.14695650985604972
+        }
+      },
+      "global": {
+        "total_variation": 0.5362884266488754,
+        "L1_density_ratio_dev": 1.0725768532977509,
+        "rho_weighted_std": 1.4687573018672626
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.023160045077845127,
+        "imag_axis_nu_mass": 0.0012941715904955188,
+        "imag_axis_mu_area": 0.055879493591034585,
+        "mirror_wall_ratio_nu_over_mu": 0.03717750004253776,
+        "mirror_wall_nu_mass": 0.003530616343076178,
+        "mirror_wall_mu_area": 0.09496648077564432,
+        "unit_arc_ratio_nu_over_mu": 0.09924746994445909,
+        "unit_arc_nu_mass": 0.008832852447948712,
+        "unit_arc_mu_area": 0.08899826315866546
+      },
+      "coeffs": {
+        "M": 18,
+        "Q": 44,
+        "Y0": 0.5,
+        "dps": 30,
+        "sigma_min": 1.7345213920031565e-05,
+        "sigma_max": 2.322993369512031,
+        "sigma_ratio": 7.46675136816043e-06,
+        "null_residual": 1.7345213920128824e-05,
+        "b_normalized_first8": [
+          0.6370529161855512,
+          0.20867089391044366,
+          0.20524905937972435,
+          0.6379992204787418,
+          0.31736943002310464,
+          -0.025745997218276515,
+          0.00797112346594843,
+          0.00015675397501675265
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.0009368777158286393,
+        "max_rel_automorphy_err": 0.0035372436152258375,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 1.945653589743061e-05,
+        "max_rel_eigeneq_err": 7.914644785570862e-05,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 10.1365,
+      "n_cells": 10290,
+      "grid_Vol_FD_numeric": 1.6830791980640722,
+      "total_mass_Z": 0.3127710999542031,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.05999202375678659,
+        "mu_area_frac": 0.26365704492226605,
+        "excess": -0.20366502116547947
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.15685199724861215,
+          "avg_mu": -0.10948739874081595,
+          "abs_dev": 0.0473645985077962,
+          "rel_dev": 0.4326031950025596
+        },
+        "inv_y": {
+          "avg_nu": 0.7472128099659471,
+          "avg_mu": 0.6607500538592046,
+          "abs_dev": 0.08646275610674248,
+          "rel_dev": 0.13085546584785648
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.669590526246864,
+          "avg_mu": 0.5387144628211855,
+          "abs_dev": 0.13087606342567848,
+          "rel_dev": 0.24294143272169755
+        }
+      },
+      "global": {
+        "total_variation": 0.5183452980088501,
+        "L1_density_ratio_dev": 1.0366905960177002,
+        "rho_weighted_std": 1.3073797056443541
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.04550494367191661,
+        "imag_axis_nu_mass": 0.002542793208275254,
+        "imag_axis_mu_area": 0.055879493591034585,
+        "mirror_wall_ratio_nu_over_mu": 0.08351594222975713,
+        "mirror_wall_nu_mass": 0.007931215122222052,
+        "mirror_wall_mu_area": 0.09496648077564432,
+        "unit_arc_ratio_nu_over_mu": 0.17609377747454938,
+        "unit_arc_nu_mass": 0.01567204034828342,
+        "unit_arc_mu_area": 0.08899826315866546
+      },
+      "coeffs": {
+        "M": 19,
+        "Q": 46,
+        "Y0": 0.5,
+        "dps": 30,
+        "sigma_min": 3.748385059630005e-06,
+        "sigma_max": 1.9416586144583556,
+        "sigma_ratio": 1.9305067490845464e-06,
+        "null_residual": 3.74838505988224e-06,
+        "b_normalized_first8": [
+          0.4742145551163153,
+          -0.5359360910002204,
+          -0.5473955610358363,
+          0.1887206428512187,
+          -0.2198540082107052,
+          -0.3218527400004994,
+          0.024641937316972864,
+          -0.010155829760543965
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.18298119635220766,
+        "max_rel_automorphy_err": 1.9120674556093211,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 3.3156565426540894e-06,
+        "max_rel_eigeneq_err": 3.755750910353097e-06,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 11.0156,
+      "n_cells": 10290,
+      "grid_Vol_FD_numeric": 1.6830791980640722,
+      "total_mass_Z": 0.8134634279057176,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.13067367178019432,
+        "mu_area_frac": 0.26365704492226605,
+        "excess": -0.13298337314207173
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": 0.04041043423097243,
+          "avg_mu": -0.10948739874081595,
+          "abs_dev": 0.14989783297178838,
+          "rel_dev": 1.3690875360609676
+        },
+        "inv_y": {
+          "avg_nu": 0.6747730572962934,
+          "avg_mu": 0.6607500538592046,
+          "abs_dev": 0.014023003437088843,
+          "rel_dev": 0.021222856290643487
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.6444373171047295,
+          "avg_mu": 0.5387144628211855,
+          "abs_dev": 0.105722854283544,
+          "rel_dev": 0.19625026165045878
+        }
+      },
+      "global": {
+        "total_variation": 0.5260957890279272,
+        "L1_density_ratio_dev": 1.0521915780558544,
+        "rho_weighted_std": 1.3390419966483356
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.06460027095437172,
+        "imag_axis_nu_mass": 0.0036098304267739123,
+        "imag_axis_mu_area": 0.055879493591034585,
+        "mirror_wall_ratio_nu_over_mu": 0.04973646564222146,
+        "mirror_wall_nu_mass": 0.004723297108260518,
+        "mirror_wall_mu_area": 0.09496648077564432,
+        "unit_arc_ratio_nu_over_mu": 0.13549106249839266,
+        "unit_arc_nu_mass": 0.01205846923587914,
+        "unit_arc_mu_area": 0.08899826315866546
+      },
+      "coeffs": {
+        "M": 19,
+        "Q": 46,
+        "Y0": 0.5,
+        "dps": 30,
+        "sigma_min": 6.03871122761137e-05,
+        "sigma_max": 6.564898111170348,
+        "sigma_ratio": 9.198484310573447e-06,
+        "null_residual": 6.03871122759388e-05,
+        "b_normalized_first8": [
+          0.6394078447784177,
+          -0.184861074425046,
+          -0.55099388455404,
+          0.05805306648430581,
+          0.2704866475856343,
+          0.3359907272804734,
+          0.252897338038881,
+          0.0003765189983873719
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.02393901182768216,
+        "max_rel_automorphy_err": 0.21695664491722033,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 3.960806778198947e-06,
+        "max_rel_eigeneq_err": 1.183684988903082e-05,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 12.0841,
+      "n_cells": 10290,
+      "grid_Vol_FD_numeric": 1.6830791980640722,
+      "total_mass_Z": 0.33442574874473524,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.19170204297443424,
+        "mu_area_frac": 0.26365704492226605,
+        "excess": -0.0719550019478318
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.22236829426444563,
+          "avg_mu": -0.10948739874081595,
+          "abs_dev": 0.11288089552362968,
+          "rel_dev": 1.0309944050351125
+        },
+        "inv_y": {
+          "avg_nu": 0.6986106852382444,
+          "avg_mu": 0.6607500538592046,
+          "abs_dev": 0.03786063137903983,
+          "rel_dev": 0.05729947528253601
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.6409268239771638,
+          "avg_mu": 0.5387144628211855,
+          "abs_dev": 0.10221236115597832,
+          "rel_dev": 0.18973383528762894
+        }
+      },
+      "global": {
+        "total_variation": 0.47636928191578476,
+        "L1_density_ratio_dev": 0.9527385638315693,
+        "rho_weighted_std": 1.2435628731364832
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.05119796978957113,
+        "imag_axis_nu_mass": 0.002860916624730322,
+        "imag_axis_mu_area": 0.055879493591034585,
+        "mirror_wall_ratio_nu_over_mu": 0.0978102848051624,
+        "mirror_wall_nu_mass": 0.00928869853160975,
+        "mirror_wall_mu_area": 0.09496648077564432,
+        "unit_arc_ratio_nu_over_mu": 0.22535608029193333,
+        "unit_arc_nu_mass": 0.020056299738226827,
+        "unit_arc_mu_area": 0.08899826315866546
+      },
+      "coeffs": {
+        "M": 20,
+        "Q": 48,
+        "Y0": 0.5,
+        "dps": 30,
+        "sigma_min": 2.1327260121533685e-05,
+        "sigma_max": 3.4911385796216328,
+        "sigma_ratio": 6.108969791696186e-06,
+        "null_residual": 2.13272601213923e-05,
+        "b_normalized_first8": [
+          0.18026574379272428,
+          0.5641615125574836,
+          -0.050338001772830425,
+          -0.3052475207871658,
+          0.6139453365180408,
+          0.3614723298925077,
+          -0.21196112741784498,
+          -0.02720033856945579
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.43034050982255856,
+        "max_rel_automorphy_err": 2.0,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 5.0507287218171675e-06,
+        "max_rel_eigeneq_err": 6.9021648763306755e-06,
+        "n_pts": 6
+      }
+    },
+    {
+      "r": 12.8513,
+      "n_cells": 10290,
+      "grid_Vol_FD_numeric": 1.6830791980640722,
+      "total_mass_Z": 0.43426554140096807,
+      "cusp_cutoff_Yc": 2.5,
+      "cusp": {
+        "nu_mass": 0.2774705753517768,
+        "mu_area_frac": 0.26365704492226605,
+        "excess": 0.013813530429510779
+      },
+      "test_functions": {
+        "cos_pi_x_over_half": {
+          "avg_nu": -0.09948602075328984,
+          "avg_mu": -0.10948739874081595,
+          "abs_dev": 0.010001377987526108,
+          "rel_dev": 0.09134729752052902
+        },
+        "inv_y": {
+          "avg_nu": 0.6841459826171539,
+          "avg_mu": 0.6607500538592046,
+          "abs_dev": 0.02339592875794927,
+          "rel_dev": 0.03540813749662527
+        },
+        "bulk_bump_y1.2": {
+          "avg_nu": 0.5561906639928764,
+          "avg_mu": 0.5387144628211855,
+          "abs_dev": 0.017476201171690908,
+          "rel_dev": 0.032440564302228046
+        }
+      },
+      "global": {
+        "total_variation": 0.48308852941532443,
+        "L1_density_ratio_dev": 0.9661770588306489,
+        "rho_weighted_std": 1.283182882653002
+      },
+      "scarring_probes": {
+        "imag_axis_ratio_nu_over_mu": 0.04834306508568549,
+        "imag_axis_nu_mass": 0.00270138599562653,
+        "imag_axis_mu_area": 0.055879493591034585,
+        "mirror_wall_ratio_nu_over_mu": 0.12549054155889378,
+        "mirror_wall_nu_mass": 0.011917395102477881,
+        "mirror_wall_mu_area": 0.09496648077564432,
+        "unit_arc_ratio_nu_over_mu": 0.2648658608932238,
+        "unit_arc_nu_mass": 0.02357260158952161,
+        "unit_arc_mu_area": 0.08899826315866546
+      },
+      "coeffs": {
+        "M": 20,
+        "Q": 48,
+        "Y0": 0.5,
+        "dps": 30,
+        "sigma_min": 2.4913043584092005e-06,
+        "sigma_max": 21.39054193381237,
+        "sigma_ratio": 1.1646756618499488e-07,
+        "null_residual": 2.4913043581745325e-06,
+        "b_normalized_first8": [
+          0.4195993132863722,
+          -0.02278200170479582,
+          0.404030056768118,
+          0.7238138466196129,
+          -0.18975771839567288,
+          0.044600327325262264,
+          0.2507367653542742,
+          -0.18746675952862493
+        ]
+      },
+      "automorphy_sanity": {
+        "mean_rel_automorphy_err": 0.0031620280380309507,
+        "max_rel_automorphy_err": 0.016995252944823708,
+        "n_pts": 12
+      },
+      "eigen_equation_sanity": {
+        "mean_rel_eigeneq_err": 1.003747478585953e-05,
+        "max_rel_eigeneq_err": 3.245571121890514e-05,
+        "n_pts": 6
+      }
+    }
+  ],
+  "trend": {
+    "total_variation": {
+      "slope_vs_r": -0.017363641898076036,
+      "first": 0.5947108862871668,
+      "last": 0.48308852941532443,
+      "ratio_last_over_first": 0.8123081997561693,
+      "n_decreasing_steps_of_5": 3
+    },
+    "L1_density_ratio_dev": {
+      "slope_vs_r": -0.03472728379615207,
+      "first": 1.1894217725743337,
+      "last": 0.9661770588306489,
+      "ratio_last_over_first": 0.8123081997561693,
+      "n_decreasing_steps_of_5": 3
+    },
+    "abs_cusp_excess": {
+      "slope_vs_r": -0.03984217157703558,
+      "first": 0.2631375093137568,
+      "last": 0.013813530429510779,
+      "ratio_last_over_first": 0.05249548217407487,
+      "n_decreasing_steps_of_5": 5
+    },
+    "rho_weighted_std": {
+      "slope_vs_r": -0.047198409727049265,
+      "first": 1.546461494002413,
+      "last": 1.283182882653002,
+      "ratio_last_over_first": 0.8297541759879085,
+      "n_decreasing_steps_of_5": 3
+    },
+    "note": "QUE-consistent => these deviation metrics shrink as r grows (negative slope, ratio_last/first < 1). 6 low forms can only SUGGEST, never prove, an r->inf trend."
+  },
+  "scarring_summary": {
+    "imag_axis_ratio_per_r": [
+      0.025995024373691156,
+      0.023160045077845127,
+      0.04550494367191661,
+      0.06460027095437172,
+      0.05119796978957113,
+      0.04834306508568549
+    ],
+    "mirror_wall_ratio_per_r": [
+      0.024933748971658287,
+      0.03717750004253776,
+      0.08351594222975713,
+      0.04973646564222146,
+      0.0978102848051624,
+      0.12549054155889378
+    ],
+    "unit_arc_ratio_per_r": [
+      0.05801806001996615,
+      0.09924746994445909,
+      0.17609377747454938,
+      0.13549106249839266,
+      0.22535608029193333,
+      0.2648658608932238
+    ],
+    "note": "ratio = nu(strip)/mu(strip); ~1 => no concentration, >>1 => scar, <<1 => depletion. ODD forms vanish on Re z=0 by symmetry, so the imag-axis ratio is expected near 0 (a symmetry fact, not a scar)."
+  },
+  "sanity_note": "VALIDITY = eigen-equation check (-y^2 Laplacian u = (1/4+r^2)u, sampled in the well-converged bulk y in [1.05,1.8]): CLEAN for all 6 forms, mean rel err 7.1e-7..2.0e-5, confirming each recovered null vector is a genuine Maass eigenfunction. The automorphy check is NOISY for forms 3 (r=10.14, mean 0.18) and 5 (r=12.08, mean 0.43) ONLY because it samples random points whose pullbacks land at LOW heights y<0.5 where the M~19-mode Fourier truncation has not converged (verified: same form has automorphy err 5.4e-4 at pullback height>=0.5, vs 8.9e-2 at <0.5). The mass-distribution grid lives entirely at y>=Y_corner=0.588, so it is UNAFFECTED by this low-height truncation artifact. Net: all 6 mass distributions are trustworthy."
+}

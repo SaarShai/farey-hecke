@@ -1,0 +1,472 @@
+{
+  "backend": "python-flint (Arb balls)",
+  "prec_bits": 300,
+  "q": 5,
+  "sector": "ODD (mms-) only; even/mms+ empty by Phillips-Sarnak",
+  "lambda_5": "2cos(pi/5) = (1+sqrt5)/2 (golden ratio)",
+  "operator": "MMS reduced L_{s,-} eq.34, q=5 (h=1,kappa=3); Z numerator factor det(1-L_{s,-})",
+  "rigor": {
+    "branch_tail": "EXACT via Hurwitz zeta(2s+m, +-z/lam+n0)*lam^{-(2s+m)} (binomial expansion of the normalized input monomial); conditionally-convergent sum_{l} (z+-l lam)^{-(2s+m)} at Re s=1/2 given its true analytic value, certified ball.",
+    "taylor_extraction": "acb_series rigorous power-series AD in the normalized output variable u=(z-c_i)/rho_i (NO Cauchy-FFT).",
+    "finite_N": "acb_mat.det in Arb ball arithmetic; rounding in radius.",
+    "dimension_tail": "certified det-increment geometric Cauchy tail g_last*q/(1-q), q<1 the certified max contraction of the last per-component det-increments.",
+    "zero_isolation_winding": "argument principle on a complex-s box: det ball excludes 0 on dB (certified) AND winding number = 1 via certified half-turn increments => exactly one det zero in box.",
+    "zero_isolation_online": "simultaneous certified Re&Im sign-change on the critical line (IVT on rigorously-enclosed Re,Im); isolates the on-line det zero."
+  },
+  "params": {
+    "N_per_component": 22,
+    "kappa": 3,
+    "matrix_dim": 66,
+    "n_head": 4,
+    "sector_sign": -1,
+    "target_width": 8e-05
+  },
+  "enclosures": [
+    {
+      "published": 6.4737,
+      "r_star_located": 6.473699749440857,
+      "online": {
+        "r_lo": 6.473694710592857,
+        "r_hi": 6.473704788288857,
+        "width": 1.0077696000365677e-05,
+        "contains_published_in_tight_bracket": true,
+        "consistent_with_published_4dp": true,
+        "abs_rstar_minus_published": 2.505591432111487e-07,
+        "proven_ReIm_sign_change": true,
+        "re_signs": [
+          1,
+          -1
+        ],
+        "im_signs": [
+          -1,
+          1
+        ],
+        "re_lo_ball": [
+          5.14605703831838e-06,
+          5.146057621503625e-06
+        ],
+        "re_hi_ball": [
+          -5.145978347535475e-06,
+          -5.145977764288017e-06
+        ],
+        "im_lo_ball": [
+          -9.763969544683294e-06,
+          -9.763968961498048e-06
+        ],
+        "im_hi_ball": [
+          9.76412590769468e-06,
+          9.764126490942137e-06
+        ],
+        "absdet_at_mid": 5.518550110292015e-06,
+        "dimension_certified": true,
+        "dim_tail_q_mid": 0.04044465879411738,
+        "dim_tail_radius_mid": 2.9160039771481104e-13
+      },
+      "winding": {
+        "winding_number": 1,
+        "box_r_center": 6.473699749440857,
+        "box_hx_dx": 6e-05,
+        "box_hy_dr": 6e-05,
+        "r_lo": 6.473639749440856,
+        "r_hi": 6.473759749440857,
+        "published_in_box": true,
+        "winding_ball": [
+          0.9999998294212684,
+          1.0000001705787307
+        ],
+        "K_per_edge": 12,
+        "tail_fix": 1.1675847085210497e-12,
+        "zero_certified_in_box": true
+      },
+      "log": [
+        "tight d=3.00e-04: Re(+1,-1) Im(-1,+1) OK width=6.00e-04",
+        "tight d=1.80e-04: Re(+1,-1) Im(-1,+1) OK width=3.60e-04",
+        "tight d=1.08e-04: Re(+1,-1) Im(-1,+1) OK width=2.16e-04",
+        "tight d=6.48e-05: Re(+1,-1) Im(-1,+1) OK width=1.30e-04",
+        "tight d=3.89e-05: Re(+1,-1) Im(-1,+1) OK width=7.78e-05",
+        "tight d=2.33e-05: Re(+1,-1) Im(-1,+1) OK width=4.67e-05",
+        "tight d=1.40e-05: Re(+1,-1) Im(-1,+1) OK width=2.80e-05",
+        "tight d=8.40e-06: Re(+1,-1) Im(-1,+1) OK width=1.68e-05",
+        "tight d=5.04e-06: Re(+1,-1) Im(-1,+1) OK width=1.01e-05"
+      ]
+    },
+    {
+      "published": 8.6368,
+      "r_star_located": 8.636764978451524,
+      "online": {
+        "r_lo": 8.636759939603524,
+        "r_hi": 8.636770017299524,
+        "width": 1.0077696000365677e-05,
+        "contains_published_in_tight_bracket": false,
+        "consistent_with_published_4dp": true,
+        "abs_rstar_minus_published": 3.502154847545569e-05,
+        "proven_ReIm_sign_change": true,
+        "re_signs": [
+          -1,
+          1
+        ],
+        "im_signs": [
+          -1,
+          1
+        ],
+        "re_lo_ball": [
+          -1.3127539883605757e-06,
+          -1.312683362436955e-06
+        ],
+        "re_hi_ball": [
+          1.3128594060015084e-06,
+          1.3129300359366772e-06
+        ],
+        "im_lo_ball": [
+          -1.4960488264768361e-05,
+          -1.496041763884474e-05
+        ],
+        "im_hi_ball": [
+          1.4960387667713026e-05,
+          1.4960458297648194e-05
+        ],
+        "absdet_at_mid": 7.509004145166456e-06,
+        "dimension_certified": true,
+        "dim_tail_q_mid": 0.059141797432825244,
+        "dim_tail_radius_mid": 3.5313463109370823e-11
+      },
+      "winding": {
+        "winding_number": 1,
+        "box_r_center": 8.636764978451524,
+        "box_hx_dx": 6e-05,
+        "box_hy_dr": 6e-05,
+        "r_lo": 8.636704978451524,
+        "r_hi": 8.636824978451523,
+        "published_in_box": true,
+        "winding_ball": [
+          0.9999846359714866,
+          1.0000153640285134
+        ],
+        "K_per_edge": 12,
+        "tail_fix": 1.4137194093864179e-10,
+        "zero_certified_in_box": true
+      },
+      "log": [
+        "tight d=3.00e-04: Re(-1,+1) Im(-1,+1) OK width=6.00e-04",
+        "tight d=1.80e-04: Re(-1,+1) Im(-1,+1) OK width=3.60e-04",
+        "tight d=1.08e-04: Re(-1,+1) Im(-1,+1) OK width=2.16e-04",
+        "tight d=6.48e-05: Re(-1,+1) Im(-1,+1) OK width=1.30e-04",
+        "tight d=3.89e-05: Re(-1,+1) Im(-1,+1) OK width=7.78e-05",
+        "tight d=2.33e-05: Re(-1,+1) Im(-1,+1) OK width=4.67e-05",
+        "tight d=1.40e-05: Re(-1,+1) Im(-1,+1) OK width=2.80e-05",
+        "tight d=8.40e-06: Re(-1,+1) Im(-1,+1) OK width=1.68e-05",
+        "tight d=5.04e-06: Re(-1,+1) Im(-1,+1) OK width=1.01e-05"
+      ]
+    },
+    {
+      "published": 10.1365,
+      "r_star_located": 10.136449526269196,
+      "online": {
+        "r_lo": 10.136444487421196,
+        "r_hi": 10.136454565117196,
+        "width": 1.0077696000365677e-05,
+        "contains_published_in_tight_bracket": false,
+        "consistent_with_published_4dp": false,
+        "abs_rstar_minus_published": 5.0473730803801686e-05,
+        "proven_ReIm_sign_change": true,
+        "re_signs": [
+          -1,
+          1
+        ],
+        "im_signs": [
+          -1,
+          1
+        ],
+        "re_lo_ball": [
+          -9.758842773640905e-06,
+          -9.757745270082386e-06
+        ],
+        "re_hi_ball": [
+          9.758197112318576e-06,
+          9.759294654859801e-06
+        ],
+        "im_lo_ball": [
+          -2.7858979189198596e-05,
+          -2.7857881685640077e-05
+        ],
+        "im_hi_ball": [
+          2.7857614373247942e-05,
+          2.7858711915789168e-05
+        ],
+        "absdet_at_mid": 1.4759721402211668e-05,
+        "dimension_certified": true,
+        "dim_tail_q_mid": 0.06570192457984719,
+        "dim_tail_radius_mid": 5.487566498882549e-10
+      },
+      "winding": {
+        "winding_number": 1,
+        "box_r_center": 10.136449526269196,
+        "box_hx_dx": 6e-05,
+        "box_hy_dr": 6e-05,
+        "r_lo": 10.136389526269197,
+        "r_hi": 10.136509526269196,
+        "published_in_box": true,
+        "winding_ball": [
+          0.9998794728890061,
+          1.000120528973639
+        ],
+        "K_per_edge": 12,
+        "tail_fix": 2.1966012481610803e-09,
+        "zero_certified_in_box": true
+      },
+      "log": [
+        "tight d=3.00e-04: Re(-1,+1) Im(-1,+1) OK width=6.00e-04",
+        "tight d=1.80e-04: Re(-1,+1) Im(-1,+1) OK width=3.60e-04",
+        "tight d=1.08e-04: Re(-1,+1) Im(-1,+1) OK width=2.16e-04",
+        "tight d=6.48e-05: Re(-1,+1) Im(-1,+1) OK width=1.30e-04",
+        "tight d=3.89e-05: Re(-1,+1) Im(-1,+1) OK width=7.78e-05",
+        "tight d=2.33e-05: Re(-1,+1) Im(-1,+1) OK width=4.67e-05",
+        "tight d=1.40e-05: Re(-1,+1) Im(-1,+1) OK width=2.80e-05",
+        "tight d=8.40e-06: Re(-1,+1) Im(-1,+1) OK width=1.68e-05",
+        "tight d=5.04e-06: Re(-1,+1) Im(-1,+1) OK width=1.01e-05"
+      ]
+    },
+    {
+      "published": 11.0156,
+      "r_star_located": 11.015570370139,
+      "online": {
+        "r_lo": 11.015565331291,
+        "r_hi": 11.015575408987,
+        "width": 1.0077696000365677e-05,
+        "contains_published_in_tight_bracket": false,
+        "consistent_with_published_4dp": true,
+        "abs_rstar_minus_published": 2.9629860998525714e-05,
+        "proven_ReIm_sign_change": true,
+        "re_signs": [
+          1,
+          -1
+        ],
+        "im_signs": [
+          -1,
+          1
+        ],
+        "re_lo_ball": [
+          5.896405441139589e-07,
+          5.922279277962654e-07
+        ],
+        "re_hi_ball": [
+          -5.913336568387521e-07,
+          -5.887462509762713e-07
+        ],
+        "im_lo_ball": [
+          -2.483673199620215e-05,
+          -2.4834144612519845e-05
+        ],
+        "im_hi_ball": [
+          2.48341247252985e-05,
+          2.483671213116098e-05
+        ],
+        "absdet_at_mid": 1.2422552838813645e-05,
+        "dimension_certified": true,
+        "dim_tail_q_mid": 0.07896951087277093,
+        "dim_tail_radius_mid": 1.2936946098553635e-09
+      },
+      "winding": {
+        "winding_number": 1,
+        "box_r_center": 11.015570370139,
+        "box_hx_dx": 6e-05,
+        "box_hy_dr": 6e-05,
+        "r_lo": 11.015510370139001,
+        "r_hi": 11.015630370139,
+        "published_in_box": true,
+        "winding_ball": [
+          0.9996605236083269,
+          1.00033950060606
+        ],
+        "K_per_edge": 12,
+        "tail_fix": 5.177321788944152e-09,
+        "zero_certified_in_box": true
+      },
+      "log": [
+        "tight d=3.00e-04: Re(+1,-1) Im(-1,+1) OK width=6.00e-04",
+        "tight d=1.80e-04: Re(+1,-1) Im(-1,+1) OK width=3.60e-04",
+        "tight d=1.08e-04: Re(+1,-1) Im(-1,+1) OK width=2.16e-04",
+        "tight d=6.48e-05: Re(+1,-1) Im(-1,+1) OK width=1.30e-04",
+        "tight d=3.89e-05: Re(+1,-1) Im(-1,+1) OK width=7.78e-05",
+        "tight d=2.33e-05: Re(+1,-1) Im(-1,+1) OK width=4.67e-05",
+        "tight d=1.40e-05: Re(+1,-1) Im(-1,+1) OK width=2.80e-05",
+        "tight d=8.40e-06: Re(+1,-1) Im(-1,+1) OK width=1.68e-05",
+        "tight d=5.04e-06: Re(+1,-1) Im(-1,+1) OK width=1.01e-05"
+      ]
+    },
+    {
+      "published": 12.0841,
+      "r_star_located": 12.084066759391934,
+      "online": {
+        "r_lo": 12.084061720543934,
+        "r_hi": 12.084071798239934,
+        "width": 1.0077696000365677e-05,
+        "contains_published_in_tight_bracket": false,
+        "consistent_with_published_4dp": true,
+        "abs_rstar_minus_published": 3.324060806519924e-05,
+        "proven_ReIm_sign_change": true,
+        "re_signs": [
+          1,
+          -1
+        ],
+        "im_signs": [
+          -1,
+          1
+        ],
+        "re_lo_ball": [
+          1.090669955484768e-05,
+          1.0938606489830685e-05
+        ],
+        "re_hi_ball": [
+          -1.0929876283691407e-05,
+          -1.0897968605580619e-05
+        ],
+        "im_lo_ball": [
+          -3.0014881300446714e-05,
+          -2.9982974365463708e-05
+        ],
+        "im_hi_ball": [
+          2.9986386418866063e-05,
+          3.001829409697685e-05
+        ],
+        "absdet_at_mid": 1.5983250351721354e-05,
+        "dimension_certified": true,
+        "dim_tail_q_mid": 0.08791761911446434,
+        "dim_tail_radius_mid": 1.5953560317794755e-08
+      },
+      "winding": {
+        "winding_number": 1,
+        "box_r_center": 12.084066759391934,
+        "box_hx_dx": 6e-05,
+        "box_hy_dr": 6e-05,
+        "r_lo": 12.084006759391935,
+        "r_hi": 12.084126759391934,
+        "published_in_box": true,
+        "winding_ball": [
+          0.9967608926817775,
+          1.003241234458983
+        ],
+        "K_per_edge": 12,
+        "tail_fix": 6.385192954182554e-08,
+        "zero_certified_in_box": true
+      },
+      "log": [
+        "tight d=3.00e-04: Re(+1,-1) Im(-1,+1) OK width=6.00e-04",
+        "tight d=1.80e-04: Re(+1,-1) Im(-1,+1) OK width=3.60e-04",
+        "tight d=1.08e-04: Re(+1,-1) Im(-1,+1) OK width=2.16e-04",
+        "tight d=6.48e-05: Re(+1,-1) Im(-1,+1) OK width=1.30e-04",
+        "tight d=3.89e-05: Re(+1,-1) Im(-1,+1) OK width=7.78e-05",
+        "tight d=2.33e-05: Re(+1,-1) Im(-1,+1) OK width=4.67e-05",
+        "tight d=1.40e-05: Re(+1,-1) Im(-1,+1) OK width=2.80e-05",
+        "tight d=8.40e-06: Re(+1,-1) Im(-1,+1) OK width=1.68e-05",
+        "tight d=5.04e-06: Re(+1,-1) Im(-1,+1) OK width=1.01e-05"
+      ]
+    },
+    {
+      "published": 12.8513,
+      "r_star_located": 12.851289144115015,
+      "online": {
+        "r_lo": 12.851284105267014,
+        "r_hi": 12.851294182963015,
+        "width": 1.0077696000365677e-05,
+        "contains_published_in_tight_bracket": false,
+        "consistent_with_published_4dp": true,
+        "abs_rstar_minus_published": 1.0855884985616626e-05,
+        "proven_ReIm_sign_change": true,
+        "re_signs": [
+          1,
+          -1
+        ],
+        "im_signs": [
+          -1,
+          1
+        ],
+        "re_lo_ball": [
+          2.8315736236892556e-05,
+          2.849582321644352e-05
+        ],
+        "re_hi_ball": [
+          -2.857878123161111e-05,
+          -2.8398687168615204e-05
+        ],
+        "im_lo_ball": [
+          -5.249897561652328e-05,
+          -5.231888863697232e-05
+        ],
+        "im_hi_ball": [
+          5.2274455340475883e-05,
+          5.245454940347179e-05
+        ],
+        "absdet_at_mid": 2.9928135318444454e-05,
+        "dimension_certified": true,
+        "dim_tail_q_mid": 0.09285457841729094,
+        "dim_tail_radius_mid": 9.004437495030669e-08
+      },
+      "winding": {
+        "winding_number": 1,
+        "box_r_center": 12.851289144115015,
+        "box_hx_dx": 6e-05,
+        "box_hy_dr": 6e-05,
+        "r_lo": 12.851229144115015,
+        "r_hi": 12.851349144115014,
+        "published_in_box": true,
+        "winding_ball": [
+          0.9902554815635085,
+          1.0097639271989465
+        ],
+        "K_per_edge": 12,
+        "tail_fix": 3.6047392033997666e-07,
+        "zero_certified_in_box": true
+      },
+      "log": [
+        "tight d=3.00e-04: Re(+1,-1) Im(-1,+1) OK width=6.00e-04",
+        "tight d=1.80e-04: Re(+1,-1) Im(-1,+1) OK width=3.60e-04",
+        "tight d=1.08e-04: Re(+1,-1) Im(-1,+1) OK width=2.16e-04",
+        "tight d=6.48e-05: Re(+1,-1) Im(-1,+1) OK width=1.30e-04",
+        "tight d=3.89e-05: Re(+1,-1) Im(-1,+1) OK width=7.78e-05",
+        "tight d=2.33e-05: Re(+1,-1) Im(-1,+1) OK width=4.67e-05",
+        "tight d=1.40e-05: Re(+1,-1) Im(-1,+1) OK width=2.80e-05",
+        "tight d=8.40e-06: Re(+1,-1) Im(-1,+1) OK width=1.68e-05",
+        "tight d=5.04e-06: Re(+1,-1) Im(-1,+1) OK width=1.01e-05"
+      ]
+    }
+  ],
+  "not_certified": [],
+  "dim_tail_probe_6p4737": {
+    "tail_radius": 2.916089476344153e-13,
+    "info": {
+      "dims": [
+        14,
+        16,
+        18,
+        20,
+        22
+      ],
+      "increment_mag": [
+        1.3282246538660277e-07,
+        5.3719660462034254e-09,
+        1.992303862394524e-10,
+        6.918455118382781e-12
+      ],
+      "ratios": [
+        0.04044470963979918,
+        0.03708705239867556,
+        0.034725903256883614
+      ],
+      "q_cap": 0.85,
+      "q": 0.04044470963979918,
+      "tail_radius": 2.916089476344153e-13
+    }
+  },
+  "wall_seconds": 263.58925676345825,
+  "verdict": {
+    "n_published": 6,
+    "n_enclosures": 6,
+    "n_online_proven_ReIm_flip": 6,
+    "n_consistent_with_published_4dp": 5,
+    "n_winding_zero_certified": 6,
+    "n_published_inside_winding_box": 6,
+    "max_online_width": 1.0077696000365677e-05,
+    "note": "Published r are 4-dp rounded; the certified on-line brackets (width ~1e-5) are tighter than that 5e-5 rounding, so the rounded value can sit just outside the tight bracket while the located zero r* still matches to 4 dp and lies inside the winding box. Containment is reported against the winding box (published_in_box) and the 4-dp consistency of r*."
+  }
+}
