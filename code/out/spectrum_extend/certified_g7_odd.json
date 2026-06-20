@@ -1,0 +1,47 @@
+{
+  "objective": "Extend the certified non-arith Hecke Maass spectrum: FIRST G_7 odd-sector Maass cusp-form eigenvalue (on Re s=1/2).",
+  "backend": "python-flint (Arb balls)",
+  "engine": "code/zeta_cert_rosen.py (general-odd-q certified MMS, validated vs hard-coded q=5 engine before use)",
+  "surface": "G_7 = (2,7,inf), lambda_7 = 2 cos(pi/7)",
+  "sector": "mms- (sign=-1) = ODD Maass cusp forms",
+  "q": 7,
+  "N": 22,
+  "n_head": 4,
+  "anchor_r_doubleprec": 5.921981,
+  "anchor_validated_by": [
+    "double-prec MMS transfer-op zeta_mayer_rosen.det_on_line(7,r,-1,N): N-stable zero r*=5.921981, |det-|~2.0e-8 at N=18,22,26"
+  ],
+  "selfcheck_q5": {
+    "max_midpoint_diff": 0.0,
+    "balls_overlap": true
+  },
+  "r_star_located": 5.921981251389186,
+  "absdet_at_rstar": 5.4585141624059e-12,
+  "dimension_certified_at_rstar": true,
+  "lambda_eig": 35.31986194180502,
+  "absdet_even_sector_at_rstar": 1.7974764540429502,
+  "winding": {
+    "winding_number": 1,
+    "box_hx_re": 8e-05,
+    "box_hy_r": 8e-05,
+    "r_lo": 5.921901251389186,
+    "r_hi": 5.922061251389185,
+    "info": {
+      "winding": 1,
+      "winding_ball": [
+        0.9999996330589056,
+        1.0000003688037395
+      ],
+      "K_per_edge": 16,
+      "box_hx": 8e-05,
+      "box_hy": 8e-05,
+      "re0_center": 0.5,
+      "im0_center": 5.921981251389186,
+      "tail_fix": 2.7938717280659004e-12
+    },
+    "log": [],
+    "zero_certified_in_box": true
+  },
+  "certified": true,
+  "wall_seconds": 190.5876660346985
+}

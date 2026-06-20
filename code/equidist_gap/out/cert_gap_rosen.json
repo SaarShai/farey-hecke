@@ -1,0 +1,143 @@
+{
+  "description": "Certified (Arb ball, Rump-verified eig) spectral gap of the full Rosen/MMS lambda_q-CF transfer operator at s=1 (lambda_1=1). gap_lo = 1 - l2_hi/l1_lo is a rigorous lower bound on the finite-N nuclear-truncation gap.",
+  "parameter_s": 1.0,
+  "method": "zeta_cert_rosen.build_reduced_matrix_ball (exact-Hurwitz tail, acb_series, Arb balls) + acb_mat.eig(algorithm='rump').",
+  "caveat": "1-D CF decay-of-correlations gap; CERTIFIED for the finite-N truncation. Eigenvalue dimension-tail propagation to the true operator is the residual. Does NOT imply 2-D horocycle effective equidistribution (parabolic, no gap).",
+  "scope": "odd q>=5 (and q=3 scalar). even q (q=8) deferred to Kaggle/even-q engine (eq.32 not generalized in zeta_cert_rosen).",
+  "per_q": {
+    "5": {
+      "rows": [
+        {
+          "q": 5,
+          "N": 10,
+          "prec": 300,
+          "kappa": 3,
+          "l1_lo": 0.9999999989724114,
+          "l1_hi": 0.9999999989724114,
+          "l2_lo": 0.2025126998700134,
+          "l2_hi": 0.2025126998700134,
+          "gap_lo": 0.7974872999218868,
+          "gap_hi": 0.7974872999218868,
+          "alpha_lo": 1.59695267796701,
+          "seconds": 0.6350557804107666
+        },
+        {
+          "q": 5,
+          "N": 12,
+          "prec": 300,
+          "kappa": 3,
+          "l1_lo": 0.999999999973027,
+          "l1_hi": 0.999999999973027,
+          "l2_lo": 0.20251271647062763,
+          "l2_hi": 0.20251271647062763,
+          "gap_lo": 0.79748728352391,
+          "gap_hi": 0.79748728352391,
+          "alpha_lo": 1.596952596994428,
+          "seconds": 0.8012371063232422
+        },
+        {
+          "q": 5,
+          "N": 14,
+          "prec": 300,
+          "kappa": 3,
+          "l1_lo": 0.9999999999992688,
+          "l1_hi": 0.9999999999992688,
+          "l2_lo": 0.20251271706424864,
+          "l2_hi": 0.20251271706424864,
+          "gap_lo": 0.7974872829356032,
+          "gap_hi": 0.7974872829356032,
+          "alpha_lo": 1.596952594089392,
+          "seconds": 1.335951805114746
+        },
+        {
+          "q": 5,
+          "N": 16,
+          "prec": 300,
+          "kappa": 3,
+          "l1_lo": 0.9999999999999797,
+          "l1_hi": 0.9999999999999797,
+          "l2_lo": 0.20251271708467017,
+          "l2_hi": 0.20251271708467017,
+          "gap_lo": 0.7974872829153257,
+          "gap_hi": 0.7974872829153257,
+          "alpha_lo": 1.5969525939892624,
+          "seconds": 2.1122379302978516
+        }
+      ],
+      "headline": {
+        "q": 5,
+        "N": 16,
+        "prec": 300,
+        "kappa": 3,
+        "l1_lo": 0.9999999999999797,
+        "l1_hi": 0.9999999999999797,
+        "l2_lo": 0.20251271708467017,
+        "l2_hi": 0.20251271708467017,
+        "gap_lo": 0.7974872829153257,
+        "gap_hi": 0.7974872829153257,
+        "alpha_lo": 1.5969525939892624,
+        "seconds": 2.1122379302978516
+      }
+    },
+    "7": {
+      "rows": [
+        {
+          "q": 7,
+          "N": 10,
+          "prec": 300,
+          "kappa": 5,
+          "l1_lo": 0.9999999984183522,
+          "l1_hi": 0.9999999984183522,
+          "l2_lo": 0.3406773719437051,
+          "l2_hi": 0.3406773719437051,
+          "gap_lo": 0.6593226275174633,
+          "gap_hi": 0.6593226275174633,
+          "alpha_lo": 1.076819371306403,
+          "seconds": 1.9269990921020508
+        },
+        {
+          "q": 7,
+          "N": 12,
+          "prec": 300,
+          "kappa": 5,
+          "l1_lo": 0.9999999999521987,
+          "l1_hi": 0.9999999999521987,
+          "l2_lo": 0.34067738313200613,
+          "l2_hi": 0.34067738313200613,
+          "gap_lo": 0.659322616851709,
+          "gap_hi": 0.659322616851709,
+          "alpha_lo": 1.0768193399989114,
+          "seconds": 3.746150016784668
+        },
+        {
+          "q": 7,
+          "N": 14,
+          "prec": 300,
+          "kappa": 5,
+          "l1_lo": 0.9999999999985101,
+          "l1_hi": 0.9999999999985101,
+          "l2_lo": 0.34067738362318584,
+          "l2_hi": 0.34067738362318584,
+          "gap_lo": 0.6593226163763066,
+          "gap_hi": 0.6593226163763066,
+          "alpha_lo": 1.076819338603449,
+          "seconds": 6.603133201599121
+        }
+      ],
+      "headline": {
+        "q": 7,
+        "N": 14,
+        "prec": 300,
+        "kappa": 5,
+        "l1_lo": 0.9999999999985101,
+        "l1_hi": 0.9999999999985101,
+        "l2_lo": 0.34067738362318584,
+        "l2_hi": 0.34067738362318584,
+        "gap_lo": 0.6593226163763066,
+        "gap_hi": 0.6593226163763066,
+        "alpha_lo": 1.076819338603449,
+        "seconds": 6.603133201599121
+      }
+    }
+  }
+}
