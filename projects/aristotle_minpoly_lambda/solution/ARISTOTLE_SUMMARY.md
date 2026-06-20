@@ -1,0 +1,6 @@
+# Summary of changes for run 223e3fb2-e274-478c-a5b7-6958e3fa96f9
+Both Hecke triangle-group minimal-polynomial identities are now proved sorry-free in `RequestProject/Main.lean`, verified by a successful build and an axiom check (only `propext`, `Classical.choice`, `Quot.sound`).
+
+- `hecke_lambda_five`: for `x = 2·cos(π/5)`, proves `x² - x - 1 = 0`. Uses `Real.cos_pi_div_five` (cos(π/5) = (1+√5)/4) together with `(√5)² = 5` (`Real.sq_sqrt`), closed by `nlinarith`.
+
+- `hecke_lambda_seven`: for `x = 2·cos(π/7)`, proves `x³ - x² - 2x + 1 = 0`. Sets `c = cos(π/7)`, expands the 7th Chebyshev polynomial `T₇` via its recurrence (`Polynomial.Chebyshev.T_add_two`) to get `eval c (T ℝ 7) = 64c⁷ − 112c⁵ + 56c³ − 7c`, and evaluates it with `Polynomial.Chebyshev.T_real_cos` at θ = π/7 to get `cos(π) = −1`, yielding `64c⁷ − 112c⁵ + 56c³ − 7c = −1`. Substituting `x = 2c` gives the factorization `(x+2)·(x³−x²−2x+1)² = 0`; since `cos(π/7) > 0` we have `x + 2 > 0`, so the squared cubic factor vanishes and hence the cubic itself is zero.

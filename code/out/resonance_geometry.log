@@ -1,0 +1,54 @@
+[q3] gamma=14.1347 -> s=0.25000+7.06736i |det|=7.7e-16
+[q3] gamma=21.0220 -> s=0.25000+10.51102i |det|=1.2e-15
+[q3] gamma=25.0109 -> s=0.25000+12.50543i |det|=1.5e-15
+[q3] gamma=30.4249 -> s=0.25000+15.21244i |det|=2.9e-15
+[q3] gamma=32.9351 -> s=0.25000+16.46753i |det|=3.5e-15
+[q3] gamma=37.5862 -> s=0.25000+18.79309i |det|=1.2e-14
+[q3] gamma=40.9187 -> s=0.25000+20.45936i |det|=2.5e-14
+[q3] gamma=43.3271 -> s=0.25000+21.66354i |det|=5.6e-15
+[G5 surf] Re=0.300 min|det|=5.885e-01 (62s)
+[G5 surf] Re=0.327 min|det|=4.459e-01 (104s)
+[G5 surf] Re=0.354 min|det|=2.888e-01 (146s)
+[G5 surf] Re=0.381 min|det|=1.591e-01 (188s)
+[G5 surf] Re=0.409 min|det|=8.402e-02 (229s)
+[G5 surf] Re=0.436 min|det|=9.051e-02 (271s)
+[G5 surf] Re=0.463 min|det|=8.668e-02 (313s)
+[G5 surf] Re=0.490 min|det|=5.437e-02 (355s)
+[G5] pinned s=0.41054+7.81977i |det|=1.0e-15 Nstable=True
+[G5] pinned s=0.45390+5.76354i |det|=7.5e-16 Nstable=True
+[G5] pinned s=0.39982+11.66476i |det|=1.7e-15 Nstable=True
+[G5] pinned s=0.44708+12.07972i |det|=1.9e-15 Nstable=True
+[G5] pinned s=0.40044+15.14787i |det|=1.0e-15 Nstable=True
+[G5] pinned s=0.44448+16.48752i |det|=9.3e-15 Nstable=True
+[G5] pinned s=0.46906+12.78585i |det|=4.3e-15 Nstable=True
+[G5] pinned s=0.48527+13.56538i |det|=6.8e-16 Nstable=True
+
+VERDICT: {
+  "q3_geometry": {
+    "n": 8,
+    "re_mean": 0.24999999999998349,
+    "re_std": 6.47516930146045e-14,
+    "re_min": 0.24999999999981787,
+    "re_max": 0.2500000000000505,
+    "re_range": 2.3264723481020155e-13,
+    "expected": "Re=0.25 line (zeta zeros)"
+  },
+  "g5_all_geometry": {
+    "n": 8,
+    "re_mean": 0.4388239902186848,
+    "re_std": 0.029986183641395464,
+    "re_min": 0.3998208929499856,
+    "re_max": 0.48527431432587564,
+    "re_range": 0.08545342137589007
+  },
+  "g5_stable_geometry": {
+    "n": 8,
+    "re_mean": 0.4388239902186848,
+    "re_std": 0.029986183641395464,
+    "re_min": 0.3998208929499856,
+    "re_max": 0.48527431432587564,
+    "re_range": 0.08545342137589007
+  },
+  "interpretation": "if g5 re_std >> q3 re_std (~0) and g5 re_range is wide, non-arith resonances SCATTER in Re vs arith resonances on a line."
+}
+done (1360s) -> /Users/za/Documents/farey-hecke/code/out/resonance_geometry.json
