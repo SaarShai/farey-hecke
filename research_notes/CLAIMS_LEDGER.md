@@ -118,3 +118,8 @@ Comprehensive extraction of every quantitative claim across load-bearing researc
 | cos²(33π/512) < 24/25 inequality | make-or-break L1b constraint | Lean-proven | PAPER_uniform_onset_SUBMISSION.md |
 | Asymptotic safety margin δ_∞ | 5.77·10⁻⁵ > 0 | interval-certified | PAPER_uniform_onset_SUBMISSION.md |
 | Interval margin verification q=10000 | worst margin 7.33·10⁻⁵ at q=10000 | interval-certified | PAPER_uniform_onset_SUBMISSION.md |
+| G_8 odd Maass eigenvalue (even-q engine) | r* = 5.79814413, winding=1, |det|=2.6e-7 | interval-certified | aletheia_hecke_evidence_package.md |
+| G_8 r-enclosure | [5.79806413, 5.79822413] anchor inside | interval-certified | code/out/certified_g8.json |
+| G_8 sector selectivity | mms- |det|=2.6e-7 vs mms+ 0.82 (P-S empty even sector) | numerical | code/out/certified_g8.json |
+| q=3 even resonances = Riemann zeros (CAP check) | max|Im-gamma_n/2|=1.4e-13 vs 15-digit Odlyzko | interval-certified | aletheia_cap_crossvalidate.md |
+| 2cos(pi/n) minpoly Lean (n=5,7,9) | 3 theorems sorry-free, axiom-clean | Lean-proven | projects/mathlib_2cos_minpoly/Lemmas.lean |

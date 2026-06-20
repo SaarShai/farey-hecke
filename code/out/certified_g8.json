@@ -1,0 +1,88 @@
+{
+  "backend": "python-flint (Arb balls)",
+  "prec_bits": 300,
+  "q": 8,
+  "lambda_8": "2cos(pi/8) = sqrt(2+sqrt2)",
+  "sector": "mms- (sign=-1) -- the populated odd sector for G_8",
+  "operator": "MMS reduced L_{s,-} eq.32 (EVEN q), q=8 (h_q=kappa=3); Selberg-Z numerator factor det(1-L_{s,-})",
+  "engine": "code/zeta_cert_rosen_even.py (certified Arb-ball EVEN-q build)",
+  "anchor": {
+    "r": 5.798144,
+    "validated_by": [
+      "transfer-op double precision (zeta_mayer_rosen.json, q8 mms- |det|=2.1e-8 at N=35)",
+      "Hejhal automorphy point-matching (hejhal_g8_maass.json, r*=5.798174, sigma_min=2.1e-5)"
+    ]
+  },
+  "rigor": {
+    "geometry": "EVEN-q Markov partition phi_i=[[0;1^{hq-i}]] as Arb balls; centers/radii match the double-prec reference.",
+    "branch_tail": "EXACT via Hurwitz zeta (reused q-agnostic primitive _tail_block_allcols); conditionally-convergent sum_l (z +- l lam)^{-(2s+m)} given its analytic value.",
+    "block_placement": "MMS eq.32 (even q): (Lg)_1 = Linf_2 g_h + sign Linf_{-1} g_h; (Lg)_i = L_1 g_{i-1} + Linf_2 g_h + sign Linf_{-1} g_h, 2<=i<=h.  Verified vs the double-prec even-q builder (diff -> 0 as its tail truncation grows; certified tail is the exact limit).",
+    "finite_N": "acb_mat.det in Arb ball arithmetic; rounding in radius.",
+    "dimension_tail": "certified det-increment geometric Cauchy tail.",
+    "zero_isolation": "argument principle on a complex-s box: det ball excludes 0 on dB (certified) AND winding=1 via certified half-turn increments => exactly one det zero in box."
+  },
+  "params": {
+    "N_per_component": 20,
+    "kappa": 3,
+    "matrix_dim": 60,
+    "n_head": 4,
+    "sector_sign": -1
+  },
+  "selfcheck_vs_doubleprec": {
+    "N": 10,
+    "max_abs_entry_diff": 6.183414060036901e-05,
+    "max_rel": 1.5190357017971101,
+    "note": "double-prec builder has an O(1/n_head) L^inf-tail truncation error; the certified tail is exact, so this diff is the double-prec resolution (~1e-5 at n_head=8000), not a bug (diff -> 2.5e-6 at n_head=2e5)."
+  },
+  "anchor_absdet": {
+    "12": {
+      "mms-": 3.81225510399721e-05,
+      "mms+": 0.8238744053712651
+    },
+    "16": {
+      "mms-": 4.684097294204987e-07,
+      "mms+": 0.824179303130122
+    },
+    "20": {
+      "mms-": 2.579332489208075e-07,
+      "mms+": 0.8242130337867009
+    }
+  },
+  "anchor_reproduced": true,
+  "dim_tail_probe": {
+    "tail_radius": 1.4470599322106225e-09,
+    "q": 0.0811994066788011,
+    "ratios": [
+      0.0811994066788011,
+      0.07448574470878015,
+      0.07019660863928648
+    ],
+    "increment_mag": [
+      3.856672655379497e-05,
+      3.131595313711715e-06,
+      2.332592090683431e-07,
+      1.6374005410479985e-08
+    ]
+  },
+  "wall_seconds": 38.39743494987488,
+  "r_star_located": 5.79814413434108,
+  "absdet_at_rstar": 1.0289580689159666e-09,
+  "winding": {
+    "winding_number": 1,
+    "box_r_center": 5.79814413434108,
+    "box_hx_dx": 8e-05,
+    "box_hy_dr": 8e-05,
+    "r_lo": 5.798064134341081,
+    "r_hi": 5.79822413434108,
+    "anchor_in_box": true,
+    "winding_ball": [
+      0.9989277785643935,
+      1.0010724058374763
+    ],
+    "K_per_edge": 16,
+    "tail_fix": 6.538772734590798e-09,
+    "zero_certified_in_box": true,
+    "log": []
+  },
+  "certified": true
+}

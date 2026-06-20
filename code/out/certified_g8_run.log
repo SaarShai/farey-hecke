@@ -1,0 +1,27 @@
+==============================================================================
+CERTIFIED G_8 (even q) Selberg-zeta zero -- anchor + winding
+backend=python-flint (Arb balls) prec=300 bits  N/comp=20 matrix=60x60  n_head=4
+==============================================================================
+
+[0] SELF-CHECK certified-vs-doubleprec builder (q=8, N=10):
+selfcheck q=8 N=10 sign=-1 at r=5.798144: max |entry diff| = 6.183e-05, max rel = 1.519e+00 (double-prec FFT resolution ~1e-6)
+
+[1] ANCHOR reproduction: certified |det| at r=5.798144, both sectors:
+    N=12 sign=-1 (mms-): |det| = 3.8123e-05
+    N=12 sign=+1 (mms+): |det| = 8.2387e-01
+    N=16 sign=-1 (mms-): |det| = 4.6841e-07
+    N=16 sign=+1 (mms+): |det| = 8.2418e-01
+    N=20 sign=-1 (mms-): |det| = 2.5793e-07
+    N=20 sign=+1 (mms+): |det| = 8.2421e-01
+    -> anchor reproduced (mms- ~0, mms+ ~O(1)): True
+
+[1b] certified dimension-tail (s=1/2+5.798144i, N=20, mms-): 1.447e-09 q=0.0811994066788011
+
+[2] locate on-line zero r* (complex-secant) then winding box:
+    r* = 5.79814413  |det(1/2+i r*)| = 1.029e-09  (|r* - anchor| = 1.34e-07)
+    WINDING box r0=5.79814413 +-(8.0e-05dx,8.0e-05dr): winding=1 => 1 CERTIFIED det zero in box (anchor in box)
+
+==============================================================================
+RESULT: anchor_reproduced=True  certified(winding=1)=True  (38.4s)
+wrote /Users/za/Documents/farey-hecke/code/out/certified_g8.json
+==============================================================================
