@@ -1,0 +1,67 @@
+{
+  "claim_id": "smoke_q3_even_control",
+  "statement": "s=0.30+8.5i is a simple zero of det(1-L^+_s) for the Hecke G_3 transfer operator (CONTROL: expected NO zero)",
+  "kind": "numerical",
+  "artifact": "hecke_transfer_operator_zero",
+  "params": {
+    "q": 3,
+    "re": 0.3,
+    "im": 8.5,
+    "sign": 1,
+    "N": 18,
+    "refine": false
+  },
+  "method": "argument-principle winding (Arb interval enclosure)",
+  "enclosure": {
+    "claim": "s = re + i*im is a simple zero of det(1 - L^{sign}_s) for the Hecke G_q transfer operator",
+    "q": 3,
+    "sign": 1,
+    "sign_sector": "even (mms+)",
+    "kappa": 1,
+    "seed_point": {
+      "re": 0.3,
+      "im": 8.5
+    },
+    "center_point": {
+      "re": 0.3,
+      "im": 8.5
+    },
+    "winding_number": 0,
+    "winding_ball": [
+      -0.000865431767579139,
+      0.0008654187190586526
+    ],
+    "box_hx": 0.012,
+    "box_hy": 0.012,
+    "tail_fix": 6.252142646222783e-05,
+    "K_per_edge": 24,
+    "det_real_ball": [
+      2.3356053501422527,
+      2.3356053501422527
+    ],
+    "det_imag_ball": [
+      0.14287929070372146,
+      0.14287929070372146
+    ],
+    "absdet_center_mid": 2.3399715475460625,
+    "absdet_seed_mid": 2.3399715475460625,
+    "N": 18,
+    "n_head": 4,
+    "prec_bits": 400,
+    "newton": null,
+    "dim_tail_certified": true,
+    "seed_dim_tail_certified": true,
+    "winding_failure_reason": null
+  },
+  "certified": false,
+  "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/smoke_q3_even_control__certify.json",
+  "tool": "code/zeta_resonance_g5.py (Arb argument-principle winding box)",
+  "backend": "python-flint (Arb balls)",
+  "dim_tail_certified": true,
+  "dim_tail_caveat": "Winding rigor rests on a dimension-tail (truncation-remainder) bound that is VALIDATED (certified-det-increment estimate, inflated x4 over the box), NOT proved as an analytic theorem. dim_tail_certified=True means the engine returned finite tail balls at every box sample; it does NOT assert the tail bound is a theorem.",
+  "log": [],
+  "timestamps": {
+    "started": "2026-06-20T17:16:48.522137+00:00",
+    "finished": "2026-06-20T17:17:01.427348+00:00"
+  }
+}

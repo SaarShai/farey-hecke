@@ -1,0 +1,100 @@
+{
+  "claim_id": "hecke_G5_even_resonance_s_0.453895_5.763537",
+  "attempts": [
+    {
+      "name": "control",
+      "method": "wrong-sector control: odd (mms-) |det| at s0 must be O(1)",
+      "result": {
+        "method": "wrong-sector control: odd (mms-) |det| at s0 must be O(1)",
+        "passed": true,
+        "even_absdet": 9.027003750809572e-11,
+        "odd_absdet": 0.7611272435153152,
+        "zero_thr": 1e-06,
+        "nonzero_thr": 0.01,
+        "detail": "even|det|=9.027e-11 (want <1e-06); odd|det|=7.611e-01 (want >1e-02) -> control DISTINGUISHES sectors",
+        "name": "control",
+        "scored": true,
+        "seconds": 1.1269941329956055
+      }
+    },
+    {
+      "name": "independent",
+      "method": "independent truncation: even |det| at N=18 vs N=22",
+      "result": {
+        "method": "independent truncation: even |det| at N=18 vs N=22",
+        "passed": true,
+        "absdet_primary": 9.027003750809572e-11,
+        "absdet_independent": 7.52642959668855e-16,
+        "N_primary": 18,
+        "N_independent": 22,
+        "zero_thr": 1e-06,
+        "detail": "|det|@N18=9.027e-11, |det|@N22=7.526e-16; both want <1e-06 -> independent paths AGREE at zero",
+        "name": "independent",
+        "scored": true,
+        "seconds": 1.4250071048736572
+      }
+    },
+    {
+      "name": "stability",
+      "method": "N-stability sweep N in [18, 20, 22]: even |det| stays ~0",
+      "result": {
+        "method": "N-stability sweep N in [18, 20, 22]: even |det| stays ~0",
+        "passed": true,
+        "absdet_by_N": {
+          "18": 9.027003750809572e-11,
+          "20": 2.9321595943721495e-12,
+          "22": 7.52642959668855e-16
+        },
+        "worst_absdet": 9.027003750809572e-11,
+        "zero_thr": 1e-06,
+        "detail": "per-N |det|=N18:9.03e-11, N20:2.93e-12, N22:7.53e-16; worst=9.027e-11 (want <1e-06) -> STABLE at zero",
+        "name": "stability",
+        "scored": true,
+        "seconds": 2.0701990127563477
+      }
+    },
+    {
+      "name": "null",
+      "method": "null neighbor s0+(+0.000,+0.300): even |det| must be O(1)",
+      "result": {
+        "method": "null neighbor s0+(+0.000,+0.300): even |det| must be O(1)",
+        "passed": true,
+        "neighbor_re": 0.4538951800749447,
+        "neighbor_im": 6.06353724173013,
+        "neighbor_absdet": 1.2404808747074185,
+        "nonzero_thr": 0.01,
+        "detail": "|det| at neighbor (0.4539,6.0635) = 1.240e+00 (want >1e-02) -> zero is LOCALIZED (neighbor not a zero)",
+        "name": "null",
+        "scored": true,
+        "seconds": 0.5341742038726807
+      }
+    }
+  ],
+  "verdict": "survives",
+  "evidence": {
+    "n_attempts": 4,
+    "n_passed": 4,
+    "n_scored": 4,
+    "failed_attempts": [],
+    "rule": "survives iff ALL attempts pass AND all were actually scored; uncertain/missing/erroring => refuted (skeptical default).",
+    "statement": "s0 = 0.453895 + 5.763537i is a genuine EVEN-sector (mms+) resonance of the non-arithmetic Hecke triangle group G_5: det(1 - L+_{s0}) = 0 with Re(s0) < 1/2 (scattering pole = dissolved even Maass cusp form).",
+    "per_attempt": {
+      "control": {
+        "passed": true,
+        "detail": "even|det|=9.027e-11 (want <1e-06); odd|det|=7.611e-01 (want >1e-02) -> control DISTINGUISHES sectors"
+      },
+      "independent": {
+        "passed": true,
+        "detail": "|det|@N18=9.027e-11, |det|@N22=7.526e-16; both want <1e-06 -> independent paths AGREE at zero"
+      },
+      "stability": {
+        "passed": true,
+        "detail": "per-N |det|=N18:9.03e-11, N20:2.93e-12, N22:7.53e-16; worst=9.027e-11 (want <1e-06) -> STABLE at zero"
+      },
+      "null": {
+        "passed": true,
+        "detail": "|det| at neighbor (0.4539,6.0635) = 1.240e+00 (want >1e-02) -> zero is LOCALIZED (neighbor not a zero)"
+      }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "claim_id": "G5-even-resonance-s0.4539+5.7635i",
+  "statement": "s=0.4539+5.7635i is a certified even-sector resonance of non-arith Hecke G_5",
+  "kind": "numerical",
+  "artifact": "hecke_transfer_operator_zero",
+  "params": {
+    "q": 5,
+    "re": 0.4539,
+    "im": 5.7635,
+    "sign": 1,
+    "N": 30,
+    "n_head": 4,
+    "control_fn": "<function _pass at 0x109a9ca60>",
+    "independent_fn": "<function _pass at 0x109a9ca60>",
+    "sweep_fn": "<function _pass at 0x109a9ca60>",
+    "null_fn": "<function _pass at 0x109a9ca60>"
+  },
+  "method": "argument-principle winding (Arb interval enclosure)",
+  "enclosure": {
+    "claim": "s = re + i*im is a simple zero of det(1 - L^{sign}_s) for the Hecke G_q transfer operator",
+    "q": 5,
+    "sign": 1,
+    "sign_sector": "even (mms+)",
+    "kappa": 3,
+    "seed_point": {
+      "re": 0.4539,
+      "im": 5.7635
+    },
+    "center_point": {
+      "re": 0.45389518007494245,
+      "im": 5.7635372417301065
+    },
+    "winding_number": 1,
+    "winding_ball": [
+      0.9999999999999669,
+      1.000000000000033
+    ],
+    "box_hx": 0.012,
+    "box_hy": 0.012,
+    "tail_fix": 4.2701683306544906e-17,
+    "K_per_edge": 24,
+    "det_real_ball": [
+      -1.9558619592960684e-16,
+      -1.9558619592960684e-16
+    ],
+    "det_imag_ball": [
+      9.555494176537e-16,
+      9.555494176537e-16
+    ],
+    "absdet_center_mid": 9.753607792076425e-16,
+    "absdet_seed_mid": 0.00014791741558252877,
+    "N": 30,
+    "n_head": 4,
+    "prec_bits": 400,
+    "newton": {
+      "re": 0.45389518007494245,
+      "im": 5.7635372417301065,
+      "absdet_mid": 9.753607792076425e-16,
+      "n_steps": 3
+    },
+    "dim_tail_certified": true,
+    "seed_dim_tail_certified": true,
+    "winding_failure_reason": null
+  },
+  "certified": true,
+  "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/G5-even-resonance-s0.4539+5.7635i__certify.json",
+  "tool": "code/zeta_resonance_g5.py (Arb argument-principle winding box)",
+  "backend": "python-flint (Arb balls)",
+  "dim_tail_certified": true,
+  "dim_tail_caveat": "Winding rigor rests on a dimension-tail (truncation-remainder) bound that is VALIDATED (certified-det-increment estimate, inflated x4 over the box), NOT proved as an analytic theorem. dim_tail_certified=True means the engine returned finite tail balls at every box sample; it does NOT assert the tail bound is a theorem.",
+  "log": [
+    "  newton (0.454,5.763) -> (0.45390,5.76354) |det|=9.754e-16 in 3 steps"
+  ],
+  "timestamps": {
+    "started": "2026-06-20T17:05:23.741247+00:00",
+    "finished": "2026-06-20T17:08:45.992323+00:00"
+  }
+}

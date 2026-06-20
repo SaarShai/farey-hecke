@@ -1,0 +1,135 @@
+{
+  "run_id": "smoke-trivial-001--0000",
+  "schema": "aletheia.runrecord/v1",
+  "claim": {
+    "id": "smoke-trivial-001",
+    "statement": "2 + 2 = 4",
+    "kind": "numerical",
+    "artifact": null,
+    "params": {}
+  },
+  "falsify": {
+    "claim_id": "smoke-trivial-001",
+    "attempts": [
+      {
+        "name": "control",
+        "method": "control_fn",
+        "result": {
+          "name": "control",
+          "method": "control_fn",
+          "passed": false,
+          "scored": false,
+          "detail": "no 'control_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        }
+      },
+      {
+        "name": "independent",
+        "method": "independent_fn",
+        "result": {
+          "name": "independent",
+          "method": "independent_fn",
+          "passed": false,
+          "scored": false,
+          "detail": "no 'independent_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        }
+      },
+      {
+        "name": "stability",
+        "method": "sweep_fn",
+        "result": {
+          "name": "stability",
+          "method": "sweep_fn",
+          "passed": false,
+          "scored": false,
+          "detail": "no 'sweep_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        }
+      },
+      {
+        "name": "null",
+        "method": "null_fn",
+        "result": {
+          "name": "null",
+          "method": "null_fn",
+          "passed": false,
+          "scored": false,
+          "detail": "no 'null_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        }
+      }
+    ],
+    "verdict": "refuted",
+    "evidence": {
+      "n_attempts": 4,
+      "n_passed": 0,
+      "n_scored": 0,
+      "failed_attempts": [
+        "control",
+        "independent",
+        "stability",
+        "null"
+      ],
+      "rule": "survives iff ALL attempts pass AND all were actually scored; uncertain/missing/erroring => refuted (skeptical default).",
+      "statement": "2 + 2 = 4",
+      "per_attempt": {
+        "control": {
+          "passed": false,
+          "detail": "no 'control_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        },
+        "independent": {
+          "passed": false,
+          "detail": "no 'independent_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        },
+        "stability": {
+          "passed": false,
+          "detail": "no 'sweep_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        },
+        "null": {
+          "passed": false,
+          "detail": "no 'null_fn' supplied in claim params -> attempt MISSING -> treated as FAILED (skeptical default). A claim cannot survive an un-run adversarial probe."
+        }
+      }
+    },
+    "stub": false
+  },
+  "certify": {
+    "claim_id": "smoke-trivial-001",
+    "method": null,
+    "enclosure": null,
+    "certified": false,
+    "certificate_path": null,
+    "tool": null,
+    "stub": true,
+    "note": "STUB FALLBACK: real certify.certify raised at run time. STUB: engine.certify.certify not importable at run time; no interval/ball certificate was produced.",
+    "error": "Traceback (most recent call last):\n  File \"/Users/za/Documents/farey-hecke/engine/orchestrator/orchestrator.py\", line 206, in _run_stage\n    artifact = real_call(real_fn)\n  File \"/Users/za/Documents/farey-hecke/engine/orchestrator/orchestrator.py\", line 364, in <lambda>\n    lambda fn: fn(claim),\n  File \"/Users/za/Documents/farey-hecke/engine/certify/certify.py\", line 378, in certify\n    raise ValueError(\nValueError: no certify evaluator registered for artifact=None; known artifacts: ['hecke_transfer_operator_zero']. Use register_evaluator()."
+  },
+  "verify": {
+    "claim_id": "smoke-trivial-001",
+    "lemma": "2 + 2 = 4",
+    "lean_file": null,
+    "sorry_free": false,
+    "axioms": [],
+    "proved": false,
+    "stub": true,
+    "note": "STUB FALLBACK: real formal_verify.verify raised at run time. STUB: engine.formal_verify.verify not importable at run time; no Lean proof certificate was produced.",
+    "error": "Traceback (most recent call last):\n  File \"/Users/za/Documents/farey-hecke/engine/orchestrator/orchestrator.py\", line 206, in _run_stage\n    artifact = real_call(real_fn)\n  File \"/Users/za/Documents/farey-hecke/engine/orchestrator/orchestrator.py\", line 374, in <lambda>\n    lambda fn: fn(lemma, pdir),\n  File \"/Users/za/Documents/farey-hecke/engine/formal_verify/formal_verify.py\", line 398, in verify\n    raise RuntimeError(\nRuntimeError: verify(submit=False) does not spend Aristotle compute. Use verify_project(project_id, lemma=...) to post-process an existing completed run, or call verify(..., submit=True) to submit a new (billable) job."
+  },
+  "synthesis": "Claim \"smoke-trivial-001\" \u2014 2 + 2 = 4. It was REFUTED by falsification (4 attempt(s)); the claim does not hold and downstream certificates are moot. No interval/ball certificate was produced (certify stubbed). No formal (Lean) proof was attempted (verify stubbed). CAVEAT: stage(s) ['certify', 'verify'] were stubbed at run time, so this run is a pipeline-composition demonstration, not a fully certified result.",
+  "stage_status": {
+    "falsify": {
+      "source": "real",
+      "error": null
+    },
+    "certify": {
+      "source": "stub",
+      "error": "ValueError: no certify evaluator registered for artifact=None; known artifacts: ['hecke_transfer_operator_zero']. Use register_evaluator()."
+    },
+    "verify": {
+      "source": "stub",
+      "error": "RuntimeError: verify(submit=False) does not spend Aristotle compute. Use verify_project(project_id, lemma=...) to post-process an existing completed run, or call verify(..., submit=True) to submit a new (billable) job."
+    }
+  },
+  "verdict": "refuted",
+  "timestamps": {
+    "started": "2026-06-20T00:00:00Z",
+    "finished": "2026-06-20T00:00:00Z"
+  }
+}

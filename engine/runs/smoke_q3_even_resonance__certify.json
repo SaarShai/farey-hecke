@@ -1,0 +1,73 @@
+{
+  "claim_id": "smoke_q3_even_resonance",
+  "statement": "s=0.25+7.0674i is a simple zero of det(1-L^+_s) for the Hecke G_3 transfer operator (even/mms+ sector)",
+  "kind": "numerical",
+  "artifact": "hecke_transfer_operator_zero",
+  "params": {
+    "q": 3,
+    "re": 0.25,
+    "im": 7.0674,
+    "sign": 1,
+    "N": 18
+  },
+  "method": "argument-principle winding (Arb interval enclosure)",
+  "enclosure": {
+    "claim": "s = re + i*im is a simple zero of det(1 - L^{sign}_s) for the Hecke G_q transfer operator",
+    "q": 3,
+    "sign": 1,
+    "sign_sector": "even (mms+)",
+    "kappa": 1,
+    "seed_point": {
+      "re": 0.25,
+      "im": 7.0674
+    },
+    "center_point": {
+      "re": 0.25000000000001305,
+      "im": 7.067362570867332
+    },
+    "winding_number": 1,
+    "winding_ball": [
+      0.9991896310821176,
+      1.0008104452863336
+    ],
+    "box_hx": 0.012,
+    "box_hy": 0.012,
+    "tail_fix": 4.825298337087813e-07,
+    "K_per_edge": 24,
+    "det_real_ball": [
+      4.940658497145369e-17,
+      4.940658497145369e-17
+    ],
+    "det_imag_ball": [
+      -3.3386957951143316e-16,
+      -3.3386957951143316e-16
+    ],
+    "absdet_center_mid": 3.375054173812365e-16,
+    "absdet_seed_mid": 6.814722529808612e-05,
+    "N": 18,
+    "n_head": 4,
+    "prec_bits": 400,
+    "newton": {
+      "re": 0.25000000000001305,
+      "im": 7.067362570867332,
+      "absdet_mid": 3.375054173812365e-16,
+      "n_steps": 3
+    },
+    "dim_tail_certified": true,
+    "seed_dim_tail_certified": true,
+    "winding_failure_reason": null
+  },
+  "certified": true,
+  "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/smoke_q3_even_resonance__certify.json",
+  "tool": "code/zeta_resonance_g5.py (Arb argument-principle winding box)",
+  "backend": "python-flint (Arb balls)",
+  "dim_tail_certified": true,
+  "dim_tail_caveat": "Winding rigor rests on a dimension-tail (truncation-remainder) bound that is VALIDATED (certified-det-increment estimate, inflated x4 over the box), NOT proved as an analytic theorem. dim_tail_certified=True means the engine returned finite tail balls at every box sample; it does NOT assert the tail bound is a theorem.",
+  "log": [
+    "  newton (0.250,7.067) -> (0.25000,7.06736) |det|=3.375e-16 in 3 steps"
+  ],
+  "timestamps": {
+    "started": "2026-06-20T17:16:34.293033+00:00",
+    "finished": "2026-06-20T17:16:48.521451+00:00"
+  }
+}
