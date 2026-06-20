@@ -1,10 +1,10 @@
 import Mathlib
 
 /-!
-# Minimal polynomials of `2 * cos (π / n)` (cases `n = 5, 7, 9`)
+# Minimal polynomials of `2 * cos (π / n)` (cases `n = 5, 7, 9, 11`)
 
 This file collects sorry-free proofs that `2 * cos (π / n)` is a root of its
-monic integer minimal polynomial, for `n = 5, 7, 9`.
+monic integer minimal polynomial, for `n = 5, 7, 9, 11`.
 
 ## Background
 
@@ -28,6 +28,8 @@ that missing family.
   (degree `φ(14)/2 = 3`).
 * `two_cos_pi_div_nine_min_poly`   : `(2 cos (π/9))³ - 3·(2 cos (π/9)) - 1 = 0`
   (degree `φ(18)/2 = 3`).
+* `two_cos_pi_div_eleven_min_poly` : `(2 cos (π/11))⁵ - (2 cos (π/11))⁴ - 4·(2 cos (π/11))³ + 3·(2 cos (π/11))² + 3·(2 cos (π/11)) - 1 = 0`
+  (degree `φ(22)/2 = 5`).
 
 ## Proof strategies
 
@@ -40,11 +42,19 @@ that missing family.
 * `n = 9`: use the cosine triple-angle identity `Real.cos_three_mul` at `θ = π/9`
   (so `3·(π/9) = π/3` and `cos (π/3) = 1/2`), which rearranges directly to
   `x³ - 3x - 1 = 0`.
+* `n = 11`: expand the 11th Chebyshev polynomial via the `Polynomial.Chebyshev.T`
+  evaluation identity `T_n (cos θ) = cos (n θ)` at `θ = π/11` (so `cos (11 θ) = -1`),
+  giving `1024c¹¹ - 2816c⁹ + 2816c⁷ - 1232c⁵ + 220c³ - 11c + 1 = 0`; with `x = 2c`
+  and `cos (π/11) > 0` this yields the degree-5 relation
+  `x⁵ - x⁴ - 4x³ + 3x² + 3x - 1 = 0` (closed by `nlinarith`).
 
 These proofs were produced and machine-checked sorry-free (axioms `propext`,
 `Classical.choice`, `Quot.sound` only) via the Aristotle Lean prover and are
-collected here toward a Mathlib contribution. See `README.md` for the general
-statement and what a general-`n` lemma would require.
+collected here toward a Mathlib contribution. (The `n = 11` proof body is
+reproduced verbatim from its Aristotle run, reported sorry-free and axiom-clean;
+like `n = 5, 7, 9` it has not been re-built locally in this environment — no
+Mathlib build env is available here.) See `README.md` for the general statement
+and what a general-`n` lemma would require.
 -/
 
 open scoped Real
@@ -143,3 +153,33 @@ theorem two_cos_pi_div_nine_min_poly :
   rw [Real.cos_pi_div_three] at h
   show (2 * Real.cos (Real.pi / 9)) ^ 3 - 3 * (2 * Real.cos (Real.pi / 9)) - 1 = 0
   nlinarith [h]
+
+/-- **Minimal polynomial of `2 cos (π/11)`.**
+With `x = 2 cos (π/11)`, the degree-5 minimal polynomial vanishes:
+`x⁵ - x⁴ - 4x³ + 3x² + 3x - 1 = 0`.
+
+Proof: evaluate the 11th Chebyshev polynomial of the first kind at `c = cos (π/11)`
+via `T_n (cos θ) = cos (n θ)`, where `T₁₁ (c) = cos π = -1`, giving the relation
+`1024c¹¹ - 2816c⁹ + 2816c⁷ - 1232c⁵ + 220c³ - 11c + 1 = 0`; with `x = 2c` and
+`cos (π/11) > 0` this collapses (closed by `nlinarith`) to the quintic
+`x⁵ - x⁴ - 4x³ + 3x² + 3x - 1 = 0`.
+
+Body reproduced verbatim from the Aristotle run (reported sorry-free, axioms
+`propext`, `Classical.choice`, `Quot.sound`); not locally re-built here. -/
+set_option synthInstance.maxHeartbeats 20000 in
+set_option synthInstance.maxSize 128 in
+theorem two_cos_pi_div_eleven_min_poly :
+    let x : ℝ := 2 * Real.cos (Real.pi / 11)
+    x^5 - x^4 - 4*x^3 + 3*x^2 + 3*x - 1 = 0 := by
+  -- Set θ := π/11, c := cos θ.
+  set θ : ℝ := Real.pi / 11
+  set c : ℝ := Real.cos θ
+  set x : ℝ := 2 * c
+  have h_key : 1024 * c^11 - 2816 * c^9 + 2816 * c^7 - 1232 * c^5 + 220 * c^3 - 11 * c + 1 = 0 := by
+    -- Use the recurrence relation for Chebyshev polynomials to compute $T_{11}(c)$.
+    have h_recurrence : ∀ n : ℕ, Polynomial.eval c (Polynomial.Chebyshev.T ℝ n) = Real.cos (n * θ) := by
+      aesop;
+    have := h_recurrence 11;
+    simp +zetaDelta at *;
+    rw [ ← Complex.ofReal_inj ] ; norm_num [ Complex.cos, Complex.exp_re, Complex.exp_im ] ; ring_nf ; norm_num [ ← Complex.exp_nat_mul, ← Complex.exp_add ] ; ring_nf ; norm_num [ Complex.ext_iff, Complex.exp_re, Complex.exp_im ] ;
+  exact sq_eq_zero_iff.mp ( by nlinarith [ show 0 < Real.cos ( Real.pi / 11 ) from Real.cos_pos_of_mem_Ioo ⟨ by linarith [ Real.pi_pos ], by linarith [ Real.pi_pos ] ⟩ ] )
