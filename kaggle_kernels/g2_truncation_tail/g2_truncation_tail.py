@@ -98,7 +98,10 @@ import json
 import os
 import numpy as np
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
+# Kaggle mounts the kernel source read-only at /kaggle/src; only /kaggle/working
+# (CWD) is writable. Prefer it; fall back to a local "out" dir off-Kaggle.
+OUT = "/kaggle/working" if os.path.isdir("/kaggle/working") else \
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
 os.makedirs(OUT, exist_ok=True)
 
 # Published SL2(Z) Maass r_k for the q=3 regression anchor.
