@@ -1,0 +1,162 @@
+{
+  "objective": "First rigorously interval-certified table of non-arithmetic Hecke triangle Maass eigenvalues + even-sector resonances.",
+  "method": "Aletheia certify stage: Arb argument-principle winding (winding=1 => one simple enclosed zero of det(1-L^sign_s)).",
+  "gap": "Stroemberg arXiv:0804.4837 heuristic; rigorous certification lit (2204.11761, 2502.01442) congruence/arithmetic only.",
+  "entries": [
+    {
+      "surface": "G_5",
+      "sector": "odd",
+      "kind": "Maass eigenvalue",
+      "r": 6.4737,
+      "lambda": 42.15879169,
+      "s_re": 0.5,
+      "s_im": 6.4737,
+      "hejhal_crosscheck_r": 6.47367,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "odd",
+      "kind": "Maass eigenvalue",
+      "r": 8.6368,
+      "lambda": 74.84431423999999,
+      "s_re": 0.5,
+      "s_im": 8.6368,
+      "hejhal_crosscheck_r": 8.63677,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "odd",
+      "kind": "Maass eigenvalue",
+      "r": 10.1365,
+      "lambda": 102.99863225,
+      "s_re": 0.5,
+      "s_im": 10.1365,
+      "hejhal_crosscheck_r": 10.13642,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "odd",
+      "kind": "Maass eigenvalue",
+      "r": 11.0156,
+      "lambda": 121.59344335999998,
+      "s_re": 0.5,
+      "s_im": 11.0156,
+      "hejhal_crosscheck_r": null,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "odd",
+      "kind": "Maass eigenvalue",
+      "r": 12.0841,
+      "lambda": 146.27547281,
+      "s_re": 0.5,
+      "s_im": 12.0841,
+      "hejhal_crosscheck_r": null,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "odd",
+      "kind": "Maass eigenvalue",
+      "r": 12.8513,
+      "lambda": 165.40591169,
+      "s_re": 0.5,
+      "s_im": 12.8513,
+      "hejhal_crosscheck_r": null,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "even",
+      "kind": "resonance",
+      "s_re": 0.45389518,
+      "s_im": 5.76353724,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "even",
+      "kind": "resonance",
+      "s_re": 0.41054374,
+      "s_im": 7.81976825,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_5",
+      "sector": "even",
+      "kind": "resonance",
+      "s_re": 0.485,
+      "s_im": 13.565,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_7",
+      "sector": "even",
+      "kind": "resonance",
+      "s_re": 0.4842,
+      "s_im": 7.567,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_7",
+      "sector": "even",
+      "kind": "resonance",
+      "s_re": 0.4751,
+      "s_im": 4.669,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    },
+    {
+      "surface": "G_7",
+      "sector": "even",
+      "kind": "resonance",
+      "s_re": 0.4732,
+      "s_im": 16.605,
+      "certified": true,
+      "winding": 1,
+      "box": null,
+      "dim_tail_certified": true
+    }
+  ],
+  "summary": {
+    "n_entries": 12,
+    "n_certified": 12,
+    "wall_seconds": 1642.52392411232
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "claim_id": "q7_0.4751_4.6690_s1",
+  "statement": null,
+  "kind": "numerical",
+  "artifact": "hecke_transfer_operator_zero",
+  "params": {
+    "q": 7,
+    "re": 0.4751,
+    "im": 4.669,
+    "sign": 1,
+    "N": 22,
+    "refine": true
+  },
+  "method": "argument-principle winding (Arb interval enclosure)",
+  "enclosure": {
+    "claim": "s = re + i*im is a simple zero of det(1 - L^{sign}_s) for the Hecke G_q transfer operator",
+    "q": 7,
+    "sign": 1,
+    "sign_sector": "even (mms+)",
+    "kappa": 5,
+    "seed_point": {
+      "re": 0.4751,
+      "im": 4.669
+    },
+    "center_point": {
+      "re": 0.4751647621098119,
+      "im": 4.668743786424271
+    },
+    "winding_number": 1,
+    "winding_ball": [
+      0.9999999996490437,
+      1.0000000003509562
+    ],
+    "box_hx": 0.012,
+    "box_hy": 0.012,
+    "tail_fix": 3.792801370372721e-13,
+    "K_per_edge": 24,
+    "det_real_ball": [
+      7.335976071354954e-17,
+      7.335976071354954e-17
+    ],
+    "det_imag_ball": [
+      3.1305655688391164e-16,
+      3.1305655688391164e-16
+    ],
+    "absdet_center_mid": 3.215370309932575e-16,
+    "absdet_seed_mid": 0.0008756569005589403,
+    "N": 22,
+    "n_head": 4,
+    "prec_bits": 300,
+    "newton": {
+      "re": 0.4751647621098119,
+      "im": 4.668743786424271,
+      "absdet_mid": 3.215370309932575e-16,
+      "n_steps": 3
+    },
+    "dim_tail_certified": true,
+    "seed_dim_tail_certified": true,
+    "winding_failure_reason": null
+  },
+  "certified": true,
+  "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/q7_0.4751_4.6690_s1__certify.json",
+  "tool": "code/zeta_cert_rosen.py (Arb argument-principle winding box)",
+  "backend": "python-flint (Arb balls)",
+  "dim_tail_certified": true,
+  "dim_tail_caveat": "Winding rigor rests on a dimension-tail (truncation-remainder) bound that is VALIDATED (certified-det-increment estimate, inflated x4 over the box), NOT proved as an analytic theorem. dim_tail_certified=True means the engine returned finite tail balls at every box sample; it does NOT assert the tail bound is a theorem.",
+  "log": [
+    "  local-newton (0.475,4.669) -> (0.47516,4.66874) |det|=3.215e-16"
+  ],
+  "timestamps": {
+    "started": "2026-06-20T18:23:12.610518+00:00",
+    "finished": "2026-06-20T18:25:32.609612+00:00"
+  }
+}
