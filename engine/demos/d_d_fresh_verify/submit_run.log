@@ -1,0 +1,44 @@
+=== DISCOVER + FALSIFY: minpoly of lambda_9 = 2cos(pi/9) ===
+  lemma : 2*cos(pi/9) is a root of x^3 - 3x - 1
+  cubic : x^3 - 3x - 1    (dps=60)
+  lambda_9 = 1.87938524157182
+  roots:
+    2cos(pi/9)     = 1.87938524157
+    2cos(5pi/9)    = -0.347296355334
+    2cos(7pi/9)    = -1.53208888624
+
+  [root_test]            pass=True  residual=6.22302e-61 (tol 1.0e-55)
+  [independent_all_roots] pass=True  residuals={'2cos(pi/9)': '6.22302e-61', '2cos(5pi/9)': '5.44514e-61', '2cos(7pi/9)': '0.0'}
+  [vieta]                pass=True  sum=1.55575e-61 e2=-3.0 prod=1.0
+  [control_phi_not_root] pass=True  phi_resid=1.61803  lambda7_resid=0.554958
+
+  VERDICT: SURVIVES
+
+=== VERIFY: Aristotle (Lean/Mathlib) ===
+  submitting ONE live job; polling up to 1200 s ...
+Traceback (most recent call last):
+  File "/Users/za/Documents/farey-hecke/engine/demos/d_d_fresh_verify/run_demo.py", line 281, in <module>
+    raise SystemExit(main())
+  File "/Users/za/Documents/farey-hecke/engine/demos/d_d_fresh_verify/run_demo.py", line 253, in main
+    ver, ver_status = verify_stage(args.submit, args.project_id, args.max_wait)
+  File "/Users/za/Documents/farey-hecke/engine/demos/d_d_fresh_verify/run_demo.py", line 116, in verify_stage
+    cert = fv.verify(
+  File "/Users/za/Documents/farey-hecke/engine/formal_verify/formal_verify.py", line 423, in verify
+    return verify_project(
+  File "/Users/za/Documents/farey-hecke/engine/formal_verify/formal_verify.py", line 346, in verify_project
+    status, _ = poll_until_done(project_id, max_wait=max_wait)
+  File "/Users/za/Documents/farey-hecke/engine/formal_verify/formal_verify.py", line 169, in poll_until_done
+    status, text = show_status(project_id)
+  File "/Users/za/Documents/farey-hecke/engine/formal_verify/formal_verify.py", line 146, in show_status
+    cp = _run_cli(["show", project_id], timeout=timeout)
+  File "/Users/za/Documents/farey-hecke/engine/formal_verify/formal_verify.py", line 102, in _run_cli
+    return subprocess.run(
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1980, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/Users/za/.local/bin/aristotle', 'show', '52301831-be26-4d70-93b0-549fbcf6d31e']' timed out after 60 seconds

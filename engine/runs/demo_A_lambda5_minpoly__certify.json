@@ -1,0 +1,43 @@
+{
+  "claim_id": "demo_A_lambda5_minpoly",
+  "statement": "lambda_5 = 2*cos(pi/5) = 1.618034 is a real root of x^2 - x - 1 = 0",
+  "kind": "numerical",
+  "artifact": "polynomial_real_root",
+  "params": {
+    "coeffs": [
+      1,
+      -1,
+      -1
+    ],
+    "value": 1.618033988749895,
+    "control_fn": "<function _mk_poly_falsify_params.<locals>.control_fn at 0x105c50f70>",
+    "independent_fn": "<function _mk_poly_falsify_params.<locals>.independent_fn at 0x1062f8040>",
+    "sweep_fn": "<function _mk_poly_falsify_params.<locals>.sweep_fn at 0x1062f80d0>",
+    "null_fn": "<function _mk_poly_falsify_params.<locals>.null_fn at 0x1062f8160>"
+  },
+  "method": "arb interval sign-change bracket (rigorous IVT)",
+  "enclosure": {
+    "interval": [
+      1.608033988749895,
+      1.628033988749895
+    ],
+    "p_lo_ball": "[-0.0222606797749977765847262069818200866537124336012104985817877667031439159473 +/- 5.56e-77]",
+    "p_hi_ball": "[0.0224606797749980195163033478658077915353744804612895014182122332968560840527 +/- 8.77e-77]",
+    "poly_coeffs_hi_to_lo": [
+      1,
+      -1,
+      -1
+    ]
+  },
+  "certified": true,
+  "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/demo_A_lambda5_minpoly__certify.json",
+  "tool": "python-flint arb @ prec=256",
+  "backend": null,
+  "dim_tail_certified": null,
+  "dim_tail_caveat": null,
+  "log": null,
+  "timestamps": {
+    "started": "2026-06-20T17:39:45.545994+00:00",
+    "finished": "2026-06-20T17:39:45.546649+00:00"
+  }
+}

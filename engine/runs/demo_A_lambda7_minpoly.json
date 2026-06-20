@@ -1,0 +1,171 @@
+{
+  "run_id": "demo_A_lambda7_minpoly--0000",
+  "schema": "aletheia.runrecord/v1",
+  "claim": {
+    "id": "demo_A_lambda7_minpoly",
+    "statement": "lambda_7 = 2*cos(pi/7) = 1.801938 is a real root of x^3 - x^2 - 2x + 1 = 0",
+    "kind": "numerical",
+    "lemma": "x^3 - x^2 - 2x + 1 = 0"
+  },
+  "falsify": {
+    "claim_id": "demo_A_lambda7_minpoly",
+    "attempts": [
+      {
+        "name": "control",
+        "method": "control_fn",
+        "result": {
+          "passed": true,
+          "detail": "control value 1.61803 -> |poly|=6.180e-01 (want >1e-2: not a root)",
+          "name": "control",
+          "method": "control_fn",
+          "scored": true,
+          "seconds": 5.9604644775390625e-06
+        }
+      },
+      {
+        "name": "independent",
+        "method": "independent_fn",
+        "result": {
+          "passed": true,
+          "detail": "horner=1.11e-16, expanded=0.00e+00 (both ~0, agree)",
+          "name": "independent",
+          "method": "independent_fn",
+          "scored": true,
+          "seconds": 7.867813110351562e-06
+        }
+      },
+      {
+        "name": "stability",
+        "method": "sweep_fn",
+        "result": {
+          "passed": true,
+          "detail": "|poly(root)| worst over prec {60,120,240} = 1.64e-16",
+          "name": "stability",
+          "method": "sweep_fn",
+          "scored": true,
+          "seconds": 2.5987625122070312e-05
+        }
+      },
+      {
+        "name": "null",
+        "method": "null_fn",
+        "result": {
+          "passed": true,
+          "detail": "perturbed root+0.05 -> |poly|=2.180e-01 (want >1e-2)",
+          "name": "null",
+          "method": "null_fn",
+          "scored": true,
+          "seconds": 1.9073486328125e-06
+        }
+      }
+    ],
+    "verdict": "survives",
+    "evidence": {
+      "n_attempts": 4,
+      "n_passed": 4,
+      "n_scored": 4,
+      "failed_attempts": [],
+      "rule": "survives iff ALL attempts pass AND all were actually scored; uncertain/missing/erroring => refuted (skeptical default).",
+      "statement": "lambda_7 = 2*cos(pi/7) = 1.801938 is a real root of x^3 - x^2 - 2x + 1 = 0",
+      "per_attempt": {
+        "control": {
+          "passed": true,
+          "detail": "control value 1.61803 -> |poly|=6.180e-01 (want >1e-2: not a root)"
+        },
+        "independent": {
+          "passed": true,
+          "detail": "horner=1.11e-16, expanded=0.00e+00 (both ~0, agree)"
+        },
+        "stability": {
+          "passed": true,
+          "detail": "|poly(root)| worst over prec {60,120,240} = 1.64e-16"
+        },
+        "null": {
+          "passed": true,
+          "detail": "perturbed root+0.05 -> |poly|=2.180e-01 (want >1e-2)"
+        }
+      }
+    }
+  },
+  "certify": {
+    "claim_id": "demo_A_lambda7_minpoly",
+    "statement": "lambda_7 = 2*cos(pi/7) = 1.801938 is a real root of x^3 - x^2 - 2x + 1 = 0",
+    "kind": "numerical",
+    "artifact": "polynomial_real_root",
+    "params": {
+      "coeffs": [
+        1,
+        -1,
+        -2,
+        1
+      ],
+      "value": 1.8019377358048383,
+      "control_fn": "<callable control_fn>",
+      "independent_fn": "<callable independent_fn>",
+      "sweep_fn": "<callable sweep_fn>",
+      "null_fn": "<callable null_fn>"
+    },
+    "method": "arb interval sign-change bracket (rigorous IVT)",
+    "enclosure": {
+      "interval": [
+        1.7919377358048383,
+        1.8119377358048383
+      ],
+      "p_lo_ball": "[-0.040931052074685635258634595178928761719692475455185726880449560304364246537 +/- 1.48e-76]",
+      "p_hi_ball": "[0.041812214716168865271120246838781329936702176427559298362281838911869631954 +/- 3.53e-76]",
+      "poly_coeffs_hi_to_lo": [
+        1,
+        -1,
+        -2,
+        1
+      ]
+    },
+    "certified": true,
+    "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/demo_A_lambda7_minpoly__certify.json",
+    "tool": "python-flint arb @ prec=256",
+    "backend": null,
+    "dim_tail_certified": null,
+    "dim_tail_caveat": null,
+    "log": null,
+    "timestamps": {
+      "started": "2026-06-20T17:39:50.598437+00:00",
+      "finished": "2026-06-20T17:39:50.598490+00:00"
+    }
+  },
+  "verify": {
+    "claim_id": "demo_A_lambda7_minpoly",
+    "lemma": "x^3 - x^2 - 2x + 1 = 0",
+    "lean_file": "/var/folders/0j/0fv2szdj15xg_wbgl96cbf_r0000gn/T/aletheia_demo_verify_hr1ov7f3/extracted/aristotle_minpoly_lambda_aristotle/RequestProject/Main.lean",
+    "sorry_free": true,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "proved": true,
+    "project_id": "3d185f73-bec0-4932-a2e7-0ef18f0a8948",
+    "status": "COMPLETE",
+    "build_passed_per_summary": true,
+    "notes": [
+      "build/axiom result is Aristotle-reported (not re-run locally)"
+    ]
+  },
+  "stage_status": {
+    "falsify": {
+      "source": "real"
+    },
+    "certify": {
+      "source": "real"
+    },
+    "verify": {
+      "source": "real",
+      "note": "cached Aristotle proof 3d185f73-bec0-4932-a2e7-0ef18f0a8948 (hecke_lambda_seven)"
+    }
+  },
+  "verdict": "survives",
+  "timestamps": {
+    "started": "2026-06-20T12:00:00Z",
+    "finished": "2026-06-20T12:00:00Z"
+  },
+  "synthesis": "Claim \"demo_A_lambda7_minpoly\" \u2014 lambda_7 = 2*cos(pi/7) = 1.801938 is a real root of x^3 - x^2 - 2x + 1 = 0. It survived 4 adversarial refutation attempt(s) (controls / independent methods / sweeps). It was rigorously certified by python-flint arb @ prec=256 (enclosure {'interval': [1.7919377358048383, 1.8119377358048383], 'p_lo_ball': '[-0.040931052074685635258634595178928761719692475455185726880449560304364246537 +/- 1.48e-76]', 'p_hi_ball': '[0.041812214716168865271120246838781329936702176427559298362281838911869631954 +/- 3.53e-76]', 'poly_coeffs_hi_to_lo': [1, -1, -2, 1]}). A sorry-free Lean proof was machine-verified under axioms ['propext', 'Classical.choice', 'Quot.sound']."
+}

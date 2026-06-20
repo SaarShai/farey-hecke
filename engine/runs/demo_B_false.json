@@ -1,0 +1,122 @@
+{
+  "run_id": "demo_B_false",
+  "schema": "aletheia.runrecord/v1",
+  "claim": {
+    "id": "demo_B_false_s_0.25_5.76353724",
+    "statement": "FALSE: G_5 resonance sits on Re=1/4 (like arith q=3) :: s0 = 0.250000 + 5.763537i is a genuine EVEN-sector (mms+) resonance of the non-arithmetic Hecke triangle group G_5: det(1 - L+_{s0}) = 0 with Re(s0) < 1/2 (scattering pole = dissolved even Maass cusp form).",
+    "kind": "numerical"
+  },
+  "falsify": {
+    "claim_id": "demo_B_false_s_0.25_5.76353724",
+    "attempts": [
+      {
+        "name": "control",
+        "method": "wrong-sector control: odd (mms-) |det| at s0 must be O(1)",
+        "result": {
+          "method": "wrong-sector control: odd (mms-) |det| at s0 must be O(1)",
+          "passed": false,
+          "even_absdet": 1.2425741698881636,
+          "odd_absdet": 0.6603313453702397,
+          "zero_thr": 1e-06,
+          "nonzero_thr": 0.01,
+          "detail": "even|det|=1.243e+00 (want <1e-06); odd|det|=6.603e-01 (want >1e-02) -> control FAILS",
+          "name": "control",
+          "scored": true,
+          "seconds": 1.069943904876709
+        }
+      },
+      {
+        "name": "independent",
+        "method": "independent truncation: even |det| at N=18 vs N=22",
+        "result": {
+          "method": "independent truncation: even |det| at N=18 vs N=22",
+          "passed": false,
+          "absdet_primary": 1.2425741698881636,
+          "absdet_independent": 1.2425741693633978,
+          "N_primary": 18,
+          "N_independent": 22,
+          "zero_thr": 1e-06,
+          "detail": "|det|@N18=1.243e+00, |det|@N22=1.243e+00; both want <1e-06 -> independent paths DISAGREE",
+          "name": "independent",
+          "scored": true,
+          "seconds": 1.4228973388671875
+        }
+      },
+      {
+        "name": "stability",
+        "method": "N-stability sweep N in [18, 20, 22]: even |det| stays ~0",
+        "result": {
+          "method": "N-stability sweep N in [18, 20, 22]: even |det| stays ~0",
+          "passed": false,
+          "absdet_by_N": {
+            "18": 1.2425741698881636,
+            "20": 1.242574169380823,
+            "22": 1.2425741693633978
+          },
+          "worst_absdet": 1.2425741698881636,
+          "zero_thr": 1e-06,
+          "detail": "per-N |det|=N18:1.24e+00, N20:1.24e+00, N22:1.24e+00; worst=1.243e+00 (want <1e-06) -> DRIFTS / not a stable zero",
+          "name": "stability",
+          "scored": true,
+          "seconds": 2.0360991954803467
+        }
+      },
+      {
+        "name": "null",
+        "method": "null neighbor s0+(+0.000,+0.300): even |det| must be O(1)",
+        "result": {
+          "method": "null neighbor s0+(+0.000,+0.300): even |det| must be O(1)",
+          "passed": true,
+          "neighbor_re": 0.25,
+          "neighbor_im": 6.06353724,
+          "neighbor_absdet": 2.3817716112579954,
+          "nonzero_thr": 0.01,
+          "detail": "|det| at neighbor (0.2500,6.0635) = 2.382e+00 (want >1e-02) -> zero is LOCALIZED (neighbor not a zero)",
+          "name": "null",
+          "scored": true,
+          "seconds": 0.5142521858215332
+        }
+      }
+    ],
+    "verdict": "refuted",
+    "evidence": {
+      "n_attempts": 4,
+      "n_passed": 1,
+      "n_scored": 4,
+      "failed_attempts": [
+        "control",
+        "independent",
+        "stability"
+      ],
+      "rule": "survives iff ALL attempts pass AND all were actually scored; uncertain/missing/erroring => refuted (skeptical default).",
+      "statement": "FALSE: G_5 resonance sits on Re=1/4 (like arith q=3) :: s0 = 0.250000 + 5.763537i is a genuine EVEN-sector (mms+) resonance of the non-arithmetic Hecke triangle group G_5: det(1 - L+_{s0}) = 0 with Re(s0) < 1/2 (scattering pole = dissolved even Maass cusp form).",
+      "per_attempt": {
+        "control": {
+          "passed": false,
+          "detail": "even|det|=1.243e+00 (want <1e-06); odd|det|=6.603e-01 (want >1e-02) -> control FAILS"
+        },
+        "independent": {
+          "passed": false,
+          "detail": "|det|@N18=1.243e+00, |det|@N22=1.243e+00; both want <1e-06 -> independent paths DISAGREE"
+        },
+        "stability": {
+          "passed": false,
+          "detail": "per-N |det|=N18:1.24e+00, N20:1.24e+00, N22:1.24e+00; worst=1.243e+00 (want <1e-06) -> DRIFTS / not a stable zero"
+        },
+        "null": {
+          "passed": true,
+          "detail": "|det| at neighbor (0.2500,6.0635) = 2.382e+00 (want >1e-02) -> zero is LOCALIZED (neighbor not a zero)"
+        }
+      }
+    }
+  },
+  "verdict": "refuted",
+  "failed_probes": [
+    "control",
+    "independent",
+    "stability"
+  ],
+  "timestamps": {
+    "started": "2026-06-20T12:00:00Z"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "run_id": "demo_D_lambda9",
+  "schema": "aletheia.runrecord/v1",
+  "demo": "D-D (FRESH VERIFIED MATH)",
+  "claim": {
+    "id": "lambda9-minpoly",
+    "statement": "lambda_9 = 2*cos(pi/9) is a root of x^3 - 3x - 1",
+    "kind": "theorem",
+    "artifact": "hecke_minpoly_lambda_q",
+    "lemma": "let x : Real := 2 * Real.cos (Real.pi / 9); then x^3 - 3*x - 1 = 0  (Hecke triangle-group lambda_9 = 2cos(pi/9) is a root of x^3 - 3x - 1)",
+    "params": {
+      "q": 9,
+      "cubic": "x^3 - 3x - 1",
+      "project_dir": "/Users/za/Documents/farey-hecke/engine/demos/d_d_fresh_verify/aristotle_lambda9"
+    }
+  },
+  "discover": {
+    "lemma": "2*cos(pi/9) is a root of x^3 - 3x - 1",
+    "cubic": "x^3 - 3x - 1",
+    "lambda9": "1.87938524157182",
+    "roots": {
+      "2cos(pi/9)": "1.87938524157",
+      "2cos(5pi/9)": "-0.347296355334",
+      "2cos(7pi/9)": "-1.53208888624"
+    },
+    "method": "Chebyshev T_9(cos(pi/9)) = cos(pi) = -1; minimal cubic of 2cos(pi/9) over Q is x^3 - 3x - 1."
+  },
+  "falsify": {
+    "lemma": "2*cos(pi/9) is a root of x^3 - 3x - 1",
+    "cubic": "x^3 - 3x - 1",
+    "dps": 60,
+    "lambda9": "1.87938524157182",
+    "roots": {
+      "2cos(pi/9)": "1.87938524157",
+      "2cos(5pi/9)": "-0.347296355334",
+      "2cos(7pi/9)": "-1.53208888624"
+    },
+    "attempts": {
+      "root_test": {
+        "passed": true,
+        "residual": "6.22302e-61",
+        "tol": "1.0e-55",
+        "detail": "|(2cos(pi/9))^3 - 3(2cos(pi/9)) - 1| < 1e-(dps-5)"
+      },
+      "independent_all_roots": {
+        "passed": true,
+        "residuals": {
+          "2cos(pi/9)": "6.22302e-61",
+          "2cos(5pi/9)": "5.44514e-61",
+          "2cos(7pi/9)": "0.0"
+        },
+        "detail": "all three 2cos(k*pi/9), k in {1,5,7}, annihilate the cubic"
+      },
+      "vieta": {
+        "passed": true,
+        "sum": "1.55575e-61",
+        "e2": "-3.0",
+        "prod": "1.0",
+        "detail": "sum=0, e2=-3, prod=+1  <=>  cubic is x^3 - 0x^2 - 3x - 1"
+      },
+      "control_phi_not_root": {
+        "passed": true,
+        "phi_residual": "1.61803",
+        "lambda7_residual": "0.554958",
+        "detail": "CONTROL: 2cos(pi/5)=phi and 2cos(pi/7) are NOT roots (residuals must be far from 0)"
+      }
+    },
+    "verdict": "survives"
+  },
+  "certify": {
+    "claim_id": "lambda9-minpoly",
+    "method": "high-precision (mpmath dps=60) root test + Vieta identities",
+    "enclosure": "|poly(2cos(pi/9))| = 6.22302e-61 < 1.0e-55",
+    "certified": true,
+    "tool": "mpmath",
+    "note": "Numerical falsify-certification (mpmath, NOT Arb interval arithmetic). The RIGOROUS guarantee for this claim is the Lean proof in the VERIFY stage, not this float check.",
+    "stub": false
+  },
+  "verify": {
+    "claim_id": "lambda9-minpoly",
+    "lemma": "let x : Real := 2 * Real.cos (Real.pi / 9); then x^3 - 3*x - 1 = 0  (Hecke triangle-group lambda_9 = 2cos(pi/9) is a root of x^3 - 3x - 1)",
+    "lean_file": "/Users/za/Documents/farey-hecke/engine/demos/d_d_fresh_verify/aristotle_lambda9/solution/extracted/aristotle_lambda9_aristotle/RequestProject/Main.lean",
+    "sorry_free": true,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "proved": true,
+    "project_id": "52301831-be26-4d70-93b0-549fbcf6d31e",
+    "status": "COMPLETE_WITH_ERRORS",
+    "build_passed_per_summary": true,
+    "notes": [
+      "build/axiom result is Aristotle-reported (not re-run locally)",
+      "PROVED=True upgraded by INDEPENDENT LOCAL re-verification: `lake env lean` exit 0 against leanprover/lean4:v4.28.0 (local prebuilt Mathlib), axiom check 'lambda_9_min_poly' depends on axioms: [propext, Classical.choice, Quot.sound] (project status was 'COMPLETE_WITH_ERRORS', but the final Main.lean builds clean locally \u2014 this is NOT merely Aristotle-reported)."
+    ],
+    "local_verification": {
+      "available": true,
+      "build_exit": 0,
+      "build_ok": true,
+      "axioms_clean": true,
+      "no_sorry_in_output": true,
+      "theorems": [
+        "lambda_9_min_poly"
+      ],
+      "axiom_print": "'lambda_9_min_poly' depends on axioms: [propext, Classical.choice, Quot.sound]",
+      "toolchain": "leanprover/lean4:v4.28.0 (local prebuilt Mathlib)",
+      "lean_project": "/Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v14"
+    }
+  },
+  "synthesis": "Claim \"lambda9-minpoly\" \u2014 lambda_9 = 2cos(pi/9) is a root of x^3 - 3x - 1. DISCOVER+FALSIFY: derived the cubic and it survived the numerical battery (high-precision root test residual 6.22302e-61, Vieta sum/e2/prod = 1.55575e-61/-3.0/1.0, and CONTROLS confirm phi=2cos(pi/5) and 2cos(pi/7) are NOT roots). VERIFY: Aristotle returned a SORRY-FREE Lean/Mathlib proof (axioms ['propext', 'Classical.choice', 'Quot.sound'], project 52301831-be26-4d70-93b0-549fbcf6d31e); the engine proved this FRESH statement on demand. The proof was INDEPENDENTLY re-verified LOCALLY (lake env lean exit 0 against leanprover/lean4:v4.28.0 (local prebuilt Mathlib); 'lambda_9_min_poly' depends on axioms: [propext, Classical.choice, Quot.sound]) \u2014 this is ground-truth, NOT merely Aristotle-reported. Aristotle used the cosine triple-angle identity (cos_three_mul), a simpler route than the Chebyshev hint.",
+  "stage_status": {
+    "falsify": {
+      "source": "real",
+      "error": null
+    },
+    "verify": {
+      "source": "real",
+      "mode": "post_process_existing",
+      "error": null
+    }
+  },
+  "verdict": "survives",
+  "proved": true,
+  "timestamps": {
+    "started": "2026-06-20T17:54:18Z",
+    "finished": "2026-06-20T17:54:26Z"
+  }
+}

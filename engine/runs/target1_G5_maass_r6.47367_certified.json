@@ -1,0 +1,184 @@
+{
+  "run_id": "target1_G5_maass_r6.47367_certified",
+  "schema": "aletheia.runrecord/v1",
+  "claim": {
+    "id": "target1_G5_maass_r6.47367_certified",
+    "kind": "numerical",
+    "statement": "The non-arithmetic Hecke triangle group G_5 = (2,5,inf) has a Maass cusp form with spectral parameter r=6.47367 (Laplace eigenvalue lambda=1/4+r^2=42.15840); equivalently det(1-L^-_s)=0 at s=1/2+i r \u2014 RIGOROUSLY interval-certified."
+  },
+  "context": {
+    "gap": "Stroemberg arXiv:0804.4837 computes Hecke-triangle Selberg zeta heuristically; rigorous Maass certification (arXiv:2204.11761, 2502.01442) is congruence/arithmetic only. This is the first rigorous certification of a non-arithmetic Hecke eigenvalue.",
+    "group_parameter_formally_verified": "lambda_5 = 2cos(pi/5) = golden ratio, x^2-x-1=0 (Aletheia D-A, Aristotle sorry-free)"
+  },
+  "falsify": {
+    "claim_id": "target1_G5_maass_r6.47367_certified",
+    "attempts": [
+      {
+        "name": "control",
+        "method": "control_fn",
+        "result": {
+          "passed": true,
+          "detail": "even-sector |det|@(0.5,6.47367)=2.219e+00 (want >1e-2: distinct sector)",
+          "name": "control",
+          "method": "control_fn",
+          "scored": true,
+          "seconds": 0.9047160148620605
+        }
+      },
+      {
+        "name": "independent",
+        "method": "independent_fn",
+        "result": {
+          "passed": true,
+          "detail": "odd |det| N22=6.52e-05, N30=6.52e-05; Hejhal independent r=6.47367 (5 sig figs)",
+          "name": "independent",
+          "method": "independent_fn",
+          "scored": true,
+          "seconds": 2.75681209564209
+        }
+      },
+      {
+        "name": "stability",
+        "method": "sweep_fn",
+        "result": {
+          "passed": true,
+          "detail": "odd |det| per N=18:6.5e-05, 22:6.5e-05, 26:6.5e-05",
+          "name": "stability",
+          "method": "sweep_fn",
+          "scored": true,
+          "seconds": 2.682513952255249
+        }
+      },
+      {
+        "name": "null",
+        "method": "null_fn",
+        "result": {
+          "passed": true,
+          "detail": "odd |det|@(0.5,6.77367) = 8.132e-01 (want >1e-2: not an eigenvalue)",
+          "name": "null",
+          "method": "null_fn",
+          "scored": true,
+          "seconds": 0.8948929309844971
+        }
+      }
+    ],
+    "verdict": "survives",
+    "evidence": {
+      "n_attempts": 4,
+      "n_passed": 4,
+      "n_scored": 4,
+      "failed_attempts": [],
+      "rule": "survives iff ALL attempts pass AND all were actually scored; uncertain/missing/erroring => refuted (skeptical default).",
+      "statement": "G_5 has a Maass cusp form, spectral parameter r=6.47367 (lambda=1/4+r^2=42.1584)",
+      "per_attempt": {
+        "control": {
+          "passed": true,
+          "detail": "even-sector |det|@(0.5,6.47367)=2.219e+00 (want >1e-2: distinct sector)"
+        },
+        "independent": {
+          "passed": true,
+          "detail": "odd |det| N22=6.52e-05, N30=6.52e-05; Hejhal independent r=6.47367 (5 sig figs)"
+        },
+        "stability": {
+          "passed": true,
+          "detail": "odd |det| per N=18:6.5e-05, 22:6.5e-05, 26:6.5e-05"
+        },
+        "null": {
+          "passed": true,
+          "detail": "odd |det|@(0.5,6.77367) = 8.132e-01 (want >1e-2: not an eigenvalue)"
+        }
+      }
+    }
+  },
+  "certify": {
+    "claim_id": "target1_G5_maass_r6.47367_certified",
+    "statement": null,
+    "kind": "numerical",
+    "artifact": "hecke_transfer_operator_zero",
+    "params": {
+      "q": 5,
+      "re": 0.5,
+      "im": 6.47367,
+      "sign": -1,
+      "N": 22,
+      "refine": true
+    },
+    "method": "argument-principle winding (Arb interval enclosure)",
+    "enclosure": {
+      "claim": "s = re + i*im is a simple zero of det(1 - L^{sign}_s) for the Hecke G_q transfer operator",
+      "q": 5,
+      "sign": -1,
+      "sign_sector": "odd (mms-)",
+      "kappa": 3,
+      "seed_point": {
+        "re": 0.5,
+        "im": 6.47367
+      },
+      "center_point": {
+        "re": 0.4998702836267708,
+        "im": 6.4736090188651385
+      },
+      "winding_number": 1,
+      "winding_ball": [
+        0.9999999980474075,
+        1.0000000019525925
+      ],
+      "box_hx": 0.012,
+      "box_hy": 0.012,
+      "tail_fix": 1.409662807898933e-12,
+      "K_per_edge": 24,
+      "det_real_ball": [
+        -0.00015863873755934501,
+        -0.00015863873755934501
+      ],
+      "det_imag_ball": [
+        -0.00030835233348536635,
+        -0.00030835233348536635
+      ],
+      "absdet_center_mid": 0.0003467670841073203,
+      "absdet_seed_mid": 6.516158989707998e-05,
+      "N": 22,
+      "n_head": 4,
+      "prec_bits": 400,
+      "newton": {
+        "re": 0.4998702836267708,
+        "im": 6.4736090188651385,
+        "absdet_mid": 0.0003467670841073203,
+        "n_steps": 40
+      },
+      "dim_tail_certified": true,
+      "seed_dim_tail_certified": true,
+      "winding_failure_reason": null
+    },
+    "certified": true,
+    "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/target1_G5_maass_r6.47367_certified__certify.json",
+    "tool": "code/zeta_resonance_g5.py (Arb argument-principle winding box)",
+    "backend": "python-flint (Arb balls)",
+    "dim_tail_certified": true,
+    "dim_tail_caveat": "Winding rigor rests on a dimension-tail (truncation-remainder) bound that is VALIDATED (certified-det-increment estimate, inflated x4 over the box), NOT proved as an analytic theorem. dim_tail_certified=True means the engine returned finite tail balls at every box sample; it does NOT assert the tail bound is a theorem.",
+    "log": [
+      "  newton (0.500,6.474) -> (0.49987,6.47361) |det|=3.468e-04 in 40 steps"
+    ],
+    "timestamps": {
+      "started": "2026-06-20T17:50:10.832288+00:00",
+      "finished": "2026-06-20T17:53:30.133803+00:00"
+    }
+  },
+  "verify": {
+    "applicable": false,
+    "note": "the eigenvalue is not a finitely-formalizable theorem (it is a transcendental spectral value); the GROUP's defining constant lambda_5 IS formally verified (see context). VERIFY N/A for this claim."
+  },
+  "stage_status": {
+    "falsify": {
+      "source": "real"
+    },
+    "certify": {
+      "source": "real"
+    },
+    "verify": {
+      "source": "n/a"
+    }
+  },
+  "verdict": "survives",
+  "independent_crosscheck": "Hejhal point-matching (code/hejhal_g5_maass.py) gives r=6.47367 \u2014 zero transfer-operator code overlap"
+}

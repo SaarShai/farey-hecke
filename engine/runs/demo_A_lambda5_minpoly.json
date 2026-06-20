@@ -1,0 +1,169 @@
+{
+  "run_id": "demo_A_lambda5_minpoly--0000",
+  "schema": "aletheia.runrecord/v1",
+  "claim": {
+    "id": "demo_A_lambda5_minpoly",
+    "statement": "lambda_5 = 2*cos(pi/5) = 1.618034 is a real root of x^2 - x - 1 = 0",
+    "kind": "numerical",
+    "lemma": "x^2 - x - 1 = 0"
+  },
+  "falsify": {
+    "claim_id": "demo_A_lambda5_minpoly",
+    "attempts": [
+      {
+        "name": "control",
+        "method": "control_fn",
+        "result": {
+          "passed": true,
+          "detail": "control value 1.80194 -> |poly|=4.450e-01 (want >1e-2: not a root)",
+          "name": "control",
+          "method": "control_fn",
+          "scored": true,
+          "seconds": 4.0531158447265625e-06
+        }
+      },
+      {
+        "name": "independent",
+        "method": "independent_fn",
+        "result": {
+          "passed": true,
+          "detail": "horner=2.22e-16, expanded=0.00e+00 (both ~0, agree)",
+          "name": "independent",
+          "method": "independent_fn",
+          "scored": true,
+          "seconds": 6.198883056640625e-06
+        }
+      },
+      {
+        "name": "stability",
+        "method": "sweep_fn",
+        "result": {
+          "passed": true,
+          "detail": "|poly(root)| worst over prec {60,120,240} = 1.21e-16",
+          "name": "stability",
+          "method": "sweep_fn",
+          "scored": true,
+          "seconds": 3.6716461181640625e-05
+        }
+      },
+      {
+        "name": "null",
+        "method": "null_fn",
+        "result": {
+          "passed": true,
+          "detail": "perturbed root+0.05 -> |poly|=1.143e-01 (want >1e-2)",
+          "name": "null",
+          "method": "null_fn",
+          "scored": true,
+          "seconds": 9.5367431640625e-07
+        }
+      }
+    ],
+    "verdict": "survives",
+    "evidence": {
+      "n_attempts": 4,
+      "n_passed": 4,
+      "n_scored": 4,
+      "failed_attempts": [],
+      "rule": "survives iff ALL attempts pass AND all were actually scored; uncertain/missing/erroring => refuted (skeptical default).",
+      "statement": "lambda_5 = 2*cos(pi/5) = 1.618034 is a real root of x^2 - x - 1 = 0",
+      "per_attempt": {
+        "control": {
+          "passed": true,
+          "detail": "control value 1.80194 -> |poly|=4.450e-01 (want >1e-2: not a root)"
+        },
+        "independent": {
+          "passed": true,
+          "detail": "horner=2.22e-16, expanded=0.00e+00 (both ~0, agree)"
+        },
+        "stability": {
+          "passed": true,
+          "detail": "|poly(root)| worst over prec {60,120,240} = 1.21e-16"
+        },
+        "null": {
+          "passed": true,
+          "detail": "perturbed root+0.05 -> |poly|=1.143e-01 (want >1e-2)"
+        }
+      }
+    }
+  },
+  "certify": {
+    "claim_id": "demo_A_lambda5_minpoly",
+    "statement": "lambda_5 = 2*cos(pi/5) = 1.618034 is a real root of x^2 - x - 1 = 0",
+    "kind": "numerical",
+    "artifact": "polynomial_real_root",
+    "params": {
+      "coeffs": [
+        1,
+        -1,
+        -1
+      ],
+      "value": 1.618033988749895,
+      "control_fn": "<callable control_fn>",
+      "independent_fn": "<callable independent_fn>",
+      "sweep_fn": "<callable sweep_fn>",
+      "null_fn": "<callable null_fn>"
+    },
+    "method": "arb interval sign-change bracket (rigorous IVT)",
+    "enclosure": {
+      "interval": [
+        1.608033988749895,
+        1.628033988749895
+      ],
+      "p_lo_ball": "[-0.0222606797749977765847262069818200866537124336012104985817877667031439159473 +/- 5.56e-77]",
+      "p_hi_ball": "[0.0224606797749980195163033478658077915353744804612895014182122332968560840527 +/- 8.77e-77]",
+      "poly_coeffs_hi_to_lo": [
+        1,
+        -1,
+        -1
+      ]
+    },
+    "certified": true,
+    "certificate_path": "/Users/za/Documents/farey-hecke/engine/runs/demo_A_lambda5_minpoly__certify.json",
+    "tool": "python-flint arb @ prec=256",
+    "backend": null,
+    "dim_tail_certified": null,
+    "dim_tail_caveat": null,
+    "log": null,
+    "timestamps": {
+      "started": "2026-06-20T17:39:45.545994+00:00",
+      "finished": "2026-06-20T17:39:45.546649+00:00"
+    }
+  },
+  "verify": {
+    "claim_id": "demo_A_lambda5_minpoly",
+    "lemma": "x^2 - x - 1 = 0",
+    "lean_file": "/var/folders/0j/0fv2szdj15xg_wbgl96cbf_r0000gn/T/aletheia_demo_verify_3q9cc__j/extracted/aristotle_minpoly_lambda_aristotle/RequestProject/Main.lean",
+    "sorry_free": true,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "proved": true,
+    "project_id": "3d185f73-bec0-4932-a2e7-0ef18f0a8948",
+    "status": "COMPLETE",
+    "build_passed_per_summary": true,
+    "notes": [
+      "build/axiom result is Aristotle-reported (not re-run locally)"
+    ]
+  },
+  "stage_status": {
+    "falsify": {
+      "source": "real"
+    },
+    "certify": {
+      "source": "real"
+    },
+    "verify": {
+      "source": "real",
+      "note": "cached Aristotle proof 3d185f73-bec0-4932-a2e7-0ef18f0a8948 (hecke_lambda_five)"
+    }
+  },
+  "verdict": "survives",
+  "timestamps": {
+    "started": "2026-06-20T12:00:00Z",
+    "finished": "2026-06-20T12:00:00Z"
+  },
+  "synthesis": "Claim \"demo_A_lambda5_minpoly\" \u2014 lambda_5 = 2*cos(pi/5) = 1.618034 is a real root of x^2 - x - 1 = 0. It survived 4 adversarial refutation attempt(s) (controls / independent methods / sweeps). It was rigorously certified by python-flint arb @ prec=256 (enclosure {'interval': [1.608033988749895, 1.628033988749895], 'p_lo_ball': '[-0.0222606797749977765847262069818200866537124336012104985817877667031439159473 +/- 5.56e-77]', 'p_hi_ball': '[0.0224606797749980195163033478658077915353744804612895014182122332968560840527 +/- 8.77e-77]', 'poly_coeffs_hi_to_lo': [1, -1, -1]}). A sorry-free Lean proof was machine-verified under axioms ['propext', 'Classical.choice', 'Quot.sound']."
+}

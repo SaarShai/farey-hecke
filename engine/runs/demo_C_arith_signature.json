@@ -1,0 +1,62 @@
+{
+  "run_id": "demo_C_arith_signature",
+  "schema": "aletheia.runrecord/v1",
+  "claim": {
+    "id": "arith_signature",
+    "statement": "Resonance geometry detects arithmeticity: the arithmetic Hecke surface q=3 has even-sector resonances on a vertical LINE (Re=1/4, the Riemann zeros); the non-arithmetic G_5 and G_7 have them SCATTERED in Re (clouds). Scattering / continuous-spectrum resonances, certified by Arb winding.",
+    "kind": "numerical"
+  },
+  "signature": {
+    "q3_arith": {
+      "n": 8,
+      "re_std": 6.47516930146045e-14,
+      "re_min": 0.24999999999981787,
+      "re_max": 0.2500000000000505,
+      "shape": "vertical line Re=1/4"
+    },
+    "g5_nonarith": {
+      "n": 8,
+      "re_std": 0.029986183641395464,
+      "re_min": 0.3998208929499856,
+      "re_max": 0.48527431432587564,
+      "shape": "scattered cloud"
+    },
+    "g7_nonarith": {
+      "n": 12,
+      "re_std": 0.10292157548329758,
+      "re_min": 0.15354628004003862,
+      "re_max": 0.4842071839738105,
+      "shape": "scattered cloud"
+    }
+  },
+  "certified_anchors": [
+    {
+      "label": "q3 on Re=1/4",
+      "q": 3,
+      "re": 0.25,
+      "im": 7.0674,
+      "certified": true,
+      "winding": 1
+    },
+    {
+      "label": "g5 cloud pt",
+      "q": 5,
+      "re": 0.45389518,
+      "im": 5.76353724,
+      "certified": true,
+      "winding": 1
+    },
+    {
+      "label": "g5 near-line pt",
+      "q": 5,
+      "re": 0.485,
+      "im": 13.565,
+      "certified": true,
+      "winding": 1
+    }
+  ],
+  "g7_engine_precheck_reproduces_q5": true,
+  "timestamps": {
+    "started": "2026-06-20T12:00:00Z"
+  }
+}
