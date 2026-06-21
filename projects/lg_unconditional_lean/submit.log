@@ -1,0 +1,18 @@
+Aristotle submission ATTEMPTED 2026-06-21 — FAILED (server-side auth).
+
+CLI: aristotlelib 2.0.0 (~/.local/bin/aristotle), invocation:
+  aristotle submit "<prompt>" --project-dir projects/lg_unconditional_lean --api-key "$KEY"
+
+Result: "ERROR - Invalid API key. Please check your API key and try again."
+(The key in ~/.farey_api_keys, arstl_…48 chars, is extracted cleanly but rejected
+server-side — likely expired/rotated. A separate `aristotle list` call hit an httpx
+transport error. Both are environment/credential issues, not a Lean problem.)
+
+LOCAL VERIFICATION (authoritative, EXIT 0):
+  ( cd projects/lg_unconditional_lean && lake env lean RequestProject/Main.lean )
+  -> compiles sorry-free; #print axioms:
+     LgUnconditional.Xomega_ge_final       : [propext, Classical.choice, Quot.sound]   (NO sorryAx)
+     LgUnconditional.hEfloor_keystone       : [propext, Classical.choice, Quot.sound]   (NO sorryAx)
+     LgUnconditional.hAgreePrefix_genuine   : [propext, Classical.choice, Quot.sound]   (NO sorryAx)
+     LgUnconditional.Xomega_ge_no_confinement: [propext, Classical.choice, Quot.sound]  (NO sorryAx)
+     LgUnconditional.pgen_orbit_realization : [propext, Classical.choice, Quot.sound]   (NO sorryAx)
