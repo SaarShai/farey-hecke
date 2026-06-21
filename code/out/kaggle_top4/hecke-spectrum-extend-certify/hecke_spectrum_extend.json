@@ -1,0 +1,159 @@
+{
+  "objective": "Certified (Arb winding=1 + dim-tail) batch extension of the non-arith Hecke odd-sector Maass spectrum.",
+  "engine": "zeta_cert_rosen.py (general-odd-q MMS, validated vs q=5 engine)",
+  "params": {
+    "N": 22,
+    "n_head": 4,
+    "sign": -1,
+    "box_hx": 8e-05,
+    "box_hy": 8e-05,
+    "K_per_edge": 16
+  },
+  "results": [
+    {
+      "q": 7,
+      "label": "G_7 odd k=1 (CERTIFIED locally; in-kernel regression)",
+      "anchor_r": 5.921981,
+      "r_star": 5.921981251387827,
+      "absdet_mid": 2.2017182912718126e-12,
+      "lambda_eig": 35.31986194178893,
+      "dim_tail_certified_at_rstar": true,
+      "winding": 1,
+      "winding_info": {
+        "winding": 1,
+        "winding_ball": [
+          0.9999996330589056,
+          1.0000003688037395
+        ],
+        "K_per_edge": 16,
+        "box_hx": 8e-05,
+        "box_hy": 8e-05,
+        "re0_center": 0.5,
+        "im0_center": 5.921981251387827,
+        "tail_fix": 2.793871728043874e-12
+      },
+      "winding_log": [],
+      "certified": true,
+      "r_lo": 5.921901251387827,
+      "r_hi": 5.922061251387826,
+      "wall_seconds": 366.950040102005
+    },
+    {
+      "q": 7,
+      "label": "G_7 odd k=2 (CERTIFIED locally; in-kernel regression)",
+      "anchor_r": 7.933889,
+      "r_star": 7.9338887700695535,
+      "absdet_mid": 1.0656460505613135e-11,
+      "lambda_eig": 63.19659101583577,
+      "dim_tail_certified_at_rstar": true,
+      "winding": 1,
+      "winding_info": {
+        "winding": 1,
+        "winding_ball": [
+          0.9999845949932933,
+          1.0000154050067067
+        ],
+        "K_per_edge": 16,
+        "box_hx": 8e-05,
+        "box_hy": 8e-05,
+        "re0_center": 0.5,
+        "im0_center": 7.9338887700695535,
+        "tail_fix": 2.544515817253868e-10
+      },
+      "winding_log": [],
+      "certified": true,
+      "r_lo": 7.933808770069554,
+      "r_hi": 7.933968770069553,
+      "wall_seconds": 388.45883297920227
+    },
+    {
+      "q": 7,
+      "label": "G_7 odd k=3 (NEW target)",
+      "anchor_r": 9.18571,
+      "r_star": 9.185710066244068,
+      "absdet_mid": 2.93301106406144e-10,
+      "lambda_eig": 84.62726942109761,
+      "dim_tail_certified_at_rstar": true,
+      "winding": 1,
+      "winding_info": {
+        "winding": 1,
+        "winding_ball": [
+          0.9997863955795765,
+          1.000213611871004
+        ],
+        "K_per_edge": 16,
+        "box_hx": 8e-05,
+        "box_hy": 8e-05,
+        "re0_center": 0.5,
+        "im0_center": 9.185710066244068,
+        "tail_fix": 3.856454966132385e-09
+      },
+      "winding_log": [],
+      "certified": true,
+      "r_lo": 9.185630066244068,
+      "r_hi": 9.185790066244069,
+      "wall_seconds": 386.1691415309906
+    },
+    {
+      "q": 7,
+      "label": "G_7 odd k=4 (NEW target)",
+      "anchor_r": 10.22917,
+      "r_star": 10.229167474924783,
+      "absdet_mid": 2.3263396668855742e-10,
+      "lambda_eig": 104.88586723005905,
+      "dim_tail_certified_at_rstar": true,
+      "winding": 1,
+      "winding_info": {
+        "winding": 1,
+        "winding_ball": [
+          0.999764303676784,
+          1.0002357056364417
+        ],
+        "K_per_edge": 16,
+        "box_hx": 8e-05,
+        "box_hy": 8e-05,
+        "re0_center": 0.5,
+        "im0_center": 10.229167474924783,
+        "tail_fix": 4.269894571894726e-09
+      },
+      "winding_log": [],
+      "certified": true,
+      "r_lo": 10.229087474924782,
+      "r_hi": 10.229247474924783,
+      "wall_seconds": 388.01481103897095
+    },
+    {
+      "q": 5,
+      "label": "G_5 odd k=1 (regression anchor)",
+      "anchor_r": 6.4737,
+      "r_star": 6.473699749441975,
+      "absdet_mid": 2.4592877206418087e-12,
+      "lambda_eig": 42.15878844592509,
+      "dim_tail_certified_at_rstar": true,
+      "winding": 1,
+      "winding_info": {
+        "winding": 1,
+        "winding_ball": [
+          0.9999998336606635,
+          1.0000001663393356
+        ],
+        "K_per_edge": 16,
+        "box_hx": 8e-05,
+        "box_hy": 8e-05,
+        "re0_center": 0.5,
+        "im0_center": 6.473699749441975,
+        "tail_fix": 1.1679688551979843e-12
+      },
+      "winding_log": [],
+      "certified": true,
+      "r_lo": 6.473619749441975,
+      "r_hi": 6.473779749441975,
+      "wall_seconds": 194.65413999557495
+    }
+  ],
+  "selfcheck_q5": {
+    "max_midpoint_diff": 0.0,
+    "balls_overlap": true
+  },
+  "wall_seconds_total": 1724.5725762844086
+}
