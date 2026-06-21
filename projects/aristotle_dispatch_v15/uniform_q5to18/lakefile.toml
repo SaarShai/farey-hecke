@@ -94,6 +94,10 @@ name = "EqualityUpperBound"
 globs = ["EqualityUpperBound"]
 
 [[lean_lib]]
+name = "CorridorProductRealization"
+globs = ["CorridorProductRealization"]
+
+[[lean_lib]]
 name = "OnsetEquality"
 globs = ["OnsetEquality"]
 
@@ -108,3 +112,7 @@ globs = ["OnsetEqualityLowQ"]
 [[lean_lib]]
 name = "LblkWindow"
 globs = ["LblkWindow"]
+
+[[lean_lib]]
+name = "RealizeWire"
+globs = ["RealizeWire"]
