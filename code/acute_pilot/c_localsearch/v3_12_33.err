@@ -1,0 +1,8 @@
+seed rec_n12.txt: 32 dim 12 direct
+seed rec_n13.txt: 33 dim 13 ->26 splits
+seed rec_n14.txt: 64 dim 14 ->728 splits
+v3 N=12 TARGET=33 threads=6 seeds=755 maxseed=32 tlimit=600
+  [+] new best 19
+  [+] new best 24
+  [+] new best 26
+  [+] new best 32

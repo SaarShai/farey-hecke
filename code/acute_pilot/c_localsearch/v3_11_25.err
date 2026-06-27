@@ -1,0 +1,12 @@
+seed rec_n11.txt: 24 dim 11 direct
+seed rec_n12.txt: 32 dim 12 ->24 splits
+seed rec_n13.txt: 33 dim 13 ->624 splits
+v3 N=11 TARGET=25 threads=6 seeds=649 maxseed=24 tlimit=600
+  [+] new best 15
+  [+] new best 16
+  [+] new best 17
+  [+] new best 18
+  [+] new best 19
+  [+] new best 20
+  [+] new best 22
+  [+] new best 24

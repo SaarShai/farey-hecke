@@ -1,0 +1,54 @@
+A089676 EXACT/NEAR-EXACT ATTACK — RESULTS LOG (READY FOR JUDGING)
+================================================================
+
+TARGETS:  beat a(11)>=24 (find 25 in dim 11)  or  a(12)>=32 (find 33 in dim 12).
+OUTCOME:  no record beaten; no exact upper bound improved. Verified artifacts below.
+
+------------------------------------------------------------------
+1. ENGINE VALIDATION (all witnesses PASS trusted code/acute_pilot/verify.py)
+------------------------------------------------------------------
+Exact branch-and-bound (backtrack.py) — COMPLETED proofs matching OEIS:
+   n=5 -> 6, n=6 -> 8, n=7 -> 9, n=8 -> 10   (a(n) exactly, search exhausted)
+   n=8 already requires 2M+ nodes / ~50s -> EXACT proof at n>=11 is INFEASIBLE.
+Independent record reproductions (found from scratch, differ from published):
+   a(10)=17  (sa_best, lns, hybrid — all reach 0 conflicts in <2s)
+   a(11)=24  (sa_best from scratch ~80s; fast_witness_n11_k24.txt; shares only 6/24
+              vertices with the published record under best translation => different set)
+
+------------------------------------------------------------------
+2. PRIMARY TARGET: K=25 in {0,1}^11  (from-scratch heuristic search)
+------------------------------------------------------------------
+14-worker SA fleet, 30 min, diverse random starts + tabu + kicks (fleet.py + sa_best.py):
+   FINAL best_conflicts across all workers = 10
+   distribution = [10,10,10,10,10,10,10,10,10,10,10,10,10,11]
+   => every independent worker bottomed out at 10 forbidden triples for a 25-set
+      (out of C(25,3)=2300). NO acute (0-conflict) 25-set found.
+Hybrid (SA -> EXACT large-neighborhood repair), 4 workers, 20 min: did not reach 25.
+
+------------------------------------------------------------------
+3. EXACT d-STABILITY CERTIFICATES (sound: every per-subset exact search COMPLETED)
+   "R-set is d-stable" <=> exhaustively removing EVERY d-subset and exact-refilling
+   never reaches R+1  <=>  every (R+1)-set differs from it in MORE than d vertices.
+------------------------------------------------------------------
+n=11, published a(11)=24 set, seeking 25:
+   d=2 (253), d=3 (1,771), d=4 (8,855), d=5 (33,649) : STABLE
+   d=6 (100,947 subsets) : STABLE [SOUND] — ALL 100,947 exact searches COMPLETED, 0 timeouts.
+   => PROVABLY 6-STABLE: any acute 25-set shares <= 17 of these 24 vertices.
+n=11, a SECOND structurally-different 24-set (shares 6/24 with published):
+   d=4 (8,855) : STABLE [SOUND] — also addition-maximal.
+n=12, published a(12)=32 set, seeking 33:
+   addition-MAXIMAL; d=3 (4,495), d=4 (31,465) : STABLE.
+
+------------------------------------------------------------------
+4. WHAT FAILED / WALLS REACHED (honest)
+------------------------------------------------------------------
+- CP-SAT lazy-clause loop (cpsat_lazy.py): THRASHES — even known-feasible n=10,K=17 did
+  not converge (30k lazy clauses, 65 iters); eager triple enumeration infeasible
+  (0-compat graph density >0.88 on 1000+ vertex pools => tens of millions of triples).
+- Exact upper bound: infeasible (enumeration explodes past n=8). Trivial a(11)<=2^11 unimproved.
+- Beating the record: not achieved. The records = product-construction values
+  (24=a(5)a(3)=6*4, 32=a(6)a(3)=8*4); the 24/32 basins are exact-certified robust.
+
+Reproduce:  bash code/acute_pilot/exact_cp/verify_all.sh
+            python3 code/acute_pilot/exact_cp/stability.py 11 6 6 60   # 6-STABLE [SOUND]
+            python3 code/acute_pilot/exact_cp/fleet.py 11 25 1800 14 all 200

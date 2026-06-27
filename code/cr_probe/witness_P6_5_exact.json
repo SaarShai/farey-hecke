@@ -1,0 +1,12 @@
+{
+  "claim": "cr(P_6^5) = cr(K_6) = 3, EXACT (this session)",
+  "method": "exact_cr.py planarization search: all 990 two-crossing sets non-realizable (=> cr>2); a realizable 3-crossing set found (=> cr<=3). Hence cr=3.",
+  "convention": "P_6^5 on 6 vertices {0..5}, edges |a-b|<=5 = complete graph K_6",
+  "crossing_pairs": [
+    [[0,1],[2,3]],
+    [[0,4],[2,5]],
+    [[1,5],[3,4]]
+  ],
+  "lower_bound_certificate": "exhaustive: no set of <=2 independent-edge crossing pairs yields a planar planarization (checked all C(45,2)=990, plus all C(45,1)=45 at k=1)",
+  "matches_known": "cr(K_6)=3 (Guy, proven). Independent confirmation of the convention and solver."
+}

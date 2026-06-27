@@ -1,0 +1,14 @@
+{
+  "claim": "cr(P_9^6) <= 22  AND  rectilinear-cr(P_9^6) <= 22  (this session, checkable)",
+  "convention": "P_9^6 on 9 vertices {0..8}, edge {a,b} iff 0<|a-b|<=6 ; |E|=33",
+  "drawing_type": "straight-line (rectilinear); each edge is a line segment between its endpoints' coords",
+  "vertex_coords": {
+    "0": [0.4301, 0.13531], "1": [0.56227, 0.03184], "2": [-0.30387, 0.40157],
+    "3": [3.20818, -0.51969], "4": [-5.79406, 6.30055], "5": [1.52696, -0.4736],
+    "6": [0.32406, -0.48167], "7": [0.45099, -0.98653], "8": [-0.0347, -1.41664]
+  },
+  "crossing_count": 22,
+  "verification": "independently recomputed by code/cr_probe/check_witness.py (separate code path) => 22 crossings. Reproduce: python3 code/cr_probe/check_witness.py 9 6 '<coords>'",
+  "implication": "Independently corroborates Zheng 2009 upper bound cr(P_9^6)<=22 (their construction is topological; this is a straight-line realization, so also rcr<=22). Does NOT match a lower bound, so does NOT settle the conjecture; does NOT beat 22, so no refutation.",
+  "status": "VERIFICATION of known UB, not a new fact"
+}

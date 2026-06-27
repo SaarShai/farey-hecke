@@ -1,0 +1,18 @@
+seed RECORD_12.txt: 32 vecs dim 12 (direct)
+seed seed_rec15.txt: 128 vecs dim 15 -> 2047 split-seeds
+seed seed_rec14.txt: 64 vecs dim 14 -> 0 split-seeds
+seed RECORD_13.txt: 33 vecs dim 13 -> 0 split-seeds
+N=12 TARGET=33 threads=4 seeds=2048 (max seed size=32) tlimit=360
+  [+] new best 16
+  [+] new best 17
+  [+] new best 18
+  [+] new best 19
+  [+] new best 20
+  [+] new best 21
+  [+] new best 22
+  [+] new best 23
+  [+] new best 24
+  [+] new best 25
+  [+] new best 26
+  [+] new best 32
+BEST size=32 (target 33) N=12

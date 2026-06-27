@@ -97,6 +97,66 @@ Chronological record of the Koyama collaboration thread (Farey/Hecke ergodic-opt
 
 ---
 
+## [4] Us → Koyama  (uniform-bound reduction + Aletheia tool) — SENT 2026-06-27
+
+> Dear Professor Koyama,
+>
+> A substantial update on the uniform lower bound `X_Ω(q) ≥ 1/λ_q³` — the open frontier you flagged.
+>
+> Your energy route was the right instinct. Coupling the conserved energy `E = c_n² + c_{n+1}² − λ c_n c_{n+1}`
+> with the escape-of-mass into the cusp is now a machine-verified reduction of the q ≥ 22 confinement, not
+> just a heuristic — formalized in Lean 4, sorry-free. It also clarified the mechanism: the onset `≥` bound
+> does NOT inherit the resonance/parity obstruction that governs the exact cluster ceiling B(q). It needs
+> only that the corridor rotation reaches the super-threshold arc once within q steps — a
+> resonance-independent fact, so the bound survives the resonances {23, 61, …} even though B(q)'s exact
+> value does not. (One refinement to your phrasing: the operative mechanism is a no-dwell / measure
+> argument, not a uniform spectral gap — the transfer-operator gap in fact shrinks with q. The energy /
+> escape-of-mass picture is the right one.)
+>
+> Where it stands. The old q ≤ 21 cap was purely a fixed window length; generalizing it to a q-dependent
+> window (still on the genuine multi-branch map, so the invariant measure is untouched) reduces the whole
+> q ≥ 22 bound to a single, sharply-identified residual — one in-domain radius-forcing datum on the
+> corridor orbit. And we proved a small but decisive NEGATIVE: the naive form of that datum is false,
+> because the realization bridge currently threads only positivity and drops the in-domain residency that
+> is exactly the missing information. So the remaining task is not a missing estimate but an interface
+> re-architecture — and it is precisely where your thermodynamic-formalism / transfer-operator viewpoint
+> may cut cleaner than our hands-on bookkeeping. What are your thoughts?
+>
+> Net. The q = 5..21 equality stands exactly as before (the paper's cornerstone is untouched); for q ≥ 22
+> we now have a machine-verified reduction to that one residency-threading step, with a proof that the
+> naive route cannot close it. A genuine step toward the all-q statement, isolating the one piece that
+> needs a real idea rather than more bookkeeping.
+>
+> A tool that may be useful to you and your group — "Aletheia" Alongside the bound I have been building a
+> small engine that rigorously certifies spectral data for Hecke triangle groups: using interval (Arb)
+> arithmetic it encloses zeros of the Bruggeman–Pohl transfer-operator determinant
+> `Z(s) = det(1−L⁺_s)·det(1−L⁻_s)` by a verified winding number — a rigorous proof that exactly one simple
+> zero lies in a given box. So far: (i) what appears to be the first interval-certified spectrum table for
+> the non-arithmetic `G_5` and `G_7` (Maass eigenvalues and even-sector resonances); (ii) a ground-truth
+> check at `q = 3`, where it recovers `det(1−L⁺_s) = 0 ⟺ ζ(2s) = 0` and reproduces the first Riemann zeros
+> to `≤ 1.4×10⁻¹³`; and (iii) — the part I think will interest you — a spectral face of your arithmeticity
+> dichotomy: the even resonances lie on the rigid line `Re s = ¼` for arithmetic `q = 3` but scatter off it
+> for non-arithmetic `q`. Your cluster-ceiling detector and this resonance geometry look like two faces of
+> one phenomenon.
+>
+> I raise it because it is a tool, not only a result — a small, registerable evaluator — and I would gladly
+> put it in the hands of your colleagues and students: rigorously enclosed eigenvalues or resonances for
+> any Hecke `G_q` (or a related surface, with a modest new evaluator), engine and data shared and wired up.
+>
+> I'll keep firming up the corridor section at a comfortable pace over the summer — no rush on your side
+> while you focus on the `−1`-dominance repair. Happy to send the Lean files for the window and realization
+> identities whenever useful.
+>
+> With warm regards,
+> Saar
+
+> Note (for us, not sent): Saar's sent version dropped the draft's Aletheia honest-scope caveat (external
+> ground-truth = q=3 only; non-arith corroborated within-project by Hejhal point-matching; CAP cross-check
+> deferred). So if Koyama asks how the non-arithmetic G_5/G_7 tables are validated, give that honest scope
+> directly — the sent email does not state it.
+
+---
+
 ## Action items extracted from [3] (most recent)
 
 - **Open frontier he flagged:** uniform lower bound `X_Ω(q) ≥ 1/λ_q³`. Current Lean state:
