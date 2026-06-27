@@ -23,10 +23,12 @@ Before any completion/success claim:
 Do not claim:
 - tests pass without a fresh test run
 - lint/build is clean without running it
-- bug is fixed without reproducing the original symptom or a regression test
+- bug is fixed without reproducing the original symptom or a regression test — write the test that FAILS before your change and passes after; test observable behavior that can break, not internal wiring (a field a constructor sets)
 - delegated work is correct without inspecting result/diff
 - ship/merge-ready without Live Proof: exercise the changed path on the real built artifact or service — a mock or simulation does not count
 - a **visual / rendered** output (chart, diagram, UI, PDF, image) is correct without **looking at it** — screenshot or open the rendered artifact and verify it with vision; text-only checking misses occlusion, flattening, overlap, and scale
+
+When fixing a bug, investigate before editing: reproduce it, read the whole error and stack trace, change one thing at a time. Don't add a guard for a failure whose root cause you haven't located — a null-check over an unexplained null just moves the bug somewhere quieter.
 
 When dispatching verification to a subagent: mid-tier model (sonnet-class) with read-only tools is the default — verifying is cheaper than making; escalate only when the artifact demands frontier reasoning.
 
@@ -65,7 +67,7 @@ Steps 1–5 prove the work runs. For a **high-stakes or hard-to-reverse** result
 
 **Fire (cost-gated — NOT every claim):** the output is hard to reverse (publish/send/merge/migrate/delete), money- or security-relevant, or a contested/load-bearing conclusion the user will act on. Trivial, internal, or easily-reverted results skip this and just use steps 1–5.
 
-**How:** dispatch the OTHER vendor read-only and synchronous — `codex exec` (Claude→GPT), `claude -p --model opus` (GPT→Claude), or `gemini -p --approval-mode plan`. Hand it the result + evidence; ask it to re-run the key check and **refute if it can** (holds:bool, exit 0). See Part D for the full vendor table, channel caveats, the odd-N (default 3) majority rule, and the `loop`-spec. Agreement → ship. Refutation → do not ship; resolve or escalate to the user.
+**How:** dispatch the OTHER vendor read-only and synchronous — `codex exec` (Claude→GPT), `claude -p --model opus` (GPT→Claude), or `gemini -p --approval-mode plan`. Don't guess which are installed: `python3 skills/_shared/model_roster.py --panel 3 --role verifier --exclude-lane <self> --task "<claim>" --brief "<evidence>"` detects the reachable cross-vendor backends and renders the read-only, refute-if-you-can dispatch for each (odd-N so the majority is clean; it excludes your own lane). Hand each the result + evidence; ask it to re-run the key check and **refute if it can** (holds:bool, exit 0). See Part D for the full vendor table, channel caveats, the odd-N (default 3) majority rule, and the `loop`-spec. Agreement → ship. Refutation → do not ship; resolve or escalate to the user.
 
 This is verification, not generation — a different foundation model catching errors, the one ensemble mechanism the evidence backs. It does not replace an armed task-retrospective; it is the pre-ship gate for results that cannot wait for the project-learning report.
 

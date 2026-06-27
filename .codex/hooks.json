@@ -62,6 +62,14 @@
           }
         ],
         "matcher": "*"
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash ./.claude/skills/context-keeper/tools/codex_archive.sh",
+            "type": "command"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [
@@ -77,6 +85,15 @@
         "hooks": [
           {
             "command": "python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex --event UserPromptSubmit",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash ./.codex/skills/compliance-canary/tools/hook.sh",
             "type": "command"
           }
         ],

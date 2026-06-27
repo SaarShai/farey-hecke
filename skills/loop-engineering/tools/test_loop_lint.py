@@ -525,9 +525,101 @@ def test_strict_memory_valid_contract_and_concurrency_pass():
     spec = (CLEAN.replace("topology: closed · inner · single", "topology: closed · outer · fleet")
             .replace("gate: pytest tests/ -q", "gate: pytest -q then reviewer quorum >=2/3")
             + MEMORY_FIELDS
-            + "state_concurrency: worktree_isolated\n")
+            + "state_concurrency: worktree_isolated\n"
+            + "verifier_blind: true\n")   # outer/fleet LLM verifier ⇒ R13 wants blindness declared
     assert _rules(spec, strict_memory=True) == [], _rules(spec, strict_memory=True)
     assert _exit_for(spec, args=["--strict-memory"]) == 0
+
+
+# --- R10 OUTPUT-SURFACE-UNBOUNDED ----------------------------------------
+
+# An unattended (outer) loop with its memory contract satisfied, so R10 is the
+# ONLY finding under test. The side-effecting world action lives in `stop`.
+UNATTENDED = (
+    "name: mod-bot\n"
+    "topology: closed · outer · single\n"
+    "generator: claude agent triages each new issue\n"
+    "verifier: sonnet reviewer (fresh context)\n"
+    "gate: regex: spam patterns match\n"
+    "stop: nightly cron completes; the bot closes the issue and posts a comment\n"
+    "budget: max_iterations=50\n"
+) + MEMORY_FIELDS
+
+
+def test_unattended_side_effecting_no_allowlist_warns_r10():
+    # the falsifiable core: an unattended loop that mutates the world with no
+    # declared output surface MUST warn, and it must be the sole finding (exit 1).
+    assert _has(UNATTENDED, 10, "WARN"), _rules(UNATTENDED)
+    assert _rules(UNATTENDED) == [(10, "WARN")], _rules(UNATTENDED)
+    assert _exit_for(UNATTENDED) == 1
+
+
+def test_unattended_bounded_allowlist_silences_r10():
+    spec = UNATTENDED + "output_actions: add-label[wontfix] max 5, close-issue max 5\n"
+    assert not any(r == 10 for r, _ in _rules(spec)), _rules(spec)
+    assert _exit_for(spec) == 0
+
+
+def test_unattended_unbounded_allowlist_warns_r10():
+    # an allowlist of '*' permits everything — not a control, still warns.
+    spec = UNATTENDED + "output_actions: *\n"
+    assert _has(spec, 10, "WARN"), _rules(spec)
+
+
+def test_inner_watched_loop_side_effecting_no_r10():
+    # a human watches an inner loop and IS its output gate — no allowlist required.
+    spec = CLEAN.replace("generator: opus coder agent",
+                         "generator: opus agent commits the fix and pushes to the branch")
+    assert not any(r == 10 for r, _ in _rules(spec)), _rules(spec)
+
+
+def test_scheduled_pure_compute_no_r10():
+    # a nightly loop that mutates nothing outside itself needs no output allowlist.
+    spec = UNATTENDED.replace(
+        "stop: nightly cron completes; the bot closes the issue and posts a comment",
+        "stop: nightly cron completes green")
+    assert not any(r == 10 for r, _ in _rules(spec)), _rules(spec)
+
+
+def test_r10_rule_filter_resolves():
+    # --rule 10 isolates R10; filtering to another rule drops it.
+    assert (10, "WARN") in _rules(UNATTENDED, rule=10), _rules(UNATTENDED, rule=10)
+    assert not any(r == 10 for r, _ in _rules(UNATTENDED, rule=1)), _rules(UNATTENDED, rule=1)
+
+
+# neutralise UNATTENDED's stop action so the swapped-in generator is the sole trigger.
+_NEUTRAL = UNATTENDED.replace(
+    "stop: nightly cron completes; the bot closes the issue and posts a comment",
+    "stop: nightly cron completes green")
+
+
+def _with_gen(gen):
+    return _NEUTRAL.replace("generator: claude agent triages each new issue", "generator: " + gen)
+
+
+def test_r10_no_false_positive_on_readonly_state():
+    # active-verb gating: read-only noun/adjective phrases ('commit hash', 'open
+    # issues', 'merged PRs', 'deleted files') describe STATE, not an action — an
+    # output-surface warning on a loop that only reads them would be a false nag.
+    for gen in ["agent reviews the latest commit hash and merged PRs",
+                "agent triages when 0 open issues remain",
+                "agent counts closed pull-requests and deleted files",
+                "agent summarizes the open issue backlog",
+                "agent inspects the deployment config"]:
+        spec = _with_gen(gen)
+        assert not any(r == 10 for r, _ in _rules(spec)), (gen, _rules(spec))
+
+
+def test_r10_fires_through_adjectives():
+    # an adjective between the active verb and its object ('closes the duplicate
+    # issue', 'adds a wontfix label') must still register as a side effect.
+    for gen in ["bot closes the duplicate issue",
+                "bot adds a wontfix label",
+                "bot merges the approved PR",
+                "bot posts a templated comment",
+                "bot deletes the stale branch"]:
+        spec = _with_gen(gen)
+        assert _has(spec, 10, "WARN"), (gen, _rules(spec))
 
 
 # --- input forms ----------------------------------------------------------
@@ -710,6 +802,336 @@ def test_diagram_no_spec_is_graceful():
     rc, out = _diagram_main("")
     assert "no loop spec found" in out
     assert rc == 1, rc
+
+
+# --- non-iterating pipeline = budget=1 loop -------------------------------
+
+def test_noniterating_pipeline_budget1_passes():
+    """A fixed once-through pipeline modeled as a budget=1 closed loop must lint
+    CLEAN — the load-bearing claim that a pipeline needs no new schema/tool. If
+    loop_lint ever FAILs this, the 'a pipeline is a budget=1 loop' doctrine is
+    broken (see SKILL.md 'Do you even need a loop?' + schema.md)."""
+    spec = (
+        "name: import-pipeline\n"
+        "topology: closed · inner · single\n"
+        "generator: import + transform stages\n"
+        "verifier: validate stage + final schema check (separate actor)\n"
+        "gate: python3 ./validate.py && python3 ./check_schema.py out.json\n"
+        "stop: out.json written and passes the schema check\n"
+        "budget: max_iterations=1\n"
+    )
+    assert _rules(spec) == [], _rules(spec)
+    assert _exit_for(spec) == 0
+
+
+def test_naive_pipeline_without_budget1_still_fails():
+    """A pipeline written WITHOUT the budget=1 framing (no budget, self-grading,
+    prose gate) is correctly refused — the failure that sends the author to the
+    budget=1 spec, not to a new tool."""
+    spec = (
+        "name: import-naive\n"
+        "topology: closed · inner · single\n"
+        "generator: claude does all the stages\n"
+        "verifier: claude\n"
+        "gate: each stage hands its output to the next\n"
+        "stop: when out.json is written\n"
+    )
+    rules = _rules(spec)
+    assert (1, "FAIL") in rules and (2, "FAIL") in rules and (3, "FAIL") in rules, rules
+    assert _exit_for(spec) == 2
+
+
+# --- R11 STUCK-NO-ADVISOR -------------------------------------------------
+
+_R11_BASE = (
+    "name: fix-loop\n"
+    "topology: closed · inner · single\n"
+    "generator: opus coder agent\n"
+    "verifier: sonnet read-only reviewer\n"
+    "gate: pytest tests/ -q\n"
+    "stop: target tests green\n"
+    "budget: max_iterations=3\n"
+)
+
+
+def test_r11_stuck_policy_without_advisor_warns():
+    """A loop that declares a stuck policy but names no advisor leaves the stuck
+    agent re-deriving alone — the warning the whole multi-model design hangs on."""
+    spec = _R11_BASE + "stuck: same error 2x\n"
+    assert (11, "WARN") in _rules(spec), _rules(spec)
+
+
+def test_r11_stuck_with_advisor_is_clean():
+    spec = _R11_BASE + "stuck: same error 2x\nadvisor: cross-vendor panel (codex + gemini), read-only\n"
+    assert (11, "WARN") not in _rules(spec), _rules(spec)
+
+
+def test_r11_silent_when_no_stuck_declared():
+    """Opt-in: a plain inner fix loop with neither field gets no R11 — the rule
+    must not perturb the existing specs that declare no stuck policy."""
+    assert (11, "WARN") not in _rules(CLEAN), _rules(CLEAN)
+
+
+def test_r11_advisor_equals_verifier_warns():
+    """Advisor (divergent, proposes) collapsing into verifier (convergent, judges)
+    is self-grading by another door — propose-then-judge-your-own-proposal."""
+    spec = (
+        "name: collapsed-roles\n"
+        "topology: closed · inner · single\n"
+        "generator: opus coder\n"
+        "verifier: codex reviewer\n"
+        "advisor: codex reviewer\n"
+        "gate: pytest -q\n"
+        "stop: green\n"
+        "budget: max_iterations=3\n"
+        "stuck: same command 3x\n"
+    )
+    assert (11, "WARN") in _rules(spec), _rules(spec)
+
+
+def test_r11_is_warn_not_fail():
+    """R11 is advisory: a stuck-no-advisor spec that is otherwise complete exits 1,
+    never 2 — it must not block an otherwise-valid loop."""
+    spec = _R11_BASE + "stuck: 2 iters no movement\n"
+    assert _exit_for(spec) == 1, _exit_for(spec)
+
+
+def test_r11_rule_filter_isolates():
+    spec = _R11_BASE + "stuck: same error 2x\n"
+    assert _rules(spec, rule=11) == [(11, "WARN")], _rules(spec, rule=11)
+
+
+# --- R12 CROSS-VENDOR EGRESS ----------------------------------------------
+
+_R12_EGRESS = (
+    "name: e\ntopology: closed inner single\ngenerator: opus\n"
+    "verifier: cross-vendor model_roster panel\ngate: pytest -q\n"
+    "stop: green\nbudget: max_iterations=5\n"
+)
+_R12_EGRESS_OUTER = (
+    "name: e\ntopology: closed outer single\ngenerator: opus\n"
+    "verifier: cross-vendor model_roster panel\ngate: pytest -q\n"
+    "stop: green\nbudget: max_iterations=5\n"
+    "anchor_files: S.md\nstate_store: s.json\nrecall: read s.json\nwriteback: record\n"
+)
+
+
+def test_r12a_egress_without_redaction_warns():
+    assert _has(_R12_EGRESS, 12, "WARN"), _rules(_R12_EGRESS, rule=12)
+
+
+def test_r12a_silent_with_redaction():
+    spec = _R12_EGRESS + "redaction: secrets/.env/keys scrubbed\n"
+    assert _rules(spec, rule=12) == [], _rules(spec, rule=12)
+
+
+def test_r12_silent_without_egress():
+    spec = _R12_EGRESS.replace("cross-vendor model_roster panel", "a fresh sonnet subagent")
+    assert _rules(spec, rule=12) == [], _rules(spec, rule=12)
+
+
+def test_r12b_unattended_egress_needs_consent():
+    # outer loop egresses → both R12a (no redaction) and R12b (no consent) warn.
+    rs = _rules(_R12_EGRESS_OUTER, rule=12)
+    assert rs.count((12, "WARN")) == 2, rs
+    # add both controls → silent.
+    spec = _R12_EGRESS_OUTER + "redaction: secrets scrubbed\nconsent: human approves first egress\n"
+    assert _rules(spec, rule=12) == [], _rules(spec, rule=12)
+
+
+def test_r12b_inner_egress_no_consent_needed():
+    # inner (attended) loop with redaction declared: R12a satisfied, R12b not required.
+    spec = _R12_EGRESS + "redaction: secrets scrubbed\n"
+    assert _rules(spec, rule=12) == [], _rules(spec, rule=12)
+
+
+# --- R3 natural-language self-grade: false-negative + false-positive ------
+# Surfaced by the robustness audit + GLM-5.2 cross-review: R3 caught named-actor
+# and named-model self-grades but (FN) missed the same GENERIC actor with action
+# verbs appended, and (FP) flagged DISTINCT models that share a Capitalized infra
+# word ("claude on Bedrock" / "gpt on Bedrock").
+
+def _ab(generator, verifier):
+    return (CLEAN.replace("generator: opus coder agent", f"generator: {generator}")
+            .replace("verifier: sonnet read-only reviewer", f"verifier: {verifier}"))
+
+
+def test_generic_actor_self_grade_r3_fail():
+    # FN fix: same generic actor, only the verb differs — must FAIL R3.
+    for g, v in [("our model produces the draft", "our model checks the draft"),
+                 ("the writer agent", "the same writer agent on a second pass"),
+                 ("the coding agent writes it", "the coding agent reviews it"),
+                 ("it drafts the answer", "it grades its own answer"),
+                 ("the writer drafts it", "the writer reviews it")]:
+        assert _has(_ab(g, v), 3, "FAIL"), (g, v, _rules(_ab(g, v)))
+
+
+def test_shared_infra_token_distinct_models_no_r3():
+    # FP fix: distinct models sharing a Capitalized platform word are NOT self-grading.
+    for g, v in [("claude on Bedrock", "gpt on Bedrock"),
+                 ("opus via Acme", "sonnet via Acme"),
+                 ("gpt through Portkey", "gemini through Portkey")]:
+        assert not _has(_ab(g, v), 3, "FAIL"), (g, v, _rules(_ab(g, v)))
+
+
+def test_distinct_generic_roles_same_head_no_r3():
+    # precision guard: same head noun, different modifier ⇒ different actor, no R3.
+    for g, v in [("the planning agent", "the execution agent"),
+                 ("the spec writer", "the spec reviewer")]:
+        assert not _has(_ab(g, v), 3, "FAIL"), (g, v, _rules(_ab(g, v)))
+
+
+def test_reordered_subject_words_no_r3():
+    # white-box audit hole: "model agent" vs "agent model" share a word SET but name
+    # different head roles — ordered (not set) comparison keeps them distinct.
+    for g, v in [("model agent", "agent model"), ("writer agent", "agent writer")]:
+        assert not _has(_ab(g, v), 3, "FAIL"), (g, v, _rules(_ab(g, v)))
+
+
+def test_generic_human_both_sides_still_no_r3():
+    # human-in-the-loop is the endorsed review gate, never self-grading (unchanged).
+    assert not _has(_ab("a human writes it", "a human checks it"), 3, "FAIL")
+
+
+def test_roster_lane_self_grades_caught_r3():
+    # item-5: GLM/Codex are real model_roster lanes; a same-lane self-grade must FAIL
+    # R3 just like opus/gpt. (These slipped before glm/codex joined _MODEL_SLUGS.)
+    for slug in ("glm", "codex"):
+        assert _has(_ab(f"{slug} drafts the plan", f"{slug} reviews the plan"), 3, "FAIL"), slug
+
+
+def test_loop_lint_vocab_covers_roster_lanes():
+    # DRIFT GUARD: every vendor lane model_roster can dispatch to must be recognized
+    # by loop_lint — as a self-grading slug (_MODEL_SLUGS) and/or an egress vendor
+    # (_EGRESS) — so adding a lane there can't silently desync R3/R12 here. If this
+    # fails, add the new lane's vendor word to _MODEL_SLUGS / _EGRESS.
+    shared = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "_shared")
+    sys.path.insert(0, os.path.abspath(shared))
+    try:
+        import model_roster as MR  # noqa: E402
+    except Exception:  # noqa: BLE001
+        return  # roster unavailable in this host — nothing to reconcile
+    lanes = {v for k, v in vars(MR).items() if k.startswith("LANE_") and isinstance(v, str)}
+    for lane in lanes:
+        if lane == "local":
+            recognized = "ollama" in loop_lint._MODEL_SLUGS  # the local lane is ollama-backed
+        else:
+            recognized = (lane in loop_lint._MODEL_SLUGS
+                          or bool(loop_lint._EGRESS.search(lane)))
+        assert recognized, f"model_roster lane {lane!r} not recognized by loop_lint vocab"
+
+
+# --- R13 VERIFIER-BLINDNESS -----------------------------------------------
+# The declare-to-audit field for the blind-verifier doctrine (SKILL.md line 80),
+# scoped like R12: only an LLM verifier on an unattended / cross-vendor loop.
+
+_R13_OUTER = (CLEAN.replace("topology: closed · inner · single", "topology: closed · outer · single")
+              .replace("verifier: sonnet read-only reviewer", "verifier: sonnet reviewer agent")
+              + MEMORY_FIELDS)
+
+
+def test_r13_inner_machine_gate_verifier_no_warn():
+    # a plain inner loop with a machine-gate verifier is blind by construction — silent.
+    spec = CLEAN.replace("verifier: sonnet read-only reviewer", "verifier: pytest tests/ -q")
+    assert _rules(spec, rule=13) == [], _rules(spec, rule=13)
+
+
+def test_r13_unattended_llm_verifier_undeclared_warns():
+    assert _has(_R13_OUTER, 13, "WARN"), _rules(_R13_OUTER, rule=13)
+
+
+def test_r13_verifier_blind_true_silences():
+    spec = _R13_OUTER + "verifier_blind: true\n"
+    assert _rules(spec, rule=13) == [], _rules(spec, rule=13)
+
+
+def test_r13_fresh_context_prose_silences():
+    # blindness asserted in the verifier string itself satisfies R13.
+    spec = _R13_OUTER.replace("verifier: sonnet reviewer agent",
+                              "verifier: sonnet reviewer agent (fresh context)")
+    assert _rules(spec, rule=13) == [], _rules(spec, rule=13)
+
+
+def test_r13_verifier_fed_reasoning_warns():
+    spec = _R13_OUTER + "verifier_inputs: task, outputs, generator reasoning\n"
+    assert _has(spec, 13, "WARN"), _rules(spec, rule=13)
+
+
+def test_r13_verifier_blind_false_warns():
+    spec = _R13_OUTER + "verifier_blind: false\n"
+    assert _has(spec, 13, "WARN"), _rules(spec, rule=13)
+
+
+def test_r13_inner_attended_llm_verifier_no_warn():
+    # blindness "matters" only on unattended / cross-vendor loops; a watched inner
+    # loop with an LLM reviewer is not nagged (human is present).
+    spec = CLEAN.replace("verifier: sonnet read-only reviewer", "verifier: sonnet reviewer agent")
+    assert _rules(spec, rule=13) == [], _rules(spec, rule=13)
+
+
+def test_r13_blind_declared_bypass_warns():
+    # round-2: a verifier that claims "fresh context" but ALSO reads the reasoning
+    # is NOT blind — _leaks_reasoning must override the blindness phrase and warn.
+    for v in ["sonnet with fresh context reading generator reasoning",
+              "sonnet reviewer, fresh context, also reads the rationale",
+              "gpt reviewer with full chain-of-thought but a clean context"]:
+        spec = _R13_OUTER.replace("verifier: sonnet reviewer agent", f"verifier: {v}")
+        assert _has(spec, 13, "WARN"), (v, _rules(spec, rule=13))
+
+
+def test_r13_negation_safe_blind_no_warn():
+    # the leak detector is negation-safe: "sees only outputs, not the reasoning" and
+    # "blind to the reasoning" are blind, not leaks — must stay silent.
+    for v in ["sonnet reviewer sees only the outputs, not the reasoning",
+              "sonnet reviewer, blind to the reasoning",
+              "claude reviewer with no access to the reasoning"]:
+        spec = _R13_OUTER.replace("verifier: sonnet reviewer agent", f"verifier: {v}")
+        assert _rules(spec, rule=13) == [], (v, _rules(spec, rule=13))
+
+
+def test_r13_machine_gate_verifier_named_agent_no_warn():
+    # round-2: a "pytest agent" verifier is the machine gate — blind by construction,
+    # so the agent-token must not drag it into R13.
+    for v in ["pytest agent", "the pytest agent validates tests", "cargo test runner agent"]:
+        spec = _R13_OUTER.replace("verifier: sonnet reviewer agent", f"verifier: {v}")
+        assert _rules(spec, rule=13) == [], (v, _rules(spec, rule=13))
+
+
+# --- R1 NO-OP / placeholder gate (upstreamed from the product-images sibling fork) --
+def _json_spec(gate):
+    return json.dumps({"name": "t", "topology": "closed · inner · single",
+                       "generator": "opus", "verifier": "sonnet", "gate": gate,
+                       "stop": "green", "budget": "max_iterations=10"})
+
+
+def test_noop_help_gate_r1_fail():
+    # Command-shaped but can't fail (--help/--version exit 0) — waved through the
+    # ./ allowlist; must FAIL R1.
+    for g in ["./cli/bin/screenery-design --help", "python3 cli.py --version"]:
+        spec = CLEAN.replace("gate: pytest tests/ -q", f"gate: {g}")
+        assert _has(spec, 1, "FAIL"), (g, _rules(spec))
+
+
+def test_noop_flag_with_real_check_passes_r1():
+    # A help flag ALONGSIDE a real assertion (&&, pipe to a checker) is fine.
+    for g in ["./tool build && test -f out.bin", "cmd --help | grep -q Usage"]:
+        spec = CLEAN.replace("gate: pytest tests/ -q", f"gate: {g}")
+        assert not _has(spec, 1, "FAIL"), (g, _rules(spec))
+
+
+def test_logic_placeholder_gate_warns_r1():
+    # An unfilled <placeholder> in the pass/fail LOGIC leaves the check unspecified
+    # (could be filled with `True`). WARN, not FAIL.
+    spec = _json_spec('python3 -c "exit(0 if <metric-assertion> else 1)"')
+    assert _has(spec, 1, "WARN", source="spec.json"), _rules(spec, source="spec.json")
+    assert not _has(spec, 1, "FAIL", source="spec.json"), _rules(spec, source="spec.json")
+
+
+def test_data_placeholder_gate_not_flagged_r1():
+    # A DATA placeholder (WHAT to operate on) with a real check is fine — not flagged.
+    spec = _json_spec('dump-paths --name-contains "<part>" | python3 -c "exit(0 if count>0 else 1)"')
+    assert not _has(spec, 1, "FAIL", source="spec.json"), _rules(spec, source="spec.json")
+    assert not _has(spec, 1, "WARN", source="spec.json"), _rules(spec, source="spec.json")
 
 
 # --- runner ---------------------------------------------------------------
