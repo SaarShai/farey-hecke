@@ -26,15 +26,6 @@
       {
         "hooks": [
           {
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/context-keeper/hook.sh\"",
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      },
-      {
-        "hooks": [
-          {
             "command": "python3 \"${CLAUDE_PROJECT_DIR:-$PWD}/.codex/skills/brainer-audit/tools/hook.py\" --host codex --event PreCompact",
             "type": "command"
           }
