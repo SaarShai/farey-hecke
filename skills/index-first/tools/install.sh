@@ -27,7 +27,7 @@ REPO="$(cd "$TOOLS_DIR/../../.." && pwd)"
 CLAUDE_DIR="$REPO/.claude"
 SETTINGS="$CLAUDE_DIR/settings.json"
 # Relative command so the entry is portable across checkouts.
-HOOK_CMD="python3 ./.claude/skills/index-first/tools/augment.py"
+HOOK_CMD='python3 "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/index-first/tools/augment.py"'
 
 if [ "$DRY_RUN" = "1" ]; then
   if [ "$UNINSTALL" = "1" ]; then

@@ -24,7 +24,7 @@ SETTINGS="$REPO/.claude/settings.json"
 # hook-shipping skill (compliance-canary, context-keeper,
 # skill-pulse). An absolute machine-local path breaks if the repo moves
 # or if .claude/settings.json is committed and shared across machines.
-HOOK_CMD="bash ./.claude/skills/prompt-triage/tools/hook.sh"
+HOOK_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/prompt-triage/tools/hook.sh"'
 AGENTS=(wiki-note quick-fix local-ollama research-lite kaggle-feeder glm-executor)
 
 merge_settings() {

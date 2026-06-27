@@ -18,7 +18,7 @@ REPO="$(cd "$TOOLS_DIR/../../.." && pwd)"
 CLAUDE_DIR="$REPO/.claude"
 SKILL_DIR="$CLAUDE_DIR/skills"
 SETTINGS="$CLAUDE_DIR/settings.json"
-HOOK_CMD="bash ./.claude/skills/compliance-canary/tools/hook.sh"
+HOOK_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/compliance-canary/tools/hook.sh"'
 
 merge_settings() {
   python3 - "$SETTINGS" "$HOOK_CMD" <<'PY'

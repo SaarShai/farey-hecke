@@ -128,7 +128,7 @@ def main(argv=None) -> int:
         if args.debug:
             print(json.dumps({"ok": True, "written": written, "event": event}, sort_keys=True), file=sys.stderr)
         return 0
-    except HookError as exc:
+    except Exception as exc:  # fail-open: an audit hook must NEVER block a tool call
         if args.debug:
             print(json.dumps({"ok": False, "error": str(exc)}, sort_keys=True), file=sys.stderr)
         return 0

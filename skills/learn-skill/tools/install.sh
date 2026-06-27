@@ -21,8 +21,8 @@ REPO="$(cd "$TOOLS_DIR/../../.." && pwd)"
 CLAUDE_DIR="$REPO/.claude"
 SKILL_DIR="$CLAUDE_DIR/skills"
 SETTINGS="$CLAUDE_DIR/settings.json"
-END_CMD="bash ./.claude/skills/learn-skill/tools/hook_session_end.sh"
-START_CMD="bash ./.claude/skills/learn-skill/tools/hook_session_start.sh"
+END_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/learn-skill/tools/hook_session_end.sh"'
+START_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/learn-skill/tools/hook_session_start.sh"'
 
 merge_settings() {
   python3 "$TOOLS_DIR/hook_merge.py" settings "$SETTINGS" "$END_CMD" "$START_CMD"

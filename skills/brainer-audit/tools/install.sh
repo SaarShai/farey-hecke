@@ -6,8 +6,8 @@ TOOLS_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(cd "$TOOLS_DIR/../../.." && pwd)"
 CLAUDE_SETTINGS="$REPO/.claude/settings.json"
 CODEX_HOOKS="$REPO/.codex/hooks.json"
-CLAUDE_CMD="python3 ./.claude/skills/brainer-audit/tools/hook.py --host claude"
-CODEX_CMD="python3 ./.codex/skills/brainer-audit/tools/hook.py --host codex"
+CLAUDE_CMD='python3 "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/brainer-audit/tools/hook.py" --host claude'
+CODEX_CMD='python3 "${CLAUDE_PROJECT_DIR:-$PWD}/.codex/skills/brainer-audit/tools/hook.py" --host codex'
 
 python3 - "$CLAUDE_SETTINGS" "$CODEX_HOOKS" "$CLAUDE_CMD" "$CODEX_CMD" <<'PY'
 import json
