@@ -1,0 +1,55 @@
+{
+  "task": "Veech double-(2q+1)-gon H_q slope-gap bridge: decisive go/no-go",
+  "environment": "plain python3 + numpy + mpmath (no Sage/surface_dynamics; not needed)",
+  "ACL_q5_reproduction": {
+    "method": "three independent computations of the golden-L slope-gap distribution",
+    "methodA_closed_form": "ACL Appendix-A piecewise density (OCR-corrected bars); hard edge + breakpoints",
+    "methodB_geometric": "OUR own super-level-area integral of G(t)=P(gap>=t)=(2/phi)*int_{R>=t} dadb over the 3 validated cells",
+    "methodC_orbit": "DIRECT Hecke-group orbit Gamma.(1,0) slope gaps, quantile-matched to section",
+    "suspension_volume_check": "int_Omega R dadb = 3*pi^2/10 reproduced to 1.6e-12 (ACL Appendix B)",
+    "HARD_EDGE": {
+      "value": 1.0,
+      "evidence": "G(t)=1 for t<=1 (Method B) i.e. f=0 on [0,1]; min R_q=1 from section roof; ACL Remark 2 = f(x)=0 for 0<=x<=1"
+    },
+    "NON_DIFF_POINTS": {
+      "count": 7,
+      "locations_in_powers_of_phi": [
+        "1",
+        "phi",
+        "phi^2",
+        "4",
+        "phi^3",
+        "4*phi",
+        "phi^4"
+      ],
+      "numeric": [
+        1.0,
+        1.618034,
+        2.618034,
+        4.0,
+        4.236068,
+        6.472136,
+        6.854102
+      ],
+      "evidence": "Method B density kink detection; matches ACL Thm 1.1 (seven points of non-differentiability)"
+    },
+    "orbit_vs_section_quantiles": "agree to ~2-6% at p=0.05..0.99 (finite-R cutoff explains p=0 only)",
+    "VERDICT": "ACL 2013 golden-L slope-gap REPRODUCED (hard edge=1 AND 7 non-diff points AND volume). Pipeline TRUSTED."
+  },
+  "bridge_comparison": {
+    "veech_hard_edge_all_q": 1.0,
+    "our_X": {
+      "5": 0.23606798,
+      "7": 0.17091519,
+      "9": 0.15064425,
+      "11": 0.14150918
+    },
+    "our_X_formula": "1/lam^3, lam=2cos(pi/q)",
+    "edges_match": false,
+    "why": "min R = 1 (smallest slope gap) vs 1/lam^3 = cusp-tip value of the RECIPROCAL gap-PRODUCT P=a*b=1/R; 1/X=lam^3=sup R (LARGE-gap/Hall end), the OPPOSITE extreme",
+    "sections_correspond": true,
+    "sections_evidence": "Taha T_q = ACL Omega at q=5 (same horocycle Poincare section, same roof pieces); orbit quantiles match section",
+    "normalization_audit": "no diagonal conjugation maps 1/lam^3 to 1: slope-gap scaling is lam^2, cusp-width is lam, but the edge ratio is lam^3; the X*lam^3=1 alignment is the TAUTOLOGY X=1/lam^3",
+    "reproduces_prior_record": "repo bug_id 14 (code/xomega_normalization_proof.py) = FALSIFIED lambda^3 bridge"
+  }
+}

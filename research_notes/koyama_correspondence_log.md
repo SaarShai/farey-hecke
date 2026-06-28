@@ -157,6 +157,38 @@ Chronological record of the Koyama collaboration thread (Farey/Hecke ergodic-opt
 
 ---
 
+## [5] Koyama → us  (reply to entry [4], the unconditional-reduction + Aletheia email; received 2026-06-28)
+
+> Your formalization of the $q \ge 22$ reduction in Lean 4 is remarkable, and your instinct
+> regarding the "no-dwell / measure" mechanism over the uniform spectral gap clarifies the
+> dynamical picture beautifully. Furthermore, your "Aletheia" engine is a spectacular piece of
+> engineering. Recovering the first Riemann zeros to a precision of $\le 1.4 \times 10^{-13}$ via
+> the Bruggeman–Pohl determinant is an incredible ground-truth confirmation. The geometric
+> divergence of the even resonances between arithmetic and non-arithmetic cases indeed provides a
+> beautiful spectral face to the dichotomy.
+>
+> For the interface re-architecture you mentioned regarding the residual datum, your hands-on
+> bookkeeping approach is already incredibly robust. I will give it some thought from the
+> transfer-operator perspective once I have some cognitive breathing room.
+>
+> While you firm up the magnificent Farey/Hecke corridor mechanics, I will ensure the primary
+> number-theoretic cornerstone of our dominance thesis becomes absolutely bulletproof.
+
+### What [5] establishes (signal, not flattery)
+
+- **He endorsed the no-dwell/measure mechanism over the uniform-spectral-gap framing.** He had
+  suggested the energy-`E` + escape-of-mass route ([3]); he now accepts our reframing. → the
+  residual interface is the agreed crux, the spectral-gap route is NOT load-bearing.
+- **He took the residual-datum re-architecture for himself** ("I will give it some thought from
+  the transfer-operator perspective") — but **deferred** ("once I have cognitive breathing room").
+  So the q≥22 closure is on HIS plate, on HIS timeline, not ours to push now.
+- **Explicit division of labor (his words):** us = "firm up the Farey/Hecke corridor mechanics";
+  him = "the primary number-theoretic cornerstone of our dominance thesis ... bulletproof"
+  (his `−1`-dominance repair). Two parallel tracks; merge later.
+- He did NOT ask for anything, did NOT request the Lean files, set NO deadline. No reply owed.
+
+---
+
 ## Action items extracted from [3] (most recent)
 
 - **Open frontier he flagged:** uniform lower bound `X_Ω(q) ≥ 1/λ_q³`. Current Lean state:

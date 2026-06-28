@@ -1,0 +1,56 @@
+{
+  "per_q": [
+    {
+      "q": 5,
+      "lambda": 1.618033988749895,
+      "veech_hard_edge_min_Rq": 1.0,
+      "min_at": {
+        "a": 1.0,
+        "b": 1.0,
+        "branch": 4
+      },
+      "our_X_1_over_lam3": 0.2360679774997897,
+      "lam3": 4.23606797749979
+    },
+    {
+      "q": 7,
+      "lambda": 1.8019377358048383,
+      "veech_hard_edge_min_Rq": 0.999999999999998,
+      "min_at": {
+        "a": 1.0,
+        "b": 1.0,
+        "branch": 6
+      },
+      "our_X_1_over_lam3": 0.17091518882717946,
+      "lam3": 5.850855075327144
+    },
+    {
+      "q": 9,
+      "lambda": 1.8793852415718169,
+      "veech_hard_edge_min_Rq": 0.9999999999999964,
+      "min_at": {
+        "a": 1.0,
+        "b": 1.0,
+        "branch": 8
+      },
+      "our_X_1_over_lam3": 0.1506442514261543,
+      "lam3": 6.6381557247154515
+    },
+    {
+      "q": 11,
+      "lambda": 1.9189859472289947,
+      "veech_hard_edge_min_Rq": 1.000000000000005,
+      "min_at": {
+        "a": 1.0,
+        "b": 1.0,
+        "branch": 10
+      },
+      "our_X_1_over_lam3": 0.14150918078943928,
+      "lam3": 7.066679309577554
+    }
+  ],
+  "verdict": {
+    "veech_edge_is_1_for_all_q": true,
+    "note": "min R_q = 1 for every q (golden L and beyond): the universal no-small-gaps edge (Athreya-Chaika). It is q-INDEPENDENT and equals 1, NOT 1/lam^3. Our 1/lam^3 is the cusp-tip value of the RECIPROCAL product observable P=a*b (=1/R), i.e. the large-gap / Hall-ray end (sup R = lam^3), a different edge of a different observable."
+  }
+}

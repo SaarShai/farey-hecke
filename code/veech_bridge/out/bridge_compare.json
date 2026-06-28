@@ -1,0 +1,96 @@
+{
+  "per_q": [
+    {
+      "q": 5,
+      "lambda": 1.618033988749895,
+      "veech_hard_edge_minR": 1.0,
+      "minR_at": [
+        1.0,
+        1.0
+      ],
+      "our_edge_X=1/lam^3": 0.2360679774997897,
+      "P_gen_cusp_tip": 0.2360679774997897,
+      "lam3=1/X": 4.23606797749979,
+      "normalizations": {
+        "reciprocal_1/X": 4.23606797749979,
+        "X*lam^2": 0.6180339887498949,
+        "X*lam^3": 1.0,
+        "X*lam": 0.38196601125010515
+      },
+      "edges_equal_directly": false,
+      "reciprocal_equals_edge": false,
+      "residual_factor_VeechEdge/ourX": 4.23606797749979
+    },
+    {
+      "q": 7,
+      "lambda": 1.8019377358048383,
+      "veech_hard_edge_minR": 1.0,
+      "minR_at": [
+        1.0,
+        1.0
+      ],
+      "our_edge_X=1/lam^3": 0.17091518882717946,
+      "P_gen_cusp_tip": 0.17091518882717946,
+      "lam3=1/X": 5.850855075327144,
+      "normalizations": {
+        "reciprocal_1/X": 5.850855075327143,
+        "X*lam^2": 0.5549581320873712,
+        "X*lam^3": 1.0,
+        "X*lam": 0.30797852836990414
+      },
+      "edges_equal_directly": false,
+      "reciprocal_equals_edge": false,
+      "residual_factor_VeechEdge/ourX": 5.850855075327143
+    },
+    {
+      "q": 9,
+      "lambda": 1.8793852415718169,
+      "veech_hard_edge_minR": 1.0,
+      "minR_at": [
+        1.0,
+        1.0
+      ],
+      "our_edge_X=1/lam^3": 0.15064425142615434,
+      "P_gen_cusp_tip": 0.15064425142615434,
+      "lam3=1/X": 6.638155724715451,
+      "normalizations": {
+        "reciprocal_1/X": 6.63815572471545,
+        "X*lam^2": 0.5320888862379561,
+        "X*lam^3": 1.0000000000000002,
+        "X*lam": 0.2831185828579486
+      },
+      "edges_equal_directly": false,
+      "reciprocal_equals_edge": false,
+      "residual_factor_VeechEdge/ourX": 6.63815572471545
+    },
+    {
+      "q": 11,
+      "lambda": 1.9189859472289947,
+      "veech_hard_edge_minR": 1.0,
+      "minR_at": [
+        1.0,
+        1.0
+      ],
+      "our_edge_X=1/lam^3": 0.14150918078943928,
+      "P_gen_cusp_tip": 0.14150918078943928,
+      "lam3=1/X": 7.066679309577554,
+      "normalizations": {
+        "reciprocal_1/X": 7.0666793095775535,
+        "X*lam^2": 0.5211085581132028,
+        "X*lam^3": 1.0,
+        "X*lam": 0.27155412933882117
+      },
+      "edges_equal_directly": false,
+      "reciprocal_equals_edge": false,
+      "residual_factor_VeechEdge/ourX": 7.0666793095775535
+    }
+  ],
+  "verdict": {
+    "veech_hard_edge_all_q": 1.0,
+    "our_X_is": "cusp-tip value of gap-PRODUCT P_gen (=1/lam^3), a DIFFERENT observable",
+    "relation_on_cusp_branch": "R = 1/P  (reciprocal), NOT a diagonal conjugation",
+    "edges_align_as_numbers": false,
+    "sections_correspond": true,
+    "bridge_verdict": "SECTIONS correspond (same transversal); EDGES do NOT: ACL hard edge = min R = 1; our 1/lam^3 = sup-side cusp value of the reciprocal product observable P (the LARGE-gap/Hall end). The X*lam^3=1 alignment is the tautology X=1/lam^3, not a section-level identity. Reproduces repo bug_id 14 (FALSIFIED bridge)."
+  }
+}
