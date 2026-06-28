@@ -18,9 +18,10 @@ CLAUDE_DIR="$REPO/.claude"
 SKILL_DIR="$CLAUDE_DIR/skills"
 SETTINGS="$CLAUDE_DIR/settings.json"
 CODEX_HOOKS="$REPO/.codex/hooks.json"
+# Run-time-expanded project root, not cwd-relative './' (which breaks on cwd drift).
 HOOK_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/context-keeper/tools/hook.sh"'
 ARCHIVE_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/context-keeper/tools/archive.sh"'
-# Codex hooks run from the repo root; reuse the .claude skill symlink (no second symlink needed).
+# Same portable run-time-expanded form (.codex/hooks.json is committed). Reuse the .claude skill symlink.
 CODEX_ARCHIVE_CMD='bash "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/context-keeper/tools/codex_archive.sh"'
 
 merge_settings() {
