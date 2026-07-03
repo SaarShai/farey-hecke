@@ -44,3 +44,10 @@ M-convergence 12→20 improved s1/s2 by ~10³ (spectral). The G_5 even off-line 
 
 ### Track B addendum — third implementation discrepancy (diagnosed, verdict unchanged)
 A second collocation implementation (sonnet-child, projects/g5-crosscheck/{collocation_even_sonnet.py,results_sonnet.json}) found M-stable zeros 0.07–0.09 away from targets (|det|=0.334 AT the targets) — a different operator. Root cause per its own report: the even-sector (mms+) sign/block convention was INFERRED (repo engine documents odd only) + a different interpolation scale. The codex-assembled/fable-run implementation (results_fable.json) reproduces certified zeros at 4.1e-9/1.4e-7 — not achievable with a wrong operator. Verdict: cross-check PASSES (2 of 3 implementations concordant with the certified table); LESSON: the even-sector convention is the fragile step — pin it against MMS arXiv:0912.2236 eq.(34) explicitly before the rigorous CAP build.
+
+## Wave 2 additions (2026-07-03, later)
+- [LEAN] `farey_hard_edge_cluster_is_AP` (Aristotle ced0b278, sorry-free, axiom-clean): two consecutive products > (3/4)Q² force k=2 — in-cluster AP anatomy proved. hQ/hk hypotheses unused (statement can be tightened).
+- [LEAN] FluxTwoThirds.lean ALL FOUR proved (Aristotle 64adf3ec, sorry-free, axiom-clean): volume_T = δ²/2, volume_E1 = volume_E2 = δ²/6, exit sets disjoint ⟹ θ_edge = 2/3 continuum model machine-verified. Result 2 upgraded [DERIV]→[LEAN-model + NUM].
+- [NUM] G_7 cross-check PASSED (projects/g5-crosscheck/{g7_check_run.py,g7_results.json}): 0.4842+7.567i located at 0.48420717+7.56721766i (|Δ|=2.2e-4), 0.4751+4.669i at 0.47516477+4.66874378i (|Δ|=2.6e-4); |det| @ M=22 ~1e-9. Both non-arith surfaces in the certified table now independently confirmed.
+- Convention PINNED from MMS LaTeX source (research_notes/MMS_0912.2236_EXTRACTION.txt): reduced3 odd-q blocks = the passing implementations' assembly; "+" sector = repo "even"; κ₅=3, κ₇=5.
+- Reduction draft v1: research_notes/THETA_HALF_REDUCTION_DRAFT.md (Step 1 = M–P Thm 3 citation; gaps T1/T1'/T2 laddered).

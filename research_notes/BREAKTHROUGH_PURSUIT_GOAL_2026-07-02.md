@@ -26,3 +26,10 @@ Loop contract: generator = B2; verifier = main agent vs certified intervals; gat
 3. B cross-check: DONE — all 3 certified G_5 even resonances independently reproduced (4.1e-9 / 1.4e-7 / table-precision + refinement).
 4. Synthesis note + memory: DONE.
 Bonus: G_q hard-edge trichotomy (parabolic q=3 unique; q=5 hyperbolic 2λ₅; q=7 elliptic π/7) — preliminary.
+
+## WAVE 2 GOAL (2026-07-03) — 4 items
+1. M–P reduction draft (θ=1/2 theorem): main agent writes research_notes/THETA_HALF_REDUCTION_DRAFT.md against exact M–P Thm 2–3 statements (scout A1).
+2. q=3-uniqueness verification: exact-section deep-threshold numerics q∈{3,5,7} + domain-argmax branch classification (codex A2). Gate: mean cluster size @ 1e-6 tail with ≥10⁸ samples; q=5,7 → 1.000±0.005, q=3 → 1.50±0.02.
+3. Track B convention + G_7: MMS eq.(34) verbatim (A3) → convention verdict (main agent) → G_7 collocation cross-check vs table 0.4842+7.567i, 0.4751+4.669i (codex A4). Gate: |Δ| ≤ table precision.
+4. Lean: AP lemma (k=2 in-cluster, δ=1/4 version) + 2/3 flux areas → Aristotle (2 projects).
+Loop contracts: each numeric loop = generator(agent) + verifier(main agent vs gate) + stop(pass or 2 corrective iterations) + budget(2 calls/agent).

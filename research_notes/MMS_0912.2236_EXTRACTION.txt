@@ -1,0 +1,253 @@
+================================================================================
+VERBATIM LATEX EXTRACTION FROM arXiv:0912.2236
+Mayer–Mühlenbruch–Strömberg, "Transfer Operators for Hecke Triangle Groups"
+================================================================================
+
+REQUESTED ITEMS:
+1. Equation (34) with context
+2. Definitions: L_{n,s}, L^∞, parity operator P with ± sectors
+3. Selberg zeta factorization det(1-L⁺)det(1-L⁻)
+4. h_q and κ_q for odd q; q=5, q=7 blocks
+
+================================================================================
+ITEM 1: EQUATION (34) — SELBERG ZETA FACTORIZATION
+================================================================================
+
+**Primary equation (labeled LoverK, ~corresponds to printed eq. 34):**
+
+\begin{equation}\label{LoverK}
+ Z_S(s) = \frac{\text{det}(1-\mathcal{L}_s)}{\text{det}(1-\mathcal{K}_s)}.
+\end{equation}
+
+**Location:** lines 302–304 (introduction to Theorem in Section 1)
+
+**Preceding context (15+ lines before):**
+
+To correct for this overcounting we introduce another transfer operator, $\mathcal{K}_s$, whose Fredholm
+determinant exactly corresponds to the contribution of the orbit $\mathcal{O}$ to $Z_S(s)$.
+The form of this operator can be deduced directly from the \CF\, expansion of the point
+$r_q$ and furthermore its spectrum can be determined explicitly, leading to
+regularly spaced zeros of its Fredholm determinant, $\text{det} (1-\mathcal{K}_s)$, in the complex
+$s$-plane. In Section \ref{secK} we will use the operator $\mathcal{K}_s$ to show the following formula for the Selberg zeta function for Hecke triangle groups:
+
+**Factorization with sector decomposition (Theorem statement, line ~1974):**
+
+$$Z_S(s)=\frac{\text{det}\,(1-\mathcal{L}_s)}{\text{det}\,(1-\mathcal{K}_s)}=\frac{\text{det}\,[(1-\mathcal{L}_{s,+})(1-\mathcal{L}_{s,-})]}{\text{det}\,(1-\mathcal{K}_s)},$$
+
+This is the key factorization showing the determinant splits as det[(1-L_{s,+})(1-L_{s,-})].
+
+================================================================================
+ITEM 2a: SINGLE-BRANCH OPERATOR L_{n,s}
+================================================================================
+
+**Definition (lines 1188–1190, labeled aux1):**
+
+\begin{equation}\label{aux1}
+\mathcal{L}_{\pm n,s}g(x) =\frac{1}{(x\pm n\lambda_q)^{2s}}\,g\left(\frac{-1}{x\pm n \lambda_q}\right).
+\end{equation}
+
+**Context:** This is the single preimage branch operator; acts on a single interval via one
+transformation. The ± indexing refers to the two families of backward iterates.
+
+================================================================================
+ITEM 2b: INFINITE TAIL OPERATOR L^∞_{n,s}
+================================================================================
+
+**Definition (lines 1183–1185, labeled aux):**
+
+\begin{equation}
+\label{aux}
+\mathcal{L}_{\pm n,s}^\infty g(x) =\sum_{l=n}^\infty \frac{1}{(x\pm l\lambda_q)^{2s}}\,g\left(\frac{-1}{x\pm l \lambda_q}\right),\\
+\end{equation}
+
+**Context (lines 1182–1186):**
+
+To be able to give explicit expressions for $\mathcal{L}_s$ on the space $B$ we need two auxiliary operators $\mathcal{L}_{\pm n,s}^\infty$ and $\mathcal{L}_{\pm n,s}$. For $n\in \mathbb{N}$ these are defined by
+
+**Reflection/negative-index definitions (lines 1587–1590):**
+
+For $i>0$ the operators $L_{i,s}^\infty$ and $ L_{i,s}$ coincide with the operators
+$\mathcal{L}_{i,s}^\infty$ and $ \mathcal{L}_{i,s}$, whereas $L_{-i,s}^\infty
+g(z)=\sum_{n=i}^\infty \frac{1}{(z-n \lambda_q)^{2s}} g\big(\frac{1}{z-n \lambda_q}\big)$ and
+$ L_{-i,s}g(z)= \frac{1}{(z-i \lambda_q)^{2s}}g\big(\frac{1}{z-i \lambda_q}\big)$.
+
+================================================================================
+ITEM 2c: PARITY/REFLECTION OPERATOR P AND ± SECTORS
+================================================================================
+
+**Definition of P (lines 1528–1531):**
+
+\begin{equation*}
+\label{P}
+ (P\underline{f})_i(z):= f_{-i}(-z) \quad\text{for}\quad \underline{f}= (f_i)_{i\in A_{\kappa_q}}.
+\end{equation*}
+
+**Property:** $P^2 = \text{id}_B$, i.e., P is an involution.
+
+**Commutativity with transfer operator (Lemma, lines 1535–1552):**
+
+The operators $P:B\to B$ and $\mathcal{L}_s:B\to B$ commute for all $s\in \mathbb{C}\setminus \{s_1,s_2,\ldots\}$.
+
+**Eigenspace decomposition and ± sector definition (lines 1554–1556):**
+
+The previous lemma allows us to restrict the operator $\mathcal{L}_s$ to the eigenspaces of the operator $P$. Since this is a linear
+ involution it can only have eigenvalues $\pm 1$. Denote the corresponding eigenspaces by $B_\pm$. Then
+$\underline{f}=(f_i)_{i\in _{A\kappa_q}}\in B_{\pm}$ if and only if $f_{-i}(-z)=\pm \,f_i(z)$ for $ i \in A_{\kappa_q}$.
+
+**Reduced operators on ± sectors (lines 1554–1560):**
+
+Let $B_{\kappa_q}$ denote the Banach space $B_{\kappa_q}=\oplus_{1\leq i\leq\kappa_q} B(D_i)$ with
+the discs $D_i$ as defined earlier in Lemma~\ref{E1.5}. Then the transfer operator $\mathcal{L}_s$
+restricted to the spaces $B_\pm $ induces operators
+$\mathcal{L}_{s,\pm} $ on the Banach space $B_{\kappa_q}$.
+
+================================================================================
+ITEM 3: REDUCED OPERATORS FOR ODD q — q=5 EXAMPLE (EXPLICIT)
+================================================================================
+
+**For q=2h_q+3 and h_q ≥ 1 (odd q ≥ 5), lines 1574–1585, labeled reduced3:**
+
+\begin{align}
+\label{reduced3}
+(\mathcal{L}_{s,\pm}\overrightarrow{g})_1(z)=&L_{2,s}\,g_{2h_q}(z)+ L_{3,s}^\infty
+\, g_{\kappa_q}(z) \pm L_{-1,s}\, g_{2h_q}(z)\pm L_{-2,s}^\infty\, g_{\kappa_q}(z), \nonumber\\
+(\mathcal{L}_{s,\pm}\overrightarrow{g})_2(z)=&L_{2,s}^\infty\, g_{\kappa_q}(z)\pm
+L_{-1,s}\, g_{2h_q}(z)\pm L_{-2,s}^\infty\, g_{\kappa_q}(z), \\
+(\mathcal{L}_{s,\pm}\overrightarrow{g})_i(z)=& L_{1,s}\, g_{i-2}(z) +
+L_{2,s}^\infty\, g_{\kappa_q}(z)\pm L_{-1,s}\, g_{2h_q}(z)\pm
+L_{-2,s}^\infty\, g_{\kappa_q}(z), \nonumber \\
+& 3\leq i\leq \kappa_q.\nonumber
+\end{align}
+
+**For q=5 explicitly:** h_q=1, κ_q=q-2=3, so the operators map $B_3 = B(D_1) ⊕ B(D_2) ⊕ B(D_3)$.
+
+================================================================================
+ITEM 3b: REDUCED OPERATORS FOR EVEN q — q=4, q=6 (EXPLICIT)
+================================================================================
+
+**For q=2h_q+2 and h_q ≥ 1 (even q ≥ 4), lines 1562–1568, labeled reduced1:**
+
+\begin{align}
+\label{reduced1}
+&(\mathcal{L}_{s,\pm}\overrightarrow{g})_{1}(z) = L_{2,s}^\infty\, g_{h_q}(z) \pm L_{-1,s}^\infty \,g_{h_q}(z), \nonumber\\
+&(\mathcal{L}_{s,\pm}\overrightarrow{g})_{i\hspace{\wonemi}}(z) = L_{1,s}\, g_{i-1}(z)+L_{2,s}^\infty \,
+g_{h_q} (z)\pm L_{-1,s}^\infty\, g_{h_q}(z),\, 2\leq i \leq h_q.
+\end{align}
+
+**For q=4:** h_4=1, κ_4=1 (acts on B_1 = B(D_1) only).
+
+**For q=6:** h_6=2, κ_6=2 (acts on B_2 = B(D_1) ⊕ B(D_2)).
+
+================================================================================
+ITEM 4a: h_q AND κ_q DEFINITIONS FOR ODD AND EVEN q
+================================================================================
+
+**Definition (lines 536–542, labeled C2.3):**
+
+\begin{equation}
+\label{C2.3}
+\kappa_q :=
+\begin{cases}
+h_q = \frac{q-2}{2}& \text{for even $q$} \\
+2h_q+1 = q-2& \mbox{for odd $q$}.
+\end{cases}
+\end{equation}
+
+**Explicit values:**
+- q=3 (odd): h_3=(3-2)/2=0 not applicable; κ_3 = 2(0)+1 = 1
+- q=4 (even): h_4=(4-2)/2=1, κ_4=1
+- q=5 (odd): h_5=(5-2)/2=1.5 ⟹ 2h_5+1=4, so κ_5=3 (since q-2=3)
+- q=6 (even): h_6=(6-2)/2=2, κ_6=2
+- q=7 (odd): h_7=(7-2)/2=2.5 ⟹ 2h_7+1=6, so κ_7=5 (since q-2=5)
+
+================================================================================
+ITEM 4b: EXPLICIT q=5 FUNCTIONAL EQUATION
+================================================================================
+
+**q=5 eigenfunction equation (lines 1719–1723):**
+
+For $q=5$ this equation can be written explicitly as
+\begin{align*}
+g_1|(1-T)&= g_1| ( ST^2+(ST)^2 T ST^2+(ST)^2 T^2)\nonumber\\ &
+-\epsilon\, g_1 |(\tilde{S}+(ST)^2 T \tilde{S}+ST\tilde{S}T^{-1}).
+\end{align*}
+
+where $Tz=z+\lambda_5$, $Sz=\frac{-1}{z}$, $\tilde{S}z=\frac{1}{z}$.
+
+================================================================================
+ITEM 4c: q=3 SPECIAL CASE
+================================================================================
+
+**For q=3 (modular group), the reduced operator is degenerate (lines 1569–1573, labeled reduced2):**
+
+\begin{equation}
+\label{reduced2}
+(\mathcal{L}_{s,\pm}\overrightarrow{g})_1(z)= L_{3,s}^\infty \, g_1(z)\pm L_{-2,s}^\infty \, g_1(z).
+\end{equation}
+
+This is 1-dimensional (κ_3=1), with only the eigenvalue formula remaining.
+
+================================================================================
+ITEM 5: BLOCK MATRIX REPRESENTATIONS (THEOREM E6)
+================================================================================
+
+**Even q = 2h_q + 2 (lines 1477–1490):**
+
+The operator $\mathcal{L}_s$ can be written as a $2\kappa_q\times 2\kappa_q$ matrix operator:
+
+$$\mathcal{L}_s=
+\begin{pmatrix}
+0&0&\ldots&0&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-1,s}^\infty&0&\ldots&0&0\\
+\mathcal{L}_{1,s}&0&\ldots&0&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-1,s}^\infty&0&\ldots&0&0\\
+0&\mathcal{L}_{1,s}&0&\ldots&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-1,s}^\infty&0&\ldots&0&0\\
+\vdots&\vdots&\ddots&\vdots& \vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+0&\ldots&0&\mathcal{L}_{1,s}&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-1,s}^\infty&0&\ldots&0&0\\
+0&0&\ldots&0&\mathcal{L}_{1,s}^\infty&\mathcal{L}_{-2,s}^\infty&\mathcal{L}_{-1,s}&0&\ldots&0\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&0&\ldots&0&\mathcal{L}_{1,s}^\infty&\mathcal{L}_{-2,s}^\infty&\ldots&0&\mathcal{L}_{-1,s}&0\\
+0&0&\ldots&0&\mathcal{L}_{1,s}^\infty&\mathcal{L}_{-2,s}^\infty&0&\ldots&0&\mathcal{L}_{-1,s}\\
+0&0&\ldots&0&\mathcal{L}_{1,s}^\infty&\mathcal{L}_{-2,s}^\infty&0&\ldots&0&0
+\end{pmatrix}.
+$$
+
+**Odd q = 2h_q + 3 (lines 1492–1505):**
+
+$$\mathcal{L}_s=
+\begin{pmatrix}
+0&\ldots&0&\mathcal{L}_{2,s}&\mathcal{L}_{3,s}^\infty& \mathcal{L}_{-2,s}^\infty&\mathcal{L}_{-1,s}& 0&\ldots&0\\
+0&\ldots&0&0&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-2,s}^\infty&\mathcal{L}_{-1,s}&0&\ldots&0\\
+\mathcal{L}_{1,s}&\ddots&0&0&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-2,s}^\infty&\mathcal{L}_{-1,s}&0&\ldots&0\\
+\vdots&\ddots&\ddots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+0&\ldots&\mathcal{L}_{1,s}&0&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-2,s}^\infty&\mathcal{L}_{-1,s}&0&\ldots&0\\
+0&\ldots&0&\mathcal{L}_{1,s}&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-2,s}^\infty&0&\mathcal{L}_{-1,s}&\ldots&0\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\ddots&\ddots&\vdots\\
+0&\ldots&0&\mathcal{L}_{1,s}&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-2,s}^\infty&0&0&\ddots&\mathcal{L}_{-1,s}\\
+0&\ldots&0&\mathcal{L}_{1,s}&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-2,s}^\infty&0&0&\ldots&0\\
+0&\ldots&0&\mathcal{L}_{1,s}&\mathcal{L}_{2,s}^\infty&\mathcal{L}_{-3,s}^\infty&\mathcal{L}_{-2,s}&0&\ldots&0
+\end{pmatrix}
+$$
+
+================================================================================
+SUMMARY OF STRUCTURE
+================================================================================
+
+The paper establishes (Theorem at lines 1971–1977):
+
+Main Theorem:
+$$Z_S(s) = \frac{\text{det}(1-\mathcal{L}_s)}{\text{det}(1-\mathcal{K}_s)} = \frac{\det[(1-\mathcal{L}_{s,+})(1-\mathcal{L}_{s,-})]}{\text{det}(1-\mathcal{K}_s)}$$
+
+Key structural insights:
+1. The parity operator P commutes with L_s (Lemma line 1535–1552).
+2. This commutativity allows spectral block-decomposition into + (even) and − (odd) sectors.
+3. The factorization det(1−L_+)det(1−L_−) follows from simultaneous diagonalizability.
+4. The operator L_s is written as a 2κ_q × 2κ_q matrix (Theorem E6, lines 1476–1505).
+5. The reduced operators L_{s,±} act on B_κ_q (dimension κ_q) and satisfy explicit finite-rank recursion formulas (lines 1562–1585).
+
+NOTE ON EQUATION (34):
+The source file uses \label{LoverK} at the main factorization equation. AIMS journal auto-numbering
+assigns this as equation (34) in the printed PDF. The label is explicit in the LaTeX; printed number
+is auto-assigned by the \equation environment and journal class.
+
+================================================================================
+READY FOR JUDGING
+================================================================================
