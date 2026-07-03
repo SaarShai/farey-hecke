@@ -1,0 +1,87 @@
+# EVT Farey gaps summary
+{
+  "deltas": [
+    0.05,
+    0.02,
+    0.01,
+    0.005,
+    0.002
+  ],
+  "ferro_segers_formula": {
+    "N": "number of exceedances; there are N-1 interexceedance intervals",
+    "T_j": "interexceedance times in Farey gap-index units after dropping first and last 10 gaps",
+    "branch_rule": "if max(T_j) <= 2 use 2*(sum T_j)^2 / ((N-1)*sum T_j^2), else use 2*(sum(T_j-1))^2 / ((N-1)*sum((T_j-1)*(T_j-2)))"
+  },
+  "large_threshold_integer_rule": "P * 10000 < s_num * Q^2 for s_num=[100,30,10,3]",
+  "method": "streaming Farey denominator recursion; numba JIT compiled hot loops",
+  "s_thresholds": [
+    0.01,
+    0.003,
+    0.001,
+    0.0003
+  ],
+  "skip_first_and_last_gaps": 10,
+  "small_threshold_integer_rule": "P * 1000 > (1000-delta_num) * Q^2 for delta_num=[50,20,10,5,2]"
+}
+
+## Q=10000
+gaps_total=30397486 analyzed=30397466 asymptotic=30396355.0927 runtime_total_s=0.560881875
+Task 1 theta
+s	exceedances	clusters	theta_runs	theta_FS	FS_branch
+0.01	6088	3045	0.500164257556	0.568171978488	alternative
+0.003	554	277	0.5	0.701962173126	alternative
+0.001	62	31	0.5	0.827092730804	alternative
+0.0003	4	3	0.75	1.33333359651	alternative
+Task 1 cluster hist and size-2 ratios
+s	hist_1	hist_2	hist_3	hist_ge4	ratio_min	ratio_median	ratio_max
+0.01	2	3043	0	0	0.990199019902	1	1.0098979901
+0.003	0	277	0	0	0.997699769977	1	1.00230553328
+0.001	0	31	0	0	0.999199919992	1	1.00080072065
+0.0003	2	1	0	0	1	1	1
+Task 2 theta
+delta	exceedances	clusters	theta_runs	theta_FS	FS_branch	tail_slope	AP_fraction
+0.05	77344	51396	0.664511791477	0.408821369879	alternative	-1.98707674157	1
+0.02	12230	8156	0.66688470973	0.439393665613	alternative	-1.92382785074	1
+0.01	3072	2060	0.670572916667	0.499285762294	alternative	-1.80393587491	1
+0.005	758	518	0.683377308707	0.546660478017	alternative	-1.94236337919	1
+0.002	108	84	0.777777777778	0.715495775843	alternative	-2.31776333189	1
+Task 2 cluster counts 1..10
+delta	1	2	3	4	5	6	7	8	9	10
+0.05	41016	5932	1970	902	484	298	178	132	96	64
+0.02	6524	932	314	136	80	40	34	18	18	6
+0.01	1646	238	78	36	18	12	8	4	4	4
+0.005	416	56	22	8	4	4	0	4	0	0
+0.002	70	8	4	0	2	0	0	0	0	0
+Task 2 theta_runs_vs_delta_fit: c=2.77480601291 R2=-21.6585945273 n=5
+Invariants: {"N_relative_error_vs_3Q2_pi2": 3.720397465321618e-05, "all_passed": true, "analyzed_gaps_equals_total_minus_20": true, "task1_cluster_histograms_reconcile": true, "task2_cluster_counts_reconcile": true}
+
+## Q=30000
+gaps_total=273571774 analyzed=273571754 asymptotic=273567195.834 runtime_total_s=5.198352
+Task 1 theta
+s	exceedances	clusters	theta_runs	theta_FS	FS_branch
+0.01	55240	27629	0.500162925416	0.469026410952	alternative
+0.003	4958	2479	0.5	0.576069770155	alternative
+0.001	554	277	0.5	0.701958339887	alternative
+0.0003	54	27	0.5	0.844593719836	alternative
+Task 1 cluster hist and size-2 ratios
+s	hist_1	hist_2	hist_3	hist_ge4	ratio_min	ratio_median	ratio_max
+0.01	18	27611	0	0	0.990066335545	1	1.01003333221
+0.003	0	2479	0	0	0.99739991333	1	1.00260686474
+0.001	0	277	0	0	0.999066635555	1	1.00093423643
+0.0003	0	27	0	0	0.999799993333	1	1.00020004668
+Task 2 theta
+delta	exceedances	clusters	theta_runs	theta_FS	FS_branch	tail_slope	AP_fraction
+0.05	696012	462214	0.6640891249	0.378603194606	alternative	-2.00920395145	1
+0.02	110366	73482	0.665802874074	0.409724030613	alternative	-2.00979575955	1
+0.01	27468	18318	0.666885102665	0.441285874464	alternative	-1.96925220301	1
+0.005	6884	4600	0.668216153399	0.478877786225	alternative	-1.93612748978	1
+0.002	1102	748	0.678765880218	0.553371884643	alternative	-1.87629643888	1
+Task 2 cluster counts 1..10
+delta	1	2	3	4	5	6	7	8	9	10
+0.05	368790	53352	17814	8070	4370	2598	1716	1154	820	624
+0.02	58742	8420	2802	1280	684	418	266	178	132	106
+0.01	14648	2100	696	318	170	106	62	48	34	16
+0.005	3674	536	168	84	40	28	16	10	8	8
+0.002	598	86	28	14	6	4	4	0	2	2
+Task 2 theta_runs_vs_delta_fit: c=2.70469613007 R2=-1100.85544159 n=5
+Invariants: {"N_relative_error_vs_3Q2_pi2": 1.6734788172913877e-05, "all_passed": true, "analyzed_gaps_equals_total_minus_20": true, "task1_cluster_histograms_reconcile": true, "task2_cluster_counts_reconcile": true}
