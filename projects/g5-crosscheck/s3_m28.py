@@ -1,0 +1,5 @@
+code = open('g5_check_run.py').read().replace('if __name__ == "__main__":\n    run()','')
+exec(compile(code, 'g5_check_run.py', 'exec'))
+t = complex(0.48500000, 13.56500000)
+r = locate_zero_newton(t, 28)
+print("M=28 located:", r["located"], "|delta|:", r["abs_diff_from_target"], "absdet:", r["abs_det_at_located"], "converged:", r["converged"])

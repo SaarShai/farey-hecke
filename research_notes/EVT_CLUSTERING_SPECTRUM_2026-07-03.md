@@ -30,6 +30,14 @@ Prior blocker (theta_half_repp_2026-06-14.md §8.4) was route-specific (FFFV/ope
 - Main agent's initial hard-edge predictions θ~c/log(1/δ) and tail n^{−1} were REFUTED by numerics; corrected flux computation (entry flux ∝ |d|) yields the confirmed n^{−2} tail and exact 2/3. One theory-correction cycle, as designed.
 - Earlier "Fréchet-1 with log corrections" for spatial large-gap tail was wrong (missed the a+b>1 constraint): tail is quadratic; deepest gaps sit at bounded-denominator fractions ⟹ spatial max framing is degenerate-deterministic; the random-orbit (M–P) frame is the correct probabilistic setting — matches repo convention.
 
-## Track B (session-parallel)
+## Track B — independent G_5 even-resonance cross-check: PASSED
 
-Independent G_5 even-resonance cross-check: codex attempt stalled (runtime hold, no results); reassigned to GLM (results_glm.json pending). Certified targets: 0.45389518+5.76353724i, 0.41054374+7.81976825i, 0.48500000+13.56500000i (table research_notes/certified_hecke_spectrum_table.md; run bx2scmyrr COMPLETED per state brief; extended-band Kaggle kernel prepared but NOT pushed — open item).
+Method: Chebyshev–Gauss nodal Lagrange collocation on the 3 MMS Markov discs (complex128 + mpmath Hurwitz tails, dps=15) — fully independent of the certified engine's Taylor+Arb path. Assembly by codex (gpt-5.5), performance-fixed + run by main agent (projects/g5-crosscheck/{g5_check_run.py,results_fable.json}; 4 executor attempts stalled on a perf bug: dps-30 Hurwitz zeta in an m² loop).
+
+| certified target | located (M=20/28) | |Δ| | verdict |
+|---|---|---|---|
+| 0.45389518+5.76353724i | 0.45389517743+5.76353724318i | 4.09e-9 | PASS |
+| 0.41054374+7.81976825i | 0.41054359942+7.81976824150i | 1.41e-7 | PASS |
+| 0.485+13.565 (3-dec box center) | 0.48527432+13.56537531i (M=28) | 4.6e-4 = within table precision | PASS + REFINEMENT (uncertified) |
+
+M-convergence 12→20 improved s1/s2 by ~10³ (spectral). The G_5 even off-line resonances now have an INDEPENDENT-DISCRETIZATION confirmation — the first external-systematics check the evidence package lacked (CAP step-0). Next lever: same check for the G_7 table entries (0.4842+7.567i, 0.4751+4.669i); then the full rigorous CAP program. Also still open: extended-band [14,19] Kaggle kernel prepared, never pushed.

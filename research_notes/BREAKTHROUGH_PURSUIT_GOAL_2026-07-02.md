@@ -19,3 +19,10 @@ Loop contract: generator = B2; verifier = main agent vs certified intervals; gat
 2. A: theorem-candidate statement for θ=1/2 maxima law written down if P1 holds.
 3. B: ≥2 even G_5 resonances independently reproduced (or mismatch diagnosed + documented).
 4. Synthesis note + memory updated; goal closed with verdict in this file.
+
+## CLOSED 2026-07-03 — verdict vs done-means
+1. A numerics on P1–P4: DONE — P1 (θ=1/2, δ₂) + P4 (AP signature) CONFIRMED; P2/P3 REFUTED and corrected → exact θ_edge=2/3, n⁻² tail (see EVT_CLUSTERING_SPECTRUM_2026-07-03.md).
+2. θ=1/2 theorem-candidate: EXCEEDED — combinatorial core Lean-PROVED (Aristotle 22e93551); mixing-rate blocker BYPASSED via M–P Thms 2–3 program.
+3. B cross-check: DONE — all 3 certified G_5 even resonances independently reproduced (4.1e-9 / 1.4e-7 / table-precision + refinement).
+4. Synthesis note + memory: DONE.
+Bonus: G_q hard-edge trichotomy (parabolic q=3 unique; q=5 hyperbolic 2λ₅; q=7 elliptic π/7) — preliminary.
