@@ -1,0 +1,293 @@
+{
+  "accuracy_90_percent_decision": {
+    "mean_items_saved": 2.56,
+    "paired_bootstrap_95_interval": [
+      -0.865,
+      5.95
+    ],
+    "random_mean": 1682.34,
+    "tool_mean": 1679.78
+  },
+  "claim_boundary": "Safe stopping is coverage-qualified on this frozen replay, but labor dollars are scenario calculations, not observed human savings. Marketing remains blocked until a preregistered human workflow study measures active time, errors, skips, adjudication, and integration overhead.",
+  "dataset": {
+    "doi": "https://doi.org/10.24432/C50P49",
+    "test_items": 1797
+  },
+  "derived_additional_cost_at_5pp": {
+    "biological_technician_proxy": {
+      "15": {
+        "additional_labor_cost_per_batch": 1.326340833333333,
+        "additional_review_seconds_per_batch": 119.55
+      },
+      "180": {
+        "additional_labor_cost_per_batch": 15.916089999999997,
+        "additional_review_seconds_per_batch": 1434.6
+      },
+      "30": {
+        "additional_labor_cost_per_batch": 2.652681666666666,
+        "additional_review_seconds_per_batch": 239.1
+      },
+      "60": {
+        "additional_labor_cost_per_batch": 5.305363333333332,
+        "additional_review_seconds_per_batch": 478.2
+      }
+    },
+    "clinical_lab_proxy": {
+      "15": {
+        "additional_labor_cost_per_batch": 1.4272941666666663,
+        "additional_review_seconds_per_batch": 119.55
+      },
+      "180": {
+        "additional_labor_cost_per_batch": 17.127529999999997,
+        "additional_review_seconds_per_batch": 1434.6
+      },
+      "30": {
+        "additional_labor_cost_per_batch": 2.8545883333333326,
+        "additional_review_seconds_per_batch": 239.1
+      },
+      "60": {
+        "additional_labor_cost_per_batch": 5.709176666666665,
+        "additional_review_seconds_per_batch": 478.2
+      }
+    },
+    "compliance_proxy": {
+      "15": {
+        "additional_labor_cost_per_batch": 1.9134641666666665,
+        "additional_review_seconds_per_batch": 119.55
+      },
+      "180": {
+        "additional_labor_cost_per_batch": 22.961569999999995,
+        "additional_review_seconds_per_batch": 1434.6
+      },
+      "30": {
+        "additional_labor_cost_per_batch": 3.826928333333333,
+        "additional_review_seconds_per_batch": 239.1
+      },
+      "60": {
+        "additional_labor_cost_per_batch": 7.653856666666666,
+        "additional_review_seconds_per_batch": 478.2
+      }
+    },
+    "data_entry_proxy": {
+      "15": {
+        "additional_labor_cost_per_batch": 0.9617133333333334,
+        "additional_review_seconds_per_batch": 119.55
+      },
+      "180": {
+        "additional_labor_cost_per_batch": 11.54056,
+        "additional_review_seconds_per_batch": 1434.6
+      },
+      "30": {
+        "additional_labor_cost_per_batch": 1.9234266666666668,
+        "additional_review_seconds_per_batch": 239.1
+      },
+      "60": {
+        "additional_labor_cost_per_batch": 3.8468533333333337,
+        "additional_review_seconds_per_batch": 478.2
+      }
+    },
+    "financial_examiner_proxy": {
+      "15": {
+        "additional_labor_cost_per_batch": 2.2322641666666665,
+        "additional_review_seconds_per_batch": 119.55
+      },
+      "180": {
+        "additional_labor_cost_per_batch": 26.787169999999996,
+        "additional_review_seconds_per_batch": 1434.6
+      },
+      "30": {
+        "additional_labor_cost_per_batch": 4.464528333333333,
+        "additional_review_seconds_per_batch": 239.1
+      },
+      "60": {
+        "additional_labor_cost_per_batch": 8.929056666666666,
+        "additional_review_seconds_per_batch": 478.2
+      }
+    },
+    "quality_control_proxy": {
+      "15": {
+        "additional_labor_cost_per_batch": 1.1533254166666667,
+        "additional_review_seconds_per_batch": 119.55
+      },
+      "180": {
+        "additional_labor_cost_per_batch": 13.839904999999998,
+        "additional_review_seconds_per_batch": 1434.6
+      },
+      "30": {
+        "additional_labor_cost_per_batch": 2.3066508333333333,
+        "additional_review_seconds_per_batch": 239.1
+      },
+      "60": {
+        "additional_labor_cost_per_batch": 4.613301666666667,
+        "additional_review_seconds_per_batch": 478.2
+      }
+    }
+  },
+  "design": {
+    "alpha": 0.05,
+    "commitment_examples": [
+      {
+        "random_order_sha256": "fdaa11ceb78a4c27b1653d1d25246f0b08cf433630683a8e184557068fd6c38b",
+        "seed": 0,
+        "tool_order_sha256": "e04cb33a08f6b4412ff829602bb23f9eca0b6409469150addcc97776f9d08e7b"
+      },
+      {
+        "random_order_sha256": "02829f3606473d3646502520c5e0eec9904d46d37f9a6992164727dbc6e2bb7a",
+        "seed": 1,
+        "tool_order_sha256": "09a95c3173acf37ffec85c156b4f671a07c6d715f3e6f938f0faa91789f35440"
+      },
+      {
+        "random_order_sha256": "3ad9186b22e563e08a3c6e2445754f75fc2f5e1225cd0a5090e6dc06ecadd77b",
+        "seed": 2,
+        "tool_order_sha256": "a32477d3095611ca175f07c8a2c35074f34b7884b2ae5103e99a4da6922ea069"
+      }
+    ],
+    "commitment_requirement_for_production": "persist manifest and order digest before outcome access; this offline replay records digests but is not a prospective commit",
+    "confidence_method": "exact hypergeometric inversion; Bonferroni over every nontrivial within-stratum sample count",
+    "observable_only": true,
+    "order_generation_does_not_use_outcomes": true,
+    "strata": 50,
+    "trials": 200
+  },
+  "estimation_stops": {
+    "0.01": {
+      "maximum_saved": 0,
+      "mean_items_saved": -0.125,
+      "median_items_saved": 0.0,
+      "minimum_saved": -2,
+      "paired_bootstrap_95_interval": [
+        -0.18,
+        -0.075
+      ],
+      "random_early_stop_rate": 1.0,
+      "random_mean": 1761.875,
+      "random_stop_p50": 1762.0,
+      "random_stop_p95": 1762.0,
+      "tool_early_stop_rate": 1.0,
+      "tool_mean": 1762.0,
+      "tool_stop_p50": 1762.0,
+      "tool_stop_p95": 1762.0,
+      "tool_win_rate": 0.0
+    },
+    "0.03": {
+      "maximum_saved": 0,
+      "mean_items_saved": -4.055,
+      "median_items_saved": -4.0,
+      "minimum_saved": -10,
+      "paired_bootstrap_95_interval": [
+        -4.355,
+        -3.78
+      ],
+      "random_early_stop_rate": 1.0,
+      "random_mean": 1685.945,
+      "random_stop_p50": 1686.0,
+      "random_stop_p95": 1689.0,
+      "tool_early_stop_rate": 1.0,
+      "tool_mean": 1690.0,
+      "tool_stop_p50": 1690.0,
+      "tool_stop_p95": 1690.0,
+      "tool_win_rate": 0.0
+    },
+    "0.05": {
+      "maximum_saved": 4,
+      "mean_items_saved": -7.97,
+      "median_items_saved": -8.0,
+      "minimum_saved": -19,
+      "paired_bootstrap_95_interval": [
+        -8.55,
+        -7.395
+      ],
+      "random_early_stop_rate": 1.0,
+      "random_mean": 1599.43,
+      "random_stop_p50": 1600.0,
+      "random_stop_p95": 1606.0,
+      "tool_early_stop_rate": 1.0,
+      "tool_mean": 1607.4,
+      "tool_stop_p50": 1608.0,
+      "tool_stop_p95": 1608.0,
+      "tool_win_rate": 0.02
+    }
+  },
+  "loaded_hourly_rate_10th_median_90th_bands": {
+    "biochemist_biophysicist_proxy": [
+      51.58,
+      88.49,
+      139.67
+    ],
+    "biological_technician_proxy": [
+      28.01,
+      39.94,
+      58.99
+    ],
+    "clinical_lab_proxy": [
+      26.4,
+      42.98,
+      68.05
+    ],
+    "compliance_proxy": [
+      34.42,
+      57.62,
+      95.46
+    ],
+    "data_entry_proxy": [
+      21.85,
+      28.96,
+      41.17
+    ],
+    "financial_examiner_proxy": [
+      40.15,
+      67.22,
+      124.35
+    ],
+    "medical_scientist_proxy": [
+      45.0,
+      71.82,
+      123.46
+    ],
+    "quality_control_proxy": [
+      25.39,
+      34.73,
+      55.69
+    ],
+    "software_qa_proxy": [
+      42.67,
+      72.43,
+      115.98
+    ]
+  },
+  "loaded_hourly_rate_scenarios": {
+    "biological_technician_proxy": 39.94,
+    "clinical_lab_proxy": 42.98,
+    "compliance_proxy": 57.62,
+    "data_entry_proxy": 28.96,
+    "financial_examiner_proxy": 67.22,
+    "quality_control_proxy": 34.73
+  },
+  "loaded_rate_metadata": {
+    "band_order": "loaded 10th percentile, median, loaded 90th percentile",
+    "benefit_load_vintage": "BLS ECEC March 2026 occupation-group ratios",
+    "geography": "United States national",
+    "status": "derived percentile planning proxies, not observed customer cost or vendor quotes",
+    "unit": "USD per labor hour",
+    "wage_vintage": "BLS May 2025 except clinical laboratory May 2024"
+  },
+  "measured_compute_benchmark": {
+    "paired_random_plus_tool_order_mean_seconds": 0.00045482265908503906,
+    "paired_random_plus_tool_order_p95_seconds": 0.0005503993499999997,
+    "scope": "warm in-process paired replay; not human workflow overhead",
+    "two_confidence_paths_mean_seconds": 0.0054963023110758515,
+    "two_confidence_paths_p95_seconds": 0.008381235999999999
+  },
+  "negative_control": {
+    "excluded_prefix_count": 1082,
+    "first_excluded_prefix": 338,
+    "interpretation": "the precommitted random within-stratum order is load-bearing",
+    "invalid_design": "outcomes sorted inside strata after labels were known",
+    "simultaneous_coverage": false
+  },
+  "schema_version": "economic-safe-stopping-v1",
+  "simultaneous_coverage": {
+    "random": 200,
+    "tool": 200
+  }
+}
