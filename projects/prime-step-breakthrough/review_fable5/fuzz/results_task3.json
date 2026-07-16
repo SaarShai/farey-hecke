@@ -1,0 +1,44 @@
+{
+  "task": 3,
+  "elapsed_s": 0.5842989590018988,
+  "feasible_checked_solver_accepted": 500,
+  "infeasible_agree": 1830,
+  "pin_splits_block_rejects_expanded_feasible": 89,
+  "other_solver_infeas_oracle_feas": 0,
+  "random_attempts": 2408,
+  "certificate_interval_failures": 0,
+  "constraint_violations_on_returned_orders": 0,
+  "findings_math_certificate": [],
+  "documented_restriction_note": "PIN_SPLITS_BLOCK: solver intentionally rejects pins that partially overlap a fixed block. Expanded-order oracle treats some of these as feasible. Contract documents this as unsupported.",
+  "pin_split_reproducer": {
+    "counts": {
+      "a": 0,
+      "b": 3
+    },
+    "fixed_blocks": [
+      [
+        [
+          "b",
+          1
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "b",
+          3
+        ]
+      ]
+    ],
+    "pinned_suffix": [
+      [
+        "b",
+        3
+      ]
+    ],
+    "expanded_feasible": true,
+    "solver_witness": "PIN_SPLITS_BLOCK"
+  },
+  "verdict_hint": "HOLDS on 500 solver-accepted feasible instances (L<=OPT_B<=U); PIN_SPLITS_BLOCK rejects 89 expanded-feasible instances by documented design"
+}

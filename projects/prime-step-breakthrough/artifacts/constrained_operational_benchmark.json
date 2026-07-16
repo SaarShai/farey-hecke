@@ -1,0 +1,127 @@
+{
+  "all_gates_passed": true,
+  "gates": {
+    "all_constraint_classes": true,
+    "independent_validation": true,
+    "output_complete": true,
+    "peak_rss": true,
+    "wall_time": true
+  },
+  "performance": {
+    "measurement": "fresh-subprocess wall and getrusage(RUSAGE_SELF)",
+    "peak_rss_bytes": 44974080,
+    "wall_seconds": 4.1151813750038855,
+    "worker_seconds": 4.031786250008736
+  },
+  "result": {
+    "accumulated_discrepancy": "455298078991/62500",
+    "additive_gap": "199977/200000",
+    "constraint_sha256": "85b5161d9c938f437a3d24315d271abf5cdf8bc14eba1e972a410e006dd1ae1a",
+    "digest_encoding": "uint32-big-endian-category-code-v1",
+    "emitted_counts": [
+      100003,
+      200009,
+      399977,
+      300011
+    ],
+    "lower_bound": "1799839/1000",
+    "max_discrepancy": "360167777/200000",
+    "order_sha256": "3194a7661d0d90f6115bba41cfed1c506fd8f9442c0f54c0a8069ff90662c675",
+    "output_positions": 1000000,
+    "ratio_bound": "360167777/359967800",
+    "unconstrained_order_sha256": "c92afcfccfc6bd10a920b753c5d9c5cd6f929101ecc3f5f40fdbe937db5c3ebd",
+    "validation_errors": [],
+    "verified_constraints": {
+      "fixed_blocks": 1,
+      "pinned_prefix_items": 4,
+      "pinned_suffix_items": 2,
+      "precedence_edges": 1
+    }
+  },
+  "schema_version": 1,
+  "thresholds": {
+    "peak_rss_bytes_max": 134217728,
+    "wall_seconds_strict_max": 30.0
+  },
+  "workload": {
+    "constraint_sha256": "85b5161d9c938f437a3d24315d271abf5cdf8bc14eba1e972a410e006dd1ae1a",
+    "constraints": {
+      "fixed_blocks": [
+        {
+          "block_id": "joint-block-001",
+          "occurrences": [
+            {
+              "category": "alpha",
+              "occurrence": 1001
+            },
+            {
+              "category": "alpha",
+              "occurrence": 1002
+            },
+            {
+              "category": "delta",
+              "occurrence": 1001
+            },
+            {
+              "category": "beta",
+              "occurrence": 2001
+            },
+            {
+              "category": "gamma",
+              "occurrence": 3001
+            }
+          ]
+        }
+      ],
+      "pinned_prefix": [
+        {
+          "category": "alpha",
+          "occurrence": 1
+        },
+        {
+          "category": "beta",
+          "occurrence": 1
+        },
+        {
+          "category": "delta",
+          "occurrence": 1
+        },
+        {
+          "category": "gamma",
+          "occurrence": 1
+        }
+      ],
+      "pinned_suffix": [
+        {
+          "category": "gamma",
+          "occurrence": 300011
+        },
+        {
+          "category": "delta",
+          "occurrence": 399977
+        }
+      ],
+      "precedence": [
+        {
+          "after": {
+            "category": "delta",
+            "occurrence": 1000
+          },
+          "before": {
+            "category": "alpha",
+            "occurrence": 1000
+          },
+          "edge_id": "rare-before-dense-001"
+        }
+      ]
+    },
+    "counts": {
+      "alpha": 100003,
+      "beta": 200009,
+      "delta": 399977,
+      "gamma": 300011
+    },
+    "name": "categorical_1m_sparse_constraints_v1",
+    "total_items": 1000000
+  }
+}

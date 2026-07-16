@@ -1,0 +1,47 @@
+{
+  "source": "spec",
+  "criteria": [
+    {
+      "id": "math_correctness",
+      "weight": 0.25,
+      "required": true,
+      "description": "The theorem statements and proof arguments are internally consistent, use the frozen Farey and gap conventions, handle edge cases and normalizations, and do not promote numerical evidence into proof."
+    },
+    {
+      "id": "prime_step_contribution",
+      "weight": 0.15,
+      "required": true,
+      "description": "The work derives a substantive result directly from prime-denominator Farey insertions and the per-step shift, including a quantitative shear law and the triangular shift law with the claimed moments."
+    },
+    {
+      "id": "garcia_contribution",
+      "weight": 0.2,
+      "required": true,
+      "description": "The gap-permutation theorem rigorously proves the qualitative two-sided sigma_g N^(3/2) law with explicit constants, correctly distinguishes this from Garcia's sharper provisional constants, and states the averaging convention for repeated gaps."
+    },
+    {
+      "id": "practical_value",
+      "weight": 0.15,
+      "required": true,
+      "description": "A practical application follows from the theorem itself: it replaces factorial permutation enumeration with an O(N) certificate, reports exact quantities and rigorous bounds, and keeps the narrower coprime-layer optimizer's negative controls visible."
+    },
+    {
+      "id": "prior_art_boundary",
+      "weight": 0.1,
+      "required": true,
+      "description": "Classical finite-population moments and one-dimensional discrepancy identities are credited, bounded-search novelty is not presented as exhaustive priority, and the defensible new contribution is isolated from its classical ingredients."
+    },
+    {
+      "id": "reproducibility",
+      "weight": 0.1,
+      "required": true,
+      "description": "The manuscript identifies independently checkable formulas, computational certificates, application interfaces, tests, limitations, and enough implementation detail for another researcher to reproduce or falsify the claims."
+    },
+    {
+      "id": "claim_discipline",
+      "weight": 0.05,
+      "required": true,
+      "description": "The manuscript clearly separates proved project results, computer-assisted corollaries, failed conjectures, practical scope limits, and external-priority claims still requiring specialist review."
+    }
+  ]
+}

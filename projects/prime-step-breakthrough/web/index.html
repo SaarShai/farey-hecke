@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CoprimeBatch Designer</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">Prime-step breakthrough</p>
+    <h1>GapPermutation &amp; CoprimeBatch Designer</h1>
+    <p>Rigorous two-sided gap-order certificates, plus constrained experiments for complete reduced-residue denominator batches.</p>
+  </header>
+  <main>
+    <aside class="warning" role="note">
+      <strong>CoprimeBatch scope warning:</strong> if arbitrary 1D nodes are allowed, use a uniform or established quadrature rule instead.
+      The batch panels cover the narrower complete coprime-layer setting; GapPermutation is a separate workflow.
+    </aside>
+    <p id="status" class="status" role="status" aria-live="polite">Ready.</p>
+    <section class="panels" aria-label="GapPermutation, prefix-balance, and CoprimeBatch tools">
+      <article class="panel panel-operational panel-wide" aria-labelledby="balance-heading">
+        <div class="panel-heading-row">
+          <div>
+            <p class="eyebrow">Operational optimizer</p>
+            <h2 id="balance-heading">Prefix Balance</h2>
+          </div>
+          <span class="research-badge">Research-grade certificate</span>
+        </div>
+        <p>Arrange categories or exact rational vectors so every intermediate prefix stays close to its target mix. The result reports what was proved for this input, not a broader claim.</p>
+        <div class="scope-grid" aria-label="Prefix Balance claim boundaries">
+          <p><strong>Categorical, unconstrained:</strong> fast quota scheduling with a strict factor below 3 for the maximum prefix discrepancy.</p>
+          <p><strong>Constrained or general vectors:</strong> an exact small oracle or an a-posteriori interval <var>L</var> &le; optimum &le; <var>U</var>; no inherited factor below 3.</p>
+        </div>
+        <form id="balance-form">
+          <div class="form-grid">
+            <div>
+              <label for="balance-mode">Input mode</label>
+              <select id="balance-mode" name="balance-mode">
+                <option value="counts">Categorical counts</option>
+                <option value="constrained-counts">Constrained categorical counts</option>
+                <option value="problem">Exact vector problem</option>
+              </select>
+            </div>
+            <div id="balance-preset-field">
+              <label for="balance-preset">Counts or demonstration</label>
+              <select id="balance-preset" name="balance-preset">
+                <option value="generic">Generic counts</option>
+                <option value="rendering-progressive-joint-cells">Rendering prefix demonstration</option>
+                <option value="finance-scenario-cells">Finance-scenario demonstration</option>
+                <option value="laboratory-prerandomized-strata">Laboratory-batch demonstration</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="balance-counts-fields">
+            <label for="balance-counts">Category counts, one <code>name=count</code> pair per line</label>
+            <textarea id="balance-counts" name="balance-counts" rows="5" spellcheck="false" required>A=400000
+B=300000
+C=200000
+D=100000</textarea>
+            <p id="balance-preset-note" class="field-note">Generic categorical inventory. Category names must be unique and counts must be nonnegative integers.</p>
+          </div>
+
+          <fieldset id="balance-compact-fields" class="constraint-editor" hidden>
+            <legend>Compact occurrence constraints</legend>
+            <p class="field-note">Each occurrence is a stable 1-based rank within its category, such as <code>{"category":"A","occurrence":1}</code>. All four constraint arrays are sent with the compact counts; individual items are never materialized in the request.</p>
+            <div class="constraint-grid">
+              <div>
+                <label for="balance-fixed-blocks">Fixed ordered blocks JSON</label>
+                <textarea id="balance-fixed-blocks" rows="7" spellcheck="false">[
+  {"block_id":"bootstrap","occurrences":[
+    {"category":"A","occurrence":1},
+    {"category":"B","occurrence":1}
+  ]}
+]</textarea>
+              </div>
+              <div>
+                <label for="balance-pinned-prefix">Exact pinned prefix JSON</label>
+                <textarea id="balance-pinned-prefix" rows="7" spellcheck="false">[
+  {"category":"C","occurrence":1}
+]</textarea>
+              </div>
+              <div>
+                <label for="balance-pinned-suffix">Exact pinned suffix JSON</label>
+                <textarea id="balance-pinned-suffix" rows="7" spellcheck="false">[
+  {"category":"D","occurrence":100000}
+]</textarea>
+              </div>
+              <div>
+                <label for="balance-precedence">Precedence edges JSON</label>
+                <textarea id="balance-precedence" rows="7" spellcheck="false">[
+  {"edge_id":"A2-before-C2","before":{"category":"A","occurrence":2},"after":{"category":"C","occurrence":2}}
+]</textarea>
+              </div>
+            </div>
+            <p class="constraint-warning" role="note"><strong>Guarantee boundary:</strong> constraints can destroy the unconstrained factor below 3. This mode reports the measured order, a valid lower bound, and the resulting a-posteriori gap or ratio only.</p>
+          </fieldset>
+
+          <div id="balance-problem-fields" hidden>
+            <label for="balance-solver">Solver</label>
+            <select id="balance-solver" name="balance-solver">
+              <option value="exact">Small exact oracle</option>
+              <option value="constrained">Scalable constrained constructor</option>
+            </select>
+            <label for="balance-problem">Exact problem JSON</label>
+            <textarea id="balance-problem" name="balance-problem" rows="14" spellcheck="false">{
+  "items": [
+    {"item_id": "A1", "contribution": [1, 0], "mass": 1, "category": "A"},
+    {"item_id": "B1", "contribution": [0, 1], "mass": 1, "category": "B"},
+    {"item_id": "A2", "contribution": [1, 0], "mass": 1, "category": "A"},
+    {"item_id": "B2", "contribution": [0, 1], "mass": 1, "category": "B"}
+  ],
+  "fixed_blocks": [["A1", "B1"]],
+  "pinned_prefix": [],
+  "pinned_suffix": [],
+  "precedence": [["A2", "B2"]]
+}</textarea>
+            <p class="field-note">Contributions must be integers or rational strings. V1 constraints are fixed ordered blocks, an exact ordered prefix/suffix, and a precedence DAG.</p>
+          </div>
+          <button id="balance-submit" type="submit">Build prefix-balance certificate</button>
+        </form>
+
+        <section id="balance-result" class="certificate-result" aria-live="polite" aria-busy="false" tabindex="-1" aria-labelledby="balance-result-heading">
+          <h3 id="balance-result-heading">Certificate output</h3>
+          <p id="balance-result-summary" class="certificate-summary">No prefix-balance run yet.</p>
+          <dl class="certificate-grid">
+            <div><dt>Feasibility</dt><dd id="balance-feasibility">Not checked</dd></div>
+            <div><dt>Guarantee scope</dt><dd id="balance-guarantee-scope">Not available</dd></div>
+            <div><dt>Comparison set</dt><dd id="balance-comparison-set">Not available</dd></div>
+            <div><dt>Primary <var>B</var> optimum proved</dt><dd id="balance-primary-optimum">Not available</dd></div>
+            <div><dt>Upper bound <var>U</var></dt><dd id="balance-upper-bound">Not available</dd></div>
+            <div><dt>Lower bound <var>L</var></dt><dd id="balance-lower-bound">Not available</dd></div>
+            <div><dt>Additive gap <var>U</var> &minus; <var>L</var></dt><dd id="balance-additive-gap">Not available</dd></div>
+            <div><dt>Ratio bound <var>U</var>/<var>L</var></dt><dd id="balance-ratio-bound">Not available</dd></div>
+            <div><dt>Order size</dt><dd id="balance-order-count">Not available</dd></div>
+            <div class="certificate-wide"><dt>Order preview</dt><dd id="balance-order-preview">Not available</dd></div>
+            <div class="certificate-wide"><dt>Order digest</dt><dd id="balance-order-digest" class="digest">Not available</dd></div>
+            <div class="certificate-wide"><dt>Constraint / pressure notes</dt><dd id="balance-constraints">Not available</dd></div>
+          </dl>
+          <div class="limitations-box">
+            <h4>Limitations for this result</h4>
+            <ul id="balance-limitations">
+              <li>Run an input to receive result-specific limitations.</li>
+            </ul>
+          </div>
+          <details>
+            <summary>Canonical JSON response</summary>
+            <pre id="balance-raw">No response.</pre>
+          </details>
+        </section>
+        <aside class="domain-warning" role="note">
+          <strong>Application boundary:</strong> the rendering certificate balances declared cells in progressive prefixes; ordering alone cannot change the final all-items aggregate. Finance and laboratory presets are demonstrations that require real data integration, domain validation, and independent review. They do not establish operational, monetary, financial, clinical, or regulatory outcomes.
+        </aside>
+      </article>
+      <article class="panel panel-primary">
+        <h2>Rigorous two-sided gap certificate</h2>
+        <p>Certify García's permutation-averaged L1 discrepancy between proved lower and upper bounds, without enumerating permutations.</p>
+        <p>The lower endpoint uses the proved C = 9/160; the upper endpoints are the proved sum and Cauchy bounds. No provisional constants are used.</p>
+        <form id="gaps-form">
+          <fieldset class="source-choice">
+            <legend>Gap source</legend>
+            <label class="check"><input type="radio" name="gap-source" value="supplied" checked> Supplied rational gaps</label>
+            <label class="check"><input type="radio" name="gap-source" value="farey"> Farey sequence gaps</label>
+          </fieldset>
+          <label for="gap-values">Gaps, comma separated</label>
+          <textarea id="gap-values" name="gaps" rows="3" required>1/4, 1/2, 1/4</textarea>
+          <label for="farey-order">Farey order</label>
+          <input id="farey-order" name="farey-order" type="number" min="2" max="512" value="5" disabled>
+          <label class="check"><input id="gaps-exact" type="checkbox" checked> Exact arithmetic</label>
+          <button type="submit">Compute two-sided certificate</button>
+        </form>
+        <div id="gaps-result" class="result" aria-live="polite" tabindex="-1">No two-sided gap certificate yet.</div>
+      </article>
+      <article class="panel">
+        <h2>Portfolio certificate</h2>
+        <p>Every selected denominator contributes each reduced residue exactly once.</p>
+        <form id="certificate-form">
+          <label for="denominators">Denominators</label>
+          <input id="denominators" name="denominators" value="2,3,5,7" inputmode="numeric" required>
+          <label class="check"><input id="certificate-exact" type="checkbox" checked> Exact arithmetic</label>
+          <button type="submit">Certify portfolio</button>
+        </form>
+        <div id="certificate-result" class="result" aria-live="polite" tabindex="-1">No certificate yet.</div>
+      </article>
+      <article class="panel">
+        <h2>Optimizer</h2>
+        <p>Fixed benchmark: candidates 2–200, 10 layers, seed 20260715.</p>
+        <form id="optimizer-form">
+          <label for="candidate-start">Candidate start</label>
+          <input id="candidate-start" type="number" min="2" value="2" required>
+          <label for="candidate-stop">Candidate stop</label>
+          <input id="candidate-stop" type="number" min="2" value="200" required>
+          <label for="layers">Layers</label>
+          <input id="layers" type="number" min="1" value="10" required>
+          <label for="seed">Seed</label>
+          <input id="seed" type="number" value="20260715" required>
+          <button type="submit">Run fixed benchmark</button>
+        </form>
+        <div id="optimizer-result" class="result" aria-live="polite" tabindex="-1">No optimization run yet.</div>
+      </article>
+      <article class="panel">
+        <h2>Prime-shift moments</h2>
+        <p>Moments use the fixed interior Farey convention.</p>
+        <form id="shift-form">
+          <label for="prime">Odd prime p</label>
+          <input id="prime" type="number" min="3" max="512" value="257" required>
+          <label for="max-order">Maximum order</label>
+          <input id="max-order" type="number" min="0" max="12" value="6" required>
+          <button type="submit">Compute moments</button>
+        </form>
+        <div id="shift-result" class="result" aria-live="polite" tabindex="-1">No moments yet.</div>
+      </article>
+    </section>
+  </main>
+  <script src="/app.js" defer></script>
+</body>
+</html>

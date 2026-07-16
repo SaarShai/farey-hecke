@@ -1,0 +1,9 @@
+[transport] server sha256   = d5645b973e208b9c854dc91ed42c4eaea4141f99e294a59015b5eaef2a649505
+[transport] recomputed      = d5645b973e208b9c854dc91ed42c4eaea4141f99e294a59015b5eaef2a649505
+[transport] MATCH           = True
+
+[integrity] forged factorization status=400 body={"error": "supplied factorization product does not match denominator", "status": 400}
+[integrity] forged factorization rejected = True
+
+[integrity] non-prime base status=400 body={"error": "factor bases must be prime", "status": 400}
+[integrity] non-prime base rejected = True

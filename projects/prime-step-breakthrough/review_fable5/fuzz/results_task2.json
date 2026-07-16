@@ -1,0 +1,39 @@
+{
+  "task": 2,
+  "elapsed_s": 0.30151995801134035,
+  "pairs_enumerated": 91,
+  "checked": 91,
+  "lower_word_1_4": {
+    "order": [
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "B": "4/5",
+    "Q": "2",
+    "opt_B": "2/5",
+    "opt_Q": "6/5",
+    "opt_order": [
+      1,
+      1,
+      0,
+      1,
+      1
+    ],
+    "nearest_order": [
+      1,
+      1,
+      0,
+      1,
+      1
+    ],
+    "nearest_B": "2/5",
+    "nearest_Q": "6/5",
+    "confirmed_not_minimax": true
+  },
+  "solver_errors": [],
+  "findings": [],
+  "verdict_hint": "HOLDS (91 pairs); lower(1,4) not minimax confirmed"
+}

@@ -1,0 +1,20 @@
+name: multidimensional-operational-optimizer
+topology: closed inner fleet
+generator: isolated research and builder agents produce proofs, code, tests, and application artifacts under the frozen specification
+verifier: fresh-context cold verifier agents plus independent exact oracles and the project verification commands
+gate: PYTHONDONTWRITEBYTECODE=1 python3 ./projects/prime-step-breakthrough/verify_operational.py && PYTHONDONTWRITEBYTECODE=1 python3 ./projects/prime-step-breakthrough/verify_all.py
+stop: all five OPERATIONAL_OPTIMIZER_SPEC.md done-means criteria pass, live browser evidence is recorded, and no cold review has an unresolved blocker
+budget: max_iterations=3 per lane and max_wallclock=8h for the integrated run
+quorum: every mathematical claim survives one independent re-derivation, every builder lane passes a distinct cold review, and both verification commands exit 0
+anchor_files: AGENTS.md, start.md, projects/prime-step-breakthrough/OPERATIONAL_OPTIMIZER_SPEC.md, projects/prime-step-breakthrough/OPERATIONAL_LOOP.yaml
+state_store: projects/prime-step-breakthrough/OPERATIONAL_STATE.md
+recall: read the state store, frozen specification, requirements ledger, git status, and relevant wiki search hits before every wave
+writeback: the primary agent records attempts, verifier verdicts, failures, changed paths, benchmark evidence, and the next action after every wave
+state_concurrency: single_writer
+stuck: the same verification failure twice or two iterations without improvement
+advisor: a cross-vendor read-only frontier advisor selected by skills/_shared/model_roster.py, distinct from the cold verifier
+redaction: scrub secrets, environment files, credentials, personal correspondence, and unrelated user files before cross-vendor egress
+consent: the user explicitly requested GPT 5.6 Sol Ultra advice and parallel delegated work in this research program
+verifier_blind: true
+verifier_inputs: frozen task specification, changed artifacts, exact commands, and raw outputs only
+on_error: transient tool failures retry once; bad outputs return to the generator as evidence; auth, permissions, policy substitution, and unexpected failures halt and surface

@@ -1,0 +1,274 @@
+{
+  "task": 5,
+  "elapsed_s": 0.0007303750026039779,
+  "checked": 11,
+  "latin_results": [
+    {
+      "input_keys": [
+        "zebra",
+        "apple",
+        "mango"
+      ],
+      "categories": [
+        "apple",
+        "mango",
+        "zebra"
+      ],
+      "counts": [
+        3,
+        1,
+        2
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    },
+    {
+      "input_keys": [
+        "mango",
+        "apple",
+        "zebra"
+      ],
+      "categories": [
+        "apple",
+        "mango",
+        "zebra"
+      ],
+      "counts": [
+        3,
+        1,
+        2
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    },
+    {
+      "input_keys": [
+        "mango",
+        "zebra",
+        "apple"
+      ],
+      "categories": [
+        "apple",
+        "mango",
+        "zebra"
+      ],
+      "counts": [
+        3,
+        1,
+        2
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    },
+    {
+      "input_keys": [
+        "apple",
+        "mango",
+        "zebra"
+      ],
+      "categories": [
+        "apple",
+        "mango",
+        "zebra"
+      ],
+      "counts": [
+        3,
+        1,
+        2
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    }
+  ],
+  "utf8_results": [
+    {
+      "input_keys": [
+        "caf\u00e9",
+        "cafe",
+        "caff\u00e8"
+      ],
+      "categories": [
+        "cafe",
+        "caff\u00e8",
+        "caf\u00e9"
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    },
+    {
+      "input_keys": [
+        "caff\u00e8",
+        "caf\u00e9",
+        "cafe"
+      ],
+      "categories": [
+        "cafe",
+        "caff\u00e8",
+        "caf\u00e9"
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    },
+    {
+      "input_keys": [
+        "cafe",
+        "caff\u00e8",
+        "caf\u00e9"
+      ],
+      "categories": [
+        "cafe",
+        "caff\u00e8",
+        "caf\u00e9"
+      ],
+      "order_codes": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        2
+      ],
+      "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99",
+      "B": "2/3"
+    }
+  ],
+  "sequence_example": {
+    "counts": [
+      3,
+      1,
+      2
+    ],
+    "categories": [
+      "0",
+      "1",
+      "2"
+    ],
+    "order_codes": [
+      0,
+      2,
+      0,
+      1,
+      0,
+      2
+    ],
+    "digest": "4d526621d46412c8a51aeb5f22ede1307e1877ead92b66c71d2cdfe4eb49dd99"
+  },
+  "constrained_results": [
+    {
+      "input_keys": [
+        "x",
+        "y",
+        "z"
+      ],
+      "categories": [
+        "x",
+        "y",
+        "z"
+      ],
+      "order_codes": [
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      "digest": "e41812d3206120f1d50da7b7a72b1f0b4d47beda1ba1923ddae8aecd7c66c8da",
+      "L": "2/5",
+      "U": "4/5"
+    },
+    {
+      "input_keys": [
+        "z",
+        "x",
+        "y"
+      ],
+      "categories": [
+        "x",
+        "y",
+        "z"
+      ],
+      "order_codes": [
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      "digest": "e41812d3206120f1d50da7b7a72b1f0b4d47beda1ba1923ddae8aecd7c66c8da",
+      "L": "2/5",
+      "U": "4/5"
+    },
+    {
+      "input_keys": [
+        "y",
+        "z",
+        "x"
+      ],
+      "categories": [
+        "x",
+        "y",
+        "z"
+      ],
+      "order_codes": [
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      "digest": "e41812d3206120f1d50da7b7a72b1f0b4d47beda1ba1923ddae8aecd7c66c8da",
+      "L": "2/5",
+      "U": "4/5"
+    }
+  ],
+  "findings": [],
+  "verdict_hint": "HOLDS (11 instances); output independent of dict insertion order"
+}

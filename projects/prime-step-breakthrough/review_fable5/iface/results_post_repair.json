@@ -1,0 +1,470 @@
+[
+  {
+    "name": "health_baseline",
+    "category": "baseline",
+    "detail": "GET /api/health",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 200,
+      "elapsed_s": 0.0022,
+      "body": "{\"status\":\"ok\",\"service\":\"coprimebatch\",\"api\":\"frozen-core-v1\"}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "host_header_spoof",
+    "category": "dns-rebind",
+    "detail": "GET /api/health with Host: attacker.example.com",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 403,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"Host header must name a loopback authority\",\"status\":403}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "cross_origin_textplain_post",
+    "category": "csrf",
+    "detail": "POST /api/balance as text/plain with hostile Origin",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 403,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"Origin header must name a loopback HTTP(S) origin\",\"status\":403}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "loopback_origin_textplain_post",
+    "category": "csrf",
+    "detail": "POST /api/balance as text/plain with loopback Origin",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 415,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"API POST requests require Content-Type: application/json\",\"status\":415}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "cors_header_probe",
+    "category": "csrf",
+    "detail": "check for Access-Control-* on health",
+    "verdict": "INFO",
+    "result": {
+      "status": 200,
+      "elapsed_s": 0.0003,
+      "body": "{\"status\":\"ok\",\"service\":\"coprimebatch\",\"api\":\"frozen-core-v1\"}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "body_over_cap",
+    "category": "body-cap",
+    "detail": "declared POST body 1000083 bytes (> 1,000,000), no body sent",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0002,
+      "body": "HTTP/1.0 400 Bad Request\r\nServer: CoprimeBatchHTTP/1.0 Python/3.14.6\r\nDate: Thu, 16 Jul 2026 11:05:12 GMT\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: 50\r\nCache-Control: no-store\r\n\r\n{\"error\":\"request body is too large\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "body_under_cap",
+    "category": "body-cap",
+    "detail": "normal small body",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 200,
+      "elapsed_s": 0.0005,
+      "body": "{\"schema_version\":\"prefix-balance-api-v1\",\"mode\":\"quota\",\"algorithm\":\"quota_edf_v1\",\"inventory\":{\"categories\":[\"A\",\"B\"],\"counts\":[1,1],\"total_items\":2},\"metrics\":{\"max_discrepancy\":{\"fraction\":\"1/2\",\"numerator\":1,\"denominator\":2},\"accumulated_discrepancy\":null,\"lower_bound\":{\"fraction\":\"1/2\",\"numerator\":1,\"denominator\":2},\"ratio_bound\":{\"fraction\":\"1\",\"numerator\":1,\"denominator\":1},\"additive_gap\":{\"fraction\":\"0\",\"numerator\":0,\"denominator\":1}},\"guarantee\":{\"exact_optimum\":false,\"scope\":\"unconstrained_categorical\",\"comparison_set\":\"all permutations of the supplied categorical inventory\",\"strict_factor\":3},\"order\":{\"included\":false,\"total_items\":2,\"sha256\":\"cd2662154e6d76b2b2b92e70c0cac3ccf534f9b74eb5b89819ec509083d00a50\",\"digest_encoding\":\"uint32-big-endian-category-code-v1\",\"preview\":{\"hea",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "content_length_negative",
+    "category": "body-cap",
+    "detail": "Content-Length: -1",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"Content-Length must not be negative\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "content_length_nonint",
+    "category": "body-cap",
+    "detail": "Content-Length: abc",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"Content-Length must be an integer\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "cq_category_cap_300",
+    "category": "balance-cap",
+    "detail": "constrained-quota 300 categories (cap 256)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"constrained-quota category count is capped at 256\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "cq_cell_cap_12M",
+    "category": "balance-cap",
+    "detail": "constrained-quota N*C=12,000,000 (cap 8M)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"categorical inventory is capped at 5000000 items per request\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "cq_block_width_11000",
+    "category": "balance-cap",
+    "detail": "constrained-quota fixed block width 10,999 (cap 1024)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0162,
+      "body": "{\"error\":\"each constrained-quota fixed block is capped at 1024 occurrence references\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "quota_item_cap_5M",
+    "category": "balance-cap",
+    "detail": "quota total 5,000,001 items (cap 5M)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0005,
+      "body": "{\"error\":\"categorical inventory is capped at 5000000 items per request\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "quota_many_categories_48k",
+    "category": "balance-cap-bypass",
+    "detail": "quota 48,000 distinct categories (no category cap in quota mode)",
+    "verdict": "INFO",
+    "result": {
+      "status": 200,
+      "elapsed_s": 0.2097,
+      "body": "{\"schema_version\":\"prefix-balance-api-v1\",\"mode\":\"quota\",\"algorithm\":\"quota_edf_v1\",\"inventory\":{\"categories\":[\"k000000\",\"k000001\",\"k000002\",\"k000003\",\"k000004\",\"k000005\",\"k000006\",\"k000007\",\"k000008\",\"k000009\",\"k000010\",\"k000011\",\"k000012\",\"k000013\",\"k000014\",\"k000015\",\"k000016\",\"k000017\",\"k000018\",\"k000019\",\"k000020\",\"k000021\",\"k000022\",\"k000023\",\"k000024\",\"k000025\",\"k000026\",\"k000027\",\"k000028\",\"k000029\",\"k000030\",\"k000031\",\"k000032\",\"k000033\",\"k000034\",\"k000035\",\"k000036\",\"k000037\",\"k000038\",\"k000039\",\"k000040\",\"k000041\",\"k000042\",\"k000043\",\"k000044\",\"k000045\",\"k000046\",\"k000047\",\"k000048\",\"k000049\",\"k000050\",\"k000051\",\"k000052\",\"k000053\",\"k000054\",\"k000055\",\"k000056\",\"k000057\",\"k000058\",\"k000059\",\"k000060\",\"k000061\",\"k000062\",\"k000063\",\"k000064\",\"k000065\",\"k000066\",\"k000067\",\"k000068\"",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "traversal /../../../../etc/passwd",
+    "category": "static-traversal",
+    "detail": "GET /../../../../etc/passwd",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 404,
+      "elapsed_s": 0.0008,
+      "body": "{\"error\":\"invalid static path\",\"status\":404}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "traversal //etc/passwd",
+    "category": "static-traversal",
+    "detail": "GET //etc/passwd",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 404,
+      "elapsed_s": 0.0005,
+      "body": "{\"error\":\"static file not found\",\"status\":404}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "traversal /../web.py",
+    "category": "static-traversal",
+    "detail": "GET /../web.py",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 404,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"invalid static path\",\"status\":404}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "traversal /%2e%2e/%2e%2e/etc/passwd",
+    "category": "static-traversal",
+    "detail": "GET /%2e%2e/%2e%2e/etc/passwd",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 404,
+      "elapsed_s": 0.0006,
+      "body": "{\"error\":\"static file not found\",\"status\":404}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "traversal /../src/coprimebatch/web.py",
+    "category": "static-traversal",
+    "detail": "GET /../src/coprimebatch/web.py",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 404,
+      "elapsed_s": 0.0006,
+      "body": "{\"error\":\"invalid static path\",\"status\":404}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "method_PUT",
+    "category": "static-method",
+    "detail": "PUT /api/health",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 405,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"method not allowed\",\"status\":405}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "method_DELETE",
+    "category": "static-method",
+    "detail": "DELETE /api/health",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 405,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"method not allowed\",\"status\":405}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "full_order_over_cap",
+    "category": "transport",
+    "detail": "full_order=true with 40,000 items (cap 10,000)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"full order is capped at 10000 items; use the digest and preview\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "large_order_digest",
+    "category": "transport",
+    "detail": "40,000-item order returns preview+digest (included=false)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 200,
+      "elapsed_s": 0.0317,
+      "body": "{\"schema_version\":\"prefix-balance-api-v1\",\"mode\":\"quota\",\"algorithm\":\"quota_edf_v1\",\"inventory\":{\"categories\":[\"A\",\"B\"],\"counts\":[20000,20000],\"total_items\":40000},\"metrics\":{\"max_discrepancy\":{\"fraction\":\"1/2\",\"numerator\":1,\"denominator\":2},\"accumulated_discrepancy\":null,\"lower_bound\":{\"fraction\":\"1/2\",\"numerator\":1,\"denominator\":2},\"ratio_bound\":{\"fraction\":\"1\",\"numerator\":1,\"denominator\":1},\"additive_gap\":{\"fraction\":\"0\",\"numerator\":0,\"denominator\":1}},\"guarantee\":{\"exact_optimum\":false,\"scope\":\"unconstrained_categorical\",\"comparison_set\":\"all permutations of the supplied categorical inventory\",\"strict_factor\":3},\"order\":{\"included\":false,\"total_items\":40000,\"sha256\":\"a2e43a1dbda04429f114094bedc341e217695156648e270669fe5855ed414138\",\"digest_encoding\":\"uint32-big-endian-category-code-v1\"",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "duplicate_json_keys",
+    "category": "json",
+    "detail": "duplicate top-level key rejected",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0006,
+      "body": "{\"error\":\"duplicate JSON object key: 'mode'\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "non_object_body",
+    "category": "json",
+    "detail": "array body rejected",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"request body must be a JSON object\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "invalid_utf8_body",
+    "category": "json",
+    "detail": "invalid UTF-8 body rejected",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"request body must be valid UTF-8 JSON\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "cert_large_prime_1e15",
+    "category": "dos-uncapped",
+    "detail": "certificate denominators=[10**15+37] (trial-division factor)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 200,
+      "elapsed_s": 0.7097,
+      "body": "{\"denominators\":[1000000000000037],\"point_count\":1000000000000036,\"energy\":{\"fraction\":\"500000000000018/3000000000000111\",\"numerator\":500000000000018,\"denominator\":3000000000000111,\"decimal\":0.1666666666666665},\"worst_case_error\":4.082482904638481e-16,\"factorization_seconds\":0.7090276249800809,\"kernel_seconds\":6.808299804106355e-05,\"input_constraints\":{\"denominators\":\"complete reduced-residue batches\",\"endpoints\":\"excluded by the frozen interior convention\"}}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "shift_p_4001",
+    "category": "dos-uncapped",
+    "detail": "shift p=4001 (O(p^2) Fraction moment loop)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0005,
+      "body": "{\"error\":\"shift prime p is capped at 512\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "gaps_farey_order_4000",
+    "category": "dos-uncapped",
+    "detail": "gaps farey_order=4000 (~4.8M fractions materialised)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"farey_order is capped at 512\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "optimize_samples_2M",
+    "category": "dos-uncapped",
+    "detail": "optimize samples=2,000,000 (uncapped baseline loop)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"optimize samples are capped at 2000\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "optimize_benchmark_stop_6000",
+    "category": "dos-uncapped",
+    "detail": "optimize benchmark stop=6000 (O(range^2) kernel matrix)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"benchmark candidate span (stop - start) is capped at 512\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "optimize_huge_candidate",
+    "category": "dos-combined-work",
+    "detail": "optimize one huge candidate (trial-division magnitude)",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0004,
+      "body": "{\"error\":\"optimize exact factorization work is capped at 5000000 trial-division units\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "optimize_combined_work",
+    "category": "dos-combined-work",
+    "detail": "optimize 64 candidates x 32 layers x 2,000 samples",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"optimize combined matrix/evaluation work is capped at 1000000 cells\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "optimize_bruteforce_work",
+    "category": "dos-combined-work",
+    "detail": "optimize automatic comb(18,9) exact branch",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0003,
+      "body": "{\"error\":\"optimize combined matrix/evaluation work is capped at 1000000 cells\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "gaps_distinct_rational_bit_work",
+    "category": "dos-combined-work",
+    "detail": "100 exact gaps with distinct approximately 1,000-bit denominators",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0007,
+      "body": "{\"error\":\"supplied exact-gap rational work is capped at 8000000 bit-cells; use fewer or smaller distinct denominators, or exact=false\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  },
+  {
+    "name": "certificate_prefactored_bit_work",
+    "category": "dos-combined-work",
+    "detail": "18 valid prefactored denominators near the HTTP bit-work boundary",
+    "verdict": "HARDENED",
+    "result": {
+      "status": 400,
+      "elapsed_s": 0.0008,
+      "body": "{\"error\":\"certificate combined kernel/bit work is capped at 10000000 bit-cells\",\"status\":400}",
+      "timed_out": false,
+      "client_error": null
+    }
+  }
+]

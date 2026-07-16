@@ -1,0 +1,24 @@
+
+== gaps farey_order (~0.30*order^2 fractions) (/api/gaps) ==
+  n=200        status=200 t=0.1416s  -
+  n=400        status=200 t=0.6370s  x4.5
+  n=800        status=200 t=3.6942s  x5.8
+  n=1600       status=200 t=22.1876s  x6.0
+
+== shift p (O(p^2) exact Fraction loop) (/api/shift) ==
+  n=251        status=200 t=0.1802s  -
+  n=503        status=200 t=0.8703s  x4.8
+  n=1009       status=200 t=4.9524s  x5.7
+  n=2003       status=400 t=34.5197s  x7.0
+
+== optimize samples (uncapped baseline loop) (/api/optimize) ==
+  n=10000      status=200 t=0.3428s  -
+  n=40000      status=200 t=1.3963s  x4.1
+  n=160000     status=200 t=5.6565s  x4.1
+
+== certificate single prime (O(sqrt n) trial division) (/api/certificate) ==
+  n=10000000019 status=200 t=0.0128s  -
+  n=1000000000039 status=200 t=0.0235s  x1.8
+  n=100000000000031 status=200 t=0.2252s  x9.6
+
+All four endpoints accept unbounded n; cost grows super-linearly while /api/balance is the only route with admission caps.

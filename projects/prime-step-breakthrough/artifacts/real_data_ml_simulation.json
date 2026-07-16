@@ -1,0 +1,294 @@
+{
+  "certificate": {
+    "algorithm": "quota_edf_v1",
+    "lower_bound": "898/1797",
+    "max_discrepancy": "598/599",
+    "order_sha256": "e3ab631f6b2a50a1282147195a6cf22373c2a6fe57ca35d86c6d86229c65f061",
+    "positions": 1797,
+    "ratio_bound": "897/449",
+    "strict_factor": 3,
+    "verified": true
+  },
+  "claim_boundary": "Observed reductions apply to this classifier, dataset, pre-audit metadata, accuracy-audit metric, and simulation design. They do not establish universal accuracy, inference-compute, human-time, monetary, or production savings.",
+  "classifier": {
+    "accuracy_by_digit": {
+      "0": 0.9831460674157303,
+      "1": 0.7472527472527473,
+      "2": 0.8870056497175142,
+      "3": 0.8852459016393442,
+      "4": 0.9116022099447514,
+      "5": 0.9395604395604396,
+      "6": 0.9668508287292817,
+      "7": 0.9497206703910615,
+      "8": 0.7931034482758621,
+      "9": 0.8722222222222222
+    },
+    "audit_design": "predictions and confidence margins are treated as existing metadata; ground-truth reveal/validation is the ordered audit operation",
+    "correct": 1606,
+    "incorrect": 191,
+    "test_accuracy": 0.8937117417918754,
+    "training_source": "UCI designated training split only",
+    "type": "nearest class centroid, squared Euclidean distance"
+  },
+  "dataset": {
+    "archive_sha256": "0d7b054fea010270e9b3f06411c654c5e59547732ad626381980baffe0a23fb0",
+    "doi": "https://doi.org/10.24432/C50P49",
+    "features": 64,
+    "license": "CC BY 4.0",
+    "name": "UCI Optical Recognition of Handwritten Digits",
+    "test_rows": 1797,
+    "train_rows": 3823,
+    "url": "https://archive.ics.uci.edu/static/public/80/optical%2Brecognition%2Bof%2Bhandwritten%2Bdigits.zip"
+  },
+  "negative_control": {
+    "description": "within every predicted-digit x confidence stratum, incorrect cases are placed first; the tool still balances declared cells but cannot control hidden within-cell outcome order",
+    "metrics": {
+      "max_absolute_error": 0.42312350649775776,
+      "mean_absolute_error": 0.12224077776851783,
+      "mean_squared_error": 0.025422802927185555,
+      "one_percent_settling_prefix": 1643,
+      "root_mean_squared_error": 0.1594452976013578,
+      "warmup": 50
+    },
+    "outcome_leakage_intentional": true
+  },
+  "observed_orders": {
+    "original_uci_order": {
+      "max_absolute_error": 0.04926729734743096,
+      "mean_absolute_error": 0.008892942339611411,
+      "mean_squared_error": 0.00015126300074678878,
+      "one_percent_settling_prefix": 1067,
+      "root_mean_squared_error": 0.012298902420410887,
+      "warmup": 50
+    },
+    "quota_order_with_original_within_stratum_queues": {
+      "max_absolute_error": 0.02890730582717227,
+      "mean_absolute_error": 0.006272134999055819,
+      "mean_squared_error": 7.832323242073487e-05,
+      "one_percent_settling_prefix": 874,
+      "root_mean_squared_error": 0.008850041379605796,
+      "warmup": 50
+    }
+  },
+  "schema_version": "real-data-ml-simulation-v1",
+  "simulation": {
+    "checkpoints": {
+      "100": {
+        "absolute_error_reduction": 0.0767384999060241,
+        "random_mean_absolute_error": 0.023523252643294364,
+        "random_root_mean_squared_error": 0.029736488472281303,
+        "squared_error_reduction": 0.18348997517151722,
+        "tool_mean_absolute_error": 0.021718113522537538,
+        "tool_root_mean_squared_error": 0.026870171774514014
+      },
+      "1000": {
+        "absolute_error_reduction": 0.15456801785776975,
+        "random_mean_absolute_error": 0.0051627882582081204,
+        "random_root_mean_squared_error": 0.0064311533634921975,
+        "squared_error_reduction": 0.2704260212051257,
+        "tool_mean_absolute_error": 0.004364786310517524,
+        "tool_root_mean_squared_error": 0.005493176257260197
+      },
+      "200": {
+        "absolute_error_reduction": 0.13192198011668832,
+        "random_mean_absolute_error": 0.016149872008903596,
+        "random_root_mean_squared_error": 0.02038816411084359,
+        "squared_error_reduction": 0.2576889787940949,
+        "tool_mean_absolute_error": 0.014019348914857954,
+        "tool_root_mean_squared_error": 0.017565927057991607
+      },
+      "25": {
+        "absolute_error_reduction": -0.2668550242472649,
+        "random_mean_absolute_error": 0.05005929883138557,
+        "random_root_mean_squared_error": 0.061514644472341506,
+        "squared_error_reduction": -0.6524913546548188,
+        "tool_mean_absolute_error": 0.06341787423483604,
+        "tool_root_mean_squared_error": 0.0790766233712706
+      },
+      "50": {
+        "absolute_error_reduction": 0.11603941359630687,
+        "random_mean_absolute_error": 0.03452336672231484,
+        "random_root_mean_squared_error": 0.04296162513384769,
+        "squared_error_reduction": 0.2144811447269368,
+        "tool_mean_absolute_error": 0.030517295492487172,
+        "tool_root_mean_squared_error": 0.03807667423264167
+      },
+      "500": {
+        "absolute_error_reduction": 0.12681028901392144,
+        "random_mean_absolute_error": 0.009091089037284375,
+        "random_root_mean_squared_error": 0.01143145636526442,
+        "squared_error_reduction": 0.23108947228308496,
+        "tool_mean_absolute_error": 0.007938245409015051,
+        "tool_root_mean_squared_error": 0.01002396326782841
+      }
+    },
+    "expected_error_thresholds": {
+      "definition": "first prefix after which the across-trial expected error curve never again exceeds the stated threshold",
+      "mean_absolute_error": {
+        "0.005": {
+          "item_reduction": 0.1270772238514174,
+          "random_settling_prefix": 1023,
+          "tool_settling_prefix": 893
+        },
+        "0.010": {
+          "item_reduction": 0.1445221445221445,
+          "random_settling_prefix": 429,
+          "tool_settling_prefix": 367
+        },
+        "0.020": {
+          "item_reduction": 0.20143884892086328,
+          "random_settling_prefix": 139,
+          "tool_settling_prefix": 111
+        },
+        "0.030": {
+          "item_reduction": 0.13636363636363635,
+          "random_settling_prefix": 66,
+          "tool_settling_prefix": 57
+        }
+      },
+      "root_mean_squared_error": {
+        "0.005": {
+          "item_reduction": 0.10761589403973515,
+          "random_settling_prefix": 1208,
+          "tool_settling_prefix": 1078
+        },
+        "0.010": {
+          "item_reduction": 0.18003273322422264,
+          "random_settling_prefix": 611,
+          "tool_settling_prefix": 501
+        },
+        "0.020": {
+          "item_reduction": 0.15384615384615385,
+          "random_settling_prefix": 208,
+          "tool_settling_prefix": 176
+        },
+        "0.030": {
+          "item_reduction": 0.04081632653061229,
+          "random_settling_prefix": 98,
+          "tool_settling_prefix": 94
+        }
+      }
+    },
+    "integrated_prefix_error": {
+      "label_only_ablation": {
+        "mean_absolute_error": {
+          "bootstrap_95_interval": [
+            0.018325743484591595,
+            0.03364866444958259
+          ],
+          "paired_win_rate": 0.5605,
+          "random_mean": 0.007276465868109593,
+          "relative_reduction": 0.025921212915100078,
+          "tool_mean": 0.007087851047072866
+        },
+        "mean_squared_error": {
+          "bootstrap_95_interval": [
+            0.03739114179971459,
+            0.06891319246583116
+          ],
+          "paired_win_rate": 0.5455,
+          "random_mean": 0.00013951864479811677,
+          "relative_reduction": 0.05256435074991339,
+          "tool_mean": 0.000132184937816796
+        }
+      },
+      "mean_absolute_error": {
+        "bootstrap_95_interval": [
+          0.11113109576568037,
+          0.13888214826413192
+        ],
+        "paired_win_rate": 0.6645,
+        "random_mean": 0.007276465868109593,
+        "relative_reduction": 0.12505429590166184,
+        "tool_mean": 0.006366512552320673
+      },
+      "mean_squared_error": {
+        "bootstrap_95_interval": [
+          0.19168449077788907,
+          0.24717652779383847
+        ],
+        "paired_win_rate": 0.645,
+        "random_mean": 0.00013951864479811677,
+        "relative_reduction": 0.21865984360898727,
+        "tool_mean": 0.00010901151974602271
+      }
+    },
+    "paired_design": "each trial assigns identical random priorities to items; random order sorts all items, tool order sorts within each fixed stratum then quota-interleaves strata",
+    "seed_range": [
+      0,
+      1999
+    ],
+    "trials": 2000,
+    "warmup_prefix": 50
+  },
+  "strata": {
+    "correctness_used_to_define_strata": false,
+    "definition": "predicted digit x within-predicted-digit margin bin",
+    "ground_truth_used_to_define_strata": false,
+    "margin_bins": 5,
+    "margin_threshold_source": "UCI designated training split, grouped by training prediction",
+    "margin_thresholds_by_prediction": {
+      "0": [
+        0.5898503296021259,
+        0.6737421995400535,
+        0.7448365220911229,
+        0.8100185136623541
+      ],
+      "1": [
+        0.16274947798896602,
+        0.3154545380124364,
+        0.4312153379927395,
+        0.5313072679127137
+      ],
+      "2": [
+        0.3025204546312762,
+        0.49102765321309666,
+        0.5994728872751095,
+        0.7041780121968915
+      ],
+      "3": [
+        0.28314703231599314,
+        0.38760406329673647,
+        0.4918348955843041,
+        0.5943047411588076
+      ],
+      "4": [
+        0.24350585895888804,
+        0.4354235189186837,
+        0.5703216400124345,
+        0.6499113768017889
+      ],
+      "5": [
+        0.21913345473967122,
+        0.32966620441807515,
+        0.4467259224170711,
+        0.5536469010248734
+      ],
+      "6": [
+        0.46149057953032135,
+        0.5916797744163154,
+        0.6694267464343705,
+        0.7559009691175422
+      ],
+      "7": [
+        0.3267106657850162,
+        0.5421067961151378,
+        0.638639400518264,
+        0.7346401525949093
+      ],
+      "8": [
+        0.16622416054108818,
+        0.2895558747895832,
+        0.40385994214255894,
+        0.5002713520327988
+      ],
+      "9": [
+        0.1260370751552447,
+        0.24137186108658848,
+        0.3369521377156559,
+        0.41878863632262425
+      ]
+    },
+    "nonempty_joint_cells": 50
+  }
+}
