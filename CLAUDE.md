@@ -28,30 +28,41 @@ command installed (e.g. Codex, Antigravity) or shows an "unknown command"
 error. Treat the rest of the message as the task. Don't improvise a hand-rolled
 equivalent:
 
-- `/think` — How an agent should think and approach problems — first-principles, reduce/simplify before adding, research-and-borrow before building, experiment-and-falsify, never hallucinate or flatter
+- `/baton` — Drop/grab a verified session-handoff file — pass in-progress work to the next agent (future session, another window, codex) via .brainer/baton/
+- `/brainer-audit` — "Use when the user explicitly activates Brainer audit mode, asks to audit this session, audit Brainer use, or track Brainer skill usage
+- `/caveman-ultra` — Experimental/manual terse-output style retained for paired evaluation
+- `/fable-mode` — Experimental/manual five-gate work discipline retained for paired evaluation
+- `/lean-execution` — Experimental/manual lean-work protocol retained for paired evaluation
+- `/learn-skill` — Experimental/manual skill-learning workflow retained for paired evaluation
+- `/loop-engineering` — Experimental/manual loop-design workflow retained for paired evaluation
+- `/plan-first-execute` — Experimental/manual planning protocol retained for paired evaluation
+- `/prompt-triage` — "Experimental manual router for paired evaluation
+- `/requirements-ledger` — Experimental/manual visible requirements-ledger workflow retained for paired evaluation
+- `/self-improvement-loops` — Govern loops that optimize their own agent machinery.
+- `/standing-orders` — "Experimental standing-directive probes retained for shadow telemetry and paired evaluation
+- `/task-retrospective` — "Use only when the user explicitly arms task audit mode: /retro, asks for task-retrospective, says this task will repeat and should be learned from, or requests an after-the-fact task learning audit
+- `/team-lead` — "Experimental/manual orchestration protocol retained for paired evaluation
+- `/think` — "How an agent should think and approach problems — first-principles, reduce/simplify before adding, research-and-borrow before building, experiment-and-falsify, never hallucinate or flatter
+- `/verify-before-completion` — Experimental/manual FULL verification workflow retained for paired evaluation
+- `/wayfinder` — Experimental/manual decision-recovery workflow retained for paired evaluation
 
 ### Model-invokable (host fires on matching context)
 
 You don't need to dispatch these manually — but knowing they exist helps you
 notice when context matches one (e.g. `wiki-memory` for "have we done X").
 
-- `cache-lint` — Audit a Claude Code project for prompt-cache hygiene against Anthropic's six cache rules (ordering, dynamic-content injection, tool stability, model switching, breakpoint sizing, fork safety)
-- `caveman-ultra` — Terse output style
-- `compliance-canary` — Use when a long session drifts — the single always-on drift watcher: one UserPromptSubmit hook combining a periodic skill-rule re-anchor (every N turns), symptomatic per-skill drift probes (filler creep, word-count growth, unverified done-claims, self-closing without asking, looping tool errors, rule fade), and a request ledger that keeps every user request OPEN until completed or the user closes it (so nothing the user asked for is silently dropped)
-- `context-keeper` — PreCompact hook that extracts structured state (files, commands, errors, numbers, decisions, failures) from the transcript before compaction
+- `cache-lint` — Audit a Claude Code project for prompt-cache hygiene against Anthropic's six cache rules (ordering, dynamic-content injection, tool stability, model switching, breakpoint sizing, fork safety), plus a rule-7 tool-surface audit (resident-but-unused MCP servers)
+- `compliance-canary` — "Use when a long session may drift or needs verification-compliance monitoring
+- `context-keeper` — PreCompact hook that extracts structured state (files, commands, errors, numbers, decisions, failures) from the transcript before compaction, so the summarizer can't silently drop facts; a SessionEnd hook also archives the raw transcript to .brainer/sessions/raw/ (git-ignored)
 - `eval-gate` — Score AI output against a written rubric before it ships — an LLM-as-judge quality gate for content output (drafts, posts, answers) and product output (an agent's reply, an extraction, a generated payload)
+- `impact-of-change` — "Use before committing or claiming work done to map a code edit to its blast radius — which symbols depend on the changed ones, plus a LOW/MEDIUM/HIGH/UNKNOWN risk score
 - `index-first` — Prefer pre-built indexes over chains of grep/read/scan
-- `lean-execution` — Prune plans, process, context, and delegation to the smallest safe path
-- `loop-engineering` — Use BEFORE building any multi-step agentic loop, generator→verifier pipeline, fan-out/fleet, or iterate-until-correct/retry loop — INCLUDING an automated / unattended / scheduled / nightly process that regenerates, revises, or rebuilds artifacts and keeps retrying each until it passes a check, any self-correcting or "keep going until it's good enough" automation, and any build-and-verify or generate-and-grade pipeline
 - `output-filter` — Use when terminal output is noisy with ANSI / progress bars / duplicate lines and you want to keep the agent's eyes on signal
-- `plan-first-execute` — Plan before executing non-trivial tasks
-- `prompt-triage` — Use on every UserPromptSubmit (pre-model hook) to classify the prompt and emit a directive telling the main model which subagent/model should handle it
-- `requirements-ledger` — Use whenever the user states anything carrying intent — an ask, a question, a constraint, a preference, a compound "do X, Y, and Z" (one row per conjunct), or an implicit ask embedded in prose
+- `propagate` — "Use when the user asks to propagate, sync, roll out, or push Brainer skill changes to the sibling/consumer repos (screenery-lean, product images repo, farey-hecke, PROMPTER, …) after work in the canonical Brainer repo, or asks to harvest lessons, reap lessons, or bring learnings back from a sibling
+- `security-oversight` — "Use before committing or claiming work done to triage a code edit for INTRODUCED security risk — leaked secrets, dangerous sinks, untrusted deps, risky auth logic
 - `semantic-diff` — AST-node-level diff for file re-reads
-- `task-retrospective` — Use at the end of any non-trivial task (after the work is verified, before the final report); ALSO fire mid-task the moment the user corrects you — says you were wrong, that you skipped a step or claimed something without actually running it, calls out a mistake you have made before ("again", "second time", "you keep", "I told you", "stop doing that"), or pushes back on your approach; or when the user types /retro
-- `verify-before-completion` — Use before claiming work is done, fixed, passing, committed, or ready
-- `wiki-memory` — Repo-local markdown wiki with progressive retrieval (search → timeline → fetch) and gated writes (verified facts only)
-- `wiki-refresh` — Reconcile wiki-memory pages against the current codebase — Keep / Update / Consolidate / Replace / Delete drifted ones
+- `wiki-memory` — "Repo-local markdown wiki with progressive retrieval (search → timeline → fetch) and gated writes (verified facts only)
+- `wiki-refresh` — "Reconcile wiki-memory pages against the current codebase — Keep / Update / Consolidate / Replace / Delete drifted ones
 - `write-gate` — Decide whether a candidate fact deserves persistent memory
 
 ### Durable memory store (`wiki/`)

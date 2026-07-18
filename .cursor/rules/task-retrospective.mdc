@@ -1,0 +1,7 @@
+---
+description: "Use only when the user explicitly arms task audit mode: /retro, asks for task-retrospective, says this task will repeat and should be learned from, or requests an after-the-fact task learning audit. Reconstructs the task, extracts reusable project lessons, and routes sparse durable updates through write-gate to project memory, SOPs, checklists, or project-specific skills. Never audits Brainer skill obedience or edits canonical Brainer skills."
+globs: ["**/*"]
+alwaysApply: false
+---
+
+@skills/task-retrospective/SKILL.md

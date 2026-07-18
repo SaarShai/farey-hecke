@@ -28,8 +28,23 @@ WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 TRUST_TIERS = {"asserted": 1.0, "corroborated": 2.0, "verified": 3.0, "user_confirmed": 4.0}
 DEFAULT_TRUST = "asserted"
 V2_REQUIRED = ("title", "type", "domain", "tier", "confidence", "created", "updated", "verified", "sources", "supersedes", "superseded-by", "tags")
-V2_TYPES = {"entity", "summary", "decision", "source-summary", "procedure", "concept", "pattern", "project", "query", "fact", "sop", "raw", "person", "handoff"}
+# `error` + `lesson` are first-class failure-page types across the codebase
+# (decay.PROTECTED_TYPES, maturity ladder, SKILL.md write doctrine "error/lesson
+# page; decay-protected") but were missing here — a correctly-authored
+# `type: error`/`lesson` page used to fail strict lint with `invalid_type`. Keep
+# this set the single source of truth for the type vocabulary.
+V2_TYPES = {"entity", "summary", "decision", "source-summary", "procedure", "concept", "pattern", "project", "query", "fact", "sop", "raw", "person", "handoff", "error", "lesson"}
 V2_TIERS = {"working", "episodic", "semantic", "procedural"}
+# Retrieval-cue (SKILL.md step 8b): error/lesson/sop pages must name the
+# observable symptom in the BODY so a future agent finds them by symptom via
+# search (which ranks body, NOT arbitrary frontmatter keys). Accept the cue in
+# any label form — heading (`## Symptom`), bullet (`- Symptom:`), numbered
+# (`1. Trigger`), bold (`**Trigger / symptom:**`), blockquote, or a plain line —
+# and allow the plural; `Triggering`/`symptomatic` are excluded by the trailing
+# \b. Scanned over a fenced-code-stripped body (the has_falsifier/content_tokens
+# convention) so a trigger:/symptom: line inside a ``` example does NOT satisfy it.
+_TRIGGER_CUE_RE = re.compile(r"(?im)^[\s#>*_.\d)\-`]*(trigger|symptom)s?\b")
+_TRIGGER_CUE_TYPES = {"error", "lesson", "sop"}
 
 
 DEFAULT_SCHEMA = """# Brainer Wiki Schema
@@ -37,14 +52,20 @@ DEFAULT_SCHEMA = """# Brainer Wiki Schema
 Purpose: a repo-local markdown LLM wiki for durable agent memory in the current target project.
 
 ## Layers
-- `raw/`: immutable sources. Never rewrite.
-- `concepts/`, `patterns/`, `projects/`, `people/`, `queries/`: synthesized target-project pages.
+Primary knowledge folders — new pages go here, chosen by *kind of knowledge*:
+- `concepts/`: atomic technique/idea pages (the bulk of curated knowledge; durable facts land here).
+- `patterns/`: reusable workflows and runbooks (playbooks/SOPs land here).
+- `projects/`: active target-project state.
+- `queries/`: durable Q&A.
+- `people/`: referenced humans.
+- `raw/`: immutable sources. Never rewrite. Search-visible, not auto-loaded.
+
+Index + scaffolding:
 - `index.md`: compact catalog. Read first.
 - `log.md`: append-only operation timeline.
 - `L0_rules.md`: stable rules loaded at startup.
-- `L1_index.md`: compact pointer index loaded at startup.
-- `L2_facts/`: verified durable facts.
-- `L3_sops/`: solved-task playbooks.
+- `L1_index.md`: compact pointer index loaded at startup (catalogs concepts/patterns/projects/queries).
+- `L2_facts/`, `L3_sops/`: available L-tier buckets, **often empty** — not the primary store; facts file under `concepts/`/`queries/` and SOPs under `patterns/`. Pick the folder by kind, not by L-tier number.
 - `L4_archive/`: cold session archives.
 
 ## Frontmatter v2 for new pages
@@ -52,7 +73,7 @@ Purpose: a repo-local markdown LLM wiki for durable agent memory in the current 
 ---
 schema_version: 2
 title: Example
-type: entity|summary|decision|source-summary|procedure|concept|pattern|project|query|fact|sop|raw|person|handoff
+type: entity|summary|decision|source-summary|procedure|concept|pattern|project|query|fact|sop|raw|person|handoff|error|lesson
 domain: framework|tools|patterns|experiments|project
 tier: working|episodic|semantic|procedural
 confidence: 0.0
@@ -76,16 +97,16 @@ Legacy v1 pages remain readable. Strict lint emits migration warnings for v1 pag
 
 ## Workflows
 - Ingest: source -> `raw/` note -> update synthesized pages -> backlinks -> `index.md`/`log.md`.
-- Query: search -> timeline -> fetch only relevant pages -> cite paths -> file answer in `queries/` when it will be reused.
+- Query: search -> timeline -> fetch only relevant pages -> cite paths -> file answer in `queries/` when it will be reused. `timeline` returns the page's link graph (`backlinks`/`outbound`/`neighbors`) — follow those edges as next-hops before broadening to a fresh search.
 - Lint: stale claims, orphan pages, broken links, contradictions, supersession candidates.
-- Crystallize: successful verified work -> `L3_sops/` and durable lessons.
+- Crystallize: successful verified work -> a `patterns/` playbook (or `L3_sops/` for a runbook) plus durable lessons.
 
 ## Imported Wiki Completeness
 - Imported projects must be self-contained in this working folder.
 - Treat any previous project wiki as source evidence only; adapt its useful information into repo-local pages.
 - `index.md` and `L1_index.md` must point to local wiki pages and local commands only.
 - After import, agents must not use home-directory rules, external wikis, or source-wiki paths for project facts.
-- Validate imported projects with `./te wiki import-audit --manifest raw/<date>-import-manifest.md`.
+- Validate imported projects with `python3 skills/wiki-memory/tools/wiki.py import-audit --manifest raw/<date>-import-manifest.md`.
 """
 
 
@@ -208,6 +229,22 @@ def strip_fenced_code(text: str) -> str:
     return "".join(out)
 
 
+INLINE_CODE_RE = re.compile(r"`+[^`\n]*`+")
+
+
+def strip_inline_code(text: str) -> str:
+    """Remove `inline code` spans before wikilink extraction.
+
+    strip_fenced_code handles ```fenced``` blocks; this handles single-backtick
+    spans. A `[[link]]` written inside inline code (e.g. documenting a malformed
+    `related: [[x]], [[y]]` frontmatter example, or a `[[wiki-refresh]]` code
+    reference) is NOT a real link — Obsidian does not render wikilinks inside
+    code spans — so it must not leak into the link graph as a broken_link
+    false positive.
+    """
+    return INLINE_CODE_RE.sub(" ", text)
+
+
 def normalize_wikilink(inner: str) -> str:
     target = inner.strip().split("|", 1)[0].split("#", 1)[0].strip()
     return target.rstrip("\\").removesuffix(".md")
@@ -229,6 +266,24 @@ def confidence_value(value: str) -> float | None:
     except (TypeError, ValueError):
         legacy = {"low": 0.25, "med": 0.6, "medium": 0.6, "high": 0.9}
         return legacy.get(str(value).strip().lower())
+
+
+def _env_float(name: str, default: float) -> float:
+    """Read a float-valued env knob, falling back to default on absent/garbage."""
+    import os
+    try:
+        return float(os.environ[name])
+    except (KeyError, ValueError, TypeError):
+        return default
+
+
+def _env_int(name: str, default: int) -> int:
+    """Read an int-valued env knob, falling back to default on absent/garbage."""
+    import os
+    try:
+        return int(os.environ[name])
+    except (KeyError, ValueError, TypeError):
+        return default
 
 
 def estimate_tokens(text: str) -> int:
@@ -657,6 +712,21 @@ class WikiReadOnEmptyError(RuntimeError):
     """Read op against a repo with no wiki root — graceful empty, never scaffold."""
 
 
+class WikiUnsupportedQueryError(ValueError):
+    """A `search` query is malformed / unsupported — NOT a valid zero-match.
+
+    Lineage: codebase-memory-mcp `cypher.c` unsupported-feature errors. A query
+    that reduces to zero usable tokens (empty / whitespace / pure punctuation /
+    all-stopwords) cannot be served and would otherwise return an empty list
+    indistinguishable from a valid query that simply matched nothing. Raise this
+    so the caller/CLI emits an explicit `unsupported query: <reason>` (nonzero
+    exit) instead of a silent empty result. Carries `.reason` for the CLI."""
+
+    def __init__(self, reason: str):
+        super().__init__(f"unsupported query: {reason}")
+        self.reason = reason
+
+
 class WikiWriteRejected(RuntimeError):
     """A `new`/write was refused by the memory-file contract (low signal or
     near-duplicate). Carries a structured `.report` so the caller/CLI can
@@ -710,6 +780,40 @@ def _load_write_gate():
         return mod
     except Exception:
         return None
+
+
+# SCOPE classification default for wiki-memory candidates — LEARNING_CONTRACT §1
+# (skills/_shared/LEARNING_CONTRACT.md): every write-gate candidate needs a scope
+# or it is unbankable. wiki-memory pages are, by definition, repo-scoped facts/SOPs
+# not tied to one skill ("this-repo" per the canon table) — L2 facts, L3 SOPs, and
+# timeline/log entries all default there. The one exception is L0 rules: those are
+# cross-skill canon (every skill reads L0 at boot), so a candidate destined for
+# L0_rules.md defaults to "cross-skill" instead. Callers may always pass an
+# explicit `scope=` to override either default — this is a DEFAULT, not a lock-in.
+_DEFAULT_SCOPE = "this-repo"
+
+# Mirror of write_gate.SCOPE_VALUES (LEARNING_CONTRACT §1) for the one path
+# where the write-gate module itself isn't importable (_load_write_gate()
+# returns None — skill not installed alongside): gate_candidate must still
+# reject an invalid/garbage scope end-to-end rather than silently accept it
+# just because the scorer that normally validates it is absent. When write-gate
+# IS loaded, its own SCOPE_VALUES is used instead (single source of truth).
+_FALLBACK_SCOPE_VALUES = {"this-skill", "this-repo", "cross-skill", "cross-repo", "canon"}
+
+
+def _default_wiki_scope(target_dir: str | None = None) -> str:
+    """Default SCOPE for a wiki-memory write candidate, by page kind.
+
+    `target_dir` is the template_map destination directory (e.g. "L2_facts",
+    "queries", "concepts") when known. L0_rules is a singleton file (not a
+    `new_page` template destination) — a candidate targeting it is matched by
+    directory name here (an "L0"-prefixed target_dir) and defaults to
+    "cross-skill"; every other destination (L2 facts, L3 SOPs, decisions,
+    concepts, timeline/log entries) defaults to "this-repo". Callers may
+    always pass an explicit `scope=` to override either default."""
+    if target_dir and target_dir.strip("/").upper().startswith("L0"):
+        return "cross-skill"
+    return _DEFAULT_SCOPE
 
 
 class WikiStore:
@@ -820,7 +924,7 @@ class WikiStore:
             if clean and not clean.startswith("#"):
                 preview = clean[:240]
                 break
-        links = [normalize_wikilink(x) for x in WIKILINK_RE.findall(strip_fenced_code(body))]
+        links = [normalize_wikilink(x) for x in WIKILINK_RE.findall(strip_inline_code(strip_fenced_code(body)))]
         page = Page(
             id=page_id(self.root, path),
             path=path,
@@ -909,21 +1013,31 @@ class WikiStore:
             "stable/AGENT_PROMPT",
             "stable/README",
         }
+        # Scaffolding/support trees kept OUT of the startup index. `concepts` and
+        # `patterns` were here too — that silently dropped the bulk of curated
+        # knowledge (the 27 concept pages) from L1, so an agent reading L1 first
+        # had no signal they existed. They are knowledge, not scaffolding: list
+        # them. `people` stays excluded (entities, low retrieval value).
         l1_support_dirs = {
             "adapters",
             "bench",
-            "concepts",
             "configs",
             "extensions",
             "hooks",
-            "patterns",
             "people",
             "prompts",
             "skills",
             "stable",
             "templates",
         }
-        ordered = sorted(pages, key=lambda p: (0 if p.id in priority else 1, p.id))
+        def _l1_tier_rank(pid: str) -> int:
+            # Emit small high-value tiers BEFORE the high-volume concepts/ tier:
+            # a plain alphabetical sort put `concepts/*` ahead of `projects/*` /
+            # `queries/*`, so a cap would drop those first. Lower rank = first.
+            top = Path(pid).parts[0] if "/" in pid else ""
+            return {"projects": 0, "queries": 1, "patterns": 2, "L4_archive": 3, "concepts": 4}.get(top, 5)
+
+        ordered = sorted(pages, key=lambda p: (0 if p.id in priority else 1, _l1_tier_rank(p.id), p.id))
         seen_l1 = {
             "start",
             "config",
@@ -940,17 +1054,19 @@ class WikiStore:
             "CLAUDE",
             "GEMINI",
         }
+        eligible = []
         for page in ordered:
-            if len(l1_lines) >= 45:
-                break
             if page.id in seen_l1:
                 continue
             if page.id == "INSTALL":
                 continue
             if page.id in bundled_framework_pages:
                 continue
-            parts = set(Path(page.id).parts)
-            if parts & l1_support_dirs:
+            # Anchor the support-dir exclusion to the TOP-LEVEL component, not a
+            # set-intersection over every path part — else a future nested
+            # knowledge page like `concepts/skills/x` would be wrongly dropped
+            # because "skills" appears somewhere in its path.
+            if (Path(page.id).parts[0] if "/" in page.id else page.id) in l1_support_dirs:
                 continue
             if page.id.startswith("extensions/") and page.id != "extensions/README":
                 continue
@@ -960,9 +1076,18 @@ class WikiStore:
                 continue
             if page.id.endswith("/INSTALL") or "/agents/" in page.id or "/kaggle_results/" in page.id:
                 continue
+            eligible.append(page)
+            seen_l1.add(page.id)
+        # Cap raised 45→120 (compact; loaded once). If the wiki ever outgrows it,
+        # truncation is SURFACED, not silent — drop the tail and say how many,
+        # tier-ordered so projects/queries survive ahead of bulky concepts/.
+        L1_CAP = 120
+        slots = max(0, L1_CAP - len(l1_lines))
+        for page in eligible[:slots]:
             tags = f" tags={','.join(page.tags)}" if page.tags else ""
             l1_lines.append(f"- {page.id} ({page.type or 'page'}{tags}) -> `{page.path.relative_to(self.root).as_posix()}`")
-            seen_l1.add(page.id)
+        if len(eligible) > slots:
+            l1_lines.append(f"- … +{len(eligible) - slots} more page(s) not listed (L1 cap {L1_CAP}) — use `search` to reach them")
         (self.root / "L1_index.md").write_text("\n".join(l1_lines) + "\n", encoding="utf-8")
         # H2 fix: bump db mtime to be strictly newer than any .md we just
         # touched. Without this, L1_index.md (written above) shows up newer
@@ -974,7 +1099,57 @@ class WikiStore:
             os.utime(self.db_path, (now, now))
         except OSError:
             pass
-        return {"indexed": len(pages), "db": str(self.db_path), "fts5": fts_enabled}
+        # #2 DEGRADED-WRITE (cbm dump_verify.h #334): after the write, re-count
+        # rows actually persisted to the docs table and compare against the
+        # expected page count. A silent shortfall (a write that half-landed)
+        # surfaces as status:"degraded" instead of a clean ok.
+        verdict = self.verify_persistence(expected=len(pages))
+        return {"indexed": len(pages), "db": str(self.db_path), "fts5": fts_enabled,
+                "persisted": verdict["persisted"], "status": verdict["status"]}
+
+    def verify_persistence(self, expected: int, persisted: int | None = None) -> dict[str, Any]:
+        """Re-count persisted docs rows vs expected; flag a degraded write.
+
+        Lineage: codebase-memory-mcp `dump_verify.h` #334 — never report a clean
+        ok when fewer rows landed than were handed in. Pages-only (the docs
+        table is the unit of memory). A `floor` skips tiny stores where a small
+        absolute miss is noise, not corruption. The ratio is env-tunable via
+        `WIKI_DEGRADED_RATIO` (default 0.5): persisted < ratio*expected (and
+        expected >= floor) => degraded.
+
+        `persisted` may be passed in (tests / callers that already counted);
+        otherwise it is read live from the docs table. Never raises on a DB read
+        error — a missing/locked DB reports persisted=0 (which on a real store
+        above the floor is itself a degraded signal)."""
+        floor = _env_int("WIKI_DEGRADED_FLOOR", 5)
+        ratio = _env_float("WIKI_DEGRADED_RATIO", 0.5)
+        # Clamp env knobs to sane ranges so an absurd value (inf / -inf / nan /
+        # >1 / <=0) can't silently disable the check (false-ok on data loss) or
+        # force it (false-degraded on a healthy write). Reset garbage to default.
+        # ratio MUST be > 0: ratio=0 makes `persisted < 0*expected` always false,
+        # masking 100% data loss as "ok" — so 0 is reset to the 0.5 default, not
+        # honored as a "disable" knob.
+        import math
+        if not math.isfinite(ratio) or not (0.0 < ratio <= 1.0):
+            ratio = 0.5
+        if floor < 0:
+            floor = 0
+        if persisted is None:
+            persisted = 0
+            try:
+                with sqlite3.connect(self.db_path, timeout=10) as conn:
+                    row = conn.execute("SELECT COUNT(*) FROM docs").fetchone()
+                    persisted = int(row[0]) if row else 0
+            except sqlite3.Error:
+                persisted = 0
+        degraded = expected >= floor and persisted < ratio * expected
+        return {
+            "status": "degraded" if degraded else "ok",
+            "expected": expected,
+            "persisted": persisted,
+            "ratio": ratio,
+            "floor": floor,
+        }
 
     def _ensure_db(self) -> None:
         # Read paths (search/fetch/timeline/context) must NOT scaffold a wiki
@@ -1005,7 +1180,37 @@ class WikiStore:
         if newest_md > db_mtime:
             self.index()
 
+    @staticmethod
+    def _validate_query(query: str) -> None:
+        """Reject a malformed/unsupported query LOUDLY (cbm cypher.c lineage).
+
+        A query that carries no searchable token — empty, whitespace-only, pure
+        punctuation, or entirely stopwords — cannot be served. Without this it
+        would silently fall through `_rank_pages` (zero tokens => zero hits) and
+        return `[]`, indistinguishable from a valid query that matched nothing.
+        Distinguish the two: unsupported => raise; valid-but-zero-match => [].
+        """
+        if query is None or not str(query).strip():
+            raise WikiUnsupportedQueryError("empty query")
+        q = str(query)
+        # Unicode-aware: any letter/digit (incl. non-ASCII) is searchable content.
+        # A non-ASCII query (e.g. 'тест', '你好') is a VALID query that may match
+        # zero rows — NOT "unsupported". Only pure punctuation is unsupported.
+        if not any(ch.isalnum() for ch in q):
+            raise WikiUnsupportedQueryError("no alphanumeric tokens (punctuation only)")
+        # Reject only when EVERY ASCII alnum token is a stopword (e.g. "the and
+        # for"). A single non-stopword content char like "3" or "k" is a VALID
+        # query — so mirror query_tokens' stopword set but NOT its len>1 ranking
+        # filter (validation ≠ ranking). Non-ASCII queries already passed above.
+        if q.isascii():
+            _stop = {"the", "and", "for", "with", "into", "from", "that", "this",
+                     "when", "what", "need", "needs", "task"}
+            _toks = re.findall(r"[A-Za-z0-9_/-]+", q.lower())
+            if not any(t not in _stop for t in _toks):
+                raise WikiUnsupportedQueryError("only stopwords — nothing searchable")
+
     def search(self, query: str, k: int = 10) -> list[dict[str, Any]]:
+        self._validate_query(query)
         self._ensure_db()
         return [self._search_hit(page, score, reasons) for page, score, reasons in self._rank_pages(query)[:k]]
 
@@ -1208,12 +1413,41 @@ class WikiStore:
         pages = self.pages()
         target_id = page["id"]
         target_title = page["title"]
+        id_set = {p.id for p in pages}
+        stem_to_id: dict[str, str] = {}
+        for p in pages:
+            stem_to_id.setdefault(Path(p.id).name, p.id)
+        page_by_id = {p.id: p for p in pages}
+
+        def resolve(raw_link: str) -> str | None:
+            # Resolve a wikilink to a canonical page id, or None. A FULL-PATH link
+            # (contains '/') must match an id exactly — a full-path MISS is a
+            # dangler, never silently rerouted onto an unrelated same-basename page
+            # in another dir. Bare names fall back to stem resolution (the
+            # wiki-wide convention; cf. incoming-count + gaps). `?`-stubs strip to
+            # the bare target and resolve only if a real page now exists.
+            link = normalize_wikilink(raw_link).lstrip("?")
+            if not link:
+                return None
+            if link in id_set:
+                return link
+            if "/" in link:
+                return None
+            return stem_to_id.get(Path(link).name)
+
         backlinks = []
         neighbors = []
         same_dir = []
         for p in pages:
-            if target_id in p.links or target_title in p.links:
-                backlinks.append({"id": p.id, "title": p.title, "path": p.path.relative_to(self.root).as_posix()})
+            # backlinks: resolve the CITING page's links the same way outbound
+            # does, so a bare-stem citation [[a]] counts as a backlink of
+            # concepts/a — symmetric with outbound and with lint's inbound/orphan
+            # counting (which already stem-resolves). Exclude self-links.
+            if p.id != target_id:
+                p_targets = {resolve(x) for x in p.links}
+                p_targets.discard(None)
+                if target_id in p_targets or target_title in p.links:
+                    backlinks.append({"id": p.id, "title": p.title, "path": p.path.relative_to(self.root).as_posix()})
             if str(p.path.parent) == str((self.root / page["path"]).parent):
                 same_dir.append(p)
         same_dir = sorted(same_dir, key=lambda p: p.path.as_posix())
@@ -1223,6 +1457,20 @@ class WikiStore:
             for p in same_dir[max(0, idx - window) : idx + window + 1]:
                 if p.id != target_id:
                     neighbors.append({"id": p.id, "title": p.title, "path": p.path.relative_to(self.root).as_posix()})
+        # Outbound: the target page's OWN [[links]], resolved to real pages — the
+        # most direct "this page points you to X" navigation hop, which backlinks
+        # (who points HERE) and same-dir neighbors both miss. `?`-stubs and
+        # danglers resolve to None and are skipped.
+        outbound: list[dict[str, str]] = []
+        seen_out: set[str] = set()
+        target_page = page_by_id.get(target_id)
+        if target_page:
+            for raw_link in target_page.links:
+                resolved = resolve(raw_link)
+                if resolved and resolved != target_id and resolved not in seen_out:
+                    seen_out.add(resolved)
+                    rp = page_by_id[resolved]
+                    outbound.append({"id": rp.id, "title": rp.title, "path": rp.path.relative_to(self.root).as_posix()})
         log_hits = []
         log_path = self.root / "log.md"
         if log_path.exists():
@@ -1250,7 +1498,7 @@ class WikiStore:
             for line in stream:
                 if target_id in line or target_title in line:
                     log_hits.append(line[:240])
-        return {"id": target_id, "backlinks": backlinks[:20], "neighbors": neighbors[:20], "log": log_hits[-10:]}
+        return {"id": target_id, "backlinks": backlinks[:20], "outbound": outbound[:20], "neighbors": neighbors[:20], "log": log_hits[-10:]}
 
     def lint(self) -> dict[str, Any]:
         return self.lint_pages(strict=False)
@@ -1276,7 +1524,7 @@ class WikiStore:
             if clean and not clean.startswith("#"):
                 preview = clean[:240]
                 break
-        links = [normalize_wikilink(x) for x in WIKILINK_RE.findall(strip_fenced_code(body))]
+        links = [normalize_wikilink(x) for x in WIKILINK_RE.findall(strip_inline_code(strip_fenced_code(body)))]
         try:
             rel = path.resolve().relative_to(scope_root).with_suffix("").as_posix()
         except ValueError:
@@ -1382,7 +1630,12 @@ class WikiStore:
                 missing_frontmatter.append(p.id)
                 if strict:
                     warn.append({"code": "legacy_missing_frontmatter", "page": p.id})
-            if "supersedes" in p.frontmatter or "superseded-by" in p.frontmatter:
+            # Count only pages with an ACTUAL supersession relationship (a
+            # non-empty value), not every v2 page: the v2 schema REQUIRES the
+            # `supersedes`/`superseded-by` keys, so a key-presence test flagged
+            # every compliant page (32 live) and made the metric meaningless.
+            if listish_has_value(p.frontmatter.get("supersedes", "")) or \
+               listish_has_value(p.frontmatter.get("superseded-by", "")):
                 supersession.append(p.id)
             if strict:
                 contradicts_value = p.frontmatter.get("contradicts", "")
@@ -1543,6 +1796,16 @@ class WikiStore:
         if resource and not resource.startswith(("http://", "https://", "~", "/")) and "/" in resource:
             if not ((self.root.parent / resource).exists() or (self.root / resource).exists()):
                 errors.append({"code": "broken_resource", "page": page.id, "target": resource})
+        # Retrieval-cue enforcement (SKILL.md step 8b). A failure/lesson/sop page
+        # whose symptom lives only in a `trigger:`/`symptom:` frontmatter key is a
+        # silent search no-op (search ranks body, not frontmatter). Flag the
+        # frontmatter-only footgun specifically; otherwise flag the missing cue.
+        if fm.get("type") in _TRIGGER_CUE_TYPES:
+            if not _TRIGGER_CUE_RE.search(strip_fenced_code(page.body)):
+                if "trigger" in fm or "symptom" in fm:
+                    warnings.append({"code": "trigger_in_frontmatter_only", "page": page.id})
+                else:
+                    warnings.append({"code": "missing_trigger_cue", "page": page.id})
 
     def import_audit(self, manifest: str | Path) -> dict[str, Any]:
         manifest_path = Path(manifest).expanduser()
@@ -1729,7 +1992,7 @@ class WikiStore:
         cand_title_toks = {t for t in query_tokens(title)}
         cand_content = content_tokens(f"{title}\n{body}")
         cand_refs = extract_refs(body)
-        cand_links = {normalize_wikilink(x).lower() for x in WIKILINK_RE.findall(strip_fenced_code(body))}
+        cand_links = {normalize_wikilink(x).lower() for x in WIKILINK_RE.findall(strip_inline_code(strip_fenced_code(body)))}
 
         # Pre-filter with the existing ranker so we only dim-score plausible
         # neighbours, not the whole wiki.
@@ -1910,6 +2173,49 @@ class WikiStore:
                       f"update in place; if they CONFLICT, mark contradicts:[[{bm['id']}]] both ways so retrieval "
                       f"surfaces the dispute instead of serving one as truth.")
         return {**base, "action": action, "reason": reason}
+
+    def quorum(self, title: str, body: str = "", tags: list[str] | None = None,
+               sources: int = 1, verified: bool = False, user_confirmed: bool = False,
+               k: int = 5) -> dict[str, Any]:
+        """Quorum gate for compile-on-ingest (the autonomous substitute for Karpathy's
+        human lint reviewer). Should this compiled candidate AUTO-FILE to the durable
+        graph, or be QUARANTINED as an `asserted` draft pending confirmation?
+
+        Combines the trust-quorum decision (provenance.quorum_decision: auto-file only
+        at corroborated+, i.e. >=2 independent sources / verified / user-confirmed) with
+        the dedup `overlap` check, so one call tells the compile procedure: (a) auto-file
+        vs quarantine, (b) at what trust tier, (c) whether a same-subject page already
+        exists (update instead of create). Reuses `resolve` for the conflict case — this
+        verb only decides admission, not who-wins-a-contradiction."""
+        import provenance as _prov
+        decision = _prov.quorum_decision(sources=sources, verified=verified,
+                                         user_confirmed=user_confirmed)
+        ov = self.overlap(title, body=body, tags=tags, k=k)
+        band = ov.get("overlap")
+        # A same-subject page already exists (overlap high): reconcile into it, never
+        # create a parallel page. If the candidate cleared the quorum (autofile-trust),
+        # update the existing page; if it is only quarantine-trust, route through
+        # `resolve` (trust-gated) so its low trust is WEIGHED against the existing page
+        # (likely reject/dispute) instead of silently updating the graph from one
+        # unverified source — `update-existing` on a quarantined candidate would
+        # contradict the quarantine and is never emitted.
+        if band == "high":
+            target = "update-existing" if decision["action"] == "autofile" else "reconcile-via-resolve"
+        elif decision["action"] == "autofile":
+            target = "create"
+        else:
+            target = "create-quarantined-draft"
+        return {
+            "title": title,
+            "action": decision["action"],
+            "trust": decision["trust"],
+            "tier": decision["tier"],
+            "auto_file": decision["auto_file"],
+            "reason": decision["reason"],
+            "overlap": band,
+            "best_match": ov.get("best_match"),
+            "recommended_target": target,
+        }
 
     # GRAFT 2 support — code-grounded staleness signal. The refresh skill reads
     # this to decide Keep/Update/Replace/Delete: a page whose cited code paths
@@ -2449,6 +2755,92 @@ class WikiStore:
         return {"total_findings": total, "by_angle": by_angle,
                 "note": "one-pass epistemic health (report-only); 0 = healthy. Run the individual verb behind any non-zero count for detail."}
 
+    def stale_citers(self) -> dict[str, Any]:
+        """REPORT-ONLY belief-update propagation: pages whose BODY cites a page that
+        is itself superseded or contested, so the citation can be repointed.
+
+        The wiki already supports supersession (`superseded-by`) and contradiction
+        (`contradicts:`) ON the cited page, but that status does NOT propagate to the
+        pages still linking to it — they keep pointing readers at outdated knowledge
+        (GLM-5.2 review: "supersession doesn't ripple to citers"). This surfaces those
+        citers; the agent / `wiki-refresh` decides whether to repoint each. One-
+        directional and report-only: it never rewrites another page's body, matching
+        the wiki's invalidate-don't-delete stance and the autonomous poison-defense
+        (surface the conflict, don't silently mutate)."""
+        pages = [p for p in self._knowledge_pages(include_raw=False) if p.frontmatter]
+        ids = {p.id for p in pages}
+        stem: dict[str, str] = {}
+        for p in pages:
+            stem.setdefault(Path(p.id).name, p.id)
+
+        def resolve_one(raw: str) -> str | None:
+            t = raw.removesuffix(".md").lstrip("?")
+            if not t:
+                return None
+            return t if t in ids else stem.get(Path(t).name)
+
+        def fm_targets(value: str) -> list[str]:
+            out: list[str] = []
+            for m in re.findall(r"\[\[([^\]]+)\]\]", value or ""):
+                tgt = resolve_one(normalize_wikilink(m))
+                if tgt and tgt not in out:
+                    out.append(tgt)
+            return out
+
+        # Classify each page's outdated status (only pages that declare it).
+        superseded_by: dict[str, list[str]] = {}   # outdated id -> [newer ids]
+        contested: set[str] = set()
+        for p in pages:
+            sby = p.frontmatter.get("superseded-by", "")
+            if listish_has_value(sby):
+                newer = fm_targets(sby)
+                # Only treat as superseded-for-propagation if the replacement resolves
+                # to a real page — otherwise there is no `newer` to repoint citers at, so
+                # flagging a citer with newer=[] is an unactionable false positive. A
+                # broken/non-resolving superseded-by link is lint's `broken_supersession`,
+                # a separate concern from belief-update propagation.
+                if newer:
+                    superseded_by[p.id] = newer
+            if listish_has_value(p.frontmatter.get("contradicts", "")):
+                contested.add(p.id)
+
+        cites_superseded: list[dict[str, Any]] = []
+        cites_contested: list[dict[str, Any]] = []
+        for c in pages:
+            seen: set[str] = set()
+            for link in c.links:
+                t = resolve_one(link)
+                if not t or t == c.id or t in seen:
+                    continue
+                seen.add(t)
+                if t in superseded_by:
+                    newer = superseded_by[t]
+                    # Don't flag the superseding page for citing what it replaces.
+                    if c.id not in newer:
+                        cites_superseded.append({
+                            "citer": c.id,
+                            "citer_path": c.path.relative_to(self.root).as_posix(),
+                            "cites": t,
+                            "newer": newer,
+                        })
+                if t in contested:
+                    cites_contested.append({
+                        "citer": c.id,
+                        "citer_path": c.path.relative_to(self.root).as_posix(),
+                        "cites": t,
+                    })
+        cites_superseded.sort(key=lambda r: (r["citer"], r["cites"]))
+        cites_contested.sort(key=lambda r: (r["citer"], r["cites"]))
+        return {
+            "cites_superseded": cites_superseded,
+            "cites_contested": cites_contested,
+            "count": len(cites_superseded) + len(cites_contested),
+            "scanned": len(pages),
+            "note": ("belief-update propagation (report-only): body citations of a "
+                     "superseded/contested page; repoint each citer at the newer page "
+                     "or note the dispute. Never auto-rewrites."),
+        }
+
     def calibration(self, high: float = 0.8, low: float = 0.4, stale_days: int = 180) -> dict[str, Any]:
         """REPORT-ONLY calibration lens: does a page's stated `confidence` MATCH its
         evidence? Confidence (a scalar) and trust/sources/links (the evidence) are
@@ -2625,17 +3017,35 @@ class WikiStore:
             "suggested_snippet": None if passed else self.DISCOVERABILITY_SNIPPET,
         }
 
+    # Template -> (template file, target dir). Shared by new_page (which needs
+    # target_dir both to default the write-gate SCOPE before gating and to place
+    # the rendered file) and gate_candidate (scope default only).
+    _TEMPLATE_MAP = {
+        "page": ("templates/page.template.md", "concepts"),
+        "decision": ("templates/decision.template.md", "queries"),
+        "handoff": ("templates/handoff.template.md", "L2_facts"),
+        "source-summary": ("templates/source-summary.template.md", "raw"),
+        "import-manifest": ("templates/import-manifest.template.md", "raw"),
+    }
+
     def gate_candidate(self, title: str, body: str = "", reason: str = "",
                        tags: list[str] | None = None, kind: str = "fact",
-                       k: int = 5) -> dict[str, Any]:
+                       k: int = 5, scope: str | None = None,
+                       target_dir: str | None = None) -> dict[str, Any]:
         """Score a candidate page against the memory-file contract BEFORE a write.
 
-        Two mechanical checks, both report-only here (new_page enforces):
+        Three mechanical checks, all report-only here (new_page enforces):
           1. write-gate signal scoring on (title + reason + body): a low-signal /
              reasonless candidate fails (`signal_pass` False) with the gate's own
              reason surfaced. write-gate is the same scorer used by every other
              persistent-memory write, so the bar is consistent.
-          2. overlap() INTER-document near-dup: a `high`-band match means an
+          2. write-gate SCOPE classification (LEARNING_CONTRACT §1): every
+             candidate needs a scope or it is unbanked. `scope`, if given, is
+             used as-is (explicit caller classification always wins); otherwise
+             it defaults by page kind via `_default_wiki_scope(target_dir)` —
+             this-repo for L2 facts/L3 SOPs/timeline entries, cross-skill for
+             L0 rules.
+          3. overlap() INTER-document near-dup: a `high`-band match means an
              existing page already covers this subject — steer to update-not-create
              and surface the overlapping page.
 
@@ -2644,25 +3054,37 @@ class WikiStore:
         `high`.
         """
         gate_text = "\n\n".join(part for part in (title, reason, body) if part and part.strip())
+        effective_scope = scope or _default_wiki_scope(target_dir)
         wg = _load_write_gate()
         if wg is not None:
             threshold, require_why, weights = wg.load_config()
             score = wg.score_text(gate_text, kind, weights)
-            signal_pass, signal_reason = wg.decide(score, kind, threshold, require_why)
+            signal_pass, signal_reason = wg.decide(score, kind, threshold, require_why,
+                                                    scope=effective_scope)
             signal = {
                 "available": True,
                 "pass": signal_pass,
                 "score": round(score.total, 3),
                 "threshold": threshold,
                 "has_why": score.has_why,
+                "scope": effective_scope,
                 "reason": signal_reason,
                 "features": [r for r in score.reasons],
             }
+        elif effective_scope not in _FALLBACK_SCOPE_VALUES:
+            # write-gate not installed alongside, so the scorer that normally
+            # validates SCOPE is absent — but LEARNING_CONTRACT §1 still binds:
+            # unclassified = unbanked, end-to-end, with or without the scorer.
+            signal_pass = False
+            signal = {"available": False, "pass": False, "scope": effective_scope,
+                      "reason": ("REJECTED: missing/invalid SCOPE classification (need one "
+                                 f"of {sorted(_FALLBACK_SCOPE_VALUES)} — see LEARNING_CONTRACT "
+                                 "§1); unclassified = unbanked")}
         else:
             # write-gate not installed alongside: do NOT silently accept — degrade
             # to overlap-only and say so, so the gap is visible rather than hidden.
             signal_pass = True
-            signal = {"available": False, "pass": True,
+            signal = {"available": False, "pass": True, "scope": effective_scope,
                       "reason": "write-gate scorer not found; overlap-only check applied"}
 
         ov = self.overlap(title, body=body, tags=tags, k=k)
@@ -2678,37 +3100,52 @@ class WikiStore:
 
     def new_page(self, template: str, title: str, domain: str = "framework", slug: str | None = None,
                  trust: str = DEFAULT_TRUST, body: str = "", reason: str = "",
-                 tags: list[str] | None = None, force: bool = False) -> dict[str, Any]:
+                 tags: list[str] | None = None, force: bool = False,
+                 scope: str | None = None) -> dict[str, Any]:
         # Mechanically enforce the memory-file contract BEFORE committing the
         # write (Codex flag: `new` skipped write-gate + overlap, leaving it
         # honor-system). Run both gates on the candidate; refuse a low-signal /
         # reasonless write, and steer a near-duplicate to update-not-create.
-        # `force=True` is the explicit escape hatch for deliberate
-        # scaffold-then-fill flows (template stub now, content later).
-        gate = self.gate_candidate(title, body=body, reason=reason, tags=tags)
+        # `force=True` is a caller-asserted operator/user-directed escape hatch
+        # for deliberate scaffold-then-fill flows. This CLI boundary cannot
+        # verify who authorized the override, so forced rejects are logged with
+        # that authority limitation instead of being presented as verified.
+        if template not in self._TEMPLATE_MAP:
+            raise KeyError(f"unknown template: {template}")
+        template_rel, target_dir = self._TEMPLATE_MAP[template]
+        # `scope`, if the caller passed one, overrides the by-kind default
+        # (LEARNING_CONTRACT §1: classification is mandatory, but callers may
+        # classify explicitly rather than take the page-kind default).
+        candidate_kind = "decision" if template == "decision" else "fact"
+        gate = self.gate_candidate(title, body=body, reason=reason, tags=tags,
+                                    kind=candidate_kind, scope=scope,
+                                    target_dir=target_dir)
         if not force and not gate["accept"]:
             if gate["overlap_blocks"]:
                 bm = gate["overlap"].get("best_match") or {}
                 msg = (f"REFUSED: near-duplicate of existing page "
                        f"`{bm.get('id', '?')}` ({bm.get('path', '?')}) — "
                        f"update that page instead of creating `{title}`. "
-                       f"Pass force=True to override.")
+                       f"Use force=True only for a caller-asserted operator/user-directed override.")
             else:
                 msg = (f"REFUSED: {gate['signal'].get('reason', 'low-signal candidate')}. "
                        f"Give the fact a reason (because…/so that…/to avoid…) and "
-                       f"concrete content, or pass force=True to override.")
+                       f"concrete content, or use force=True only for a caller-asserted "
+                       f"operator/user-directed override.")
             raise WikiWriteRejected(msg, gate)
+        force_override = None
+        if force:
+            force_override = {
+                "applied": not gate["accept"],
+                "authority": "caller-asserted",
+                "authority_verified": False,
+                "contract": "operator/user-directed escape only",
+                "authority_limit": "CLI cannot verify caller authority.",
+                "original_accept": gate["accept"],
+                "original_signal_reason": gate["signal"].get("reason"),
+                "original_overlap": gate["overlap"].get("overlap"),
+            }
         self.init()
-        template_map = {
-            "page": ("templates/page.template.md", "concepts"),
-            "decision": ("templates/decision.template.md", "queries"),
-            "handoff": ("templates/handoff.template.md", "L2_facts"),
-            "source-summary": ("templates/source-summary.template.md", "raw"),
-            "import-manifest": ("templates/import-manifest.template.md", "raw"),
-        }
-        if template not in template_map:
-            raise KeyError(f"unknown template: {template}")
-        template_rel, target_dir = template_map[template]
         template_path = self.root / template_rel
         if not template_path.exists():
             template_path = Path(__file__).resolve().parents[1] / template_rel
@@ -2737,7 +3174,11 @@ class WikiStore:
         content = _set_trust_frontmatter(content, trust_value)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content, encoding="utf-8")
-        self.append_log("update", title, f"Created `{target.relative_to(self.root).as_posix()}` from `{template}` template.")
+        log_note = f"Created `{target.relative_to(self.root).as_posix()}` from `{template}` template."
+        if force_override and force_override["applied"]:
+            log_note += (" caller-asserted force override applied; operator/user direction "
+                         "is required by contract, but CLI authority cannot be verified.")
+        self.append_log("update", title, log_note)
         # M4 fix: was `self.index()` — full re-index on every page creation,
         # O(N) per `new` call. Now: incremental insert (O(1)); fall back to
         # full reindex if the DB doesn't exist yet. `te wiki index` remains
@@ -2749,6 +3190,7 @@ class WikiStore:
             self._index_add_one(target)
         return {"created": target.relative_to(self.root).as_posix(), "template": template, "title": title,
                 "gate": {"accept": gate["accept"], "forced": bool(force),
+                         "kind": candidate_kind, "force_override": force_override,
                          "signal_pass": gate["signal"].get("pass"),
                          "overlap": gate["overlap"].get("overlap")}}
 
@@ -2842,6 +3284,113 @@ class WikiStore:
         index_result = self.index()
         return {"created": target.relative_to(self.root).as_posix(), "indexed": index_result["indexed"]}
 
+    def _adr_sources(self, repo_root: Path) -> list[Path]:
+        """Locate ADR/decision source files under a repo root.
+
+        Recognised: `DECISIONS.md` (and `DECISIONS/*.md`) at the repo root, and
+        every `*.md` under `docs/adr/` (the conventional ADR home, cf. cbm
+        `manage_adr`). README/index files inside docs/adr/ are skipped — they
+        are tooling indexes, not individual decisions."""
+        found: list[Path] = []
+        for name in ("DECISIONS.md", "decisions.md"):
+            p = repo_root / name
+            if p.is_file():
+                found.append(p)
+        decisions_dir = repo_root / "DECISIONS"
+        if decisions_dir.is_dir():
+            found.extend(sorted(p for p in decisions_dir.glob("*.md") if p.is_file()))
+        adr_dir = repo_root / "docs" / "adr"
+        if adr_dir.is_dir():
+            for p in sorted(adr_dir.glob("*.md")):
+                if p.is_file() and p.stem.lower() not in ("readme", "index", "template"):
+                    found.append(p)
+        return found
+
+    def ingest_decisions(self, repo_root: str | Path | None = None) -> dict[str, Any]:
+        """Ingest `DECISIONS.md` + `docs/adr/*` as wiki decision pages.
+
+        Lineage: codebase-memory-mcp `manage_adr` / `store.c:5869`. Reuses the
+        existing `new`/`new_page` machinery (the `decision` template + write
+        path), then replaces the templated body with the source ADR content so
+        the page carries the real Status/Context/Decision/Consequences. Each
+        source's H1 (or stem) becomes the page title; the title is the dedup key
+        — a re-ingest of an already-present decision is skipped, not duplicated.
+
+        `repo_root` defaults to the wiki root's parent (the project repo)."""
+        repo = Path(repo_root).expanduser().resolve() if repo_root else self.root.parent
+        self.init()
+        sources = self._adr_sources(repo)
+        created: list[str] = []
+        skipped: list[str] = []
+        existing_titles = {p.title for p in self.pages()}
+        for src in sources:
+            text = src.read_text(encoding="utf-8", errors="replace")
+            title = ""
+            for line in text.splitlines():
+                if line.startswith("# "):
+                    title = line[2:].strip()
+                    break
+            title = title or src.stem.replace("-", " ").replace("_", " ").strip()
+            if title in existing_titles:
+                skipped.append(src.as_posix())
+                continue
+            try:
+                # force=True: a curated ADR file is a deliberate ingest, not a
+                # speculative write — bypass the signal/overlap write-gate (the
+                # source already carries its own structure and provenance).
+                res = self.new_page("decision", title, domain="decisions",
+                                    body=text, force=True,
+                                    tags=["decision", "adr"])
+            except FileExistsError:
+                skipped.append(src.as_posix())
+                continue
+            rel = res["created"]
+            page_path = self.root / rel
+            self._replace_decision_body(page_path, text, src, repo)
+            created.append(rel)
+            existing_titles.add(title)
+        if created:
+            self._invalidate_caches()
+            self.index()
+        return {"created": created, "skipped": skipped, "scanned": [s.as_posix() for s in sources]}
+
+    def _replace_decision_body(self, page_path: Path, source_text: str,
+                               src: Path, repo: Path) -> None:
+        """Swap a freshly-templated decision page's body for the source ADR body.
+
+        Keeps the v2 frontmatter the template produced (so the page lints/indexes
+        like any decision page); replaces everything after it with the source
+        markdown (its H1 + Status/Context/Decision/Consequences) plus a source
+        provenance line. The source's H1 is dropped from the body since the
+        template/frontmatter already carry the title."""
+        page_text = page_path.read_text(encoding="utf-8")
+        fm_match = _FRONTMATTER_OPEN_RE.match(page_text)
+        if fm_match:
+            close = _FRONTMATTER_CLOSE_RE.search(page_text, fm_match.end())
+            frontmatter = page_text[:close.end()] if close else ""
+        else:
+            frontmatter = ""
+        # Strip a leading H1 from the source body (title is in frontmatter/H1 we re-add).
+        body_lines = source_text.splitlines()
+        title = ""
+        for i, line in enumerate(body_lines):
+            if line.startswith("# "):
+                title = line[2:].strip()
+                body_lines = body_lines[i + 1:]
+                break
+        body = "\n".join(body_lines).strip()
+        try:
+            src_ref = src.relative_to(repo).as_posix()
+        except ValueError:
+            src_ref = src.as_posix()
+        new_text = (
+            frontmatter
+            + f"\n# {title}\n\n"
+            + body
+            + f"\n\n## Related\n\n- Source: `{src_ref}`\n- [[index]]\n- [[schema]]\n"
+        )
+        page_path.write_text(new_text, encoding="utf-8")
+
     def append_log(self, op: str, title: str, body: str) -> None:
         log_path = self.root / "log.md"
         if not log_path.exists():
@@ -2860,7 +3409,7 @@ class WikiStore:
 #   python3 wiki.py init                          # bootstrap ./wiki in cwd
 #   python3 wiki.py init --root /path/to/wiki     # explicit target
 #   python3 wiki.py search "auth race"            # progressive retrieval, tier 1
-#   python3 wiki.py timeline <page-id>            # tier 2: backlinks + neighbors
+#   python3 wiki.py timeline <page-id>            # tier 2: backlinks + outbound + neighbors
 #   python3 wiki.py fetch <page-id>               # tier 3: full page
 #   python3 wiki.py new --template page --title "X" --domain framework
 #   python3 wiki.py ingest <source-or-url> [--title T]
@@ -2905,7 +3454,7 @@ def _cli_main(argv: list[str] | None = None) -> int:
     sp.add_argument("query")
     sp.add_argument("-k", type=int, default=10)
 
-    sp = sub.add_parser("timeline", help="Tier 2: backlinks, neighbors, log slice.")
+    sp = sub.add_parser("timeline", help="Tier 2: backlinks, outbound, neighbors, log slice — the page's link graph for next-hop navigation.")
     sp.add_argument("item_id")
     sp.add_argument("--window", type=int, default=3)
 
@@ -2925,11 +3474,22 @@ def _cli_main(argv: list[str] | None = None) -> int:
     sp.add_argument("--reason", default="", help="Why this fact is worth keeping (because…/so that…/to avoid…). Feeds the write-gate why-clause check.")
     sp.add_argument("--tags", default="", help="Comma-separated tags (used by the overlap near-dup check).")
     sp.add_argument("--force", action="store_true",
-                    help="Override a write-gate / overlap refusal (deliberate scaffold-then-fill).")
+                    help="Caller-asserted operator/user-directed override of a gate refusal; "
+                         "records audit metadata, but the CLI cannot verify caller authority.")
+    sp.add_argument("--scope", default=None,
+                    help="LEARNING_CONTRACT §1 SCOPE classification (this-skill/this-repo/"
+                         "cross-skill/cross-repo/canon). Defaults by page kind if omitted "
+                         "(this-repo for most templates, cross-skill for L0 rules) — pass "
+                         "this to classify explicitly instead of taking the default.")
 
     sp = sub.add_parser("ingest", help="Add a source (file path or URL) to raw/.")
     sp.add_argument("source")
     sp.add_argument("--title", default=None)
+
+    sp = sub.add_parser("ingest-decisions",
+                        help="Ingest DECISIONS.md + docs/adr/* as decision pages (cbm manage_adr).")
+    sp.add_argument("--repo-root", default=None,
+                    help="Project repo root to scan (default: the wiki root's parent).")
 
     sub.add_parser("index", help="Rebuild the SQLite search index.")
 
@@ -3022,6 +3582,26 @@ def _cli_main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("health", help="One-pass epistemic health summary across all six lenses (claim-quality/contradictions/synthesis/maturity/completeness/calibration + novelty). 0 = healthy.")
 
+    sub.add_parser("stale-citers", help="Report-only belief-update propagation: pages whose body cites a superseded/contested page (repoint each citer). Run in wiki-refresh.")
+
+    sp = sub.add_parser("quorum", help="Quorum gate for compile-on-ingest: auto-file (corroborated+) vs quarantine a candidate as an asserted draft pending confirmation.")
+    sp.add_argument("--title", required=True)
+    sp.add_argument("--body", default="", help="Candidate body text.")
+    sp.add_argument("--body-file", default=None, help="Read candidate body from a file (overrides --body).")
+    sp.add_argument("--tags", default="", help="Comma-separated candidate tags (used by the overlap dedup check).")
+    sp.add_argument("--sources", type=int, default=1,
+                    help="Count of INDEPENDENT sources asserting the claim (the quorum; >=2 auto-files).")
+    sp.add_argument("--verified", action="store_true",
+                    help="Claim checked against ground truth (fs/code/test) -> verified tier, auto-files.")
+    sp.add_argument("--user-confirmed", action="store_true",
+                    help="A human confirmed the claim -> user_confirmed tier, auto-files.")
+    sp.add_argument("-k", type=int, default=5)
+
+    sp = sub.add_parser("schema-evolution",
+                        help="Report-only: recurring write-defect classes (lint/reject histogram) -> PROPOSED schema.md/template amendments (rule-of-three; human-approved, never auto-applied).")
+    sp.add_argument("--threshold", type=int, default=3,
+                    help="Min recurrences of a defect class before proposing an amendment (default 3).")
+
     args = p.parse_args(argv)
     root = Path(args.root).expanduser().resolve() if args.root else _cli_default_root()
     store = WikiStore(root)
@@ -3037,7 +3617,14 @@ def _cli_dispatch(args, store, root) -> int:
     if args.cmd == "init":
         _cli_print(store.init())
     elif args.cmd == "search":
-        _cli_print(store.search(args.query, k=args.k))
+        try:
+            _cli_print(store.search(args.query, k=args.k))
+        except WikiUnsupportedQueryError as e:
+            # LOUD failure (cbm cypher.c): an unsupported/malformed query is an
+            # explicit error, NOT an empty result. Nonzero exit so a caller can
+            # distinguish it from a valid query that matched nothing.
+            _cli_print({"error": str(e), "reason": e.reason})
+            return 2
     elif args.cmd == "timeline":
         _cli_print(store.timeline(args.item_id, window=args.window))
     elif args.cmd == "fetch":
@@ -3050,7 +3637,8 @@ def _cli_dispatch(args, store, root) -> int:
         try:
             _cli_print(store.new_page(args.template, args.title,
                                       domain=args.domain, slug=args.slug, trust=args.trust,
-                                      body=body, reason=args.reason, tags=tags, force=args.force))
+                                      body=body, reason=args.reason, tags=tags, force=args.force,
+                                      scope=args.scope))
         except WikiWriteRejected as e:
             # Surface the reason + evidence; exit non-zero so the refusal is a
             # real gate, not a swallowed warning.
@@ -3058,6 +3646,8 @@ def _cli_dispatch(args, store, root) -> int:
             return 1
     elif args.cmd == "ingest":
         _cli_print(store.ingest(args.source, title=args.title))
+    elif args.cmd == "ingest-decisions":
+        _cli_print(store.ingest_decisions(repo_root=args.repo_root))
     elif args.cmd == "index":
         _cli_print(store.index())
     elif args.cmd == "consolidate":
@@ -3135,6 +3725,19 @@ def _cli_dispatch(args, store, root) -> int:
         _cli_print(store.calibration(high=args.high, low=args.low, stale_days=args.stale_days))
     elif args.cmd == "health":
         _cli_print(store.health())
+    elif args.cmd == "stale-citers":
+        _cli_print(store.stale_citers())
+    elif args.cmd == "quorum":
+        body = args.body
+        if args.body_file:
+            body = Path(args.body_file).expanduser().read_text(encoding="utf-8", errors="replace")
+        tags = [t.strip() for t in (args.tags or "").split(",") if t.strip()]
+        _cli_print(store.quorum(args.title, body=body, tags=tags,
+                                sources=args.sources, verified=args.verified,
+                                user_confirmed=args.user_confirmed, k=args.k))
+    elif args.cmd == "schema-evolution":
+        import schema_evolution as _se
+        return _se.main(["--root", str(root), "--threshold", str(args.threshold)])
     else:  # unreachable — argparse enforces choices
         p.error(f"unknown subcommand: {args.cmd}")
     return 0

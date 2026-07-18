@@ -4,6 +4,8 @@
 Scores candidate text on signal features (decisions / errors / architecture / code /
 numbers / entity overlap) and rejects reasonless decisions (no because… / so that… /
 to avoid…). Sits in front of any persistent write (wiki-memory, CLAUDE.md, etc).
+Also enforces LEARNING_CONTRACT §1: a candidate missing a SCOPE classification
+(this-skill/this-repo/cross-skill/cross-repo/canon) is rejected outright.
 
 Sources:
   - ogham-mcp/ogham-mcp (signal-score lifecycle, 91.8% QA on LongMemEval)
@@ -40,6 +42,7 @@ DEFAULT_WEIGHTS = {
     "entity_overlap": 0.5,      # per repeated capitalized identifier, capped at 1.5
     "filler": -1.5,
     "speculation": -1.5,
+    "vague": -1.5,            # content-free corporate buzzwords (anti-gaming)
 }
 ENTITY_CAP = 1.5
 
@@ -81,6 +84,21 @@ SPECULATION_PHRASES = (
     " might ", " maybe ", " probably ", "i think ", "seems like",
     " could maybe", " perhaps ", " possibly ",
 )
+# Content-free corporate filler. Adversarial finding (2026-06-27 PROMPTER opt run):
+# pure filler stuffed with marker substrings ("we decided to leverage our approach
+# so that things work better; uses synergy, depends on best practices; 1. align
+# stakeholders 2. maximize outcomes") scored 8.0 and PASSED — the lexical markers
+# fire on generic words. This penalty offsets that: buzzwords are negative signal,
+# like filler/speculation. Genuine facts carry concrete signal (numbers, code,
+# specific entities) that easily outweighs an incidental buzzword, and the
+# trust-bypass rescues vouched-but-terse facts — so this raises the bar against
+# gaming without re-introducing the false-reject problem.
+VAGUE_PHRASES = (
+    "synergy", "synergies", "best practices", "stakeholder", "move the needle",
+    "value-add", "going forward", "circle back", "low-hanging fruit", "holistic",
+    "leverage our", "leverage the", "things work better", "maximize outcomes",
+    "drive value", "our approach so", "streamline", "paradigm",
+)
 # NB: "since" is intentionally absent — it's overwhelmingly temporal in
 # practice ("tracked since yesterday") and was bypassing the gate as a
 # pseudo-causal token. Authors who genuinely mean causal "since" can write
@@ -94,6 +112,35 @@ WHY_CLAUSES = (
 # matching let reasonless decisions slip past the why-gate.
 WHY_RE = re.compile(r"\b(?:" + "|".join(re.escape(w) for w in WHY_CLAUSES) + r")\b")
 CODE_FENCE_PAIR_RE = re.compile(r"```.*?```", re.DOTALL)
+
+# Provenance trust tiers — a fact whose importance has been vouched for (checked
+# against code/test/fs = "verified", or a human said keep it = "user_confirmed")
+# bypasses the lexical signal FLOOR. The gate scores token-density, not importance:
+# a genuine atomic fact ("the PROMPTER folder is also called alfred") carries no
+# marker words, scores ~0, and would otherwise be dropped (measured: 82% false-
+# reject on bare keep-worthy facts). Trust vouches IMPORTANCE, not QUALITY — so
+# net-negative content (filler/speculation penalties) is still rejected, and a
+# plain "verified" does NOT waive the why-clause for a decision (only the strongest
+# tier, "user_confirmed", does). Raises recall on vouched content; precision on
+# un-vouched content is unchanged.
+TRUST_BYPASS = {"verified", "user_confirmed"}
+TRUST_RE = re.compile(r"^\s*trust:\s*([a-z_]+)", re.M | re.I)
+
+# SCOPE classification — LEARNING_CONTRACT §1 (skills/_shared/LEARNING_CONTRACT.md):
+# a candidate is unbankable until classified this-skill / this-repo / cross-skill /
+# cross-repo / canon. Read from `scope:` frontmatter (mirrors extract_trust), or
+# --scope on the CLI. `this-repo` = repo-scoped fact/lesson not tied to one skill
+# (wiki-memory L2 fact / L3 SOP).
+SCOPE_VALUES = {"this-skill", "this-repo", "cross-skill", "cross-repo", "canon"}
+SCOPE_RE = re.compile(r"^\s*scope:\s*([a-z_-]+)", re.M | re.I)
+
+# KIND classification — mirrors SCOPE/TRUST: read from `kind:` frontmatter
+# when present, same well-formed-block-only contract. A `kind: decision`
+# candidate is a reasonless-decision dodge if left unread: the CLI's --kind
+# defaults to "fact", so silently ignoring frontmatter kind let a decision
+# with no why-clause slip through under the default (weaker) fact kind.
+KIND_VALUES = {"fact", "decision", "convention", "error", "sop"}
+KIND_RE = re.compile(r"^\s*kind:\s*([a-z_-]+)", re.M | re.I)
 
 NUMBER_RE = re.compile(
     r"\b\d+(?:\.\d+)?\s?(?:%|ms|s|x|ops|qps|rps|MB|GB|KB|TB|tokens?|loc|lines?|"
@@ -203,6 +250,16 @@ def score_text(text: str, kind: str, weights: dict[str, float] | None = None) ->
         s.total += v
         s.reasons.append(f"speculation phrases ×{n_spec}")
 
+    # Vague corporate filler (negative, anti-gaming). Uncapped like filler —
+    # marker-stuffed content-free text accrues enough buzzwords to fall back
+    # under the floor; genuine concrete facts rarely use more than one.
+    n_vague = _count_any(text_lc, VAGUE_PHRASES)
+    if n_vague:
+        v = weights["vague"] * n_vague
+        s.features["vague"] = v
+        s.total += v
+        s.reasons.append(f"vague buzzwords ×{n_vague}")
+
     # Numbered / bulleted procedure (SOP signature: "1. ... 2. ... 3. ...")
     # Requires at least 2 ordered steps on their own lines.
     procedure_steps = len(re.findall(r"^\s*(?:\d+\.|[-*])\s+\S", text, re.M))
@@ -228,10 +285,79 @@ def score_text(text: str, kind: str, weights: dict[str, float] | None = None) ->
 
 # --- Decision -------------------------------------------------------------
 
-def decide(score: Score, kind: str, threshold: float, require_why: bool) -> tuple[bool, str]:
-    """Return (passed, reason)."""
-    if kind in ("decision", "convention") and require_why and not score.has_why:
+def _frontmatter_block(text: str) -> str | None:
+    """Return the WELL-FORMED leading YAML frontmatter block (between the
+    opening `---\\n` and its closing `\\n---`), or None if the text has no
+    such block. A well-formed block requires BOTH:
+      - the text starts with `---` immediately followed by a newline
+      - a closing `\\n---` exists after that
+
+    Deliberately strict (no silent fallback to scanning the raw body): a body
+    with no frontmatter at all, or a frontmatter opener with no closer
+    (malformed/truncated), yields None rather than treating the first 2000
+    chars of the whole text as if it were frontmatter — that leniency let
+    plain body text ('scope: canon' on line 1, no frontmatter) or an unclosed
+    '---' opener spoof a scope/trust/kind classification. Callers fall back to
+    the explicit CLI flag when this returns None."""
+    if not text.startswith("---\n"):
+        return None
+    end = text.find("\n---", 4)
+    if end == -1:
+        return None
+    return text[4:end]
+
+
+def extract_trust(text: str) -> str | None:
+    """Read the `trust:` tier from a candidate page's YAML frontmatter, if any.
+    Limited to a WELL-FORMED leading frontmatter block so a body mention of
+    'trust:' (or an unclosed '---' opener) can't spoof it."""
+    head = _frontmatter_block(text)
+    if head is None:
+        return None
+    m = TRUST_RE.search(head)
+    return m.group(1).lower() if m else None
+
+
+def extract_scope(text: str) -> str | None:
+    """Read the `scope:` tier from a candidate page's YAML frontmatter, if any.
+    Limited to a WELL-FORMED leading frontmatter block so a body mention of
+    'scope:' (or an unclosed '---' opener) can't spoof it. Mirrors extract_trust."""
+    head = _frontmatter_block(text)
+    if head is None:
+        return None
+    m = SCOPE_RE.search(head)
+    return m.group(1).lower() if m else None
+
+
+def extract_kind(text: str) -> str | None:
+    """Read the `kind:` classification from a candidate page's YAML frontmatter,
+    if any. Limited to a WELL-FORMED leading frontmatter block, same contract
+    as extract_scope/extract_trust."""
+    head = _frontmatter_block(text)
+    if head is None:
+        return None
+    m = KIND_RE.search(head)
+    return m.group(1).lower() if m else None
+
+
+def decide(score: Score, kind: str, threshold: float, require_why: bool,
+           trust: str | None = None, scope: str | None = None) -> tuple[bool, str]:
+    """Return (passed, reason). `trust` (if 'verified'/'user_confirmed') vouches
+    importance and bypasses the signal FLOOR — but never rescues net-negative
+    (filler/speculation) content, and only 'user_confirmed' waives the why-clause.
+
+    `scope` enforces LEARNING_CONTRACT §1: unclassified = unbanked. Checked first —
+    a scope-less candidate never reaches the signal/why checks below."""
+    if scope not in SCOPE_VALUES:
+        return False, (
+            "REJECTED: missing/invalid SCOPE classification (need one of "
+            f"{sorted(SCOPE_VALUES)} — see LEARNING_CONTRACT §1); unclassified = unbanked"
+        )
+    if kind in ("decision", "convention") and require_why and not score.has_why \
+            and trust != "user_confirmed":
         return False, "REJECTED: decision/convention missing a why-clause (need 'because…', 'so that…', 'to avoid…', etc)"
+    if trust in TRUST_BYPASS and score.total >= 0:
+        return True, f"PASSED: trust '{trust}' vouches importance; bypasses signal floor (score {score.total:.2f} ≥ 0)"
     if score.total < threshold:
         return False, f"REJECTED: signal score {score.total:.2f} < threshold {threshold:.2f}"
     return True, f"PASSED: signal score {score.total:.2f} ≥ threshold {threshold:.2f}"
@@ -326,8 +452,23 @@ def main(argv: list[str]) -> int:
 
     for name in ("score", "gate", "explain"):
         p = sub.add_parser(name)
-        p.add_argument("--kind", default="fact",
-                       choices=["fact", "decision", "convention", "error", "sop"])
+        p.add_argument("--kind", default=None,
+                       choices=sorted(KIND_VALUES),
+                       help="content classification (fact/decision/convention/error/sop); "
+                            "defaults to 'fact'. If omitted, read from the candidate's "
+                            "`kind:` frontmatter (so a frontmatter `kind: decision` isn't "
+                            "silently ignored). An explicit --kind that conflicts with "
+                            "frontmatter `kind:` is a hard error (exit 2).")
+        p.add_argument("--trust", default=None,
+                       choices=["asserted", "corroborated", "verified", "user_confirmed"],
+                       help="provenance tier; 'verified'/'user_confirmed' bypass the signal floor. "
+                            "If omitted, read from the candidate's `trust:` frontmatter.")
+        p.add_argument("--scope", default=None,
+                       choices=sorted(SCOPE_VALUES),
+                       help="LEARNING_CONTRACT §1 classification (this-skill/this-repo/"
+                            "cross-skill/cross-repo/canon); mandatory — missing/invalid scope "
+                            "is rejected. If omitted, read from the candidate's `scope:` "
+                            "frontmatter.")
         p.add_argument("--text")
         p.add_argument("--file")
         p.add_argument("--threshold", type=float)
@@ -343,15 +484,29 @@ def main(argv: list[str]) -> int:
     if args.threshold is not None:
         threshold = args.threshold
 
-    s = score_text(text, args.kind, weights)
-    passed, verdict = decide(s, args.kind, threshold, require_why)
+    trust = args.trust or extract_trust(text)
+    scope = args.scope or extract_scope(text)
+    fm_kind = extract_kind(text)
+    if args.kind is not None and fm_kind is not None and args.kind != fm_kind:
+        print(
+            f"error: --kind {args.kind!r} conflicts with frontmatter `kind: {fm_kind}` "
+            "— resolve the discrepancy (fix the frontmatter or the flag) rather than "
+            "picking one silently.",
+            file=sys.stderr,
+        )
+        return 2
+    kind = args.kind or fm_kind or "fact"
+    s = score_text(text, kind, weights)
+    passed, verdict = decide(s, kind, threshold, require_why, trust=trust, scope=scope)
 
     if args.json:
         out = {
             "passed": passed,
             "score": round(s.total, 3),
             "threshold": threshold,
-            "kind": args.kind,
+            "kind": kind,
+            "trust": trust,
+            "scope": scope,
             "has_why": s.has_why,
             "features": {k: round(v, 3) for k, v in s.features.items()},
             "verdict": verdict,
@@ -361,14 +516,15 @@ def main(argv: list[str]) -> int:
         return 0 if passed else 1
 
     if args.cmd == "score":
-        print(f"score: {s.total:.2f}  threshold: {threshold:.2f}  kind: {args.kind}  why_clause: {s.has_why}")
+        print(f"score: {s.total:.2f}  threshold: {threshold:.2f}  kind: {kind}  why_clause: {s.has_why}  scope: {scope}")
         return 0
     if args.cmd == "gate":
         return 0 if passed else 1
     # explain
     print(verdict)
-    print(f"  total: {s.total:.2f}  threshold: {threshold:.2f}  kind: {args.kind}")
+    print(f"  total: {s.total:.2f}  threshold: {threshold:.2f}  kind: {kind}")
     print(f"  why_clause present: {s.has_why}")
+    print(f"  scope: {scope}")
     if s.reasons:
         print("  features:")
         for r in s.reasons:

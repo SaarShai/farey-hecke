@@ -1,6 +1,6 @@
 ---
 name: semantic-diff
-description: AST-node-level diff for file re-reads. Use whenever you'd re-read a file you've read before — the skill returns only the changed AST nodes, not the full file. 95.5% token savings measured on argparse.py (2575 lines, 2 method edits). Default runtime is a Bash CLI (works on every host); an optional MCP server adds a native read_file_smart tool. Supports Python, JavaScript, TypeScript, Rust.
+description: AST-node-level diff for file re-reads. Use whenever you'd re-read a file you've read before — returns only the changed AST nodes, not the full file (95.5% measured savings). Bash CLI works on every host; optional MCP server. Supports Python, JavaScript, TypeScript, Rust.
 effort: low
 tools: [Bash, Read]
 ---
@@ -46,7 +46,7 @@ Use a stable `--session` per working context (e.g. the task or branch). Add
 
 ## Usage — MCP (optional, opt-in)
 
-For a native `read_file_smart` tool (Claude Code, Cursor, etc.) instead of the
+For a native `read_file_smart` tool (Claude Code, etc.) instead of the
 Bash CLI — heavier (`mcp` pulls `cryptography` ~24M):
 
 ```bash

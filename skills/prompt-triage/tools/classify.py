@@ -7,16 +7,22 @@ Two-tier classifier:
 
 Output (stdout, JSON one-line):
   {"tier": "simple|medium|hard|unknown",
-   "agent": "wiki-note|quick-fix|research-lite|general-purpose|none",
+   "agent": "wiki-note|quick-fix|research-lite|general-purpose|glm-executor|none",
    "model": "haiku|sonnet|opus",
    "confidence": 0.0-1.0,
    "reason": "<short>",
    "lean_context": ["paths or globs to load"]}
 
+  Note: agent="glm-executor" routes to GLM-5.2 via z.ai (out-of-platform). Its
+  `model` is "haiku" — that is the thin COORDINATOR subagent; the real inference
+  runs on GLM through the agent's Bash call, billed to the user's z.ai account.
+  See the 2026-06-19 policy note at the summarize rule below.
+
 Called by UserPromptSubmit hook; stdout is injected into CC context.
 """
 from __future__ import annotations
 import json, os, re, sys, urllib.request
+from pathlib import Path
 
 
 def _extract_json_obj(text: str) -> dict | None:
@@ -114,12 +120,25 @@ RULES = [
     # (codex review 2026-06-12 — the summarize rule was shadowing this one).
     (r"\b(?:research|survey|find repos?|investigate|literature)\b",
      "medium", "research-lite", "sonnet", 0.8, "research-lite task", []),
-    # Summarize this file / path / log / etc. Routes to haiku (2026-06-12
-    # policy: triage only routes to smaller IN-PLATFORM models — haiku/sonnet
-    # in Claude Code — never out-of-platform local models; those are for
-    # explicit manual dispatch only).
+    # Summarize / condense / rewrite THIS content. Routes to glm-executor.
+    # POLICY (2026-06-19, supersedes the 2026-06-12 in-platform-only rule):
+    # the original policy barred routing to out-of-platform models because a
+    # context-blind subagent + billing was deemed too risky for auto-dispatch.
+    # That is now OVERRIDDEN for the glm-executor agent specifically: it wraps
+    # the out-of-platform call in a bounded coordinator (one call, capped
+    # tokens, validated output, no fan-out), and these task shapes
+    # (summarize/condense/rewrite of supplied content) are self-contained — the
+    # subagent reads the file/content, it does not need chat history. GLM-5.2's
+    # 1M context also handles large inputs that haiku truncates. Other rules
+    # still route in-platform; only these bounded content tasks go to GLM.
     (r"\b(?:summari[sz]e|tldr|abstract|condense|rewrite)\b",
-     "simple", "general-purpose", "haiku", 0.8, "summarization -- haiku fine",
+     "medium", "glm-executor", "haiku", 0.8, "bounded summarize/rewrite -- GLM-5.2",
+     []),
+    # Classify / label / extract / tag structured output from supplied content.
+    # GLM-5.2 sweet spot (frontier-capable structured output, cheap, 1M ctx);
+    # previously these fell through to opus or none. Self-contained like above.
+    (r"\b(?:classif\w*|categor\w*|label\w*|tag\w*|extract\w*|normaliz\w*|parse\s+out)\b",
+     "medium", "glm-executor", "haiku", 0.7, "bounded classify/extract -- GLM-5.2",
      []),
     # Install / setup / configure. Conf 0.6 (was 0.75): "configure the auth
     # system" is routinely complex — transcript mining (2026-06-12) found
@@ -211,6 +230,51 @@ CONTINUATION_RE = re.compile(
 def _needs_session_context(prompt: str) -> bool:
     folded = prompt.translate(_UNICODE_FOLD)
     return bool(CONTEXT_HINTS.search(folded)) or bool(CONTINUATION_RE.match(folded))
+
+
+_SENSITIVE_EGRESS_RE = re.compile(
+    r"\b(?:api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd|"
+    r"client[_-]?secret|private[_-]?key)\b\s*[:=]\s*[^\s,;]+|"
+    r"\b(?:sk-(?:proj-)?[A-Za-z0-9_-]{16,}|AKIA[A-Z0-9]{16}|"
+    r"gh[pousr]_[A-Za-z0-9]{20,})\b|"
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----|"
+    r"(?:^|[/\\\s])(?:\.env(?:\.[A-Za-z0-9_-]+)?|"
+    r"\.ssh/(?:id_rsa|id_ed25519|authorized_keys)|\.aws/credentials|"
+    r"\.config/gcloud/application_default_credentials\.json|etc/shadow)\b",
+    re.I,
+)
+
+_CREDENTIAL_TERM_RE = re.compile(
+    r"\b(?:api[_ -]?key|access[_ -]?token|auth[_ -]?token|password|passwd|"
+    r"client[_ -]?secret|private[_ -]?key)\b",
+    re.I,
+)
+_CREDENTIAL_FILE_RE = re.compile(
+    r"(?<!\w)[~./\\\w-]*(?:credentials?|secrets?|passwords?)[\w.-]*\."
+    r"(?:toml|json|ya?ml|ini|cfg|conf|env|txt|pem|key)\b",
+    re.I,
+)
+_CREDENTIAL_SOURCE_RE = re.compile(
+    r"\b(?:from|in|inside|within|under)\b[^\n]{0,80}?"
+    r"(?:[~./\\\w-]+\.(?:toml|json|ya?ml|ini|cfg|conf|env|txt|pem|key)\b|"
+    r"(?:app\s+)?(?:config|settings|credentials?|secrets?)(?:\s+file)?\b|"
+    r"(?:what we did|(?:this|the current)\s+(?:session|conversation))\b)",
+    re.I,
+)
+
+
+def _has_sensitive_egress(prompt: str) -> bool:
+    """Credential value/path, credential-named file, or credential + source.
+
+    The last form is deliberately verb-independent: access phrasing changes
+    constantly (show/read/tell/get/what-is), while the risky invariant is a
+    credential term tied to a concrete file or session source.
+    """
+    return bool(
+        _SENSITIVE_EGRESS_RE.search(prompt)
+        or _CREDENTIAL_FILE_RE.search(prompt)
+        or (_CREDENTIAL_TERM_RE.search(prompt) and _CREDENTIAL_SOURCE_RE.search(prompt))
+    )
 
 
 # Imperative sentence-starts for multi-objective counting (field misroute,
@@ -307,7 +371,7 @@ def _resolve_ollama_model(timeout: float = 1) -> str | None:
     return None
 
 LLM_PROMPT = """Classify this user task for an LLM agent. Output ONLY one-line JSON:
-{"tier":"simple|medium|hard","agent":"wiki-note|quick-fix|research-lite|general-purpose|none","model":"haiku|sonnet|opus","confidence":0-1,"reason":"<15 words"}
+{"tier":"simple|medium|hard","agent":"wiki-note|quick-fix|research-lite|general-purpose|glm-executor|none","model":"haiku|sonnet|opus","confidence":0-1,"reason":"<15 words"}
 
 Rules:
 - simple = single file edit, add note, one-line fix, factual question, summarize
@@ -315,9 +379,9 @@ Rules:
 - medium = multi-step but bounded (research a topic, refactor one file, write one script)
 - hard = multi-file, architecture, design, novel reasoning
 - A task bundling 3+ distinct objectives (e.g. review AND research AND implement AND test) is hard
-- agent definitions: quick-fix = small scoped FILE EDITS only (never running tasks, tests, or simulations); wiki-note = wiki/markdown notes; research-lite = bounded web lookups; general-purpose = everything else simple/medium
+- agent definitions: quick-fix = small scoped FILE EDITS only (never running tasks, tests, or simulations); wiki-note = wiki/markdown notes; research-lite = bounded web lookups; glm-executor = bounded summarize/rewrite/classify/extract over SUPPLIED content, routed to GLM-5.2/z.ai (use for self-contained content tasks, esp. large input — set model="haiku", the coordinator); general-purpose = everything else simple/medium
 - agent="none" means fall through to main model (opus)
-- Prefer lowest capable tier. Haiku ~$0.25/M-tok input; sonnet ~$3; opus ~$15.
+- Prefer lowest capable tier. Haiku ~$0.25/M-tok input; sonnet ~$3; opus ~$15. glm-executor is cheap + 1M ctx but out-of-platform — only for bounded self-contained content tasks, never anything needing chat history.
 - If task mentions "simple", "quick", "tiny" — bias simple.
 - If task starts with imperative verb (add/fix/summarize/commit) — usually simple.
 
@@ -364,7 +428,7 @@ def ollama_classify(prompt: str, model: str | None = None, timeout: float = 2) -
 
 
 _VALID_TIERS = {"simple", "medium", "hard"}
-_VALID_AGENTS = {"wiki-note", "quick-fix", "research-lite", "general-purpose", "none"}
+_VALID_AGENTS = {"wiki-note", "quick-fix", "research-lite", "general-purpose", "glm-executor", "none"}
 _VALID_MODELS = {"haiku", "sonnet", "opus"}
 
 
@@ -393,6 +457,22 @@ def _validate_llm_result(obj: dict) -> dict | None:
     return obj
 
 
+# Per-agent acceptance gates (adopted 2026-07-01 from blader/arbitrage: "a
+# dispatch without acceptance criteria is malformed — codex returns 'done'
+# with red tests"). The gate names what the subagent's output must show
+# before the main model accepts it; the directive binds escalation to a
+# FAILED gate (observed), never to predicted difficulty. Keyed by agent —
+# every routable agent in _VALID_AGENTS except "none" must have an entry
+# (test-locked) so a routed directive always carries a gate.
+GATES = {
+    "wiki-note": "quote the changed wiki lines",
+    "quick-fix": "show the edited hunk; rerun the named check (lint/test) green",
+    "research-lite": "answer cites >=1 source URL",
+    "glm-executor": "output matches the requested shape; spot-check 2 items against input",
+    "general-purpose": "state what was verified and quote the check's output",
+}
+
+
 # Above this many chars, no cheap-route directive is ever emitted — not even
 # on an LLM verdict. A 7B classifier rated a 4k-char multi-objective
 # orchestration prompt "medium/research-lite" (2026-06-12); the cost asymmetry
@@ -405,9 +485,16 @@ except ValueError:  # bad env value must degrade to the default, never crash the
 
 
 def classify(prompt: str, use_ollama_fallback: bool = True) -> dict:
-    # Session-context guard runs FIRST: no classifier (regex or LLM) can know
-    # what's in the conversation, so any verdict on these prompts is noise the
-    # main model must spend tokens overriding.
+    # Sensitive egress outranks every routing route, including the otherwise
+    # first session-context guard: a prompt can carry both, and context-shaped
+    # wording must not reopen cross-vendor dispatch for credential material.
+    if _has_sensitive_egress(prompt):
+        return {"tier": "hard", "agent": "none", "model": "opus",
+                "confidence": 1.0,
+                "reason": "secret-like material or a sensitive credential path; cross-vendor routing vetoed",
+                "lean_context": [], "source": "sensitive-egress-veto"}
+    # Session-context guard runs before every ordinary classifier: no regex or
+    # LLM can know what's in the conversation, so those prompts stay local.
     if _needs_session_context(prompt):
         return {"tier": "hard", "agent": "none", "model": "opus",
                 "confidence": 1.0,
@@ -480,6 +567,30 @@ def classify(prompt: str, use_ollama_fallback: bool = True) -> dict:
                         "confidence": 0.0,
                         "reason": "LLM picked the cheapest model but complex-work hints present; defer to main model",
                         "lean_context": [], "source": "hint-veto"}
+            # Verbalized-confidence guard (research 2026-06-19): a local LLM's
+            # SELF-REPORTED confidence is an unreliable routing signal — "in the
+            # best case comparable to random routing" (arXiv:2502.00409, citing
+            # Xiong et al. ICLR 2024 arXiv:2306.13063; corroborated 2502.04428).
+            # So the 7B verdict's own confidence number must NOT, by itself,
+            # clear the 0.7 emit gate. Require corroboration from the
+            # deterministic regex layer (same agent, or same tier); when they
+            # agree, trust the regex PRIOR's confidence, not the verbalized one.
+            # Uncorroborated → push below the emit gate so the strongest (main)
+            # model decides — the IPR empty-feasible-set→strongest fallback
+            # pattern (arXiv:2509.06274). This is the safe asymmetric direction.
+            corroborated = bool(fast and (
+                fast.get("agent") == llm.get("agent")
+                or fast.get("tier") == llm.get("tier")))
+            if corroborated:
+                llm["confidence"] = min(float(fast.get("confidence", 0.7)),
+                                        float(llm.get("confidence", 0.7)))
+                llm["source"] = "ollama+regex-corroborated"
+            else:
+                llm["confidence"] = 0.5  # < emit gate: advisory only, defers
+                llm["source"] = "ollama-uncorroborated"
+                llm["reason"] = (f"{llm.get('reason', '')} (uncorroborated LLM "
+                                 "verdict; verbalized confidence not trusted — "
+                                 "deferring to main model)")
             return llm
     # Fail CLOSED on complex prompts: if the prompt carries complex-work hints
     # and no LLM was available to overrule the regex, never emit the (cheap)
@@ -541,6 +652,88 @@ def _read_prompt_from_stdin() -> str:
     return prompt if isinstance(prompt, str) else str(prompt)
 
 
+# Escalate-UP mode (BRAINER_TRIAGE_ESCALATE_UP=1): today, a hard/agent-none
+# verdict emits silence — correct when the SESSION model is already frontier
+# (it handles hard prompts itself; team-lead only fires from a frontier main
+# loop). Wrong when the session model is cheap: the hard prompt gets a cheap
+# answer with no escalation path. Under this env flag, hard/agent-none instead
+# emits a directive telling the (cheap) main model to spawn a frontier
+# subagent. Default (env unset) stays byte-identical to today — proven by
+# test_classify.py.
+_VERIFY_INTENT_RE = re.compile(
+    r"\b(?:verify|verifier|review|judge|audit|critique|grade|assess|evaluate|vet|"
+    r"double[-\s]?check|sanity[-\s]?check|sign[-\s]?off|pass\/fail|"
+    r"pass or fail|find\s+bugs?|red[-\s]?team|safe\s+to\s+ship|"
+    r"correctness\s+risks?)\b",
+    re.I,
+)
+
+
+# Creation intent takes precedence over verify intent only when the grammar is
+# unambiguous. The noun/verb-ambiguous forms design/propose/architect require a
+# determiner-led object; bare "Design constraints ..." therefore cannot
+# override an explicit audit. Create/draft/build/write/plan are imperative-only
+# enough at a clause boundary to remain direct creation signals.
+_PLAN_CREATION_RE = re.compile(
+    r"(?:^|[.!?;]\s*|,\s*(?:then\s+)?|\b(?:and|then)\s+)"
+    r"(?:(?:please)\s+|(?:(?:can|could|would|will)\s+you\s+))*"
+    r"(?:(?:design|propose|architect)\s+(?:a|an|the)\b|"
+    r"(?:create|draft|build|write|plan)\b)",
+    re.I | re.M,
+)
+
+
+def _project_root() -> str:
+    """Resolve the consuming project's root. CLAUDE_PROJECT_DIR is the
+    mechanism Claude Code injects at hook invocation time (install.sh's
+    HOOK_CMD relies on the same var: `${CLAUDE_PROJECT_DIR:-$PWD}`) — the
+    authoritative source when a hook is actually running. Falls back to
+    walking up from this file's own location (skills/prompt-triage/tools/
+    classify.py -> parents[3] == repo root), the same fixed-depth idiom used
+    by sibling tools (brainer-audit, task-retrospective, compliance-canary's
+    hook_validate.py) — robust to whatever cwd a bare CLI/test invocation
+    happens to run from, unlike os.getcwd()."""
+    env = os.environ.get("CLAUDE_PROJECT_DIR")
+    if env:
+        return env
+    try:
+        return str(Path(__file__).resolve().parents[3])
+    except Exception:
+        return os.getcwd()
+
+
+def _agent_def_installed(agent: str) -> bool:
+    """Cheap, never-raising check that the escalate-up target's agent def is
+    actually installed in the consuming project (cross-vendor review fix): a
+    consumer that opted out of the frontier-advisor/frontier-verifier roster
+    seats (.brainer-sync-optout, or never ran --adopt-agents) has no
+    `.claude/agents/<agent>.md` file, so a directive naming that subagent
+    points at nothing. Any exception (permission error, weird env value)
+    degrades to "not installed" — silence is always the safe default here."""
+    try:
+        return os.path.exists(
+            os.path.join(_project_root(), ".claude", "agents", f"{agent}.md"))
+    except Exception:
+        return False
+
+
+def _escalate_up_agent(prompt: str) -> str:
+    """Pick which frontier seat the escalate-up directive targets. Reuses the
+    existing intent vocabulary (COMPLEX_HINTS' review/audit/critique overlap
+    is deliberate — those already signal 'judge this', not 'plan this').
+    Plan/design-shaped prompts get the advisor seat even if an ambiguous
+    verify-ish word ("evaluate"/"assess") is also present (see _PLAN_CREATION_RE
+    docstring). Otherwise: verify/review/judge-shaped prompts get the cold
+    verifier seat; plan/architecture/decision prompts (the default) get the
+    advisor seat."""
+    folded = prompt.translate(_UNICODE_FOLD)
+    if _PLAN_CREATION_RE.search(folded):
+        return "frontier-advisor"
+    if _VERIFY_INTENT_RE.search(folded):
+        return "frontier-verifier"
+    return "frontier-advisor"
+
+
 def emit_context(prompt: str, use_ollama_fallback: bool = True) -> str:
     """H1 fix: produce the exact directive block hook.sh used to assemble — but
     inside the same Python process that parsed stdin and ran the classifier.
@@ -553,9 +746,33 @@ def emit_context(prompt: str, use_ollama_fallback: bool = True) -> str:
     if not prompt or is_bypass(prompt):
         return ""
     result = classify(prompt, use_ollama_fallback=use_ollama_fallback)
+    # A sensitive-egress verdict is an absolute cross-vendor boundary. The
+    # escalate-up feature may route other hard prompts to a frontier seat, but
+    # must never reopen a verdict that exists specifically to keep credentials
+    # in the current session boundary.
+    if result.get("source") == "sensitive-egress-veto":
+        return ""
     # If main-model required (tier=hard or agent=none), emit nothing — preserves
     # the prior hook.sh behavior of early-exiting on these classifications.
     if result.get("tier") == "hard" or result.get("agent") == "none":
+        if os.environ.get("BRAINER_TRIAGE_ESCALATE_UP") == "1":
+            agent = _escalate_up_agent(prompt)
+            # Guard (cross-vendor review): the consuming project may not have
+            # adopted the frontier-advisor/frontier-verifier agent roster.
+            # A directive naming a missing subagent is worse than silence —
+            # fall through to the pre-escalate-up default (empty string).
+            if not _agent_def_installed(agent):
+                return ""
+            return (
+                "⚡ [agents-triage] Task classified:\n"
+                f'{json.dumps({"tier": result.get("tier"), "agent": agent, "reason": result.get("reason")})}\n'
+                f"This prompt needs frontier judgment but the session model is "
+                f"cheap-tier. Dispatch via the Task tool to the `{agent}` "
+                "subagent (its agent def pins model: opus as a frontier floor) "
+                "with a self-contained brief. Accept its report; do not answer "
+                "this yourself at cheap tier. Wrong call? User can resend with "
+                "\"NO TRIAGE\"."
+            )
         return ""
     # A "Strong recommendation" below 0.7 confidence is miscalibrated language;
     # silence lets the main model proceed normally (the safe direction).
@@ -567,15 +784,26 @@ def emit_context(prompt: str, use_ollama_fallback: bool = True) -> str:
     # Drop empty lean_context from the wire — pure noise when [].
     if not result.get("lean_context"):
         result.pop("lean_context", None)
+    # Every emitted directive carries its acceptance gate (arbitrage adoption
+    # 2026-07-01). Routed agents are guaranteed a GATES entry (test-locked).
+    result["gate"] = GATES.get(result.get("agent"),
+                               "state what was verified and quote the check's output")
     cls_json = json.dumps(result)
     # Directive trimmed 122→~70 tokens (2026-06-12 self-audit): the directive
     # is injected on EVERY routed prompt, so its own size is part of the
-    # skill's cost. One imperative line beats three paragraphs of rationale.
+    # skill's cost. 2026-07-01: +~40 tokens buy the arbitrage rules — gate
+    # check, two-strike ladder, observed-not-predicted — which close failure
+    # modes #1/#4 (no escalation policy) and the main model's "faster to do
+    # it myself" override.
     return (
         "⚡ [agents-triage] Task classified:\n"
         f"{cls_json}\n"
-        "Dispatch via the Task tool to this subagent+model and return its "
-        "result — skip deep thinking. Wrong call? User can resend with \"NO TRIAGE\"."
+        "Dispatch via the Task tool to this subagent+model — skip deep "
+        "thinking. Accept the result only if it passes `gate`. Escalate only "
+        "on OBSERVED failure, never predicted difficulty ('this needs my "
+        "judgment' is not a reason): on gate fail, retry ONCE with concrete "
+        "corrective feedback, then take over, salvaging the partial output. "
+        "Wrong call? User can resend with \"NO TRIAGE\"."
     )
 
 

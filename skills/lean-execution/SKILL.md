@@ -1,6 +1,9 @@
 ---
 name: lean-execution
-description: Prune plans, process, context, and delegation to the smallest safe path. Trigger when the user asks to simplify, be lean, reduce process, remove steps, or cut rot; or when a plan has more steps than the task seems to need.
+description: Experimental/manual lean-work protocol retained for paired evaluation. Invoke explicitly when requested; frontier leads do not auto-load it.
+status: experimental
+disable-model-invocation: true
+auto-install: false
 effort: low
 ---
 
@@ -40,6 +43,8 @@ Maximize work not done. Keep only steps that reduce risk, gather needed facts, i
 ## Risk
 
 Do not use "lean" to skip necessary context, tests, user approval for risky choices, or docs that prevent recurrence.
+
+Mechanical backstop: `drift_probes.json` ships `dependency-manifest-changed` (flags a new/changed dependency manifest so a new dep is justified, not just added) and `reformat-only-hunk` (flags an Edit that changed only whitespace/formatting) — the canary hook enforces these two rules without relying on the model remembering them.
 
 ## Autonomy — keep going unless you truly need me
 

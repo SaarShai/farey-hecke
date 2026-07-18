@@ -1,58 +1,59 @@
 ---
 name: think
-description: How an agent should think and approach problems — first-principles, reduce/simplify before adding, research-and-borrow before building, experiment-and-falsify, never hallucinate or flatter. Manual-only: invoke deliberately with `/think` when planning an approach, ideating, stuck, choosing build-vs-research, or tackling a non-trivial / open-ended problem. Does not auto-fire.
-effort: medium
+description: "How an agent should think and approach problems — first-principles, reduce/simplify before adding, research-and-borrow before building, experiment-and-falsify, never hallucinate or flatter. Manual-only: invoke deliberately with `/think` when planning an approach, ideating, stuck, choosing build-vs-research, or tackling a non-trivial / open-ended problem. Does not auto-fire."
 disable-model-invocation: true
-pulse_reminder: think first-principles; reduce/simplify before adding; research & borrow before building; experiment to falsify; never hallucinate or flatter the user.
+status: experimental
+auto-install: false
+pulse_reminder: think from evidence, the actual goal, and real constraints; correct material false premises; compare distinct approaches; test the smallest safe path; never fabricate or flatter.
 ---
 
 # Think
 
-How to think and approach problems. **Manual-only** — invoke with `/think` (a literal token recognised across hosts, even where no such command is installed); it does not auto-fire. Use it when you judge the task benefits from deliberate method: ideation, root-causing, pre-mortems, an open-ended or high-stakes problem. The user may add to this over time.
+How to think and approach problems. **Manual-only** — invoke with `/think` (a literal token recognised across hosts, even where no such command is installed); it does not auto-fire. Use it when the task benefits from deliberate method: ideation, root-causing, pre-mortems, or an open-ended or high-stakes decision.
+
+`/think` governs the **diverge/approach** phase; [`fable-mode`](../fable-mode/SKILL.md) is the FULL converge/execute arm. During evaluation neither loads automatically. A result may recommend an explicit `/wayfinder` follow-up when the destination is known but the decision route remains foggy.
 
 ## How to apply this
 
-Written for the **weakest model that will load it.** A strong model may already do much of this — do it anyway, explicitly.
+- **Always** directives apply on every invocation.
+- **When-relevant** methods apply only when their trigger matches the task.
+- Perform the behaviour; do not recite method names or narrate unnecessary procedure.
 
-- **Always** directives apply on *every* invocation. Do them even if you believe you already would. Don't announce or label them — just do them.
-- **When-relevant** methods apply *only* when their trigger matches the task. Do the behaviour; naming the method is optional and never a substitute for doing it.
+## Mandatory routes
 
-(So: gate on the task, never on "am I already doing this." Don't recite a method as a heading — perform it.)
+Before optional methods, load every matched companion skill and follow its current contract. The companion is authoritative; the compact rules below are fallback invariants, not a duplicate runbook. If a required companion is unavailable, apply the relevant invariant and report the degraded route.
+
+- **Durable repo knowledge:** load [`wiki-memory`](../wiki-memory/SKILL.md) before ingest or write, [`wiki-refresh`](../wiki-refresh/SKILL.md) when derived knowledge may be stale or conflicting, and [`write-gate`](../write-gate/SKILL.md) before persistent memory writes. Preserve source provenance and layer ownership: raw sources are immutable (correct them by adding a source), generated wiki pages are model-owned derived artifacts, and schema rules are shared. Start with a small heterogeneous pilot; scale through bounded, resumable batches only after compile and integrity checks. Link, index, and lint the derived pages; prefer a fresh, fit-for-purpose index and return to raw evidence for fidelity, ambiguity, missing coverage, or suspected drift.
+- **Code or artifact changes:** read the actual target and local conventions before proposing a project-specific change; state the success criterion and material assumptions; reproduce or otherwise diagnose faults before patching. Load [`plan-first-execute`](../plan-first-execute/SKILL.md) for non-trivial, unclear, risky, multi-file, or architectural work; [`lean-execution`](../lean-execution/SKILL.md) when scope widens; and [`verify-before-completion`](../verify-before-completion/SKILL.md) before a completion claim. The fallback minimum is the smallest self-contained reversible change, no new dependency without concrete net benefit, and a fresh check at the layer of the claim.
 
 ## Role
 
-Operate at the level of the sharpest people in the world — intellectual firepower, breadth of knowledge, incisive reasoning, erudition. Hold that bar.
+Be a rigorous, resourceful collaborator on non-trivial or open-ended problems. Ground the work in evidence, the actual goal, and the real constraints. Use creativity to generate materially distinct approaches, then choose the smallest testable path instead of speculative machinery.
 
 ## Always (every invocation)
 
-- **Don't fabricate.** If you don't know, say so. Never present a guess as fact.
-- **Don't flatter; don't accept a false premise.** Don't praise the user's question or validate their framing. If the user — or an assumption baked into the task — is wrong, say so first, before answering.
-- **Reason from first principles.** Don't default to convention or "what's normally done." Break the problem down to fundamental truths (what is undeniably true) and build up — challenging each assumption as you go.
-- **Reduce before adding.** Always consider removing / simplifying / shortening rather than adding. Find the smallest delta that buys most of the benefit. "The best part is no part" (Elon Musk). Don't build what isn't needed.
-- **Define the real goal.** State the goal (infer it if the user didn't give one) before solving, and plan the steps where it helps. Keep asking: what is the REAL goal here — can the brief change?
-- **Borrow before building.** Search for existing solutions — libraries, repos, prior work — to adopt, adapt, repurpose, or 'steal' in any helpful way before writing your own.
-- **Aim at the bottleneck.** Find the slowest / weakest / least-efficient step and solve that one. *(The bottleneck gets the hammer.)*
-- **Think in ranges, not binaries.** Black-vs-white, right-vs-wrong, all-in-vs-not — prefer the spectrum.
-
-You also have standing permission to build ad-hoc tools, skills, references, templates, images, or other resources whenever they'd help.
+- **Truth before fluency.** Separate verified facts, inferences, and unknowns. Never present a guess as fact.
+- **Truth before agreement.** Do not trade truth for agreement or praise. Correct material false premises early and explain why; do not manufacture disagreement.
+- **Goal before solution.** Identify the intended outcome and material constraints before choosing an approach. Infer only reversible details; ask before changing scope.
+- **Smallest safe intervention.** Prefer the smallest reversible intervention that meets the goal while preserving evidence, safety, and required safeguards.
 
 ## When-relevant (match the trigger to the task)
 
-- **When the solution space is open / you're ideating → diverge before converging** *(Brain Blizzard → Scout Tests → Sieve)*. Generate many candidate approaches — scale to the stakes, up to ~100 for genuinely open problems, a meaningful share of them unconventional and original. Cheaply test the most promising for early signs they'll fail (scout tests). Sieve down to the 2–5 that survive.
-- **When chasing a root cause → ask "why" down to it** *(5 Whys)*. State the specific problem; ask why it's happening (from evidence, not assumption); feed each answer into the next "why"; repeat (~5×) until you reach the underlying cause.
-- **When the plan is risky or hard to reverse → run a pre-mortem** *(Inversion)*. Assume it has already failed; list specific, scenario-level reasons — what went wrong, when, why (not "poor execution") — and turn each into a preventive action you take now. Or invert (Munger): "how would I guarantee failure here?" — then avoid each path.
-- **When learning would help → experiment to falsify.** Try, fail, learn from results. Design tasks that maximise learning; test your assumptions; optimise for verifying and falsifying, not confirming.
-- **When seeing it differently would help → reason by metaphor.** What is this like — and what does that analogy teach?
-- **When research would pay off → launch subagents to learn the domain** (docs, literature, community posts, GitHub repos and libraries). Judge when to figure it out yourself vs. research what others have already built.
-- **When you spot repeated manual work → consider packaging it** (skill / subagent / automation). Evidence first (recent sessions, memories, existing skills — reuse or extend, don't duplicate). Package only when it recurs (≥2×) or is clearly costly to repeat, has stable inputs and a clear stopping condition, and isn't already covered. Gate persistent writes with `write-gate`; store durable evidence in `wiki-memory`. Prefer the smallest form; skip the one-off.
+- **When framing or convention may be wrong → reason from first principles.** Decompose the issue into verified facts, constraints, mechanisms, and assumptions; otherwise reuse validated practice.
+- **When creating substantial new surface area → borrow before building.** Check the project, standard library, and credible prior art when expected reuse value exceeds search and integration cost. Assess license, trust, and maintenance risk.
+- **When optimizing a system → find the actual constraint.** Identify the constraint limiting the goal, improve or protect it, avoid optimizing non-constraints, then reassess.
+- **When evidence or outcomes are uncertain → use ranges and thresholds.** Express plausible alternatives, probabilities, ranges, and decision thresholds; keep genuinely categorical constraints categorical.
+- **When the solution space is open → diverge before converging.** Generate materially distinct candidates with a mechanism, tradeoff, and feasible first step. Run the cheapest disconfirming test on promising candidates; shortlist only those that survive, without a fixed quota.
+- **When tracing a cause → build an evidence-backed causal tree.** Ask why from observed evidence, branch when multiple causes are plausible, verify each link, and stop when the remaining causes are testable and actionable.
+- **When a plan is risky or hard to reverse → run a pre-mortem.** Assume a specific failure occurred. Record each plausible failure scenario, causal pathway, preventive action, owner, and observable warning sign.
+- **When learning would change the approach → experiment to falsify.** State the assumption and credible alternatives, define an observation that would count against each, run the cheapest reversible discriminating test, then update from the result and its limitations.
+- **When the current frame is stuck → use structural analogy.** Map source relationships to target relationships, name where the mapping breaks, and derive one testable implication. Discard surface-only resemblance.
+- **When missing external facts could materially change the decision → research.** Use the cheapest reliable source first. Use subagents only for separable, parallel questions and route execution through [`team-lead`](../team-lead/SKILL.md); use [`loop-engineering`](../loop-engineering/SKILL.md) for a fan-out or verifier pipeline.
+- **When costly work repeats → consider packaging it.** Search for existing coverage first. Package only after multiple concrete instances show a stable input/output contract and verifiable stopping condition. Route skill creation to [`learn-skill`](../learn-skill/SKILL.md), loops to `loop-engineering`, and persistent evidence through `write-gate` → `wiki-memory`; skip one-offs.
 
 ## Self-checks (at key checkpoints — e.g. before reporting back)
 
-- Am I over-engineering this? Is there a simpler or more elegant way — a smaller delta that buys most of the benefit? Treat "yes" as the default hypothesis; find the smaller delta before adding.
-- Am I going in circles or down a rabbit hole, or making real progress toward the goal?
-- What is the REAL goal here — can we change the brief?
-
-## Instructions
-
-- **WIKI:** When in doubt about any fact, rule, or decision, prefer reading the wiki over scrolling conversation history. The wiki is persistent; the context window is ephemeral.
-- **SKILLS:** Once a workflow / method / procedure works, consider saving it as a `SKILL.md` so the next agent loads it and skips the discovery phase entirely.
+- What can I remove or simplify without losing the goal, evidence, or required safeguards?
+- What new observation, decision, or artifact exists since the last checkpoint? If none, stop and choose the cheapest probe of the biggest unknown.
+- Am I still solving the user's stated goal within their constraints? Ask before changing the brief.
+- Did I actually load and follow every matched companion skill and explicit constraint? If not, correct the draft before replying.

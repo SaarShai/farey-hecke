@@ -2,11 +2,21 @@
   "hooks": {
     "PreCompact": [
       {
-        "matcher": "*",
         "hooks": [
           {
-            "type": "command",
-            "command": "bash ./.claude/skills/context-keeper/hook.sh"
+            "command": "bash ./.claude/skills/context-keeper/hook.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.codex/skills/context-keeper/tools/codex_archive.sh\"",
+            "type": "command"
           }
         ]
       }
@@ -15,10 +25,19 @@
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "bash /Users/za/Documents/Farey NOW/projects/agents-triage/hook.sh"
+            "command": "bash /Users/za/Documents/Farey NOW/projects/agents-triage/hook.sh",
+            "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.codex/skills/compliance-canary/tools/hook.sh\"",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
       }
     ]
   }

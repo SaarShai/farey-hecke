@@ -1,231 +1,333 @@
 ---
 name: task-retrospective
-description: Use at the end of any non-trivial task (after the work is verified, before the final report); ALSO fire mid-task the moment the user corrects you — says you were wrong, that you skipped a step or claimed something without actually running it, calls out a mistake you have made before ("again", "second time", "you keep", "I told you", "stop doing that"), or pushes back on your approach; or when the user types /retro. Runs a fixed agent self-audit (incl. 5-whys root-cause), shows the user the evidence, asks at most 3 closed feedback questions, then routes each banked lesson through write-gate to the NARROWEST home — escalating a REPEATED failure to a mechanical gate (a compliance-canary drift probe) instead of more prose. For high-stakes or contested results it dispatches a separate, preferably cross-vendor, verifier agent (Claude ↔ GPT-via-Codex ↔ Gemini) for independent review + root-cause.
+disable-model-invocation: true
+description: "Use only when the user explicitly arms task audit mode: /retro, asks for task-retrospective, says this task will repeat and should be learned from, or requests an after-the-fact task learning audit. Reconstructs the task, extracts reusable project lessons, and routes sparse durable updates through write-gate to project memory, SOPs, checklists, or project-specific skills. Never audits Brainer skill obedience or edits canonical Brainer skills."
+status: experimental
+auto-install: false
 effort: medium
-tools: [Bash, Read, Write]
-pulse_reminder: at task end run task-retrospective — self-audit (5-whys to root cause), show evidence + ask the user, harvest lessons; a REPEATED failure earns a mechanical gate (drift probe), not another paragraph; a high-stakes/contested result earns a separate cross-vendor verifier agent, not self-grading.
+tools: [Bash, Read, Write, Grep]
+pulse_reminder: when task-retrospective is armed, record corrections and evidence; at close, produce a task learning report and persist only sparse project-specific lessons that pass write-gate or an explicit user-directed override. Do not auto-launch on ordinary task end or unarmed corrections.
 ---
 
-# task-retrospective — close the learning loop
+<!-- split-justified -->
 
-[`wiki-memory`](../wiki-memory/SKILL.md) records and retrieves lessons; [`write-gate`](../write-gate/SKILL.md)
-keeps junk out; [`compliance-canary`](../compliance-canary/SKILL.md) fires drift probes. What was
-missing is the **close**: a fast self-audit, a real user check, a gated write, and — the load-bearing
-part — a **measure** phase that detects when a lesson keeps recurring and forces it into a mechanical
-gate. This skill is that close. Lean by default — **skip Part B for trivial tasks**; never turn it
-into ceremony. It does NOT re-implement the write: it *fires* wiki-memory + write-gate at the task
-boundary.
+# task-retrospective — user-triggered task audit mode
 
-## Trigger
-End of any non-trivial task (after the work is verified, before the final report), on a corrective
-user message mid-task, or on the literal `/retro` token. For a long task, **arm it early**: state at
-the start "I'll run a retrospective at the end" — the closing check is the deferred self-instruction,
-not a thing you hope to remember once the context is full.
+This is the **project-learning** mode for repeatable work. It answers:
 
-## Part A — agent self-audit (answer honestly, ≤1 line each)
+- What did this project learn from the task?
+- What future task should trigger that lesson?
+- What project-specific skill, SOP, checklist, or project memory should change?
 
-First, counter your own known evasions — read this table before answering:
+It is deliberately separate from Brainer audit mode:
 
-| Evasion you reach for | Counter |
-|---|---|
-| "the code looks correct" | Run it. Reading code is not verification. |
-| "the tests passed" | The implementer was an LLM, and a green test can cover a stubbed half — check the last 20%. |
-| "nothing to fix here" | The bar is too low. Name one stricter check you did NOT run, and run it. (An empty audit is not a free PASS.) |
+```text
+Task-retrospective improves the current project.
+Brainer audit mode improves Brainer.
+```
 
-Then audit:
-1. Which skill / wiki SOP / runbook did this task match — and did I load it BEFORE acting? (retrieve-first)
-2. Did a FRESH verification (a command + its exact output, not a code-read) back every done-claim? (cf. [`verify-before-completion`](../verify-before-completion/SKILL.md))
-3. Where did I waste >2 tool calls — and what one-line rule would have prevented it?
-4. What did the user correct, in their exact words?
-5. **Root cause, not symptom** — for any failure/correction, run **5-whys** down to a cause you can *gate* (borrow [`think`](../think/SKILL.md)'s 5-whys / pre-mortem). "Fixed the typo" is a symptom; "no test covered the parse path" is closer; "I edit before reading" is a root you can turn into a probe. Stop at the deepest cause a mechanical gate (Part C HARD RULE) could catch.
+Deep-dive reference: [REFERENCE.md](REFERENCE.md) — headless mode, loop-pass mode, the optional adversarial cross-check, and the measure tool.
 
-## Part B — user feedback (≤3 closed questions; SKIP for trivial tasks)
+## Hard boundary
 
-**SHOW THE EVIDENCE FIRST (hard prerequisite — the user sees only the chat window; "you assume that
-I can see the result").** Before asking ANY feedback question, surface the artifact the user must
-judge in the cheapest *faithful* form:
-- the **command + its exact output**, the **diff**, the **EVAL.md number delta**, or the **file at its path** — never a claim *that* it works;
-- show the **prior state next to the new state** (old output vs new output, baseline metric vs new metric) — never two indistinguishable views ("the 2 screenshots look exactly the same — what am I judging?"). No prior state exists → say so explicitly: "no delta to judge — feedback is on process only";
-- for a **measured claim** (a count, a %, a timing), show the measurement with its source — don't describe a number, show where it came from.
+Use task-retrospective only for project learning in the current consuming repo. It may update the current project's wiki, SOPs, checklists, project-specific skills, or broad agent instructions when justified.
 
-**REVIEW CARD per reviewed item** ("you're not telling me what I'm supposed to be approving") — never
-just point at evidence. Each item carries: (1) what changed, (2) exactly where to look (path / command),
-(3) what PASS looks like, (4) what FAIL would look like, (5) what your approval DECIDES (which lesson
-gets banked / which gate gets built).
+Do **not** use it to audit Brainer skill obedience, tune Brainer drift probes, or edit canonical Brainer skills. Those belong to Brainer audit mode. If the current repo is the canonical `SaarShai/Brainer` repo, task-retrospective still must not auto-harvest Brainer-development lessons into canonical skills; canonical Brainer edits require explicit user direction and normal repo-change review.
 
-Then ask — on Claude Code via **AskUserQuestion buttons**; on other hosts as plain numbered questions.
-A feedback question is a **hard yield**: show evidence, ask, then WAIT — do not answer your own
-questions. At most three, each a closed candidate set:
-- **Result quality:** accepted / minor issues / wrong
-- **Process:** efficient / too slow / asked too much / too verbose
-- **Lessons:** bank as I suggest / I'll dictate one / **add a lesson you missed** / none
+## Trigger model
 
-The 4th lesson option is not filler — the user naming a blind spot you didn't see is the
-highest-signal input in the whole ritual. Per item, the user's verdict resolves to a closed verb:
-`bank-as-lesson` / `fixed` / `not-a-real-issue (cite evidence)` / `declined (cite the harm)` /
-`needs-human`. Citing evidence/harm to divert is required — do not manufacture doubt to dodge a
-correction.
+Primary triggers, ideally before the task:
 
-## Headless mode (no interactive human — subagent / orchestrator / CI / `/retro` in a pipeline)
+```text
+activate task audit mode
+use task-retrospective for this task
+track learnings from this task
+this task will repeat, learn from it
+run task-retrospective on this task
+```
 
-When there is no human to answer (this is the common subagent path), **degrade, don't block**: skip
-the questions and the approval card, auto-extract the ≤3 candidate lessons (Part C), route survivors
-through write-gate at the default threshold, bank the passers, and emit ONE machine-parseable result
-as a fenced `json` block — a free-text line is not parseable (a page summary with a comma, colon, or
-bracket breaks naive splitting). The caller reads the LAST such block:
-````
+After-the-fact fallback triggers:
+
+```text
+run task-retrospective on what we just did
+please audit the task we just completed for project learnings
+I forgot to activate task audit mode; reconstruct it now
+```
+
+Compatibility triggers:
+
+```text
+/retro
+retrospective
+task-retrospective
+task audit mode
+```
+
+Non-triggers:
+
+- An ordinary non-trivial task by itself.
+- A correction when task-retrospective was not armed.
+- Generic self-improvement, Brainer skill obedience, drift-probe, or carrier-sync work unless the user explicitly asks for a project-learning retrospective.
+
+Correction behavior:
+
+- **If armed:** record the correction as evidence and continue the task.
+- **If not armed:** fix the correction. Do not start a full retrospective automatically; at most, suggest task audit mode when the task is clearly repeatable and the nudge will not add noise.
+
+Default interpretation: "activate audit mode" means **Brainer audit mode** unless the user uses task/project-learning language.
+
+## Lifecycle
+
+1. **Arm** — capture the repeatable task contract.
+2. **Observe** — record lightweight evidence while work happens.
+3. **Review** — identify what changed, what failed, what worked, and what should recur.
+4. **Decide durable writes** — choose the narrowest project-owned target or decide to write nothing.
+5. **Persist** — only if the lesson is accepted, project-specific, and gate-clean.
+6. **Read back** — prove the update exists before claiming it was persisted.
+7. **Close** — deliver a task-retrospective report. Banking any user correction as a
+   durable rule + gate + exemplar is required per
+   [`LEARNING_CONTRACT`](../_shared/LEARNING_CONTRACT.md) §2 whether or not
+   task-retrospective was armed for this task; arming governs the full
+   retrospective (steps 1-6, this report), not the §2 banking requirement itself.
+
+A successful run may conclude: **No durable project lesson found.** That is not a failure.
+
+## Arm phase
+
+Capture enough state for the later report:
+
 ```json
-{"retrospective": {
-  "banked": [{"id": "<wiki-page-id>", "pattern": "<signature>", "summary": "<one line>"}],
-  "dropped": [{"candidate": "<one line>", "reason": "write-gate reject | low-confidence | duplicate"}],
-  "recurrence": [{"signature": "<pattern>", "count": <int>}]
-}}
-```
-````
-All three arrays may be empty — `{"retrospective": {"banked": [], "dropped": [], "recurrence": []}}` is
-the valid "no durable lesson" result.
-
-## Part C — route each accepted lesson
-
-1. **Cap nominations at ≤3 BEFORE the gate.** write-gate scores items one-at-a-time and has no count
-   cap, so it stops *reasonless* writes but not *lukewarm-but-individually-passing* bulk. If you're
-   nominating 5 things you aren't filtering. Nomination bar — **only the points you got burned on**
-   (a quotable failure, something that concretely broke), by confidence:
-   - **HIGH** — you can name what concretely broke / a caller or operator will hit it → nominate to bank.
-   - **MEDIUM** — "felt suboptimal / I'd have done it differently" (taste, not a failure) → surface in the card, do NOT persist.
-   - **LOW** → drop silently.
-   Blessed null exit: **"This task produced no durable, project-specific lesson; the work is captured in the diff/log."** Writing nothing is the comfortable default.
-2. **Bug-lesson or knowledge-lesson?** A bug-lesson MUST fill *what didn't work* + *prevention* (the
-   prevention is exactly what later becomes a mechanical gate); a knowledge-lesson MUST fill *when to
-   apply*. Map onto Brainer's existing page types — `error`/`lesson` vs `concept`/`pattern`/`convention`
-   — do NOT create a parallel tree.
-3. **Gate it:** `python3 skills/write-gate/tools/write_gate.py gate --kind <fact|decision|convention|error|sop> --file <candidate>`. Reject → revise (add the why-clause, cite evidence, drop the filler) or drop. Do not bypass.
-4. **Write it to the NARROWEST home** via wiki-memory — write the fact once, where the next task will
-   surface it, not preloaded into CLAUDE.md unless it's a broad operating rule:
-   `python3 skills/wiki-memory/tools/wiki.py new --template page --title "<title>" --domain "<domain>"`.
-   Ladder (narrowest first): `wiki/L2_facts` · `wiki/concepts|patterns|projects` → `wiki/L3_sops` → a
-   specific `skills/<name>/SKILL.md` body → a **NEW `skills/<name>/SKILL.md`** when the lesson is a
-   *proven, repeatable PROCEDURE* (a workflow/method that worked and will recur ≥2×, not already
-   covered) — so the next agent loads it and skips the discovery phase → `CLAUDE.md` (broad rule only).
-   Tag the page **`pattern: <named-signature>`** — the recurring class this lesson belongs to (e.g.
-   `pattern: edit-without-read`). The why-clause says *why it's true*; the pattern tag says *when to
-   re-fire it*, and it is the key the Measure phase counts against. Tell the user which future work
-   will re-trigger it.
-5. **Read it back** — `python3 skills/wiki-memory/tools/wiki.py fetch <id>` (or grep the page) to
-   confirm it persisted — THEN move on. The disk is the source of truth; conversation context is not
-   durable storage, and the retrospective runs exactly when context is most likely to be compacted away.
-6. **Append ONE line** to `wiki/log.md`: `## [YYYY-MM-DD] retro | <what happened> + <artifact updated> + pattern:<signature>`. Include the signature so [`audit_lessons.py`](tools/audit_lessons.py) can scan it.
-
-### HARD RULE — a REPEATED failure earns a gate, not prose
-If the lesson already appears in [`lesson_patterns.json`](lesson_patterns.json) or recurs in
-`wiki/log.md` history, **prose is not an acceptable fix** — the covering rule was already written and
-the failure repeated anyway. Ask the compounding question: *would the system catch this automatically
-next time?* Escalate:
-1. **1st occurrence** → a wiki lesson page (prose, via Part C).
-2. **Measure flags a signature ≥ N** → STOP writing prose; build a **mechanical gate** — but only if the
-   lesson is *mechanical* (regex / count detectable, no judgment). Pick the closed target:
-   - a recurring **user-correction** → a `user_correction` or `forbidden_regex` probe in the owning skill's `drift_probes.json`;
-   - a recurring **tool error** → a `repeated_tool_error` probe (worked precedent: the `edit-without-read` probe declared in `skills/verify-before-completion/drift_probes.json` and *fired* by compliance-canary, itself transcript-mined from "File has not been read yet" — see `wiki/log.md [2026-06-12]`);
-   - a recurring **unverified done-claim** → a `claim_without_evidence` probe, or a `verify-before-completion` criterion.
-   - a recurring **loop-design violation** (ran-past-budget / no-gate / generator==verifier — the runtime echo of [`loop-engineering`](../loop-engineering/SKILL.md)'s `loop_lint` R1–R3, which is a *design-time* static check) → this is the handoff loop-engineering advertises. loop-engineering already ships a `loop-done-without-gate` probe in its own `drift_probes.json`, so per rule 4 below **tighten/confirm that existing probe**, don't duplicate it; only the pure budget-overrun slice that never surfaces as a done-claim needs a *new* probe — and it goes in `skills/loop-engineering/drift_probes.json` (loop-engineering owns the failure). The recurrence COUNT stays here in [`lesson_patterns.json`](lesson_patterns.json) (`loop-ran-past-budget`); the PROBE lives with the failure-owner.
-   Probes are *declared* in a skill's own `drift_probes.json` and *fired* by compliance-canary, which auto-discovers every skill's probe file on the next run after `./install.sh` — no canary code change. Put the probe in the skill that owns the failure.
-3. If the recurring lesson is **real but judgment-heavy** (not regex-detectable), it stays a page AND
-   gets escalated to a `pulse_reminder:` frontmatter line on the owning skill — re-anchored every N turns by [`compliance-canary`](../compliance-canary/SKILL.md)'s periodic re-anchor (formerly skill-pulse), not another page.
-4. **The gate already exists but the failure recurred anyway** → do NOT add a duplicate probe. A recurrence past an existing gate is a **threshold or wiring defect**: tighten the probe (e.g. `min_count` 2→1), or confirm the canary is actually wired on this host (`.claude/settings.json`) — a probe that never fires is a paper gate.
-
-Precondition before generating any probe: re-check that the evidence still matches at the cited
-`file:line` — don't mechanize a lesson that the code already moved past.
-
-## Part D — adversarial cross-check (a SEPARATE, preferably cross-vendor, verifier agent)
-A self-audit shares the generator's blind spots; a different foundation model usually doesn't. Per
-[`loop-engineering`](../loop-engineering/SKILL.md) the verifier must be a *separate* agent (never
-self-grade) — and the strongest separation is a **different foundation company**.
-
-**When (cost-gated — NOT every retro):** the result is high-stakes / hard to reverse, the user
-flagged it `minor issues` / `wrong`, or a repeated failure needs an independent root-cause. Trivial or
-cleanly-accepted tasks skip Part D.
-
-**Who — pick by descending separation (different company > different model > just a fresh context).**
-Identify your own vendor (you know which host/model you are) and dispatch the OTHER, **read-only**:
-
-| You (orchestrator) | Preferred verifier | Invocation (read-only, sync) |
-|---|---|---|
-| Claude / Opus | **GPT** via Codex | `codex exec "<judge prompt>"` — or Gemini: `gemini -p --approval-mode plan "<…>"` |
-| GPT / Codex | **Claude / Opus** | `claude -p --model opus "<judge prompt>"` — or Gemini |
-| Gemini (Antigravity) | **Claude or GPT** | `claude -p --model opus "<…>"` / `codex exec "<…>"` |
-
-Fallback ladder if no cross-vendor CLI / auth on this host: a same-vendor separate subagent (Task/Agent,
-fresh context) → an in-context adversarial pass driven by the Part A rationalization catalog. Never let
-the generator grade itself unchallenged on a result that matters. Channel caveats (measured on this box):
-`codex exec` and `gemini -p` return cleanly; **`claude -p` needs `ANTHROPIC_API_KEY` / `apiKeyHelper`** in
-headless mode (it 401s on inherited OAuth) — so the →Claude channel only works where that auth is wired,
-else fall back. (Codex gotcha — memory `codex-rescue-sync-dispatch`: demand a SYNCHRONOUS `codex exec`
-with the verdict in the final message, else it fire-and-forgets.)
-
-**Hand the verifier the result + evidence + the candidate lesson(s), and ask (it judges, never edits):**
-1. Does the result actually HOLD? Re-run the key check; cite command + output; refute if you can.
-2. Independent ROOT-CAUSE of any failure — your own 5-whys, do NOT anchor on mine.
-3. Is each banked lesson correct, and is the proposed gate the right mechanism?
-
-**Reconcile, don't rubber-stamp:** agreement → proceed. Disagreement → do NOT auto-accept either side;
-for a high-stakes/repeated result gather up to an **odd N (default 3)** cross-vendor opinions and take
-the majority — if still split at N, force the conflict to the user. A cross-vendor refutation of a
-lesson **blocks its write** until resolved. This works in Headless mode too — it is agent-to-agent and
-needs no human.
-
-**Part D is itself a generator→verifier loop, so it carries [`loop-engineering`](../loop-engineering/SKILL.md)'s
-4-field spec** — the cross-check cannot spin (the budget caps the dissent path above), and `loop_lint.py`
-passes it clean:
-```loop
-name: task-retrospective-part-D-cross-check
-topology: closed · inner · single
-generator: this orchestrator (produced the result + candidate lessons)
-verifier: a SEPARATE, preferably cross-vendor, read-only agent (codex exec / claude -p / gemini -p)
-gate: verifier re-runs the key check and returns a JSON verdict — holds:bool with exit_code == 0
-stop: verifier verdict agrees with mine, OR an odd-N majority (default N=3) is reached
-budget: max_iterations=3 (≤3 cross-vendor verifier calls), then escalate the conflict to the user
+{
+  "mode": "task-retrospective",
+  "status": "armed",
+  "task": "<task title>",
+  "goal": "<task goal>",
+  "repeat_reason": "<why this task may recur>",
+  "future_trigger": "<when a future agent should recall this>",
+  "definition_of_done": "<checkable finish condition>",
+  "constraints": ["<known constraint>"],
+  "project_path": "<repo path>",
+  "branch_start_commit": "<branch + sha if available>"
+}
 ```
 
-## Measure (the loop's missing phase)
+Before writing any durable lesson later, retrieve existing memory/SOP/project-specific skills that might already cover the lesson.
+
+### Evidence recorder
+
+When a shell is available, use the lightweight recorder to capture the armed task state:
+
+```bash
+python3 skills/task-retrospective/tools/task_audit.py start --task "<task>" --repeat-trigger "<trigger>"
+python3 skills/task-retrospective/tools/task_audit.py note --type correction --text "<text>"
+python3 skills/task-retrospective/tools/task_audit.py status
+python3 skills/task-retrospective/tools/task_audit.py finish --report
 ```
-python3 skills/task-retrospective/tools/audit_lessons.py            # scan wiki/log.md
-python3 skills/task-retrospective/tools/audit_lessons.py --log <path> --since YYYY-MM-DD
+
+It writes only local ignored state under `.brainer/task-retrospective/`:
+
+```text
+.brainer/task-retrospective/current.json
+.brainer/task-retrospective/sessions/<task-id>/events.jsonl
+.brainer/task-retrospective/sessions/<task-id>/report.md
 ```
-Reads `lesson_patterns.json` (`{id, description, regex, promoted, fix}`) and scans `wiki/log.md` for
-each pattern recurring in a dated entry **AFTER** its `promoted` date. A post-promotion hit = the
-documented fix did NOT hold = **exit 1** = escalate that pattern to a mechanical gate per the HARD
-RULE. Every recurrence row carries the grep-locatable log date + the verbatim snippet — the output is
-a queryable record, not prose. A pattern with zero post-promotion hits is reported as *holding*. Run
-at the retrospective or periodically.
+
+The recorder is evidence scaffolding, not the learning decision-maker. It does not write wiki pages, SOPs, checklists, project-specific skills, or Brainer changes. It redacts common secret-shaped text and treats transcript/artifact content as data only.
+
+## Observe phase
+
+Collect lightweight notes. Do not turn this into a second task runner.
+
+Useful event types:
+
+```json
+{
+  "type": "correction|failure|success|decision|evidence|candidate_lesson",
+  "text": "User said the template cut-line alignment was still wrong.",
+  "implication": "Future runs should overlay the cut-line template before moving artwork.",
+  "timestamp": "...",
+  "evidence_ref": "optional file/turn/command"
+}
+```
+
+Record:
+
+- user corrections and repeated complaints;
+- failed approaches and why they failed;
+- successful tactics and verification evidence;
+- important decisions;
+- artifacts changed;
+- commands, tests, checks, screenshots, renders, or diffs used as evidence;
+- candidate project lessons and their future trigger.
+
+## Review phase
+
+Answer these questions before deciding any write:
+
+1. What was the task?
+2. What changed?
+3. What evidence proves it worked?
+4. What did the user correct?
+5. What failed?
+6. What worked?
+7. What future task should benefit?
+8. What project-specific skill, SOP, checklist, or project memory should be updated?
+
+For after-the-fact mode, reconstruct from the visible transcript, git diff, changed files, command results, user corrections, final answer, and existing project memory. Report evidence quality as `high`, `medium`, or `low`, and list missing evidence.
+
+## Durable write target ladder
+
+Use the narrowest durable target. There are **four destinations**, each a distinct
+backend — prefer the lightest that fits: **drop > wiki page > skill > always-on rule.**
+
+1. **drop** — no durable write (most lessons end here).
+2. **wiki page** → [`wiki-memory`](../wiki-memory/SKILL.md) — a durable fact, lesson, SOP,
+   or checklist. One destination, several *shapes*: the wiki is internally tiered, so pick
+   the lightest shape that captures it (see wiki-memory's tier layout) — a one-off fact and
+   a multi-step SOP both land here.
+3. **skill** → [`learn-skill`](../learn-skill/SKILL.md) (`/learn`) — a reusable *procedure*.
+   Create-vs-update is `/learn`'s dedup decision (PATCH vs CREATE), not a separate target.
+4. **always-on rule** — project `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`, only for broad
+   repo-wide behavior that must always be in context.
+
+A fact or gotcha is a **wiki page**, not a skill; a repo-wide rule is an **always-on rule**,
+not a skill. Most retrospective lessons are facts/gotchas → destination 2 or drop.
+
+> **Under-reach counterweight (mandatory before filing to destination 2).** This ladder
+> biases *downward* ("prefer the lightest", "most lessons are facts") — which silently
+> files genuine *procedures* as facts, so `/learn` is never reached (the connector-consistency
+> miss). Before writing any lesson to a wiki page, run the mechanical probe:
+> ```bash
+> python3 skills/task-retrospective/tools/task_audit.py route-probe \
+>   --text "<lesson one-liner>" [--body-file <draft>]
+> ```
+> Exit 3 = **PROCEDURE-CANDIDATE** (it cites commands, has ≥2 ordered steps, or chains ≥2
+> imperative verbs — a runbook, not a fact). You may **not** silently file it as a wiki page:
+> run the destination-3 gate below, and if you still choose destination 2, record the
+> *why-not-skill* reason in the report. Exit 0 = fact-shaped, wiki/drop is fine. The probe
+> never auto-creates a skill — it only refuses the silent downgrade.
+
+A **skill** (destination 3) is valid only when all are true:
+
+- the workflow will recur;
+- the trigger is clear;
+- the procedure is concrete;
+- the lesson is not already covered by a wiki page (fact / SOP / checklist) or an existing skill;
+- a future agent would otherwise rediscover the procedure;
+- the user requested it or the evidence strongly supports it.
+
+Canonical Brainer skill updates are not on this ladder.
+
+### Destination 3 (skill) hands off to `/learn`
+
+**task-retrospective DECIDES WHAT to learn and routes it to the wisest FORM** (drop / wiki fact / gate / skill / always-on rule); [`/learn`](../learn-skill/SKILL.md) is the skill-authoring *mechanism* it calls only when the chosen form is a skill — a different level, not a duplicate.
+
+When — and ONLY when — the chosen destination is a skill, do not hand-write the
+`SKILL.md`. Hand the lesson to [`learn-skill`](../learn-skill/SKILL.md):
+
+```bash
+# new skill: author from the task you just retrospected
+/learn how we just did <task>        # described-workflow source
+
+# possibly-existing: dedup first — it says PATCH if one already covers this (don't duplicate)
+python3 skills/learn-skill/tools/learn.py dedup --desc "<one-line procedure>" --body-file <draft>
+```
+
+Why route through `/learn` instead of writing the file: the skill inherits the full
+governance — dedup-before-write (patch, don't duplicate), the same `write-gate` rationale
+check this ladder already runs, birth as `status: proposed` (slash-only, can't auto-fire),
+and the telemetry-gated `proposed → trusted` lifecycle. A hand-written skill skips all that.
+
+This handoff is **conditional, not automatic** — destinations 1, 2, and 4 (drop, wiki,
+always-on rule) are NOT skills and stay on their own backends. task-retrospective remains
+the router that decides *whether* a lesson is durable and *which* of the four destinations
+it belongs to; `/learn` only owns the skill destination.
+
+## Write pipeline
+
+```text
+candidate lesson
+→ task-retrospective relevance check
+→ search existing memory/SOP/project-specific skills
+→ choose narrowest project-owned target
+→ route-probe: if procedure-shaped, test the skill (dest-3) gate before allowing a wiki page
+→ run write-gate as content-quality filter
+→ dedup/overlap check
+→ write/update target if accepted (for a wiki page, add the Trigger/symptom cue as a BODY line — see [`wiki-memory`](../wiki-memory/SKILL.md) step 8b — so the lesson is findable by its symptom phrase)
+→ read back
+→ append project log entry if the project wiki exists
+→ include final persistence summary in the report
+```
+
+Task-retrospective owns:
+
+- whether the lesson is reusable;
+- whether it is project-specific;
+- whether it mattered;
+- what future trigger should re-fire it;
+- whether it belongs in memory, SOP, checklist, project-specific skill, or instructions.
+
+[`write-gate`](../write-gate/SKILL.md) owns candidate **quality** — concrete · evidence-backed · causal why-clause for decisions · not low-value recap — and the reject outcomes (revise / drop / ask the user). Don't restate or silently bypass it; a user override is recorded with write-gate's user-directed override fields (rejected gate, explicit override, the user's reason). No agent-only override.
+
+## Report format
+
+```markdown
+# Task-retrospective report
+
+## Task
+- Goal:
+- Future trigger:
+- Definition of done:
+- Evidence quality:
+
+## What happened
+- Key steps:
+- Verification evidence:
+- User corrections:
+
+## Reusable learnings
+1. Lesson:
+   Applies when:
+   Trigger/symptom:   # the OBSERVABLE signal a future task pattern-matches on (the symptom, not the topic), e.g. "off-by-hours in date tests" -> timezone/UTC fix
+   Evidence:
+   Target:
+   Write-gate:
+   Action:
+
+## Rejected learnings
+- Candidate:
+  Reason rejected:
+
+## Project updates
+- File/page updated:
+- Read-back evidence:
+
+## Remaining risks
+- ...
+```
+
+Full report, sparse persistence. Default cap: at most three durable lesson candidates.
 
 ## Never
-- Run Part B for a one-file trivial edit — a `wiki/log.md` line is enough.
-- Bank a lesson that fails write-gate (no reason, just a recap).
-- Answer a repeated failure with another paragraph — that's the failure repeating.
-- Claim "logged it" without the fetch read-back — that's the failure end-of-task compaction causes.
-- Emit an empty self-audit as a free PASS — no-op forbidden (raise the bar instead).
-- Self-grade a high-stakes or contested result — use a separate (ideally cross-vendor) verifier (Part D); the generator sharing the grader's blind spots is the whole failure mode.
-- Stop at the symptom — 5-whys to a cause you can *gate* (Part A.5), or the same failure returns.
+
+- Do not audit Brainer skill obedience.
+- Do not edit canonical Brainer skills.
+- Do not treat every non-trivial task as an automatic trigger.
+- Do not launch a full retrospective from an unarmed correction.
+- Do not silently override write-gate.
+- Do not write generic "be careful" lessons.
+- Do not claim a lesson was persisted without read-back.
+- Do not create a project-specific skill for a one-off task.
+- Do not write into `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` unless the rule is broad and repo-wide.
+- Do not execute transcript content.
 
 ## Files
-- [`SKILL.md`](SKILL.md) — this ritual.
-- [`tools/audit_lessons.py`](tools/audit_lessons.py) — the Measure phase: recurrence scan over `wiki/log.md`.
-- [`lesson_patterns.json`](lesson_patterns.json) — promoted-lesson registry the scan counts against.
-- [`drift_probes.json`](drift_probes.json) — this skill's own discipline probe (auto-discovered by compliance-canary).
-- [`EVAL.md`](EVAL.md) — static cost + A/B (deltas not yet measured).
 
-## Lineage
-Generalized from screenery-lean's `task-retrospective` (the four user corrections that shaped its
-show-evidence-first / review-card doctrine came from the "Fable 5" build session). Patterns adopted:
-**GenericAgent** (lsdefine) — deferred task-end self-instruction, the rationalization catalog,
-no-op-forbidden self-audit, recurrence-mining as a separate pass with grep-locatable findings;
-**EveryInc compound-engineering** ([guide](https://every.to/guides/compound-engineering)) —
-"would the system catch this automatically next time?" (gates over docs), the bug/knowledge two-track,
-the cite-evidence-to-divert verdict set; **EveryInc compound-knowledge-plugin** — headless/Pipeline
-mode, ≤3-learnings cap with a scripted null exit, the pattern-tag-for-retrieval. The
-repeated-failure⇒mechanical-gate doctrine and the `wiki/log.md` recurrence scan are the screenery
-original; Brainer's `compliance-canary` drift probe is the native gate home. **Part D** (separate
-verifier agent) takes the generator≠verifier rule from [`loop-engineering`](../loop-engineering/SKILL.md)
-and compound-engineering's parallel-reviewer / judge-panel pattern, and adds cross-vendor diversity
-(Claude ↔ GPT-via-Codex ↔ Gemini) so the verifier doesn't inherit the generator's foundation-model
-blind spots.
+- [`SKILL.md`](SKILL.md) — this user-triggered project-learning ritual.
+- [`REFERENCE.md`](REFERENCE.md) — headless mode, loop-pass mode, optional adversarial cross-check, measure tool.
+- [`tools/task_audit.py`](tools/task_audit.py) — opt-in evidence recorder for armed task audits.
+- [`tools/test_task_audit.py`](tools/test_task_audit.py) — deterministic recorder tests.
+- [`tools/audit_lessons.py`](tools/audit_lessons.py) — advisory recurrence scan over `wiki/log.md`.
+- [`lesson_patterns.json`](lesson_patterns.json) — promoted-lesson signatures used by the scan.
+- [`drift_probes.json`](drift_probes.json) — discipline probes that must respect the armed/unarmed boundary.
+- [`EVAL.md`](EVAL.md) — static cost and historical eval notes.

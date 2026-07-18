@@ -2,6 +2,7 @@
 name: index-first
 description: Prefer pre-built indexes over chains of grep/read/scan. Use when about to look up symbols, callers, references, routes, or "where is X used / what depends on Y" — query the index (codegraph, ctags, wiki search) before scanning raw text. Batch related lookups into one capped call. Applies to code and any indexed corpus (wiki, tickets, docs).
 effort: low
+auto-install: false
 ---
 
 # Index-First Retrieval
@@ -27,6 +28,7 @@ If a structured index already answers the question, scanning raw text repeats wo
 5. Pass natural-language queries through. Indexes that extract symbols (CamelCase, snake_case, dot.path, SCREAMING_SNAKE) will pull them out; you don't need to pre-parse.
 6. Use structured filters (`kind:function path:src/api`, `state:open label:bug`) to narrow before content search; full-text scoring runs within the narrowed set.
 7. If no index exists for a corpus you query often, build one once — the upfront cost amortizes over future queries.
+8. Fanning out N agents over one corpus? Build the index/facts ONCE in the orchestrator and inject; don't let each agent re-derive structure from raw source (~(N−1)/N redundant work avoided). The extractor is [`code_map`](../wiki-memory/tools/code_map.py); see fleet doctrine in [loop-engineering](../loop-engineering/SKILL.md).
 
 ## Anti-patterns
 
@@ -44,6 +46,34 @@ If a structured index already answers the question, scanning raw text repeats wo
 - Indexes go stale. If the corpus changed since last build and there is no watcher, rebuild or trust grep instead.
 - Confidence matters: a top-result confidence of ~0.4 means "I don't know" — treat as ambiguous, do not silently pick.
 - Don't push agents toward an index that isn't installed. Check first, fall back to grep+read if absent.
+
+## Opt-in hook: grep-augment (`tools/augment.py`)
+
+An **opt-in** PreToolUse hook that auto-injects index hits alongside your normal
+search results. It is **off by default** (auto-install:false) and is NOT wired
+into the repo's root `./install.sh`. Turn it on per-project:
+
+```
+bash skills/index-first/tools/install.sh              # merge the hook into .claude/settings.json
+bash skills/index-first/tools/install.sh --uninstall  # remove it
+```
+
+What it does, on every `Grep`/`Glob` call: extracts the longest identifier-like
+token (`[A-Za-z_][A-Za-z0-9_]*`, length ≥4) from the search pattern, queries an
+available index (graphify `explain` if `graphify-out/graph.json` exists, else
+`wiki.py search`), and feeds the top ~3 hits back as PreToolUse
+`additionalContext`. Your raw search results are unaffected — the index hits are
+purely additive context.
+
+**CARDINAL RULE (ported verbatim-in-intent from codebase-memory-mcp's
+`hook_augment.c`): the hook NEVER blocks a tool.** Every error, timeout, missing
+index, parse failure, or short/glob-only/regex-only pattern → `exit 0` with **no
+stdout** (clean pass-through). Output is written exactly once at the very end, so
+a mid-work failure yields a clean no-op, never partial JSON. It **never acts on
+`Read`** — gating Read would break read-before-edit — nor on any tool other than
+Grep/Glob. A `signal.alarm` (~300ms; `threading.Timer` fallback where SIGALRM is
+absent) is the hard deadline: a slow index query `os._exit(0)`s rather than
+stalling the agent. Self-test: `python3 skills/index-first/tools/test_augment.py`.
 
 ## Recipe: graphify (external)
 

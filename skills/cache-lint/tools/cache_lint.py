@@ -8,6 +8,7 @@ Checks against Anthropic's six prompt-cache rules:
   4. model switching busts cache
   5. breakpoint sizing
   6. fork safety (no prefix mutation by terminal hooks)
+  7. tool-surface audit (resident-but-unused MCP servers)
 
 Lineage: ussumant/cache-audit (52★).
 """
@@ -34,6 +35,7 @@ class Finding:
     file: str = ""
     line: int = 0
     detail: str = ""
+    suggested_action: str = ""
 
 
 @dataclass
@@ -56,9 +58,10 @@ class Report:
 
 # --- Discovery ------------------------------------------------------------
 
-PREFIX_FILES = ("CLAUDE.md", "AGENTS.md", "GEMINI.md", ".cursorrules")
+PREFIX_FILES = ("CLAUDE.md", "AGENTS.md", "GEMINI.md")
 # JSON sources of hook / settings config
 SETTINGS_GLOBS = (
+    ".mcp.json",
     ".claude/settings.json",
     ".claude/settings.local.json",
     ".claude/hooks/*.json",
@@ -139,6 +142,18 @@ DYNAMIC_PATTERNS = [
 MAX_FINDINGS_PER_RULE_PER_FILE = 5  # cap to keep reports readable + bound DoS
 
 
+def _dynamic_suggestion(label: str) -> str:
+    if "shell substitution" in label or "wall-clock" in label or "timestamp" in label:
+        return "Move runtime/date values below the stable prefix or into a sidecar hook payload; keep cached files deterministic."
+    if "env" in label or "hostname" in label:
+        return "Pass machine/user-specific values at runtime below the cache breakpoint instead of embedding them in prefix files."
+    if "session" in label:
+        return "Move session/run identifiers into transient state or hook output, not resident prompt files."
+    if "jinja" in label:
+        return "Render templates before the cached prefix or keep template expressions out of resident carrier docs."
+    return "Keep volatile content out of cached prefix files; place it in runtime context instead."
+
+
 def check_dynamic_content(report: Report, files: list[Path]) -> None:
     for p in files:
         if p.suffix == ".json":
@@ -190,6 +205,7 @@ def check_dynamic_content(report: Report, files: list[Path]) -> None:
                     file=str(p),
                     line=line,
                     detail=lines[line - 1][:160] if line - 1 < len(lines) else "",
+                    suggested_action=_dynamic_suggestion(label),
                 ))
                 emitted_by_label[label] = emitted_by_label.get(label, 0) + 1
         for label, suppressed in suppressed_by_label.items():
@@ -198,6 +214,7 @@ def check_dynamic_content(report: Report, files: list[Path]) -> None:
                 title=f"+{suppressed} more '{label}' match(es) suppressed (cap {MAX_FINDINGS_PER_RULE_PER_FILE} per pattern)",
                 file=str(p),
                 detail="Fix the visible occurrences of this pattern and re-run to surface the rest.",
+                suggested_action=_dynamic_suggestion(label),
             ))
 
 
@@ -288,6 +305,7 @@ def check_sizing(report: Report, root: Path) -> None:
                 title=f"{name} is tiny ({n_tokens_est} token est) — cache slot likely wasted",
                 file=str(p),
                 detail=f"Consider inlining into another prefix file or accepting no caching here.",
+                suggested_action="If intentional, document the progressive-disclosure tradeoff; otherwise merge tiny stable content into an existing carrier.",
             ))
         elif n_tokens_est > SIZING_LARGE:
             report.add(Finding(
@@ -295,6 +313,7 @@ def check_sizing(report: Report, root: Path) -> None:
                 title=f"{name} is large ({n_tokens_est} token est) — long cache rebuild on changes",
                 file=str(p),
                 detail="Split stable rules from volatile content; keep volatile below breakpoint.",
+                suggested_action="Move volatile or rarely used detail into lazy-loaded skills/wiki pages so the stable prefix stays small.",
             ))
 
 
@@ -331,6 +350,7 @@ def check_model_switching(report: Report, files: list[Path]) -> None:
                 "(every-prompt hooks), expect cache misses on the model swap. "
                 "OK if the swap is rare or routed through a separate subagent."
             ),
+            suggested_action="Keep model routing off the hot prompt path where possible; route through short-lived subagents or document the cache tradeoff.",
         ))
 
 
@@ -448,6 +468,7 @@ def check_fork_safety(report: Report, files: list[Path]) -> None:
                         "for the current session and any fork. Queue the write for "
                         "SessionStart instead, or write to a sidecar."
                     ),
+                    suggested_action="Write hook state to .brainer/ or another sidecar; never mutate CLAUDE.md/AGENTS.md/settings from hot-path hooks.",
                 ))
             # Script-following: open invoked scripts and grep for prefix writes.
             # group(1) = interpreter+script form; group(2) = direct ./ or /abs path.
@@ -468,7 +489,134 @@ def check_fork_safety(report: Report, files: list[Path]) -> None:
                             f"Referenced by {p}. Evidence: {evidence}. "
                             "Cache-busts the hot path. Move the write to SessionStart or a sidecar."
                         ),
+                        suggested_action="Move the script write to a sidecar/state file or a non-hot-path setup step.",
                     ))
+
+
+# --- Rule 7: tool-surface audit ------------------------------------------
+
+MCP_USAGE_RE = re.compile(r"mcp__([A-Za-z0-9_-]+)__")
+
+
+def _normalized_mcp_name(name: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", name.lower())
+
+
+def _read_json_object(path: Path) -> dict | None:
+    try:
+        data = json.loads(path.read_text(errors="ignore"))
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _configured_mcp_servers(root: Path) -> dict[str, list[Path]]:
+    servers: dict[str, list[Path]] = {}
+    disabled: set[str] = set()
+    for rel in (".mcp.json", ".claude/settings.json", ".claude/settings.local.json"):
+        path = root / rel
+        data = _read_json_object(path)
+        if data is None:
+            continue
+        mcp_servers = data.get("mcpServers", {})
+        if isinstance(mcp_servers, dict):
+            for name in mcp_servers:
+                if isinstance(name, str):
+                    servers.setdefault(name, []).append(path)
+        disabled_servers = data.get("disabledMcpjsonServers", [])
+        if isinstance(disabled_servers, list):
+            disabled.update(name for name in disabled_servers if isinstance(name, str))
+    disabled_norm = {_normalized_mcp_name(name) for name in disabled}
+    return {
+        name: sources
+        for name, sources in servers.items()
+        if name not in disabled and _normalized_mcp_name(name) not in disabled_norm
+    }
+
+
+def _recent_jsonl_files(transcripts_dir: Path, sessions: int) -> list[Path]:
+    try:
+        files = list(transcripts_dir.glob("*.jsonl"))
+    except OSError:
+        return []
+
+    def mtime(path: Path) -> float:
+        try:
+            return path.stat().st_mtime
+        except OSError:
+            return 0.0
+
+    return sorted(files, key=mtime, reverse=True)[:sessions]
+
+
+def _observed_mcp_usage(session_files: list[Path]) -> dict[str, int]:
+    usage: dict[str, int] = {}
+    for path in session_files:
+        try:
+            with path.open(errors="ignore") as fh:
+                for line in fh:
+                    for match in MCP_USAGE_RE.finditer(line):
+                        slug = _normalized_mcp_name(match.group(1))
+                        usage[slug] = usage.get(slug, 0) + 1
+        except OSError:
+            continue
+    return usage
+
+
+def check_tool_surface(
+    report: Report,
+    root: Path,
+    transcripts_dir: Path | None = None,
+    sessions: int = 20,
+) -> None:
+    servers = _configured_mcp_servers(root)
+    if not servers:
+        return
+
+    if transcripts_dir is None:
+        transcripts_dir = Path.home() / ".claude" / "projects" / str(root.resolve()).replace("/", "-")
+    else:
+        transcripts_dir = Path(transcripts_dir)
+
+    session_files = _recent_jsonl_files(transcripts_dir, sessions)
+    if not transcripts_dir.exists() or not session_files:
+        report.add(Finding(
+            rule=7, severity="OK",
+            title="tool-surface usage mining skipped (no session transcripts found)",
+            file=str(transcripts_dir),
+            detail="No recent Claude Code session transcripts were available, so unused-server warnings were suppressed.",
+        ))
+        report.add(Finding(
+            rule=7, severity="OK",
+            title=f"{len(servers)} MCP servers configured; 0 with observed usage in last 0 sessions",
+            file=str(transcripts_dir),
+        ))
+        return
+
+    usage = _observed_mcp_usage(session_files)
+    observed = {
+        name for name in servers
+        if _normalized_mcp_name(name) in usage
+    }
+    scanned = len(session_files)
+    for name in sorted(servers):
+        if name in observed:
+            continue
+        report.add(Finding(
+            rule=7, severity="WARN",
+            title=f"MCP server '{name}' resident but unused in last {scanned} sessions",
+            file=str(servers[name][0]) if servers[name] else "",
+            detail="No matching mcp__server__ tool calls were observed in recent Claude Code transcripts.",
+            suggested_action=(
+                "Remove this server from .mcp.json/settings or defer/load it on demand; "
+                "every resident schema costs prefix tokens on every turn."
+            ),
+        ))
+    report.add(Finding(
+        rule=7, severity="OK",
+        title=f"{len(servers)} MCP servers configured; {len(observed)} with observed usage in last {scanned} sessions",
+        file=str(transcripts_dir),
+    ))
 
 
 # --- Rule 1 & 3: ordering / tool stability via fingerprint ---------------
@@ -562,6 +710,7 @@ def check_ordering_and_tools(report: Report, root: Path) -> None:
             rule=1, severity="WARN",
             title=f"{root} doesn't look like a Claude Code project; skipping rule 1/3 fingerprint",
             detail="Expected one of: CLAUDE.md, AGENTS.md, GEMINI.md, .claude/, .claude-plugin/, skills/",
+            suggested_action="Run cache-lint from the actual project root so the fingerprint baseline is local and reviewable.",
         ))
         return
     fp_path = root / FINGERPRINT_NAME
@@ -578,12 +727,14 @@ def check_ordering_and_tools(report: Report, root: Path) -> None:
                 rule=1, severity="WARN",
                 title=f"could not persist {FINGERPRINT_NAME} baseline ({e})",
                 detail="Rules 1 and 3 require a writable project root. Re-run from a writable checkout, or run as a user with write access.",
+                suggested_action="Use a writable checkout or pre-create the fingerprint baseline in version-controlled project context.",
             ))
             return
         report.add(Finding(
             rule=1, severity="OK",
             title="ordering/tool fingerprint initialized (no prior baseline)",
             detail=f"Wrote {FINGERPRINT_NAME}; next run will compare against it.",
+            suggested_action="Commit or intentionally ignore this local baseline according to project policy.",
         ))
         return
     try:
@@ -597,6 +748,7 @@ def check_ordering_and_tools(report: Report, root: Path) -> None:
             rule=1, severity="WARN",
             title=f"prefix-file heading order changed since last audit: {changed_orders}",
             detail="Reordering busts the cache for every session that depended on the prior order.",
+            suggested_action="Keep stable carrier headings in a fixed order; move churny content below the stable prefix or into skills.",
         ))
 
     changed_skills = [
@@ -608,6 +760,7 @@ def check_ordering_and_tools(report: Report, root: Path) -> None:
             rule=3, severity="WARN",
             title=f"{len(changed_skills)} skill description(s) changed since last audit",
             detail="Each description change re-keys the cache for any prompt that loaded that skill.",
+            suggested_action="Keep frontmatter descriptions stable and push evolving guidance into the lazy-loaded skill body.",
         ))
 
     # Update baseline. Surface write failures (read-only checkout) so the next
@@ -619,15 +772,16 @@ def check_ordering_and_tools(report: Report, root: Path) -> None:
             rule=1, severity="WARN",
             title=f"could not update {FINGERPRINT_NAME} ({e})",
             detail="Future runs will compare against the previous (now-stale) baseline until the file is writable.",
+            suggested_action="Re-run from a writable checkout before relying on rule 1/3 drift results.",
         ))
 
 
 # --- Driver ---------------------------------------------------------------
 
-def audit(root: Path, rule_filter: int | None = None) -> Report:
+def audit(root: Path, rule_filter: int | None = None, transcripts_dir: Path | None = None) -> Report:
     files = discover(root)
     report = Report(root=str(root), targets=[str(p) for p in files])
-    if not files:
+    if not files and rule_filter not in (7,):
         report.add(Finding(rule=0, severity="WARN", title="no Claude Code prefix files found", file=str(root)))
         report.finalize()
         return report
@@ -641,6 +795,8 @@ def audit(root: Path, rule_filter: int | None = None) -> Report:
         check_fork_safety(report, files)
     if rule_filter in (None, 1, 3):
         check_ordering_and_tools(report, root)
+    if rule_filter in (None, 7):
+        check_tool_surface(report, root, transcripts_dir=transcripts_dir)
     report.finalize()
     return report
 
@@ -651,7 +807,7 @@ def main(argv: list[str]) -> int:
     a = sub.add_parser("audit")
     a.add_argument("root", nargs="?", default=".")
     a.add_argument("--json", action="store_true")
-    a.add_argument("--rule", type=int, choices=[1, 2, 3, 4, 5, 6])
+    a.add_argument("--rule", type=int, choices=[1, 2, 3, 4, 5, 6, 7])
     a.add_argument("--list-targets", action="store_true")
     args = ap.parse_args(argv)
 
@@ -686,6 +842,8 @@ def main(argv: list[str]) -> int:
                 print(f"      at {loc}")
             if f.detail:
                 print(f"      → {f.detail}")
+            if f.suggested_action:
+                print(f"      fix: {f.suggested_action}")
         print(f"summary: {report.summary['FAIL']} fail · {report.summary['WARN']} warn")
 
     if report.summary["FAIL"] > 0:

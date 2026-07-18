@@ -12,11 +12,13 @@ from __future__ import annotations
 
 import os
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from classify import (  # noqa: E402
     _resolve_ollama_model,
+    _validate_llm_result,
     classify,
     emit_context,
     is_bypass,
@@ -108,6 +110,24 @@ def test_high_confidence_simple_emits_directive():
     assert "agents-triage" in out and "haiku" in out, out[:200]
 
 
+def test_directive_carries_gate_and_two_strike_rules():
+    # arbitrage adoption 2026-07-01: every routed directive must carry (a) a
+    # per-agent acceptance gate, (b) the two-strike escalation ladder, (c) the
+    # observed-not-predicted anti-override rule.
+    import json as _json
+    out = emit_context("commit and push", use_ollama_fallback=False)
+    payload = _json.loads(out.splitlines()[1])
+    assert payload["gate"], payload
+    assert "hunk" in payload["gate"], payload  # quick-fix gate, not the default
+    assert "OBSERVED" in out and "retry ONCE" in out and "salvag" in out, out
+
+
+def test_every_routable_agent_has_a_gate():
+    from classify import GATES, _VALID_AGENTS
+    for agent in _VALID_AGENTS - {"none"}:
+        assert GATES.get(agent), f"no acceptance gate for routable agent {agent}"
+
+
 def test_bypass_flags():
     assert is_bypass("NO TRIAGE just do it")
     assert is_bypass("/opus think hard about this")
@@ -182,10 +202,12 @@ def test_research_outranks_summarize_on_mixed_prompts():
     # round-2 codex: summarize rule shadowed research under first-match-wins.
     r = classify("summarize and research the available literature on X", use_ollama_fallback=False)
     assert r["agent"] == "research-lite" and r["tier"] == "medium", r
-    # plain summarize routes to haiku in-platform (never local-ollama —
-    # 2026-06-12 policy: triage targets platform models only)
+    # plain summarize routes to glm-executor (2026-06-19 policy override: bounded
+    # self-contained content tasks go to GLM-5.2/z.ai; model="haiku" is the
+    # coordinator subagent, real work runs on GLM). research still outranks it
+    # under first-match-wins (asserted above).
     r2 = classify("summarize this paragraph for me", use_ollama_fallback=False)
-    assert r2["agent"] == "general-purpose" and r2["model"] == "haiku", r2
+    assert r2["agent"] == "glm-executor" and r2["model"] == "haiku" and r2["tier"] == "medium", r2
 
 
 def test_quoted_bait_does_not_trigger_cheap_rules():
@@ -268,7 +290,9 @@ def test_llm_simple_verdict_vetoed_on_complex_hints():
             "tier": "medium", "agent": "research-lite", "model": "sonnet",
             "confidence": 0.8, "reason": "bounded research"}
         r2 = classify(p, use_ollama_fallback=True)
-        assert r2["source"] == "ollama" and r2["tier"] == "medium", r2
+        # "research" in the prompt makes the regex corroborate the LLM verdict
+        # (same agent); the verdict passes through at the regex prior's conf.
+        assert r2["source"] == "ollama+regex-corroborated" and r2["tier"] == "medium", r2
     finally:
         mod.ollama_classify = orig
 
@@ -297,7 +321,7 @@ def test_llm_medium_haiku_verdict_vetoed_on_complex_hints():
             "tier": "medium", "agent": "research-lite", "model": "sonnet",
             "confidence": 0.8, "reason": "bounded research"}
         r2 = classify(p, use_ollama_fallback=True)
-        assert r2["source"] == "ollama" and r2["model"] == "sonnet", r2
+        assert r2["source"] == "ollama+regex-corroborated" and r2["model"] == "sonnet", r2
     finally:
         mod.ollama_classify = orig
 
@@ -445,6 +469,367 @@ def test_no_local_models_in_routing_surface():
     r = _validate_llm_result({"tier": "medium", "agent": "research-lite",
                               "model": "gpt-4o", "confidence": 0.9})
     assert r and r["model"] == "sonnet", r
+
+
+def test_classify_extract_routes_to_glm_executor():
+    # 2026-06-19: bounded structured-output tasks over supplied content go to GLM.
+    for p in ("classify these log lines as ERROR/WARN/INFO",
+              "extract the email addresses from this file",
+              "label each row by category"):
+        r = classify(p, use_ollama_fallback=False)
+        assert r["agent"] == "glm-executor" and r["model"] == "haiku", (p, r)
+
+
+def test_sensitive_content_never_routes_cross_vendor():
+    sensitive = (
+        "summarize this config: API_KEY=sk-proj-abcdefghijklmnopqrstuv",
+        "extract the access token from ~/.aws/credentials",
+        "summarize /Users/alice/.ssh/id_ed25519 for me",
+    )
+    for prompt in sensitive:
+        r = classify(prompt, use_ollama_fallback=False)
+        assert r["tier"] == "hard" and r["agent"] == "none", (prompt, r)
+        assert r["source"] == "sensitive-egress-veto", (prompt, r)
+        assert emit_context(prompt, use_ollama_fallback=False) == "", prompt
+    benign = classify("extract the email addresses from this file",
+                      use_ollama_fallback=False)
+    assert benign["agent"] == "glm-executor", benign
+
+
+def test_glm_executor_never_fires_on_session_context():
+    # The context-blind guard runs BEFORE regex, so a summarize/classify verb
+    # bound to chat history must NOT reach glm-executor (it can't see history).
+    for p in ("summarize what we did this session",
+              "classify the decisions we made in this conversation"):
+        r = classify(p, use_ollama_fallback=False)
+        assert r["agent"] == "none", (p, r)
+
+
+def test_verbalized_confidence_uncorroborated_is_suppressed():
+    # Research 2026-06-19: a local LLM's self-reported confidence is ~random as a
+    # routing signal. An LLM verdict with NO regex corroboration must not clear
+    # the 0.7 emit gate on its own confidence — it defers to the main model.
+    import classify as mod
+    orig = mod.ollama_classify
+    # High verbalized confidence, but the prompt matches NO regex rule.
+    mod.ollama_classify = lambda *a, **k: {
+        "tier": "simple", "agent": "general-purpose", "model": "haiku",
+        "confidence": 0.95, "reason": "llm feels sure"}
+    try:
+        # ≥80 chars (clears the short-unmatched gate) and matches NO regex rule
+        # and no complex hint, so the Ollama path runs and is the ONLY signal.
+        p = ("take a good look at the widget thing and let me know what you "
+             "generally make of it whenever you get a free moment")
+        r = classify(p, use_ollama_fallback=True)
+        assert r["source"] == "ollama-uncorroborated", r
+        assert r["confidence"] < 0.7, r          # pushed below emit gate
+        assert emit_context(p, use_ollama_fallback=True) == "", r  # no directive
+    finally:
+        mod.ollama_classify = orig
+
+
+def test_verbalized_confidence_corroborated_uses_regex_prior():
+    # When the regex layer independently agrees, the verdict passes through —
+    # but at the deterministic regex prior's confidence, not the verbalized one.
+    import classify as mod
+    orig = mod.ollama_classify
+    mod.ollama_classify = lambda *a, **k: {
+        "tier": "medium", "agent": "research-lite", "model": "sonnet",
+        "confidence": 0.99, "reason": "llm very sure"}
+    try:
+        # "investigate" matches the research rule (sonnet/0.8) → corroborated.
+        r = classify("investigate the options here", use_ollama_fallback=True)
+        assert r["source"] == "ollama+regex-corroborated", r
+        assert r["confidence"] <= 0.8, r  # clamped to regex prior, not 0.99
+    finally:
+        mod.ollama_classify = orig
+
+
+def test_glm_executor_in_valid_agents():
+    # LLM-fallback verdicts naming glm-executor must validate, not be dropped.
+    r = _validate_llm_result({"tier": "medium", "agent": "glm-executor",
+                              "model": "haiku", "confidence": 0.8})
+    assert r and r["agent"] == "glm-executor" and r["model"] == "haiku", r
+
+
+def test_router_eval_gate_no_misroute_down():
+    # The cost-quality harness (router_eval.py) is the verifier SEPARATE from the
+    # router. Asymmetric gate: never route a needs_frontier prompt to a cheap
+    # worker. This locks the gate into CI so a future rule change can't regress
+    # it silently (research 2026-06-19; see wiki/projects/delegate-router.md).
+    import os
+    from router_eval import evaluate, load_corpus
+    corpus = load_corpus(os.path.join(os.path.dirname(__file__), "router_eval_corpus.jsonl"))
+    report = evaluate(corpus)
+    assert report["misroute_down"]["count"] == 0, report["misroute_down"]["cases"]
+    # Sanity: the router must also beat the always-opus baseline on cost.
+    assert report["cost_proxy"]["vs_opus_pct"] < 100, report["cost_proxy"]
+
+
+def test_escalate_up_env_unset_is_byte_identical():
+    # Default (env unset) must match today's silent behavior exactly on a
+    # hard/agent-none prompt — no directive, regardless of escalate-up code
+    # existing in the module.
+    os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+    p = "refactor the auth system across multiple files"
+    r = classify(p, use_ollama_fallback=False)
+    assert r["tier"] == "hard" and r["agent"] == "none", r
+    assert emit_context(p, use_ollama_fallback=False) == ""
+
+
+def test_escalate_up_emits_advisor_directive_for_plan_prompt():
+    os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+    try:
+        p = "design the architecture for a new multi-file payments module"
+        r = classify(p, use_ollama_fallback=False)
+        assert r["tier"] == "hard" and r["agent"] == "none", r
+        out = emit_context(p, use_ollama_fallback=False)
+        assert out != "", out
+        assert "frontier-advisor" in out, out
+        assert "frontier-verifier" not in out, out
+    finally:
+        os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+
+
+def test_escalate_up_emits_verifier_directive_for_review_prompt():
+    os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+    try:
+        p = "review and audit this multi-file refactor across the codebase"
+        r = classify(p, use_ollama_fallback=False)
+        assert r["tier"] == "hard" and r["agent"] == "none", r
+        out = emit_context(p, use_ollama_fallback=False)
+        assert out != "", out
+        assert "frontier-verifier" in out, out
+    finally:
+        os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+
+
+def test_escalate_up_directive_text_matches_opus_floor_not_inherit():
+    # D1 (cross-vendor review, commit 54810a5): frontier-advisor.md and
+    # frontier-verifier.md pin `model: opus` as a floor — they no longer use
+    # `model: inherit`. The escalate-up directive text must describe THAT
+    # mechanism, not the stale "inherit escalates it to frontier" wording.
+    os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+    try:
+        p = "design the architecture for a new multi-file payments module"
+        out = emit_context(p, use_ollama_fallback=False)
+        assert out != "", out
+        assert "inherit escalates" not in out, out
+        assert "pins model: opus" in out and "frontier floor" in out, out
+    finally:
+        os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+
+
+def test_escalate_up_review_synonyms_route_to_verifier():
+    # P2 repro #1/#2 (cross-vendor review): review-intent synonyms not in the
+    # original _VERIFY_INTENT_RE vocabulary ("find bugs", "red-team"/"red
+    # team", "safe to ship", "correctness risks") must still route to the cold
+    # verifier seat, not the advisor.
+    os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+    try:
+        for p in (
+            "Find bugs in this multi-file refactor and tell me whether it "
+            "is safe to ship.",
+            "Do a red-team pass on this multi-file change and list "
+            "correctness risks.",
+        ):
+            r = classify(p, use_ollama_fallback=False)
+            assert r["tier"] == "hard" and r["agent"] == "none", (p, r)
+            out = emit_context(p, use_ollama_fallback=False)
+            assert out != "", (p, out)
+            assert "frontier-verifier" in out, (p, out)
+            assert "frontier-advisor" not in out, (p, out)
+    finally:
+        os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+
+
+def test_escalate_up_plan_intent_outranks_ambiguous_verify_words():
+    # P2 repro #3/#4 (cross-vendor review): "evaluate"/"assess" are ambiguous
+    # verify-ish words that also show up in planning asks. When a plan/design
+    # verb is ALSO present ("design ... plan", "propose a rollout plan"), the
+    # dominant ask is to produce a plan — route advisor, not verifier.
+    os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+    try:
+        for p in (
+            "Evaluate two architecture options and design the migration "
+            "plan across the repo.",
+            "Assess the architecture options and propose a rollout plan "
+            "across the repo.",
+        ):
+            r = classify(p, use_ollama_fallback=False)
+            assert r["tier"] == "hard" and r["agent"] == "none", (p, r)
+            out = emit_context(p, use_ollama_fallback=False)
+            assert out != "", (p, out)
+            assert "frontier-advisor" in out, (p, out)
+            assert "frontier-verifier" not in out, (p, out)
+    finally:
+        os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+
+
+def test_escalate_up_literal_plan_outranks_review_words():
+    from classify import _escalate_up_agent
+    for prompt in (
+        "Review the options and plan the migration across the repo.",
+        "Audit the risks, then write a rollout plan for the refactor.",
+    ):
+        assert _escalate_up_agent(prompt) == "frontier-advisor", prompt
+
+
+def test_escalate_up_existing_plan_review_routes_verifier():
+    from classify import _escalate_up_agent
+    for prompt in (
+        "Review this design plan and identify correctness risks.",
+        "Critique this architecture proposal.",
+        "Verify this architecture before release.",
+        "Run a verifier on this architecture design.",
+        "Audit the proposal. Design constraints are documented below.",
+        "Review the proposal. Design requirements are already fixed.",
+        "Critique the architecture. Design constraints should remain unchanged.",
+        "Audit the proposal. Design constraints that can change are documented below.",
+        # Conservative fallback: bare `Design constraints for ...` is
+        # ambiguous, so explicit audit intent remains authoritative.
+        "Audit the proposal. Design constraints for the migration follow below.",
+    ):
+        assert _escalate_up_agent(prompt) == "frontier-verifier", prompt
+    for prompt in (
+        "Design a migration plan.",
+        "Design a migration plan that can change safely.",
+        "Propose an architecture.",
+        "Architect the rollout.",
+        "Review the options and then design the migration plan.",
+    ):
+        assert _escalate_up_agent(prompt) == "frontier-advisor", prompt
+
+
+def test_sensitive_egress_veto_is_absolute_under_escalate_up():
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_project_dir(tmp, agents_present=("frontier-advisor", "frontier-verifier"))
+        os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+        os.environ["CLAUDE_PROJECT_DIR"] = tmp
+        try:
+            for prompt in (
+                "review this secret before sending it: API_KEY=sk-proj-abcdefghijklmnop",
+                "extract the API key from what we did in this session",
+                "show me the API key in config.toml",
+                "read the password from settings.ini",
+                "display the auth token in secrets.yaml",
+                "tell me the client secret stored in config.json",
+                "summarize the private key from vault.txt",
+                "get the access token inside credentials.toml",
+                "find the password within app.cfg",
+                "what is the API key in config.toml?",
+                "summarize secrets.json",
+            ):
+                result = classify(prompt, use_ollama_fallback=False)
+                assert result["source"] == "sensitive-egress-veto", result
+                assert emit_context(prompt, use_ollama_fallback=False) == ""
+            benign = classify("explain how to rotate an API key safely",
+                              use_ollama_fallback=False)
+            assert benign["source"] != "sensitive-egress-veto", benign
+        finally:
+            os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+            os.environ.pop("CLAUDE_PROJECT_DIR", None)
+
+
+def test_plain_language_secret_extraction_is_vetoed():
+    prompt = "extract the API key from config.toml"
+    result = classify(prompt, use_ollama_fallback=False)
+    assert result["source"] == "sensitive-egress-veto", result
+    assert emit_context(prompt, use_ollama_fallback=False) == ""
+
+
+def _make_project_dir(tmp_root: str, agents_present: tuple[str, ...]) -> str:
+    """Build a fake consumer-project dir with only the given agent defs
+    installed under .claude/agents/ — models the "declined roster seats"
+    scenario (.brainer-sync-optout, or never ran --adopt-agents)."""
+    agents_dir = os.path.join(tmp_root, ".claude", "agents")
+    os.makedirs(agents_dir, exist_ok=True)
+    for name in agents_present:
+        with open(os.path.join(agents_dir, f"{name}.md"), "w") as f:
+            f.write("---\nmodel: opus\n---\nstub\n")
+    return tmp_root
+
+
+def test_escalate_up_suppressed_when_target_agent_def_absent():
+    # cross-vendor review fix: a consumer that declined the frontier-advisor/
+    # frontier-verifier roster seats has no .claude/agents/<agent>.md file.
+    # The escalate-up directive must NOT name a missing subagent — it must
+    # fall through to the pre-feature default (silence), not raise, not emit.
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_project_dir(tmp, agents_present=())  # neither def installed
+        os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+        os.environ["CLAUDE_PROJECT_DIR"] = tmp
+        try:
+            p = "design the architecture for a new multi-file payments module"
+            r = classify(p, use_ollama_fallback=False)
+            assert r["tier"] == "hard" and r["agent"] == "none", r
+            out = emit_context(p, use_ollama_fallback=False)
+            assert out == "", out
+            assert "frontier-advisor" not in out, out
+        finally:
+            os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+            os.environ.pop("CLAUDE_PROJECT_DIR", None)
+
+
+def test_escalate_up_emits_when_target_agent_def_present():
+    # Positive counterpart: both roster seats installed -> directive emitted
+    # exactly as before (unchanged happy path), proving the guard only
+    # SUPPRESSES on absence, it doesn't silence the feature outright.
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_project_dir(tmp, agents_present=("frontier-advisor", "frontier-verifier"))
+        os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+        os.environ["CLAUDE_PROJECT_DIR"] = tmp
+        try:
+            p = "design the architecture for a new multi-file payments module"
+            out = emit_context(p, use_ollama_fallback=False)
+            assert out != "", out
+            assert "frontier-advisor" in out, out
+        finally:
+            os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+            os.environ.pop("CLAUDE_PROJECT_DIR", None)
+
+
+def test_escalate_up_guard_checks_only_the_chosen_seat():
+    # Only the SPECIFICALLY-chosen seat's absence suppresses — the other
+    # seat's presence/absence is irrelevant. Two asymmetric cases:
+    #   1. advisor seat present, verifier seat absent -> a plan-shaped prompt
+    #      (routes to advisor) still emits.
+    #   2. verifier seat present, advisor seat absent -> a review-shaped
+    #      prompt (routes to verifier) still emits; a plan-shaped prompt
+    #      (routes to advisor, which is missing here) is suppressed.
+    plan_prompt = "design the architecture for a new multi-file payments module"
+    review_prompt = "review and audit this multi-file refactor across the codebase"
+    os.environ["BRAINER_TRIAGE_ESCALATE_UP"] = "1"
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            _make_project_dir(tmp, agents_present=("frontier-advisor",))
+            os.environ["CLAUDE_PROJECT_DIR"] = tmp
+            out = emit_context(plan_prompt, use_ollama_fallback=False)
+            assert "frontier-advisor" in out, out
+        with tempfile.TemporaryDirectory() as tmp:
+            _make_project_dir(tmp, agents_present=("frontier-verifier",))
+            os.environ["CLAUDE_PROJECT_DIR"] = tmp
+            out = emit_context(review_prompt, use_ollama_fallback=False)
+            assert "frontier-verifier" in out, out
+            # advisor seat is absent here -> plan-shaped prompt suppresses
+            out2 = emit_context(plan_prompt, use_ollama_fallback=False)
+            assert out2 == "", out2
+    finally:
+        os.environ.pop("BRAINER_TRIAGE_ESCALATE_UP", None)
+        os.environ.pop("CLAUDE_PROJECT_DIR", None)
+
+
+def test_agent_def_check_never_raises_on_missing_project_dir():
+    # DONE-MEANS constraint: the existence check must never raise even when
+    # CLAUDE_PROJECT_DIR points at a nonexistent path -- degrade to "not
+    # installed" (suppress), never crash the hook.
+    from classify import _agent_def_installed
+    os.environ["CLAUDE_PROJECT_DIR"] = "/this/path/does/not/exist/at/all"
+    try:
+        assert _agent_def_installed("frontier-advisor") is False
+        assert _agent_def_installed("frontier-verifier") is False
+    finally:
+        os.environ.pop("CLAUDE_PROJECT_DIR", None)
 
 
 def main():

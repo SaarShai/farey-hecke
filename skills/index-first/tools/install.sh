@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# Installer for the index-first PreToolUse augment hook.
+#
+# The root ./install.sh runs this by default. Merges a single PreToolUse entry into
+# .claude/settings.json, then leaves everything else untouched.
+#
+# The settings-merge guard (never overwrite a corrupt/truncated settings.json)
+# is copied verbatim-in-spirit from skills/context-keeper/tools/install.sh.
+set -euo pipefail
+
+DRY_RUN=0
+UNINSTALL=0
+while [ "$#" -gt 0 ]; do
+  case "${1:-}" in
+    --dry-run) DRY_RUN=1 ;;
+    --uninstall) UNINSTALL=1 ;;
+    --project) ;;  # accepted for parity with other Brainer installers (project-local only)
+    *) echo "index-first installer: unknown flag '$1'. Use --dry-run, --uninstall, or no flag." >&2; exit 2 ;;
+  esac
+  shift || true
+done
+
+TOOLS_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO="$(cd "$TOOLS_DIR/../../.." && pwd)"
+CLAUDE_DIR="$REPO/.claude"
+SETTINGS="$CLAUDE_DIR/settings.json"
+# Run-time-expanded project root (Claude injects CLAUDE_PROJECT_DIR = repo root).
+# A cwd-relative './' was NOT portable — it breaks the moment the shell cwd drifts
+# into a subdir, since hooks run from the current cwd, not the repo root.
+HOOK_CMD='python3 "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/skills/index-first/tools/augment.py"'
+
+# Host-scoping: root install.sh exports BRAINER_HOSTS with the requested host
+# list before running per-skill installers, so a single-host (non claude-code)
+# run doesn't also merge this claude-only hook config. Unset/empty (a direct
+# `bash skills/index-first/tools/install.sh` run) means all hosts — unchanged
+# back-compat behavior. Uninstall always runs regardless of host scope (removing
+# a hook is never harmful to skip-gate).
+host_enabled() { [ -z "${BRAINER_HOSTS:-}" ] && return 0; case ",$BRAINER_HOSTS," in *",$1,"*) return 0;; esac; return 1; }
+
+if [ "$UNINSTALL" != "1" ] && ! host_enabled claude-code; then
+  echo "index-first: skip (claude-code not in requested hosts: ${BRAINER_HOSTS:-})"
+  exit 0
+fi
+
+if [ "$DRY_RUN" = "1" ]; then
+  if [ "$UNINSTALL" = "1" ]; then
+    echo "dry-run: would REMOVE PreToolUse -> $HOOK_CMD from $SETTINGS"
+  else
+    echo "dry-run: would add PreToolUse -> $HOOK_CMD to $SETTINGS"
+  fi
+  exit 0
+fi
+
+python3 - "$SETTINGS" "$HOOK_CMD" "$UNINSTALL" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+settings_path = Path(sys.argv[1])
+hook_cmd = sys.argv[2]
+uninstall = sys.argv[3] == "1"
+settings_path.parent.mkdir(parents=True, exist_ok=True)
+if settings_path.exists():
+    try:
+        data = json.loads(settings_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        # NEVER write back over a corrupt/truncated settings.json — that
+        # silently erases the user's other hooks/permissions (guard copied from
+        # context-keeper/tools/install.sh). Abort; the human fixes the file.
+        sys.stderr.write(
+            f"ABORT: {settings_path} exists but is not valid JSON ({e}).\n"
+            f"Fix or remove it, then re-run this installer.\n")
+        sys.exit(1)
+else:
+    data = {}
+
+hooks = data.setdefault("hooks", {})
+rules = hooks.setdefault("PreToolUse", [])
+
+# Matcher Grep|Glob so the host only fires the hook on the tools we augment.
+MATCHER = "Grep|Glob"
+
+
+def find_rule():
+    for rule in rules:
+        if rule.get("matcher") == MATCHER:
+            return rule
+    return None
+
+
+if uninstall:
+    for rule in list(rules):
+        if rule.get("matcher") != MATCHER:
+            continue
+        rule["hooks"] = [
+            i for i in rule.get("hooks", [])
+            if not (i.get("type") == "command" and i.get("command") == hook_cmd)
+        ]
+        if not rule["hooks"]:
+            rules.remove(rule)
+    msg = f"Removed index-first PreToolUse hook from {settings_path}."
+else:
+    rule = find_rule()
+    if rule is None:
+        rule = {"matcher": MATCHER, "hooks": []}
+        rules.append(rule)
+    existing = rule.setdefault("hooks", [])
+    if any(i.get("type") == "command" and i.get("command") == hook_cmd for i in existing):
+        msg = f"index-first PreToolUse hook already present in {settings_path}."
+    else:
+        existing.append({"type": "command", "command": hook_cmd})
+        msg = f"Installed index-first PreToolUse hook into {settings_path}."
+
+settings_path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+sys.stderr.write(msg + "\n")
+PY
+
+chmod +x "$TOOLS_DIR/augment.py"
+echo "index-first augment hook: default install complete (run with --uninstall to remove)."

@@ -10,8 +10,15 @@ Schema (stable — pre-registered):
   - errors_seen      exact stderr/exception strings
   - numbers          measured/claimed numeric facts
   - urls             external references
+  - loop_passes      loop pass / iteration / round identifiers
+  - loop_anchor_files fixed files a loop says it re-reads before each pass
+  - loop_state_stores durable loop state paths/systems
+  - loop_verdicts    verifier verdict lines
+  - loop_attempts    attempts tried / failed attempts summaries
+  - loop_next_actions next-pass / next-action lines
   - user_goals       lines from user messages starting with imperative verbs
   - failed_attempts  blocks near "fail/error/bug/wrong/doesn't work"
+  - compromises      settled-for choices near workaround/stopgap markers
   - pending_todos    unchecked items from TodoWrite (if present)
 
 Usage:
@@ -35,6 +42,26 @@ NUM_RE = re.compile(r"\b\d+(?:\.\d+)?\s*(?:%|ms|s|x|tokens?|tok|GB|MB|KB|B|bytes
 ERROR_RE = re.compile(r"(?:Error|Exception|Traceback|fail(?:ed|ure)?|SIGKILL|exit code [1-9]|stderr)[^\n]{3,200}", re.I)
 IMPERATIVE_RE = re.compile(r"^(?:build|make|create|fix|find|implement|add|run|test|check|set up|design|write|measure|eval|compare|explain|research|install|deploy)\b", re.I)
 FAIL_WORD_RE = re.compile(r"didn't work|doesn't work|not work|broke|broken|bug|wrong|mismatch|incompat", re.I)
+# Compromise markers: settled-for choices that compaction would otherwise
+# launder into "intended design" — the next session must not build on them
+# as if deliberate.
+COMPROMISE_WORD_RE = re.compile(
+    r"workaround|stopgap|for now\b"
+    # bare "temporary/temporarily" false-positives on operational text
+    # ("temporary file", "temporarily unavailable") — require a fix-shaped
+    # noun or a settled-for verb nearby (cross-vendor review 2026-07-05).
+    # "temporary <fix-noun>" OR "temporarily <compromise-verb>" — but NOT bare
+    # "temporary file" / "temporarily unavailable" (operational, not a compromise).
+    r"|temporar(?:y|ily)[ -](?:fix|workaround|hack|solution|patch|measure|shim|stub|kludge"
+    r"|disabl\w*|remov\w*|comment\w*|skip\w*|bypass\w*|hardcod\w*|ignor\w*|suppress\w*|disable\w*)"
+    r"|(?:went with|using|keep(?:ing)?|accept(?:ed|ing)?) (?:a |the )?temporar(?:y|ily)"
+    r"|\bhacky?\b|settled? for|good enough for now|revisit (?:this |it )?later|quick fix|band-aid|kludge", re.I)
+LOOP_PASS_RE = re.compile(r"\b(?:loop\s+)?(?:pass|iteration|round)\s*(?:#|:|=)?\s*\d+\b", re.I)
+LOOP_ANCHOR_RE = re.compile(r"\b(?:anchor_files|anchor files?|VISION\.md|PROMPT\.md|AGENTS\.md|SKILL\.md)\b[^\n]{0,180}", re.I)
+LOOP_STATE_RE = re.compile(r"\b(?:state_store|state store|state path|loop state|LOOP-STATE(?:\.json)?|STATE\.md)\b[^\n]{0,180}", re.I)
+LOOP_VERDICT_RE = re.compile(r"\b(?:verifier\s+)?verdict\s*[:=]\s*(?:pass|passed|fail|failed|blocked|accept(?:ed)?|reject(?:ed)?)\b[^\n]{0,120}", re.I)
+LOOP_ATTEMPT_RE = re.compile(r"\b(?:attempts? tried|tried and abandoned|failed attempts?)\s*[:=]\s*[^\n]{3,200}", re.I)
+LOOP_NEXT_RE = re.compile(r"\b(?:next action|next pass|next step)\s*[:=]\s*[^\n]{3,180}", re.I)
 
 
 def iter_events(path):
@@ -100,6 +127,9 @@ def regex_extract(events):
         "files_created": 0.95, "files_touched": 0.70, "commands_run": 0.90,
         "errors_seen": 0.85, "user_goals": 0.80, "numbers": 0.60,
         "urls": 0.95, "failed_attempts": 0.50,
+        "loop_passes": 0.75, "loop_anchor_files": 0.75,
+        "loop_state_stores": 0.80, "loop_verdicts": 0.85,
+        "loop_attempts": 0.65, "loop_next_actions": 0.65,
     }
 
     def add(key, val, limit=50):
@@ -147,6 +177,21 @@ def regex_extract(events):
         # Numbers
         for n in NUM_RE.findall(text):
             add("numbers", n.strip(), limit=80)
+
+        # Loop pass memory contract: preserve the compact "where was this loop?"
+        # facts that should survive compaction (recall before pass, write after pass).
+        for rx, key, limit in (
+            (LOOP_PASS_RE, "loop_passes", 30),
+            (LOOP_ANCHOR_RE, "loop_anchor_files", 20),
+            (LOOP_STATE_RE, "loop_state_stores", 20),
+            (LOOP_VERDICT_RE, "loop_verdicts", 30),
+            (LOOP_ATTEMPT_RE, "loop_attempts", 20),
+            (LOOP_NEXT_RE, "loop_next_actions", 20),
+        ):
+            for m in rx.findall(text):
+                s = str(m).strip().rstrip(".")
+                if len(s) > 4:
+                    add(key, s[:220], limit=limit)
 
         # Errors (assistant or tool_result)
         if t in ("assistant", "user"):
@@ -196,6 +241,16 @@ def regex_extract(events):
             if len(s) >= 15:
                 add("failed_attempts", s[:200], limit=20)
 
+        for m in COMPROMISE_WORD_RE.finditer(text):
+            lo = max(0, m.start() - 150)
+            hi = min(len(text), m.end() + 150)
+            window = text[lo:hi]
+            head = window[:m.start() - lo].rsplit("\n", 1)[-1].rsplit(". ", 1)[-1]
+            tail = window[m.start() - lo:].split("\n", 1)[0].split(". ", 1)[0]
+            s = (head + tail).strip()
+            if len(s) >= 15:
+                add("compromises", s[:200], limit=12)
+
     result = dict(out)
     result["_confidence"] = {k: dict(v) for k, v in confidence.items()}
     return result
@@ -216,6 +271,7 @@ def llm_extract(events, model="qwen3:8b"):
 
     prompt = f"""Extract from this session transcript. Output ONLY JSON on one line with keys:
 "decisions" (list of {{"what":..., "why":...}}),
+"compromises" (list of {{"what":..., "why":...}} — workaround/settled-for choices that are NOT the intended design),
 "failed_attempts" (list of {{"tried":..., "why_failed":...}}),
 "next_steps" (list of short strings).
 Keep each field under 200 chars. Max 8 items per list.
@@ -244,7 +300,44 @@ JSON:"""
     return {}
 
 
-def render_markdown(regex_out, llm_out, session_id, transcript_path):
+def git_snapshot(repo_root):
+    """Runtime repo truth at snapshot time — the Iron Rule (adopted 2026-07-01
+    from blader/baton): persisted state must reflect `git status`, never the
+    chat narrative. Fail-soft: any git error returns {} (hook must never
+    break), and a non-repo dir just skips the section."""
+    import subprocess
+    out = {}
+    def run(*args):
+        try:
+            r = subprocess.run(["git", "-C", str(repo_root), *args],
+                               capture_output=True, text=True, timeout=5)
+            return r.stdout.strip() if r.returncode == 0 else None
+        except Exception:
+            return None
+    branch = run("branch", "--show-current")
+    if branch is None:
+        return {}
+    out["branch"] = branch or "(detached)"
+    status = run("status", "--porcelain")
+    if status is not None:
+        lines = status.splitlines()
+        out["dirty"] = lines[:30]
+        out["dirty_count"] = len(lines)
+    head = run("log", "-1", "--format=%h %s")
+    if head:
+        out["head"] = head
+    return out
+
+
+# Section provenance (baton adoption 2026-07-01): tool-call-derived sections
+# are runtime truth; regex-over-narrative sections are claims the next reader
+# must not treat as verified. Rendered as a per-section tag.
+_VERIFIED_KEYS = {"files_created", "commands_run", "urls"}
+_ASSUMED_KEYS = {"user_goals", "numbers", "failed_attempts", "files_touched",
+                 "errors_seen", "compromises"}
+
+
+def render_markdown(regex_out, llm_out, session_id, transcript_path, git_state=None):
     lines = [
         "---",
         "type: session-memory",
@@ -258,11 +351,32 @@ def render_markdown(regex_out, llm_out, session_id, transcript_path):
         "",
     ]
 
+    if git_state:
+        lines.append("## Repo state (verified at snapshot — Iron Rule)")
+        lines.append(f"- Branch: `{git_state.get('branch', '?')}`" +
+                     (f" — HEAD `{git_state['head']}`" if git_state.get("head") else ""))
+        dc = git_state.get("dirty_count", 0)
+        if dc:
+            lines.append(f"- Uncommitted ({dc} paths):")
+            lines.extend(f"  - `{ln}`" for ln in git_state.get("dirty", []))
+            if dc > len(git_state.get("dirty", [])):
+                lines.append(f"  - … +{dc - len(git_state['dirty'])} more")
+        else:
+            lines.append("- Working tree clean")
+        lines.append("- If the narrative below contradicts this section, "
+                     "THIS section wins — it is runtime truth, the rest is "
+                     "extracted narrative.")
+        lines.append("")
+
     conf_map = regex_out.get("_confidence", {})
 
     def section(title, items, fmt=lambda x, c: f"- {x}" + (f"  `{c:.2f}`" if c < 0.9 else ""),
                  section_key=None):
         if not items: return
+        if section_key in _VERIFIED_KEYS:
+            title += " (verified — from tool calls)"
+        elif section_key in _ASSUMED_KEYS:
+            title += " (assumed — narrative-derived, unverified)"
         lines.append(f"## {title}")
         kc = conf_map.get(section_key or "", {}) if section_key else {}
         for it in items:
@@ -272,11 +386,34 @@ def render_markdown(regex_out, llm_out, session_id, transcript_path):
 
     section("User goals", regex_out.get("user_goals", []), section_key="user_goals")
 
+    loop_rows = []
+    for title, key in (
+        ("pass", "loop_passes"),
+        ("anchors", "loop_anchor_files"),
+        ("state", "loop_state_stores"),
+        ("verdict", "loop_verdicts"),
+        ("attempts", "loop_attempts"),
+        ("next", "loop_next_actions"),
+    ):
+        for item in regex_out.get(key, []):
+            loop_rows.append(f"**{title}:** {item}")
+    if loop_rows:
+        lines.append("## Loop pass memory")
+        for row in loop_rows:
+            lines.append(f"- {row}")
+        lines.append("")
+
     if llm_out and not llm_out.get("_error"):
         dec = llm_out.get("decisions", [])
         if dec:
             lines.append("## Decisions")
             for d in dec:
+                lines.append(f"- **{d.get('what','?')}** — {d.get('why','')}")
+            lines.append("")
+        comp = llm_out.get("compromises", [])
+        if comp:
+            lines.append("## Compromises (settled-for — NOT intended design)")
+            for d in comp:
                 lines.append(f"- **{d.get('what','?')}** — {d.get('why','')}")
             lines.append("")
         fa = llm_out.get("failed_attempts", [])
@@ -301,6 +438,9 @@ def render_markdown(regex_out, llm_out, session_id, transcript_path):
     section("URLs", regex_out.get("urls", []), section_key="urls")
     if regex_out.get("failed_attempts") and not (llm_out and llm_out.get("failed_attempts")):
         section("Failure signals (regex)", regex_out.get("failed_attempts", []))
+    if regex_out.get("compromises") and not (llm_out and llm_out.get("compromises")):
+        section("Compromises (settled-for — NOT intended design)",
+                regex_out.get("compromises", []), section_key="compromises")
 
     return "\n".join(lines)
 
@@ -397,9 +537,9 @@ def main():
     regex_out = regex_extract(events)
     llm_out = llm_extract(events, args.llm) if args.llm else {}
 
-    md = render_markdown(regex_out, llm_out, sid, args.transcript)
-
     repo_root = Path(os.environ.get("TOKEN_ECONOMY_ROOT", Path.cwd()))
+    git_state = git_snapshot(repo_root)
+    md = render_markdown(regex_out, llm_out, sid, args.transcript, git_state)
     if args.out:
         out_path = Path(args.out)
     else:
@@ -415,8 +555,37 @@ def main():
         while out_path.exists():
             out_path = base / f"{stamp}-{sid[:8]}-{trig}-{n}.md"
             n += 1
+    # Secrets-only scrub before persistence (paths stay — they're the resume
+    # pointers). Fail-OPEN by design (unlike model_roster egress, which fails
+    # closed): a missing _shared import must not kill the PreCompact hook — a
+    # lost local snapshot is worse than an unredacted local file. The manifest
+    # below counts against `md_preredact` so redaction is never miscounted as
+    # cap-loss (redaction rewrites items out of `md`, but they DID land).
+    md_preredact = md
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "_shared"))
+        from audit_redact import redact_secrets  # type: ignore
+        md = redact_secrets(md)
+    except Exception:
+        pass
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(md, encoding="utf-8")
+
+    # DEGRADED manifest (mirrors cbm `dump_verify`): how many extracted items
+    # actually landed in the persisted page. render_markdown caps some sections
+    # (e.g. files_touched[:40]) and per-key extraction limits apply, so
+    # persisted < expected is normal under load — we REPORT it (don't fix it) so
+    # a post-compaction reader knows the snapshot is lossy. Schema keys only; the
+    # `_`-prefixed meta keys (e.g. _confidence) are skipped.
+    expected = sum(
+        len(v) for k, v in regex_out.items()
+        if not k.startswith("_") and isinstance(v, list)
+    )
+    persisted = sum(
+        1 for k, v in regex_out.items()
+        if not k.startswith("_") and isinstance(v, list)
+        for item in v if str(item) in md_preredact
+    )
 
     # Terse pointer for PreCompact hook: gets injected into compaction context
     n_files = len(regex_out.get("files_touched", []))
@@ -434,10 +603,22 @@ def main():
             sl.append(f"  • {name}: {rule}")
         style_block = "\n".join(sl) + "\n"
 
+    degraded_line = (
+        f"  ⚠ DEGRADED: {persisted}/{expected} extracted items persisted "
+        f"(snapshot is lossy — some sections were capped/truncated)\n"
+        if persisted < expected else ""
+    )
+    git_line = (
+        f"  git (verified): {git_state.get('branch')}, "
+        f"{git_state.get('dirty_count', 0)} uncommitted paths\n"
+        if git_state else ""
+    )
     pointer = (
         style_block
         + f"[context-keeper] structured memory saved → {out_path}\n"
         f"  {n_files} files touched, {n_cmds} commands run, {n_errs} errors logged\n"
+        + git_line
+        + degraded_line
         + (f"  goals: {'; '.join(goals)}\n" if goals else "")
         + f"  READ this file post-compact if prior context needed."
     )

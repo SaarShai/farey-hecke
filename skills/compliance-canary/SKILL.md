@@ -1,35 +1,145 @@
 ---
 name: compliance-canary
-description: Use when a long session drifts — the single always-on drift watcher: one UserPromptSubmit hook combining a periodic skill-rule re-anchor (every N turns), symptomatic per-skill drift probes (filler creep, word-count growth, unverified done-claims, self-closing without asking, looping tool errors, rule fade), and a request ledger that keeps every user request OPEN until completed or the user closes it (so nothing the user asked for is silently dropped). Absorbs the former skill-pulse; the re-anchor yields to a fired probe so the two never double-nag. Tune/disable via COMPLIANCE_CANARY_* env vars (SKILL_PULSE_* honored as aliases).
+description: "Use when a long session may drift or needs verification-compliance monitoring. Frontier defaults to silent intent state plus one compact, compliance-aware verification probe; shadow measures suppressed legacy probes; legacy preserves rollback behavior; off is a mutation-free control."
 model: haiku
 effort: low
 tools: [Bash, Read, Write]
 auto-install: true
-pulse_reminder: drift detectors are watching — your recent reply is scanned each user turn against the active skills' drift_probes.json files.
 ---
 
-# compliance-canary — the drift watcher
+<!-- split-justified -->
+
+# compliance-canary — profiled drift watcher
+
+## Profiles
+
+Set `COMPLIANCE_CANARY_PROFILE=frontier|shadow|legacy|off` (default:
+`frontier`):
+
+- `frontier` silently records pending intent and emits only
+  `verify-before-completion:claim-without-evidence`, plus pending intent at a
+  genuine wrap-up. There is no pulse, generic style probe, correction nag, or
+  escalation wrapper.
+- `shadow` makes the same task-facing decisions and emits byte-identical output
+  while evaluating suppressed legacy probes into redacted telemetry.
+- `legacy` preserves the complete pre-profile behavior below for rollback.
+- `off` exits before state, lock, ledger, telemetry, transcript, or activation
+  mutation and is the clean experimental control.
+
+`COMPLIANCE_CANARY_PROBE_IDS=skill:id,...` selects exact probes (not entire
+skills). In frontier/shadow it overrides the compact default. Telemetry defaults
+to `.brainer/compliance-canary/telemetry.jsonl` and contains only session hash,
+turn, mechanism, probe ID, emitted flag, injected UTF-8 byte count, and content
+hash—never prompt or transcript text.
+
+The compact verification probe accepts evidence only when a tool use has a
+correlated successful result, the result is newer than the last material
+mutation, and its class matches the claim (`test/build`, `filesystem/diff`,
+`live service`, or `visual`). Typed-but-unrun commands, failed results, stale or
+pre-edit checks, incidental output keywords, and wrong evidence classes do not
+suppress it. Mutations are recognized across Edit/Write and shell shapes
+(redirects/`tee`, `sed -i`, `rm`/`mv`/`cp`/`mkdir`/`touch`/`chmod`,
+`git commit|merge|rebase|cherry-pick|add|mv|rm|reset|restore|clean`, package
+installs, and — broadened 2026-07-18 per the adversarial audit —
+interpreter-mediated file writes such as `python3 -c "open('f','w')…"`,
+`perl -e`, and `node -e` fs writers).
+
+Notification evidence boundary (frontier/shadow only, 2026-07-18; hardened
+2026-07-19): when the current `UserPromptSubmit` payload is a
+substrate-authored `<task-notification>` reporting terminal SUCCESS
+(completed status / exit code 0) for a self-contained job kind — timer
+wakeup, background command, or advisor consult — and the notification
+carries its own result content or an output-file pointer, the
+`claim_without_evidence` probe does not emit for that turn: the notification
+IS the evidence boundary and the agent authored no claim on it. The
+predicate is fail-open — any classification uncertainty (a user ask riding
+along, a failed/killed job, an unrecognized job kind, or world-state
+assertion prose such as "files moved" / "files were moved" / "tests pass"
+/ "checks green" / "uploaded" / "deployed" / "deleted" / "DONE" / "READY
+FOR JUDGING" — the implementation-subagent shape whose forwarded claim is
+the guard's one proven live catch, broadened 2026-07-18 to passive and
+rephrased forms) leaves the probe armed exactly as before.
+Hardening (two adversarial sense-checks, then the 2026-07-18 adversarial
+audit — all fail-open):
+
+- **Provenance.** Suppression additionally requires the notification's
+  task-id to be **≥6 characters AND not low-entropy** (an all-same-char,
+  <3-distinct-char, or trivial monotone-sequence id like "000000" or
+  "123456" collides with incidental substrings and proves nothing either)
+  AND to appear inside **tool_use input,
+  tool_result content, or a substrate-announcement event ANYWHERE in the
+  full transcript file** (cheap whole-file string search, not just the
+  400-line tail). A pasted, syntactically valid `<task-notification>` has
+  no such anchor and fails open — the turn fires exactly as before. A
+  one-char id like `<task-id>0</task-id>` matches incidental substrings in
+  every transcript and proves nothing (entropy floor); an id mentioned only
+  in arbitrary user or assistant prose is not substrate provenance; and a
+  legit notification whose announcement scrolled 500 lines back still
+  suppresses correctly.
+- **Deferred fire.** Suppression never destroys a fire, only defers it: the
+  suppressed probe is still EVALUATED on the notification turn, and a
+  would-have-fired is persisted as a `deferred_fires` marker in session
+  state. On the next `UserPromptSubmit` that is NOT a qualifying
+  notification, the probe emits once (marker cleared), regardless of
+  message-window slide. A marker survives **at most one** qualifying-
+  notification turn: if a second qualifying notification arrives while a
+  marker is pending, it emits on that turn anyway — a notification flood
+  cannot destroy a fire. At emission time, freshness is re-checked: if
+  matching successful evidence appeared AFTER the original claim (the agent
+  verified in the meantime), the stale marker drops silently instead of
+  nagging.
+- **Pending content.** A pointer-only success records a
+  `notification_pending_content` entry (output-file path + kind + turn +
+  timestamp) in the session state file. On later turns an entry clears only
+  on evidence of an actual READ: the full path — or, for a genuine
+  `cd <dir> && cat <file>` relative read, the basename together with the
+  parent-dir name within the same event — appearing in a READ-SHAPED
+  tool_use input (Read/view tool, or a Bash content-display command like
+  `cat`/`grep`; never Edit/Write or an interpreter write) whose paired
+  result is non-error, with no deletion token
+  (`rm`/`mv`/`unlink`/`delete`/`removed`/…) in its command. The correlation
+  scans the full transcript so a genuine read older than the 400-line tail
+  still clears; an uncorrelated tool result containing the path never does.
+  Destruction does not clear;
+  a failed read does not clear; a bare basename does not clear. Entries
+  still unresolved are listed, one compact line each (`<kind> output never
+  read: <path>`), at the existing wrap-up surface — no new emission point —
+  INDEPENDENT of whether the request ledger has open items.
+
+Every suppression is logged to telemetry as a `suppressed_notification`
+event (emitted=false) so the counterfactual stays measurable. `legacy`
+deliberately keeps the pre-fix behavior for rollback.
+
+The remainder of this document describes `legacy` rollback behavior.
 
 The single, non-optional drift defense for long sessions. One `UserPromptSubmit`
-hook runs **three orthogonal mechanisms** in one process (skill-pulse was folded
+hook runs **four orthogonal mechanisms** in one process — plus a fifth,
+legacy-profile-only probe-escalation mechanism (§ escalation below) that
+frontier/shadow never run (skill-pulse was folded
 in here 2026-06-16 — the leaner "one reactive hook instead of two" the eval
-notes had flagged; the request ledger was added 2026-06-17):
+notes had flagged; the request ledger was added 2026-06-17; the correction
+ledger closes the LEARNING_CONTRACT §2 gap — a user correction must become a
+durable artifact before the task closes):
 
 | # | Mechanism | When it speaks | Covers |
 |---|---|---|---|
 | 1 | **Symptomatic probes** | only when a drift symptom appears | filler, verbosity creep, unverified done-claims, self-closing without asking, looping tool errors, error-rate spikes |
 | 2 | **Periodic re-anchor** | every Nth turn, unconditionally | rules that *fade* before any symptom shows — incl. rules with no probe |
 | 3 | **Request ledger** | at wrap-up turns (+ on cadence) | a user request silently dropped before it was completed or the user closed it |
+| 4 | **Correction ledger** | every turn it is non-empty | a user correction closed out without being banked as a durable rule + gate + exemplar (LEARNING_CONTRACT §2) |
 
-All three emit into **one** `<system-reminder>` with a shared budget. On a turn
+All four emit into **one** `<system-reminder>` with a shared budget. On a turn
 where a probe fires, the periodic re-anchor **yields** (symptom correction is
 higher-signal and itself re-anchors attention) — so the two never stack into
-consecutive nags. The ledger does NOT yield at a wrap-up turn: surfacing still-open
-requests precisely as the agent moves to close is the whole point.
+consecutive nags. The request ledger does NOT yield at a wrap-up turn: surfacing
+still-open requests precisely as the agent moves to close is the whole point.
+The correction ledger likewise does not yield — it is closeout-blocking, so it
+surfaces every turn it holds an open item.
 
-Emergency off-switch: `COMPLIANCE_CANARY_DISABLED=1` (kills both). This is a
-safety valve, not an install option — the skill is default-on (`auto-install:
-true`) and meant to stay wired.
+Legacy emergency switch: `COMPLIANCE_CANARY_DISABLED=1`. For experiments use
+`COMPLIANCE_CANARY_PROFILE=off`, whose no-mutation contract is tested.
+
+Deep-dive reference: [REFERENCE.md](REFERENCE.md) — the offline `measure.py` analyzer, host compatibility notes, and known gaps.
 
 ## Mechanism 1 — symptomatic probes
 
@@ -39,138 +149,26 @@ Probes are declared by each skill in `<.claude/skills>/<skill>/drift_probes.json
 
 ### Probe kinds (v1)
 
-#### `forbidden_regex`
+Each kind is the JSON shape an author writes in their skill's `drift_probes.json`. Full schema + per-field semantics for every kind: [`tools/PROBES.md`](tools/PROBES.md) (`hook.py`'s `DETECTORS` registry is the authoritative behavior).
 
-Pattern match on recent assistant text. Fires on first match in the message window.
+- **`forbidden_regex`** — regex on recent assistant text → style drift (pleasantries, fluff, "as an AI" hedges, emoji creep).
+- **`word_count_per_message`** — avg words/msg over a window → terseness drift (caveman-ultra creep, explanation bloat).
+- **`claim_without_evidence`** — a claim word with no verify-style tool call in recent history → [verify-before-completion](../verify-before-completion/SKILL.md) drift.
+- **`repeated_tool_error`** *(v1.7)* — a recurring `is_error` signature → a tool error the agent keeps re-triggering.
+- **`user_correction`** *(v1.7)* — current prompt matches a correction pattern → surface it so it isn't ignored (route the lesson through [write-gate](../write-gate/SKILL.md)) and open a closeout-blocking correction-ledger item (Mechanism 4, LEARNING_CONTRACT §2) until it is banked or user-closed.
+- **`trajectory_drift`** *(v1.8)* — session tool-error RATE over the tail → thrashing (retry loops, schema-mismatch storms).
+- **`prompt_intent`** *(v1.11)* — current prompt matches a governed situation → a PRE-TASK skill nudge (spontaneous Skill invocation is unreliable, so fire mechanically).
+- **`early_stop`** *(v1.11)* — last turn is a forward-looking promise with no tool/claim/question → the anti-early-stop reflex ([verify-before-completion](../verify-before-completion/SKILL.md)).
+- **`completion_without_closure`** *(v1.11)* — a terminal done-claim without asking the user to confirm closure → the self-close gate ([verify-before-completion](../verify-before-completion/SKILL.md)).
 
-```json
-{
-  "kind": "forbidden_regex",
-  "id": "filler-phrases",
-  "pattern": "(?i)\\b(certainly|absolutely|of course)\\b",
-  "message": "filler/pleasantry phrase detected — drop hedges, soft closings",
-  "severity": "warn"
-}
-```
+### Wrap-up learning nudges (`workflow_nomination`)
 
-Use for: style drift (caveman pleasantries, marketing fluff, "as an AI" hedges, emoji creep).
+At a wrap-up turn — the agent's last message reads as a completion claim, past a tool-call floor, with a substantive Edit/Write or a non-boilerplate Bash this window — the `workflow_nomination` probe fires a single ADVISORY nudge so a finished non-trivial workflow doesn't pass unlearned. (The detector kind lives in `hook.py`; the probe instance + message text are shipped by [`learn-skill`](../learn-skill/SKILL.md)'s `drift_probes.json`, so the nudge wording is maintained there, not here.) It suggests two routes, whichever fits:
 
-#### `word_count_per_message`
+- **`/learn`** — capture the workflow as a reusable skill ([learn-skill](../learn-skill/SKILL.md)); write-gate + dedup in the `/learn` flow decide whether it earns one.
+- **`/retro`** — retrospect the task when it's one that repeats or is worth learning from ([task-retrospective](../task-retrospective/SKILL.md)); it decides whether the lesson belongs in a wiki fact, a gate, a skill, or an always-on rule.
 
-Average words per assistant message over a sliding window. Fires when average exceeds threshold.
-
-```json
-{
-  "kind": "word_count_per_message",
-  "id": "word-creep",
-  "threshold": 120,
-  "window": 3,
-  "severity": "warn"
-}
-```
-
-Use for: terseness drift (caveman-ultra creep, explanation bloat).
-
-#### `claim_without_evidence`
-
-Looks for claim words in the last assistant message AND checks that a verification-style tool call appears in the recent tool-use history. Fires when claim present but evidence absent.
-
-```json
-{
-  "kind": "claim_without_evidence",
-  "id": "unverified-done",
-  "claim_pattern": "(?i)\\b(done|fixed|complete|passes|verified)\\b",
-  "verify_tools": ["Bash"],
-  "verify_keywords": ["test", "pytest", "make", "build", "check", "curl"],
-  "lookback_tool_uses": 5,
-  "severity": "warn"
-}
-```
-
-Use for: verify-before-completion drift (claiming success without running a check).
-
-#### `repeated_tool_error` *(v1.7)*
-
-Scans recent `is_error` tool_results (user-type events — invisible to the message detectors) for a recurring error signature. Added after transcript mining found one signature ("File has not been read yet") was 15 of 18 tool errors across 5 sessions.
-
-```json
-{
-  "kind": "repeated_tool_error",
-  "id": "edit-without-read",
-  "pattern": "File has not been read yet",
-  "min_count": 2,
-  "severity": "warn"
-}
-```
-
-Use for: any tool error the agent keeps re-triggering after the native error message failed to break the habit.
-
-#### `user_correction` *(v1.7)*
-
-Matches the user's CURRENT prompt (not the transcript) against correction patterns ("no, use X", "that's wrong", "I said …"). Fires the harvest reflex at the exact turn the correction lands — corrections are the highest-value learning source (exp1: feedback lift +0.667) but the prose-only reflex under-fires. Lineage: BayramAnnakov/claude-reflect; ships in `wiki-memory/drift_probes.json`.
-
-```json
-{
-  "kind": "user_correction",
-  "id": "user-correction",
-  "pattern": "(?i)(?:^\\s*no[,. ]|don'?t use\\b|i said\\b|that'?s wrong)",
-  "severity": "warn"
-}
-```
-
-Use for: routing corrections into write-gate → wiki-memory instead of losing them to the session.
-
-#### `trajectory_drift` *(v1.8)*
-
-Session-level tool-error RATE over the transcript tail (tool_use count vs `is_error` tool_results, same window). Catches error-loop drift that `repeated_tool_error` misses when each retry fails differently. Cheapest form of trajectory calibration (lineage: HTC, arXiv 2601.15778) — no model, no training. Ships default-on in `compliance-canary/drift_probes.json`.
-
-```json
-{
-  "kind": "trajectory_drift",
-  "id": "traj-error-rate",
-  "min_tool_calls": 8,
-  "max_error_rate": 0.25
-}
-```
-
-Use for: stop-and-reassess when the agent is thrashing (retry loops, wrong-cwd cascades, schema-mismatch storms). `min_tool_calls` guards cold starts.
-
-#### `prompt_intent` *(v1.11)*
-
-Same mechanism as `user_correction` (matches the CURRENT user prompt) but for a PRE-TASK nudge rather than a correction: a skill fires the moment the prompt describes the situation it governs — e.g. `loop-engineering` on a "build a self-correcting automation" or "spawn parallel agents" prompt, or `eval-gate` on "is this good enough / would this pass". Measured rationale: spontaneous Skill-tool invocation is unreliable (blind agents don't auto-load a skill even with a strong description), so a mechanical trigger beats hoping the model remembers. Ships in `loop-engineering/drift_probes.json` (loop-build + fleet-orchestration intent) and `eval-gate/drift_probes.json`.
-
-```json
-{
-  "kind": "prompt_intent",
-  "id": "loop-build-intent",
-  "pattern": "(?i)\\b(iterate|retry)\\b[^.?!]{0,30}\\buntil\\b",
-  "severity": "warn"
-}
-```
-
-#### `early_stop` *(v1.11)*
-
-Fires when the agent's LAST turn ended on a forward-looking PROMISE ("I'll now implement…", "let me start…") with no completion claim, no question, and no tool call that turn — it narrated the next step instead of doing it. Suppressed when the closing turn called a tool (work happened), reported completion (a legit "next steps" note), or asked the user a question (a legitimate pause). The anti-early-stop reflex; ships in `verify-before-completion/drift_probes.json`. Overridable: `pattern` (the promise), `done_pattern` (suppress on completion), `question_pattern` (suppress on a question).
-
-```json
-{
-  "kind": "early_stop",
-  "id": "early-stop-on-promise",
-  "severity": "warn"
-}
-```
-
-#### `completion_without_closure` *(v1.11)*
-
-The closure gate — mirror of `early_stop`. Fires when the agent's last turn makes a TERMINAL "whole task is finished" claim ("all done", "task is complete", "ready to ship") but does NOT ask the user to confirm closure — i.e. it self-closes. Suppressed when the message invites confirmation ("shall I close this?", "anything else?") or is only a mid-task milestone (the claim regex is tighter than `claim_without_evidence`'s, which fires on any sub-step "done"). Distinct from `claim_without_evidence` (that is about EVIDENCE; this fires even when verification ran, because a verified-done still must be offered to the user). Ships in `verify-before-completion/drift_probes.json`. Overridable: `claim_pattern` (terminal claim), `ask_pattern` (closure invite that suppresses).
-
-```json
-{
-  "kind": "completion_without_closure",
-  "id": "completion-without-closure",
-  "severity": "warn"
-}
-```
+Both are suggestions inside a `<system-reminder>` — the canary NEVER auto-runs `/learn` or `/retro`. They share the one wrap-up detector (one suppression/budget path) so the two never double-nag.
 
 ## Mechanism 2 — periodic re-anchor
 
@@ -234,6 +232,141 @@ is the whole-hook `COMPLIANCE_CANARY_DISABLED=1`. Stored items are
 capped at `LEDGER_STORE_CAP=50`, surfaced at `LEDGER_SHOW_MAX=8` (with "+N more
 open").
 
+## Verbatim intent log
+
+The capture side of the no-drop guarantee (target architecture L0 "Intent
+log"). On every `UserPromptSubmit` the hook decides via harness-block
+stripping whether the turn carried anything user-authored: a turn whose
+remainder is EMPTY (a pure `<task-notification>` or command-transcript
+turn) writes no record; a turn with ANY user-authored remainder is
+captured to `.brainer/intent/<session_id>.jsonl` (git-ignored; follows a
+`COMPLIANCE_CANARY_STATE_DIR` override as a sibling) as one
+`{"turn", "ts", "sha256", "text"}` record per line. What gets stored
+(2026-07-18 audit, F4): a pasted `<task-notification>` block inside
+organic user text is the OBJECT of the user's ask ("is this legitimate?")
+and is preserved verbatim with the capture — it must not vanish from the
+record — while always-mechanical command/system transcripts
+(`<local-command-*>`, `<command-*>`, `<system-reminder>`) are still
+stripped; any other turn stores the user-authored remainder. The text is
+full-length — unlike the ledger's 140-char mirror — with a sha256
+integrity anchor over the stored text. Mechanical, zero LLM, zero injected
+bytes, append-only, best-effort: a capture failure logs to stderr and never
+blocks the hook.
+
+**The sole verbatim exception** (2026-07-18 audit): the shared secret
+scrubber (`skills/_shared/audit_redact.py`, key-like strings only) runs
+over the text before writing — credential-shaped strings never persist;
+everything else stays byte-identical (whitespace included — no trimming)
+for any prompt free of harness-injected blocks; a prompt that DID carry
+harness blocks stores the user-authored remainder after block removal
+(outer whitespace around removed blocks is necessarily lost).
+If the scrubber itself FAILS, the record degrades to the
+`[REDACTION-FAILED]` placeholder plus the ORIGINAL text's sha256 — raw
+text never reaches disk on any path. Hygiene riders from the same audit:
+intent logs age out on the same 7-day horizon as state files —
+opportunistic cleanup on the next session start (the new-session gc pass
+removes them; it is not a hard 7-day enforcement) — and a missing
+`session_id` writes a timestamped fallback filename instead of co-mingling
+every anonymous session into a shared `unknown.jsonl`.
+
+**Consumers.** Today: the Mechanism 3 wrap-up surface quotes the user's own
+captured words (with turn numbers, truncated to the existing per-item budget)
+from this log instead of ledger state. Planned: close-boundary reconciliation
+mapping every captured intent to satisfied / deferred / uncovered.
+
+**No opt-out.** Capture is unconditional by standing user directive ("never
+switch off, never opt out") — there is no per-log flag. Two exceptions:
+profile `off` (the experimental control arm) exits before ANY mutation and
+so writes no intent records; and the whole-hook
+`COMPLIANCE_CANARY_DISABLED=1` valve suppresses intent capture like every
+other mechanism (2026-07-18 audit — the request LEDGER is the sole record
+that stays ahead of the valve; the intent log is its verbatim mirror and
+follows the operator valve).
+
+## Mechanism 4 — correction ledger (legacy profile only)
+
+[`LEARNING_CONTRACT`](../_shared/LEARNING_CONTRACT.md) §2: a user correction is
+**closeout-blocking** — it must become a durable artifact (rule + gate +
+exemplar, SCOPE-classified per §1) before the task closes, unconditionally, not
+only "if a retrospective is armed". The `user_correction` probe (Mechanism 1)
+already detects the correction at the turn it lands; the correction ledger is
+the stateful guard that keeps it from being forgotten — mirroring the request
+ledger's shape exactly, one mechanism level up.
+
+This mechanism is live only in the `legacy` rollback profile. Frontier and
+shadow do not open, surface, or resolve correction-ledger items.
+
+Lifecycle (per-session state under `COMPLIANCE_CANARY_STATE_DIR`, key
+`correction_ledger`):
+
+- **Open.** Every fired `user_correction` probe (any skill's) opens an OPEN
+  item `{id, turn, text}` — unconditional capture, the same no-opt-out posture
+  as Mechanism 3. This is unconditional even when `COMPLIANCE_CANARY_PROBE_SKILLS`
+  scopes DISPLAY to a different allowlist: the allowlist filters which fired
+  probes are shown in the drift-signal block, but every discovered
+  `user_correction` probe is still evaluated for ledger OPENING regardless of
+  that filter — an allowlist that happens to exclude a skill's `user_correction`
+  probe must never silently prevent its corrections from ever entering the
+  ledger (this was a confirmed hole; fixed by evaluating `user_correction`
+  probes on a path the allowlist doesn't reach, see `hook.py`'s `ledger_probes`).
+- **Surface.** Unlike the request ledger (which waits for a wrap-up turn or
+  drift coupling), an open correction is surfaced **every turn** it is
+  non-empty — "closeout-blocking" means it does not wait for the agent to
+  believe it is done.
+- **Close.** An item leaves the ledger when (a) a Bash tool call banking the
+  lesson is observed — `write_gate.py` (the quality gate §2 requires) or
+  `wiki.py new` (materializing the durable artifact; `wiki.py` has no `update`
+  subcommand — `new` is the only page-writing verb it exposes) — **actually
+  ran and produced a passing execution-evidence signature**, which resolves
+  ALL open corrections, or (b) the user explicitly closes it (the same closure
+  phrasing as Mechanism 3: "close it", "that's all", …), for a correction the
+  agent judges already handled outside the banking tools.
+
+**The hook never judges whether the banked lesson is any good** — only whether
+a banking tool call ACTUALLY RAN. There is no auto-resolve on the mere passage
+of turns: an unbanked correction stays OPEN indefinitely until one of the two
+close paths above fires.
+
+**Bank-resolution requires EXECUTION EVIDENCE, not just command text.** Two
+prior fix attempts were each defeated adversarially:
+
+1. A bare substring match let `echo write_gate.py`, `wiki.py new --help`, and
+   `grep write_gate.py x` all falsely resolve a closeout-blocking correction —
+   none of them ran the gate. Fixed by requiring **command-position invocation
+   shape** (the matched token must be the thing actually invoked in a shell
+   segment split on `&&`/`||`/`;`/`|`, after stripping leading
+   env-assignments/`sudo`, optionally behind a `python`/`python3`/`bash`/`sh`
+   interpreter; a segment containing `--help`/`-h` is rejected).
+2. Invocation shape alone is still **text-trust**: `CMD="python3
+   .../write_gate.py gate --text x"` (a bare shell variable assignment — the
+   command string matches, but nothing executes) and `false && python3
+   .../write_gate.py gate ...` (a short-circuited compound — the second
+   segment still "looks like" an invocation even though `&&` guarantees it
+   never runs) both resolved a correction without the gate ever running.
+   Command-string matching cannot tell a typed-but-never-run command from a
+   genuine one.
+
+The fix: the hook now requires the SAME Bash `tool_use` to have a **paired
+`tool_result`** (correlated by `tool_use_id`, the same id every real Claude
+Code transcript carries — confirmed against a live transcript fixture) whose
+content carries a real execution signature:
+
+- `write_gate.py score`/`explain` (or any subcommand with `--json`) prints a
+  `PASSED: …` / `REJECTED: …` verdict (JSON: the `"verdict"` field). **`gate`
+  alone (no `--json`) prints nothing to stdout — only an exit code** — so a
+  banking call must use `--json` or `score`/`explain` for the hook to see a
+  verdict at all; a bare `gate` invocation carries no signature to detect,
+  banked or not.
+- `wiki.py new` prints JSON with a `"created": "<path>"` key on success, or
+  `"refused": "REFUSED: …"` on a write-gate/overlap refusal.
+
+A `REJECTED`/`REFUSED` result is **not** a bank signature — the gate ran but
+refused the candidate, so the correction stays OPEN (a rejected banking
+attempt is not a successful banking). A command with matching invocation shape
+but no observed `tool_result` in the transcript window never resolves anything
+either — invocation shape narrows which Bash calls are worth checking, but
+shape alone no longer resolves the ledger.
+
 ## Install
 
 Claude Code (project-local):
@@ -242,7 +375,7 @@ Claude Code (project-local):
 bash skills/compliance-canary/tools/install.sh --project
 ```
 
-Wires `tools/hook.sh` into `.claude/settings.json` under `UserPromptSubmit` — a single hook running all three mechanisms. (`prompt-triage` may also wire `UserPromptSubmit`; the hooks fire in sequence, each independent.)
+Wires `tools/hook.sh` into `.claude/settings.json` under `UserPromptSubmit` — a single hook running all four mechanisms. (`prompt-triage` may also wire `UserPromptSubmit`; the hooks fire in sequence, each independent.)
 
 ## How a skill opts in
 
@@ -268,7 +401,8 @@ A skill can do both. `drift_probes.json` example for caveman-ultra:
 ]
 ```
 
-Two bootstrapped skills ship probes out of the box: `caveman-ultra` (filler-regex + word-creep) and `verify-before-completion` (claim-without-evidence). Other skills opt in over time.
+Eighteen shipped skill directories currently include `drift_probes.json`;
+additional skills opt in by adding the same file beside their `SKILL.md`.
 
 ## Tuning
 
@@ -276,7 +410,10 @@ Env vars (all optional). `SKILL_PULSE_*` names are honored as back-compat aliase
 
 | Var | Default | Effect |
 |---|---|---|
-| `COMPLIANCE_CANARY_DISABLED=1` | — | emergency off-switch — kills **all** mechanisms |
+| `COMPLIANCE_CANARY_PROFILE` | `frontier` | `frontier`, `shadow`, `legacy`, or mutation-free `off` |
+| `COMPLIANCE_CANARY_PROBE_IDS` | frontier verification probe | exact comma-separated `skill:id` selection; replaces skill-level selection |
+| `COMPLIANCE_CANARY_TELEMETRY_PATH` | state dir `telemetry.jsonl` | redacted append-only telemetry path |
+| `COMPLIANCE_CANARY_DISABLED=1` | — | legacy break-glass: silences drift detection, all reminders, and intent-log capture, but the turn is still counted and the prompt still recorded to the request ledger first (ledger state mutation happens BEFORE the valve by standing user directive); only profile `off` is fully mutation-free |
 | `COMPLIANCE_CANARY_COOLDOWN` | 3 | turns to suppress the same probe after it fires |
 | `COMPLIANCE_CANARY_PULSE_EVERY` | 4 | re-anchor cadence (floored to 2); `0` disables **just** the re-anchor. Alias: `SKILL_PULSE_EVERY` |
 | `COMPLIANCE_CANARY_PULSE_DISABLED=1` | — | disable just the re-anchor (probes still run). Alias: `SKILL_PULSE_DISABLED` |
@@ -284,19 +421,14 @@ Env vars (all optional). `SKILL_PULSE_*` names are honored as back-compat aliase
 | `COMPLIANCE_CANARY_STATE_DIR` | `.brainer/compliance-canary` | override state location |
 | `COMPLIANCE_CANARY_SKILLS_ROOT` | `.claude/skills` | override skills lookup root. Alias: `SKILL_PULSE_SKILLS_ROOT` |
 
-## Offline analyzer (`measure.py`)
-
-Runs the same probes against any transcript JSONL without installing the hook. Useful for baselining past sessions and tuning thresholds:
-
-```bash
-python3 skills/compliance-canary/tools/measure.py ~/.claude/projects/<proj>/<sid>.jsonl
-```
-
-Prints per-probe trigger counts and the offending snippets. No state writes, no side effects.
-
 ## Rules
 
-- Read at most `TRANSCRIPT_LINE_CAP=400` trailing lines of the transcript (bound transcript-read cost).
+- The general transcript path reads at most `TRANSCRIPT_LINE_CAP=400` trailing
+  lines from an at-most 8,000,000-byte tail (the 8MB scan cap bounds hot-path
+  cost). Two notification checks stream the FULL transcript line-by-line:
+  provenance (F1), only on qualifying `<task-notification>` turns, and pending-
+  output read reconciliation (F9). Legitimate provenance or a successful paired
+  read older than the tail must still count without materializing the full file.
 - Anti-spam: each probe is suppressed for `COMPLIANCE_CANARY_COOLDOWN` turns after it fires.
 - Cap symptomatic output at `MAX_PROBES_TRIGGERED=4` and the re-anchor at `MAX_SKILLS_IN_PULSE=8`. On a shared turn the re-anchor yields, so output never exceeds one block.
 - The re-anchor reads no transcript and the probes need no frontmatter — one dir-walk feeds both.
@@ -307,20 +439,17 @@ Prints per-probe trigger counts and the offending snippets. No state writes, no 
 
 ```
 tools/
-├── hook.sh        # UserPromptSubmit shell shim
-├── hook.py        # probes + periodic re-anchor + request ledger + state (one process)
-├── install.sh     # wires UserPromptSubmit into project-local .claude/
-├── test.sh        # regression suite (80 cases: probes + re-anchor + ledger + hardening)
-└── measure.py     # standalone offline probe analyzer
+├── coherence_drift_meter.py # offline coherence-drift metric
+├── deadline.py              # bounded subprocess deadline helper
+├── hook.sh                  # UserPromptSubmit shell shim
+├── hook.py                  # profiled probes + ledgers + state
+├── hook_validate.py         # hook/settings validation helper
+├── install.sh               # wires UserPromptSubmit into project-local .claude/
+├── measure.py               # standalone offline probe analyzer
+├── PROBES.md                # probe schema and detector semantics
+├── test.sh                  # regression suite: probes + re-anchor + ledgers + hardening
+├── test_hook_safety.py      # hook fail-open and safety regression tests
+└── test_profiles.py         # frontier/shadow/off + evidence freshness/class gates
 ```
 
-## Compatibility
-
-**Claude Code only** — `UserPromptSubmit` is a Claude-Code-specific event. The top-level `./install.sh` symlinks the folder into all four host dirs for description visibility; only Claude Code wires the hook.
-
-## Known gaps
-
-- Probe detectors are syntactic — they catch keyword/structural signals but miss semantic drift (a paraphrased "done" without claim-word match). A judge-style probe using a tiny LLM is the natural next add (the `llm_judge` kind, currently deferred).
-- `edit_count_per_turn` (lean-execution drift) and `tool_choice_drift` (model picks Write when rule says Edit) are not yet detector kinds. Easy adds when needed.
-- The re-anchor is cadence-based (turn count), not staleness-aware: it re-states rules on schedule even if attention hasn't actually decayed. It yields to probes, but on a quiet long session it still fires every N turns. A true staleness signal would need a cheap per-rule "faded?" probe — none exists yet.
-- The request ledger is one-item-per-prompt and closes by heuristic (most-recent-open, or all on "everything") — it can't map "yes, that one's done" to a specific item, and a single prompt bundling several asks ("do X, Y, and Z") is tracked as one line (the `completion_without_closure` gate is what forces per-item enumeration at wrap-up). It errs toward keeping items open. A semantic ledger (split sub-asks, map closures to items) again wants the deferred `llm_judge`.
+REFERENCE.md — deep-dive: offline `measure.py` usage, host compatibility, known gaps.

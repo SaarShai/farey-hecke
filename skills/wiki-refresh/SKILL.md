@@ -1,10 +1,12 @@
 ---
 name: wiki-refresh
-description: Reconcile wiki-memory pages against the current codebase — Keep / Update / Consolidate / Replace / Delete drifted ones. Use on "refresh the wiki", "audit wiki against code", "are these facts still true", "clean up stale pages", or after a refactor/rename/migration that invalidated cited paths. Ground-truth reconcile; emits typed contradicts: edges.
+description: "Reconcile wiki-memory pages against the current codebase — Keep / Update / Consolidate / Replace / Delete drifted ones. Use on \"refresh the wiki\", \"audit wiki against code\", \"are these facts still true\", \"clean up stale pages\", or after a refactor/rename/migration that invalidated cited paths. Ground-truth reconcile; emits typed contradicts: edges."
 effort: medium
 tools: [Bash, Read, Edit, Glob, Grep]
 pulse_reminder: a wiki page whose cited code paths are gone is drifting against ground truth, not just the clock. Reconcile vs the codebase, don't just decay confidence.
 ---
+
+<!-- split-justified -->
 
 # wiki-refresh
 
@@ -13,6 +15,8 @@ Ground-truth maintenance for `wiki-memory`: reconciles a page against the *curre
 Division of labor:
 - `write-gate` — what enters the wiki.
 - **`wiki-refresh`** — whether a page still matches reality (heavier, monthly / post-refactor / pre-audit). `lint --strict` flags stale `verified:` dates between runs.
+
+Deep-dive reference: [REFERENCE.md](REFERENCE.md) — the nine (+disuse) quality-scan verbs and the opt-in staleness-nudge hook / stale-marking convention.
 
 ## Two modes
 
@@ -34,8 +38,6 @@ graphify query "<page subject>"   # OR Grep — confirm where the code lives NOW
 `audit-refs` returns `drifted[]` with `missing_refs`, `present_refs`, `signal` (`some-refs-gone` | `all-refs-gone`), `age_days`, `protected`. That is the primary drift evidence — a path the page cites that no longer exists on disk.
 
 **`protected: true` pages** (type ∈ error/lesson/sop/procedure, or `L3_sops/`) report drift but are not auto-actioned — a lesson stays protective even when its example code is gone. Surface, never auto-delete.
-
-**Epistemic lenses (periodic, report-only — heuristic aids, never gates).** Three further `wiki.py` verbs (defined in [`wiki-memory`](../wiki-memory/SKILL.md)) feed refresh decisions: `maturity` → `demotion_candidates` route into the contradiction pass below, `promotion_candidates` into Update/Consolidate; `synth-candidates` → cluster groups into Consolidate; `claim-audit` → thin-evidence pages into Replace/Delete review; `gaps` → recurring missing concepts (write the canonical page or fix the stale link). Per-claim typing is noisy (measured) — read aggregates, treat outputs as candidates to confirm, not verdicts.
 
 ## Scope
 
@@ -80,7 +82,7 @@ Implementation-gone ≠ domain-gone: if `auth_token.rb` is deleted but the app s
 python3 skills/wiki-memory/tools/wiki.py --root wiki contradict-scan
 ```
 
-It surfaces same-subject page pairs whose numbers diverge on a shared key (minus already-declared edges). Candidates are **structural signals, not confirmed conflicts** — read both pages and confirm a real disagreement before writing the edge (this is the judge step OKF's `absence_of_contradictions` metric formalizes). For prose that may describe still-present code *wrongly* (the Update-vs-Replace tell), run `claim-ground <id>` to flag claims whose cited artifact is gone.
+It surfaces same-subject page pairs with (a) diverging numbers for a shared key, or (b) a **polarity conflict** (negation-flip / antonym on near-identical wording), minus already-declared edges. **Type-aware**: polarity is skipped when both pages are judgment-dominant (opinion×opinion is expected divergence). High-overlap-gated (measured: 0 false positives on the live wiki). Each candidate carries a deterministic **`suggested_resolution`** verb: `invalidate` (polarity — keep higher-trust/newer, mark the other `contradicts:`), `supersede` (numeric change — newer/higher-trust wins, wire `superseded-by`), or `dispute` (equal trust+recency — flag both). Candidates are **structural signals, not confirmed conflicts** — read both pages and confirm a real disagreement before writing the edge (this is the judge step OKF's `absence_of_contradictions` metric formalizes). For prose that may describe still-present code *wrongly* (the Update-vs-Replace tell), run `claim-ground <id>` to flag claims whose cited artifact is gone.
 
 When investigation (scan-surfaced or otherwise) finds a page that conflicts with current reality **or** with another page — and you cannot immediately resolve it (Replace evidence insufficient, or both pages partly right) — do **not** silently drop it. Record a typed edge so retrieval flags it instead of serving both as truth:
 
@@ -90,6 +92,16 @@ When investigation (scan-surfaced or otherwise) finds a page that conflicts with
 
 These contradictions become durable graph state (not just sweep-time detection): retrieval keeps flagging the pair until an agent resolves it. (Dedup-at-write and store-discoverability are `wiki-memory`'s job, not repeated here.)
 
+## Propagate belief updates (after any supersession/contradiction edge)
+
+A `superseded-by`/`contradicts:` edge marks the *target* page — it does NOT ripple to the pages still citing it, which keep pointing readers at outdated knowledge. After wiring any such edge (or a Replace), run:
+
+```bash
+python3 skills/wiki-memory/tools/wiki.py --root wiki stale-citers
+```
+
+It returns `cites_superseded[]` (citer → old page → `newer[]`) and `cites_contested[]`. Repoint each citer's body link at the newer page, or add a "(superseded — see [[newer]])" note; for contested targets, ensure the citer doesn't assert the disputed claim as settled. Report-only — it never rewrites another page for you (invalidate-don't-delete). A clean `stale-citers` (count 0) is part of a finished reconcile.
+
 ## Execute
 
 1. Apply Keep (no-op) / Update / Consolidate directly when evidence is clear.
@@ -97,15 +109,7 @@ These contradictions become durable graph state (not just sweep-time detection):
 3. Delete: re-check the three gates, then remove.
 4. After any write: `python3 skills/wiki-memory/tools/wiki.py --root wiki index` then `lint --strict`. Resolve new broken links / missing reverse edges before finishing.
 5. Append a `wiki/log.md` entry summarizing the pass.
-
-## Stale-marking (headless ambiguous cases)
-
-Add to frontmatter, do not guess an action:
-```yaml
-status: stale
-stale_reason: "<what drifted / what's missing>"
-stale_date: <today>
-```
+6. After a **full-scope** reconcile, record the baseline: `python3 skills/wiki-refresh/tools/staleness.py mark-refreshed`. This stores the current HEAD so the optional staleness nudge (see [REFERENCE.md](REFERENCE.md)) stays silent until code advances past it.
 
 ## Report (always print)
 

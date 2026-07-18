@@ -15,7 +15,7 @@ Two-layer policy:
 1. **Execution gate** (existing) — fact came from an action that *executed* and *succeeded*. Plans don't earn pages.
 2. **Content gate** (this skill) — fact has signal AND, if it's a decision/convention, gives a reason.
 
-The execution gate is the job of [`verify-before-completion`](../verify-before-completion/SKILL.md) (evidence-first: a fact only earns a page once the action that produced it ran and passed). This skill adds the **content gate**. Both are **procedure gates** — agent steps in `wiki-memory`'s write protocol (`SKILL.md` step 3 instructs running `write_gate.py gate` before a write), not code auto-invoked by `wiki.py`. So the gate fires when the protocol is followed; it is a manual/CLI gate, not enforced inside the write path.
+The execution gate is the job of [`verify-before-completion`](../verify-before-completion/SKILL.md) (evidence-first: a fact only earns a page once the action that produced it ran and passed). This skill adds the **content gate**. It is enforced two ways: as a procedure gate (`wiki-memory`'s `SKILL.md` step 3 instructs running `write_gate.py gate` before hand-authored writes like `CLAUDE.md`/`AGENTS.md`), AND mechanically inside `wiki.py`'s own write path — `new_page()` calls `gate_candidate()` (which runs the write-gate signal scorer plus an overlap near-dup check) before committing a page, and raises `WikiWriteRejected` on a low-signal/reasonless or near-duplicate candidate; the CLI's `new` command catches that exception and exits 1, surfacing the refusal reason. `--force`/`force=True` is the explicit bypass for deliberate scaffold-then-fill writes. So a low-signal `wiki.py new` call is refused by code, not just by convention — but the gate still scores signal-shape, not truth: it passed 8/8 confident-wrong lessons in the adversarial poison eval (mean gate score 4.88, identical to their correct twins), so it is not a truth filter.
 
 ## When to call
 
@@ -30,7 +30,7 @@ Trigger phrases: "remember that …", "log this …", "add to memory", "record �
 
 ## What earns a memory (and which store)
 
-The gate is about *quality*; the *contract* is about shape. Record **corrections AND confirmed approaches alike**, each with the **why** it mattered. Don't store what the repo, the code graph, or chat history already records. **Update an existing note rather than creating a duplicate** (`wiki.py overlap` flags near-matches). **Delete a note that turns out wrong** — git is the archive; a falsified non-protected page is removed via [`wiki-refresh`](../wiki-refresh/SKILL.md)'s Delete outcome.
+The gate is about *quality*; the *contract* is about shape. Record **corrections AND confirmed approaches alike**, each with the **why** it mattered. Don't store what the repo, the code graph, or chat history already records. **Dedup-at-write** (update rather than duplicate) is [`wiki-memory`](../wiki-memory/SKILL.md)'s write-path job (`wiki.py overlap`), not restated here. **Delete a note that turns out wrong** — git is the archive; a falsified non-protected page is removed via [`wiki-refresh`](../wiki-refresh/SKILL.md)'s Delete outcome.
 
 Two stores, two shapes — don't conflate them:
 - **The cross-session memory dir** (`~/.claude/projects/<proj>/memory/`, harness-owned): **one fact per file**, with a **one-line summary at the top** (the frontmatter `description:`). Atomic by contract.
@@ -61,35 +61,56 @@ Note: `since` is intentionally absent — it's overwhelmingly temporal in practi
 
 Decisions without why-clauses are rejected outright, regardless of signal score.
 
+**Trust bypass (recall).** The score measures lexical *signal density*, not *importance* — a genuine atomic fact with no marker words (e.g. "the PROMPTER folder is also called alfred") scores ~0 and is dropped (measured: ~82% false-reject on bare keep-worthy facts). So a candidate whose provenance is vouched-for bypasses the signal **floor**: `trust: verified` or `user_confirmed` (read from the candidate's frontmatter, or passed via `--trust`) passes even at score 0. Trust vouches importance, **not quality** — net-negative content (filler/speculation penalties) is still rejected, and only `user_confirmed` (a human said keep it) waives the why-clause for a decision; plain `verified` still demands it. This raises recall on vouched content while leaving precision on un-vouched content unchanged. It is the principled form of the manual override below.
+
 Source for the formula: [ogham-mcp/ogham-mcp](https://github.com/ogham-mcp/ogham-mcp) (signal-score lifecycle, 91.8% QA / 97.2% R@10 on LongMemEval). Source for the why-clause requirement: [codenamev/claude_memory](https://github.com/codenamev/claude_memory) (100% on 100-case FEVER-derived test).
 
 ## CLI
 
 ```bash
 # score a piece of text from stdin or a file
-python skills/write-gate/tools/write_gate.py score --kind fact < candidate.md
-python skills/write-gate/tools/write_gate.py score --kind decision --text "We chose pgvector over Qdrant because dev parity"
+python3 skills/write-gate/tools/write_gate.py score --kind fact < candidate.md
+python3 skills/write-gate/tools/write_gate.py score --kind decision --text "We chose pgvector over Qdrant because dev parity"
 
 # explain why something was rejected
-python skills/write-gate/tools/write_gate.py explain --text "Basically we did some stuff with the database."
+python3 skills/write-gate/tools/write_gate.py explain --text "Basically we did some stuff with the database."
 
 # integrate as a precheck in another script
-python skills/write-gate/tools/write_gate.py gate --kind decision --file ./candidate.md && echo "write it" || echo "rejected"
+python3 skills/write-gate/tools/write_gate.py gate --kind decision --scope this-skill --file ./candidate.md && echo "write it" || echo "rejected"
+
+# a vouched-for atomic fact bypasses the signal floor (--trust, else read from frontmatter)
+python3 skills/write-gate/tools/write_gate.py gate --kind fact --scope cross-repo --trust verified --text "The PROMPTER folder is also called alfred."
+
+# SCOPE is mandatory (LEARNING_CONTRACT §1) — missing/invalid --scope rejects outright
+python3 skills/write-gate/tools/write_gate.py gate --kind fact --scope this-skill --file ./candidate.md
 ```
 
 Exit codes:
-- `0` — gate passed (signal ≥ threshold, why-clause present if decision)
-- `1` — rejected (signal below threshold OR missing why-clause)
+- `0` — gate passed (scope classified, signal ≥ threshold, why-clause present if decision)
+- `1` — rejected (missing/invalid scope OR signal below threshold OR missing why-clause)
 - `2` — bad input / usage error
 
 ## Protocol
 
 Before persistent write:
 
-1. Run `write_gate.py gate --kind <kind> --file <candidate>`.
-2. On exit 0: proceed with write.
-3. On exit 1: read the explanation. Either revise the candidate (add the reason, cite evidence, drop the filler) or drop the write entirely. Do not bypass.
-4. Bypass is only legitimate when the user explicitly says "save it anyway" or "I know it's thin, save it" — record the override in `wiki/log.md`.
+1. **Classify SCOPE first — unclassified = unbanked.** Every candidate gets one of `this-skill` / `this-repo` / `cross-skill` / `cross-repo` / `canon` (`scope:` frontmatter or `--scope`) before it can pass; the gate mechanically rejects a missing/invalid scope regardless of signal score. A `cross-skill` or `canon` lesson never lands in a single skill's own notes — it goes to [`LEARNING_CONTRACT.md` §1](../_shared/LEARNING_CONTRACT.md#1-scope-classification-is-mandatory-at-banking-time) (or `ORCHESTRATION.md` if orchestration-shaped), with a pointer left in the skill — §1 has the full table.
+2. **PASS/FAIL lessons need a mechanism, not just a page.** If the candidate is expressible as a PASS/FAIL check, it must land as an executable check (test/probe/lint/gate) or the write must say explicitly why no invariant exists yet. See [LEARNING_CONTRACT §3](../_shared/LEARNING_CONTRACT.md#3-mechanism-over-prose).
+3. **Repo canon beats private memory.** If another host (Codex, Gemini, a future session) needs this to act correctly, it belongs in the repo, not only in a private memory dir. See [LEARNING_CONTRACT §7](../_shared/LEARNING_CONTRACT.md#7-repo-canon-over-private-memory).
+4. Run `write_gate.py gate --kind <kind> --scope <scope> --file <candidate>`.
+5. On exit 0: proceed with write (to the destination step 1 selected).
+6. On exit 1: read the explanation. Either revise the candidate (classify scope, add the reason, cite evidence, drop the filler) or drop the write entirely. Do not bypass.
+7. Override is only legitimate when the user explicitly says "save it anyway" or "I know it's thin, save it". Record it as user-directed in the write target or `wiki/log.md`:
+
+```json
+{
+  "write_gate": "rejected",
+  "override": "user_directed",
+  "override_reason": "User explicitly wants this remembered despite gate rejection."
+}
+```
+
+There is no agent-only override.
 
 ## Anti-patterns
 

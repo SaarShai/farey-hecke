@@ -1,0 +1,7 @@
+---
+description: "Use before committing or claiming work done to map a code edit to its blast radius — which symbols depend on the changed ones, plus a LOW/MEDIUM/HIGH/UNKNOWN risk score. Trigger on \"what breaks if I change this?\", \"who calls this?\", \"is this safe to ship?\", or as the pre-commit gate in a generate→verify loop. Uses graphify's call graph when present, labelled lexical grep otherwise; tells verify-before-completion WHAT to verify. Also: /impact-of-change."
+globs: ["**/*"]
+alwaysApply: false
+---
+
+@skills/impact-of-change/SKILL.md

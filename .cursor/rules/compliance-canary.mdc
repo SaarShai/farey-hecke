@@ -1,0 +1,7 @@
+---
+description: "Use when a long session may drift or needs verification-compliance monitoring. Frontier defaults to silent intent state plus one compact, compliance-aware verification probe; shadow measures suppressed legacy probes; legacy preserves rollback behavior; off is a mutation-free control."
+globs: ["**/*"]
+alwaysApply: false
+---
+
+@skills/compliance-canary/SKILL.md

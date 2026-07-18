@@ -15,7 +15,8 @@ generator != verifier} is not a loop — it is an open-ended spin. This linter
 refuses such specs BEFORE the loop runs, turning the doctrine into a mechanical
 gate (per Brainer's "no prose rule where a mechanical gate can stand").
 
-It validates a loop spec against three FAIL rules and four WARN rules:
+It validates a loop spec against four always-FAIL rules, nine WARN rules, and
+one context-scoped rule (R7 — FAIL when unattended, WARN when attended):
 
   R1 NO-GATE          (FAIL) — gate absent, or prose with no machine-checkable
                                pass/fail signal (allowlist: a command / test id /
@@ -29,8 +30,54 @@ It validates a loop spec against three FAIL rules and four WARN rules:
                                (declare that "no feedback" is intentional).
   R5 FLEET-NO-QUORUM  (WARN) — fleet topology with no aggregation/quorum gate.
   R6 NO-TOPOLOGY      (WARN) — topology not declared (you did not choose a shape).
-  R7 IRREVERSIBLE-NO-HUMAN (WARN) — autonomous loop that merges/deploys/migrates/
-                               charges with no human approval gate (the security tax).
+  R7 IRREVERSIBLE-NO-HUMAN (FAIL if unattended, else WARN) — a loop that merges/
+                               deploys/migrates/charges with no human approval gate
+                               (the security tax). An UNATTENDED loop (scheduled/
+                               event/outer/fleet/long-running — same predicate as
+                               R8/R10/R12b/R13/R14) has no human present to catch it
+                               at runtime, so it is a hard FAIL; an ATTENDED loop
+                               keeps the advisory WARN (a human is there to approve).
+  R8 NO-MEMORY-CONTRACT (WARN) — scheduled/fleet/outer loop lacks anchor/read/write
+                               state fields, so it will re-derive after context rot.
+  R9 FLEET-STATE-NO-CONCURRENCY (WARN) — fleet has shared state with no explicit
+                               single-writer / optimistic-revision / worktree strategy.
+  R10 OUTPUT-SURFACE-UNBOUNDED (WARN) — an unattended (scheduled/event/outer/fleet/
+                               long-running) loop takes a side-effecting world action
+                               (post/comment/close/label/merge/email/commit/delete/…)
+                               but declares no bounded `output_actions` allowlist —
+                               default-deny + per-action caps, harness-enforced, not
+                               a "please don't" in the prompt (cf. GitHub Agentic
+                               Workflows `safe-outputs:`). An allowlist of `*`/`all`
+                               is not an allowlist and still warns.
+  R11 STUCK-NO-ADVISOR (WARN) — a loop that declares a `stuck` policy names no
+                               `advisor` (the DIVERGENT, cross-vendor fresh-
+                               perspective panel that feeds the generator on a
+                               stall), or the advisor collapses into the verifier
+                               (propose-and-judge is self-grading). Sourced from
+                               skills/_shared/model_roster.py.
+  R12 CROSS-VENDOR-EGRESS (WARN) — an advisor/verifier panel sends repo-derived
+                               content to a third-party model but declares no
+                               `redaction` surface (R12a), or an UNATTENDED loop
+                               egresses with no `consent` gate (R12b). The enforced
+                               scrub + consent live in model_roster.py; this makes
+                               the data surface declarable + auditable in the spec.
+                               (Borrowed from ksimback/looper's privacy layer.)
+  R13 VERIFIER-BLINDNESS (WARN) — an LLM/agent verifier on a loop where blindness
+                               matters (unattended, or a cross-vendor panel) does not
+                               declare it is BLIND to the generator's reasoning
+                               (`verifier_blind` / `verifier_inputs`, or a "fresh
+                               context"/"blind" verifier string), or declares it is
+                               NOT. A separate actor that reads the generator's self-
+                               justification inherits the same bias. Closes the
+                               declare-to-audit asymmetry (egress/concurrency/memory
+                               all had a field; the deepest rule did not).
+  R15 SELF-MODIFICATION-BOUNDARIES (FAIL) — a spec that opts into
+                               `self_modifying: true` must declare editable and
+                               locked surfaces, held-in and held-out gates,
+                               artifact binding, and human approval.
+
+Use --strict-memory to promote R8/R9 findings to FAIL for loops where durable
+state matters: scheduled, fleet, outer, or long-running loops.
 
 Exit code IS the verdict: 0 clean · 1 any WARN · 2 any FAIL · 3 usage/unparseable.
 
@@ -41,6 +88,7 @@ block (fenced ```loop in markdown, a .yaml/.yml file, a .json file, or stdin).
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -51,7 +99,68 @@ from typing import Literal
 Severity = Literal["OK", "WARN", "FAIL"]
 
 # Rules that are fatal (exit 2). Everything else is advisory (exit 1).
-FAIL_RULES = {1, 2, 3}
+FAIL_RULES = {1, 2, 3, 15}
+
+# R12 CROSS-VENDOR EGRESS — a loop whose advisor/verifier panel sends repo-derived
+# content to a THIRD-PARTY model (cross-vendor, model_roster, codex/gemini/glm/
+# openrouter/fusion, or an "external"/"cross-vendor" panel). When that egress is
+# present the spec must declare two controls, mirroring ksimback/looper's privacy
+# layer: a `redaction` surface (R12a — what is scrubbed before it leaves) and, for
+# UNATTENDED loops, a `consent` gate (R12b — egress is authorized, not a default).
+# A tripwire over the actor strings; the enforced scrub + consent live in
+# skills/_shared/model_roster.py (render_prompt redacts; --run needs consent).
+_EGRESS = re.compile(
+    r"\b(cross[\s-]?vendor|model[\s_-]?roster|openrouter|fusion|codex|gemini|"
+    r"glm|z\.?ai|external\s+(?:model|panel|vendor|llm)|other\s+vendors?)\b", re.I)
+
+# R13 VERIFIER-BLINDNESS — `verifier_inputs` content that means the verifier is
+# fed the GENERATOR's self-justification (reasoning / chain-of-thought / rationale).
+# A verifier that reads that chain inherits the same bias even though it is a
+# separate actor — the doctrine's "blind verifier" rule (SKILL.md line 80). This
+# detects a declared NON-blind input surface; absence is handled in the R13 check.
+_NONBLIND_INPUT = re.compile(
+    r"\b(reasoning|rationale|justification|chain[\s-]?of[\s-]?thought|\bcot\b|"
+    r"scratchpad|thought\s+process|self[\s-]?critique|deliberation|"
+    r"inner\s+monologue|self[\s-]?justification|the\s+why)\b", re.I)
+
+# A verifier string that asserts input ISOLATION in prose ("fresh context", "blind",
+# "sees only the outputs") already declares blindness — R13 is satisfied without a
+# separate field, the same way R1 reads a machine gate out of the gate string and R5
+# reads a quorum word out of the gate. NOT "read-only" — that bounds WRITE access,
+# not what the verifier READS, so it does not establish blindness.
+_BLIND_DECLARED = re.compile(
+    r"\b(blind|fresh[\s-]?context|clean[\s-]?context|separate[\s-]?context|"
+    r"isolated[\s-]?context|sees?\s+only\s+(?:the\s+)?(?:task|output|outputs|artifact)|"
+    r"outputs?[\s-]only|without\s+(?:the\s+)?(?:generator'?s?\s+)?reasoning|"
+    r"no\s+access\s+to\s+(?:the\s+)?(?:generator'?s?\s+)?reasoning)\b", re.I)
+
+# A verifier STRING that ACTIVELY pulls in the generator's reasoning leaks it even
+# if the same string also claims "fresh context", so it must NOT be read as blind
+# (the _BLIND_DECLARED bypass round-2 surfaced). A leak = an inclusion verb
+# (reads/with/plus/fed/…) followed within a short span by a reasoning token, with NO
+# negator between them — so "sees only the outputs, not the reasoning" and "without
+# the reasoning" stay blind (negation-safe, the FP a bare regex would introduce).
+_REASONING_TOKEN = re.compile(
+    r"\b(reasoning|rationale|chain[\s-]?of[\s-]?thought|\bcot\b|self[\s-]?justification|"
+    r"scratchpad|thought\s+process|deliberation)\b", re.I)
+_INCLUSION_VERB = re.compile(
+    r"\b(read(?:s|ing)?|see(?:s|ing)?|with|plus|including|includes|incorporat\w+|"
+    r"consum\w+|fed|feeding|given|giving|receiv\w+|gets?|getting|along\s+with)\b", re.I)
+_NEGATOR = re.compile(r"\b(not|no|without|never|excluding|sans|minus|except)\b", re.I)
+
+
+def _leaks_reasoning(verifier: str) -> bool:
+    """True if the verifier string ACTIVELY includes the generator's reasoning — an
+    inclusion verb then a reasoning token (≤30 chars apart) with no negator between.
+    Negated forms ('…not the reasoning', 'without the reasoning') return False."""
+    for m in _REASONING_TOKEN.finditer(verifier):
+        verbs = list(_INCLUSION_VERB.finditer(verifier[:m.start()]))
+        if not verbs:
+            continue
+        span = verifier[verbs[-1].end():m.start()]
+        if len(span) <= 30 and not _NEGATOR.search(span):
+            return True
+    return False
 
 
 @dataclass
@@ -69,12 +178,17 @@ class Spec:
     """One parsed loop spec: flat fields + the source line of each field."""
     name: str = ""
     fields: dict[str, str] = field(default_factory=dict)
+    raw_fields: dict[str, str] = field(default_factory=dict)
     field_lines: dict[str, int] = field(default_factory=dict)
     start_line: int = 0
     source: str = ""
 
     def get(self, key: str) -> str:
         return self.fields.get(key, "").strip()
+
+    def get_raw(self, key: str) -> str:
+        """Return source spelling when flat parsing retained it, else the value."""
+        return self.raw_fields.get(key, self.fields.get(key, "")).strip()
 
     def line_of(self, key: str) -> int:
         return self.field_lines.get(key, self.start_line)
@@ -102,7 +216,11 @@ class Report:
 # Keys the spec understands. Unknown keys are kept (harmless) but never required.
 KNOWN_KEYS = {
     "name", "topology", "generator", "verifier", "gate", "stop", "budget",
-    "accepted_open_loop", "quorum", "aggregate",
+    "accepted_open_loop", "quorum", "aggregate", "anchor_files", "state_store",
+    "recall", "writeback", "state_concurrency", "stuck", "advisor",
+    "redaction", "consent", "egress", "verifier_inputs", "verifier_blind", "on_error",
+    "self_modifying", "editable_surfaces", "locked_surfaces", "held_in_gate",
+    "held_out_gate", "artifact_binding", "human_approval",
 }
 
 _KV_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_-]*)\s*:\s*(.*)$")
@@ -128,8 +246,10 @@ def _parse_flat(lines: list[str], base_line: int) -> Spec:
         if not m:
             continue
         key = m.group(1).strip().lower()
-        val = _strip_quotes(m.group(2))
+        raw_val = m.group(2).strip()
+        val = _strip_quotes(raw_val)
         spec.fields[key] = val
+        spec.raw_fields[key] = raw_val
         spec.field_lines[key] = base_line + i
         if key == "name":
             spec.name = val
@@ -147,6 +267,11 @@ def _specs_from_json(text: str, source: str) -> list[Spec]:
         for k, v in item.items():
             kk = str(k).strip().lower()
             spec.fields[kk] = "" if v is None else str(v)
+            # Preserve JSON type/string boundaries for exact-literal checks.
+            # In particular, `"true # literal"` is one string, not a YAML
+            # scalar followed by an inline comment. Normal field values retain
+            # their established string-coercion behavior in `fields`.
+            spec.raw_fields[kk] = json.dumps(v, ensure_ascii=False)
             spec.field_lines[kk] = 1
         spec.name = spec.get("name")
         out.append(spec)
@@ -188,6 +313,31 @@ def _looks_like_flat_spec(text: str) -> bool:
     return bool(keys & {"gate", "generator", "verifier", "topology", "stop", "budget"})
 
 
+_YAML_DOC_RE = re.compile(r"^---(?:[ \t]+#.*)?[ \t]*$")
+
+
+def _specs_from_yaml(text: str, source: str) -> list[Spec]:
+    """Parse each flat document in a multi-document YAML stream."""
+    out: list[Spec] = []
+    block: list[str] = []
+    start_line = 1
+    for line_no, line in enumerate(text.splitlines(), 1):
+        if _YAML_DOC_RE.match(line):
+            if block and _looks_like_flat_spec("\n".join(block)):
+                spec = _parse_flat(block, base_line=start_line)
+                spec.source = source
+                out.append(spec)
+            block = []
+            start_line = line_no + 1
+        else:
+            block.append(line)
+    if block and _looks_like_flat_spec("\n".join(block)):
+        spec = _parse_flat(block, base_line=start_line)
+        spec.source = source
+        out.append(spec)
+    return out
+
+
 def parse_specs(text: str, source: str) -> list[Spec]:
     """Discover loop specs from raw text. Order of preference:
     .json → JSON; fenced ```loop blocks → one spec each; otherwise, if the text
@@ -196,6 +346,8 @@ def parse_specs(text: str, source: str) -> list[Spec]:
     low = source.lower()
     if low.endswith(".json"):
         specs = _specs_from_json(text, source)
+    elif low.endswith((".yaml", ".yml")):
+        specs = _specs_from_yaml(text, source)
     elif low.endswith((".md", ".markdown")) or _FENCE_OPEN_RE.search(text) or "```loop" in text.lower():
         specs = _specs_from_markdown(text, source)
         # A markdown file with no fenced loop block but flat keys at top level
@@ -281,14 +433,32 @@ _DECISION_VERB = re.compile(r"\b(approv\w+|sign[\s-]?off|signs?\s+off|signed\s+o
 
 _UNBOUNDED = re.compile(r"\b(unbounded|infinite|none|no\s*limit|unlimited|never|forever)\b", re.I)
 _QUORUM = re.compile(r"\b(quorum|aggregat\w*|merge|reviewer|vote|consensus|majority|reduce)\b", re.I)
+_SCHEDULED = re.compile(
+    r"\b(cron|schedule[sd]?|scheduled|nightly|daily|weekly|hourly|timer|"
+    r"webhook|event\s+loop|file\s+watcher|watch(?:es|er)?|inbox|"
+    r"monitoring\s+(?:job|automation|agent|loop))\b", re.I)
+_LONG_RUNNING = re.compile(
+    r"\b(long[-\s]?running|daemon|persistent|continuously|continuous|always[-\s]?on|"
+    r"background\s+(?:job|worker|loop|agent)|service\s+loop|until\s+(?:interrupted|cancelled|stopped))\b",
+    re.I,
+)
+_MEMORY_CONTRACT_FIELDS = ("anchor_files", "state_store", "recall", "writeback")
+_STATE_CONCURRENCY_ALLOWED = {"single_writer", "optimistic_revision", "worktree_isolated"}
+_SELF_MODIFICATION_FIELDS = (
+    "editable_surfaces", "locked_surfaces", "held_in_gate", "held_out_gate",
+    "artifact_binding", "human_approval",
+)
+_SELF_MODIFICATION_PLACEHOLDERS = {
+    "todo", "tbd", "n/a", "none", "null", "nil", "?", "no", "not set", "<todo>",
+}
 
 # A real budget cap is a NUMBER bound to a cap unit (iterations / tokens / a
 # duration) — not a stray digit in a prose sentence ("run until inbox has 0 unread").
 _BUDGET_CAP = re.compile(
     r"\b(?:max[_\s-]?)?(?:iterations?|iters?|tokens?|turns?|rounds?|attempts?|steps?|calls?|"
-    r"loops?|passes|retries|tries)\b\s*[:=]?\s*\d+(?:\.\d+)?"                 # unit then number
+    r"loops?|passes|retries|tries|revisions?|revs?)\b\s*[:=]?\s*\d+(?:\.\d+)?"                 # unit then number
     r"|\d+(?:\.\d+)?\s*(?:k\s*)?(?:iterations?|iters?|tokens?|turns?|rounds?|attempts?|steps?|"
-    r"calls?|loops?|passes|retries|tries)\b"                                 # number then unit
+    r"calls?|loops?|passes|retries|tries|revisions?|revs?)\b"                                 # number then unit
     r"|\d+(?:\.\d+)?\s*(?:s|sec|secs|seconds?|m|min|mins|minutes?|h|hr|hrs|hours?)\b",  # a duration
     re.I)
 
@@ -310,8 +480,13 @@ _TOTAL = re.compile(r"\b(total|overall|across|aggregate|combined|cumulative|in a
 # drafts" / "Alfred reviews"). A capitalized QUALIFIER before a noun ("Payments
 # service", "Senior Marketing") or a shared domain word ("Keep/Update/Replace")
 # is NOT an actor name, so distinct teams/roles that share vocabulary stay distinct.
-_MODEL_SLUGS = frozenset("""opus sonnet haiku claude gpt fable gemini llama mistral mixtral
-qwen deepseek grok o1 o3 o4 mimo ollama""".split())
+# Keep in sync with the vendor lanes in skills/_shared/model_roster.py (LANE_*:
+# gpt/claude/gemini/glm/local) + their model families — a panel sourced from the
+# roster can name any of them, and R3 must catch the same vendor on both sides.
+# `glm` and `codex` were missing, so GLM/Codex self-grades slipped R3 while
+# opus/gpt/gemini were caught; test_loop_lint guards this set against roster drift.
+_MODEL_SLUGS = frozenset("""opus sonnet haiku claude gpt codex fable gemini gemma llama mistral mixtral
+qwen deepseek grok glm o1 o3 o4 mimo ollama""".split())
 # Generic / role / common-domain words that, even when Capitalized in a role
 # phrase, are NOT a person's name — so they must not trigger a self-grading match.
 _GENERIC_ACTORS = frozenset("""human agent agents model models llm ai bot worker person people someone
@@ -332,6 +507,40 @@ tests test grades grade judges judge evaluates evaluate inspects inspect approve
 critiques critique refutes refute reads read reconciles reconcile recomputes recompute applies apply
 runs run ships ship owns own maintains maintain signs sign leads lead handles handle manages manage
 oversees oversee curates curate delivers deliver edits edit fixes fix merges merge""".split())
+# Generic AUTONOMOUS-actor head nouns. When the SAME such noun heads an identical
+# subject phrase on both sides ("the writer agent" / "the same writer agent …",
+# "our model produces" / "our model checks") with NO distinguishing model-slug or
+# proper name and NO human in the loop, the two roles are one autonomous actor —
+# self-grading (the natural-language false negative the audit surfaced). Human
+# tokens are deliberately ABSENT: "a human writes" / "a human checks" is the
+# endorsed human-review gate, never self-grading (R1/R7), and is exempted below.
+_FLAGGABLE_GENERIC = frozenset("""agent agents subagent subagents model models llm llms ai bot bots
+automation pipeline writer drafter author coder builder generator producer reviewer checker verifier
+validator auditor judge critic grader evaluator tester worker assistant it they""".split())
+# Subject-phrase determiners/ordinals dropped before comparing the two subjects,
+# so "the same writer agent" and "the writer agent" compare equal.
+_SUBJ_DROP = frozenset("""the a an our its their your my his her this that these those said same other
+another single one first second third next previous own""".split())
+# A preposition (like a role-verb) ends the SUBJECT phrase, so a trailing
+# qualifier ("… on a second pass", "… in staging") is not read as the head noun.
+_SUBJ_PREP = frozenset("on in at of for to via with by from through over after before during per across "
+                       "into onto under within against around about".split())
+
+
+# A verifier that ADMITS self-grading in prose — "the same agent/model", "grades
+# its own", "judges itself", "its own patch/output", "self-review". The actor-
+# identity checks (_norm / _same_actor / _generic_self_grade) miss this when the
+# two actor STRINGS differ token-wise ("the coding agent writes the patch" vs "the
+# same agent then grades its own patch") even though the verifier explicitly says
+# it is the generator grading its own work (adversarial finding 2026-06-27).
+# Scoped to self-grading verbs + own-output so a legit separate reviewer
+# ("sonnet read-only reviewer") does not trip it.
+_SELF_GRADE_RE = re.compile(
+    r"\bthe same (?:agent|model|actor|llm|coder|writer|drafter|author|generator|producer|bot|ai|one)\b"
+    r"|\b(?:grad|judg|review|verif|check|assess|scor|critiqu)\w*\s+(?:its|their|it)\s+own\b"
+    r"|\b(?:grad|judg|review|verif|check|assess|scor|critiqu)\w*\s+itself\b"
+    r"|\bits own (?:patch|work|output|code|homework|draft|answer|result|review)\b"
+    r"|\bself[\s-]?(?:grad|review|verif|assess|judg|critiqu)\w*", re.I)
 
 
 def _norm(s: str) -> str:
@@ -362,6 +571,15 @@ def _slugs(s: str) -> frozenset[str]:
 # service") is a qualifier, not an actor.
 _NAME_BOUNDARY = re.compile(r"\s*(?:[,(;:]|and\b|or\b|'s\b|$)", re.I)
 
+# A Capitalized token that is the OBJECT of a transport/infra preposition
+# ("claude on Bedrock", "opus via Acme", "gpt through Portkey") names the
+# infrastructure the actor runs on, NOT the actor. It must not be read as a
+# shared proper name, or two DISTINCT models on the same platform collide on the
+# platform word and trip R3 (the false positive GLM-5.2's review surfaced).
+_INFRA_PREP = re.compile(
+    r"(?:^|\b)(on|via|through|thru|using|with|over|atop|behind|across|"
+    r"by\s+way\s+of|hosted\s+on|served\s+by|routed\s+through)\s*$", re.I)
+
 
 def _subject_names(s: str) -> frozenset[str]:
     """Proper names that ACT — a Capitalized, non-common token that is the subject
@@ -376,6 +594,8 @@ def _subject_names(s: str) -> frozenset[str]:
             continue
         if m.start() > 0 and s[m.start() - 1] == "/":
             continue                              # part of a slash enum (Keep/Update/Replace), not a name
+        if _INFRA_PREP.search(s[:m.start()]):
+            continue                              # object of "on/via/through" — infra, not an actor
         rest = s[m.end():]
         if _NAME_BOUNDARY.match(rest):            # name then a clause boundary
             names.add(low)
@@ -396,6 +616,47 @@ def _same_actor(generator: str, verifier: str) -> bool:
     return bool(_slugs(generator) & _slugs(verifier))   # same model named on both sides
 
 
+def _subject_words(s: str) -> list[str]:
+    """The actor's SUBJECT phrase as lowercased content words: everything up to
+    the first role-verb or preposition, with determiners/ordinals dropped. So
+    "the same writer agent on a second pass" → ['writer', 'agent'] and
+    "our model produces the draft" → ['model']."""
+    toks = re.findall(r"[A-Za-z][A-Za-z0-9'-]*", _strip_quotes(s))
+    subj: list[str] = []
+    for t in toks:
+        tl = t.lower()
+        if tl in _NAME_VERBS or tl in _SUBJ_PREP:
+            break                                 # subject ends at the first verb/preposition
+        subj.append(tl)
+    if not subj:
+        subj = [t.lower() for t in toks]          # no verb/prep: the whole phrase is the subject
+    return [t for t in subj if t not in _SUBJ_DROP]
+
+
+def _generic_self_grade(generator: str, verifier: str) -> bool:
+    """True when both actors are the SAME generic autonomous actor described
+    without a distinguishing model-slug or proper name — the natural-language
+    self-grade ("the writer agent"/"the same writer agent", "our model
+    produces"/"our model checks") that exact-string and slug/name matching miss.
+    Guards keep it precise: a distinct slug (opus vs sonnet) or proper name means
+    two actors; a human in either role is the endorsed review gate, not self-
+    grading; and the full subject phrase must match (so "planning agent" vs
+    "execution agent" — same head, different work — stays distinct)."""
+    if _slugs(generator) or _slugs(verifier):
+        return False                              # a named model distinguishes the actors
+    if _subject_names(generator) or _subject_names(verifier):
+        return False                              # a proper name is handled by _same_actor
+    if _HUMAN_TOKEN.search(generator) or _HUMAN_TOKEN.search(verifier):
+        return False                              # human-in-the-loop is a valid separate gate
+    wg, wv = _subject_words(generator), _subject_words(verifier)
+    if not wg or wg != wv:
+        return False                              # different subject phrase ⇒ different actor.
+        # ORDERED equality, not set: "model agent" vs "agent model" share a word set
+        # but name different head roles — a set match there is a false positive
+        # (the reorder hole the white-box audit surfaced).
+    return wg[-1] in _FLAGGABLE_GENERIC           # head is an autonomous-actor noun
+
+
 def _has_machine_gate(gate: str) -> bool:
     if any(rx.search(gate) for rx in _STRONG_GATE):
         return True                       # unambiguous command/assertion wins over prose
@@ -410,6 +671,43 @@ def _has_human_gate(gate: str) -> bool:
     if _AGENT_TOKEN.search(gate):
         return False
     return bool(_DECISION_VERB.search(gate) and _HUMAN_TOKEN.search(gate))
+
+
+# A gate can be COMMAND-SHAPED (passes the _STRONG_GATE allowlist) yet never return
+# non-zero — so it always "passes" and gates nothing. Two classes the shape check
+# waves through: (a) a help/version/usage flag as the whole check ('./tool --help' —
+# exits 0 by definition); (b) a bare printer/lister with no assertion ('cat f',
+# 'echo ok', 'ls dir'). Fire ONLY when NO real assertion exists anywhere in the gate
+# (no &&/||, no pipe, no test/grep -q/exit-code/comparison) — so 'cmd | grep -q OK'
+# or '... && test -f out' (real checks) are NOT flagged.
+# (Upstreamed from the product-images sibling fork; pairs with R1's shape allowlist.)
+_NOOP_FLAG = re.compile(r"(?:^|[\s=])(?:--help|-h|--usage|--version|-V)\b", re.I)
+_NOOP_ONLY_CMD = re.compile(r"^\s*(?:true|:|echo|printf|cat|ls|pwd)\b", re.I)
+_REAL_CHECK = re.compile(
+    r"&&|\|\||(?:^|\s)\|(?:\s|$)|\bgrep\b[^\n]*\s-\w*q|\btest\b|\[\s|\[\[|"
+    r"\bexit\s+\d|\bassert\b|==|!=|>=|<=|-eq|-ne|-gt|-lt|\$\?", re.I)
+# An unfilled <placeholder> sitting in the gate's PASS/FAIL LOGIC (a ternary
+# condition or an assertion operand) means the CHECK ITSELF is unspecified — the
+# agent could fill it with a tautology ('True'). DATA placeholders that only say
+# WHAT to operate on ('--name-contains "<part>"') are fine and not flagged.
+_LOGIC_PLACEHOLDER = re.compile(
+    r"<[^>]*(?:assert|condition|cond|predicate|expr|metric|check|bool)[^>]*>"
+    r"|\bif\s+<[^>]+>\s+else\b"
+    r"|(?:==|!=|>=|<=)\s*<[^>]+>|<[^>]+>\s*(?:==|!=|>=|<=)", re.I)
+
+
+def _is_noop_gate(gate: str) -> bool:
+    """True if the gate is command-shaped but can't fail (a help/version flag or a
+    bare printer/lister with no real assertion anywhere)."""
+    if _REAL_CHECK.search(gate):
+        return False
+    return bool(_NOOP_FLAG.search(gate) or _NOOP_ONLY_CMD.match(gate))
+
+
+def _has_logic_placeholder(gate: str) -> bool:
+    """True if an unfilled <...> placeholder sits in the gate's pass/fail logic
+    (the check is unspecified), vs a data arg (which is fine)."""
+    return bool(_LOGIC_PLACEHOLDER.search(gate))
 
 
 def _budget_cap_value(budget: str) -> float | None:
@@ -437,6 +735,68 @@ def _topology_tokens(topology: str) -> set[str]:
 
 def _is_true(v: str) -> bool:
     return _strip_quotes(v).strip().lower() in {"true", "yes", "1", "on"}
+
+
+def _strip_unquoted_inline_comment(v: str) -> str:
+    """Strip a YAML-style inline comment: `#` outside quotes after whitespace.
+
+    Preserve path fragments (`spec#section`) and hashes inside quoted values.
+    """
+    quote = ""
+    escaped = False
+    for i, ch in enumerate(v):
+        if escaped:
+            escaped = False
+            continue
+        if ch == "\\" and quote == '"':
+            escaped = True
+            continue
+        if quote:
+            if ch == quote:
+                quote = ""
+            continue
+        if ch in "\"'":
+            quote = ch
+        elif ch == "#" and (i == 0 or v[i - 1].isspace()):
+            return v[:i].rstrip()
+    return v.strip()
+
+
+def _normalized_self_modification_value(v: str) -> str:
+    stripped = _strip_unquoted_inline_comment(v)
+    return re.sub(r"\s+", " ", _strip_quotes(stripped).strip().casefold())
+
+
+def _is_literal_true(v: str) -> bool:
+    """R15's explicit activation token: normalized literal `true`, no aliases."""
+    return _normalized_self_modification_value(v) == "true"
+
+
+def _self_modification_field_present(v: str) -> bool:
+    """Reject only narrow, known placeholder sentinels; retain real prose/paths."""
+    normalized = _normalized_self_modification_value(v)
+    if not normalized or normalized in _SELF_MODIFICATION_PLACEHOLDERS:
+        return False
+    # A path beginning with TODO is still concrete (`TODO-tools/SKILL.md` or
+    # `TODO.md`); check its first token before rejecting broader TODO decorations.
+    first_token = normalized.split(maxsplit=1)[0]
+    concrete_first_token = ("/" in first_token or "\\" in first_token
+                            or bool(re.search(r"\.[a-z0-9]{1,8}$", first_token)))
+    if concrete_first_token:
+        return True
+    # Scaffold-style TODO decorations are placeholders, but commands/paths merely
+    # containing "todo" remain valid (`python3 ./tools/todo_gate.py`).
+    if normalized.startswith(("<todo>", "[todo]")):
+        return False
+    if re.match(r"^todo(?:\b|[_-])", normalized):
+        return False
+    return True
+
+
+def _state_concurrency_ok(v: str) -> bool:
+    """True when `state_concurrency` names one of the documented strategies."""
+    norm = re.sub(r"[\s-]+", "_", _strip_quotes(v).strip().lower())
+    return norm in _STATE_CONCURRENCY_ALLOWED
 
 
 # An IRREVERSIBLE action — something an autonomous loop should not do without a
@@ -479,9 +839,81 @@ def _irreversible_action(text: str) -> "re.Match | None":
     return None
 
 
+# Optional determiner + up to two adjective words between an active verb and its
+# object noun, so "closes the duplicate issue" / "adds a wontfix label" match while
+# "closed issues" (no active verb) does not. Active-verb gating, not this gap, is
+# what kills the read-only false positives.
+_DET = r"(?:(?:the|a|an|this|that|its|their|your)\s+)?(?:\w+\s+){0,2}"
+
+# R14 UNCLASSIFIED-FAILURE-POLICY — an unattended loop that retries every
+# failure class implicitly without distinguishing transient (network/rate-limit),
+# recoverable-by-generator (bad output), user-fixable (auth/config), or unexpected
+# (halt/surface) burns budget on errors no retry can fix. Detect an unattended spec
+# without `on_error`, or with `on_error` containing no halt/escalate/interrupt token
+# that would break the retry loop.
+_HALT_OR_ESCALATE = re.compile(
+    r"\b(halt|stop|abort|escalate|interrupt|human|bubble|fail[\s-]?fast|page|alert)\b", re.I)
+
+
+# A halt/escalate word is NEGATED — and so does not silence R14 — when a
+# continue-anyway clause follows it ("stop after 3 retries, otherwise keep
+# trying"): every failure still retries forever past the stated cap, the
+# exact blanket-retry anti-pattern R14 targets. If both a halt word and one of
+# these continue-anyway tokens are present, R14 still fires.
+_CONTINUE_ANYWAY = re.compile(
+    r"\b(otherwise|keep\s+trying|retry\s+until|continue)\b", re.I)
+
+
+# A SIDE-EFFECTING world action — something an UNATTENDED loop mutates outside
+# itself: a comment, an issue/PR state, a label, a merge/commit/push, an email/
+# message, a published/deployed/charged side effect. Broader than _IRREVERSIBLE
+# (which is only the catastrophic subset): R10 catches the mundane-but-unbounded
+# case (a moderation bot that closes/labels/comments with no cap). A tripwire,
+# not a proof — object-anchored so generic verbs (edit/update/write) inside a
+# generator description don't trip it; a novel surface will slip until adversarially
+# extended. cf. GitHub Agentic Workflows `safe-outputs:` (allowed actions + caps).
+# Active-verb forms only (3rd-person `-s` / gerund `-ing`). Bare and past-participle
+# forms are deliberately EXCLUDED because they collide with read-only noun/adjective
+# phrases that describe state rather than an action — "the commit hash", "0 open
+# issues", "count merged PRs", "deleted files" must NOT trip an output-surface warning.
+_SIDE_EFFECTING = re.compile(
+    r"\b("
+    r"posts?\s+" + _DET + r"comments?|posting\s+" + _DET + r"comments?|comments?\s+on\b|"
+    r"repl(?:ies|ying)\s+to\b|"
+    r"clos(?:es|ing)\s+" + _DET + r"(?:issue|pr|pull[\s-]?request|ticket)|"
+    r"reopen(?:s|ing)\b|"
+    r"add(?:s|ing)?\s+" + _DET + r"labels?|labell?(?:s|ing)\s+" + _DET + r"(?:issue|pr|pull[\s-]?request)|"
+    r"merg(?:es|ing)\s+" + _DET + r"(?:pr|pull[\s-]?request|branch)|"
+    r"commits\b|committing\b|"
+    r"push(?:es|ing)\s+(?:to\b|a\s|the\s)|"
+    r"open(?:s|ing)\s+" + _DET + r"(?:pr|pull[\s-]?request|issue)|"
+    r"creat(?:es|ing)\s+" + _DET + r"(?:issue|pr|pull[\s-]?request|ticket|branch|file|record)|"
+    r"delet(?:es|ing)\s+" + _DET + r"(?:issue|comment|file|branch|record|row)|"
+    r"sends?\s+(?:\w+\s+){0,3}(?:email|message|dm|slack|notification|reply)|"
+    r"sending\s+(?:\w+\s+){0,3}(?:email|message|dm|notification)|"
+    r"emails?\s+(?:the\s+)?(?:team|user|owner|list|subscribers?|customers?)|"
+    r"publish(?:es|ing)\b|deploys\b|deploying\b|deploy\s+to\b|"
+    r"charg(?:es|ing)\s+(?:the\s+)?(?:card|customer)|refund(?:s|ing)\b"
+    r")\b", re.I)
+# An `output_actions` value that permits everything is not an allowlist.
+_UNBOUNDED_ALLOWLIST = re.compile(r"(\*|\ball\b|\banything\b|\beverything\b|\bunrestricted\b|\bunbounded\b)", re.I)
+
+
+def _side_effecting_action(text: str) -> "re.Match | None":
+    """The first side-effecting world action in `text`, or None. Same path /
+    reversibility skips as _irreversible_action (a dry-run/preview is not an act)."""
+    for m in _SIDE_EFFECTING.finditer(text):
+        if m.start() > 0 and text[m.start() - 1] == "/":
+            continue
+        if _REVERSIBLE_CTX.search(text[max(0, m.start() - 16): m.end() + 16]):
+            continue
+        return m
+    return None
+
+
 # --- Checks ---------------------------------------------------------------
 
-def check_spec(report: Report, spec: Spec, rule_filter: int | None) -> None:
+def check_spec(report: Report, spec: Spec, rule_filter: int | None, *, strict_memory: bool = False) -> None:
     src = spec.source
     label = spec.name or f"(unnamed @ line {spec.start_line})"
 
@@ -497,7 +929,13 @@ def check_spec(report: Report, spec: Spec, rule_filter: int | None) -> None:
     toks = _topology_tokens(topology)
     is_open = "open" in toks
     is_fleet = "fleet" in toks
+    is_outer = "outer" in toks
     is_closed = "closed" in toks or (not is_open and bool(toks))
+    all_fields = " ".join(spec.fields.values())
+    is_scheduled = bool(_SCHEDULED.search(all_fields))
+    is_long_running = bool(_LONG_RUNNING.search(all_fields))
+    needs_memory_contract = is_outer or is_fleet or is_scheduled or is_long_running
+    memory_severity: Severity = "FAIL" if strict_memory else "WARN"
 
     # R1 NO-GATE
     if want(1):
@@ -512,6 +950,18 @@ def check_spec(report: Report, spec: Spec, rule_filter: int | None) -> None:
                                f"gate={gate!r}: no command / test id / assertion / exit-code / path, and no "
                                "explicit human approval (approve / sign-off / escalate). 'looks correct' / "
                                "'the reviewer agrees' do not gate a loop — name the check or the approver."))
+        elif _is_noop_gate(gate):
+            report.add(Finding(1, "FAIL", f"spec '{label}' gate is a no-op that can't fail",
+                               src, spec.line_of("gate"),
+                               f"gate={gate!r}: a --help/--version flag or a bare printer always exits 0 — it can "
+                               "never block the loop. Name a check that returns non-zero on the bad case "
+                               "(an assertion, grep -q, test, a non-zero exit)."))
+        elif _has_logic_placeholder(gate):
+            report.add(Finding(1, "WARN", f"spec '{label}' gate has an unfilled placeholder in its pass/fail logic",
+                               src, spec.line_of("gate"),
+                               f"gate={gate!r}: a <placeholder> in the assertion/condition leaves the check itself "
+                               "unspecified — it could be filled with a tautology (`True`). Substitute the concrete "
+                               "assertion before running; data placeholders (paths/names) are fine."))
 
     # R2 NO-STOP-OR-BUDGET
     if want(2):
@@ -533,7 +983,10 @@ def check_spec(report: Report, spec: Spec, rule_filter: int | None) -> None:
 
     # R3 SELF-GRADING
     if want(3):
-        if generator and verifier and (_norm(generator) == _norm(verifier) or _same_actor(generator, verifier)):
+        if generator and verifier and (_norm(generator) == _norm(verifier)
+                                        or _same_actor(generator, verifier)
+                                        or _generic_self_grade(generator, verifier)
+                                        or _SELF_GRADE_RE.search(verifier)):
             report.add(Finding(3, "FAIL", f"spec '{label}' generator and verifier are the same actor (self-grading)",
                                src, spec.line_of("verifier"),
                                f"generator={generator!r}, verifier={verifier!r} resolve to the same actor. An "
@@ -571,20 +1024,216 @@ def check_spec(report: Report, spec: Spec, rule_filter: int | None) -> None:
     # R7 IRREVERSIBLE-NO-HUMAN — an autonomous loop that merges/deploys/migrates/
     # charges with no human in the loop (the security tax: an unattended loop is an
     # unattended attack surface). A human gate or a human verifier silences it.
+    # Severity is scoped by the SAME unattended predicate as R8/R10/R12b/R13/R14
+    # (needs_memory_contract — scheduled/event/outer/fleet/long-running): an
+    # UNATTENDED loop has no human present to catch the irreversible action at
+    # runtime, so it FAILs. An ATTENDED inner fix loop keeps the advisory WARN — a
+    # human is in the loop to approve before the action runs.
     if want(7):
         # scan each action field SEPARATELY (not the name, and not joined — joining
         # lets a gate's "pytest tests/" bleed into the stop's window and wrongly
         # suppress). A label like "deploy-config-linter" takes no action.
         m = next((mm for mm in (_irreversible_action(f) for f in (stop, gate, generator)) if mm), None)
         if m and not _has_human_gate(gate) and not _HUMAN_TOKEN.search(verifier):
-            report.add(Finding(7, "WARN", f"spec '{label}' takes an irreversible action with no human gate",
+            r7_severity: Severity = "FAIL" if needs_memory_contract else "WARN"
+            report.add(Finding(7, r7_severity, f"spec '{label}' takes an irreversible action with no human gate",
                                src, spec.line_of("gate") or spec.start_line,
                                f"the loop names an irreversible action ({m.group(0)!r}) but no human approves "
                                "before it runs. Require a human sign-off (a human verifier, or an approve/"
-                               "sign-off gate) before merge / deploy / migrate / charge; scope its permissions."))
+                               "sign-off gate) before merge / deploy / migrate / charge; scope its permissions."
+                               + (" This loop is UNATTENDED — no human is present to catch it at runtime, so "
+                                  "this is a hard failure, not an advisory." if needs_memory_contract else "")))
+
+    # R8 NO-MEMORY-CONTRACT — context rot starts to matter for loops that are
+    # outer, scheduled/event-triggered, long-running, or parallel. Do not fail
+    # simple inner fix loops by default; --strict-memory turns durable-state gaps
+    # into a hard gate where pass state must survive the context window.
+    if want(8) and needs_memory_contract:
+        missing = [k for k in _MEMORY_CONTRACT_FIELDS if not spec.get(k)]
+        if missing:
+            report.add(Finding(8, memory_severity, f"spec '{label}' lacks a loop memory contract",
+                               src, spec.line_of("topology") or spec.start_line,
+                               "scheduled/fleet/outer/long-running loops need recall-before-pass and "
+                               "write-after-pass. "
+                               f"Missing: {', '.join(missing)}. Add anchor_files, state_store, recall, "
+                               "and writeback so each pass resumes from durable state instead of memory."))
+
+    # R9 FLEET-STATE-NO-CONCURRENCY — when a fleet writes shared pass state, name
+    # the merge strategy. Advisory by default because some fleets isolate state
+    # outside the spec; --strict-memory makes missing strategy a hard gate.
+    if want(9) and is_fleet and spec.get("state_store"):
+        sc = spec.get("state_concurrency")
+        if not sc or not _state_concurrency_ok(sc):
+            detail = ("missing state_concurrency" if not sc
+                      else f"state_concurrency={sc!r} is not one of "
+                           "single_writer / optimistic_revision / worktree_isolated")
+            report.add(Finding(9, memory_severity, f"spec '{label}' has fleet state with no concurrency strategy",
+                               src, spec.line_of("state_concurrency") or spec.line_of("state_store"),
+                               f"{detail}. Shared state needs a single writer, optimistic revision checks, "
+                               "or worktree-isolated state before aggregation."))
+
+    # R10 OUTPUT-SURFACE-UNBOUNDED — an UNATTENDED loop (scheduled/event/outer/
+    # fleet/long-running) that mutates the outside world must declare a bounded
+    # output surface: an `output_actions` allowlist (what it MAY do) with per-action
+    # caps, enforced by the harness (default-deny), NOT asked for in the prompt.
+    # Inverts R7's catastrophic blocklist to catch the mundane-but-unbounded case
+    # (a bot that can close/label/comment at scale). Scoped to needs_memory_contract
+    # so a watched inner fix loop stays lightweight — the human IS its output gate.
+    # Ported from GitHub Agentic Workflows `safe-outputs:` (allowed actions + max).
+    if want(10) and needs_memory_contract:
+        m = next((mm for mm in (_side_effecting_action(f) for f in (generator, stop, gate)) if mm), None)
+        if m:
+            oa = spec.get("output_actions")
+            if not oa:
+                report.add(Finding(10, "WARN", f"spec '{label}' has an unbounded output surface",
+                                   src, spec.line_of("generator") or spec.start_line,
+                                   f"an unattended loop takes a side-effecting action ({m.group(0)!r}) but "
+                                   "declares no `output_actions` allowlist. Enumerate the actions it MAY take, "
+                                   "each with a per-action cap (default-deny, harness-enforced), so a drifted "
+                                   "run can't act at scale — a prompt-level 'don't' is not a control."))
+            elif _UNBOUNDED_ALLOWLIST.search(oa):
+                report.add(Finding(10, "WARN", f"spec '{label}' output_actions allowlist is unbounded",
+                                   src, spec.line_of("output_actions") or spec.start_line,
+                                   f"output_actions={oa!r}: an allowlist of '*'/'all' permits any action and is "
+                                   "not a control. Name the specific actions allowed, each with a cap."))
+
+    # R11 STUCK-NO-ADVISOR — a loop that declares a `stuck` policy should source
+    # its next-hypothesis from an `advisor`: a DIVERGENT, preferably cross-vendor
+    # panel (skills/_shared/model_roster.py) that proposes structurally-different
+    # approaches, rather than the already-stuck agent retrying harder against its
+    # own blind spot. And the advisor must stay SEPARATE from the verifier — the
+    # advisor proposes (feeds the generator), the verifier judges (IS the gate);
+    # one actor doing both judges a fix it suggested, which is self-grading by
+    # another door. Opt-in (fires only once `stuck` is declared) so plain inner
+    # fix loops stay lightweight, exactly like R8/R9/R10.
+    if want(11):
+        stuck = spec.get("stuck")
+        advisor = spec.get("advisor")
+        if stuck and not advisor:
+            report.add(Finding(11, "WARN", f"spec '{label}' declares a stuck policy but names no `advisor`",
+                               src, spec.line_of("stuck") or spec.start_line,
+                               "on stuck, a fresh perspective beats retrying harder. Name an `advisor` panel "
+                               "(cross-vendor, read-only) from skills/_shared/model_roster.py to propose "
+                               "structurally-different approaches — the divergent counterpart to the verifier. "
+                               "Advisors propose new approaches/tools/methods; they never gate."))
+        if advisor and verifier and (_norm(advisor) == _norm(verifier) or _same_actor(advisor, verifier)):
+            report.add(Finding(11, "WARN", f"spec '{label}' advisor and verifier are the same actor",
+                               src, spec.line_of("advisor"),
+                               f"advisor={advisor!r}, verifier={verifier!r} resolve to the same actor. The advisor "
+                               "is DIVERGENT (proposes approaches, feeds the generator); the verifier is CONVERGENT "
+                               "(judges pass/fail, IS the gate). One actor doing both judges a fix it proposed — "
+                               "keep them separate vendors/agents (model_roster excludes the orchestrator's lane)."))
+
+    # R12 CROSS-VENDOR EGRESS — if the advisor/verifier panel sends repo content to a
+    # third-party model, demand the two privacy controls. R12a (redaction) always;
+    # R12b (consent) only for unattended loops, where no human is present to approve
+    # the first egress. Fires only when an egress signal is actually present, so a
+    # same-host / local-only loop is never nagged.
+    if want(12):
+        egress_fields = [spec.get("advisor"), verifier, spec.get("egress")]
+        if any(f and _EGRESS.search(f) for f in egress_fields):
+            if not spec.get("redaction"):
+                report.add(Finding(12, "WARN", f"spec '{label}' egresses cross-vendor with no `redaction` declared",
+                                   src, spec.line_of("advisor") or spec.line_of("verifier") or spec.start_line,
+                                   "the advisor/verifier panel sends repo-derived content to a third-party model "
+                                   "but the spec declares no `redaction` surface. Name what is scrubbed before egress "
+                                   "(secrets / .env / keys / PII); the enforced scrub is in skills/_shared/"
+                                   "model_roster.py (render_prompt), but declare it so the data surface is auditable."))
+            if needs_memory_contract and not spec.get("consent"):
+                report.add(Finding(12, "WARN", f"spec '{label}' is an unattended loop that egresses with no `consent` gate",
+                                   src, spec.line_of("consent") or spec.start_line,
+                                   "an unattended loop crosses vendor boundaries with no human present to approve the "
+                                   "first egress. Declare a `consent` gate (model_roster --run requires "
+                                   "--consent / MODEL_ROSTER_EGRESS_CONSENT=1) so cross-vendor send is authorized, "
+                                   "not a silent default."))
+
+    # R13 VERIFIER-BLINDNESS — a SEPARATE verifier is necessary but not sufficient:
+    # it must also be BLIND to the generator's reasoning/self-justification, or it
+    # inherits the same bias (SKILL.md line 80). This is the skill's deepest rule
+    # and — until now — the only major doctrine with no declarable spec field, while
+    # egress/concurrency/memory all have one. R13 closes that declare-to-audit
+    # asymmetry. Static lint cannot PROVE information isolation, so (like R12's
+    # redaction) it makes the surface DECLARABLE: an LLM/agent verifier on a loop
+    # where blindness matters (unattended, or a cross-vendor panel) must say what it
+    # sees. A machine-gate verifier (pytest) is blind by construction and never trips
+    # it; a self-grading verifier is R3's job, not R13's. Opt-in scope mirrors R8/
+    # R10/R12 so plain inner fix loops are never nagged.
+    if want(13) and generator and verifier and _AGENT_TOKEN.search(verifier) \
+            and not _has_machine_gate(verifier):   # a "pytest agent" verifier is the machine gate — blind by construction
+        same_actor = (_norm(generator) == _norm(verifier)
+                      or _same_actor(generator, verifier)
+                      or _generic_self_grade(generator, verifier))
+        blindness_matters = needs_memory_contract or bool(_EGRESS.search(verifier))
+        if not same_actor and blindness_matters:
+            vblind = spec.get("verifier_blind")
+            vinputs = spec.get("verifier_inputs")
+            declares_nonblind = (bool(vblind) and not _is_true(vblind)) \
+                or (bool(vinputs) and bool(_NONBLIND_INPUT.search(vinputs))) \
+                or _leaks_reasoning(verifier)   # verifier string itself pulls in the reasoning
+            declares_blind = (bool(vblind) and _is_true(vblind)) \
+                or (bool(vinputs) and not _NONBLIND_INPUT.search(vinputs)) \
+                or bool(_BLIND_DECLARED.search(verifier))
+            if declares_nonblind:
+                report.add(Finding(13, "WARN", f"spec '{label}' verifier is NOT blind to the generator's reasoning",
+                                   src, spec.line_of("verifier_blind") or spec.line_of("verifier_inputs"),
+                                   "the verifier reads the generator's reasoning/self-justification and inherits the "
+                                   "same bias. A separate actor is necessary but not sufficient — the verifier must "
+                                   "see only the task + the outputs (SKILL.md: design the verifier). Set "
+                                   "verifier_blind: true and restrict verifier_inputs to task, outputs."))
+            elif not declares_blind:
+                report.add(Finding(13, "WARN", f"spec '{label}' does not declare verifier blindness",
+                                   src, spec.line_of("verifier") or spec.start_line,
+                                   "an LLM verifier on an unattended/cross-vendor loop must be BLIND to the "
+                                   "generator's reasoning, or it inherits the same bias even as a separate actor. "
+                                   "Declare the surface so it is auditable: verifier_blind: true, or "
+                                   "verifier_inputs: task, outputs — the declare-to-audit field egress/"
+                                   "concurrency/memory already have. (A 'fresh context' / 'blind' verifier "
+                                   "satisfies this in prose.)"))
 
 
-def lint(text: str, source: str, rule_filter: int | None = None) -> Report:
+    # R14 UNCLASSIFIED-FAILURE-POLICY — an UNATTENDED loop that retries every
+    # failure class implicitly (no differentiation between transient/recoverable/
+    # user-fixable/unexpected errors) burns budget on errors that no retry can fix.
+    # Detect: unattended spec without `on_error` field, OR with `on_error` but no
+    # halt/escalate/interrupt token that would break the retry loop.
+    if want(14) and needs_memory_contract:
+        on_error = spec.get("on_error")
+        if not on_error:
+            report.add(Finding(14, "WARN", f"spec '{label}' is unattended without an `on_error` failure policy",
+                               src, spec.line_of("stop") or spec.start_line,
+                               "an unattended loop that retries every failure class burns budget on errors a "
+                               "retry can never fix. Classify failures: transient (network/rate-limit) → retry "
+                               "with backoff (cap ~2) · recoverable-by-generator (bad output) → return the error "
+                               "as an observation · user-fixable (config/auth/permissions) → interrupt, don't retry "
+                               "· unexpected (halt and surface). Declare the mapping in on_error."))
+        elif not _HALT_OR_ESCALATE.search(on_error) or _CONTINUE_ANYWAY.search(on_error):
+            report.add(Finding(14, "WARN", f"spec '{label}' has an `on_error` policy where every failure class retries",
+                               src, spec.line_of("on_error"),
+                               "the on_error policy names no halt/escalate/interrupt-class token — meaning every "
+                               "failure implicitly retries. Classify failures: transient (network/rate-limit) → retry "
+                               "with backoff (cap ~2) · recoverable-by-generator (bad output) → return the error as an "
+                               "observation · user-fixable (config/auth → interrupt, never retry) · unexpected (halt and "
+                               "surface). Add halt/stop/abort/escalate/interrupt/human/bubble/fail-fast/page/alert tokens "
+                               "to the on_error value so non-transient errors do not retry indefinitely."))
+
+    # R15 SELF-MODIFICATION-BOUNDARIES — ordinary loops stay untouched. Once a
+    # spec explicitly opts into self-modification, every mutation boundary and
+    # promotion gate is load-bearing, so an omission is a hard gate like R1-R3.
+    if want(15) and _is_literal_true(spec.get_raw("self_modifying")):
+        for key in _SELF_MODIFICATION_FIELDS:
+            if not _self_modification_field_present(spec.get(key)):
+                report.add(Finding(
+                    15, "FAIL",
+                    f"spec '{label}' self-modifies without a concrete `{key}`",
+                    src, spec.line_of(key) or spec.line_of("self_modifying") or spec.start_line,
+                    f"Required self-modification boundary `{key}` is missing or a placeholder. "
+                    "Normalized TODO/TBD/null/nil/not-set sentinels do not define a control. "
+                    "A self-modifying loop "
+                    "must declare editable_surfaces, locked_surfaces, held_in_gate, held_out_gate, "
+                    "artifact_binding, and human_approval before it can run.",
+                ))
+
+def lint(text: str, source: str, rule_filter: int | None = None, *, strict_memory: bool = False) -> Report:
     report = Report(root=source)
     specs = parse_specs(text, source)
     report.n_specs = len(specs)
@@ -596,7 +1245,7 @@ def lint(text: str, source: str, rule_filter: int | None = None) -> Report:
         report.finalize()
         return report
     for spec in specs:
-        check_spec(report, spec, rule_filter)
+        check_spec(report, spec, rule_filter, strict_memory=strict_memory)
     report.finalize()
     return report
 
@@ -634,6 +1283,7 @@ def to_mermaid(spec: Spec, findings: list[Finding]) -> str:
     budget = _mm_label(spec.get("budget"))
     topo = _mm_label(spec.get("topology"), 40)
     name = _mm_label(spec.name or spec.source or "loop", 60)
+    advisor = spec.get("advisor")
 
     out: list[str] = []
     out.append(f"%% loop-lint diagram — {name}")
@@ -651,6 +1301,12 @@ def to_mermaid(spec: Spec, findings: list[Finding]) -> str:
     out.append("  V -->|accept| S")
     out.append("  V -->|reject| G")
     out.append("  B -.caps.-> G")
+    # The advisor is a DIVERGENT side-input: on stuck it feeds fresh approaches
+    # back into the generator — it is never on the gate/verify path.
+    if advisor:
+        out.append(f'  ADV[["advisor: {_mm_label(advisor)}"]]')
+        out.append("  G -.stuck.-> ADV")
+        out.append("  ADV -.fresh approach.-> G")
 
     if findings:
         out.append("  subgraph lint[lint findings]")
@@ -666,7 +1322,10 @@ def to_mermaid(spec: Spec, findings: list[Finding]) -> str:
     # R2 cap==0 WARN must paint amber, not FAIL-red). Per-NODE, not per-rule, so
     # a node hit by two rules of different severity can't get two conflicting
     # `class` lines (FAIL dominates WARN).
-    rule_nodes = {1: ("K",), 2: ("S", "B"), 3: ("G", "V"), 5: ("V",), 6: ("TOPO",)}
+    # R11 paints the generator: a stuck loop with no advisor leaves the generator
+    # re-deriving alone (G always exists; the ADV node may not, so don't key on it).
+    rule_nodes = {1: ("K",), 2: ("S", "B"), 3: ("G", "V"), 5: ("V",),
+                  6: ("TOPO",), 8: ("TOPO",), 9: ("V",), 11: ("G",), 12: ("V",)}
     node_sev: dict[str, str] = {}
     for f in findings:
         for n in rule_nodes.get(f.rule, ()):
@@ -684,7 +1343,68 @@ def to_mermaid(spec: Spec, findings: list[Finding]) -> str:
     return "\n".join(out)
 
 
-def diagrams(text: str, source: str, rule_filter: int | None = None) -> list[str]:
+# --- Resolved snapshot ----------------------------------------------------
+# An IMMUTABLE AUDIT SNAPSHOT of a spec — not a resume checkpoint. Borrowed from
+# ksimback/looper's loop.resolved.json, deliberately narrowed: looper compiles a
+# runnable artifact; we only freeze the spec + its lint verdict so a long-lived
+# (outer/fleet/scheduled) loop has a replay/drift surface ("rerun the exact spec we
+# verified last Tuesday"). It does NOT make loop_lint an orchestrator: there is no
+# runner, and the file carries no run state. The boundary is enforced by what we
+# emit — fields + verdict, never a resume cursor.
+
+def _is_unattended(spec: Spec) -> bool:
+    toks = _topology_tokens(spec.get("topology"))
+    all_fields = " ".join(spec.fields.values())
+    return ("fleet" in toks or "outer" in toks
+            or bool(_SCHEDULED.search(all_fields)) or bool(_LONG_RUNNING.search(all_fields)))
+
+
+RESOLVED_SCHEMA_VERSION = 1
+
+
+def resolved_spec_hash(snapshot: dict) -> str:
+    """Hash every immutable snapshot field using canonical JSON.
+
+    ``spec_hash`` excludes only itself, so any later change to the resolved
+    fields, verdict, source, or contract metadata invalidates the binding.
+    """
+    payload = {key: value for key, value in snapshot.items() if key != "spec_hash"}
+    canonical = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
+    return "sha256:" + hashlib.sha256(canonical).hexdigest()
+
+
+def resolve_snapshot(spec: Spec, *, strict_memory: bool = False) -> dict:
+    """Freeze one spec into an immutable audit snapshot: normalized fields + the
+    lint verdict at freeze time. No timestamp (Date.now is unavailable in this
+    runtime and would also break reproducibility — stamp it outside if needed)."""
+    per = Report(root=spec.source)
+    check_spec(per, spec, None, strict_memory=strict_memory)
+    per.finalize()
+    verdict = "fail" if per.summary["FAIL"] else ("warn" if per.summary["WARN"] else "clean")
+    snapshot = {
+        "kind": "loop.resolved",
+        "schema_version": RESOLVED_SCHEMA_VERSION,
+        "note": "immutable audit snapshot of the spec + lint verdict at freeze time. "
+                "NOT a resume checkpoint: it carries no run state and no runner.",
+        "name": spec.name,
+        "source": spec.source,
+        "unattended": _is_unattended(spec),
+        "self_modifying": _is_literal_true(spec.get_raw("self_modifying")),
+        "fields": dict(sorted(spec.fields.items())),
+        "lint": {
+            "verdict": verdict,
+            "summary": per.summary,
+            "findings": [asdict(f) for f in per.findings],
+        },
+    }
+    snapshot["spec_hash"] = resolved_spec_hash(snapshot)
+    return snapshot
+
+
+def diagrams(text: str, source: str, rule_filter: int | None = None, *, strict_memory: bool = False) -> list[str]:
     """One Mermaid diagram per spec in `text`, each with its own findings
     overlaid. Raises ValueError/JSONDecodeError on an unparseable spec (same as
     lint)."""
@@ -692,7 +1412,7 @@ def diagrams(text: str, source: str, rule_filter: int | None = None) -> list[str
     out: list[str] = []
     for spec in specs:
         per = Report(root=source)
-        check_spec(per, spec, rule_filter)
+        check_spec(per, spec, rule_filter, strict_memory=strict_memory)
         per.finalize()
         out.append(to_mermaid(spec, per.findings))
     return out
@@ -708,7 +1428,14 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--diagram", action="store_true",
                     help="emit a Mermaid diagram of each spec with lint findings overlaid "
                          "(grounded in the parsed spec; wrap in a ```mermaid fence to render)")
-    ap.add_argument("--rule", type=int, choices=[1, 2, 3, 4, 5, 6, 7], help="restrict to one rule")
+    ap.add_argument("--rule", type=int, choices=list(range(1, 16)),
+                    help="restrict to one rule")
+    ap.add_argument("--strict-memory", action="store_true",
+                    help="promote R8/R9 loop-memory findings to FAIL for scheduled/fleet/outer/long-running loops")
+    ap.add_argument("--resolve", action="store_true",
+                    help="emit an immutable audit snapshot (loop.resolved JSON) of each spec + its lint verdict — "
+                         "a replay/drift surface for outer/fleet/scheduled loops, NOT a resume checkpoint. "
+                         "Exit code stays the lint verdict so it composes in CI.")
     args = ap.parse_args(argv)
 
     if args.path == "-":
@@ -726,15 +1453,24 @@ def main(argv: list[str]) -> int:
         source = str(p)
 
     try:
-        report = lint(text, source, rule_filter=args.rule)
+        report = lint(text, source, rule_filter=args.rule, strict_memory=args.strict_memory)
     except (ValueError, json.JSONDecodeError) as e:
         print(f"error: unparseable loop spec in {source}: {e}", file=sys.stderr)
         return 3
 
-    if args.diagram:
+    if args.resolve:
+        # Freeze each spec to an immutable audit snapshot; lint verdict stays the
+        # exit code so `loop_lint --resolve spec.md` is still a CI gate. Non-fleet/
+        # outer/scheduled specs get a snapshot too, but flagged unattended:false so a
+        # caller knows the replay surface only earns its keep for long-lived loops.
+        snaps = [resolve_snapshot(s, strict_memory=args.strict_memory)
+                 for s in parse_specs(text, source)]
+        print(json.dumps(snaps if len(snaps) != 1 else snaps[0], indent=2) if snaps
+              else json.dumps({"error": "no loop spec found", "source": source}, indent=2))
+    elif args.diagram:
         # Render the parsed spec(s); keep the lint verdict as the exit code so
         # `loop_lint --diagram spec.md` is still a CI-composable gate.
-        blocks = diagrams(text, source, rule_filter=args.rule)
+        blocks = diagrams(text, source, rule_filter=args.rule, strict_memory=args.strict_memory)
         if not blocks:
             print(f"%% loop-lint: no loop spec found in {source}")
         print("\n\n".join(blocks))

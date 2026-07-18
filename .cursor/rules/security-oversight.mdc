@@ -1,0 +1,7 @@
+---
+description: "Use before committing or claiming work done to triage a code edit for INTRODUCED security risk — leaked secrets, dangerous sinks, untrusted deps, risky auth logic. Trigger on \"is this safe to ship?\", \"did I leak a secret?\", or as the security gate in a generate→verify loop. Also audits an UNTRUSTED skill folder/repo before you install/vendor it (skill_audit.py → PASS/WARN/FAIL) — \"is this skill safe to install?\". Report-only; absence of a finding ≠ proof of safety. Also: /security-oversight."
+globs: ["**/*"]
+alwaysApply: false
+---
+
+@skills/security-oversight/SKILL.md

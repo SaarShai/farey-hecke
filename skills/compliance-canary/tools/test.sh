@@ -2,6 +2,10 @@
 # compliance-canary self-test.
 set -uo pipefail
 
+# This is the legacy behavior regression suite. Profile-specific frontier,
+# shadow, and off gates live in test_profiles.py.
+export COMPLIANCE_CANARY_PROFILE=legacy
+
 TOOLS_DIR="$(cd "$(dirname "$0")" && pwd)"
 HOOK=(bash "$TOOLS_DIR/hook.sh")
 STATE_ROOT="$(mktemp -d -t cc-test-XXXX)"
@@ -52,6 +56,31 @@ name=sys.argv[1]; inp=json.loads(sys.argv[2])
 print(json.dumps({'type':'assistant',
                   'message':{'role':'assistant','content':[{'type':'tool_use','name':name,'input':inp}]}}))
 " "$1" "$2"
+}
+
+assistant_tool_use_with_id() {
+  # emit one JSONL line for an assistant tool_use CARRYING a tool_use id — the
+  # correlation key recent_bash_tool_results() needs to pair it with its
+  # tool_result (a real Claude Code transcript always carries this id; see
+  # hook.py's recent_bash_tool_results docstring).
+  python3 -c "
+import json,sys
+name=sys.argv[1]; inp=json.loads(sys.argv[2]); tid=sys.argv[3]
+print(json.dumps({'type':'assistant',
+                  'message':{'role':'assistant','content':[{'type':'tool_use','id':tid,'name':name,'input':inp}]}}))
+" "$1" "$2" "$3"
+}
+
+user_tool_result_for() {
+  # emit one JSONL line for a user-event tool_result PAIRED to a given
+  # tool_use id (execution evidence — the actual output the tool printed).
+  python3 -c "
+import json,sys
+tid=sys.argv[1]; text=sys.argv[2]; is_error=sys.argv[3] == '1'
+print(json.dumps({'type':'user',
+                  'message':{'role':'user','content':[{'type':'tool_result','tool_use_id':tid,
+                    'is_error':is_error,'content':text}]}}))
+" "$1" "$2" "$3"
 }
 
 call() {
@@ -459,6 +488,262 @@ print(json.dumps({'session_id':'s34','transcript_path':sys.argv[1],'hook_event_n
 out=$(printf '%s' "$payload" | env COMPLIANCE_CANARY_STATE_DIR="$STATE_ROOT/cc34" COMPLIANCE_CANARY_SKILLS_ROOT="$SKILLS_ROOT/sk34" "${HOOK[@]}")
 if emitted "$out" && echo "$out" | grep -q 'user_correction'; then ok "user_correction fires with no assistant prose"; else no "user_correction fires with no assistant prose" "got: $(echo "$out" | head -c150)"; fi
 
+# ======================================================================
+# Mechanism 4 — correction ledger (LEARNING_CONTRACT §2): a fired
+# user_correction probe opens a closeout-blocking OPEN item that is surfaced
+# every turn until a banking tool call (write_gate.py / wiki.py new) is
+# observed to have ACTUALLY RUN (a Bash tool_use with matching invocation
+# shape AND a paired tool_result carrying a passing execution signature), or
+# the user explicitly closes it. Reuses the sk34/PROBES fixture above (the
+# user_correction probe from test [34]).
+# ======================================================================
+
+call34() {
+  # call34 <state_sub> <transcript_file> <session_id> <prompt>
+  local state_sub="$1" tx="$2" sid="$3" prompt="$4"
+  local payload
+  payload=$(python3 -c "
+import json,sys
+print(json.dumps({'session_id':sys.argv[1],'transcript_path':sys.argv[2],'hook_event_name':'UserPromptSubmit','prompt':sys.argv[3]}))
+" "$sid" "$tx" "$prompt")
+  printf '%s' "$payload" | env COMPLIANCE_CANARY_STATE_DIR="$STATE_ROOT/$state_sub" \
+    COMPLIANCE_CANARY_SKILLS_ROOT="$SKILLS_ROOT/sk34" "${HOOK[@]}"
+}
+
+echo "[34a] correction ledger: a fired user_correction opens an item citing LEARNING_CONTRACT §2"
+TX34A="$TRANSCRIPT_DIR/t34a.jsonl"
+write_transcript "$TX34A" "$(assistant_text 'ok, using tabs' u34a)"
+out=$(call34 cc34a "$TX34A" s34a 'no, I said use spaces')
+if emitted "$out" && echo "$out" | grep -q '§2' && echo "$out" | grep -qi 'still OPEN'; then
+  ok "correction opens item citing §2"
+else
+  no "correction opens item citing §2" "got: $(echo "$out" | head -c220)"
+fi
+
+echo "[34b] NEGATIVE — an unrelated later turn (no banking tool call) keeps the correction OPEN"
+out=$(call34 cc34a "$TX34A" s34a 'thanks, looks fine')
+if echo "$out" | grep -qi 'still OPEN'; then
+  ok "unrelated later turn keeps correction OPEN"
+else
+  no "unrelated turn wrongly resolved the correction" "got: $(echo "$out" | head -c220)"
+fi
+
+echo "[34c] a write_gate.py Bash call WITH a PASSED result resolves the correction ledger (banked)"
+TX34C="$TRANSCRIPT_DIR/t34c.jsonl"
+write_transcript "$TX34C" \
+  "$(assistant_text 'banking the lesson' u34c)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"python3 skills/write-gate/tools/write_gate.py score --json --text lesson"}' tu34c)" \
+  "$(user_tool_result_for tu34c '{"verdict": "PASSED: signal score 5.00"}' 0)"
+out=$(call34 cc34a "$TX34C" s34a 'go ahead')
+if echo "$out" | grep -q 'resolved 1 correction' && ! echo "$out" | grep -qi 'still OPEN'; then
+  ok "write_gate.py bank call (with PASSED result) resolves the correction ledger"
+else
+  no "write_gate.py bank should resolve" "got: $(echo "$out" | head -c220)"
+fi
+
+echo "[34d] user 'close it' resolves an OPEN correction without a banking tool call"
+TX34D="$TRANSCRIPT_DIR/t34d_open.jsonl"
+write_transcript "$TX34D" "$(assistant_text 'noted' u34d)"
+out=$(call34 cc34d "$TX34D" s34d 'no, I said use spaces')
+if ! echo "$out" | grep -qi 'still OPEN'; then no "setup: correction should open first" "got: $(echo "$out" | head -c220)"; fi
+TX34D2="$TRANSCRIPT_DIR/t34d_close.jsonl"
+write_transcript "$TX34D2" "$(assistant_text 'ok' u34d2)"
+out=$(call34 cc34d "$TX34D2" s34d 'close it')
+if echo "$out" | grep -q 'resolved 1 correction' && ! echo "$out" | grep -qi 'still OPEN'; then
+  ok "user 'close it' resolves the open correction"
+else
+  no "explicit user close should resolve" "got: $(echo "$out" | head -c220)"
+fi
+
+echo "[34e] lifecycle direct-assert: an unbanked correction never auto-resolves on the mere passage of turns"
+lifecycle=$(python3 -c "
+import sys; sys.path.insert(0,'$TOOLS_DIR'); import hook
+probe = {'kind':'user_correction','_result':{'snippet':'no, use spaces'}}
+ledger, closed, action = [], [], None
+for turn in range(1, 6):
+    fired = [probe] if turn == 1 else []
+    ledger, closed, action = hook.update_correction_ledger(ledger, fired, [], 'next', turn)
+print('open' if ledger and not closed else 'wrongly-resolved')
+")
+if [ "$lifecycle" = "open" ]; then
+  ok "unbanked correction stays OPEN across turns (no auto-resolve)"
+else
+  no "unbanked correction must never auto-resolve" "got: $lifecycle"
+fi
+
+# ======================================================================
+# Correction-ledger bank-resolver hole #1 (adversarially confirmed): a bare
+# substring match let 'echo write_gate.py', 'wiki.py new --help', and
+# 'grep write_gate.py x' all falsely RESOLVE a closeout-blocking correction —
+# none of them ran the gate. Fix requires COMMAND-POSITION invocation shape
+# (necessary, but — see hole #2 below — not by itself sufficient).
+# ======================================================================
+
+echo "[34f] ATTACK: 'echo write_gate.py' does NOT resolve the correction ledger"
+TX34F="$TRANSCRIPT_DIR/t34f.jsonl"
+write_transcript "$TX34F" \
+  "$(assistant_text 'noting the tool name' u34f)" \
+  "$(assistant_tool_use Bash '{"command":"echo write_gate.py"}')"
+out=$(call34 cc34f "$TX34F" s34f 'no, I said use spaces')
+out2=$(call34 cc34f "$TX34F" s34f 'go ahead')
+if echo "$out2" | grep -qi 'still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "echo write_gate.py does NOT resolve (attack blocked)"
+else
+  no "echo write_gate.py must NOT resolve" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34g] ATTACK: 'wiki.py new --help' does NOT resolve the correction ledger"
+TX34G="$TRANSCRIPT_DIR/t34g.jsonl"
+write_transcript "$TX34G" \
+  "$(assistant_text 'checking usage' u34g)" \
+  "$(assistant_tool_use Bash '{"command":"python3 skills/wiki-memory/tools/wiki.py new --help"}')"
+out=$(call34 cc34g "$TX34G" s34g 'no, I said use spaces')
+out2=$(call34 cc34g "$TX34G" s34g 'go ahead')
+if echo "$out2" | grep -qi 'still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "wiki.py new --help does NOT resolve (attack blocked)"
+else
+  no "wiki.py new --help must NOT resolve" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34h] ATTACK: 'grep write_gate.py foo' does NOT resolve the correction ledger"
+TX34H="$TRANSCRIPT_DIR/t34h.jsonl"
+write_transcript "$TX34H" \
+  "$(assistant_text 'searching for references' u34h)" \
+  "$(assistant_tool_use Bash '{"command":"grep write_gate.py foo"}')"
+out=$(call34 cc34h "$TX34H" s34h 'no, I said use spaces')
+out2=$(call34 cc34h "$TX34H" s34h 'go ahead')
+if echo "$out2" | grep -qi 'still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "grep write_gate.py foo does NOT resolve (attack blocked)"
+else
+  no "grep write_gate.py foo must NOT resolve" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34i] a real 'python3 .../write_gate.py score --json ...' invocation WITH a PASSED result DOES resolve the correction ledger"
+# Single call, mirroring [34c]'s pattern: the correction fires AND the banking
+# Bash tool_use (WITH its paired tool_result) are both visible in the same
+# transcript/turn, so open + resolve happen together (same as a real session
+# where the agent bank-calls right after the correction lands, before the
+# next user turn). Uses `score --json` (not bare `gate`): verified live
+# (2026-07-06) that `write_gate.py gate` alone prints NOTHING to stdout — only
+# an exit code — so a bare `gate` invocation carries no verdict signature for
+# the hook to observe at all; `--json` (or score/explain) is what actually
+# prints the PASSED:/REJECTED: line this resolver requires.
+TX34I="$TRANSCRIPT_DIR/t34i.jsonl"
+write_transcript "$TX34I" \
+  "$(assistant_text 'banking the lesson' u34i)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"cd /repo && python3 skills/write-gate/tools/write_gate.py score --json --text lesson"}' tu34i)" \
+  "$(user_tool_result_for tu34i '{"verdict": "PASSED: signal score 5.00"}' 0)"
+out=$(call34 cc34i "$TX34I" s34i 'no, I said use spaces')
+# NOTE: this same prompt also opens an UNRELATED Mechanism-3 request-ledger
+# item ("no, I said use spaces" is itself captured as a trackable request),
+# whose own "N request(s) still open" text would collide with a bare 'still
+# OPEN' substring check — assert on the CORRECTION ledger's specific phrasing
+# ("correction(s) still OPEN") instead, mirroring [34c]/[34d]'s narrower checks.
+if echo "$out" | grep -q 'resolved 1 correction' && ! echo "$out" | grep -qi 'correction(s) still OPEN'; then
+  ok "real write_gate.py invocation (with PASSED result) DOES resolve"
+else
+  no "real write_gate.py invocation (with PASSED result) should resolve" "got: $(echo "$out" | head -c220)"
+fi
+
+# ======================================================================
+# Bank-resolver hole #2 (adversarially confirmed, distinct from the ledger-
+# OPENING allowlist hole referenced below as "HOLE #2" in [34j] — that one
+# predates this fix and is unrelated): invocation shape alone is still
+# TEXT-TRUST — a bare shell variable assignment, or a short-circuited
+# compound, both present a matching command STRING while the tool never
+# actually runs. Fix requires a paired tool_result carrying a passing
+# execution-evidence signature (PASSED:/"created": for a wiki.py new).
+# ======================================================================
+
+echo "[34k] ATTACK: a bare variable ASSIGNMENT ('CMD=\"...write_gate.py gate...\"') does NOT resolve the correction ledger"
+TX34K="$TRANSCRIPT_DIR/t34k.jsonl"
+write_transcript "$TX34K" \
+  "$(assistant_text 'setting up the command' u34k)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"CMD=\"python3 skills/write-gate/tools/write_gate.py gate --text x\""}' tu34k)"
+out=$(call34 cc34k "$TX34K" s34k 'no, I said use spaces')
+out2=$(call34 cc34k "$TX34K" s34k 'go ahead')
+if echo "$out2" | grep -qi 'correction(s) still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "bare variable assignment does NOT resolve (attack blocked)"
+else
+  no "bare variable assignment must NOT resolve" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34l] ATTACK: a short-circuited 'false && python3 .../write_gate.py gate ...' does NOT resolve the correction ledger"
+TX34L="$TRANSCRIPT_DIR/t34l.jsonl"
+write_transcript "$TX34L" \
+  "$(assistant_text 'running the guarded command' u34l)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"false && python3 skills/write-gate/tools/write_gate.py gate --text x"}' tu34l)"
+out=$(call34 cc34l "$TX34L" s34l 'no, I said use spaces')
+out2=$(call34 cc34l "$TX34L" s34l 'go ahead')
+if echo "$out2" | grep -qi 'correction(s) still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "short-circuited && does NOT resolve (attack blocked)"
+else
+  no "short-circuited && must NOT resolve" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34m] a genuine invocation whose result is REJECTED does NOT resolve — a rejected banking attempt is not a successful banking"
+TX34M="$TRANSCRIPT_DIR/t34m.jsonl"
+write_transcript "$TX34M" \
+  "$(assistant_text 'attempting to bank' u34m)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"python3 skills/write-gate/tools/write_gate.py score --json --text x"}' tu34m)" \
+  "$(user_tool_result_for tu34m '{"verdict": "REJECTED: signal score 0.00 < threshold 3.00"}' 0)"
+out=$(call34 cc34m "$TX34M" s34m 'no, I said use spaces')
+out2=$(call34 cc34m "$TX34M" s34m 'go ahead')
+if echo "$out2" | grep -qi 'correction(s) still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "REJECTED gate result stays OPEN (rejected banking attempt is not a banking)"
+else
+  no "REJECTED gate result must stay OPEN" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34n] a genuine 'wiki.py new' invocation whose result shows \"created\": DOES resolve"
+# Both the correction (fired by this turn's prompt) and the banking Bash call
+# (with its paired tool_result) are visible in the SAME transcript/turn —
+# mirroring [34c]/[34i] — so open + resolve happen together on turn 1; assert
+# on `out`, not a second turn (which would find the ledger already empty).
+TX34N="$TRANSCRIPT_DIR/t34n.jsonl"
+write_transcript "$TX34N" \
+  "$(assistant_text 'materializing the page' u34n)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"python3 skills/wiki-memory/tools/wiki.py new --template decision --title x"}' tu34n)" \
+  "$(user_tool_result_for tu34n '{"created": "queries/x.md", "template": "decision"}' 0)"
+out=$(call34 cc34n "$TX34N" s34n 'no, I said use spaces')
+if echo "$out" | grep -q 'resolved 1 correction' && ! echo "$out" | grep -qi 'correction(s) still OPEN'; then
+  ok "wiki.py new with \"created\" result DOES resolve"
+else
+  no "wiki.py new with \"created\" result should resolve" "got: $(echo "$out" | head -c220)"
+fi
+
+echo "[34o] a genuine 'wiki.py new' invocation whose result shows \"refused\": does NOT resolve"
+TX34O="$TRANSCRIPT_DIR/t34o.jsonl"
+write_transcript "$TX34O" \
+  "$(assistant_text 'attempting to materialize the page' u34o)" \
+  "$(assistant_tool_use_with_id Bash '{"command":"python3 skills/wiki-memory/tools/wiki.py new --template page --title x"}' tu34o)" \
+  "$(user_tool_result_for tu34o '{"refused": "REFUSED: low-signal candidate"}' 0)"
+out=$(call34 cc34o "$TX34O" s34o 'no, I said use spaces')
+out2=$(call34 cc34o "$TX34O" s34o 'go ahead')
+if echo "$out2" | grep -qi 'correction(s) still OPEN' && ! echo "$out2" | grep -q 'resolved 1 correction'; then
+  ok "wiki.py new with \"refused\" result stays OPEN"
+else
+  no "wiki.py new with \"refused\" result must stay OPEN" "got: $(echo "$out2" | head -c220)"
+fi
+
+echo "[34j] allowlist excluding user_correction's owning skill still OPENS a ledger item"
+# COMPLIANCE_CANARY_PROBE_SKILLS scoped to an UNRELATED skill: the sk34
+# user_correction probe (skill 'cv') is excluded from DISPLAY, but ledger
+# OPENING must still happen (capture is unconditional, HOLE #2).
+TX34J="$TRANSCRIPT_DIR/t34j.jsonl"
+write_transcript "$TX34J" "$(assistant_text 'ok, using tabs' u34j)"
+payload34j=$(python3 -c "
+import json,sys
+print(json.dumps({'session_id':sys.argv[1],'transcript_path':sys.argv[2],'hook_event_name':'UserPromptSubmit','prompt':sys.argv[3]}))
+" s34j "$TX34J" 'no, I said use spaces not tabs')
+out=$(printf '%s' "$payload34j" | env COMPLIANCE_CANARY_STATE_DIR="$STATE_ROOT/cc34j" \
+  COMPLIANCE_CANARY_SKILLS_ROOT="$SKILLS_ROOT/sk34" COMPLIANCE_CANARY_PROBE_SKILLS=some-other-skill "${HOOK[@]}")
+if echo "$out" | grep -qi 'still OPEN' && echo "$out" | grep -q '§2'; then
+  ok "allowlist excluding user_correction's skill still opens the correction ledger"
+else
+  no "allowlist must not block ledger OPENING" "got: $(echo "$out" | head -c220)"
+fi
+
 echo "[35] claim_without_evidence: incidental substring ('cat' inside 'category') does NOT count as verification"
 # Word-boundary fix: short verify keywords (cat, ls, build) must not match
 # inside unrelated words. Bash ran 'mkdir category' — the keyword 'cat' is a
@@ -819,15 +1104,63 @@ write_transcript "$TXE" "$(assistant_text 'updating the ledger' u)" "$(assistant
 out=$(call_p cc67 sk67 "$TXE" s67 'and Z')
 if [ -z "$out" ]; then ok "ledger Edit → suppressed"; else no "ledger Edit suppresses" "got: $(echo "$out"|head -c200)"; fi
 
-echo "[68] ledger_not_materialized: a recent TaskCreate suppresses it"
+echo "[68] ledger_not_materialized: unrelated TaskCreate metadata does NOT suppress it"
 make_skill_with_probes sk68 requirements-ledger "$LNM"
 TXP="$TRANSCRIPT_DIR/t68p.jsonl"; write_transcript "$TXP" "$(assistant_text 'ok' u)"
 call_p cc68 sk68 "$TXP" s68 'add X' >/dev/null
 call_p cc68 sk68 "$TXP" s68 'add Y' >/dev/null
 TXT="$TRANSCRIPT_DIR/t68t.jsonl"
-write_transcript "$TXT" "$(assistant_text 'mirroring to tasks' u)" "$(assistant_tool_use TaskCreate '{"subject":"x"}')"
+write_transcript "$TXT" "$(assistant_text 'creating an unrelated task' u)" "$(assistant_tool_use TaskCreate '{"subject":"x","metadata":{"ledger_id":"r999-wrong"}}')"
 out=$(call_p cc68 sk68 "$TXT" s68 'and Z')
-if [ -z "$out" ]; then ok "TaskCreate → suppressed"; else no "TaskCreate suppresses" "got: $(echo "$out"|head -c200)"; fi
+if echo "$out" | grep -q 'ledger_not_materialized'; then ok "unrelated TaskCreate does not suppress"; else no "unrelated TaskCreate wrongly suppresses" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[68b] ledger_not_materialized: matching TaskCreate metadata suppresses it"
+make_skill_with_probes sk68b requirements-ledger "$LNM"
+TXP="$TRANSCRIPT_DIR/t68bp.jsonl"; write_transcript "$TXP" "$(assistant_text 'ok' u)"
+call_p cc68b sk68b "$TXP" s68b 'add X' >/dev/null
+call_p cc68b sk68b "$TXP" s68b 'add Y' >/dev/null
+RID68=$(python3 -c 'import hashlib;print("r1-"+hashlib.sha256(b"add X").hexdigest()[:6])')
+TXT="$TRANSCRIPT_DIR/t68bt.jsonl"
+write_transcript "$TXT" "$(assistant_text 'mirroring the captured row' u)" "$(assistant_tool_use TaskCreate '{"subject":"x","metadata":{"ledger_id":"'"$RID68"'"}}')"
+out=$(call_p cc68b sk68b "$TXT" s68b 'and Z')
+if [ -z "$out" ]; then ok "matching TaskCreate metadata → suppressed"; else no "matching TaskCreate should suppress" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[68c] ledger_not_materialized: three-conjunct request needs all three suffixed task IDs"
+THREE='add X, update Y, and test Z'
+RID3=$(python3 -c 'import hashlib,sys;print("r1-"+hashlib.sha256(sys.argv[1].encode()).hexdigest()[:6])' "$THREE")
+make_skill_with_probes sk68c requirements-ledger "$LNM"
+TXP="$TRANSCRIPT_DIR/t68cp.jsonl"; write_transcript "$TXP" "$(assistant_text 'ok' u)"
+call_p cc68c sk68c "$TXP" s68c "$THREE" >/dev/null
+call_p cc68c sk68c "$TXP" s68c 'go on' >/dev/null
+TXT="$TRANSCRIPT_DIR/t68ct.jsonl"
+write_transcript "$TXT" \
+  "$(assistant_tool_use TaskCreate '{"subject":"X","metadata":{"ledger_id":"'"$RID3"'-a"}}')" \
+  "$(assistant_tool_use TaskCreate '{"subject":"Y","metadata":{"ledger_id":"'"$RID3"'-b"}}')"
+out=$(call_p cc68c sk68c "$TXT" s68c 'ok')
+if echo "$out" | grep -q 'ledger_not_materialized'; then ok "partial 2/3 task mirror does not suppress"; else no "three-conjunct partial mirror wrongly suppresses" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[68d] ledger_not_materialized: complete three-conjunct task mirror suppresses it"
+make_skill_with_probes sk68d requirements-ledger "$LNM"
+call_p cc68d sk68d "$TXP" s68d "$THREE" >/dev/null
+call_p cc68d sk68d "$TXP" s68d 'go on' >/dev/null
+TXT="$TRANSCRIPT_DIR/t68dt.jsonl"
+write_transcript "$TXT" \
+  "$(assistant_tool_use TaskCreate '{"subject":"X","metadata":{"ledger_id":"'"$RID3"'-a"}}')" \
+  "$(assistant_tool_use TaskCreate '{"subject":"Y","metadata":{"ledger_id":"'"$RID3"'-b"}}')" \
+  "$(assistant_tool_use TaskCreate '{"subject":"Z","metadata":{"ledger_id":"'"$RID3"'-c"}}')"
+out=$(call_p cc68d sk68d "$TXT" s68d 'ok')
+if [ -z "$out" ]; then ok "complete 3/3 task mirror → suppressed"; else no "complete three-conjunct mirror should suppress" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[68e] requirements ledger: audit/verify/score conjunctions each count as atomic asks"
+atomic=$(python3 - "$TOOLS_DIR/hook.py" <<'PY'
+import importlib.util, sys
+spec = importlib.util.spec_from_file_location("hook", sys.argv[1])
+hook = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(hook)
+print(hook._ledger_atomic_count("fix the parser, then audit the output, verify the evidence, and score the result"))
+PY
+)
+if [ "$atomic" = "4" ]; then ok "audit/verify/score conjuncts → atomic_count=4"; else no "audit/verify/score conjunct count" "got: $atomic"; fi
 
 echo "[69] ledger_not_materialized: cold start (1 item, turn 1) → silent"
 make_skill_with_probes sk69 requirements-ledger "$LNM"
@@ -883,6 +1216,21 @@ a,L=act('close it and add a healthcheck endpoint', ledger=[{'id':'p','turn':1,'t
 print('yes' if any('healthcheck' in it['text'] for it in L) else 'no')")
 if [ "$ok78" = yes ]; then ok "close-compound captures the co-occurring ask"; else no "compound close drops ask"; fi
 
+echo "[78b] field false-close guards: supersession replaces silently; negated close and scope-only nothing-else stay open"
+ok78b=$(python3 -c "$LEDGER_PY
+seed=[{'id':'p','turn':1,'text':'prior'}]
+cases=[
+ ('OK, forget it. Let'+chr(39)+'s use streaming mode instead of batch.', 0, 1),
+ ('Take one more bounded verification step and do not close the task.', 0, 2),
+ ('Replace retry with recovery, preserving its position and changing nothing else.', 0, 2),
+]
+good=True
+for prompt,closed_count,ledger_count in cases:
+    L,c,a = hook.update_ledger(seed, prompt, 2)
+    good = good and len(c)==closed_count and len(L)==ledger_count and L[-1]['turn']==2
+print('yes' if good else 'no')")
+if [ "$ok78b" = yes ]; then ok "field false-close morphologies classified"; else no "field false-close morphology regression"; fi
+
 echo "[79] M1: editing an unrelated requirements/TASKS .md must NOT suppress the detector"
 make_skill_with_probes sk79 requirements-ledger "$LNM"
 TXP="$TRANSCRIPT_DIR/t79p.jsonl"; write_transcript "$TXP" "$(assistant_text 'ok' u)"
@@ -926,6 +1274,765 @@ out=$(call_p cc83 sk69 "$TX" s83 'add an important feature' COMPLIANCE_CANARY_DI
 SIDH83=$(python3 -c "import hashlib;print(hashlib.sha256(b's83').hexdigest()[:16])")
 recorded=$(python3 -c "import json;d=json.load(open('$STATE_ROOT/cc83/$SIDH83.json'));print('yes' if any('important feature' in it.get('text','') for it in d.get('request_ledger',[])) else 'no')" 2>/dev/null)
 if [ -z "$out" ] && [ "$recorded" = yes ]; then ok "kill → silent output, request still on the record"; else no "kill must not disable capture" "out=$(echo "$out"|head -c80) recorded=$recorded"; fi
+
+echo "[84] tool_path_touch: editing a dependency manifest fires"
+PROBES='[{"id":"dep","kind":"tool_path_touch","tools":["Edit","Write","NotebookEdit","Bash"],"path_pattern":"(?i)(?:^|/)(?:package\\.json|requirements\\.txt|pyproject\\.toml|poetry\\.lock)$","message":"manifest changed — justify the dep"}]'
+make_skill_with_probes sk84 le "$PROBES"
+TX="$TRANSCRIPT_DIR/t84.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/requirements.txt","old_string":"flask","new_string":"flask\nrequests"}')"
+out=$(call cc84 sk84 "$TX" s84)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then ok "manifest edit fires"; else no "manifest edit fires" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[85] tool_path_touch: editing a normal source file stays silent"
+TX="$TRANSCRIPT_DIR/t85.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/src/app.py","old_string":"a","new_string":"b"}')"
+out=$(call cc85 sk84 "$TX" s85)
+if [ -z "$out" ]; then ok "non-manifest edit → silent"; else no "non-manifest edit → silent" "got: $(echo "$out"|head -c120)"; fi
+
+echo "[85a] tool_path_touch: Bash redirection mutating a dependency manifest fires"
+TX="$TRANSCRIPT_DIR/t85a.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Bash '{"command":"printf requests >> /proj/requirements.txt"}')"
+out=$(call cc85a sk84 "$TX" s85a)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then ok "Bash manifest mutation fires"; else no "Bash manifest mutation should fire" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[85b] tool_path_touch: Bash command that only tests a manifest stays silent"
+TX="$TRANSCRIPT_DIR/t85b.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Bash '{"command":"test -f /proj/requirements.txt && python3 -m pytest -q"}')"
+out=$(call cc85b sk84 "$TX" s85b)
+if [ -z "$out" ]; then ok "Bash manifest test → silent"; else no "Bash manifest test should stay silent" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[85c] tool_path_touch: package-manager dependency mutations fire without an explicit path"
+TX="$TRANSCRIPT_DIR/t85c.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Bash '{"command":"npm install lodash # --dry-run is only a comment"}')" \
+  "$(assistant_tool_use Bash '{"command":"cd /proj\npoetry add requests"}')"
+out=$(call cc85c sk84 "$TX" s85c)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then ok "npm install / poetry add manifest mutation fires"; else no "package-manager manifest mutation should fire" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[85d] tool_path_touch: read-only package-manager commands stay silent"
+TX="$TRANSCRIPT_DIR/t85d.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Bash '{"command":"npm list --depth=0"}')" \
+  "$(assistant_tool_use Bash '{"command":"poetry show --tree"}')" \
+  "$(assistant_tool_use Bash '{"command":"npm install lodash --dry-run"}')" \
+  "$(assistant_tool_use Bash '{"command":"poetry add requests --dry-run"}')"
+out=$(call cc85d sk84 "$TX" s85d)
+if [ -z "$out" ]; then ok "npm list / poetry show → silent"; else no "read-only package-manager commands should stay silent" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[85e] tool_path_touch: tokenized package-manager adjacency matrix"
+matrix=$(python3 - "$TOOLS_DIR/hook.py" <<'PY'
+import importlib.util, sys
+spec = importlib.util.spec_from_file_location("hook", sys.argv[1])
+hook = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(hook)
+probe = {
+    "_probe_id": "dep",
+    "tools": ["Bash"],
+    "path_pattern": r"(?i)(?:^|/)(?:package\.json|package-lock\.json|pyproject\.toml|poetry\.lock)$",
+}
+positive = (
+    "/usr/local/bin/npm install lodash",
+    "env NODE_ENV=dev npm install lodash",
+    "npm --prefix /proj install lodash",
+    "/opt/homebrew/bin/poetry add requests",
+    "env POETRY_VIRTUALENVS_CREATE=false poetry --directory /proj add requests",
+    "poetry -C /proj add requests",
+    "npm install lodash --dry-run=false",
+    "poetry add requests --dry-run=false",
+)
+negative = (
+    "npm install lodash --dry-run",
+    "npm install lodash --dry-run=true",
+    "npm install lodash --no-save",
+    "poetry add requests --dry-run",
+    "poetry add requests --dry-run=true",
+    "npm list --depth=0",
+    "poetry show --tree",
+)
+failures = []
+for command in positive:
+    result = hook.detect_tool_path_touch(
+        probe, [], [{"name": "Bash", "input": {"command": command}}])
+    if result is None:
+        failures.append("MISS " + command)
+for command in negative:
+    result = hook.detect_tool_path_touch(
+        probe, [], [{"name": "Bash", "input": {"command": command}}])
+    if result is not None:
+        failures.append("FALSE-POS " + command)
+print("\n".join(failures) if failures else "ok")
+PY
+)
+if [ "$matrix" = "ok" ]; then ok "package-manager adjacency matrix"; else no "package-manager adjacency matrix" "got: $matrix"; fi
+
+echo "[86] whitespace_only_edit: an Edit changing only whitespace fires"
+PROBES='[{"id":"reformat","kind":"whitespace_only_edit","min_chars":4,"message":"whitespace-only reformat — keep the diff to the task"}]'
+make_skill_with_probes sk86 le "$PROBES"
+TX="$TRANSCRIPT_DIR/t86.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/src/app.py","old_string":"def f(x):\n  return x","new_string":"def f(x):\n    return x"}')"
+out=$(call cc86 sk86 "$TX" s86)
+if emitted "$out" && echo "$out" | grep -q 'whitespace_only_edit'; then ok "reformat-only edit fires"; else no "reformat-only edit fires" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[87] whitespace_only_edit: a real content change stays silent"
+TX="$TRANSCRIPT_DIR/t87.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/src/app.py","old_string":"return x","new_string":"return x + 1"}')"
+out=$(call cc87 sk86 "$TX" s87)
+if [ -z "$out" ]; then ok "real change → silent"; else no "real change → silent" "got: $(echo "$out"|head -c120)"; fi
+
+echo "[88] harness-strip: a pure task-notification is NOT captured as a user request"
+TX="$TRANSCRIPT_DIR/t88.jsonl"
+write_transcript "$TX" "$(assistant_text 'All done.' u88)"
+NOTIF='<task-notification><task-id>x1</task-id><result>agent finished: please fix the login flow and add a retry cap</result></task-notification>'
+out=$(call_p cc88 sk88 "$TX" s88 "$NOTIF")
+if [ -z "$out" ] || ! echo "$out" | grep -q 'still OPEN'; then ok "task-notification → not tracked"; else no "task-notification not tracked" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[89] harness-strip: user text AFTER a local-command block IS captured (blocks stripped)"
+TX="$TRANSCRIPT_DIR/t89.jsonl"
+write_transcript "$TX" "$(assistant_text 'All done.' u89)"
+MIXED='<local-command-caveat>Caveat: generated by local commands</local-command-caveat><command-name>/model</command-name><local-command-stdout>Set model</local-command-stdout>add a retry cap to the parser'
+out=$(call_p cc89 sk89 "$TX" s89 "$MIXED")
+if echo "$out" | grep -q 'retry cap' && ! echo "$out" | grep -q 'Caveat'; then ok "post-command user ask captured, blocks stripped"; else no "mixed prompt strip+capture" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[90] harness-strip: prompt_intent stays silent on notification text, fires on the same plain text"
+PROBES='[{"id":"prop-int","kind":"prompt_intent","pattern":"(?i)propagate.{0,30}sibling","message":"apply the propagate skill"}]'
+make_skill_with_probes sk90 propagate "$PROBES"
+TX="$TRANSCRIPT_DIR/t90.jsonl"
+write_transcript "$TX" "$(assistant_text 'working' u90)"
+out=$(call_p cc90 sk90 "$TX" s90 '<task-notification><result>the agent chose to propagate to the sibling repos</result></task-notification>')
+if echo "$out" | grep -q 'prompt_intent'; then no "intent silent on notification" "got: $(echo "$out"|head -c160)"; else ok "intent silent on notification"; fi
+out=$(call_p cc90b sk90 "$TX" s90b 'now propagate to the sibling repos')
+if echo "$out" | grep -q 'prompt_intent'; then ok "intent fires on plain user text"; else no "intent fires on plain text" "got: $(echo "$out"|head -c160)"; fi
+
+# ======================================================================
+# team-lead §5 leader keystroke budget (leader-bulk-edit, tool_path_touch).
+# Sourced from the REAL skills/team-lead/drift_probes.json (not a synthetic
+# copy) so a drift between this test and the shipped file is caught.
+#
+# tool_path_touch now takes an optional min_count (default 1 = fire-on-first,
+# byte-identical to prior behavior for every OTHER probe using this kind).
+# leader-bulk-edit sets min_count:3 so a single allowed one-line fixup
+# (team-lead §5/§6 proportionality) stays quiet, while an actual bulk
+# mechanical edit still fires. Tests [93a]-[93c] assert this directly.
+REAL_TL_PROBES="$(cat "$TOOLS_DIR/../../team-lead/drift_probes.json")"
+mkdir -p "$SKILLS_ROOT/tl/team-lead"
+printf '%s\n' "$REAL_TL_PROBES" > "$SKILLS_ROOT/tl/team-lead/drift_probes.json"
+
+echo "[91] leader-bulk-edit: parses + registers from the shipped drift_probes.json, fires on a bulk-edit window (5 Edit calls to source files)"
+TX="$TRANSCRIPT_DIR/t91.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+with open(sys.argv[1], "w") as f:
+    for i in range(5):
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":f"/proj/src/file{i}.py","old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc91 tl "$TX" s91)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch' && echo "$out" | grep -q 'keystroke budget'; then
+  ok "leader-bulk-edit registers + fires on a bulk-edit window"
+else
+  no "leader-bulk-edit registers + fires" "got: $(echo "$out" | head -c250)"
+fi
+
+echo "[92] leader-bulk-edit: exempt on plan/ledger/brief/synthesis paths (stays quiet)"
+TX="$TRANSCRIPT_DIR/t92.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/PLAN.md","old_string":"a","new_string":"b"}')"
+out=$(call cc92 tl "$TX" s92)
+if [ -z "$out" ]; then ok "plan.md edit stays exempt (quiet)"; else no "plan.md edit should be exempt" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93a] leader-bulk-edit min_count:3 — a 1-file fixup to a non-exempt path stays QUIET"
+TX="$TRANSCRIPT_DIR/t93a.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/src/onefile.py","old_string":"a","new_string":"b"}')"
+out=$(call cc93a tl "$TX" s93a)
+if [ -z "$out" ]; then ok "1-file fixup stays quiet (min_count:3)"; else no "1-file fixup should stay quiet" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93b] leader-bulk-edit min_count:3 — a 2-edit window stays QUIET"
+TX="$TRANSCRIPT_DIR/t93b.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+with open(sys.argv[1], "w") as f:
+    for i in range(2):
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":f"/proj/src/file{i}.py","old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93b tl "$TX" s93b)
+if [ -z "$out" ]; then ok "2-edit window stays quiet (min_count:3)"; else no "2-edit window should stay quiet" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93c] leader-bulk-edit min_count:3 — a 3-edit window to non-exempt paths FIRES"
+TX="$TRANSCRIPT_DIR/t93c.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+with open(sys.argv[1], "w") as f:
+    for i in range(3):
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":f"/proj/src/file{i}.py","old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93c tl "$TX" s93c)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then
+  ok "3-edit window fires (min_count:3 reached)"
+else
+  no "3-edit window should fire" "got: $(echo "$out"|head -c160)"
+fi
+
+echo "[93d] leader-bulk-edit: wiki/ paths are exempt (synthesis home, team-lead §5) — 3 wiki edits stay QUIET"
+TX="$TRANSCRIPT_DIR/t93d.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+paths = ["/proj/wiki/concepts/some-page.md", "/proj/wiki/L1_index.md", "/proj/wiki/queries/external-validation.md"]
+with open(sys.argv[1], "w") as f:
+    for p in paths:
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":p,"old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93d tl "$TX" s93d)
+if [ -z "$out" ]; then ok "3 wiki edits stay quiet (wiki/ exempt)"; else no "wiki/ paths should be exempt" "got: $(echo "$out"|head -c160)"; fi
+
+# ------------------------------------------------------------------------
+# Cross-vendor review fixes (P3/P4/P5, post-a44b270) on leader-bulk-edit.
+# P3/P4 exercise the REAL shipped team-lead/drift_probes.json (the "tl" skills
+# dir set up above); P5 asserts detect_tool_path_touch's min_count coercion
+# directly in python (mirrors the update_ledger direct-assert style at [74]+).
+# ------------------------------------------------------------------------
+
+echo "[93e] P3: suffix-token filenames (project-plan.md, api-spec.md, client-brief.md) are now EXEMPT"
+TX="$TRANSCRIPT_DIR/t93e.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+paths = ["/proj/docs/project-plan.md", "/proj/docs/api-spec.md", "/proj/briefs/client-brief.md"]
+with open(sys.argv[1], "w") as f:
+    for p in paths:
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":p,"old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93e tl "$TX" s93e)
+if [ -z "$out" ]; then ok "suffix-token plan/spec/brief filenames exempt (quiet)"; else no "suffix-token filenames should be exempt" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93f] P3: a suffix-token synthesis filename (design-synthesis.md) is also EXEMPT"
+TX="$TRANSCRIPT_DIR/t93f.jsonl"
+write_transcript "$TX" "$(assistant_tool_use Edit '{"file_path":"/proj/notes/design-synthesis.md","old_string":"a","new_string":"b"}')"
+out=$(call cc93f tl "$TX" s93f)
+if [ -z "$out" ]; then ok "design-synthesis.md exempt (quiet)"; else no "design-synthesis.md should be exempt" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93g] P3: a non-token filename that merely CONTAINS 'plan' as a substring (plant.md) still COUNTS (no over-exemption)"
+TX="$TRANSCRIPT_DIR/t93g.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+with open(sys.argv[1], "w") as f:
+    for i in range(3):
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":f"/proj/plant{i}.md","old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93g tl "$TX" s93g)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then ok "'plant.md' (substring, not word) still counts"; else no "'plant.md' should still count" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93h] P4: wiki/ DOCS stay exempt but wiki/ CODE now COUNTS (blanket wiki/ exemption no longer hides code)"
+TX="$TRANSCRIPT_DIR/t93h.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+paths = ["/proj/wiki/tools/rebuild_index.py", "/proj/wiki/tools/sync.sh", "/proj/wiki/tools/build.js"]
+with open(sys.argv[1], "w") as f:
+    for p in paths:
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":p,"old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93h tl "$TX" s93h)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then ok "wiki/tools/*.py|.sh|.js bulk edits COUNT (code, not doc)"; else no "wiki/ code edits should count" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93i] P4: wiki doc edits mixed in do NOT count toward min_count — only the 3 wiki .py edits reach the threshold"
+TX="$TRANSCRIPT_DIR/t93i.jsonl"
+python3 - "$TX" <<'PY'
+import json, sys
+# 2 exempt wiki docs (must NOT count) + 3 wiki .py edits (must reach min_count:3
+# on code alone). If the doc edits wrongly counted too, this would already fire
+# at 2 hits before the 3rd .py edit — instead the fix must make the .md edits
+# invisible to the counter and the fire happen exactly at the 3rd .py edit.
+paths = ["/proj/wiki/concepts/foo.md", "/proj/wiki/notes/bar.md",
+         "/proj/wiki/tools/rebuild_index.py", "/proj/wiki/tools/another.py", "/proj/wiki/tools/third.py"]
+with open(sys.argv[1], "w") as f:
+    for p in paths:
+        f.write(json.dumps({"type":"assistant","message":{"role":"assistant","content":[
+            {"type":"tool_use","name":"Edit","input":{"file_path":p,"old_string":"a","new_string":"b"}}
+        ]}}) + "\n")
+PY
+out=$(call cc93i tl "$TX" s93i)
+if emitted "$out" && echo "$out" | grep -q 'tool_path_touch'; then ok "wiki .md stays exempt (uncounted), 3 wiki .py edits alone reach min_count"; else no "3 wiki .py edits amid docs should still fire" "got: $(echo "$out"|head -c160)"; fi
+
+echo "[93j] P5: detect_tool_path_touch min_count coercion — 'three'/0/-1 all clamp to 1 (fire-on-first), no raise"
+p5=$(python3 -c "
+import sys; sys.path.insert(0,'$TOOLS_DIR'); import hook
+def hits(n):
+    return [{'name':'Edit','input':{'file_path':f'/src/f{i}.py'}} for i in range(n)]
+bad = []
+for mc in ('three', 0, -1):
+    probe = {'path_pattern': '.+', 'min_count': mc, '_probe_id': 'x'}
+    try:
+        r0 = hook.detect_tool_path_touch(probe, None, hits(0))
+        r1 = hook.detect_tool_path_touch(probe, None, hits(1))
+    except Exception as e:
+        bad.append(f'{mc!r}:raised:{e!r}')
+        continue
+    if r0 is not None:
+        bad.append(f'{mc!r}:fired-on-zero-hits')
+    if r1 is None or r1.get('min_count') != 1:
+        bad.append(f'{mc!r}:did-not-clamp-to-1:{r1!r}')
+print(';'.join(bad))
+" 2>&1)
+if [ -z "$p5" ]; then ok "min_count 'three'/0/-1 all clamp to 1, no raise, no fire-on-zero-hits"; else no "min_count coercion" "got: $p5"; fi
+
+echo "[93k] P5: a valid positive min_count (e.g. 3) is unaffected by the clamp/coercion"
+p5b=$(python3 -c "
+import sys; sys.path.insert(0,'$TOOLS_DIR'); import hook
+def hits(n):
+    return [{'name':'Edit','input':{'file_path':f'/src/f{i}.py'}} for i in range(n)]
+probe = {'path_pattern': '.+', 'min_count': 3, '_probe_id': 'x'}
+r2 = hook.detect_tool_path_touch(probe, None, hits(2))
+r3 = hook.detect_tool_path_touch(probe, None, hits(3))
+print('ok' if r2 is None and r3 is not None and r3.get('min_count') == 3 else f'r2={r2!r} r3={r3!r}')
+" 2>&1)
+if [ "$p5b" = ok ]; then ok "valid min_count:3 unaffected (2 hits quiet, 3 hits fires)"; else no "valid min_count:3 regressed" "got: $p5b"; fi
+
+# ======================================================================
+# Mechanism 5: probe escalation (advisory→blocking after 3 uncorrected fires)
+# Stateless from probe_history; clears after 3 silent turns. Direct-asserts.
+# ======================================================================
+ESC_PY='import sys; sys.path.insert(0,"'"$TOOLS_DIR"'"); import hook
+def esc(hist, turn): return hook.build_probe_escalation_lines(hist, turn)
+def H(pid, *turns): return [{"probe_id": pid, "fired_at_turn": t} for t in turns]'
+
+echo "[96a] escalation trips: 3 fires, last one recent → blocking lines name the probe"
+r=$(python3 -c "$ESC_PY
+L=esc(H('vision:claim-without-render',2,5,8), 9)
+print('yes' if L and 'ESCALATION' in L[0] and any('vision:claim-without-render' in x and '3 fires' in x for x in L) else 'no:'+repr(L)[:120])")
+if [ "$r" = yes ]; then ok "3 recent fires escalate"; else no "escalation did not trip" "$r"; fi
+
+echo "[96b] negative: 2 fires never escalate (threshold is 3)"
+r=$(python3 -c "$ESC_PY
+print('yes' if esc(H('x:p',5,8), 9)==[] else 'no')")
+if [ "$r" = yes ]; then ok "2 fires stay advisory"; else no "under-threshold escalated"; fi
+
+echo "[96c] clears on observed correction: 3 fires but silent >=3 turns → no lines"
+r=$(python3 -c "$ESC_PY
+print('yes' if esc(H('x:p',2,5,8), 11)==[] and esc(H('x:p',2,5,8), 10)!=[] else 'no')")
+if [ "$r" = yes ]; then ok "silence clears at exactly +$((3)) turns"; else no "clear boundary wrong"; fi
+
+echo "[96d] independence: only the repeat offender escalates, not co-firing probes"
+r=$(python3 -c "$ESC_PY
+L=esc(H('bad:p',3,6,9)+H('ok:p',9), 9)
+print('yes' if any('bad:p' in x for x in L) and not any('ok:p' in x for x in L) else 'no')")
+if [ "$r" = yes ]; then ok "per-probe isolation"; else no "co-firing probe wrongly escalated"; fi
+
+echo "[96e] end-to-end: escalation line reaches hook stdout via build_output path"
+SESC="sesc"; TESC="$TRANSCRIPT_DIR/tesc.jsonl"; write_transcript "$TESC" "$(assistant_text 'ok.' uesc)"
+COMPLIANCE_CANARY_STATE_DIR="$STATE_ROOT/cesc" python3 - <<PYEOF
+import json, os, sys
+sys.path.insert(0, "$TOOLS_DIR"); import hook
+p = hook.state_path("$SESC")
+os.makedirs(os.path.dirname(p), exist_ok=True)
+st = hook.load_state(p)
+st["turn_count"] = 8
+st["probe_history"] = [{"probe_id":"vision:claim-without-render","fired_at_turn":t} for t in (2,5,8)]
+hook.save_state(p, st)
+PYEOF
+out=$(call_p cesc skesc "$TESC" "$SESC" 'continue')
+if echo "$out" | grep -q 'ESCALATION' && echo "$out" | grep -q 'closeout-blocking gate'; then ok "escalation surfaces in hook output"; else no "escalation missing from output" "got: $(echo "$out"|head -c200)"; fi
+
+# ======================================================================
+# Live-monitoring drift probes (3 new probes, canary Mechanism 5 follow-up):
+# requirements-ledger "assumption-self-close", eval-gate
+# "feedback-ask-without-rubric", baton "grabbed-baton-not-consulted". Each
+# has a positive (bad exemplar) and negative (clean near-miss) test.
+# ======================================================================
+
+echo "[97] requirements-ledger assumption-self-close: bad exemplar fires"
+RLPROBES='[{"id":"assumption-self-close","kind":"forbidden_regex","pattern":"(?i)\\b(?:done|complete|finished|closed)\\b[^\\n]{0,110}?(?:user\\s+will\\b|user\\s+(?!agrees\\b|confirms\\b|approves\\b|accepts\\b|acknowledges\\b|signs\\b)\\w+s\\b|you.?ll\\b|you\\s+will\\b|you\\s+(?!agrees\\b|confirms\\b|approves\\b|accepts\\b|acknowledges\\b|signs\\b)\\w+s\\b|saar\\s+will\\b|saar\\s+(?!agrees\\b|confirms\\b|approves\\b|accepts\\b|acknowledges\\b|signs\\b)\\w+s\\b|\\bassuming\\b|\\blater\\b|\\bafterwards\\b|\\bsubsequently\\b)","unless_pattern":"(?i)\\b(?:done|complete|finished|closed)\\b(?![^\\n]*\\b(?:tomorrow|next)\\b)[^\\n]{0,110}?\\b(?:verified|\\d+\\s*/\\s*\\d+|render(?:ed)?|tests?\\b|matched|manifest)\\b[^\\n]{0,110}?(?:user\\s+will\\b|user\\s+\\w+s\\b|you.?ll\\b|you\\s+will\\b|you\\s+\\w+s\\b|saar\\s+will\\b|saar\\s+\\w+s\\b|\\bassuming\\b|\\blater\\b|\\bafterwards\\b|\\bsubsequently\\b)","message":"self-closed on an unconfirmed assumption"}]'
+make_skill_with_probes sk97 requirements-ledger "$RLPROBES"
+TX="$TRANSCRIPT_DIR/t97.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — byte-identical copy (scaffold; Saar sorts out art)' u97)"
+out=$(call cc97 sk97 "$TX" s97)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]: self-closed on an unconfirmed assumption'; then ok "assumption-self-close fires on bad exemplar"; else no "assumption-self-close fires on bad exemplar" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[98] requirements-ledger assumption-self-close: clean near-miss (verified done) stays silent"
+TX="$TRANSCRIPT_DIR/t98.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — verified 31/31 via manifest (render attached)' u98)"
+out=$(call cc98 sk97 "$TX" s98)
+if [ -z "$out" ]; then ok "verified-done clean near-miss stays silent"; else no "verified-done clean near-miss stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99] eval-gate feedback-ask-without-rubric: bad exemplar fires"
+EGPROBES='[{"id":"feedback-ask-without-rubric","kind":"forbidden_regex","pattern":"(?i)\\b(?:what do you think|which (?:do you|one do you) prefer|prefer\\b|judge (?:this|it|these)|feedback on (?:this|these|it|the \\w+)|which (?:one|version|option)?\\s*(?:passes|wins|is better|looks best|looks better)|review this|feels off|favorite|thoughts on)\\b","unless_pattern":"(?i)(?:\\b(?:scoring guide|acceptance|done means|pass if|threshold|must have|measuring|success means|judge it by)\\b|\\bcriteri(?:a|on)\\b[^.\\n]{0,10}[:=](?!\\s*(?:TBD|TBA|none|n/?a|later|pending|\\?+)\\b)|\\brubric\\b[^.\\n]{0,12}[:=](?!\\s*(?:TBD|TBA|none|n/?a|later|pending|\\?+)\\b))","message":"no judging criterion stated"}]'
+make_skill_with_probes sk99 eval-gate "$EGPROBES"
+TX="$TRANSCRIPT_DIR/t99.jsonl"
+write_transcript "$TX" "$(assistant_text "here's the compare board — which do you prefer?" u99)"
+out=$(call cc99 sk99 "$TX" s99)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]: no judging criterion stated'; then ok "feedback-ask-without-rubric fires on bad exemplar"; else no "feedback-ask-without-rubric fires on bad exemplar" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[100] eval-gate feedback-ask-without-rubric: clean near-miss (criterion stated) stays silent"
+TX="$TRANSCRIPT_DIR/t100.jsonl"
+write_transcript "$TX" "$(assistant_text "here's the compare board — judging criterion: sharpness lapvar ratio >1.5, no plastic texture; which passes?" u100)"
+out=$(call cc100 sk99 "$TX" s100)
+if [ -z "$out" ]; then ok "criterion-stated clean near-miss stays silent"; else no "criterion-stated clean near-miss stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101] baton grabbed-baton-not-consulted: bad exemplar (where-is prompt) fires"
+BPROBES='[{"kind":"prompt_intent","id":"grabbed-baton-not-consulted","pattern":"(?i)(?=.*\\b(?:file|folder|dir|directory|path|export|output|render|asset|minis?|miniatures?|version|docs?|document|image|deliverable)\\b)(?=(?:(?!\\b(?:regex|assertion|function|stack trace|variable|import|class|unit test)\\b).)*$|.*\\b(?:I generated|we made|I created|earlier|yesterday|before the|last session)\\b)\\b(?:where (?:is|are|'"'"'?s)|which file (?:has|had|contains)|which (?:folder|dir|directory) (?:holds|contains)|what was the|can(?:'"'"'|no)t find|cannot find|couldn'"'"'?t find|where did (?:we|i|you) (?:put|leave|save|store))\\b","message":"re-consult the active baton before answering from memory"}]'
+make_skill_with_probes sk101 baton "$BPROBES"
+TX="$TRANSCRIPT_DIR/t101.jsonl"
+write_transcript "$TX" "$(assistant_text 'previous turn context' u101)"
+out=$(call_p cc101 sk101 "$TX" s101 'where are the washington miniatures?!')
+if emitted "$out" && echo "$out" | grep -q 'baton \[prompt_intent\]: re-consult the active baton'; then ok "grabbed-baton-not-consulted fires on where-is prompt"; else no "grabbed-baton-not-consulted fires on where-is prompt" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[102] baton grabbed-baton-not-consulted: clean near-miss (ordinary prompt) stays silent"
+out=$(call_p cc102 sk101 "$TX" s102 'add a retry cap to the loop and a test for it')
+if [ -z "$out" ]; then ok "ordinary prompt clean near-miss stays silent"; else no "ordinary prompt clean near-miss stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+# ======================================================================
+# 17 confirmed codex attack findings against probes 1-3 above (2026-07-07
+# hardening pass). Each becomes a regression test asserting the CORRECT
+# fire/silent behavior directly against the drift_probes.json PROBES
+# strings already re-declared in [97]/[99]/[101] above (sk97/sk99/sk101).
+# ======================================================================
+
+echo "[97a] assumption-self-close ATTACK: MISS — no-parens phrasing now fires"
+TX="$TRANSCRIPT_DIR/t97a.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — byte-identical copy; Saar sorts out art' u97a)"
+out=$(call cc97a sk97 "$TX" s97a)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]'; then ok "no-parens self-close fires"; else no "no-parens self-close fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97b] assumption-self-close ATTACK: MISS — generalized third-person verb + 'later' deferral fires"
+TX="$TRANSCRIPT_DIR/t97b.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — byte-identical copy (scaffold; user handles art later)' u97b)"
+out=$(call cc97b sk97 "$TX" s97b)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]'; then ok "generalized verb + later fires"; else no "generalized verb + later fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97c] assumption-self-close ATTACK: MISS — 'complete' done-claim synonym fires"
+TX="$TRANSCRIPT_DIR/t97c.jsonl"
+write_transcript "$TX" "$(assistant_text 'complete — byte-identical copy (scaffold; Saar sorts out art)' u97c)"
+out=$(call cc97c sk97 "$TX" s97c)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]'; then ok "'complete' done-synonym fires"; else no "'complete' done-synonym fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97d] assumption-self-close ATTACK: MISS — crossing one sentence boundary fires"
+TX="$TRANSCRIPT_DIR/t97d.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — byte-identical copy. (scaffold; Saar sorts out art)' u97d)"
+out=$(call cc97d sk97 "$TX" s97d)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]'; then ok "sentence-boundary-crossing self-close fires"; else no "sentence-boundary-crossing self-close fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97e] assumption-self-close ATTACK: FALSE-POS — quoted 'user will' phrase alongside verified/N-of-N evidence stays silent"
+TX="$TRANSCRIPT_DIR/t97e.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — verified 31/31 via manifest (literal phrase user will was covered by the negative test)' u97e)"
+out=$(call cc97e sk97 "$TX" s97e)
+if [ -z "$out" ]; then ok "quoted-mention + evidence stays silent"; else no "quoted-mention + evidence stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97f] assumption-self-close ATTACK: FALSE-POS — 'Saar sorts' alongside verified/manifest/matched evidence stays silent"
+TX="$TRANSCRIPT_DIR/t97f.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — verified 31/31 via manifest (Saar sorts column matched the source)' u97f)"
+out=$(call cc97f sk97 "$TX" s97f)
+if [ -z "$out" ]; then ok "attribution-phrase + evidence stays silent"; else no "attribution-phrase + evidence stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99a] feedback-ask-without-rubric ATTACK: MISS — 'review this'/'feels off' asks fire"
+TX="$TRANSCRIPT_DIR/t99a.jsonl"
+write_transcript "$TX" "$(assistant_text 'Can you review this and tell me what feels off?' u99a)"
+out=$(call cc99a sk99 "$TX" s99a)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "review-this/feels-off ask fires"; else no "review-this/feels-off ask fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99b] feedback-ask-without-rubric ATTACK: MISS — 'looks best' ask fires"
+TX="$TRANSCRIPT_DIR/t99b.jsonl"
+write_transcript "$TX" "$(assistant_text 'Which version looks best to you?' u99b)"
+out=$(call cc99b sk99 "$TX" s99b)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "looks-best ask fires"; else no "looks-best ask fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99c] feedback-ask-without-rubric ATTACK: FALSE-POS — 'scoring guide: ...; which wins?' stays silent"
+TX="$TRANSCRIPT_DIR/t99c.jsonl"
+write_transcript "$TX" "$(assistant_text 'scoring guide: sharpness >1.5; which wins?' u99c)"
+out=$(call cc99c sk99 "$TX" s99c)
+if [ -z "$out" ]; then ok "scoring-guide-stated ask stays silent"; else no "scoring-guide-stated ask stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99d] feedback-ask-without-rubric ATTACK: FALSE-POS — 'acceptance: ...; feedback on this' stays silent"
+TX="$TRANSCRIPT_DIR/t99d.jsonl"
+write_transcript "$TX" "$(assistant_text 'acceptance: must render without artifacts; feedback on this' u99d)"
+out=$(call cc99d sk99 "$TX" s99d)
+if [ -z "$out" ]; then ok "acceptance-stated ask stays silent"; else no "acceptance-stated ask stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99e] feedback-ask-without-rubric ATTACK: BYPASS — negated-criteria phrase ('no criteria yet') still fires"
+TX="$TRANSCRIPT_DIR/t99e.jsonl"
+write_transcript "$TX" "$(assistant_text 'I do not have criteria yet; what do you think?' u99e)"
+out=$(call cc99e sk99 "$TX" s99e)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "negated-criteria phrase does not suppress — fires"; else no "negated-criteria phrase must still fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99f] feedback-ask-without-rubric ATTACK: BYPASS — bare 'criteria.txt' filename mention still fires"
+TX="$TRANSCRIPT_DIR/t99f.jsonl"
+write_transcript "$TX" "$(assistant_text 'criteria.txt is attached only for file naming; which one is better?' u99f)"
+out=$(call cc99f sk99 "$TX" s99f)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "bare criteria.txt mention does not suppress — fires"; else no "bare criteria.txt mention must still fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101a] grabbed-baton-not-consulted ATTACK: MISS — 'which folder holds' fires"
+TX="$TRANSCRIPT_DIR/t101a.jsonl"
+write_transcript "$TX" "$(assistant_text 'previous turn context' u101a)"
+out=$(call_p cc101a sk101 "$TX" s101a 'which folder holds the washington miniatures?')
+if emitted "$out" && echo "$out" | grep -q 'baton \[prompt_intent\]'; then ok "which-folder-holds fires"; else no "which-folder-holds fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101b] grabbed-baton-not-consulted ATTACK: MISS — 'what was the path to...' fires"
+out=$(call_p cc101b sk101 "$TX" s101b 'what was the path to the baton handoff?')
+if emitted "$out" && echo "$out" | grep -q 'baton \[prompt_intent\]'; then ok "what-was-the fires"; else no "what-was-the fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101c] grabbed-baton-not-consulted ATTACK: MISS — \"can't find the minis\" fires"
+out=$(call_p cc101c sk101 "$TX" s101c "can't find the minis")
+if emitted "$out" && echo "$out" | grep -q 'baton \[prompt_intent\]'; then ok "can't-find fires"; else no "can't-find fires" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101d] grabbed-baton-not-consulted ATTACK: FALSE-POS — 'which file contains the regex?' stays silent"
+out=$(call_p cc101d sk101 "$TX" s101d 'which file contains the regex?')
+if [ -z "$out" ]; then ok "code-debug-noun 'regex' question stays silent"; else no "code-debug-noun 'regex' question stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101e] grabbed-baton-not-consulted ATTACK: FALSE-POS — stack-trace/assertion debug question stays silent"
+out=$(call_p cc101e sk101 "$TX" s101e 'where is the failing assertion in the current stack trace?')
+if [ -z "$out" ]; then ok "code-debug-noun 'assertion/stack trace' question stays silent"; else no "code-debug-noun 'assertion/stack trace' question stays silent" "got: $(echo "$out" | head -c200)"; fi
+
+# ======================================================================
+# Round-2 hardening (2026-07-07): 5 confirmed breaks fixed in the 3 probes
+# above. Each gets a dedicated regression test against the freshly updated
+# RLPROBES/EGPROBES/BPROBES mirrors declared in [97]/[99]/[101] above.
+# ======================================================================
+
+echo "[97g] assumption-self-close FIX 1: FIRE — trailing evidence AFTER the assumption clause does NOT suppress (position-bound)"
+TX="$TRANSCRIPT_DIR/t97g.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — byte-identical copy; Saar sorts out art; tests pass' u97g)"
+out=$(call cc97g sk97 "$TX" s97g)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]'; then ok "trailing evidence does not suppress — fires"; else no "trailing evidence does not suppress — must fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97h] assumption-self-close FIX 1: SILENT (regression) — evidence BETWEEN done and assumption still suppresses"
+TX="$TRANSCRIPT_DIR/t97h.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — verified 31/31 via manifest (Saar sorts column matched the source)' u97h)"
+out=$(call cc97h sk97 "$TX" s97h)
+if [ -z "$out" ]; then ok "positioned evidence still suppresses"; else no "positioned evidence still suppresses" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97i] assumption-self-close FIX 2: SILENT — 'user agrees this is complete' (present-confirmation verb excluded)"
+TX="$TRANSCRIPT_DIR/t97i.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — user agrees this is complete' u97i)"
+out=$(call cc97i sk97 "$TX" s97i)
+if [ -z "$out" ]; then ok "'user agrees' stays silent"; else no "'user agrees' must stay silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97j] assumption-self-close FIX 2: SILENT — 'Saar confirms receipt' (present-confirmation verb excluded)"
+TX="$TRANSCRIPT_DIR/t97j.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — Saar confirms receipt' u97j)"
+out=$(call cc97j sk97 "$TX" s97j)
+if [ -z "$out" ]; then ok "'Saar confirms' stays silent"; else no "'Saar confirms' must stay silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99g] feedback-ask-without-rubric FIX 5: FIRE — bare 'rubric' mention (no definition shape) still fires"
+TX="$TRANSCRIPT_DIR/t99g.jsonl"
+write_transcript "$TX" "$(assistant_text 'rubric file is attached for naming only; which wins?' u99g)"
+out=$(call cc99g sk99 "$TX" s99g)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "bare rubric mention does not suppress — fires"; else no "bare rubric mention must still fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101f] grabbed-baton-not-consulted FIX 3+4: FIRE — past-work marker lifts the debug-noun exclusion"
+out=$(call_p cc101f sk101 "$TX" s101f 'where is the export I generated before the regex refactor?')
+if emitted "$out" && echo "$out" | grep -q 'baton \[prompt_intent\]'; then ok "past-work marker + debug noun still fires"; else no "past-work marker + debug noun must fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101g] grabbed-baton-not-consulted FIX 3+4: SILENT — debug noun + past-marker-shaped phrase without a real past marker stays silent"
+out=$(call_p cc101g sk101 "$TX" s101g 'which file contains the generated helper that parses the canary transcript state before matching the regex?')
+if [ -z "$out" ]; then ok "no genuine past-work marker + debug noun stays silent"; else no "no genuine past-work marker + debug noun must stay silent" "got: $(echo "$out" | head -c200)"; fi
+
+# ======================================================================
+# Round-3 hardening (2026-07-07): 3 high-severity finds fixed in the same
+# 3 probes above. Each gets a FIRE test against the freshly updated
+# RLPROBES/EGPROBES/BPROBES mirrors, plus the keep-silent counterpart the
+# brief specifies (where one is specified).
+# ======================================================================
+
+echo "[97k] assumption-self-close ROUND-3 FIX: FIRE — deferral marker 'tomorrow' overrides evidence-token suppression"
+TX="$TRANSCRIPT_DIR/t97k.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — tests pass; Saar sorts out art tomorrow' u97k)"
+out=$(call cc97k sk97 "$TX" s97k)
+if emitted "$out" && echo "$out" | grep -q 'requirements-ledger \[forbidden_regex\]'; then ok "'tomorrow' deferral overrides evidence suppression — fires"; else no "'tomorrow' deferral must override evidence suppression — must fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[97l] assumption-self-close ROUND-3: SILENT (keep-silent counterpart) — no deferral marker, evidence present, stays silent"
+TX="$TRANSCRIPT_DIR/t97l.jsonl"
+write_transcript "$TX" "$(assistant_text 'done — verified 31/31 via manifest (Saar sorts column matched the source)' u97l)"
+out=$(call cc97l sk97 "$TX" s97l)
+if [ -z "$out" ]; then ok "no-deferral-marker verified-done stays silent"; else no "no-deferral-marker verified-done must stay silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99h] feedback-ask-without-rubric ROUND-3 FIX: FIRE — 'rubric: TBD; which wins?' placeholder value does not suppress"
+TX="$TRANSCRIPT_DIR/t99h.jsonl"
+write_transcript "$TX" "$(assistant_text 'rubric: TBD; which wins?' u99h)"
+out=$(call cc99h sk99 "$TX" s99h)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "'rubric: TBD' placeholder does not suppress — fires"; else no "'rubric: TBD' placeholder must not suppress — must fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[99i] feedback-ask-without-rubric ROUND-3 FIX: FIRE — 'criteria: none yet; which looks best?' placeholder value does not suppress"
+TX="$TRANSCRIPT_DIR/t99i.jsonl"
+write_transcript "$TX" "$(assistant_text 'criteria: none yet; which looks best?' u99i)"
+out=$(call cc99i sk99 "$TX" s99i)
+if emitted "$out" && echo "$out" | grep -q 'eval-gate \[forbidden_regex\]'; then ok "'criteria: none yet' placeholder does not suppress — fires"; else no "'criteria: none yet' placeholder must not suppress — must fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[101h] grabbed-baton-not-consulted ROUND-3 FIX: FIRE — 'where did we put the minis?' recall shape"
+out=$(call_p cc101h sk101 "$TX" s101h 'where did we put the minis?')
+if emitted "$out" && echo "$out" | grep -q 'baton \[prompt_intent\]'; then ok "'where did we put' recall shape fires"; else no "'where did we put' recall shape must fire" "got: $(echo "$out" | head -c200)"; fi
+
+# ======================================================================
+# fable-mode fable-repeated-failure: probe-specific regression against the
+# REAL shipped skills/fable-mode/drift_probes.json (not an inline copy, and
+# not the generic repeated_tool_error smoke test at [24]-[26] — an
+# adversarial review found those only exercised the DETECTOR via a narrow
+# literal pattern ["File has not been read yet"], never THIS probe's actual
+# pattern file). Mirrors [91]'s "load the real team-lead drift_probes.json"
+# style. Detector semantics are COUNT, not same-signature: 3 DISTINCT
+# failure classes must fire exactly like 3 of the same class would, and the
+# message must say only "stalling" — never assert same-signature semantics
+# (locked lesson: an earlier draft claimed "the same class of failure
+# recurred — stop retrying variations", which is false on 3 distinct
+# errors).
+# ======================================================================
+REAL_FABLE_PROBES="$(cat "$TOOLS_DIR/../../fable-mode/drift_probes.json")"
+mkdir -p "$SKILLS_ROOT/fm/fable-mode"
+printf '%s\n' "$REAL_FABLE_PROBES" > "$SKILLS_ROOT/fm/fable-mode/drift_probes.json"
+
+echo "[103a] fable-repeated-failure: 3 DISTINCT failure classes (not same signature) → fires (count semantics)"
+TX="$TRANSCRIPT_DIR/t103a.jsonl"
+write_transcript "$TX" \
+  "$(assistant_text 'running the build' u103a1)" \
+  "$(user_tool_error 'Segmentation fault (core dumped)')" \
+  "$(assistant_text 'retrying a different way' u103a2)" \
+  "$(user_tool_error 'Error: ENOENT no such file')" \
+  "$(assistant_text 'trying yet another approach' u103a3)" \
+  "$(user_tool_error 'Timed out after 30s')"
+out=$(call cc103a fm "$TX" s103a)
+if emitted "$out" && echo "$out" | grep -q 'fable-mode \[repeated_tool_error\]'; then ok "3 distinct failure classes fire (count semantics, not same-signature)"; else no "3 distinct failure classes should fire" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[103b] fable-repeated-failure: 2 matching errors → silent (min_count=3 boundary)"
+TX="$TRANSCRIPT_DIR/t103b.jsonl"
+write_transcript "$TX" \
+  "$(assistant_text 'running the build' u103b1)" \
+  "$(user_tool_error 'Segmentation fault (core dumped)')" \
+  "$(assistant_text 'retrying' u103b2)" \
+  "$(user_tool_error 'Error: ENOENT no such file')"
+out=$(call cc103b fm "$TX" s103b)
+if [ -z "$out" ]; then ok "2 matching errors stay silent (below min_count=3)"; else no "2 matching errors should stay silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[103c] fable-repeated-failure: 3 benign non-error tool_results mentioning 'errors' (plural) → silent (only is_error results are counted)"
+user_tool_result_ok() {
+  python3 -c "
+import json,sys
+print(json.dumps({'type':'user',
+                  'message':{'role':'user','content':[{'type':'tool_result','is_error':False,'content':sys.argv[1]}]}}))
+" "$1"
+}
+TX="$TRANSCRIPT_DIR/t103c.jsonl"
+write_transcript "$TX" \
+  "$(assistant_text 'summarizing the run' u103c1)" \
+  "$(user_tool_result_ok '3 errors were found in the log but all were handled gracefully')" \
+  "$(assistant_text 'more detail' u103c2)" \
+  "$(user_tool_result_ok 'no failures here — just some errors logged for visibility')" \
+  "$(assistant_text 'final note' u103c3)" \
+  "$(user_tool_result_ok 'errors, errors, errors — all benign, non-fatal')"
+out=$(call cc103c fm "$TX" s103c)
+if [ -z "$out" ]; then ok "benign non-error tool_results with 'errors' stay silent (is_error=False excluded from the count)"; else no "benign non-error tool_results should stay silent" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[103d] fable-repeated-failure: emitted message says 'stalling', and never asserts the retracted same-signature claim"
+TX="$TRANSCRIPT_DIR/t103d.jsonl"
+write_transcript "$TX" \
+  "$(assistant_text 'running the build' u103d1)" \
+  "$(user_tool_error 'Segmentation fault (core dumped)')" \
+  "$(assistant_text 'retrying a different way' u103d2)" \
+  "$(user_tool_error 'Error: ENOENT no such file')" \
+  "$(assistant_text 'trying yet another approach' u103d3)" \
+  "$(user_tool_error 'Timed out after 30s')"
+out=$(call cc103d fm "$TX" s103d)
+if emitted "$out" && echo "$out" | grep -qi 'stalling' && ! echo "$out" | grep -qi 'same class' && ! echo "$out" | grep -qi 'STOP retrying variations'; then
+  ok "message says 'stalling' and omits the retracted same-signature claim"
+else
+  no "message must say 'stalling' and must NOT claim same-signature semantics" "got: $(echo "$out" | head -c400)"
+fi
+
+echo "[104] Inline backtick PHRASE unwrapped: backtick-wrapped done-claim still triggers claim probe"
+PROBES='[{"id":"unverified","kind":"claim_without_evidence","claim_pattern":"(?i)\\b(done|fixed)\\b","verify_tools":["Bash"]}]'
+make_skill_with_probes sk104 uwp "$PROBES"
+TX="$TRANSCRIPT_DIR/t104.jsonl"
+python3 <<PY > "$TX"
+import json
+bt = chr(96)
+msg = f"{bt}Done and dusted.{bt}"
+print(json.dumps({"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":msg}]}}))
+PY
+out=$(call cc104 sk104 "$TX" s104)
+if emitted "$out" && echo "$out" | grep -q 'claim_without_evidence'; then ok "backtick-wrapped phrase claim still triggers"; else no "backtick-wrapped phrase claim still triggers" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[105] Quoted-args decoy: verify keyword inside a quoted Bash string is NOT evidence"
+PROBES='[{"id":"unverified","kind":"claim_without_evidence","claim_pattern":"(?i)\\b(done|fixed)\\b","verify_tools":["Bash"],"verify_keywords":["test","verified"]}]'
+make_skill_with_probes sk105 qad "$PROBES"
+TX="$TRANSCRIPT_DIR/t105.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Bash '{"command":"git commit -m \"verified and tested end to end\""}')" \
+  "$(assistant_text 'Done.' u105)"
+out=$(call cc105 sk105 "$TX" s105)
+if emitted "$out" && echo "$out" | grep -q 'claim_without_evidence'; then ok "quoted-string keyword decoy does not suppress claim probe"; else no "quoted-string keyword decoy does not suppress" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[106] requires_context_regex: probe stays silent when session lacks the context"
+PROBES='[{"id":"ai-only","kind":"claim_without_evidence","claim_pattern":"(?i)\\b(done|fixed)\\b","verify_tools":["Bash"],"verify_keywords":["render"],"requires_context_regex":"(?i)\\.ai\\b|illustrator|dump-paths"}]'
+make_skill_with_probes sk106 ctx "$PROBES"
+TX="$TRANSCRIPT_DIR/t106.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Edit '{"file_path":"/repo/README.md","old_string":"a","new_string":"b"}')" \
+  "$(assistant_text 'all done!' u106)"
+out=$(call cc106 sk106 "$TX" s106)
+if [ -z "$out" ] || ! echo "$out" | grep -q 'claim_without_evidence'; then ok "context-gated probe silent on docs-only session"; else no "context-gated probe silent on docs-only session" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[107] requires_context_regex: probe fires when session shows the context"
+TX="$TRANSCRIPT_DIR/t107.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Bash '{"command":"./cli/bin/screenery-design illustrator dump-paths --doc Space.ai"}')" \
+  "$(assistant_tool_use Edit '{"file_path":"/repo/parts.json","old_string":"a","new_string":"b"}')" \
+  "$(assistant_text 'all done!' u107)"
+out=$(call cc107 sk106 "$TX" s107)
+if emitted "$out" && echo "$out" | grep -q 'claim_without_evidence'; then ok "context-gated probe fires on .ai session"; else no "context-gated probe fires on .ai session" "got: $(echo "$out" | head -c200)"; fi
+
+echo "[108] new_machinery_no_borrow_checkpoint: new solver file with no checkpoint line fires"
+PROBES='[{"id":"borrow","kind":"new_machinery_no_borrow_checkpoint","message":"state what existing tool was checked before building bespoke machinery"}]'
+make_skill_with_probes sk108 le "$PROBES"
+TX="$TRANSCRIPT_DIR/t108.jsonl"
+write_transcript "$TX" \
+  "$(assistant_text 'Building a placement solver for this.' u108)" \
+  "$(assistant_tool_use Write '{"file_path":"/proj/src/placement_solver.py","content":"class Solver: pass"}')"
+out=$(call cc108 sk108 "$TX" s108)
+if emitted "$out" && echo "$out" | grep -q 'new_machinery_no_borrow_checkpoint'; then ok "new solver file, no checkpoint → fires"; else no "new solver file, no checkpoint → fires" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[109] new_machinery_no_borrow_checkpoint: same file WITH a borrow-checkpoint line stays silent"
+TX="$TRANSCRIPT_DIR/t109.jsonl"
+write_transcript "$TX" \
+  "$(assistant_text 'Checked build123d and CadQuery — neither offers a constraint solver that fits this geometry; building bespoke.' u109)" \
+  "$(assistant_tool_use Write '{"file_path":"/proj/src/placement_solver.py","content":"class Solver: pass"}')"
+out=$(call cc109 sk108 "$TX" s109)
+if [ -z "$out" ]; then ok "checkpoint present → silent"; else no "checkpoint present → silent" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[110] new_machinery_no_borrow_checkpoint: an ordinary file write stays silent"
+TX="$TRANSCRIPT_DIR/t110.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Write '{"file_path":"/proj/src/utils.py","content":"def helper(): pass"}')"
+out=$(call cc110 sk108 "$TX" s110)
+if [ -z "$out" ]; then ok "non-machinery filename → silent"; else no "non-machinery filename → silent" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[111] delegated_diagnosis: builder briefed to 'investigate why' fires"
+PROBES='[{"id":"deldiag","kind":"delegated_diagnosis","message":"diagnosis is frontier-tier work; spec it first"}]'
+make_skill_with_probes sk111 le "$PROBES"
+TX="$TRANSCRIPT_DIR/t111.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Agent '{"subagent_type":"builder","prompt":"Investigate why the export step fails on large files and fix it."}')"
+out=$(call cc111 sk111 "$TX" s111)
+if emitted "$out" && echo "$out" | grep -q 'delegated_diagnosis'; then ok "builder diagnosis brief → fires"; else no "builder diagnosis brief → fires" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[112] delegated_diagnosis: same brief to a frontier-tier agent stays silent"
+TX="$TRANSCRIPT_DIR/t112.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Agent '{"subagent_type":"frontier-advisor","prompt":"Investigate why the export step fails on large files."}')"
+out=$(call cc112 sk111 "$TX" s112)
+if [ -z "$out" ]; then ok "frontier-tier diagnosis brief → silent"; else no "frontier-tier diagnosis brief → silent" "got: $(echo "$out"|head -c200)"; fi
+
+echo "[113] delegated_diagnosis: spec-shaped builder brief stays silent"
+TX="$TRANSCRIPT_DIR/t113.jsonl"
+write_transcript "$TX" \
+  "$(assistant_tool_use Agent '{"subagent_type":"builder","prompt":"Root cause: exporter buffers whole file. Replace read() with 64KB chunked reads in export.py lines 40-55; gate: pytest tests/test_export.py."}')"
+out=$(call cc113 sk111 "$TX" s113)
+if [ -z "$out" ]; then ok "spec'd builder brief → silent"; else no "spec'd builder brief → silent" "got: $(echo "$out"|head -c200)"; fi
 
 # ----------------------------------------------------------------------
 echo

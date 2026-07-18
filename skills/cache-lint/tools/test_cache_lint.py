@@ -41,6 +41,7 @@ def test_dynamic_content_flagged() -> None:
         report = audit(root, rule_filter=2)
         flagged = [f for f in report.findings if f.rule == 2 and f.severity == "FAIL"]
         assert flagged, "should flag $(date) and {{env.USER}}"
+        assert all(f.suggested_action for f in flagged), f"dynamic findings need suggested_action: {flagged}"
 
 
 def test_inline_code_typography_not_flagged() -> None:
@@ -90,6 +91,56 @@ def test_model_switching_warns() -> None:
         report = audit(root, rule_filter=4)
         warns = [f for f in report.findings if f.rule == 4]
         assert warns, "multi-model setup should WARN"
+        assert warns[0].suggested_action, "model-switching WARN should include a report-only fix hint"
+
+
+def test_tool_surface_unused_flagged() -> None:
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        transcripts = root / "transcripts"
+        transcripts.mkdir()
+        _setup(root, {
+            ".mcp.json": json.dumps({
+                "mcpServers": {
+                    "server-a": {"command": "a"},
+                    "server-b": {"command": "b"},
+                }
+            }),
+            "transcripts/session.jsonl": '{"tool":"mcp__server-a__foo"}\n',
+        })
+        report = audit(root, rule_filter=7, transcripts_dir=transcripts)
+        warns = [f for f in report.findings if f.rule == 7 and f.severity == "WARN"]
+        assert any("server-b" in f.title for f in warns), f"unused server-b should WARN: {warns}"
+        assert not any("server-a" in f.title for f in warns), f"used server-a must not WARN: {warns}"
+        assert all(f.suggested_action for f in warns), f"rule 7 WARNs need suggested_action: {warns}"
+
+
+def test_tool_surface_no_transcripts() -> None:
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        transcripts = root / "missing-transcripts"
+        _setup(root, {
+            ".mcp.json": json.dumps({"mcpServers": {"server-a": {"command": "a"}}}),
+        })
+        report = audit(root, rule_filter=7, transcripts_dir=transcripts)
+        warns = [f for f in report.findings if f.rule == 7 and f.severity == "WARN"]
+        assert not warns, f"missing transcripts are absence of evidence, not unused: {warns}"
+        skips = [f for f in report.findings if f.rule == 7 and "usage mining skipped" in f.title]
+        assert len(skips) == 1, f"should emit one skip note, got: {report.findings}"
+
+
+def test_tool_surface_sanitized_names() -> None:
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        transcripts = root / "transcripts"
+        transcripts.mkdir()
+        _setup(root, {
+            ".mcp.json": json.dumps({"mcpServers": {"My Server": {"command": "server"}}}),
+            "transcripts/session.jsonl": '{"tool":"mcp__my-server__foo"}\n',
+        })
+        report = audit(root, rule_filter=7, transcripts_dir=transcripts)
+        warns = [f for f in report.findings if f.rule == 7 and f.severity == "WARN"]
+        assert not warns, f"sanitized transcript slug should match config name: {warns}"
 
 
 def test_fork_safety_fails_on_stop_hook_mutating_prefix() -> None:
@@ -138,6 +189,7 @@ def test_rule6_actual_write_still_flagged() -> None:
         report = audit(root, rule_filter=6)
         fails = [f for f in report.findings if f.rule == 6 and f.severity == "FAIL"]
         assert fails, "actual `>> CLAUDE.md` write must still FAIL"
+        assert fails[0].suggested_action, "rule 6 FAIL should explain the sidecar alternative"
 
 
 def test_rule6_follows_invoked_script() -> None:
@@ -402,6 +454,9 @@ def main() -> int:
         test_dynamic_in_code_fence_downgraded,
         test_tiny_prefix_warns,
         test_model_switching_warns,
+        test_tool_surface_unused_flagged,
+        test_tool_surface_no_transcripts,
+        test_tool_surface_sanitized_names,
         test_fork_safety_fails_on_stop_hook_mutating_prefix,
         test_rule6_read_only_is_not_flagged,
         test_rule6_actual_write_still_flagged,

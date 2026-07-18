@@ -5,8 +5,8 @@
 | field | tokens / size |
 |---|---|
 | description (always resident) | **70 tokens** (347 chars) |
-| body (loaded on trigger)      | **393 tokens** (1636 chars) |
-| tools/ payload                 | 44.5 KB |
+| body (loaded on trigger)      | **589 tokens** (2536 chars) |
+| tools/ payload                 | 33.9 KB |
 | model pin                      | `any` |
 | effort pin                     | `low` |
 
@@ -36,8 +36,26 @@ Raw: [`eval/results/output-filter.json`](../../eval/results/output-filter.json)
 
 ## Failure modes
 
-To be filled in after analysis of result outputs (see raw JSON for individual trial outputs).
+Premortem ([`LEARNING_CONTRACT`](../_shared/LEARNING_CONTRACT.md) §8):
+
+- **Silent-failure path** — the filter's job is to preserve error lines verbatim
+  while dropping everything else; if a future log format buries a failure signal in
+  a line shape the `ERROR`/`FAILED` matcher doesn't recognize, that line gets
+  collapsed as noise along with the progress-bar redraws, and the agent sees a
+  clean, quiet stream instead of the buried failure.
+- **Rot-when-unwatched** — the ANSI-stripping and dedup patterns are tuned against
+  today's CI/build tool output shapes; as build tools change their progress-bar
+  escape sequences or logging framework, the filter keeps running and keeps
+  producing SOME reduction, masking the fact that its actual signal/noise split
+  against the new format has drifted from the measured 88.8%/5-of-5 baseline.
+- **No-hooks host** — output-filter is "wire as a shell pipe or PostToolUse hook,"
+  not auto-installed; on a host where that wiring step was skipped, Bash stdout
+  reaches the agent raw and unfiltered, with no fallback path narrowing it.
 
 ## Measured gain (2026-06-13, `eval/gains.py`)
 
 **83.6% fewer tokens** on a realistic noisy build/test stream (redrawing progress bar + ANSI + cycling compile logs), with the `ERROR`/`FAILED` signal lines preserved verbatim (0% signal loss). Perf is locked by `eval/sims/hotpath_perf.py` (ANSI+dedupe on 10k hostile lines under a hard time budget).
+
+## Deterministic checks
+
+`python3 skills/output-filter/tools/test_output_filter.py` — 10 tests covering ANSI stripping, error preservation, content-aware search/log/diff summaries, raw archive rewind, `rewind --grep`, and opt-in recovery markers.

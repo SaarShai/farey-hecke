@@ -16,9 +16,27 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from extract import PATH_RE, iter_events, regex_extract  # noqa: E402
+from extract import PATH_RE, COMPROMISE_WORD_RE, iter_events, regex_extract  # noqa: E402
+
+
+def test_compromise_regex_balances_fp_and_fn():
+    # settled-for phrasing MATCHES; ordinary operational language does NOT
+    # (2026-07-05 cross-vendor review: first fix over-corrected FP into FN).
+    should_match = ["went with a temporary workaround", "temporary fix for auth",
+                    "temporarily disabled the check", "hacky stopgap", "quick fix for now",
+                    "settled for the simpler shape", "band-aid until the refactor"]
+    should_not = ["the temporary file is fine", "the service is temporarily unavailable",
+                  "this is the canonical solution", "a permanent fix landed"]
+    miss = [s for s in should_match if not COMPROMISE_WORD_RE.search(s)]
+    false_pos = [s for s in should_not if COMPROMISE_WORD_RE.search(s)]
+    assert not miss, f"false negatives: {miss}"
+    assert not false_pos, f"false positives: {false_pos}"
 
 _EXTRACT_PY = Path(__file__).parent.parent / "extract.py"
+_HOOK_WORKERS = [
+    Path(__file__).parent.parent / "hook.py",
+    Path(__file__).parent.parent / "archive.py",
+]
 
 
 def _write_jsonl(lines: list) -> str:
@@ -38,6 +56,96 @@ def _assistant(text: str) -> dict:
 
 def _user(text: str) -> dict:
     return {"type": "user", "message": {"role": "user", "content": text}}
+
+
+def test_hook_workers_reject_non_object_json_without_traceback():
+    failures = []
+    for worker in _HOOK_WORKERS:
+        proc = subprocess.run(
+            [sys.executable, str(worker)], input="[]", text=True,
+            capture_output=True, env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+        )
+        if proc.returncode != 0 or "Traceback" in proc.stderr:
+            failures.append((worker.name, proc.returncode, proc.stderr))
+    assert not failures, failures
+
+
+def test_hook_workers_normalize_typed_fields_without_traceback():
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        transcript = tmp / "valid.jsonl"
+        transcript.write_text(
+            json.dumps(_user("keep this context")) + "\n", encoding="utf-8",
+        )
+        env = {
+            **os.environ,
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "CLAUDE_PROJECT_DIR": str(tmp),
+            "TOKEN_ECONOMY_ROOT": str(tmp),
+        }
+
+        def run(worker: Path, payload: dict, expected_log: str = ""):
+            proc = subprocess.run(
+                [sys.executable, str(worker)], input=json.dumps(payload), text=True,
+                capture_output=True, env=env,
+            )
+            assert proc.returncode == 0, (worker.name, proc.stderr)
+            assert "Traceback" not in proc.stderr, (worker.name, proc.stderr)
+            assert "TypeError" not in proc.stderr, (worker.name, proc.stderr)
+            if expected_log:
+                assert expected_log in proc.stderr, (worker.name, proc.stderr)
+            return proc
+
+        hook, archive = _HOOK_WORKERS
+        for worker in _HOOK_WORKERS:
+            run(
+                worker,
+                {"transcript_path": {"truthy": "not-a-path"}},
+                "invalid-transcript-path type=dict",
+            )
+            run(worker, {"transcript_path": "\0"})
+
+        session_proc = run(
+            hook,
+            {"transcript_path": str(transcript),
+             "session_id": {"truthy": "not-a-session-id"},
+             "trigger": "manual"},
+            "invalid-session-id type=dict fallback='unknown'",
+        )
+        assert "structured memory saved" in session_proc.stdout, session_proc.stdout
+
+        trigger_proc = run(
+            hook,
+            {"transcript_path": str(transcript), "session_id": "typed-fields",
+             "trigger": {"truthy": "not-a-trigger"}},
+            "invalid-trigger type=dict fallback='auto'",
+        )
+        assert "structured memory saved" in trigger_proc.stdout, trigger_proc.stdout
+
+        nul_cwd_hook = run(
+            hook,
+            {"transcript_path": str(transcript), "cwd": "\0",
+             "session_id": "typed-fields", "trigger": "manual"},
+        )
+        assert "structured memory saved" in nul_cwd_hook.stdout, nul_cwd_hook.stdout
+
+        run(
+            archive,
+            {"transcript_path": str(transcript), "cwd": {"truthy": "not-a-cwd"}},
+            "invalid-cwd type=dict",
+        )
+        run(archive, {"transcript_path": str(transcript), "cwd": "\0"})
+        copied = tmp / ".brainer" / "sessions" / "raw" / transcript.name
+        assert copied.read_bytes() == transcript.read_bytes()
+
+        valid_hook = run(
+            hook,
+            {"transcript_path": str(transcript), "session_id": "typed-fields",
+             "trigger": "manual"},
+        )
+        assert "structured memory saved" in valid_hook.stdout, valid_hook.stdout
+        run(archive, {"transcript_path": str(transcript), "cwd": str(tmp)})
+        assert copied.read_bytes() == transcript.read_bytes()
 
 
 def test_malformed_lines_do_not_crash_or_block_extraction():
@@ -170,6 +278,54 @@ def test_bom_prefixed_frontmatter_parses():
     bom = "﻿" + plain
     assert _parse_frontmatter(plain).get("output_style") == "true"
     assert _parse_frontmatter(bom).get("output_style") == "true", "BOM defeated frontmatter parse"
+
+
+def test_loop_pass_memory_contract_extraction():
+    events = [_assistant(
+        "pass 47 of N\n"
+        "anchor_files: VISION.md, PROMPT.md, skills/loop-engineering/SKILL.md\n"
+        "state_store: work/LOOP-STATE.json revision abc123\n"
+        "verifier verdict: fail because tests still fail\n"
+        "attempts tried: patched parser -> failed on R8 warning\n"
+        "next action: add optimistic_revision state_concurrency\n"
+    )]
+    out = regex_extract(events)
+    assert "pass 47" in out.get("loop_passes", []), out
+    assert any("VISION.md" in x and "PROMPT.md" in x for x in out.get("loop_anchor_files", [])), out
+    assert any("LOOP-STATE.json" in x for x in out.get("loop_state_stores", [])), out
+    assert any("verifier verdict: fail" in x for x in out.get("loop_verdicts", [])), out
+    assert any("patched parser" in x for x in out.get("loop_attempts", [])), out
+    assert any("optimistic_revision" in x for x in out.get("loop_next_actions", [])), out
+
+
+def test_git_snapshot_iron_rule_and_provenance_tags():
+    # baton adoption 2026-07-01: snapshot embeds runtime git truth (Iron Rule)
+    # and tags narrative-derived sections as assumed, tool-derived as verified.
+    from extract import git_snapshot, render_markdown
+
+    # A non-repo dir fails soft — {} and no section, never a crash.
+    empty = tempfile.mkdtemp()
+    assert git_snapshot(empty) == {}
+
+    # This test file lives in a git repo — snapshot must carry a branch.
+    gs = git_snapshot(Path(__file__).resolve().parents[4])
+    assert gs.get("branch"), gs
+
+    regex_out = {
+        "commands_run": ["pytest -x"], "numbers": ["17 tests"],
+        "_confidence": {"commands_run": {"pytest -x": 0.9},
+                        "numbers": {"17 tests": 0.6}},
+    }
+    md = render_markdown(regex_out, {}, "s" * 16, "/t.jsonl",
+                         git_state={"branch": "main", "dirty_count": 1,
+                                    "dirty": [" M a.py"], "head": "abc123 msg"})
+    assert "Repo state (verified at snapshot — Iron Rule)" in md, md
+    assert "THIS section wins" in md, md
+    assert "Commands run (verified — from tool calls)" in md, md
+    assert "Key numbers (assumed — narrative-derived, unverified)" in md, md
+    # git_state omitted (non-repo) → section absent, no crash.
+    md2 = render_markdown(regex_out, {}, "s" * 16, "/t.jsonl", git_state={})
+    assert "Repo state" not in md2
 
 
 def main():

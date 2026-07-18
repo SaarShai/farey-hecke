@@ -1,6 +1,6 @@
 ---
 name: cache-lint
-description: Audit a Claude Code project for prompt-cache hygiene against Anthropic's six cache rules (ordering, dynamic-content injection, tool stability, model switching, breakpoint sizing, fork safety). Use before shipping new hooks or skills, after a costly session, or when cache-bust costs spike. Produces a typed report; exit codes signal pass / warn / fail.
+description: Audit a Claude Code project for prompt-cache hygiene against Anthropic's six cache rules (ordering, dynamic-content injection, tool stability, model switching, breakpoint sizing, fork safety), plus a rule-7 tool-surface audit (resident-but-unused MCP servers). Use before shipping new hooks or skills, after a costly session, or when cache-bust costs spike. Produces a typed report; exit codes signal pass / warn / fail.
 effort: low
 tools: [Bash, Read, Glob, Grep]
 pulse_reminder: prompt cache silently dies when CLAUDE.md grows dynamic content above a breakpoint. Run cache-lint before believing cache-hit numbers.
@@ -8,7 +8,7 @@ pulse_reminder: prompt cache silently dies when CLAUDE.md grows dynamic content 
 
 # cache-lint
 
-Static linter for prompt-cache hygiene. Reads a project's Claude Code surface (`CLAUDE.md`, `AGENTS.md`, `.claude/settings*.json`, hook configs, skill bodies) and checks for the six failure modes that silently bust Anthropic's prompt cache.
+Static linter for prompt-cache hygiene. Reads a project's Claude Code surface (`CLAUDE.md`, `AGENTS.md`, `.claude/settings*.json`, hook configs, skill bodies) and checks for the six failure modes that silently bust Anthropic's prompt cache. Findings include report-only `suggested_action` hints for cache alignment; the tool never rewrites carrier files.
 
 Lineage: [ussumant/cache-audit](https://github.com/ussumant/cache-audit) (52★) — same six-rule framing, applied per-project as a precheck.
 
@@ -34,6 +34,11 @@ python skills/cache-lint/tools/cache_lint.py audit .
 | 4 | Model switching | Switching Sonnet ↔ Haiku ↔ Opus busts cache (per-model namespace) | scan settings + hook configs for `model:` overrides on the hot path |
 | 5 | Breakpoint sizing | Very small or very large cached blocks waste cache budget | warn if CLAUDE.md > 4K tokens or < 1K (over-eager caching wastes a slot) |
 | 6 | Fork safety | Mutating a prefix mid-session corrupts forks | warn on writes to CLAUDE.md / settings.json by Stop / SessionEnd hooks |
+| 7 | Tool-surface audit (report-only) | Resident MCP tool schemas cost prefix tokens every turn and can degrade tool selection | warn on configured MCP servers with no observed `mcp__server__` usage in recent Claude Code transcripts |
+
+Rule 7 — tool-surface audit (report-only): resident tool schemas cost prefix tokens every turn and can degrade tool selection, so cache-lint flags configured-but-unused MCP servers using the minimal-tool-surface principle; Vercel cut 80% of v0's tools and improved results.
+
+**Scope boundary (by design, not a bug):** Rule 7 covers only **project-scoped** MCP servers — those declared in `.mcp.json` / `.claude/settings*.json` in the repo. It deliberately does **not** flag user-global servers (`~/.claude.json`) or host-injected session connectors (claude.ai connectors, plugin toolkits). Two reasons: (1) global servers are shared across every project, so per-repo transcript mining cannot prove a server is unused *anywhere* — it would emit false "unused" WARNs for a server that is heavy in another repo; (2) host-injected connectors appear in no config file the linter can read. Correct per-repo attribution is only possible for project-scoped config, so that is the only surface Rule 7 judges. (Measured 2026-07-03: this repo has 0 project servers, 1 global server across 51 project dirs — confirming a global check would be low-signal and unsound here.)
 
 ## Severity
 
@@ -75,6 +80,7 @@ python skills/cache-lint/tools/cache_lint.py audit . --list-targets
 
 - Doesn't read Anthropic's live cache stats — that's `ccmeter`'s job ([vnmoorthy/ccmeter](https://github.com/vnmoorthy/ccmeter)). cache-lint is **static**; ccmeter is **dynamic**. Pair them.
 - Doesn't transform files. It tells you; you fix it.
+- Doesn't move dynamic content automatically. `suggested_action` is an advisory hint, not an auto-fix plan.
 - Doesn't know about MCP-server-provided tools (they aren't in the repo). Tool stability is approximated from `skills/*/SKILL.md`.
 - Doesn't catch every form of dynamic content — regex heuristics only. A FAIL is high-confidence; an OK is "no smells detected," not a guarantee. In particular, legacy POSIX backtick command substitution is **not** checked — Markdown prose uses identical syntax for inline-code typography, and the false-positive rate is too high to be useful.
 
