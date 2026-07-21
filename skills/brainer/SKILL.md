@@ -10,7 +10,7 @@ host_support: [claude, codex, gemini, generic]
 side_effects: [reads_repo]
 requires_tools: [read]
 effort: low
-pulse_reminder: select the smallest sufficient optional set from REFERENCE.md; method exports may be partial, whole skills may not; no selection is valid and /brainer grants no new authority.
+pulse_reminder: select the smallest sufficient optional set from REFERENCE.md; report optional methods and governing execution route as separate fields before task tools; optional methods none never means route direct; /brainer grants no new authority.
 ---
 
 # brainer — task-local optional-skill selection
@@ -32,7 +32,11 @@ to list skills. Do not keep it armed for later unrelated tasks.
 
 1. Read [`REFERENCE.md`](REFERENCE.md) completely. It is the on-demand selection
    index; the short resident skill descriptions are not enough for
-   instruction-level selection.
+   instruction-level selection. Also classify explicitly referenced
+   task-defining artifacts—such as a baton, committed spec, or task packet—as
+   selection bootstrap and read them before any final authority-dependent
+   selection. If one is discovered later, selection that depends on its
+   authority remains provisional until it has been read.
 2. Identify observable task needs—not keywords—including uncertainty,
    unresolved decisions, scope risk, iterative verification, evaluation,
    handoff, learning, or cross-repo coordination. Reassess only when the task
@@ -52,14 +56,15 @@ to list skills. Do not keep it armed for later unrelated tasks.
    - **authority-gated** — check whether the task already supplies the named
      authority. If yes, load and follow the complete source skill. If not,
      recommend the route without executing it.
-5. A selected skill's own mandatory routes, prerequisites, and conflict rules
-   remain authoritative. User instructions and project rules outrank this
-   selector.
+5. Resolve the governing execution route independently of optional-method
+   selection. User instructions, applicable `AGENTS.md` files, project rules,
+   and a selected skill's mandatory routes outrank this selector. Declining an
+   optional skill does not cancel a mandatory route imposed by that authority.
 6. Before any task-specific investigation or task tool call, state the final
-   selection compactly in the first useful progress update: skill or exact
-   exported method, the task signal it addresses, and whether an authority gate
-   was satisfied or deferred. Reads needed to obey higher-priority instructions
-   or to complete steps 1–5 are selection bootstrap, not task investigation.
+   selection and execution route as separate fields in the first useful progress
+   update: `Brainer optional methods: <ids|none>. Routing: <governing receipt>.`
+   Optional methods `none` never means route `direct`. Reads needed to obey
+   higher-priority instructions or to complete steps 1–5 are selection bootstrap.
    Then perform the behavior; do not recite the index. A selection reported only
    after the work is explanatory bookkeeping, not valid `/brainer` routing.
 7. At a real phase transition—such as diagnosis to implementation or
@@ -142,9 +147,5 @@ judgment.
 
 - [`think`](../think/SKILL.md) — first skill exporting independently selectable
   methods.
-- [`plan-first-execute`](../plan-first-execute/SKILL.md) — complete planning
-  workflow when the task meets its threshold.
-- [`wayfinder`](../wayfinder/SKILL.md) — complete decision-recovery workflow for
-  a known destination with a foggy route.
 - [`learn-skill`](../learn-skill/SKILL.md) — authors skills only when separately
   authorized; it is not the selector.

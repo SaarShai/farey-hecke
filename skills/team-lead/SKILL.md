@@ -29,7 +29,7 @@ criteria, proxy evidence, or claims done mid-closeout.)
 
 ## 1. Plan (leader, in-context)
 
-Run [`plan-first-execute`](../plan-first-execute/SKILL.md). Output must include:
+Output must include:
 
 - **Lane decomposition** — independent pieces that do NOT touch the same files.
   Two lanes sharing a file = one lane, or worktree-isolate both.
@@ -64,6 +64,14 @@ domain lanes to this table (e.g. screenery-lean routes `.ai` edits to its
 `bracket` planner/executor/judge) — domain tables extend this one, they don't
 replace the protocol.
 
+**Interrupt-immune dispatch (hard).** App-mutating or >~2-min lanes MUST
+launch through [`skills/_shared/detached_lane.sh`](../_shared/detached_lane.sh)
+(launch/status file contract), never as killable harness subagents — the
+desktop harness cascades main-loop interrupts to ALL background subagents
+under a "stopped by the user" mislabel. Full rule, mechanism, and
+revert-first respawn contract: [`ORCHESTRATION.md §7`](../_shared/ORCHESTRATION.md);
+applies together with §6's checkpoint-each-verified-lane discipline.
+
 **Backend canary preflight.** Before recording lane routing for a multi-lane
 run, canary each backend with one trivial task proving TOOLS actually work
 (shell present, files readable) — reply `CANARY: OK` or `CANARY: DEGRADED`; a
@@ -91,12 +99,13 @@ identical.
 Hooks, canaries, and skills do NOT fire inside subagents — the brief must carry
 everything. Render it with
 [`skills/_shared/brief_header.py`](../_shared/brief_header.py)
-(`--task … --scope … --skills …`), which emits the GOAL / IN-SCOPE /
-OUT-OF-SCOPE / GATE block; then add per-lane:
+(`--task … --scope … --out-of-scope … --skills …`), which emits the GOAL /
+IN-SCOPE / OUT-OF-SCOPE / GATE block; then add per-lane:
 
 ```
 CONSTRAINTS: <inlined skill directives the lane needs — save rules, naming, style>
 DONE MEANS: <≤5 verifiable criteria>
+VERIFY: <exact command or source-grounded check that proves DONE MEANS>
 MAX ITERATIONS: 2, then stop and report blockers.
 ```
 
@@ -107,8 +116,10 @@ file evidence before editing — silent compliance is a lane defect.
 **User-supplied literals go in VERBATIM** (ORCHESTRATION §6): every concrete
 value the user gave — path, filename, ID, threshold — is pasted
 character-for-character; never elide ("…"), abbreviate, or paraphrase it. Gate
-the composed brief with `python3 skills/_shared/brief_header.py --lint-brief -`
-(exit 1 = elided literal found; fix before dispatch).
+the composed brief with
+`python3 skills/_shared/brief_header.py --lint-brief - --strict-contract`
+(exit 1 = a missing/placeholder contract field or elided literal; fix before
+dispatch).
 
 Brief altitude follows ORCHESTRATION §6: spec-shaped for cheap lanes,
 goal-shaped for frontier lanes. The template above is altitude-neutral — GOAL,
@@ -170,17 +181,13 @@ Catching yourself doing bulk mechanical edits — stop, brief a builder.
 
 ## 6. When NOT to use this
 
-- Task is a one-sentence diff → just do it (plan-first-execute bypass).
+- Task is a one-sentence diff → just do it.
 - Unattended/scheduled regeneration loop → `loop-engineering` first.
 - Conversational / analysis-only turns → no fleet, just answer.
 
-**Proportionality (the anti-ceremony gate).** Delegation has a fixed cost
-(brief + spawn + cold-verify round-trip). If that cost exceeds doing the task
-and self-evidencing it, the protocol is net-negative — a "critical" *label* on
-a tiny task does not change its size. The leader may type a change small enough
-that a brief+verify would cost more than the fix, PROVIDED it still produces
-fresh evidence (run the test/lint, quote it) — cold-verify guards the leader's
-*judgment*, not its keystrokes. `prompt-triage` (per-prompt model routing) and
-team-lead (per-task lane decomposition) can both fire; **triage wins for a
-single-shot task, team-lead for genuinely decomposable multi-lane work** —
-don't run both on one small ask.
+**Proportionality (the anti-ceremony gate).** Apply it only when
+[`ORCHESTRATION.md §6`](../_shared/ORCHESTRATION.md#6-architect-cost-discipline-frontier-tier-orchestrator)
+does not mandate a route. It never overrides SPEC'D+GATED delegation: an
+expected diff of 30+ lines closes the direct-execution exception regardless of
+dispatch cost. Direct work is limited to a one-sentence change or the explicit
+~<30-line judgment-dense exception in the canonical contract.

@@ -20,9 +20,12 @@ Maximize work not done. Keep only steps that reduce risk, gather needed facts, i
 4. Understand before deleting: if the reason for a step or codepath is unclear, preserve or inspect narrowly.
 5. Prefer the smallest reversible action that produces value or evidence.
 6. Scope simplification to the active task; avoid drive-by refactors.
-7. Delegate only when saved main-context/tool cost exceeds orchestration overhead.
+7. For routes not mandated by `ORCHESTRATION.md §6`, delegate only when saved main-context/tool cost exceeds orchestration overhead.
 8. Stop and simplify when a workflow starts creating more artifacts than outcome.
 9. Verify with the cheapest sufficient check.
+
+Frontier-tier routing is governed by the hard economy invariant in
+[`ORCHESTRATION.md §6`](../_shared/ORCHESTRATION.md#6-architect-cost-discipline-frontier-tier-orchestrator); this skill's proportionality rule is its anti-ceremony exception, not a routine-work escape hatch.
 
 ## Keep
 

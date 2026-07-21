@@ -58,7 +58,8 @@ Exactly three places, all machine-resolvable and refreshable:
 
 A versioned model name in skill *prose* is a defect unless it is a measured-
 evidence citation (e.g. "judge X false-passed on model Y" — evidence keeps its
-exact name). Dispatch instructions always speak in tiers.
+exact name) or a clearly labelled, non-exhaustive scope example in a durable
+user policy. Dispatch instructions always speak in tiers.
 
 ## 5. The dispatch contract (any host, any vendor)
 
@@ -69,7 +70,49 @@ final message** — fire-and-forget returns nothing a gate can read. Verifiers a
 loop. Cross-vendor egress goes through redaction + consent
 (`model_roster.render_prompt`; loop_lint R12).
 
+**Kill-safety line (external mutable state).** A brief for any lane that
+holds external mutable state (open documents, GUI apps, live services) must
+state what happens if the lane dies at any instant — what is stranded, and
+the recovery step. No kill-safety line → the lane doesn't dispatch. (§7 is
+the dispatch mechanism this pairs with; the line is the design-time check.)
+
+**Measure-before-fix (owner-ratified 2026-07-20).** No repair lane
+dispatches without (a) a diagnostic receipt — a measured diff of actual vs
+ground truth AT THE TARGET STATE, produced before the fix — and (b) the
+ground-truth artifact cited as the repair target. "Restore how it was" is
+never a repair spec. Evidence: two same-day shear repairs shipped defects
+running ahead of ground truth; the third, sequenced behind a diff table +
+gate-verified export, was surgical on dispatch. Mechanical enforcement
+precedent: screenery-lean's release-controller lint rejects fix-class
+contracts lacking a diagnostic receipt.
+
 ## 6. Architect cost discipline (frontier-tier orchestrator)
+
+**Frontier economy invariant (hard).** This applies whenever the driving model
+is top/frontier tier — including the current Fable 5 and GPT-5.6 Sol xhigh
+class, and any equal-or-better future model. Spend its context on deep
+reasoning, diagnosis, architecture, decomposition, planning, synthesis, and
+final judgment. Route bounded research, summarization, extraction,
+classification, bulk reads, mechanical edits, boilerplate, and spec'd
+execution to the cheapest reachable capable tier. Do not delegate when the task
+is inseparable from live context or no suitable lane is reachable. Outside a
+mandatory route below, compare end-to-end delegation cost with direct execution.
+The sole cost/size exception to SPEC'D+GATED delegation is the ~<30-line
+judgment-dense fix below; an expected diff of 30+ lines closes it regardless of
+dispatch cost. Never delegate unresolved diagnosis or semantic invention to a
+weaker lane merely to save tokens.
+
+**End-to-end ownership invariant (hard).** For non-trivial decomposable work,
+create one measurable goal covering architecture, implementation, tests,
+review, and final verification. Split it into independent, non-colliding lanes;
+each lane gets a goal, expected deliverable, verification gate, and done
+criteria. Run the cheapest capable lanes concurrently while continuing
+unblocked lead work. Track results as they return, intervene when a lane drifts
+or lacks context, synthesize the outputs, resolve conflicts, and verify material
+boundaries live. Use the host's goal mechanism when available; otherwise put
+the goal in the plan or lane brief — a literal `/goal` command is not portable.
+Commit only when authorized and ready. Partial progress is not a stopping
+condition; stop only for missing authority or a genuine blocker.
 
 When the orchestrating session itself runs a frontier-tier model, **invert the
 token volume**: the expensive model emits judgment — decomposition, specs,
@@ -103,6 +146,16 @@ structural savings on a 17-lane run (team-lead/EVAL.md), which lands inside the
 
 Rules:
 
+- **Route before mutation (hard).** Before the first root or child mutation,
+  record one receipt: task-defining artifacts read, `SPEC'D`, `GATED`, expected
+  size, governing authority, route, execution owner, and claimed exception.
+  Applicable `AGENTS.md` and project rules override a generic
+  no-proactive-subagent default. Speed pressure may change lane count, brief
+  size, or concurrency, never a mandatory route; retain proportionality and
+  the ~<30-line judgment-dense exception. Refresh the receipt when later
+  artifacts change authority. If mutation or required delegation came first,
+  stop, record the breach, refresh, delegate remaining bounded work, and cold-
+  review premature edits; later delegation is not retroactive compliance.
 - **Route by SPEC'D × GATED, not size.** SPEC'D = a written spec states the
   root cause (for fixes) or exact construction (for features) such that
   execution needs no semantic invention — "figure out why X" is NOT a spec.
@@ -219,6 +272,31 @@ Rules:
   stash created, HEAD moved, or a dirty file reverted-to-HEAD is a FAIL that
   quarantines that lane's report until the tree is reconciled (never
   self-absorbed as "looks fine").
+
+## 7. Interrupt-immune (detached) lanes
+
+**RULE (hard).** Any lane that mutates external application state (open
+documents, GUI apps, live services) or runs >~2 min, on a host with the
+interrupt-cascade behavior recorded in `HOST_CAPABILITY_MATRIX.md`, MUST be
+dispatched via [`detached_lane.sh`](detached_lane.sh) launch/status, never as
+a killable harness Agent-tool/background subagent. Results come back only
+through the `.done`/`.exit`/log file contract — poll `status` from a
+heartbeat, never assume harness-native progress reporting is reliable for
+these lanes.
+
+**Why.** 2026-07-20 (session af48da1c): the Claude desktop harness cascaded a
+main-loop interrupt (a stray user "ping" mid-turn) to ALL running
+background subagents, killing an Illustrator-mutating lane mid-work with
+unsaved edits — then mislabeled it "stopped by the user" in the transcript.
+`detached_lane.sh` launches via `setsid(2)` (Python `start_new_session=True`),
+so the spawned process is its own session leader and survives a SIGINT/
+SIGTERM/SIGHUP blast to the launcher's group.
+
+**Respawn briefs for external-app lanes** (Illustrator, Figma, any GUI app
+with unsaved state) MUST lead with a revert/recover step before resuming
+work — STEP 0 = File > Revert (or the app's equivalent discard-unsaved-state
+action) — never assume the last-seen state is still on disk/in-app; a killed
+lane may have left partial, unsaved mutations.
 
 (Adapted from DannyMac180/fable-advisor, MIT — generalized from concrete
 models to tiers.)

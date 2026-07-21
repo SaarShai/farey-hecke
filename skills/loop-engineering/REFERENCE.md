@@ -10,7 +10,7 @@ enough for the loop shape you're building — not on every trigger.
 
 Use the four-loop stack as a diagnosis before adding machinery:
 
-1. **Agent loop** — model ↔ tools until a result exists — the ordinary work loop; for a single bounded task, [`plan-first-execute`](../plan-first-execute/SKILL.md) plus [`verify-before-completion`](../verify-before-completion/SKILL.md) is usually enough.
+1. **Agent loop** — model ↔ tools until a result exists — the ordinary work loop; for a single bounded task, [`verify-before-completion`](../verify-before-completion/SKILL.md) is usually enough.
 2. **Verification loop** — grader/rubric/test sends feedback back to the agent. This skill names the verifier and gate; [`eval-gate`](../eval-gate/SKILL.md) handles judgment rubrics when deterministic tests cannot express "good enough".
 3. **Event loop** — a trigger (cron, webhook, inbox/channel, file watcher) starts the verified agent loop repeatedly. This is deployment wiring, not new autonomy: the same loop spec still needs harness pre-flight, a gate, stop, budget, permissions audit, and human approval before irreversible actions.
 4. **Hill-climbing loop** — traces from repeated runs feed a separate analysis pass that proposes harness improvements. Never let this loop self-merge. It should produce a reviewed patch, or when project learning is armed, a lesson routed through [`task-retrospective`](../task-retrospective/SKILL.md), [`write-gate`](../write-gate/SKILL.md), and [`wiki-memory`](../wiki-memory/SKILL.md).
@@ -86,11 +86,7 @@ A fleet converges two ways, and the doc above only named one. **SELECT** — a v
 
 ## Instrument before you scale
 
-**You cannot improve a loop you do not measure** — instrument the gate (iteration count, pass rate, failure reasons, per-step cost/success) BEFORE you scale, or you are just generating wrong answers faster. The metric that matters is **cost per accepted change**, not tokens spent — under ~50% accepted means the loop is making review work, not saving it. Add cheap deterministic **stuck detectors** distinct from the correctness gate, with concrete thresholds: **same command 3×, same error 2× (the `repeated_tool_error` probe), or 2 iterations with no metric movement = stuck.** Emit the iteration trace as JSON and run `loop_run_monitor.py` against it:
-
-```bash
-python3 skills/loop-engineering/tools/loop_run_monitor.py trace.json
-```
+**You cannot improve a loop you do not measure** — instrument the gate (iteration count, pass rate, failure reasons, per-step cost/success) BEFORE you scale, or you are just generating wrong answers faster. The metric that matters is **cost per accepted change**, not tokens spent — under ~50% accepted means the loop is making review work, not saving it. Add cheap deterministic **stuck detectors** distinct from the correctness gate, with concrete thresholds: **same command 3×, same error 2× (the `repeated_tool_error` probe), or 2 iterations with no metric movement = stuck.** Emit the iteration trace as JSON so a stuck detector can gate on it.
 
 **Liveness doctrine for monitors:** no per-command kill ceilings — long
 suites are legitimate work; liveness = output growth + process activity,

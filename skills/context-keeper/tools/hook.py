@@ -17,6 +17,27 @@ def log_err(msg: str) -> None:
     sys.stderr.write(f"{ts} context-keeper: {msg}\n")
 
 
+def resolve_project_root(payload: dict) -> Path | None:
+    payload_cwd = payload.get("cwd")
+    if payload_cwd is not None and not isinstance(payload_cwd, str):
+        log_err(f"invalid-cwd type={type(payload_cwd).__name__}")
+    candidates = (
+        ("payload", payload_cwd),
+        ("CLAUDE_PROJECT_DIR", os.environ.get("CLAUDE_PROJECT_DIR")),
+        ("process", os.getcwd()),
+    )
+    for source, candidate in candidates:
+        if not isinstance(candidate, str) or not candidate:
+            continue
+        try:
+            path = Path(candidate)
+            if path.is_dir():
+                return path
+        except (ValueError, OSError) as e:
+            log_err(f"invalid-cwd source={source} error={type(e).__name__}")
+    return None
+
+
 def main() -> int:
     raw = sys.stdin.read()
     if not raw.strip():
@@ -65,8 +86,13 @@ def main() -> int:
         log_err(f"extract.py-missing at={extract_py}")
         return 0
 
+    project_root = resolve_project_root(payload)
+    if project_root is None:
+        log_err("no-resolvable-cwd")
+        return 0
+
     env = os.environ.copy()
-    env.setdefault("TOKEN_ECONOMY_ROOT", str(Path(__file__).resolve().parents[3]))
+    env["TOKEN_ECONOMY_ROOT"] = str(project_root)
 
     try:
         subprocess.run(
@@ -80,6 +106,26 @@ def main() -> int:
         log_err(f"extract-timeout sid={sid} trigger={trigger}")
     except Exception as e:  # never crash the host
         log_err(f"extract-error: {e!r}")
+
+    # Second piggyback point for the staleness sweep (see sweep.py): PreCompact
+    # fires reliably on hosts where SessionEnd never does. Bounded, not
+    # detached — hook-safety requires every subprocess to own a timeout, and
+    # compaction already tolerates the extract call's 30s bound above.
+    sweep_py = Path(__file__).parent / "sweep.py"
+    if sweep_py.is_file():
+        try:
+            subprocess.run(
+                [sys.executable, str(sweep_py), str(project_root), sid],
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=20,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            log_err(f"sweep-timeout sid={sid}")
+        except Exception as e:  # never crash the host
+            log_err(f"sweep-launch-error: {e!r}")
     return 0
 
 

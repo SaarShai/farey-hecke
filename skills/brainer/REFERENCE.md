@@ -15,16 +15,17 @@ skills remain authoritative.
   it. `/brainer` alone never satisfies the gate, but the task text following it
   can. For example, `/brainer Sync the committed Brainer change to all consumer
   repos` satisfies `propagate` and selects `propagate:whole`; `/brainer Review
-  this Brainer change` does not authorize propagation.
+  this Brainer change` does not authorize propagation. Applicable `AGENTS.md`
+  and project rules are also governing authority. A route they make mandatory
+  survives decline of an optional skill; when a referenced task-defining
+  artifact has not yet resolved the authority, treat the candidate as deferred
+  or provisional rather than declined.
 
 ## Reasoning and execution
 
 | Need or observable signal | Source | Mode | What may be selected | Avoid when |
 |---|---|---|---|---|
 | A premise may be wrong; a build should be borrowed, constrained, or cheaply falsified; a causal or risky decision needs deliberate reasoning | [`think`](../think/SKILL.md#exported-methods-for-brainer) | `method` | Choose only matching IDs from **Think method exports** below | Clear mechanical work with no consequential uncertainty |
-| Destination is known but unresolved decisions or unformulated fog prevent a gradeable plan | [`wayfinder`](../wayfinder/SKILL.md#when-to-use) | `whole` | Complete destination/map/ticket/frontier/handoff workflow | A complete spec or ordinary task list already exists |
-| Work is unclear, risky, architectural, multi-file, or exceeds a small one-sentence change | [`plan-first-execute`](../plan-first-execute/SKILL.md#spec-first-checkpoint) | `whole` | Complete confidence, spec, plan, execution, and convergence contract | Clear low-risk one-sentence diff |
-| Scope is widening, abstraction is premature, or the implementation needs aggressive pruning | [`lean-execution`](../lean-execution/SKILL.md#protocol) | `whole` | Complete pruning protocol | The requested scope is already minimal and direct |
 | A meaningful completion claim needs evidence beyond the compact default check | [`verify-before-completion`](../verify-before-completion/SKILL.md#verify-before-completion) | `whole` | Complete claim-layer verification workflow | No changed artifact or externally checkable claim |
 | Repeated generation/checking needs a machine gate, budget, and stop rule | [`loop-engineering`](../loop-engineering/SKILL.md#do-you-even-need-a-loop) | `whole` | Complete loop design and lint contract | One pass or a normal test command is sufficient |
 
@@ -63,18 +64,17 @@ Use the exact `think:<id>` form in the final selection:
 
 | Signal | Source | Mode | Additional authority required |
 |---|---|---|---|
-| Separable parallel work would benefit from builders or a cold verifier | [`team-lead`](../team-lead/SKILL.md#6-when-not-to-use-this) | `authority-gated` | The user or governing task must authorize subagents/delegation |
+| Applicable governing authority requires delegation, or separable work would benefit from builders or a cold verifier | [`team-lead`](../team-lead/SKILL.md#6-when-not-to-use-this) | `authority-gated` | The user or governing task must authorize delegation; applicable `AGENTS.md` is governing authority |
 | A completed recurring procedure appears worth packaging | [`learn-skill`](../learn-skill/SKILL.md#when-to-use) | `authority-gated` | The user must ask to capture/create a skill; dedup and write-gate still apply |
 | Work should continue in another session or agent | [`baton`](../baton/SKILL.md#when-to-use) | `authority-gated` | The task must actually request or require a handoff artifact |
 | Canonical Brainer changes should reach consumer repositories | [`propagate`](../propagate/SKILL.md#preconditions-hard) | `authority-gated` | Explicit propagate/sync/rollout scope and a committed canonical change |
 | The user wants an after-the-fact learning audit | [`task-retrospective`](../task-retrospective/SKILL.md#hard-boundary) | `authority-gated` | Explicit `/retro`, task-retrospective, or repeat-and-learn intent |
 | The user wants Brainer usage itself audited | [`brainer-audit`](../brainer-audit/SKILL.md#trigger-model) | `authority-gated` | Explicit Brainer-audit/session-audit intent |
-| The task changes prompts, skills, harnesses, or other self-improving machinery | [`self-improvement-loops`](../self-improvement-loops/SKILL.md#when-to-use) | `authority-gated` | The task must explicitly place agent machinery optimization in scope |
 
 ## Not selected by `/brainer` alone
 
-Evaluation-arm skills require their own literal request: `caveman-ultra`,
-`fable-mode`, `prompt-triage`, `requirements-ledger`, and `standing-orders`.
+Evaluation-arm skills require their own literal request: `caveman-ultra` and
+`prompt-triage`.
 Their retained experimental status is not a recommendation.
 
 Default or mechanical facilities continue under their ordinary triggers:
@@ -84,14 +84,16 @@ does not suppress, duplicate, or report them as discretionary selections.
 
 ## Conflict order
 
-1. User instructions and project rules.
+1. User instructions, applicable `AGENTS.md` files, and project rules.
 2. Safety and authority boundaries.
 3. A selected source skill's mandatory routes and full-contract rules.
 4. `/brainer` method choices.
 
 When two optional choices address the same failure, keep the narrower one. When
 their instructions conflict, do not blend them: follow the higher item above or
-surface the unresolved choice.
+surface the unresolved choice. Declining an optional choice never suppresses a
+mandatory route required by governing authority.
 
-Final identifiers are `<skill>:<export-id>`, `<skill>:whole`, or `none`; bare
-skill names are invalid.
+Final optional-method identifiers are `<skill>:<export-id>`, `<skill>:whole`, or
+`none`; bare skill names are invalid. Always label this field "optional methods":
+`none` is not an execution route.

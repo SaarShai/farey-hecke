@@ -103,8 +103,7 @@ class BrainerReferenceTests(unittest.TestCase):
             self.assertIn(f"`{export_id}`", think)
             self.assertIn(f"`{export_id}`", text)
         for name in (
-            "caveman-ultra", "fable-mode", "prompt-triage",
-            "requirements-ledger", "standing-orders", "compliance-canary",
+            "caveman-ultra", "prompt-triage", "compliance-canary",
             "context-keeper", "semantic-diff", "wiki-memory", "write-gate",
         ):
             self.assertIn(f"`{name}`", text)
@@ -146,6 +145,15 @@ class BrainerReferenceTests(unittest.TestCase):
         self.assertEqual(
             ["task work preceded final selection"], source_order_errors(events)
         )
+
+    def test_governing_authority_precedence_is_explicit(self) -> None:
+        skill = SKILL.read_text(encoding="utf-8")
+        reference = REFERENCE.read_text(encoding="utf-8")
+        self.assertIn("applicable `AGENTS.md`", skill)
+        self.assertIn("applicable `AGENTS.md`", reference)
+        self.assertIn("mandatory route required by governing authority", reference)
+        self.assertIn("Optional methods `none` never means route `direct`", skill)
+        self.assertIn('`none` is not an execution route', reference)
 
     def test_consumer_verification_marks_missing_checks_unavailable(self) -> None:
         text = SKILL.read_text(encoding="utf-8")
