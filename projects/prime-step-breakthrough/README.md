@@ -100,6 +100,8 @@ features.
 - [`artifacts/ECONOMIC_DECISION_2026-08-01.md`](artifacts/ECONOMIC_DECISION_2026-08-01.md):
   the current no-go/paid-pilot economic decision, including the negative
   production-order baseline result and scenario-value calculations.
+- [`artifacts/HUMAN_WORKFLOW_PILOT_RUNBOOK.md`](artifacts/HUMAN_WORKFLOW_PILOT_RUNBOOK.md):
+  the participant-ready runbook for the remaining real-workflow evidence gate.
 - [`prospective_uci_blind.py`](prospective_uci_blind.py) and
   [`pilots/uci-optdigits-2026-08-01-label-blind-v2/`](pilots/uci-optdigits-2026-08-01-label-blind-v2/):
   a label-blind freeze/reveal study for the UCI audit workload.  It is
