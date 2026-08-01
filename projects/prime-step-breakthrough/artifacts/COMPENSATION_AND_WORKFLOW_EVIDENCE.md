@@ -72,3 +72,14 @@ No operational marketing claim is permitted until a preregistered participant
 study shows a positive paired time/cost effect, noninferior error/adjudication,
 and conservative value after all overhead on at least three frozen workloads
 and one professional workflow.
+
+## External calibration candidate
+
+The University of Southampton's public [Weather Sentiment Mechanical Turk
+dataset](https://eprints.soton.ac.uk/376543/) contains 6,000 classifications of
+300 tweets by 110 workers, with worker labels, gold labels, and time spent for
+each judgment. It is a possible independent source for calibrating annotation
+time and error distributions. It is **not** evidence that this certificate
+changes human time: it has no committed production/random/quota comparison from
+this project and is not a customer workflow. Any use must preserve its
+provenance and license and must not be relabeled as our pilot.
