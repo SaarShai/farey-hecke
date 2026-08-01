@@ -1,0 +1,20 @@
+{
+  "cohort_digest": "932edfc21d60a41873e0bd5ef0b3a65bf581a82016b788bc5c8c05d0a4c98812",
+  "conditions": [
+    "production",
+    "seeded_random",
+    "quota_balanced"
+  ],
+  "dataset_archive_sha256": "0d7b054fea010270e9b3f06411c654c5e59547732ad626381980baffe0a23fb0",
+  "freeze_sha256": "43af5bdcc36bc1d53fbdd6aca5781ad65e00ddcbf39c222d9eed1679cc25c7f8",
+  "item_count": 100,
+  "labels_read": false,
+  "manifest_sha256": {
+    "manifest-production.json": "84b22ab4c45644942debac1c35440346bada71bc39db8f2d4abf11b66e25feb2",
+    "manifest-quota_balanced.json": "ccf83b2efa16a47abc219c03621569a1dc0610a89af43d75020165f7ab79549d",
+    "manifest-seeded_random.json": "a33d448fec40ca4ad5d2b640def4945b985bec51d663bdcf6fddb3b30a99a99b"
+  },
+  "outcome_state": "ABSENT_BY_DESIGN",
+  "per_prediction": 10,
+  "schema": "uci-human-workflow-manifest-v1"
+}

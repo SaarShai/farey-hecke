@@ -29,6 +29,12 @@ downloads a JSONL file. The example manifest at
 `web/pilot_manifest.example.json` is only a smoke test and must not be used as
 domain evidence.
 
+The first concrete domain-ready set is
+`pilots/uci-human-workflow-2026-08-01/`: three 100-item UCI digit manifests
+with one common cohort and production, seeded-random, and quota-balanced
+orders. Their prompts contain feature renderings only; labels remain reserved
+for post-session reveal.
+
 ## Session protocol
 
 Run the same frozen cohort under each condition, with condition order
@@ -62,6 +68,21 @@ lower time or total cost, no material error/adjudication increase, and survival
 of the production and seeded-random comparisons. A neutral or negative result
 means the product remains an auditability feature rather than a labor-saving
 claim.
+
+For the UCI feasibility pilot, the post-session reveal command is:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+  python3 human_workflow_analysis.py session.jsonl \
+  --dataset /path/to/coprimebatch-uci-optdigits.zip \
+  --freeze pilots/uci-optdigits-2026-08-01-label-blind-v2/freeze.json \
+  --manifest-dir pilots/uci-human-workflow-2026-08-01 \
+  --output result.json
+```
+
+It first recomputes the workflow hash chain, then checks the frozen order and
+cohort digests, and only then reads the test labels. Its output is aggregate
+evidence; it does not alter the sealed event file or authorize an ROI claim.
 
 ## External timing calibration
 

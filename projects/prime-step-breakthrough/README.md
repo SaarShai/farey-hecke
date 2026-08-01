@@ -114,6 +114,13 @@ features.
   prospective with respect to the committed analysis and orders, but remains
   offline public-dataset evidence rather than a production or human-time
   result.
+- [`human_workflow_manifest.py`](human_workflow_manifest.py) and
+  [`pilots/uci-human-workflow-2026-08-01/`](pilots/uci-human-workflow-2026-08-01/):
+  matched 100-item, label-blind browser manifests for the first real human-time
+  feasibility pilot; no participant result is included yet.
+- [`human_workflow_analysis.py`](human_workflow_analysis.py):
+  fail-closed post-session reveal that verifies browser JSONL before joining UCI
+  labels and reporting time, cost, coverage, and accuracy.
 
 ## Python examples
 

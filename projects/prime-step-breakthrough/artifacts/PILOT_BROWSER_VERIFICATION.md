@@ -29,3 +29,11 @@ Replace it with a frozen study manifest only after the cohort, order digests,
 outcome boundary, participant protocol, and compensation/rate inputs have been
 approved. A passing instrument check does not establish human-time savings,
 error non-inferiority, ROI, or a production deployment claim.
+
+## Domain-manifest acceptance check
+
+The real `pilots/uci-human-workflow-2026-08-01/manifest-production.json` was
+loaded through the same browser page on 2026-08-01. The page accepted the
+100-item manifest, displayed `uci-human-production`, and showed item `1 of
+100` with ten digit choices. The session was intentionally not completed: this
+was a loader/integrity check, not a participant result.
