@@ -106,12 +106,12 @@ class CostInputs:
 
     def to_dict(self) -> dict[str, float]:
         return {
-            "reviewer_rate_per_hour": self.reviewer_rate_per_hour,
-            "operator_rate_per_hour": self.operator_rate_per_hour,
-            "compute_usd": self.compute_usd,
-            "rework_usd": self.rework_usd,
-            "integration_usd": self.integration_usd,
-            "license_usd": self.license_usd,
+            "reviewer_rate_per_hour": float(self.reviewer_rate_per_hour),
+            "operator_rate_per_hour": float(self.operator_rate_per_hour),
+            "compute_usd": float(self.compute_usd),
+            "rework_usd": float(self.rework_usd),
+            "integration_usd": float(self.integration_usd),
+            "license_usd": float(self.license_usd),
         }
 
     @classmethod

@@ -17,7 +17,7 @@ class WorkflowMeasurementTests(unittest.TestCase):
             cohort_digest="cohort-digest",
             item_ids=("a", "b"),
             cost_inputs=CostInputs(
-                reviewer_rate_per_hour=60.0,
+                reviewer_rate_per_hour=60,
                 operator_rate_per_hour=30.0,
                 compute_usd=1.25,
                 rework_usd=2.0,
