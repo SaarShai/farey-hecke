@@ -97,6 +97,9 @@ features.
 - [`artifacts/WORKFLOW_MEASUREMENT_PROTOCOL.md`](artifacts/WORKFLOW_MEASUREMENT_PROTOCOL.md):
   hash-chained prospective human-workflow instrumentation, cost formula, and
   the gate for any labor-saving claim.
+- [`artifacts/ECONOMIC_DECISION_2026-08-01.md`](artifacts/ECONOMIC_DECISION_2026-08-01.md):
+  the current no-go/paid-pilot economic decision, including the negative
+  production-order baseline result and scenario-value calculations.
 - [`prospective_uci_blind.py`](prospective_uci_blind.py) and
   [`pilots/uci-optdigits-2026-08-01/`](pilots/uci-optdigits-2026-08-01/):
   a label-blind freeze/reveal study for the UCI audit workload.  It is
