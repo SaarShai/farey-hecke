@@ -32,7 +32,7 @@ import real_data_ml_simulation as audit
 
 SCHEMA = "prospective-uci-blind-freeze-v1"
 RESULT_SCHEMA = "prospective-uci-blind-result-v1"
-PILOT_ID = "uci-optdigits-2026-08-01"
+PILOT_ID = "uci-optdigits-2026-08-01-label-blind-v2"
 DEFAULT_SEED = 20260801
 DEFAULT_WARMUP = 50
 DEFAULT_MARGIN_BINS = 5
@@ -101,6 +101,19 @@ def _manifest_core(manifest: dict[str, Any]) -> dict[str, Any]:
 
 def _result_core(result: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in result.items() if key != "commitment_sha256"}
+
+
+def _semantic_core(value: dict[str, Any], *, result: bool = False) -> dict[str, Any]:
+    """Compare evidence semantics while retaining the recorded generator hash.
+
+    The generator hash remains commitment-bound.  It is excluded only from
+    recomputation comparison so an older, already-revealed pilot remains
+    independently verifiable after this loader-hardening patch.
+    """
+
+    core = _result_core(value) if result else _manifest_core(value)
+    core.pop("generator_sha256", None)
+    return core
 
 
 def _script_sha256() -> str:
@@ -385,7 +398,7 @@ def verify_freeze(pilot_dir: Path, dataset_path: Path) -> dict[str, Any]:
         bins=int(manifest["strata"]["margin_bins"]),
         pilot_id=str(manifest["pilot_id"]),
     )
-    if _manifest_core(rebuilt) != _manifest_core(manifest):
+    if _semantic_core(rebuilt) != _semantic_core(manifest):
         raise PilotError("freeze does not recompute from the pinned dataset")
     if len(train_x) != manifest["dataset"]["train_rows"] or len(test_x) != manifest["dataset"]["test_rows"]:
         raise PilotError("dataset row counts do not match the freeze")
@@ -568,7 +581,7 @@ def verify_result(pilot_dir: Path, dataset_path: Path) -> dict[str, Any]:
         dataset_path,
         revealed_at=str(result["revealed_at_utc"]),
     )
-    if _result_core(rebuilt) != _result_core(result):
+    if _semantic_core(rebuilt, result=True) != _semantic_core(result, result=True):
         raise PilotError("result does not recompute from the freeze and dataset")
     return {
         "result_verified": True,
