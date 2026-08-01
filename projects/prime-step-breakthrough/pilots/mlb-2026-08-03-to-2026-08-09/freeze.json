@@ -1,0 +1,2922 @@
+{
+  "analysis_preregistration": {
+    "confidence_alpha": 0.05,
+    "distribution_free_stop": "valid for all three fixed orders",
+    "missing_outcomes": "reveal writes nothing until every fixed gamePk is Final with a non-tied score",
+    "primary_metric": "integrated absolute prefix error after warmup",
+    "randomization_stop": "stratified exact hypergeometric; valid only for seeded_random and quota_balanced",
+    "safe_stop_half_width": 0.05,
+    "warmup": 10
+  },
+  "cohort": {
+    "end_date": "2026-08-09",
+    "first_scheduled_utc": "2026-08-03T22:40:00Z",
+    "fixed_game_pks": [
+      823431,
+      823520,
+      823757,
+      822867,
+      824647,
+      824160,
+      824324,
+      825095,
+      824805,
+      823432,
+      824403,
+      824484,
+      823517,
+      824731,
+      824888,
+      823756,
+      824084,
+      822865,
+      824645,
+      824161,
+      824321,
+      823108,
+      825054,
+      824158,
+      824646,
+      822866,
+      824322,
+      824806,
+      823429,
+      824402,
+      824482,
+      823516,
+      824728,
+      824889,
+      823753,
+      824082,
+      823106,
+      825052,
+      824804,
+      824481,
+      824401,
+      823754,
+      824664,
+      823105,
+      823430,
+      824729,
+      824885,
+      824080,
+      825053,
+      823349,
+      823428,
+      822699,
+      823515,
+      823836,
+      824727,
+      823750,
+      824566,
+      824081,
+      822863,
+      823024,
+      823266,
+      825051,
+      823103,
+      823191,
+      823514,
+      823834,
+      824726,
+      823426,
+      823348,
+      822701,
+      823752,
+      824079,
+      822864,
+      823021,
+      823188,
+      823267,
+      824565,
+      825049,
+      823102,
+      822700,
+      823345,
+      823425,
+      823513,
+      824724,
+      823835,
+      823751,
+      824078,
+      824564,
+      823020,
+      822862,
+      823190,
+      823104,
+      825050,
+      823268
+    ],
+    "item_count": 94,
+    "last_scheduled_utc": "2026-08-10T00:20:00Z",
+    "start_date": "2026-08-03"
+  },
+  "commitment_sha256": "aadc3c2b6c86336daeaaa9cba55f3ccd74192c94e884bd444104dc66dde959f2",
+  "frozen_at_utc": "2026-08-01T16:48:26.309411Z",
+  "generator_sha256": "0907e2b9a15ad0c86d111ed3964a8e6b261582bb3b1f0dbe5172773fff12277d",
+  "items": [
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Washington Nationals",
+      "away_team_id": 120,
+      "game_date": "2026-08-03T22:40:00Z",
+      "game_pk": 823431,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.022281921618204803,
+      "margin_fraction": "141/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "away_smoothed_rate": "55/112",
+      "away_team": "St. Louis Cardinals",
+      "away_team_id": 138,
+      "game_date": "2026-08-03T23:05:00Z",
+      "game_pk": 823520,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "New York Yankees",
+      "home_team_id": 147,
+      "margin_bin": 2,
+      "margin_float": 0.07142857142857142,
+      "margin_fraction": "1/14",
+      "predicted_side": "home",
+      "predicted_team_id": 147,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Pittsburgh Pirates",
+      "away_team_id": 134,
+      "game_date": "2026-08-03T23:40:00Z",
+      "game_pk": 823757,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 4,
+      "margin_float": 0.12604640038268358,
+      "margin_fraction": "527/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 63,
+        "wins": 47
+      },
+      "away_smoothed_rate": "3/7",
+      "away_team": "San Francisco Giants",
+      "away_team_id": 137,
+      "game_date": "2026-08-04T00:05:00Z",
+      "game_pk": 822867,
+      "home_record": {
+        "losses": 55,
+        "wins": 55
+      },
+      "home_smoothed_rate": "1/2",
+      "home_team": "Texas Rangers",
+      "home_team_id": 140,
+      "margin_bin": 2,
+      "margin_float": 0.07142857142857142,
+      "margin_fraction": "1/14",
+      "predicted_side": "home",
+      "predicted_team_id": 140,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 41,
+        "wins": 69
+      },
+      "away_smoothed_rate": "5/8",
+      "away_team": "Los Angeles Dodgers",
+      "away_team_id": 119,
+      "game_date": "2026-08-04T00:05:00Z",
+      "game_pk": 824647,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "Chicago Cubs",
+      "home_team_id": 112,
+      "margin_bin": 2,
+      "margin_float": 0.0625,
+      "margin_fraction": "1/16",
+      "predicted_side": "away",
+      "predicted_team_id": 119,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-04T00:10:00Z",
+      "game_pk": 824160,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Houston Astros",
+      "home_team_id": 117,
+      "margin_bin": 1,
+      "margin_float": 0.04013906447534766,
+      "margin_fraction": "127/3164",
+      "predicted_side": "home",
+      "predicted_team_id": 117,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 64
+      },
+      "away_smoothed_rate": "65/111",
+      "away_team": "Tampa Bay Rays",
+      "away_team_id": 139,
+      "game_date": "2026-08-04T00:40:00Z",
+      "game_pk": 824324,
+      "home_record": {
+        "losses": 67,
+        "wins": 43
+      },
+      "home_smoothed_rate": "11/28",
+      "home_team": "Colorado Rockies",
+      "home_team_id": 115,
+      "margin_bin": 4,
+      "margin_float": 0.19272844272844272,
+      "margin_fraction": "599/3108",
+      "predicted_side": "away",
+      "predicted_team_id": 139,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/112",
+      "away_team": "San Diego Padres",
+      "away_team_id": 135,
+      "game_date": "2026-08-04T01:40:00Z",
+      "game_pk": 825095,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 0,
+      "margin_float": 0.017857142857142856,
+      "margin_fraction": "1/56",
+      "predicted_side": "home",
+      "predicted_team_id": 109,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 68,
+        "wins": 42
+      },
+      "away_smoothed_rate": "43/112",
+      "away_team": "Los Angeles Angels",
+      "away_team_id": 108,
+      "game_date": "2026-08-04T22:35:00Z",
+      "game_pk": 824805,
+      "home_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "home_smoothed_rate": "55/112",
+      "home_team": "Baltimore Orioles",
+      "home_team_id": 110,
+      "margin_bin": 3,
+      "margin_float": 0.10714285714285714,
+      "margin_fraction": "3/28",
+      "predicted_side": "home",
+      "predicted_team_id": 110,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Washington Nationals",
+      "away_team_id": 120,
+      "game_date": "2026-08-04T22:40:00Z",
+      "game_pk": 823432,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.022281921618204803,
+      "margin_fraction": "141/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 64,
+        "wins": 47
+      },
+      "away_smoothed_rate": "48/113",
+      "away_team": "New York Mets",
+      "away_team_id": 121,
+      "game_date": "2026-08-04T22:40:00Z",
+      "game_pk": 824403,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Cleveland Guardians",
+      "home_team_id": 114,
+      "margin_bin": 2,
+      "margin_float": 0.07964601769911504,
+      "margin_fraction": "9/113",
+      "predicted_side": "home",
+      "predicted_team_id": 114,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 65,
+        "wins": 45
+      },
+      "away_smoothed_rate": "23/56",
+      "away_team": "Athletics",
+      "away_team_id": 133,
+      "game_date": "2026-08-04T22:40:00Z",
+      "game_pk": 824484,
+      "home_record": {
+        "losses": 57,
+        "wins": 52
+      },
+      "home_smoothed_rate": "53/111",
+      "home_team": "Cincinnati Reds",
+      "home_team_id": 113,
+      "margin_bin": 2,
+      "margin_float": 0.06676319176319176,
+      "margin_fraction": "415/6216",
+      "predicted_side": "home",
+      "predicted_team_id": 113,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "away_smoothed_rate": "55/112",
+      "away_team": "St. Louis Cardinals",
+      "away_team_id": 138,
+      "game_date": "2026-08-04T23:05:00Z",
+      "game_pk": 823517,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "New York Yankees",
+      "home_team_id": 147,
+      "margin_bin": 2,
+      "margin_float": 0.07142857142857142,
+      "margin_fraction": "1/14",
+      "predicted_side": "home",
+      "predicted_team_id": 147,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "away_smoothed_rate": "59/111",
+      "away_team": "Chicago White Sox",
+      "away_team_id": 145,
+      "game_date": "2026-08-04T23:10:00Z",
+      "game_pk": 824731,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Boston Red Sox",
+      "home_team_id": 111,
+      "margin_bin": 0,
+      "margin_float": 0.0,
+      "margin_fraction": "0",
+      "predicted_side": "home",
+      "predicted_team_id": 111,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Miami Marlins",
+      "away_team_id": 146,
+      "game_date": "2026-08-04T23:15:00Z",
+      "game_pk": 824888,
+      "home_record": {
+        "losses": 45,
+        "wins": 65
+      },
+      "home_smoothed_rate": "33/56",
+      "home_team": "Atlanta Braves",
+      "home_team_id": 144,
+      "margin_bin": 3,
+      "margin_float": 0.08486093552465233,
+      "margin_fraction": "537/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 144,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Pittsburgh Pirates",
+      "away_team_id": 134,
+      "game_date": "2026-08-04T23:40:00Z",
+      "game_pk": 823756,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 4,
+      "margin_float": 0.12604640038268358,
+      "margin_fraction": "527/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Minnesota Twins",
+      "away_team_id": 142,
+      "game_date": "2026-08-04T23:40:00Z",
+      "game_pk": 824084,
+      "home_record": {
+        "losses": 65,
+        "wins": 46
+      },
+      "home_smoothed_rate": "47/113",
+      "home_team": "Kansas City Royals",
+      "home_team_id": 118,
+      "margin_bin": 3,
+      "margin_float": 0.08849557522123894,
+      "margin_fraction": "10/113",
+      "predicted_side": "away",
+      "predicted_team_id": 142,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 63,
+        "wins": 47
+      },
+      "away_smoothed_rate": "3/7",
+      "away_team": "San Francisco Giants",
+      "away_team_id": 137,
+      "game_date": "2026-08-05T00:05:00Z",
+      "game_pk": 822865,
+      "home_record": {
+        "losses": 55,
+        "wins": 55
+      },
+      "home_smoothed_rate": "1/2",
+      "home_team": "Texas Rangers",
+      "home_team_id": 140,
+      "margin_bin": 2,
+      "margin_float": 0.07142857142857142,
+      "margin_fraction": "1/14",
+      "predicted_side": "home",
+      "predicted_team_id": 140,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 41,
+        "wins": 69
+      },
+      "away_smoothed_rate": "5/8",
+      "away_team": "Los Angeles Dodgers",
+      "away_team_id": 119,
+      "game_date": "2026-08-05T00:05:00Z",
+      "game_pk": 824645,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "Chicago Cubs",
+      "home_team_id": 112,
+      "margin_bin": 2,
+      "margin_float": 0.0625,
+      "margin_fraction": "1/16",
+      "predicted_side": "away",
+      "predicted_team_id": 119,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-05T00:10:00Z",
+      "game_pk": 824161,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Houston Astros",
+      "home_team_id": 117,
+      "margin_bin": 1,
+      "margin_float": 0.04013906447534766,
+      "margin_fraction": "127/3164",
+      "predicted_side": "home",
+      "predicted_team_id": 117,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 64
+      },
+      "away_smoothed_rate": "65/111",
+      "away_team": "Tampa Bay Rays",
+      "away_team_id": 139,
+      "game_date": "2026-08-05T00:40:00Z",
+      "game_pk": 824321,
+      "home_record": {
+        "losses": 67,
+        "wins": 43
+      },
+      "home_smoothed_rate": "11/28",
+      "home_team": "Colorado Rockies",
+      "home_team_id": 115,
+      "margin_bin": 4,
+      "margin_float": 0.19272844272844272,
+      "margin_fraction": "599/3108",
+      "predicted_side": "away",
+      "predicted_team_id": 139,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 58,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/112",
+      "away_team": "Detroit Tigers",
+      "away_team_id": 116,
+      "game_date": "2026-08-05T01:40:00Z",
+      "game_pk": 823108,
+      "home_record": {
+        "losses": 58,
+        "wins": 53
+      },
+      "home_smoothed_rate": "54/113",
+      "home_team": "Seattle Mariners",
+      "home_team_id": 136,
+      "margin_bin": 0,
+      "margin_float": 0.004661820480404551,
+      "margin_fraction": "59/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 136,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/112",
+      "away_team": "San Diego Padres",
+      "away_team_id": 135,
+      "game_date": "2026-08-05T01:40:00Z",
+      "game_pk": 825054,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 0,
+      "margin_float": 0.017857142857142856,
+      "margin_fraction": "1/56",
+      "predicted_side": "home",
+      "predicted_team_id": 109,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-05T18:10:00Z",
+      "game_pk": 824158,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Houston Astros",
+      "home_team_id": 117,
+      "margin_bin": 1,
+      "margin_float": 0.04013906447534766,
+      "margin_fraction": "127/3164",
+      "predicted_side": "home",
+      "predicted_team_id": 117,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 41,
+        "wins": 69
+      },
+      "away_smoothed_rate": "5/8",
+      "away_team": "Los Angeles Dodgers",
+      "away_team_id": 119,
+      "game_date": "2026-08-05T18:20:00Z",
+      "game_pk": 824646,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "Chicago Cubs",
+      "home_team_id": 112,
+      "margin_bin": 2,
+      "margin_float": 0.0625,
+      "margin_fraction": "1/16",
+      "predicted_side": "away",
+      "predicted_team_id": 119,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 63,
+        "wins": 47
+      },
+      "away_smoothed_rate": "3/7",
+      "away_team": "San Francisco Giants",
+      "away_team_id": 137,
+      "game_date": "2026-08-05T18:35:00Z",
+      "game_pk": 822866,
+      "home_record": {
+        "losses": 55,
+        "wins": 55
+      },
+      "home_smoothed_rate": "1/2",
+      "home_team": "Texas Rangers",
+      "home_team_id": 140,
+      "margin_bin": 2,
+      "margin_float": 0.07142857142857142,
+      "margin_fraction": "1/14",
+      "predicted_side": "home",
+      "predicted_team_id": 140,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 64
+      },
+      "away_smoothed_rate": "65/111",
+      "away_team": "Tampa Bay Rays",
+      "away_team_id": 139,
+      "game_date": "2026-08-05T19:10:00Z",
+      "game_pk": 824322,
+      "home_record": {
+        "losses": 67,
+        "wins": 43
+      },
+      "home_smoothed_rate": "11/28",
+      "home_team": "Colorado Rockies",
+      "home_team_id": 115,
+      "margin_bin": 4,
+      "margin_float": 0.19272844272844272,
+      "margin_fraction": "599/3108",
+      "predicted_side": "away",
+      "predicted_team_id": 139,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 68,
+        "wins": 42
+      },
+      "away_smoothed_rate": "43/112",
+      "away_team": "Los Angeles Angels",
+      "away_team_id": 108,
+      "game_date": "2026-08-05T22:35:00Z",
+      "game_pk": 824806,
+      "home_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "home_smoothed_rate": "55/112",
+      "home_team": "Baltimore Orioles",
+      "home_team_id": 110,
+      "margin_bin": 3,
+      "margin_float": 0.10714285714285714,
+      "margin_fraction": "3/28",
+      "predicted_side": "home",
+      "predicted_team_id": 110,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Washington Nationals",
+      "away_team_id": 120,
+      "game_date": "2026-08-05T22:40:00Z",
+      "game_pk": 823429,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.022281921618204803,
+      "margin_fraction": "141/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 64,
+        "wins": 47
+      },
+      "away_smoothed_rate": "48/113",
+      "away_team": "New York Mets",
+      "away_team_id": 121,
+      "game_date": "2026-08-05T22:40:00Z",
+      "game_pk": 824402,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Cleveland Guardians",
+      "home_team_id": 114,
+      "margin_bin": 2,
+      "margin_float": 0.07964601769911504,
+      "margin_fraction": "9/113",
+      "predicted_side": "home",
+      "predicted_team_id": 114,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 65,
+        "wins": 45
+      },
+      "away_smoothed_rate": "23/56",
+      "away_team": "Athletics",
+      "away_team_id": 133,
+      "game_date": "2026-08-05T22:40:00Z",
+      "game_pk": 824482,
+      "home_record": {
+        "losses": 57,
+        "wins": 52
+      },
+      "home_smoothed_rate": "53/111",
+      "home_team": "Cincinnati Reds",
+      "home_team_id": 113,
+      "margin_bin": 2,
+      "margin_float": 0.06676319176319176,
+      "margin_fraction": "415/6216",
+      "predicted_side": "home",
+      "predicted_team_id": 113,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "away_smoothed_rate": "55/112",
+      "away_team": "St. Louis Cardinals",
+      "away_team_id": 138,
+      "game_date": "2026-08-05T23:05:00Z",
+      "game_pk": 823516,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "New York Yankees",
+      "home_team_id": 147,
+      "margin_bin": 2,
+      "margin_float": 0.07142857142857142,
+      "margin_fraction": "1/14",
+      "predicted_side": "home",
+      "predicted_team_id": 147,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "away_smoothed_rate": "59/111",
+      "away_team": "Chicago White Sox",
+      "away_team_id": 145,
+      "game_date": "2026-08-05T23:10:00Z",
+      "game_pk": 824728,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Boston Red Sox",
+      "home_team_id": 111,
+      "margin_bin": 0,
+      "margin_float": 0.0,
+      "margin_fraction": "0",
+      "predicted_side": "home",
+      "predicted_team_id": 111,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Miami Marlins",
+      "away_team_id": 146,
+      "game_date": "2026-08-05T23:15:00Z",
+      "game_pk": 824889,
+      "home_record": {
+        "losses": 45,
+        "wins": 65
+      },
+      "home_smoothed_rate": "33/56",
+      "home_team": "Atlanta Braves",
+      "home_team_id": 144,
+      "margin_bin": 3,
+      "margin_float": 0.08486093552465233,
+      "margin_fraction": "537/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 144,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Pittsburgh Pirates",
+      "away_team_id": 134,
+      "game_date": "2026-08-05T23:40:00Z",
+      "game_pk": 823753,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 4,
+      "margin_float": 0.12604640038268358,
+      "margin_fraction": "527/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Minnesota Twins",
+      "away_team_id": 142,
+      "game_date": "2026-08-05T23:40:00Z",
+      "game_pk": 824082,
+      "home_record": {
+        "losses": 65,
+        "wins": 46
+      },
+      "home_smoothed_rate": "47/113",
+      "home_team": "Kansas City Royals",
+      "home_team_id": 118,
+      "margin_bin": 3,
+      "margin_float": 0.08849557522123894,
+      "margin_fraction": "10/113",
+      "predicted_side": "away",
+      "predicted_team_id": 142,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 58,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/112",
+      "away_team": "Detroit Tigers",
+      "away_team_id": 116,
+      "game_date": "2026-08-06T01:40:00Z",
+      "game_pk": 823106,
+      "home_record": {
+        "losses": 58,
+        "wins": 53
+      },
+      "home_smoothed_rate": "54/113",
+      "home_team": "Seattle Mariners",
+      "home_team_id": 136,
+      "margin_bin": 0,
+      "margin_float": 0.004661820480404551,
+      "margin_fraction": "59/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 136,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/112",
+      "away_team": "San Diego Padres",
+      "away_team_id": 135,
+      "game_date": "2026-08-06T01:40:00Z",
+      "game_pk": 825052,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 0,
+      "margin_float": 0.017857142857142856,
+      "margin_fraction": "1/56",
+      "predicted_side": "home",
+      "predicted_team_id": 109,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 68,
+        "wins": 42
+      },
+      "away_smoothed_rate": "43/112",
+      "away_team": "Los Angeles Angels",
+      "away_team_id": 108,
+      "game_date": "2026-08-06T16:35:00Z",
+      "game_pk": 824804,
+      "home_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "home_smoothed_rate": "55/112",
+      "home_team": "Baltimore Orioles",
+      "home_team_id": 110,
+      "margin_bin": 3,
+      "margin_float": 0.10714285714285714,
+      "margin_fraction": "3/28",
+      "predicted_side": "home",
+      "predicted_team_id": 110,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 65,
+        "wins": 45
+      },
+      "away_smoothed_rate": "23/56",
+      "away_team": "Athletics",
+      "away_team_id": 133,
+      "game_date": "2026-08-06T16:40:00Z",
+      "game_pk": 824481,
+      "home_record": {
+        "losses": 57,
+        "wins": 52
+      },
+      "home_smoothed_rate": "53/111",
+      "home_team": "Cincinnati Reds",
+      "home_team_id": 113,
+      "margin_bin": 2,
+      "margin_float": 0.06676319176319176,
+      "margin_fraction": "415/6216",
+      "predicted_side": "home",
+      "predicted_team_id": 113,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 64,
+        "wins": 47
+      },
+      "away_smoothed_rate": "48/113",
+      "away_team": "New York Mets",
+      "away_team_id": 121,
+      "game_date": "2026-08-06T17:10:00Z",
+      "game_pk": 824401,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Cleveland Guardians",
+      "home_team_id": 114,
+      "margin_bin": 2,
+      "margin_float": 0.07964601769911504,
+      "margin_fraction": "9/113",
+      "predicted_side": "home",
+      "predicted_team_id": 114,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Pittsburgh Pirates",
+      "away_team_id": 134,
+      "game_date": "2026-08-06T18:10:00Z",
+      "game_pk": 823754,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 4,
+      "margin_float": 0.12604640038268358,
+      "margin_fraction": "527/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-06T18:20:00Z",
+      "game_pk": 824664,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "Chicago Cubs",
+      "home_team_id": 112,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "home",
+      "predicted_team_id": 112,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 58,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/112",
+      "away_team": "Detroit Tigers",
+      "away_team_id": 116,
+      "game_date": "2026-08-06T20:10:00Z",
+      "game_pk": 823105,
+      "home_record": {
+        "losses": 58,
+        "wins": 53
+      },
+      "home_smoothed_rate": "54/113",
+      "home_team": "Seattle Mariners",
+      "home_team_id": 136,
+      "margin_bin": 0,
+      "margin_float": 0.004661820480404551,
+      "margin_fraction": "59/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 136,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "away_smoothed_rate": "56/113",
+      "away_team": "Washington Nationals",
+      "away_team_id": 120,
+      "game_date": "2026-08-06T22:05:00Z",
+      "game_pk": 823430,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.022281921618204803,
+      "margin_fraction": "141/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "away_smoothed_rate": "59/111",
+      "away_team": "Chicago White Sox",
+      "away_team_id": 145,
+      "game_date": "2026-08-06T23:10:00Z",
+      "game_pk": 824729,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Boston Red Sox",
+      "home_team_id": 111,
+      "margin_bin": 0,
+      "margin_float": 0.0,
+      "margin_fraction": "0",
+      "predicted_side": "home",
+      "predicted_team_id": 111,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Miami Marlins",
+      "away_team_id": 146,
+      "game_date": "2026-08-06T23:15:00Z",
+      "game_pk": 824885,
+      "home_record": {
+        "losses": 45,
+        "wins": 65
+      },
+      "home_smoothed_rate": "33/56",
+      "home_team": "Atlanta Braves",
+      "home_team_id": 144,
+      "margin_bin": 2,
+      "margin_float": 0.08486093552465233,
+      "margin_fraction": "537/6328",
+      "predicted_side": "home",
+      "predicted_team_id": 144,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Minnesota Twins",
+      "away_team_id": 142,
+      "game_date": "2026-08-06T23:40:00Z",
+      "game_pk": 824080,
+      "home_record": {
+        "losses": 65,
+        "wins": 46
+      },
+      "home_smoothed_rate": "47/113",
+      "home_team": "Kansas City Royals",
+      "home_team_id": 118,
+      "margin_bin": 3,
+      "margin_float": 0.08849557522123894,
+      "margin_fraction": "10/113",
+      "predicted_side": "away",
+      "predicted_team_id": 142,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/112",
+      "away_team": "San Diego Padres",
+      "away_team_id": 135,
+      "game_date": "2026-08-07T01:40:00Z",
+      "game_pk": 825053,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 0,
+      "margin_float": 0.017857142857142856,
+      "margin_fraction": "1/56",
+      "predicted_side": "home",
+      "predicted_team_id": 109,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 64,
+        "wins": 47
+      },
+      "away_smoothed_rate": "48/113",
+      "away_team": "New York Mets",
+      "away_team_id": 121,
+      "game_date": "2026-08-07T22:40:00Z",
+      "game_pk": 823349,
+      "home_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "home_smoothed_rate": "56/113",
+      "home_team": "Pittsburgh Pirates",
+      "home_team_id": 134,
+      "margin_bin": 2,
+      "margin_float": 0.07079646017699115,
+      "margin_fraction": "8/113",
+      "predicted_side": "home",
+      "predicted_team_id": 134,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-07T22:40:00Z",
+      "game_pk": 823428,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.05357142857142857,
+      "margin_fraction": "3/56",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 57,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/111",
+      "away_team": "Cincinnati Reds",
+      "away_team_id": 113,
+      "game_date": "2026-08-07T22:45:00Z",
+      "game_pk": 822699,
+      "home_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "home_smoothed_rate": "56/113",
+      "home_team": "Washington Nationals",
+      "home_team_id": 120,
+      "margin_bin": 0,
+      "margin_float": 0.018097743761460575,
+      "margin_fraction": "227/12543",
+      "predicted_side": "home",
+      "predicted_team_id": 120,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 65
+      },
+      "away_smoothed_rate": "33/56",
+      "away_team": "Atlanta Braves",
+      "away_team_id": 144,
+      "game_date": "2026-08-07T23:05:00Z",
+      "game_pk": 823515,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "New York Yankees",
+      "home_team_id": 147,
+      "margin_bin": 1,
+      "margin_float": 0.026785714285714284,
+      "margin_fraction": "3/112",
+      "predicted_side": "away",
+      "predicted_team_id": 144,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 68,
+        "wins": 42
+      },
+      "away_smoothed_rate": "43/112",
+      "away_team": "Los Angeles Angels",
+      "away_team_id": 108,
+      "game_date": "2026-08-07T23:10:00Z",
+      "game_pk": 823836,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Miami Marlins",
+      "home_team_id": 146,
+      "margin_bin": 4,
+      "margin_float": 0.12049620733249052,
+      "margin_fraction": "1525/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 146,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 65,
+        "wins": 45
+      },
+      "away_smoothed_rate": "23/56",
+      "away_team": "Athletics",
+      "away_team_id": 133,
+      "game_date": "2026-08-07T23:10:00Z",
+      "game_pk": 824727,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Boston Red Sox",
+      "home_team_id": 111,
+      "margin_bin": 4,
+      "margin_float": 0.12081724581724582,
+      "margin_fraction": "751/6216",
+      "predicted_side": "home",
+      "predicted_team_id": 111,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Minnesota Twins",
+      "away_team_id": 142,
+      "game_date": "2026-08-07T23:40:00Z",
+      "game_pk": 823750,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 3,
+      "margin_float": 0.11719684286055967,
+      "margin_fraction": "490/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Cleveland Guardians",
+      "away_team_id": 114,
+      "game_date": "2026-08-07T23:40:00Z",
+      "game_pk": 824566,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Chicago White Sox",
+      "home_team_id": 145,
+      "margin_bin": 1,
+      "margin_float": 0.027106752770469585,
+      "margin_fraction": "340/12543",
+      "predicted_side": "home",
+      "predicted_team_id": 145,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "away_smoothed_rate": "9/16",
+      "away_team": "Chicago Cubs",
+      "away_team_id": 112,
+      "game_date": "2026-08-08T00:10:00Z",
+      "game_pk": 824081,
+      "home_record": {
+        "losses": 65,
+        "wins": 46
+      },
+      "home_smoothed_rate": "47/113",
+      "home_team": "Kansas City Royals",
+      "home_team_id": 118,
+      "margin_bin": 4,
+      "margin_float": 0.14657079646017698,
+      "margin_fraction": "265/1808",
+      "predicted_side": "away",
+      "predicted_team_id": 112,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "away_smoothed_rate": "55/112",
+      "away_team": "Baltimore Orioles",
+      "away_team_id": 110,
+      "game_date": "2026-08-08T00:15:00Z",
+      "game_pk": 822863,
+      "home_record": {
+        "losses": 55,
+        "wins": 55
+      },
+      "home_smoothed_rate": "1/2",
+      "home_team": "Texas Rangers",
+      "home_team_id": 140,
+      "margin_bin": 0,
+      "margin_float": 0.008928571428571428,
+      "margin_fraction": "1/112",
+      "predicted_side": "home",
+      "predicted_team_id": 140,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 67,
+        "wins": 43
+      },
+      "away_smoothed_rate": "11/28",
+      "away_team": "Colorado Rockies",
+      "away_team_id": 115,
+      "game_date": "2026-08-08T00:15:00Z",
+      "game_pk": 823024,
+      "home_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "home_smoothed_rate": "55/112",
+      "home_team": "St. Louis Cardinals",
+      "home_team_id": 138,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "home",
+      "predicted_team_id": 138,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Houston Astros",
+      "away_team_id": 117,
+      "game_date": "2026-08-08T01:40:00Z",
+      "game_pk": 823266,
+      "home_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/112",
+      "home_team": "San Diego Padres",
+      "home_team_id": 135,
+      "margin_bin": 0,
+      "margin_float": 0.004503792667509482,
+      "margin_fraction": "57/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 135,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 41,
+        "wins": 69
+      },
+      "away_smoothed_rate": "5/8",
+      "away_team": "Los Angeles Dodgers",
+      "away_team_id": 119,
+      "game_date": "2026-08-08T01:40:00Z",
+      "game_pk": 825051,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "away",
+      "predicted_team_id": 119,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 64
+      },
+      "away_smoothed_rate": "65/111",
+      "away_team": "Tampa Bay Rays",
+      "away_team_id": 139,
+      "game_date": "2026-08-08T01:45:00Z",
+      "game_pk": 823103,
+      "home_record": {
+        "losses": 58,
+        "wins": 53
+      },
+      "home_smoothed_rate": "54/113",
+      "home_team": "Seattle Mariners",
+      "home_team_id": 136,
+      "margin_bin": 3,
+      "margin_float": 0.10770947939089533,
+      "margin_fraction": "1351/12543",
+      "predicted_side": "away",
+      "predicted_team_id": 139,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 58,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/112",
+      "away_team": "Detroit Tigers",
+      "away_team_id": 116,
+      "game_date": "2026-08-08T02:15:00Z",
+      "game_pk": 823191,
+      "home_record": {
+        "losses": 63,
+        "wins": 47
+      },
+      "home_smoothed_rate": "3/7",
+      "home_team": "San Francisco Giants",
+      "home_team_id": 137,
+      "margin_bin": 1,
+      "margin_float": 0.044642857142857144,
+      "margin_fraction": "5/112",
+      "predicted_side": "away",
+      "predicted_team_id": 116,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 65
+      },
+      "away_smoothed_rate": "33/56",
+      "away_team": "Atlanta Braves",
+      "away_team_id": 144,
+      "game_date": "2026-08-08T19:05:00Z",
+      "game_pk": 823514,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "New York Yankees",
+      "home_team_id": 147,
+      "margin_bin": 1,
+      "margin_float": 0.026785714285714284,
+      "margin_fraction": "3/112",
+      "predicted_side": "away",
+      "predicted_team_id": 144,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 68,
+        "wins": 42
+      },
+      "away_smoothed_rate": "43/112",
+      "away_team": "Los Angeles Angels",
+      "away_team_id": 108,
+      "game_date": "2026-08-08T20:10:00Z",
+      "game_pk": 823834,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Miami Marlins",
+      "home_team_id": 146,
+      "margin_bin": 4,
+      "margin_float": 0.12049620733249052,
+      "margin_fraction": "1525/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 146,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 65,
+        "wins": 45
+      },
+      "away_smoothed_rate": "23/56",
+      "away_team": "Athletics",
+      "away_team_id": 133,
+      "game_date": "2026-08-08T20:10:00Z",
+      "game_pk": 824726,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Boston Red Sox",
+      "home_team_id": 111,
+      "margin_bin": 4,
+      "margin_float": 0.12081724581724582,
+      "margin_fraction": "751/6216",
+      "predicted_side": "home",
+      "predicted_team_id": 111,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-08T22:05:00Z",
+      "game_pk": 823426,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.05357142857142857,
+      "margin_fraction": "3/56",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 64,
+        "wins": 47
+      },
+      "away_smoothed_rate": "48/113",
+      "away_team": "New York Mets",
+      "away_team_id": 121,
+      "game_date": "2026-08-08T22:40:00Z",
+      "game_pk": 823348,
+      "home_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "home_smoothed_rate": "56/113",
+      "home_team": "Pittsburgh Pirates",
+      "home_team_id": 134,
+      "margin_bin": 2,
+      "margin_float": 0.07079646017699115,
+      "margin_fraction": "8/113",
+      "predicted_side": "home",
+      "predicted_team_id": 134,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 57,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/111",
+      "away_team": "Cincinnati Reds",
+      "away_team_id": 113,
+      "game_date": "2026-08-08T22:45:00Z",
+      "game_pk": 822701,
+      "home_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "home_smoothed_rate": "56/113",
+      "home_team": "Washington Nationals",
+      "home_team_id": 120,
+      "margin_bin": 0,
+      "margin_float": 0.018097743761460575,
+      "margin_fraction": "227/12543",
+      "predicted_side": "home",
+      "predicted_team_id": 120,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Minnesota Twins",
+      "away_team_id": 142,
+      "game_date": "2026-08-08T23:10:00Z",
+      "game_pk": 823752,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 4,
+      "margin_float": 0.11719684286055967,
+      "margin_fraction": "490/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "away_smoothed_rate": "9/16",
+      "away_team": "Chicago Cubs",
+      "away_team_id": 112,
+      "game_date": "2026-08-08T23:10:00Z",
+      "game_pk": 824079,
+      "home_record": {
+        "losses": 65,
+        "wins": 46
+      },
+      "home_smoothed_rate": "47/113",
+      "home_team": "Kansas City Royals",
+      "home_team_id": 118,
+      "margin_bin": 4,
+      "margin_float": 0.14657079646017698,
+      "margin_fraction": "265/1808",
+      "predicted_side": "away",
+      "predicted_team_id": 112,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "away_smoothed_rate": "55/112",
+      "away_team": "Baltimore Orioles",
+      "away_team_id": 110,
+      "game_date": "2026-08-08T23:15:00Z",
+      "game_pk": 822864,
+      "home_record": {
+        "losses": 55,
+        "wins": 55
+      },
+      "home_smoothed_rate": "1/2",
+      "home_team": "Texas Rangers",
+      "home_team_id": 140,
+      "margin_bin": 0,
+      "margin_float": 0.008928571428571428,
+      "margin_fraction": "1/112",
+      "predicted_side": "home",
+      "predicted_team_id": 140,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 67,
+        "wins": 43
+      },
+      "away_smoothed_rate": "11/28",
+      "away_team": "Colorado Rockies",
+      "away_team_id": 115,
+      "game_date": "2026-08-08T23:15:00Z",
+      "game_pk": 823021,
+      "home_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "home_smoothed_rate": "55/112",
+      "home_team": "St. Louis Cardinals",
+      "home_team_id": 138,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "home",
+      "predicted_team_id": 138,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 58,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/112",
+      "away_team": "Detroit Tigers",
+      "away_team_id": 116,
+      "game_date": "2026-08-08T23:15:00Z",
+      "game_pk": 823188,
+      "home_record": {
+        "losses": 63,
+        "wins": 47
+      },
+      "home_smoothed_rate": "3/7",
+      "home_team": "San Francisco Giants",
+      "home_team_id": 137,
+      "margin_bin": 1,
+      "margin_float": 0.044642857142857144,
+      "margin_fraction": "5/112",
+      "predicted_side": "away",
+      "predicted_team_id": 116,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Houston Astros",
+      "away_team_id": 117,
+      "game_date": "2026-08-08T23:15:00Z",
+      "game_pk": 823267,
+      "home_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/112",
+      "home_team": "San Diego Padres",
+      "home_team_id": 135,
+      "margin_bin": 0,
+      "margin_float": 0.004503792667509482,
+      "margin_fraction": "57/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 135,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Cleveland Guardians",
+      "away_team_id": 114,
+      "game_date": "2026-08-08T23:15:00Z",
+      "game_pk": 824565,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Chicago White Sox",
+      "home_team_id": 145,
+      "margin_bin": 1,
+      "margin_float": 0.027106752770469585,
+      "margin_fraction": "340/12543",
+      "predicted_side": "home",
+      "predicted_team_id": 145,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 41,
+        "wins": 69
+      },
+      "away_smoothed_rate": "5/8",
+      "away_team": "Los Angeles Dodgers",
+      "away_team_id": 119,
+      "game_date": "2026-08-09T00:10:00Z",
+      "game_pk": 825049,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "away",
+      "predicted_team_id": 119,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 64
+      },
+      "away_smoothed_rate": "65/111",
+      "away_team": "Tampa Bay Rays",
+      "away_team_id": 139,
+      "game_date": "2026-08-09T01:50:00Z",
+      "game_pk": 823102,
+      "home_record": {
+        "losses": 58,
+        "wins": 53
+      },
+      "home_smoothed_rate": "54/113",
+      "home_team": "Seattle Mariners",
+      "home_team_id": 136,
+      "margin_bin": 3,
+      "margin_float": 0.10770947939089533,
+      "margin_fraction": "1351/12543",
+      "predicted_side": "away",
+      "predicted_team_id": 139,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 57,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/111",
+      "away_team": "Cincinnati Reds",
+      "away_team_id": 113,
+      "game_date": "2026-08-09T16:15:00Z",
+      "game_pk": 822700,
+      "home_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "home_smoothed_rate": "56/113",
+      "home_team": "Washington Nationals",
+      "home_team_id": 120,
+      "margin_bin": 0,
+      "margin_float": 0.018097743761460575,
+      "margin_fraction": "227/12543",
+      "predicted_side": "home",
+      "predicted_team_id": 120,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 64,
+        "wins": 47
+      },
+      "away_smoothed_rate": "48/113",
+      "away_team": "New York Mets",
+      "away_team_id": 121,
+      "game_date": "2026-08-09T17:35:00Z",
+      "game_pk": 823345,
+      "home_record": {
+        "losses": 56,
+        "wins": 55
+      },
+      "home_smoothed_rate": "56/113",
+      "home_team": "Pittsburgh Pirates",
+      "home_team_id": 134,
+      "margin_bin": 2,
+      "margin_float": 0.07079646017699115,
+      "margin_fraction": "8/113",
+      "predicted_side": "home",
+      "predicted_team_id": 134,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-2"
+    },
+    {
+      "away_record": {
+        "losses": 59,
+        "wins": 51
+      },
+      "away_smoothed_rate": "13/28",
+      "away_team": "Toronto Blue Jays",
+      "away_team_id": 141,
+      "game_date": "2026-08-09T17:35:00Z",
+      "game_pk": 823425,
+      "home_record": {
+        "losses": 53,
+        "wins": 57
+      },
+      "home_smoothed_rate": "29/56",
+      "home_team": "Philadelphia Phillies",
+      "home_team_id": 143,
+      "margin_bin": 1,
+      "margin_float": 0.05357142857142857,
+      "margin_fraction": "3/56",
+      "predicted_side": "home",
+      "predicted_team_id": 143,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 65
+      },
+      "away_smoothed_rate": "33/56",
+      "away_team": "Atlanta Braves",
+      "away_team_id": 144,
+      "game_date": "2026-08-09T17:35:00Z",
+      "game_pk": 823513,
+      "home_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "home_smoothed_rate": "9/16",
+      "home_team": "New York Yankees",
+      "home_team_id": 147,
+      "margin_bin": 1,
+      "margin_float": 0.026785714285714284,
+      "margin_fraction": "3/112",
+      "predicted_side": "away",
+      "predicted_team_id": 144,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 65,
+        "wins": 45
+      },
+      "away_smoothed_rate": "23/56",
+      "away_team": "Athletics",
+      "away_team_id": 133,
+      "game_date": "2026-08-09T17:35:00Z",
+      "game_pk": 824724,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Boston Red Sox",
+      "home_team_id": 111,
+      "margin_bin": 4,
+      "margin_float": 0.12081724581724582,
+      "margin_fraction": "751/6216",
+      "predicted_side": "home",
+      "predicted_team_id": 111,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 68,
+        "wins": 42
+      },
+      "away_smoothed_rate": "43/112",
+      "away_team": "Los Angeles Angels",
+      "away_team_id": 108,
+      "game_date": "2026-08-09T17:40:00Z",
+      "game_pk": 823835,
+      "home_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/113",
+      "home_team": "Miami Marlins",
+      "home_team_id": 146,
+      "margin_bin": 4,
+      "margin_float": 0.12049620733249052,
+      "margin_fraction": "1525/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 146,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Minnesota Twins",
+      "away_team_id": 142,
+      "game_date": "2026-08-09T18:10:00Z",
+      "game_pk": 823751,
+      "home_record": {
+        "losses": 41,
+        "wins": 68
+      },
+      "home_smoothed_rate": "23/37",
+      "home_team": "Milwaukee Brewers",
+      "home_team_id": 158,
+      "margin_bin": 4,
+      "margin_float": 0.11719684286055967,
+      "margin_fraction": "490/4181",
+      "predicted_side": "home",
+      "predicted_team_id": 158,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 48,
+        "wins": 62
+      },
+      "away_smoothed_rate": "9/16",
+      "away_team": "Chicago Cubs",
+      "away_team_id": 112,
+      "game_date": "2026-08-09T18:10:00Z",
+      "game_pk": 824078,
+      "home_record": {
+        "losses": 65,
+        "wins": 46
+      },
+      "home_smoothed_rate": "47/113",
+      "home_team": "Kansas City Royals",
+      "home_team_id": 118,
+      "margin_bin": 4,
+      "margin_float": 0.14657079646017698,
+      "margin_fraction": "265/1808",
+      "predicted_side": "away",
+      "predicted_team_id": 112,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-4"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Cleveland Guardians",
+      "away_team_id": 114,
+      "game_date": "2026-08-09T18:10:00Z",
+      "game_pk": 824564,
+      "home_record": {
+        "losses": 51,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/111",
+      "home_team": "Chicago White Sox",
+      "home_team_id": 145,
+      "margin_bin": 1,
+      "margin_float": 0.027106752770469585,
+      "margin_fraction": "340/12543",
+      "predicted_side": "home",
+      "predicted_team_id": 145,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 67,
+        "wins": 43
+      },
+      "away_smoothed_rate": "11/28",
+      "away_team": "Colorado Rockies",
+      "away_team_id": 115,
+      "game_date": "2026-08-09T18:15:00Z",
+      "game_pk": 823020,
+      "home_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "home_smoothed_rate": "55/112",
+      "home_team": "St. Louis Cardinals",
+      "home_team_id": 138,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "home",
+      "predicted_team_id": 138,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 56,
+        "wins": 54
+      },
+      "away_smoothed_rate": "55/112",
+      "away_team": "Baltimore Orioles",
+      "away_team_id": 110,
+      "game_date": "2026-08-09T18:35:00Z",
+      "game_pk": 822862,
+      "home_record": {
+        "losses": 55,
+        "wins": 55
+      },
+      "home_smoothed_rate": "1/2",
+      "home_team": "Texas Rangers",
+      "home_team_id": 140,
+      "margin_bin": 0,
+      "margin_float": 0.008928571428571428,
+      "margin_fraction": "1/112",
+      "predicted_side": "home",
+      "predicted_team_id": 140,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    },
+    {
+      "away_record": {
+        "losses": 58,
+        "wins": 52
+      },
+      "away_smoothed_rate": "53/112",
+      "away_team": "Detroit Tigers",
+      "away_team_id": 116,
+      "game_date": "2026-08-09T20:05:00Z",
+      "game_pk": 823190,
+      "home_record": {
+        "losses": 63,
+        "wins": 47
+      },
+      "home_smoothed_rate": "3/7",
+      "home_team": "San Francisco Giants",
+      "home_team_id": 137,
+      "margin_bin": 1,
+      "margin_float": 0.044642857142857144,
+      "margin_fraction": "5/112",
+      "predicted_side": "away",
+      "predicted_team_id": 116,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-1"
+    },
+    {
+      "away_record": {
+        "losses": 45,
+        "wins": 64
+      },
+      "away_smoothed_rate": "65/111",
+      "away_team": "Tampa Bay Rays",
+      "away_team_id": 139,
+      "game_date": "2026-08-09T20:10:00Z",
+      "game_pk": 823104,
+      "home_record": {
+        "losses": 58,
+        "wins": 53
+      },
+      "home_smoothed_rate": "54/113",
+      "home_team": "Seattle Mariners",
+      "home_team_id": 136,
+      "margin_bin": 3,
+      "margin_float": 0.10770947939089533,
+      "margin_fraction": "1351/12543",
+      "predicted_side": "away",
+      "predicted_team_id": 139,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 41,
+        "wins": 69
+      },
+      "away_smoothed_rate": "5/8",
+      "away_team": "Los Angeles Dodgers",
+      "away_team_id": 119,
+      "game_date": "2026-08-09T20:10:00Z",
+      "game_pk": 825050,
+      "home_record": {
+        "losses": 52,
+        "wins": 58
+      },
+      "home_smoothed_rate": "59/112",
+      "home_team": "Arizona Diamondbacks",
+      "home_team_id": 109,
+      "margin_bin": 3,
+      "margin_float": 0.09821428571428571,
+      "margin_fraction": "11/112",
+      "predicted_side": "away",
+      "predicted_team_id": 119,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-away:margin-3"
+    },
+    {
+      "away_record": {
+        "losses": 55,
+        "wins": 56
+      },
+      "away_smoothed_rate": "57/113",
+      "away_team": "Houston Astros",
+      "away_team_id": 117,
+      "game_date": "2026-08-10T00:20:00Z",
+      "game_pk": 823268,
+      "home_record": {
+        "losses": 54,
+        "wins": 56
+      },
+      "home_smoothed_rate": "57/112",
+      "home_team": "San Diego Padres",
+      "home_team_id": 135,
+      "margin_bin": 0,
+      "margin_float": 0.004503792667509482,
+      "margin_fraction": "57/12656",
+      "predicted_side": "home",
+      "predicted_team_id": 135,
+      "status_abstract": "Preview",
+      "status_detail": "Scheduled",
+      "stratum": "predicted-home:margin-0"
+    }
+  ],
+  "model": {
+    "name": "smoothed-season-record-v1",
+    "outcomes_used": false,
+    "rate": "(wins + 1) / (wins + losses + 2)",
+    "rule": "predict the side with larger Laplace-smoothed season win rate; ties predict home"
+  },
+  "orders": {
+    "production": {
+      "game_pks": [
+        823431,
+        823520,
+        823757,
+        822867,
+        824647,
+        824160,
+        824324,
+        825095,
+        824805,
+        823432,
+        824403,
+        824484,
+        823517,
+        824731,
+        824888,
+        823756,
+        824084,
+        822865,
+        824645,
+        824161,
+        824321,
+        823108,
+        825054,
+        824158,
+        824646,
+        822866,
+        824322,
+        824806,
+        823429,
+        824402,
+        824482,
+        823516,
+        824728,
+        824889,
+        823753,
+        824082,
+        823106,
+        825052,
+        824804,
+        824481,
+        824401,
+        823754,
+        824664,
+        823105,
+        823430,
+        824729,
+        824885,
+        824080,
+        825053,
+        823349,
+        823428,
+        822699,
+        823515,
+        823836,
+        824727,
+        823750,
+        824566,
+        824081,
+        822863,
+        823024,
+        823266,
+        825051,
+        823103,
+        823191,
+        823514,
+        823834,
+        824726,
+        823426,
+        823348,
+        822701,
+        823752,
+        824079,
+        822864,
+        823021,
+        823188,
+        823267,
+        824565,
+        825049,
+        823102,
+        822700,
+        823345,
+        823425,
+        823513,
+        824724,
+        823835,
+        823751,
+        824078,
+        824564,
+        823020,
+        822862,
+        823190,
+        823104,
+        825050,
+        823268
+      ],
+      "randomization_certified": false,
+      "sha256": "ea5aaffce8140f5fdbac5a457ce6a8d0407f40dca316a578f3aa794d62dea7d3"
+    },
+    "quota_balanced": {
+      "game_pks": [
+        823105,
+        824401,
+        823428,
+        823835,
+        824731,
+        824889,
+        824082,
+        824482,
+        824158,
+        825053,
+        823514,
+        824079,
+        824727,
+        824481,
+        824664,
+        823266,
+        823104,
+        824566,
+        822866,
+        823836,
+        825054,
+        823429,
+        824888,
+        822865,
+        822701,
+        823188,
+        824646,
+        825051,
+        824081,
+        823757,
+        824728,
+        823517,
+        823431,
+        824804,
+        822863,
+        823753,
+        825050,
+        823516,
+        823425,
+        822700,
+        823515,
+        824321,
+        823348,
+        823750,
+        824724,
+        822699,
+        823432,
+        823102,
+        824403,
+        822864,
+        823752,
+        823024,
+        824564,
+        824484,
+        825095,
+        823191,
+        824647,
+        824084,
+        824324,
+        824726,
+        824729,
+        823345,
+        824161,
+        823021,
+        825052,
+        823349,
+        823834,
+        824160,
+        824080,
+        823108,
+        824805,
+        822867,
+        823513,
+        824078,
+        823751,
+        823268,
+        823426,
+        824402,
+        823103,
+        822862,
+        824806,
+        824565,
+        823754,
+        824885,
+        823106,
+        823190,
+        824645,
+        825049,
+        824322,
+        823267,
+        823430,
+        823520,
+        823020,
+        823756
+      ],
+      "randomization_certified": true,
+      "sha256": "91c4e409898efd2eb1534669c2fa12bfc9acd93d8f7862abd3f58ce723f3458e"
+    },
+    "seeded_random": {
+      "game_pks": [
+        824082,
+        824079,
+        823104,
+        824401,
+        824889,
+        824482,
+        824481,
+        822866,
+        825051,
+        823428,
+        823105,
+        824731,
+        824664,
+        823835,
+        825050,
+        823514,
+        823102,
+        824158,
+        824081,
+        824566,
+        824727,
+        822865,
+        824321,
+        825053,
+        824646,
+        824324,
+        824888,
+        823517,
+        823266,
+        823188,
+        825054,
+        824084,
+        824647,
+        823429,
+        823515,
+        824080,
+        823836,
+        822701,
+        823431,
+        823425,
+        824804,
+        823750,
+        823516,
+        823757,
+        823024,
+        823021,
+        824728,
+        823432,
+        823753,
+        823348,
+        823191,
+        822863,
+        824403,
+        824484,
+        824724,
+        823345,
+        824564,
+        822700,
+        824805,
+        823349,
+        824806,
+        822699,
+        823752,
+        822864,
+        823103,
+        824726,
+        824161,
+        824078,
+        825095,
+        824729,
+        825052,
+        824160,
+        823513,
+        823426,
+        823108,
+        823834,
+        823268,
+        822867,
+        825049,
+        822862,
+        823751,
+        823020,
+        823190,
+        824565,
+        824402,
+        824885,
+        823754,
+        823430,
+        824645,
+        823106,
+        824322,
+        823267,
+        823756,
+        823520
+      ],
+      "randomization_certified": true,
+      "sha256": "8c4e769fd3d4ccf0c8f36840c422e2c8e7f902f93679881c81b8f228bc8ea9d6"
+    }
+  },
+  "outcome_state": "ABSENT_BY_DESIGN",
+  "pilot_id": "mlb-2026-08-03-to-2026-08-09",
+  "quota_certificate": {
+    "categories": [
+      "predicted-away:margin-1",
+      "predicted-away:margin-2",
+      "predicted-away:margin-3",
+      "predicted-away:margin-4",
+      "predicted-home:margin-0",
+      "predicted-home:margin-1",
+      "predicted-home:margin-2",
+      "predicted-home:margin-3",
+      "predicted-home:margin-4"
+    ],
+    "counts": [
+      6,
+      3,
+      9,
+      6,
+      19,
+      13,
+      16,
+      10,
+      12
+    ],
+    "max_declared_cell_discrepancy": "93/94",
+    "order_codes_sha256": "f29928ea7332351eb5298dfd3416dd5767f8b676ec649f6b8b0f5f7bcdbc957f",
+    "verified": true
+  },
+  "randomization": {
+    "pairing": "same per-item priorities define global random and within-stratum quota queues",
+    "priority_rule": "SHA256('blind-audit-priority-v1|<seed>|<game_pk>')",
+    "seed": 20260801
+  },
+  "schema": "prospective-blind-audit-freeze-v1",
+  "sources": {
+    "schedule": {
+      "sha256": "a0da597dd91f15b5d02b2ebf0e29894540ad150cf15394f11b280ae7a212490f",
+      "url": "https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=2026-08-03&endDate=2026-08-09"
+    },
+    "standings": {
+      "sha256": "04d500c1de096344636a0d9669fb9f887d07a96774a339aa2007cf5a1a0c29bf",
+      "url": "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2026&standingsTypes=regularSeason&hydrate=team"
+    }
+  },
+  "strata": {
+    "bins": 5,
+    "margin": "absolute difference of the two smoothed season win rates",
+    "outcomes_used": false,
+    "rule": "predicted side x outcome-blind batch margin rank quintile"
+  }
+}
