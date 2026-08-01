@@ -20,9 +20,16 @@ def fixture_rows() -> tuple[list[tuple[int, ...]], list[int], list[tuple[int, ..
 class ProspectiveUciBlindTests(unittest.TestCase):
     def setUp(self) -> None:
         self.rows = fixture_rows()
-        self.loader = patch.object(pilot, "_load_dataset", return_value=self.rows)
-        self.loader.start()
-        self.addCleanup(self.loader.stop)
+        self.full_loader = patch.object(pilot, "_load_dataset", return_value=self.rows)
+        self.feature_loader = patch.object(
+            pilot,
+            "_load_features_for_freeze",
+            return_value=(self.rows[0], self.rows[1], self.rows[2]),
+        )
+        self.full_loader.start()
+        self.feature_loader.start()
+        self.addCleanup(self.full_loader.stop)
+        self.addCleanup(self.feature_loader.stop)
 
     def make_freeze(self, root: Path) -> tuple[Path, Path, dict[str, object]]:
         dataset = root / "fixture.zip"

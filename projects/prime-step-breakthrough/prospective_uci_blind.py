@@ -15,11 +15,14 @@ result; the report keeps that boundary explicit.
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
+import io
 import json
 import os
 import statistics
 import tempfile
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -107,9 +110,34 @@ def _script_sha256() -> str:
 def _load_dataset(path: Path) -> tuple[
     list[tuple[int, ...]], list[int], list[tuple[int, ...]], list[int]
 ]:
-    """Small indirection that keeps unit tests offline and deterministic."""
+    """Load the complete dataset for the post-freeze reveal only."""
 
     return audit.load_dataset(path)
+
+
+def _load_features_for_freeze(
+    path: Path,
+) -> tuple[list[tuple[int, ...]], list[int], list[tuple[int, ...]]]:
+    """Load training labels and test features without parsing test labels."""
+
+    if sha256_file(path) != audit.DATASET_SHA256:
+        raise PilotError("dataset archive is not the pinned UCI artifact")
+    with zipfile.ZipFile(path) as archive:
+        train_x, train_y = audit._load_member(archive, audit.TRAIN_MEMBER)
+        test_x: list[tuple[int, ...]] = []
+        with archive.open(audit.TEST_MEMBER) as raw:
+            reader = csv.reader(io.TextIOWrapper(raw, encoding="ascii", newline=""))
+            for row_number, row in enumerate(reader, 1):
+                if len(row) != 65:
+                    raise PilotError(
+                        f"{audit.TEST_MEMBER}:{row_number}: expected 65 columns, found {len(row)}"
+                    )
+                test_x.append(tuple(int(value) for value in row[:-1]))
+    if len(train_x) != audit.EXPECTED_TRAIN_ROWS or len(test_x) != audit.EXPECTED_TEST_ROWS:
+        raise PilotError(
+            f"unexpected split sizes: train={len(train_x)}, test={len(test_x)}"
+        )
+    return train_x, train_y, test_x
 
 
 def _order_digest(name: str, item_ids: list[str]) -> str:
@@ -199,7 +227,7 @@ def build_freeze_manifest(
 
     if warmup < 1 or bins < 1:
         raise PilotError("warmup and margin bins must be positive")
-    train_x, train_y, test_x, _test_y = _load_dataset(dataset_path)
+    train_x, train_y, test_x = _load_features_for_freeze(dataset_path)
     if warmup > len(test_x):
         raise PilotError("warmup cannot exceed the test item count")
     items, order_payload, thresholds = _metadata_from_rows(
@@ -348,7 +376,7 @@ def verify_freeze(pilot_dir: Path, dataset_path: Path) -> dict[str, Any]:
         forbidden = FORBIDDEN_ITEM_KEYS.intersection(item)
         if forbidden:
             raise PilotError(f"freeze item contains outcome-bearing keys: {sorted(forbidden)}")
-    train_x, train_y, test_x, _test_y = _load_dataset(dataset_path)
+    train_x, train_y, test_x = _load_features_for_freeze(dataset_path)
     rebuilt = build_freeze_manifest(
         dataset_path,
         frozen_at=str(manifest["frozen_at_utc"]),
