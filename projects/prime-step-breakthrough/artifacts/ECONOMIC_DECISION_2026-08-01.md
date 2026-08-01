@@ -18,7 +18,7 @@ replacement, a risk engine, or an enterprise savings claim.
   artifact validation.
 - The retrospective UCI replay improved integrated prefix error against paired
   random orders, but that is not a human-time result.
-- The separate label-blind UCI freeze/reveal provides a stronger baseline check:
+- The separate [label-blind UCI freeze/reveal](../pilots/uci-optdigits-2026-08-01-label-blind-v2/RESULT.md) provides a stronger baseline check:
   quota-balanced error was `0.00928984`, seeded-random error was `0.01147492`,
   and the original production/test-file order was `0.00889294`. The certificate
   therefore did not beat the production baseline on this workload.

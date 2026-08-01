@@ -101,7 +101,7 @@ features.
   the current no-go/paid-pilot economic decision, including the negative
   production-order baseline result and scenario-value calculations.
 - [`prospective_uci_blind.py`](prospective_uci_blind.py) and
-  [`pilots/uci-optdigits-2026-08-01/`](pilots/uci-optdigits-2026-08-01/):
+  [`pilots/uci-optdigits-2026-08-01-label-blind-v2/`](pilots/uci-optdigits-2026-08-01-label-blind-v2/):
   a label-blind freeze/reveal study for the UCI audit workload.  It is
   prospective with respect to the committed analysis and orders, but remains
   offline public-dataset evidence rather than a production or human-time
