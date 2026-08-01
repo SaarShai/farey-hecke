@@ -27,6 +27,13 @@ replacement, a risk engine, or an enterprise savings claim.
 - The hash-chained workflow recorder is implemented, but no professional
   participant or customer workflow has supplied active-time, correction,
   adjudication, or integration-cost observations.
+- A separate [NetEaseCrowd human-annotation replay](../pilots/neteasecrowd-human-annotation-2026-08-01/RESULT.md)
+  used 24,000 real annotations from 12 tasksets. The chronological production
+  order had integrated absolute error `0.06540395`; seeded random had
+  `0.00186332`; quota-balanced had `0.00187554`. This is strong evidence that
+  prefix composition can change the early human-label accuracy trajectory, but
+  it is a historical reorder replay and its timestamps are not active labor
+  durations.
 
 ## Economic interpretation
 

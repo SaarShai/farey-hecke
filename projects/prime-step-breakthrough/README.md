@@ -102,6 +102,10 @@ features.
   production-order baseline result and scenario-value calculations.
 - [`artifacts/HUMAN_WORKFLOW_PILOT_RUNBOOK.md`](artifacts/HUMAN_WORKFLOW_PILOT_RUNBOOK.md):
   the participant-ready runbook for the remaining real-workflow evidence gate.
+- [`neteasecrowd_human_audit.py`](neteasecrowd_human_audit.py) and
+  [`pilots/neteasecrowd-human-annotation-2026-08-01/`](pilots/neteasecrowd-human-annotation-2026-08-01/):
+  a public-corpus replay with real human annotations and ground truth; its
+  timestamps remain explicitly non-active-time evidence.
 - [`prospective_uci_blind.py`](prospective_uci_blind.py) and
   [`pilots/uci-optdigits-2026-08-01-label-blind-v2/`](pilots/uci-optdigits-2026-08-01-label-blind-v2/):
   a label-blind freeze/reveal study for the UCI audit workload.  It is

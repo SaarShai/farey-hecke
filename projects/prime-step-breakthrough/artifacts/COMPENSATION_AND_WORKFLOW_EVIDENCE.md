@@ -83,3 +83,9 @@ time and error distributions. It is **not** evidence that this certificate
 changes human time: it has no committed production/random/quota comparison from
 this project and is not a customer workflow. Any use must preserve its
 provenance and license and must not be relabeled as our pilot.
+
+The accessible [NetEaseCrowd corpus](https://huggingface.co/datasets/liuhyuu/NetEaseCrowd)
+provides a stronger error-trajectory check: the committed replay uses 24,000
+real annotations with worker IDs, capabilities, recorded completion timestamps,
+and ground truth. It still does not provide active labor durations or a causal
+customer comparison, so it cannot clear the human-cost gate.
