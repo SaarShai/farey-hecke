@@ -94,6 +94,9 @@ features.
 - [`artifacts/REAL_DATA_ML_SIMULATION.md`](artifacts/REAL_DATA_ML_SIMULATION.md):
   real UCI handwritten-digit evaluation, 2,000 paired ordering simulations,
   downstream prefix-error gains, sample-count thresholds, and a negative control.
+- [`artifacts/WORKFLOW_MEASUREMENT_PROTOCOL.md`](artifacts/WORKFLOW_MEASUREMENT_PROTOCOL.md):
+  hash-chained prospective human-workflow instrumentation, cost formula, and
+  the gate for any labor-saving claim.
 
 ## Python examples
 
