@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blind human-workflow pilot</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">Prime-step breakthrough</p>
+    <h1>Blind human-workflow pilot</h1>
+    <p>Run one frozen workload condition while recording active review time, responses, skips, and pauses. Ground truth is not loaded by this page.</p>
+  </header>
+  <main>
+    <aside class="warning" role="note">
+      <strong>Study boundary:</strong> this page is a measurement instrument, not a production annotation service. Use one frozen manifest per condition, keep participants pseudonymous, and do not put labels, answers, or other outcome fields in the manifest.
+    </aside>
+    <p id="pilot-status" class="status" role="status" aria-live="polite">Load a frozen manifest to begin.</p>
+
+    <section id="pilot-setup" class="panel" aria-labelledby="pilot-setup-heading">
+      <h2 id="pilot-setup-heading">1. Load the frozen condition</h2>
+      <p>The manifest supplies the condition, cohort/order digests, item IDs, prompts, and response choices. The page rejects manifests containing common ground-truth fields.</p>
+      <p><a href="/pilot_manifest.example.json" download>Download the label-blind example manifest</a> for a smoke test; it is not a domain study.</p>
+      <label for="pilot-manifest">Manifest JSON</label>
+      <input id="pilot-manifest" type="file" accept="application/json,.json" required>
+      <p id="pilot-manifest-summary" class="field-note">No manifest loaded.</p>
+      <div class="form-grid">
+        <div>
+          <label for="pilot-session-id">Pseudonymous session ID</label>
+          <input id="pilot-session-id" type="text" autocomplete="off" spellcheck="false" placeholder="participant-01-condition-A" required>
+        </div>
+        <div>
+          <label for="pilot-reviewer-rate">Loaded reviewer rate (USD/hour)</label>
+          <input id="pilot-reviewer-rate" type="number" min="0" step="0.01" value="60" required>
+        </div>
+      </div>
+      <button id="pilot-begin" type="button" disabled>Begin measured session</button>
+    </section>
+
+    <section id="pilot-review" class="panel panel-operational" hidden aria-labelledby="pilot-review-heading">
+      <div class="panel-heading-row">
+        <div>
+          <p class="eyebrow">Measured session</p>
+          <h2 id="pilot-review-heading">Review the current item</h2>
+        </div>
+        <span id="pilot-condition" class="research-badge">Condition not loaded</span>
+      </div>
+      <p id="pilot-progress" class="field-note">Item 0 of 0</p>
+      <article id="pilot-item" class="certificate-result" aria-live="polite" aria-labelledby="pilot-item-heading">
+        <h3 id="pilot-item-heading">Current item</h3>
+        <p id="pilot-prompt">No item is active.</p>
+        <div id="pilot-choices" class="choice-list" aria-label="Response choices"></div>
+      </article>
+      <div class="form-grid">
+        <button id="pilot-skip" type="button">Skip item</button>
+        <button id="pilot-pause" type="button">Pause</button>
+      </div>
+      <p class="field-note">Pause when the participant is interrupted. The pause interval is excluded from active review time; a skip remains an observed workflow event.</p>
+    </section>
+
+    <section id="pilot-complete" class="panel" hidden aria-labelledby="pilot-complete-heading">
+      <h2 id="pilot-complete-heading">2. Seal and export</h2>
+      <p id="pilot-complete-summary">Session complete.</p>
+      <button id="pilot-download" type="button">Download verified workflow JSONL</button>
+      <p class="field-note">Verify the downloaded file with <code>PYTHONPATH=src python3 workflow_measurement.py session.jsonl --json</code>. Do not edit the file before verification.</p>
+      <label for="pilot-evidence">Evidence text (fallback if the browser blocks a download)</label>
+      <textarea id="pilot-evidence" rows="8" readonly hidden></textarea>
+    </section>
+  </main>
+  <script src="/pilot.js" defer></script>
+</body>
+</html>

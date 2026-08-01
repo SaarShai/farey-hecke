@@ -102,6 +102,8 @@ features.
   production-order baseline result and scenario-value calculations.
 - [`artifacts/HUMAN_WORKFLOW_PILOT_RUNBOOK.md`](artifacts/HUMAN_WORKFLOW_PILOT_RUNBOOK.md):
   the participant-ready runbook for the remaining real-workflow evidence gate.
+- [`artifacts/PILOT_BROWSER_VERIFICATION.md`](artifacts/PILOT_BROWSER_VERIFICATION.md):
+  the instrument-only browser smoke test and independent JSONL recomputation.
 - [`neteasecrowd_human_audit.py`](neteasecrowd_human_audit.py) and
   [`pilots/neteasecrowd-human-annotation-2026-08-01/`](pilots/neteasecrowd-human-annotation-2026-08-01/):
   a public-corpus replay with real human annotations and ground truth; its
@@ -197,7 +199,11 @@ PYTHONPATH=src python3 -m coprimebatch.cli gaps --farey-order 8 --json
 PYTHONPATH=src python3 -m coprimebatch.web --host 127.0.0.1 --port 8765
 ```
 
-Then open `http://127.0.0.1:8765/` for the keyboard-accessible browser UI.
+Then open `http://127.0.0.1:8765/` for the keyboard-accessible browser UI.  The
+participant-ready blind workflow instrument is at
+`http://127.0.0.1:8765/pilot.html`; it accepts a frozen label-blind manifest
+and downloads an evidence JSONL file that the existing `workflow_measurement.py`
+verifier can recompute.
 This dependency-free HTTP server is localhost research software. It has no
 authentication, TLS, rate limiting, process isolation, or production work
 queue. Its bind guard accepts only `127.0.0.1`, `localhost`, or `::1`; every
@@ -305,4 +311,7 @@ evidence yet that balancing declared cells improves a renderer, risk estimate,
 scientific conclusion, or final result after all items are processed. One UCI
 model-audit replay now shows a statistical prefix-estimation gain under declared
 prediction/confidence strata, but it does not yet establish a deployable stopping
-rule, human-time saving, workflow-overhead saving, or monetary benefit.
+rule, human-time saving, workflow-overhead saving, or monetary benefit. The
+blind pilot page makes the remaining human-time gate executable, but no
+participant result is claimed until a real frozen workload is run and its JSONL
+file is independently verified.

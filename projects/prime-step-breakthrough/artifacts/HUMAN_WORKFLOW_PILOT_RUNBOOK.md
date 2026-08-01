@@ -21,6 +21,14 @@ demonstration generated from synthetic timings.
    put names, raw labels, credentials, or sensitive content in the evidence
    stream.
 
+The local participant surface is `http://127.0.0.1:8765/pilot.html`. Give the
+participant one frozen manifest for the assigned condition. The page rejects
+common outcome fields (`truth`, `label`, `correct`, `answer`, and related
+keys), records the response/pause event chain in the existing schema, and
+downloads a JSONL file. The example manifest at
+`web/pilot_manifest.example.json` is only a smoke test and must not be used as
+domain evidence.
+
 ## Session protocol
 
 Run the same frozen cohort under each condition, with condition order

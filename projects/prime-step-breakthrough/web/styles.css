@@ -56,6 +56,8 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
 .constraint-warning { margin: .25rem 0 0; padding: .7rem; border-left: 4px solid #b45309; background: var(--warning); }
 .result { min-height: 8rem; max-height: 32rem; margin-top: 1rem; padding: .75rem; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; border-left: 4px solid var(--accent); background: #eef6fa; font: .85rem/1.45 ui-monospace, SFMono-Regular, monospace; }
 .field-note { margin: .15rem 0 .5rem; color: var(--muted); font-size: .9rem; }
+.choice-list { display: grid; gap: .65rem; margin-top: .75rem; }
+.choice-list button { margin-top: 0; text-align: left; }
 .certificate-result { margin-top: 1rem; padding: 1rem; border: 1px solid #c7d2fe; border-radius: .5rem; background: #fafaff; }
 .certificate-summary { padding: .7rem; border-left: 4px solid var(--operational); background: var(--operational-pale); font-weight: 700; }
 .certificate-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .65rem; margin: 1rem 0; }

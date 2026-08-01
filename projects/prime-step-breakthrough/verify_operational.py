@@ -374,14 +374,18 @@ def main() -> int:
         errors.extend(f"static: {error}" for error in static_errors)
     print(f"static gate: {'PASS' if not static_errors else 'FAIL'}")
 
-    javascript = _run(["node", "--check", "web/app.js"])
-    if javascript.returncode:
-        errors.append(
-            f"browser JavaScript syntax check failed\n{javascript.stdout}\n{javascript.stderr}"
-        )
+    javascript_errors = []
+    for javascript_path in ("web/app.js", "web/pilot.js"):
+        javascript = _run(["node", "--check", javascript_path])
+        if javascript.returncode:
+            javascript_errors.append(
+                f"{javascript_path}:\n{javascript.stdout}\n{javascript.stderr}"
+            )
+    if javascript_errors:
+        errors.append("browser JavaScript syntax check failed\n" + "\n".join(javascript_errors))
     print(
         "browser JavaScript syntax gate: "
-        f"{'PASS' if javascript.returncode == 0 else 'FAIL'}"
+        f"{'PASS' if not javascript_errors else 'FAIL'}"
     )
 
     unit = _run(
