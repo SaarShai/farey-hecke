@@ -1,5 +1,5 @@
 ---
-description: "Use when a long session may drift or needs verification-compliance monitoring. Frontier defaults to silent intent state plus one compact, compliance-aware verification probe; shadow measures suppressed legacy probes; legacy preserves rollback behavior; off is a mutation-free control."
+description: "Use when a long session may drift or needs verification-compliance monitoring. Frontier defaults to silent intent state plus one compact, compliance-aware verification probe and an armed-only closeout-blocking correction ledger; off is a mutation-free control."
 globs: ["**/*"]
 alwaysApply: false
 ---

@@ -35,12 +35,12 @@ Load only when triggered:
 | Trigger | Load |
 |---|---|
 | Terse style details | `skills/caveman-ultra/SKILL.md` |
-| Task >3 steps | `skills/plan-first-execute/SKILL.md` |
+| Task >3 steps | Use a short written plan, then execute it |
 | Need wiki memory | `skills/wiki-memory/SKILL.md` |
 | Writing memory | `skills/write-gate/SKILL.md`; `skills/wiki-memory/SKILL.md` |
 | Context refresh/clear/`summ` | `./te context status` / `./te context checkpoint` |
 | Need subagents | `./te delegate plan`; `prompts/subagents/lifecycle.prompt.md` |
-| Simplify/lean/prune | `skills/lean-execution/SKILL.md` |
+| Simplify/lean/prune | Apply the resident smallest-reversible-action rule |
 | GitHub repo maintenance | `prompts/subagents/repo-maintainer.prompt.md` |
 | `/pa` or `/btw` prompt | `./te pa --directive` |
 | Before completion claim | `skills/verify-before-completion/SKILL.md` |

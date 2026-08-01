@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 import re
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -93,7 +94,9 @@ def python_signature(node: ast.AST) -> str:
 
 def parse_python(text: str) -> tuple[list[str], list[Symbol]]:
     try:
-        tree = ast.parse(text)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", SyntaxWarning)
+            tree = ast.parse(text)
     except SyntaxError:
         return [], []
     imports: list[str] = []

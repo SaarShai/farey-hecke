@@ -19,6 +19,13 @@ import Mathlib
 /-!
 # A density-one sign pattern for the prime-step Farey L² discrepancy
 
+**WITHDRAWN / DO NOT SUBMIT (2026-07-19).**  Exact matched-observable
+computation found the pointwise relation false already at `p = 13` and zero
+agreements among 4,617 qualifying primes through `100000`.  A finite scan does
+not logically refute the density-one statement, but the present conjecture has
+no responsible empirical basis.  The declaration is retained locally only as
+a record of the withdrawn proposal.
+
 *Reference:* S. Shai, *The per-step Farey discrepancy* (2026); project
 record `Primes-Equispaced` (`handoff-2026-05-09-followup`,
 `handoff-2026-05-16-D3-functionfield`). arXiv: to be assigned.
@@ -31,14 +38,18 @@ Let `fareySet N` be the Farey fractions of order `N` in `(0, 1]`, and let
 `ΔW p := W (p-1) − W p` — the change when the `p−1` new fractions `{k/p}`
 are inserted. Let `mertens` be `M n = ∑_{k ≤ n} μ(k)`.
 
-The naive **pointwise** relation `sgn (ΔW p) = sgn (−M p)` for *every*
-prime `p` with `M p ≤ −3` is **false** (explicit counterexamples, e.g.
-`p = 237733`, `M p = −20`; `p = 243799`, `M p = −3`; project record). The
-surviving statement — numerically ≈ 73 % of qualifying primes at
-`X = 10⁷`, expected to be density-one under the `L`-function hypotheses
-controlling the explicit-formula expansion of `ΔW p` (a Chebyshev-bias
-statement à la Rubinstein–Sarnak) — is the **density-one** form below.
-It is an open problem; the body is `sorry`.
+The pointwise relation `sgn (ΔW p) = sgn (−M p)` for every prime `p` with
+`M p ≤ −3` is false for this **integral count-discrepancy** observable.  At
+`p = 13`, exact arithmetic gives `M p = -3` and
+`ΔW p = -95083 / 180180 < 0`.  The density-one declaration below is retained
+only as the withdrawn historical proposal; its body is `sorry`.
+
+Some project numerical records concern different observables: a discrete-sum
+quantity also called `W`, and a crossTerm quantity `B(p)`. They are not
+evidence for this file's `W` or `ΔW`: already at `N = 2` the integral `W`
+defined here is `1/3`, whereas the discrete-sum quantity is `5/36`. No
+numerical percentage or named counterexample is asserted here for the formal
+observable.
 
 NOTE TO REVIEWERS / MAINTAINERS: this statement uses a *concrete* Farey
 discrepancy (no opaque symbols). It is a faithful statement, but it has
@@ -89,12 +100,12 @@ def signZ (n : ℤ) : ℤ := if n > 0 then 1 else if n < 0 then -1 else 0
 /-- At prime `p`: `sgn (ΔW p) = sgn (−M p)`. -/
 noncomputable def Agrees (p : ℕ) : Prop := signR (ΔW p) = signZ (- mertens p)
 
-/-- **Density-one Farey discrepancy sign pattern (open).**
+/-- **Density-one Farey discrepancy sign pattern (withdrawn historical proposal).**
 
 For every `ε > 0` there is `X₀` such that for all `X ≥ X₀`, whenever at
 least one prime `p ≤ X` has `M p ≤ −3`, the proportion of such primes that
-also satisfy `sgn (ΔW p) = sgn (−M p)` is `≥ 1 − ε`. The pointwise form
-(`ε = 0`) is false; this density-one form is the surviving conjecture. -/
+also satisfy `sgn (ΔW p) = sgn (−M p)` is `≥ 1 − ε`. Exact finite evidence
+now runs in the opposite direction; do not submit this declaration. -/
 -- @[category research open, AMS 11]  (formal-conjectures attr; stripped for Mathlib-only build-check)
 theorem farey_discrepancy_density_one_sign :
     ∀ ε > (0 : ℝ), ∃ X₀ : ℕ, ∀ X ≥ X₀,

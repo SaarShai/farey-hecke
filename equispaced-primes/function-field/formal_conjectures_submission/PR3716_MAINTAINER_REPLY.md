@@ -1,6 +1,14 @@
 @mo271 thank you for the review and for marking it draft — that was the right
 call. I've reworked the PR to address the points:
 
+**2026-07-19 correction:** please withdraw the Farey sign item. An exact
+matched-observable calculation gives
+`DeltaW(13) = -95083/180180` while `M(13) = -3`, and found zero agreements
+among 4,617 qualifying primes through `100000`. The pointwise claim is false;
+the finite range gives no responsible numerical basis for retaining the
+density-one conjecture. The local follow-up draft contains the reproduction
+details. No sign-reversed replacement is proposed.
+
 1. **No placeholder definitions.** Both remaining files previously stated
    `True := by sorry`. They now state the actual conjectures against
    concrete, fully-defined objects: the Farey set as a `Finset ℚ`, the L²
@@ -19,13 +27,18 @@ call. I've reworked the PR to address the points:
    indentation, and removed commented-out pseudo-code. I read
    `CONTRIBUTING.md` and `AGENTS.md`.
 
-4. **Recalibrated the prose.** Removed overstated framing; the docstrings now
-   state plainly what is false (the pointwise sign pattern), what is open
-   (the density-one form, and the Dirichlet-polynomial avoidance), and what
-   is only numerical.
+4. **Superseded by the 2026-07-19 correction above.** The matched integral-
+   count computation refutes the pointwise Farey sign pattern and provides no
+   finite support for retaining the density-one proposal. The older
+   discrete-sum and cross-term computations remain different observables.
+   Dirichlet-polynomial avoidance remains open and is unaffected.
 
-5. **Build.** Ran `lake exe cache get` + `lake --wfail build` on both
-   modules locally (Lean v4.27.0): ✓ **Passed.** `Build completed successfully (7983 jobs)`; both `FormalConjectures.Paper.FareySignPattern` and `FormalConjectures.Paper.DirichletPolynomialAvoidance` build under `lake --wfail build` (warnings-as-errors) on Lean v4.27.0, with only the expected research-open `sorry`.
+5. **Build.** The adjacent local Lean v4.28.0 project completes plain
+   `lake build` (`8037` jobs), while `lake --wfail build` exits `1` on the
+   disclosed research-open `sorry` declarations and existing linter warnings.
+   This is not a current build certificate for the upstream module layout; I
+   will rerun the submitted modules in the current upstream checkout before
+   posting a strict-build claim.
 
 One question: would you prefer the concrete Farey/discrepancy definitions to
 stay inline in the problem file, or be moved into

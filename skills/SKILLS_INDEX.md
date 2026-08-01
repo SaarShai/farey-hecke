@@ -35,7 +35,7 @@ For measured per-skill deltas and the live A/B table see [`eval/FINDINGS.md`](..
 | [security-oversight](security-oversight/SKILL.md) | Pre-ship security triage of a `git diff` — flags INTRODUCED risk in added lines across 4 OWASP-anchored classes (secret / injection / supply_chain / authz), scores HIGH/MEDIUM/REVIEW, routes HIGH/MEDIUM to `verify-before-completion` and surfaces REVIEW for a human; scanner-aware (recommends gitleaks/semgrep/osv-scanner), never blocks, absence ≠ proof of safety. The security sibling of `impact-of-change`. It also **audits an untrusted skill folder/repo pre-install** (`skill_audit.py` → PASS/WARN/FAIL); A18 dogfood permits deliberate WARN fixtures but fails CRITICAL/HIGH findings outside test files. Lineage: OWASP Agentic Top 10 (ASI) + LLM Top 10 + Karpathy's agentic-engineering mandate. **Opt-in** (`auto-install: false`). |
 | [team-lead](team-lead/SKILL.md) | **Experimental/manual.** FULL orchestration protocol retained for explicit team requests and paired evaluation; compact builder/verifier role briefs remain available. |
 
-24 skills total — all **listed and symlinked by the current installer**. Opt-in status controls hook/dependency wiring, while `disable-model-invocation` keeps suspect bodies manual. `compliance-canary` remains the default frontier service with silent intent state and compact verification; executable tools remain callable without auto-loading their manuals. Promotion history and measured deltas live in [`eval/FINDINGS.md`](../eval/FINDINGS.md).
+24 active skills total — all **listed and symlinked by the current installer**. Opt-in status controls hook/dependency wiring, while `disable-model-invocation` keeps suspect bodies manual. Retired skill directories remain only as source/evaluation history and are not linked or advertised. `compliance-canary` remains the default frontier service with silent intent state and compact verification; executable tools remain callable without auto-loading their manuals. Promotion history and measured deltas live in [`eval/FINDINGS.md`](../eval/FINDINGS.md).
 
 Removed after measurement: `personal-assistant` / `memory-api` / `skill-creator` (v1.1.0, redundancy), `delegate` (v1.2.0, zero measured gain — auto-routing via `prompt-triage` already covers the use case), `context-refresh` (v1.3.0, merged into `handoff` — its only unique piece was the auto-launcher which never worked reliably; the rest is now `/handoff --full` and `/handoff --ask`), `handoff-from` + `memory-decay` (v1.6.0, redundant / verified no-op), and `compress-context` + `session-recall` + `loop-breaker` (v1.6.0, the unproven-gain tail: each was both ❌/🟡 on measured benefit and redundant with a kept skill — `caveman`+`context-keeper`, `context-keeper`+`wiki`+`handoff`, and host loop-protection respectively; see `eval/FINDINGS.md` "Catalog cuts"), and `handoff` (v1.6.1 — operational-only, no measured gain; the host's `/compact` + `context-keeper` PreCompact extraction cover session continuity), and `standing-orders` + `self-improvement-loops` + `requirements-ledger` + `wayfinder` + `fable-mode` + `plan-first-execute` + `lean-execution` (v1.12, 2026-07-19 catalog contraction: unproven doctrine bodies per the null FRONTIER-vs-OFF pilot, the 2026-07-17 adversarial-review taxonomy, and `docs/TARGET_ARCHITECTURE.md`'s migration map; their still-valuable mechanical probes — repeated-failure stall, dependency-manifest, whitespace-only-edit, ledger-not-materialized, assumption-self-close — were rehomed to `compliance-canary/drift_probes.json`, and canary's unconditional intent capture already replaces the ledger workflow).
 
@@ -56,7 +56,7 @@ The eight slots below cover the measured-win axes (output × routing × memory �
 | Terminal output | [`output-filter`](output-filter/SKILL.md) | −88.8% bytes, errors preserved |
 | Claims of done | [`verify-before-completion`](verify-before-completion/SKILL.md) | −33.5% output, evidence-first |
 
-Bootstrap once per project: `python3 skills/wiki-memory/tools/wiki.py init && graphify extract .` (graphify is auto-installed by `./install.sh`; pass `--no-graphify` to opt out).
+Bootstrap wiki memory once per project with `python3 skills/wiki-memory/tools/wiki.py init`. Graphify is optional; install it explicitly with `./INSTALL.sh --graphify` before running `graphify extract .`.
 
 ## Prime directive
 
@@ -71,10 +71,10 @@ Stacking, anti-patterns, and workload guidance live in [`eval/FINDINGS.md`](../e
 ## Install
 
 ```bash
-./install.sh             # symlink to all four host loaders
-./install.sh --host claude-code   # just one host
+./INSTALL.sh                       # symlink to all four host loaders
+./INSTALL.sh --host claude-code    # just one host
 ```
 
 ## Status
 
-Twenty-two skills ship an `EVAL.md`; `baton` and `propagate` currently do not. Skills claiming >20% savings get N≥50 verification before promotion. A skill carrying `auto-install: false` remains symlinked and listed, but its installer does not run. Root reinstall removes stale managed hooks for opt-in skills; explicit per-skill installation can re-enable one for a controlled arm.
+Of the 24 active skills, twenty-two ship an `EVAL.md`; `baton` and `propagate` currently do not. Skills claiming >20% savings get N≥50 verification before promotion. A skill carrying `auto-install: false` remains symlinked and listed, but its installer does not run. Root reinstall removes stale managed hooks for opt-in skills; explicit per-skill installation can re-enable one for a controlled arm.

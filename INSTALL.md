@@ -5,7 +5,7 @@ Token Economy is a framework of tools, skills, and operating rules that a projec
 Project-local install (in an existing project that already contains the framework files):
 
 ```bash
-./INSTALL.sh --scope project
+./INSTALL.sh
 ```
 
 Dry run:
@@ -14,52 +14,31 @@ Dry run:
 ./INSTALL.sh --dry-run
 ```
 
-What it checks:
-- `te doctor`
-- `te hooks doctor`
-- `te wiki index`
-- adapter copy via `te start`
-- repo-local install helpers when their files are present
-
-## Fresh Target Project Setup
-
-In a new empty target project folder, retrieve only the downstream runtime/framework files. Refuse to run if this folder already contains the framework itself.
+The installer links the active skills into repo-local host directories, refreshes
+the resident catalogs, and runs repo-local skill helpers. Verify the result with:
 
 ```bash
-# Refuse to install if this folder is already the Token Economy framework
-if [ -f "token-economy.yaml" ] || git remote get-url origin 2>/dev/null | grep -q "SaarShai/token-economy"; then
-  echo "ABORT: folder already contains the Token Economy framework. Use a different folder."
-  exit 1
-fi
+./te doctor
+./te hooks doctor
+./te wiki index
+```
 
-# Python version note (core works on 3.9+; stable bundle MCP install needs 3.10+)
-python3 -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" || \
-  echo "WARNING: Python <3.10 detected. ./stable/INSTALL.sh needs 3.10+ for ComCom + semdiff MCP deps."
+## Fresh Checkout
 
-find . -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-git clone --depth 1 --filter=blob:none --sparse https://github.com/SaarShai/token-economy.git .
-git sparse-checkout set --no-cone \
-  '/.gitignore' '/AGENTS.md' '/CLAUDE.md' '/GEMINI.md' \
-  '/INSTALL.md' '/INSTALL.sh' '/LICENSE' \
-  '/L0_rules.md' '/L1_index.md' '/index.md' '/models.yaml' '/schema.md' \
-  '/start.md' '/te' '/token-economy.yaml' \
-  '/token_economy/*' '/adapters/*' '/hooks/*' '/hooks/output-filter/*' '/templates/*' \
-  '/prompts/*.md' '/prompts/subagents/*' \
-  '/projects/agents-triage/*' '/projects/compound-compression-pipeline/*' \
-  '/projects/context-keeper/*' '/projects/semdiff/*' \
-  '/skills/cache-lint/*' '/skills/caveman-ultra/*' '/skills/compliance-canary/*' \
-  '/skills/context-keeper/*' '/skills/index-first/*' '/skills/lean-execution/*' \
-  '/skills/output-filter/*' '/skills/plan-first-execute/*' '/skills/prompt-triage/*' \
-  '/skills/semantic-diff/*' '/skills/skill-pulse/*' '/skills/think/*' \
-  '/skills/verify-before-completion/*' '/skills/wiki-memory/*' '/skills/wiki-refresh/*' \
-  '/skills/write-gate/*' '/skills/SKILLS_INDEX.md' \
-  '/stable/INSTALL.sh' '/stable/*'
-rm -rf .git
-git init
+Clone into a new directory, then install. The installer never clears the current
+directory and does not write user-global configuration by default.
+
+```bash
+git clone https://github.com/SaarShai/token-economy.git token-economy
+cd token-economy
 ./INSTALL.sh --dry-run
-./INSTALL.sh --scope project --agent auto
-command -v claude >/dev/null && ./stable/INSTALL.sh   # registers ComCom + semdiff MCP servers (skipped if claude CLI missing)
+./INSTALL.sh
 ./te doctor && ./te hooks doctor && ./te wiki lint --strict --fail-on-error
 ```
 
-This permission applies only to the current target folder named by the user. Do not delete parent folders or files elsewhere. The framework does not install global agent settings.
+Optional global integrations must be requested explicitly:
+
+```bash
+./INSTALL.sh --graphify
+./INSTALL.sh --global-claude-hooks
+```

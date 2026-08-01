@@ -1,17 +1,21 @@
 ## Summary
 
-Revised after @mo271's review. Two **open conjectures** from a study of the
-per-step Farey discrepancy, each stated against **concrete, fully-defined
-objects** (no placeholder definitions):
+Revised after @mo271's review. This packet now records one **withdrawn Farey
+proposal** and one surviving **open conjecture**, each stated against
+**concrete, fully-defined objects** (no placeholder definitions):
 
-1. **Density-one Farey L² discrepancy sign pattern**
+1. **WITHDRAWN — density-one Farey L² discrepancy sign pattern**
    (`FormalConjectures/Paper/FareySignPattern.lean`). With `fareySet`,
    `fareyL2Discrepancy = ∫₀¹ (#{f ≤ x} − |F_N|·x)² dx`,
    `primeStepIncrement`, and `mertens` all defined concretely: among primes
    `p` with `M p ≤ −3`, the proportion satisfying
-   `sgn(ΔW p) = sgn(−M p)` tends to `1`. The *pointwise* form is **false**
-   (fails at `p = 243799`); the density-one form is open (≈73% of qualifying
-   primes up to `10⁷`).
+   `sgn(ΔW p) = sgn(−M p)` tends to `1`. **Update (2026-07-19): an exact matched-
+   observable scan found the pointwise claim false at `p=13` and zero
+   agreements among 4,617 qualifying primes through `100000`. This Farey
+   item should be removed from the PR; no sign-reversed replacement is being
+   proposed.** Project records for a different
+   discrete-sum `W` or crossTerm `B(p)` are not evidence for this `ΔW`
+   (already `N = 2` gives `1/3` here versus `5/36` there).
 
 2. **Möbius Dirichlet-polynomial avoidance**
    (`FormalConjectures/Paper/DirichletPolynomialAvoidance.lean`). For fixed
@@ -39,8 +43,14 @@ objects** (no placeholder definitions):
 
 ## Build
 
-`lake exe cache get` + `lake --wfail build` on both modules, Lean v4.27.0:
-✓ **Passed.** `Build completed successfully (7983 jobs)`; both `FormalConjectures.Paper.FareySignPattern` and `FormalConjectures.Paper.DirichletPolynomialAvoidance` build under `lake --wfail build` (warnings-as-errors) on Lean v4.27.0, with only the expected research-open `sorry`.
+The earlier draft recorded a Lean v4.27.0 `lake --wfail build` pass for the
+upstream `FormalConjectures` modules, but that checkout and its build output are
+not present in this local packet, so the statement is not offered as a fresh
+certificate. In the adjacent local Lean v4.28.0 project, `lake build` succeeds
+(`8037` jobs) while `lake --wfail build` exits `1` on the disclosed
+research-open `sorry` declarations and existing linter warnings. Before this
+text is posted, rerun the two submitted modules in a current
+`FormalConjectures` checkout and replace this paragraph with that exact output.
 
 ## Source / disclosure
 

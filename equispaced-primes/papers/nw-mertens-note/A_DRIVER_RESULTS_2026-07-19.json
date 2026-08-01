@@ -1,0 +1,280 @@
+{
+  "binary_decimal_sign_disagreement_count": 0,
+  "decimal_precision": 80,
+  "decimal_sign_floor": "1E-60",
+  "discovery": {
+    "count": 1000000,
+    "cumulative_decade_blocks": [
+      {
+        "count": 1,
+        "cumulative_global_block": [
+          1,
+          1
+        ],
+        "max_abs_driver_over_sqrt_x": 0.0,
+        "mean_abs_driver_over_sqrt_x": 0.0,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          1
+        ]
+      },
+      {
+        "count": 10,
+        "cumulative_global_block": [
+          1,
+          10
+        ],
+        "max_abs_driver_over_sqrt_x": 1.035802639127668,
+        "mean_abs_driver_over_sqrt_x": 0.7423712252655268,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          10
+        ]
+      },
+      {
+        "count": 100,
+        "cumulative_global_block": [
+          1,
+          100
+        ],
+        "max_abs_driver_over_sqrt_x": 1.2073603301174454,
+        "mean_abs_driver_over_sqrt_x": 0.8641364275454972,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          100
+        ]
+      },
+      {
+        "count": 1000,
+        "cumulative_global_block": [
+          1,
+          1000
+        ],
+        "max_abs_driver_over_sqrt_x": 1.2073603301174454,
+        "mean_abs_driver_over_sqrt_x": 0.5309622378831216,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          1000
+        ]
+      },
+      {
+        "count": 10000,
+        "cumulative_global_block": [
+          1,
+          10000
+        ],
+        "max_abs_driver_over_sqrt_x": 1.2073603301174454,
+        "mean_abs_driver_over_sqrt_x": 0.2607661488279971,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          10000
+        ]
+      },
+      {
+        "count": 100000,
+        "cumulative_global_block": [
+          1,
+          100000
+        ],
+        "max_abs_driver_over_sqrt_x": 1.2073603301174454,
+        "mean_abs_driver_over_sqrt_x": 0.1324698356675715,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          100000
+        ]
+      },
+      {
+        "count": 1000000,
+        "cumulative_global_block": [
+          1,
+          1000000
+        ],
+        "max_abs_driver_over_sqrt_x": 1.2073603301174454,
+        "mean_abs_driver_over_sqrt_x": 0.09863035658086512,
+        "min_abs_driver_over_sqrt_x": 0.0,
+        "split_intersection": [
+          1,
+          1000000
+        ]
+      }
+    ],
+    "first_nonnegative": 1,
+    "first_sign_changes": [
+      3293,
+      3299,
+      7455,
+      7457,
+      7465,
+      7469,
+      7471,
+      7474,
+      8417,
+      8419,
+      8489,
+      8636,
+      8637,
+      8642,
+      8646,
+      8647,
+      8651,
+      8677,
+      8678,
+      8679
+    ],
+    "integer_nonzero_mertens_count": 994639,
+    "integer_reversed_sign_agreements": 831076,
+    "integer_reversed_sign_rate": 0.8355554125667705,
+    "max_abs_driver_over_sqrt_x": 1.2073603301174454,
+    "mean_abs_driver_over_sqrt_x": 0.09863035658086512,
+    "min_abs_driver_over_sqrt_x": 0.0,
+    "pearson_driver_mertens": 0.9705776642653462,
+    "range": [
+      1,
+      1000000
+    ],
+    "sign_change_count": 2739,
+    "sign_counts": {
+      "negative": 683715,
+      "positive": 316284,
+      "unresolved": 0,
+      "zero": 1
+    }
+  },
+  "exact_oracle": {
+    "A_1": "1",
+    "A_12_minus_1": "-95083/27720",
+    "coefficient_formula_equals_mobius_harmonic_formula": true,
+    "limit": 200
+  },
+  "holdout": {
+    "count": 1000000,
+    "cumulative_decade_blocks": [
+      {
+        "count": 1000000,
+        "cumulative_global_block": [
+          1,
+          10000000
+        ],
+        "max_abs_driver_over_sqrt_x": 0.256570868875531,
+        "mean_abs_driver_over_sqrt_x": 0.08454916915210918,
+        "min_abs_driver_over_sqrt_x": 1.8466405522662587e-07,
+        "split_intersection": [
+          1000001,
+          2000000
+        ]
+      }
+    ],
+    "first_nonnegative": 1000001,
+    "first_sign_changes": [
+      1019861,
+      1019923,
+      1019927,
+      1019929,
+      1020044,
+      1020045,
+      1020055,
+      1020067,
+      1020106,
+      1020107,
+      1020109,
+      1020111,
+      1020113,
+      1020115,
+      1020116,
+      1020117,
+      1020119,
+      1020169,
+      1021139,
+      1021141
+    ],
+    "integer_nonzero_mertens_count": 998098,
+    "integer_reversed_sign_agreements": 876686,
+    "integer_reversed_sign_rate": 0.8783566343184738,
+    "max_abs_driver_over_sqrt_x": 0.256570868875531,
+    "mean_abs_driver_over_sqrt_x": 0.08454916915210918,
+    "min_abs_driver_over_sqrt_x": 1.8466405522662587e-07,
+    "pearson_driver_mertens": 0.9606493594521959,
+    "range": [
+      1000001,
+      2000000
+    ],
+    "sign_change_count": 1355,
+    "sign_counts": {
+      "negative": 532168,
+      "positive": 467832,
+      "unresolved": 0,
+      "zero": 0
+    }
+  },
+  "holdout_label": "DIFFERS",
+  "limit": 2000000,
+  "prime_conditioning": {
+    "discovery": {
+      "mertens_ge_3": {
+        "original_agreements": 11730,
+        "original_rate": 0.3255710677509784,
+        "qualifying": 36029,
+        "reversed_agreements": 24299,
+        "reversed_rate": 0.6744289322490217,
+        "unresolved": 0
+      },
+      "mertens_le_minus_3": {
+        "original_agreements": 232,
+        "original_rate": 0.005777611754451501,
+        "qualifying": 40155,
+        "reversed_agreements": 39923,
+        "reversed_rate": 0.9942223882455485,
+        "unresolved": 0
+      },
+      "mertens_nonzero": {
+        "original_agreements": 12827,
+        "original_rate": 0.16441920680903427,
+        "qualifying": 78014,
+        "reversed_agreements": 65187,
+        "reversed_rate": 0.8355807931909657,
+        "unresolved": 0
+      }
+    },
+    "holdout": {
+      "mertens_ge_3": {
+        "original_agreements": 6147,
+        "original_rate": 0.16663955757970073,
+        "qualifying": 36888,
+        "reversed_agreements": 30741,
+        "reversed_rate": 0.8333604424202993,
+        "unresolved": 0
+      },
+      "mertens_le_minus_3": {
+        "original_agreements": 2040,
+        "original_rate": 0.06210991018419851,
+        "qualifying": 32845,
+        "reversed_agreements": 30805,
+        "reversed_rate": 0.9378900898158015,
+        "unresolved": 0
+      },
+      "mertens_nonzero": {
+        "original_agreements": 8445,
+        "original_rate": 0.12019812408374728,
+        "qualifying": 70259,
+        "reversed_agreements": 61814,
+        "reversed_rate": 0.8798018759162527,
+        "unresolved": 0
+      }
+    }
+  },
+  "protocol": "A_DRIVER_PROTOCOL_2026-07-19.md",
+  "provenance": {
+    "checkpoint_csv_sha256": "1a0ffce2255350ba0fea4792a1161a6baac4550f14a59cb1ca4cb6ac0eb2b7cf",
+    "prime_csv_sha256": "48bdd0ce9f210fb0f52cdcf146090d1804d26753564dade3ce18f179efd7f1a4",
+    "protocol_sha256": "e433601afd87520ad456bf6ad2a2ba3528a8fce21ea727229f5896106ad66b86",
+    "script_sha256": "3ae9a4ba34c4bd2a4ded91c99f8636ff3482d760c82c9d4a1252f78f29ef2817"
+  },
+  "schema_version": 1,
+  "scope_warning": "This frozen two-way characterization does not establish an asymptotic conjecture or a theorem."
+}

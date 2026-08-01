@@ -12,7 +12,7 @@ Read THIS instead of walking skills/*/tools/ file by file.
 | prompt-triage | no (opt-in) | UserPromptSubmit | `skills/prompt-triage/tools/hook.sh` | `skills/prompt-triage/tools/install.sh` |
 
 LIVE wiring state is machine-local: check `.claude/settings.json`.
-Per-skill installers append hook entries; `./install.sh` prunes dead
+Per-skill installers append hook entries; `./INSTALL.sh` prunes dead
 hooks and managed hooks for skills now marked `auto-install: false`.
 `output-filter`
 ships tooling but no auto-installer by design (wire as pipe or

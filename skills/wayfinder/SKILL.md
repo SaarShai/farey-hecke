@@ -2,6 +2,7 @@
 name: wayfinder
 description: Experimental/manual decision-recovery workflow retained for paired evaluation. Invoke explicitly; frontier leads do not auto-load it.
 status: experimental
+retired: true
 source: "https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder"
 learned_at: 2026-07-13
 trigger_type: model

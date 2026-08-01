@@ -6,6 +6,7 @@ import re
 import shutil
 import sqlite3
 import sys
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +21,7 @@ from .hooks import doctor as hooks_doctor
 from .output_filter import rewind as output_filter_rewind, stats as output_filter_stats
 from .output_filter import cmd_filter as output_filter_cmd_filter, cmd_rules as output_filter_cmd_rules
 from .profile import set_profile, show as show_profile
+from .skills import CORE_SKILLS, discover_active_skills, run_skill_tests, skill_entrypoints
 from .tokens import estimate_tokens
 from .wiki import WikiStore
 
@@ -77,10 +79,25 @@ def print_json(obj: Any) -> None:
 
 def cmd_doctor(args: argparse.Namespace) -> int:
     cfg = load_config(args.repo)
+    runtime_files = sorted((cfg.repo_root / "token_economy").glob("*.py"))
+    runtime_syntax: dict[str, bool] = {}
+    for path in runtime_files:
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", SyntaxWarning)
+                compile(path.read_text(encoding="utf-8"), str(path), "exec")
+            runtime_syntax[path.name] = True
+        except (OSError, SyntaxError, UnicodeError):
+            runtime_syntax[path.name] = False
+    core_skills = skill_entrypoints(cfg.repo_root)
+    wiki_is_curated = cfg.wiki_root == (cfg.repo_root / "wiki").resolve()
     required = {
         "config",
         "start_md",
         "wiki_root_exists",
+        "wiki_is_curated",
+        "runtime_syntax_ok",
+        "core_skills_ok",
     }
     checks = {
         "repo_root": str(cfg.repo_root),
@@ -88,20 +105,39 @@ def cmd_doctor(args: argparse.Namespace) -> int:
         "start_md": (cfg.repo_root / "start.md").exists(),
         "wiki_root": str(cfg.wiki_root),
         "wiki_root_exists": cfg.wiki_root.exists(),
+        "wiki_is_curated": wiki_is_curated,
         "refresh_threshold": cfg.refresh_threshold,
-        "comcom_mcp": (cfg.repo_root / "projects/compound-compression-pipeline/comcom_mcp/server.py").exists(),
-        "semdiff_mcp": (cfg.repo_root / "projects/semdiff/semdiff_mcp/server.py").exists(),
-        "context_keeper": (cfg.repo_root / "projects/context-keeper").exists(),
+        "runtime_syntax": runtime_syntax,
+        "runtime_syntax_ok": bool(runtime_syntax) and all(runtime_syntax.values()),
+        "core_skills": core_skills,
+        "core_skills_ok": all(core_skills.values()),
         "python": sys.version.split()[0],
     }
+    if args.deep:
+        checks["skill_tests"] = run_skill_tests(cfg.repo_root, CORE_SKILLS)
+        checks["skill_test_scope"] = "active-core"
+        checks["skill_tests_ok"] = checks["skill_tests"]["ok"]
+        required.add("skill_tests_ok")
     checks["ok"] = all(bool(checks[k]) for k in required)
-    checks["extensions"] = {
-        "comcom_mcp": checks["comcom_mcp"],
-        "semdiff_mcp": checks["semdiff_mcp"],
-        "context_keeper": checks["context_keeper"],
-    }
     print_json(checks)
     return 0 if checks["ok"] else 1
+
+
+def cmd_skills(args: argparse.Namespace) -> int:
+    cfg = load_config(args.repo)
+    names = tuple(args.skill) if args.skill else discover_active_skills(cfg.repo_root)
+    unknown = [
+        name
+        for name in names
+        if name != "_shared" and not (cfg.repo_root / "skills" / name / "SKILL.md").is_file()
+    ]
+    if unknown:
+        print_json({"ok": False, "error": "unknown skill", "skills": unknown})
+        return 2
+    result = run_skill_tests(cfg.repo_root, names, timeout=args.timeout, fail_fast=args.fail_fast)
+    result["scope"] = "selected" if args.skill else "all-active-plus-shared"
+    print_json(result)
+    return 0 if result["ok"] else 1
 
 
 def adapter_target(repo_root: Path, agent: str) -> Path:
@@ -414,7 +450,7 @@ def cmd_bench(args: argparse.Namespace) -> int:
     if args.bench_cmd == "run":
         if args.suite != "framework-smoke":
             raise SystemExit(f"unknown suite: {args.suite}")
-        result = run_framework_smoke(cfg.repo_root)
+        result = run_framework_smoke(cfg.repo_root, cfg.wiki_root)
         print_json(result)
         return 0 if result["ok"] else 1
     return 0
@@ -426,7 +462,16 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     d = sub.add_parser("doctor")
+    d.add_argument("--deep", action="store_true", help="also run active core skill tests")
     d.set_defaults(func=cmd_doctor)
+
+    sk = sub.add_parser("skills")
+    sksub = sk.add_subparsers(dest="skills_cmd", required=True)
+    skt = sksub.add_parser("test")
+    skt.add_argument("--skill", action="append", help="skill to test; repeat for more than one")
+    skt.add_argument("--timeout", type=int, default=120, help="per-file timeout in seconds")
+    skt.add_argument("--fail-fast", action="store_true")
+    skt.set_defaults(func=cmd_skills)
 
     s = sub.add_parser("start")
     s.add_argument("--agent", choices=["auto", "claude", "codex", "gemini", "cursor"], default="auto")

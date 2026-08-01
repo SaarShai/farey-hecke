@@ -1,5 +1,5 @@
 ---
-description: PreCompact hook that extracts structured state (files, commands, errors, numbers, decisions, failures) from the transcript before compaction, so the summarizer can't silently drop facts; a SessionEnd hook also archives the raw transcript to .brainer/sessions/raw/ (git-ignored). Use when the host supports project-local PreCompact/SessionEnd hooks.
+description: PreCompact hook that extracts structured state (files, commands, errors, numbers, decisions, failures) from the transcript before compaction, so the summarizer can't silently drop facts; a SessionEnd hook also archives the raw transcript to .brainer/sessions/raw/ (git-ignored), and a SessionStart/PreCompact staleness sweep catches sessions on hosts (e.g. Claude desktop) where SessionEnd never fires. Use when the host supports project-local PreCompact/SessionEnd/SessionStart hooks.
 globs: ["**/*"]
 alwaysApply: false
 ---

@@ -19,6 +19,13 @@ import FormalConjectures.Util.ProblemImports
 /-!
 # A density-one sign pattern for the prime-step Farey L² discrepancy
 
+**WITHDRAWN / DO NOT RESUBMIT (2026-07-19).** Exact matched-observable
+arithmetic gives `M(13) = -3` and
+`primeStepIncrement 13 = -95083 / 180180 < 0`, contradicting the pointwise
+sign claim, and found zero agreements among 4,617 qualifying primes through
+`100000`. The declaration remains only as a local record of what was
+submitted; the follow-up draft requests withdrawal.
+
 *Reference:* S. Shai, *The per-step Farey discrepancy* (2026),
 https://github.com/SaarShai/Primes-Equispaced .
 AI disclosure: conjecture studied with assistance from Claude (Anthropic).
@@ -30,14 +37,13 @@ be the `L²` (Weyl) discrepancy. For a prime `p` the prime-step increment is
 the change when the `p−1` new fractions `{k/p}` are inserted, and
 `mertens n = ∑_{k ≤ n} μ k`.
 
-The *pointwise* relation `sgn (primeStepIncrement p) = sgn (− mertens p)`
-for every prime `p` with `mertens p ≤ −3` is **false** (e.g. it fails at
-`p = 243799`). The conjecture below is the surviving **density-one** form:
-numerically about `73 %` of qualifying primes up to `10⁷` satisfy it, and it
-is expected to hold with density one under the `L`-function hypotheses that
-control the explicit-formula expansion of `primeStepIncrement` (a
-Chebyshev-bias statement in the spirit of Rubinstein–Sarnak, 1994). It is
-open.
+The pointwise relation `sgn (primeStepIncrement p) = sgn (− mertens p)` for
+every prime `p` with `mertens p ≤ −3` is false for this integral
+count-discrepancy observable. The density-one statement below is a withdrawn
+historical proposal, not a conjecture recommended for submission. Project records for a
+different discrete-sum `W` or crossTerm `B(p)` do not establish either claim:
+at `N = 2` the integral `W` here is `1/3`, while that discrete-sum quantity is
+`5/36`. No numerical percentage or named counterexample is asserted here.
 -/
 
 open scoped BigOperators Classical
@@ -86,8 +92,8 @@ noncomputable def agreesAtPrime (p : ℕ) : Prop :=
 /-- Among the primes `p` with `mertens p ≤ −3`, the proportion that satisfy
 `sgn (primeStepIncrement p) = sgn (− mertens p)` tends to `1`: for every
 `ε > 0` there is `X₀` such that for all `X ≥ X₀`, whenever at least one such
-prime is `≤ X`, the agreeing fraction is `≥ 1 − ε`. (The pointwise form,
-`ε = 0`, is false; this density-one form is the open conjecture.) -/
+prime is `≤ X`, the agreeing fraction is `≥ 1 − ε`. Exact finite evidence
+now runs in the opposite direction; do not resubmit this declaration. -/
 @[category research open, AMS 11]
 theorem farey_discrepancy_density_one_sign :
     ∀ ε > (0 : ℝ), ∃ X₀ : ℕ, ∀ X ≥ X₀,

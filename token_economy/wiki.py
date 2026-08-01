@@ -11,7 +11,19 @@ from typing import Any
 
 
 WIKI_DIRS = ("raw", "concepts", "patterns", "projects", "people", "queries", "L2_facts", "L3_sops", "L4_archive")
-SKIP_PARTS = {".git", ".token-economy", "__pycache__", ".pytest_cache"}
+SKIP_PARTS = {
+    ".brainer",
+    ".git",
+    ".token-economy",
+    ".venv",
+    "__pycache__",
+    ".pytest_cache",
+    "build",
+    "dist",
+    "node_modules",
+    "vendor",
+    "venv",
+}
 WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 V2_REQUIRED = ("title", "type", "domain", "tier", "confidence", "created", "updated", "verified", "sources", "supersedes", "superseded-by", "tags")
 V2_TYPES = {"entity", "summary", "decision", "source-summary", "procedure", "concept", "pattern", "project", "query", "fact", "sop", "raw", "person", "handoff"}

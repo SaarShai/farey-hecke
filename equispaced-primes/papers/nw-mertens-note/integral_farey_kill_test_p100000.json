@@ -1,0 +1,70 @@
+{
+  "agreement_count": 0,
+  "arithmetic": "exact fractions; decimal fields are display-only",
+  "cumulative": [
+    {
+      "agreements": 0,
+      "cutoff": 10000,
+      "proportion": 0.0,
+      "qualifying": 598,
+      "wilson95_lower": 0.0,
+      "wilson95_upper": 0.006382841800598862
+    },
+    {
+      "agreements": 0,
+      "cutoff": 30000,
+      "proportion": 0.0,
+      "qualifying": 1732,
+      "wilson95_lower": 0.0,
+      "wilson95_upper": 0.0022130240069873418
+    },
+    {
+      "agreements": 0,
+      "cutoff": 100000,
+      "proportion": 0.0,
+      "qualifying": 4617,
+      "wilson95_lower": 0.0,
+      "wilson95_upper": 0.0008313331792332302
+    }
+  ],
+  "density_numerical_verdict": "NO_SUPPORT_TO_LIMIT",
+  "density_support_gates": {
+    "at_least_30_each_cutoff": true,
+    "cumulative_nondecreasing": true,
+    "final_wilson_lower_at_least_0_90": false,
+    "terminal_band_at_least_0_90": false
+  },
+  "first_pointwise_failure": {
+    "A_minus_1_decimal": "-3.430122655122655123",
+    "A_minus_1_denominator": "27720",
+    "A_minus_1_numerator": "-95083",
+    "A_minus_1_sign": -1,
+    "agrees": 0,
+    "deltaW_decimal": "-0.527711177711177711",
+    "deltaW_denominator": "180180",
+    "deltaW_numerator": "-95083",
+    "deltaW_sign": -1,
+    "mertens_p": -3,
+    "mu_p": -1,
+    "p": 13
+  },
+  "formula": "DeltaW(p)=(p-1)/(6p)*(A(p-1)-1)",
+  "limit": 100000,
+  "observable": "formal integral count discrepancy including endpoint 1",
+  "pointwise_verdict": "FAIL",
+  "provenance": {
+    "csv_sha256": "b398c923f53823fa4dc26e3f31f7e1f155051a22054f16c56a11a2ee715fb0e2",
+    "protocol_sha256": "25e5a1dfff4833d4110b1b8182c8f25a88b46eddd542b0b0aace143e4b263111",
+    "script_sha256": "dad8b73ff0e26529fd1eb5fce016504ef48b5b7319b554364c73bc087feaca02"
+  },
+  "qualifier": "prime p with M(p) <= -3",
+  "qualifying_count": 4617,
+  "schema_version": 1,
+  "scope_warning": "Finite computation neither proves nor disproves density one.",
+  "terminal_band": {
+    "agreements": 0,
+    "proportion": 0.0,
+    "qualifying": 2885,
+    "range": "(30000,100000]"
+  }
+}

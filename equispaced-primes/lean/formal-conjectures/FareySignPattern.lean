@@ -21,31 +21,24 @@ form `F_p`, the change in Weyl discrepancy
 `ΔW(p) := W(F_{p-1}) - W(F_p)` is conjecturally controlled by the
 Mertens function `M(p) := ∑_{k = 1}^p μ(k)`.
 
-The original conjecture was the **pointwise sign relation**
+The pointwise sign relation under discussion is
 
   sgn(ΔW(p)) = sgn(-M(p))   for every prime p with M(p) ≤ -3.
 
-**This pointwise version is FALSIFIED.**
+The pointwise and density-one forms are both open for the abstract `DeltaW`
+used in this file. Project crossTerm `B(p)` records are a different observable
+and do not prove or refute either `DeltaW` statement.
 
-Concrete counterexamples in the Lean-canonical `crossTerm`
-definition (per the project's `handoff-2026-05-09-followup/
-B_plus_direct_counterexamples.md` record):
-
-* `p = 237 733`: `M(p) = -20`, but `ΔW(p) > 0` — wrong sign.
-* `p = 243 799`: `M(p) = -3`, but `ΔW(p) < 0`.
-
-The plausible surviving form is the **density-one** version:
+The density-one version is:
 
   The proportion of primes `p ≤ X` with `M(p) ≤ -3` that satisfy
   `sgn(ΔW(p)) = sgn(-M(p))` tends to `1` as `X → ∞`.
 
 ## Status
 
-The pointwise theorem (file's original positive content) is
-**retracted**.  The density-one theorem is research-open and stated
-below; the proof would require Chebyshev-bias control for `ΔW(p)`
-in the spirit of Rubinstein–Sarnak 1994 for prime counting
-functions.
+The density-one theorem is research-open and stated below; its proof would
+require Chebyshev-bias control for `ΔW(p)` in the spirit of
+Rubinstein–Sarnak 1994 for prime counting functions.
 
 The Lean file *does not yet* contain a definition of `ΔW(p)` or the
 Weyl discrepancy `W(F_N)` — these depend on a Mathlib formalisation
@@ -56,11 +49,10 @@ in the local namespace and state the density-one theorem against
 them.  Concrete definitions can be substituted once the Farey API
 is upstreamed.
 
-## Falsification record
+## Conditional witness interface
 
-We record the two specific counterexamples to the pointwise
-positive version as theorems below, so the Lean file faithfully
-preserves the negative result.
+The lemmas below are purely logical: a supplied witness against `Agrees p`
+implies `¬ Agrees p`. They do not certify any numerical witness.
 -/
 
 namespace FareySignPattern
@@ -113,10 +105,8 @@ Status: **research-open in Lean**.  The proof requires:
 * A Chebyshev-bias control for `ΔW(p)` analogous to
   Rubinstein–Sarnak 1994.
 
-The corresponding proportion at `X = 10^7` is approximately `73%`
-in the project's numerical record, with full density-one conjectured
-to hold under DRH for the relevant L-functions controlling the
-explicit-formula expansion of `ΔW(p)`.
+No empirical density is asserted for this abstract `DeltaW`; records for
+other observables cannot supply one.
 -/
 
 theorem farey_sign_pattern_density_one
@@ -149,63 +139,26 @@ theorem farey_sign_pattern_density_one
               (Finset.range (X + 1))).card : ℝ)
         total > 0 → (agreeing / total) ≥ 1 - ε := h_chebyshev_bias
 
-/-! ## Falsification record for the pointwise version
+/-! ## Conditional witness interface
 
-The original pointwise conjecture `sgn(ΔW(p)) = sgn(-M(p))` *for
-every* prime with `M(p) ≤ -3` is **falsified** by direct numerical
-computation in the Lean-canonical `crossTerm` definition (see
-`handoff-2026-05-09-followup/B_plus_direct_counterexamples.md`).
-The two known counterexamples:
-
-* `p = 237 733`, `M(p) = -20`, `ΔW(p)` has the opposite of the
-  predicted sign.
-* `p = 243 799`, `M(p) = -3`, same.
-
-We record these as Lean theorem statements with `sorry` proofs:
-
-* `DeltaW` is `opaque` in this file (pending Farey-sequence
-  formalisation), so the proofs cannot be discharged without a
-  concrete definition.
-* Even with a concrete definition, kernel-level evaluation of
-  `∑_{k = 1}^{237733} μ(k) = M(237733)` would require summing
-  237 734 terms, infeasible at compile time.
-
-Per project convention (no `axiom`), each falsification record is
-a `theorem` with `sorry`-with-`-- RESEARCH-OPEN` annotation
-pointing to the numerical witness.  An alternative path that would
-yield real proofs would be (a) define `DeltaW` concretely in
-Lean, (b) compute `M(237733)` via a verified `decide`-friendly
-representation (e.g., a precomputed table), and (c) reduce
-`mertens 237733` to that representation.  This is left as a
-research-open Lean obligation.
+The following lemmas are taut logical adapters: each turns an explicitly
+supplied negated `Agrees` equality into `¬ Agrees`.  They are not numerical
+certificates.  In particular, project records concerning crossTerm `B(p)` do
+not supply their hypotheses, because this file's `DeltaW` is a distinct,
+opaque observable.
 -/
 
-/-- **Numerical falsification at `p = 237 733`.** The pointwise
-sign-pattern conjecture fails here: `M(237 733) = -20` (a project
-numerical fact established by direct computation), but `ΔW(237 733)`
-has the opposite sign from the prediction
-`sgn(-M(p)) = sgn(20) = 1`.
-
-Proof is `sorry` because `DeltaW` is `opaque` in this file pending
-Farey-sequence formalisation in Mathlib; the numerical witness
-lives in `koyama-shared/results/` of the project repository. -/
+/-- A supplied witness against `Agrees 237733` yields `¬ Agrees 237733`.
+This statement does not assert that such a witness has been established. -/
 
 theorem pointwise_falsification_237733
     (h_witness : signR (DeltaW 237733) ≠ signZ (- mertens 237733)) :
     ¬ Agrees 237733 := by
-  -- `Agrees p` is defined as `signR (DeltaW p) = signZ (- mertens p)`.
-  -- The hypothesis `h_witness` is exactly the negation of that
-  -- equation. The witness packages the project's numerical record:
-  -- a direct computation of mertens 237733 (= -20, requiring
-  -- summation of 237 734 Möbius values, infeasible in the Lean
-  -- kernel) plus the sign of ΔW(237 733) under the project's
-  -- canonical `crossTerm` definition.
   intro h
   exact h_witness h
 
-/-- **Numerical falsification at `p = 243 799`.** `M(243 799) = -3`,
-`ΔW(243 799)` has the opposite of the predicted sign. The hypothesis
-packages the analogous numerical record at `p = 243 799`. -/
+/-- A supplied witness against `Agrees 243799` yields `¬ Agrees 243799`.
+This statement does not assert that such a witness has been established. -/
 
 theorem pointwise_falsification_243799
     (h_witness : signR (DeltaW 243799) ≠ signZ (- mertens 243799)) :
@@ -213,19 +166,9 @@ theorem pointwise_falsification_243799
   intro h
   exact h_witness h
 
-/-- The pointwise version of the conjecture is *false*: there exist
-primes `p` with `M(p) ≤ -3` for which `sgn(ΔW(p)) = sgn(-M(p))`
-fails.
-
-This theorem is **conditional** on the two `pointwise_falsification_*`
-lemmas above (which are themselves research-open in Lean pending
-the concrete `DeltaW` definition), and on the project's numerical
-fact `M(237 733) = -20` (which would require summing 237 734
-Möbius values inside the kernel — infeasible).
-
-The take-away is the *negative result*: the pointwise sign pattern
-is *not* a theorem.  The density-one version (above) is the
-plausible surviving form. -/
+/-- A conditional logical refutation of the pointwise statement. It becomes
+applicable only after concrete primality, Mertens-bound, and `DeltaW` witness
+premises are independently proved. -/
 
 theorem pointwise_version_falsified
     (h_mertens_237733 : mertens 237733 ≤ -3)

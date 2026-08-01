@@ -2,6 +2,7 @@
 name: standing-orders
 description: "Experimental standing-directive probes retained for shadow telemetry and paired evaluation. Frontier profiles suppress their output; invoke manually only for an explicit evaluation arm."
 status: experimental
+retired: true
 disable-model-invocation: true
 trigger_type: hook
 risk_level: low

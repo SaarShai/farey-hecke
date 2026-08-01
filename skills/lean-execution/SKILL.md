@@ -2,6 +2,7 @@
 name: lean-execution
 description: Experimental/manual lean-work protocol retained for paired evaluation. Invoke explicitly when requested; frontier leads do not auto-load it.
 status: experimental
+retired: true
 disable-model-invocation: true
 auto-install: false
 effort: low

@@ -2,6 +2,7 @@
 name: fable-mode
 description: Experimental/manual five-gate work discipline retained for paired evaluation. Invoke explicitly for an evaluation arm; frontier leads do not auto-load it.
 status: experimental
+retired: true
 disable-model-invocation: true
 auto-install: false
 effort: medium

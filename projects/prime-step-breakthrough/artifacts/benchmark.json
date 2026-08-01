@@ -325,7 +325,7 @@
         "low_multiplicity": 500000
       },
       "distinct_permutations": null,
-      "elapsed_seconds": 5.300752540992107,
+      "elapsed_seconds": 5.227975458983565,
       "exact_distinct_count_required": false,
       "exact_metric_types": true,
       "expected_l2_squared": "1000009/24000000000000",
@@ -441,7 +441,7 @@
       "passed": true
     }
   },
-  "generated_at_utc": "2026-07-16T11:16:03.593025+00:00",
+  "generated_at_utc": "2026-07-16T12:11:12.673325+00:00",
   "negative_controls": {
     "kernel_mismatched_functions": {
       "cases": [
@@ -498,8 +498,8 @@
           200
         ],
         "energy": 2.6528961438388854,
-        "factorization_seconds": 5.0000089686363935e-06,
-        "kernel_seconds": 0.0001975419872906059,
+        "factorization_seconds": 4.6670029405504465e-06,
+        "kernel_seconds": 0.0001939999929163605,
         "midpoint_loss_ratio": 5.642229499592038,
         "midpoint_worst_case_error": 0.0002298368906009657,
         "point_count": 1256,
@@ -519,8 +519,8 @@
           199
         ],
         "energy": 6.434728178907693,
-        "factorization_seconds": 3.8330035749822855e-06,
-        "kernel_seconds": 0.00015016598626971245,
+        "factorization_seconds": 4.917004844173789e-06,
+        "kernel_seconds": 0.0001798330049496144,
         "midpoint_loss_ratio": 8.787305511184433,
         "midpoint_worst_case_error": 0.0001609114462624375,
         "point_count": 1794,
@@ -565,8 +565,8 @@
         199
       ],
       "energy": 1.4791923197844754,
-      "factorization_seconds": 7.150002056732774e-05,
-      "kernel_seconds": 0.07269691600231454,
+      "factorization_seconds": 7.537502096965909e-05,
+      "kernel_seconds": 0.07478083300520666,
       "midpoint_loss_ratio": 4.213111420009409,
       "midpoint_worst_case_error": 0.0001808741444829655,
       "point_count": 1596,
@@ -604,8 +604,8 @@
           12
         ],
         "energy": 0.43636363636363634,
-        "factorization_seconds": 3.749999450519681e-06,
-        "kernel_seconds": 0.00016970798606052995,
+        "factorization_seconds": 3.374996595084667e-06,
+        "kernel_seconds": 0.00018812500638887286,
         "midpoint_loss_ratio": 2.2883102141894214,
         "midpoint_worst_case_error": 0.012028130608117204,
         "point_count": 24,
@@ -621,8 +621,8 @@
           12
         ],
         "energy": 0.43636363636363634,
-        "factorization_seconds": 3.4580007195472717e-06,
-        "kernel_seconds": 0.00016283299191854894,
+        "factorization_seconds": 3.3339892979711294e-06,
+        "kernel_seconds": 0.00017541699344292283,
         "midpoint_loss_ratio": 2.2883102141894214,
         "midpoint_worst_case_error": 0.012028130608117204,
         "point_count": 24,
@@ -637,8 +637,8 @@
       ],
       "energy": "266/1597",
       "energy_float": 0.16656230432060112,
-      "factorization_seconds": 1.3339740689843893e-06,
-      "kernel_seconds": 5.208014044910669e-06,
+      "factorization_seconds": 1.4170072972774506e-06,
+      "kernel_seconds": 5.916983354836702e-06,
       "optimized_worst_case_error": 0.0007620429237056137,
       "optimizer_loses": true,
       "optimizer_to_prime_ratio": 2.9800528169966216,
@@ -1245,13 +1245,13 @@
       ],
       "energy": 0.16666650772094727,
       "energy_float": 0.16666650772094727,
-      "factorization_seconds": 1.2788048479706049e-05,
+      "factorization_seconds": 1.2667966075241566e-05,
       "implicit_points": 1048575,
-      "kernel_seconds": 0.0005609159998130053,
+      "kernel_seconds": 0.0005558750126510859,
       "materialized_points": 0,
       "point_count": 1048575,
       "points_not_materialized": 1048575,
-      "total_seconds": 0.0005854589981026947,
+      "total_seconds": 0.000577667000470683,
       "worst_case_error": 3.8933609498210615e-07
     },
     "raw_vs_prefactored_high_bit": {
@@ -1268,7 +1268,7 @@
         "energy": "13835058026291134478/27670116065467170831",
         "energy_float": 0.49999999976716936,
         "factorization_seconds": 0.0,
-        "kernel_seconds": 1.4999997802078724e-05,
+        "kernel_seconds": 1.5792000340297818e-05,
         "point_count": 6442450936,
         "worst_case_error": 1.0975741810785773e-10
       },
@@ -1279,8 +1279,8 @@
         ],
         "energy": "13835058026291134478/27670116065467170831",
         "energy_float": 0.49999999976716936,
-        "factorization_seconds": 0.0025014160200953484,
-        "kernel_seconds": 1.9208993762731552e-05,
+        "factorization_seconds": 0.0024007510219234973,
+        "kernel_seconds": 2.1000014385208488e-05,
         "point_count": 6442450936,
         "worst_case_error": 1.0975741810785773e-10
       },

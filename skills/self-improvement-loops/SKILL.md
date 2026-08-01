@@ -2,6 +2,7 @@
 name: self-improvement-loops
 description: Govern loops that optimize their own agent machinery.
 status: proposed
+retired: true
 source: "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/main/skills/self-improvement-loops/SKILL.md"
 learned_at: 2026-07-16
 disable-model-invocation: true

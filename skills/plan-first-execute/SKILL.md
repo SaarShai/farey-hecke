@@ -2,6 +2,7 @@
 name: plan-first-execute
 description: Experimental/manual planning protocol retained for paired evaluation. Invoke explicitly for a FULL evaluation arm; frontier leads do not auto-load it.
 status: experimental
+retired: true
 disable-model-invocation: true
 auto-install: false
 effort: medium

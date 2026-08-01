@@ -2,6 +2,7 @@
 name: requirements-ledger
 description: Experimental/manual visible requirements-ledger workflow retained for paired evaluation. Frontier canary preserves pending intent silently without auto-loading this prose or emitting ledger nags.
 status: experimental
+retired: true
 disable-model-invocation: true
 effort: medium
 tools: [Read, Edit, Write, TaskCreate, TaskUpdate, TaskList]

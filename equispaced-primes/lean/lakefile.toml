@@ -58,6 +58,43 @@ name = "FareySignPattern"
 globs = ["FareySignPattern"]
 srcDir = "formal-conjectures"
 
+# Exact endpoint-inclusive Farey prime-step reduction (proved finite core;
+# concrete integral-to-kernel bridge remains explicitly named).
+[[lean_lib]]
+name = "IntegralFareyPrimeStep"
+globs = ["IntegralFareyPrimeStep"]
+srcDir = "formal-conjectures"
+
+# Reusable endpoint-inclusive primitive denominator layers.
+[[lean_lib]]
+name = "PrimitiveLayer"
+globs = ["PrimitiveLayer"]
+srcDir = "formal-conjectures"
+
+# Exact floor-sawtooth analytic API and diagonal covariance.
+[[lean_lib]]
+name = "SawtoothCovariance"
+globs = ["SawtoothCovariance"]
+srcDir = "formal-conjectures"
+
+# Finite Möbius/kernel algebra and abstract energy reduction.
+[[lean_lib]]
+name = "PrimitiveLayerKernel"
+globs = ["PrimitiveLayerKernel"]
+srcDir = "formal-conjectures"
+
+# Exact integral formula for arbitrary finite endpoint-inclusive step sets.
+[[lean_lib]]
+name = "FiniteStepIntegral"
+globs = ["FiniteStepIntegral"]
+srcDir = "formal-conjectures"
+
+# Concrete Farey specialization of the generic finite-step energy.
+[[lean_lib]]
+name = "FareyFiniteStep"
+globs = ["FareyFiniteStep"]
+srcDir = "formal-conjectures"
+
 # DPAC partial closure: K ≤ 4 unconditionally, FLRLI bridge, obstruction certificate.
 [[lean_lib]]
 name = "DPAC_closure_attempt"
@@ -76,6 +113,12 @@ globs = [
   "MertensSpectroscopeUniversality",
   "FareyBridgeIdentity",
   "FareySignPattern",
+  "IntegralFareyPrimeStep",
+  "PrimitiveLayer",
+  "SawtoothCovariance",
+  "PrimitiveLayerKernel",
+  "FiniteStepIntegral",
+  "FareyFiniteStep",
   "DPAC_closure_attempt",
   "RamanujanSum",
   "SignedVsAbsoluteResidueGadget",
