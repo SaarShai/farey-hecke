@@ -258,3 +258,24 @@ turn those deltas into hidden identity recovery. The next
 protocol must change the development learning problem—most plausibly richer
 target-independent local observations and genuinely interactive exploration—
 and clear the same train/validation gates before any fresh sealed test exists.
+
+## V8 online development result
+
+- [x] Replace fixed offline replay with an on-policy action/update loop.
+- [x] Compare true, causal lagged-null, and zero-feedback lanes with matched
+  task, episode, action-seed, and update schedules.
+- [x] Correct the confidence interval procedure to resample learner groups and
+  cells, and bind compact receipts to omitted validation rows.
+- [x] Run train/validation only and independently audit the receipt and
+  structural serialization diagnostic.
+- [ ] Seal or open a new held-out test only after the development gates pass.
+
+V8 is a valid negative development result. The true online lane reached mean
+precision 0.0094, recall 0.0087, F1 0.0077, and zero exact recoveries. True
+feedback exceeded the causal lagged-null and zero lanes by 0.0067 and 0.0077,
+respectively, with confidence intervals above zero but far below the locked
+0.05 feedback margin. Absolute hidden-recovery thresholds also failed. The
+G-only derangement diagnostic preserved physical state, rewards, action
+reachability, and non-geometry fields, with a 1.0 effective geometry-change
+rate; it is descriptive evidence only because no structural controller arms
+were evaluated. No sealed test was opened.
