@@ -391,6 +391,7 @@ def train_reward_lanes(
     tasks: Sequence[RepairTask],
     *,
     seed: int = 0,
+    seeds: Sequence[int] | None = None,
     init_seed: int = 0,
     modes: Sequence[str] = ("true", "within_episode_permuted", "zero"),
     require_all_actions: bool = True,
@@ -405,10 +406,17 @@ def train_reward_lanes(
     task_list = tuple(tasks)
     if not task_list:
         raise ValueError("at least one training task is required")
+    collector_seeds = (
+        tuple(int(value) for value in seeds)
+        if seeds is not None
+        else tuple(seed + index * ACTION_BUDGET for index in range(len(task_list)))
+    )
+    if len(collector_seeds) != len(task_list):
+        raise ValueError("seeds must match the number of training tasks")
     trajectories = tuple(
         collect_trajectory(
             task,
-            seed=seed + index * ACTION_BUDGET - int(task.seed),
+            seed=collector_seeds[index] - int(task.seed),
         )
         for index, task in enumerate(task_list)
     )
