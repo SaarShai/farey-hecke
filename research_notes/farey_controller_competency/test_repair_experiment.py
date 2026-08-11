@@ -17,6 +17,7 @@ from .repair_experiment import (
     RewardLearner,
     _gate,
     _hidden_repair_metrics,
+    _initial_action_reachability,
     _structural_proof,
     _task_environment,
     coarse_view,
@@ -64,6 +65,18 @@ class RepairExperimentTests(unittest.TestCase):
         self.assertTrue(proof["all_same_exact_gap_multiset"])
         self.assertTrue(proof["all_same_rank_mask_count"])
 
+    def test_reachability_is_a_direct_initial_state_diagnostic(self) -> None:
+        task = RepairTask(11, TEST_PATTERNS[0], GOALS[0], 123, 4)
+        farey = _initial_action_reachability(_task_environment(task, "farey"))
+        scrambled = _initial_action_reachability(_task_environment(task, "scramble"))
+        self.assertTrue(0.0 <= farey <= 1.0)
+        self.assertTrue(0.0 <= scrambled <= 1.0)
+        self.assertGreater(farey, scrambled)
+
+    def test_nondefault_action_budget_is_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            replace(DEFAULT_CONFIG, action_budget=7)
+
     def test_gate_negative_fixture_proves_a_gate_can_trip(self) -> None:
         treatment = [{"f1": 0.0} for _ in range(12)]
         control = [{"f1": 1.0} for _ in range(12)]
@@ -91,7 +104,9 @@ class RepairExperimentTests(unittest.TestCase):
         result = run_experiment(config)
         self.assertEqual(result["model"]["measured_test_updates"], {"true": 0, "prior_reward_shuffled": 0, "zero": 0})
         self.assertTrue(result["predeclaration"]["test"]["complete_cells"])
-        self.assertIn(result["gates"]["conjunction"]["status"], {"positive", "null", "negative", "unverified"})
+        self.assertIn(result["gates"]["core_conjunction"]["status"], {"positive", "null", "negative", "unverified"})
+        expected_updates = config.train_episodes * ACTION_BUDGET
+        self.assertEqual(set(result["model"]["training_updates"].values()), {expected_updates})
 
 
 if __name__ == "__main__":

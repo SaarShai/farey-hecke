@@ -1,6 +1,6 @@
 {
   "baselines": [
-    "prior-reward-shuffled learner",
+    "history-resampled prior-reward learner",
     "zero-feedback learner",
     "uniform random",
     "deterministic local-gap/mediant",
@@ -12,8 +12,7 @@
       "move_left",
       "move_right",
       "insert_mediant",
-      "insert_midpoint",
-      "stop"
+      "insert_midpoint"
     ],
     "hidden": [
       "N/order",
@@ -43,57 +42,57 @@
   },
   "experiment": "repair-only strict Farey competency probe",
   "gates": {
-    "conjunction": {
+    "core_conjunction": {
       "margin": null,
       "metric": "all core gates",
-      "name": "conjunction",
-      "reason": "positive only when feedback learning, recovery, and frozen transfer are all positive and the structural control is valid",
+      "name": "core_conjunction",
+      "reason": "positive only when feedback learning, recovery, and frozen transfer are all positive on the same manifest",
       "status": "unverified",
       "valid": true
     },
     "farey_vs_exact_gap_scramble": {
       "comparisons": {
         "exact_gap_scramble": {
-          "ci_high": 0.08768518518518519,
-          "ci_low": 0.04355379188712522,
-          "effect": 0.06495149911816579
+          "ci_high": 0.05,
+          "ci_low": 0.013333333333333334,
+          "effect": 0.030000000000000002
         }
       },
       "margin": 0.02,
       "method": "paired percentile bootstrap (600 resamples), Bonferroni over 1 preregistered controls",
       "metric": "f1",
       "name": "farey_vs_exact_gap_scramble",
-      "reason": "paired Farey-vs-scramble targets share rank-mask count, point count, and exact gap multiset",
+      "reason": "controller contrast is invalid/confounded unless initial local-action reachability is matched; matched=False",
       "simultaneous": {
-        "ci_high": 0.08768518518518519,
-        "ci_low": 0.04355379188712522,
-        "effect_min": 0.06495149911816579
+        "ci_high": 0.05,
+        "ci_low": 0.013333333333333334,
+        "effect_min": 0.030000000000000002
       },
-      "status": "positive",
-      "valid": true
+      "status": "unverified",
+      "valid": false
     },
     "feedback_learning": {
       "comparisons": {
         "prior_reward_shuffled": {
-          "ci_high": 0.26366666666666666,
-          "ci_low": 0.14800000000000002,
-          "effect": 0.2053333333333333
+          "ci_high": 0.26452380952380955,
+          "ci_low": 0.13,
+          "effect": 0.19185714285714284
         },
         "zero_feedback": {
-          "ci_high": 0.25933333333333336,
-          "ci_low": 0.14466666666666667,
-          "effect": 0.2053333333333333
+          "ci_high": 0.257,
+          "ci_low": 0.1261904761904762,
+          "effect": 0.19185714285714284
         }
       },
       "margin": 0.03,
       "method": "paired percentile bootstrap (600 resamples), Bonferroni over 2 preregistered controls",
       "metric": "f1",
       "name": "feedback_learning",
-      "reason": "frozen held-out low-order random-isolated d=2 cells; hidden F1 never entered a controller view or reward",
+      "reason": "matched initialization/schedule/eight updates per episode; frozen held-out low-order cells; hidden F1 never entered view or reward",
       "simultaneous": {
-        "ci_high": 0.26366666666666666,
-        "ci_low": 0.14466666666666667,
-        "effect_min": 0.2053333333333333
+        "ci_high": 0.26452380952380955,
+        "ci_low": 0.1261904761904762,
+        "effect_min": 0.19185714285714284
       },
       "status": "positive",
       "valid": true
@@ -101,29 +100,29 @@
     "frozen_transfer": {
       "comparisons": {
         "local_gap_mediant": {
-          "ci_high": 0.08691758858425526,
-          "ci_low": 0.03502645502645503,
-          "effect": 0.059973144139810815
+          "ci_high": 0.0789983164983165,
+          "ci_low": 0.02416666666666667,
+          "effect": 0.048526936026936036
         },
         "prior_reward_shuffled": {
-          "ci_high": 0.09755731922398589,
-          "ci_low": 0.0416358024691358,
-          "effect": 0.06653880070546737
+          "ci_high": 0.08416666666666667,
+          "ci_low": 0.030833333333333338,
+          "effect": 0.055092592592592596
         },
         "uniform_random": {
-          "ci_high": 0.0847178130511464,
-          "ci_low": 0.027826278659611993,
-          "effect": 0.053809523809523814
+          "ci_high": 0.07274210357543691,
+          "ci_low": 0.016802148468815135,
+          "effect": 0.04366802950136284
         },
         "visible_one_step_greedy": {
-          "ci_high": 0.08817460317460318,
-          "ci_low": 0.03041005291005291,
-          "effect": 0.05727954144620811
+          "ci_high": 0.07592592592592594,
+          "ci_low": 0.017962962962962965,
+          "effect": 0.04583333333333333
         },
         "zero_feedback": {
-          "ci_high": 0.0953615520282187,
-          "ci_low": 0.04098324514991182,
-          "effect": 0.06653880070546737
+          "ci_high": 0.08555555555555555,
+          "ci_low": 0.029444444444444447,
+          "effect": 0.055092592592592596
         }
       },
       "margin": 0.03,
@@ -132,9 +131,9 @@
       "name": "frozen_transfer",
       "reason": "N={11,13,17}, d=4, all three damage families, both goals, ten repetitions/cell; measured test updates must be zero",
       "simultaneous": {
-        "ci_high": 0.09755731922398589,
-        "ci_low": 0.027826278659611993,
-        "effect_min": 0.053809523809523814
+        "ci_high": 0.08555555555555555,
+        "ci_low": 0.016802148468815135,
+        "effect_min": 0.04366802950136284
       },
       "status": "unverified",
       "valid": true
@@ -142,19 +141,19 @@
     "recovery": {
       "comparisons": {
         "local_gap_mediant": {
-          "ci_high": 0.08886684303350971,
-          "ci_low": 0.03632635882635883,
-          "effect": 0.059973144139810815
+          "ci_high": 0.07436868686868688,
+          "ci_low": 0.026111111111111113,
+          "effect": 0.048526936026936036
         },
         "uniform_random": {
-          "ci_high": 0.07982804232804233,
-          "ci_low": 0.028253968253968254,
-          "effect": 0.053809523809523814
+          "ci_high": 0.06856701940035274,
+          "ci_low": 0.020021244187910854,
+          "effect": 0.04366802950136284
         },
         "visible_one_step_greedy": {
-          "ci_high": 0.08508818342151676,
-          "ci_low": 0.03371693121693122,
-          "effect": 0.05727954144620811
+          "ci_high": 0.0712962962962963,
+          "ci_low": 0.016018518518518522,
+          "effect": 0.04583333333333333
         }
       },
       "margin": 0.03,
@@ -163,9 +162,9 @@
       "name": "recovery",
       "reason": "balanced larger-order recovery, primary evaluator-only precision/recall/F1/exact accounting",
       "simultaneous": {
-        "ci_high": 0.08886684303350971,
-        "ci_low": 0.028253968253968254,
-        "effect_min": 0.053809523809523814
+        "ci_high": 0.07436868686868688,
+        "ci_low": 0.016018518518518522,
+        "effect_min": 0.04366802950136284
       },
       "status": "unverified",
       "valid": true
@@ -173,9 +172,9 @@
   },
   "model": {
     "digests": {
-      "prior_reward_shuffled": "14de518b8a97f1730b7aa6cd13dd74be9a3a5f01680b135b8e06597ca9412f7f",
-      "true": "0b3582c3443911c4a80766045d301823c9e06aff61035771349c99715ef64579",
-      "zero": "1f01f80a289dd595c492ff6d437e0a5193952eb3c256ec69655f76fef00706c5"
+      "prior_reward_shuffled": "865384ee0306ea7ea88b1994e9f4a4873de8d535c9448c84d1a7db21fa39d03f",
+      "true": "cdc8188c78f9f15a496c04a2c83673d077bb5352096df98c4d982ac162f4233d",
+      "zero": "ed20ea8dcef8905a4fcf16007a2c5e4a4cfecf1f12eca79a38ac7f4e73114498"
     },
     "frozen_digest_unchanged": {
       "prior_reward_shuffled": true,
@@ -188,9 +187,9 @@
       "zero": 0
     },
     "training_updates": {
-      "prior_reward_shuffled": 3646,
-      "true": 7319,
-      "zero": 7254
+      "prior_reward_shuffled": 8000,
+      "true": 8000,
+      "zero": 8000
     }
   },
   "predeclaration": {
@@ -198,7 +197,7 @@
       "feedback_learning",
       "recovery",
       "frozen_transfer",
-      "conjunction"
+      "core_conjunction"
     ],
     "statistics": "paired percentile bootstrap with Bonferroni-adjusted marginal intervals; positive/null/negative/unverified taxonomy",
     "test": {
@@ -235,23 +234,45 @@
   },
   "primary_hidden_metrics": {
     "exact_recovery": 0.0,
-    "f1": 0.06653880070546737,
-    "precision": 0.13675925925925927,
-    "recall": 0.04722222222222222
+    "f1": 0.055092592592592596,
+    "precision": 0.1300925925925926,
+    "recall": 0.03611111111111111
   },
   "provenance": {
     "command": "PYTHONDONTWRITEBYTECODE=1 python3 research_notes/farey_controller_competency/repair_experiment.py",
     "python": "3.14.6"
   },
-  "runtime_seconds": 10.115,
   "schema_version": 1,
   "seed": 20260811,
   "source_and_test_hashes": {
-    "repair_ablation.py": "09ded19dfec25574c37cee142abc4cdc33ceb694f80cb231c6d8dd3b631d715e",
-    "repair_experiment.py": "63d57002f4f4a7fd88354582dd90ef09874f0c870bcd60d602cebc47265f06ed",
+    "repair_ablation.py": "722ff6ffc9754a9de34e177039818b8809499efec9650ec0b855a4d540f0b7c5",
+    "repair_experiment.py": "e956941b60193ef301687d2633f1be88e4fa83a9a5b6f5abb0efadc2fdb594c1",
     "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30",
-    "test_repair_ablation.py": "e5c8e3fc28fc841679726894f1b9274cc36c14fb08f92486131790c6f3719dc8",
-    "test_repair_experiment.py": "1f0520af6cd1203913d875254f1b91d2915b085cab97f359abada5acf3d52745"
+    "test_repair_ablation.py": "dccd33359bfe73ebeda9a591a259f6c6424517880366c055421eb29137935ca4",
+    "test_repair_experiment.py": "f3aa891236bbc10457d4c3542d97b3de72c46b6bf1d2c40b26a4aa60468b4c03"
+  },
+  "structural_diagnostics": {
+    "structural_reachability_payoff": {
+      "comparisons": {
+        "exact_gap_scramble": {
+          "ci_high": 0.6333333333333333,
+          "ci_low": 0.4791666666666667,
+          "effect": 0.5520833333333334
+        }
+      },
+      "margin": 0.02,
+      "method": "paired percentile bootstrap (600 resamples), Bonferroni over 1 preregistered controls",
+      "metric": "initial_reachable_fraction",
+      "name": "structural_reachability_payoff",
+      "reason": "evaluator-only diagnostic: share of deleted identities generated by a mediant or midpoint from any initially visible adjacent pair",
+      "simultaneous": {
+        "ci_high": 0.6333333333333333,
+        "ci_low": 0.4791666666666667,
+        "effect_min": 0.5520833333333334
+      },
+      "status": "positive",
+      "valid": true
+    }
   },
   "structural_proof": {
     "all_close": true,
@@ -260,11 +281,11 @@
     "all_same_point_count": true,
     "all_same_rank_mask_count": true,
     "available": true,
-    "pairs": 180
+    "pairs": 120
   },
   "visible_metrics": {
     "charged_actions": 8.0,
     "cost": 8.0,
-    "visible_progress": 0.0023959555555555555
+    "visible_progress": 0.0022065444444444447
   }
 }

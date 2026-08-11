@@ -5,8 +5,10 @@ The learner sees only :class:`CoarseRepairView`: four quantized local gaps,
 two local ratios, a quantized cursor relation, budget, scalar feedback, and a
 trusted goal bit.  In particular, it is never passed an order, a fraction,
 the survivor or target sets, deletion ranks, a target metric, or the evaluator
-arm.  All five actions from ``strict_environment`` remain available and every
-chosen action is charged.
+arm.  Policies use the four nonterminal fixed actions from
+``strict_environment``—move left/right and insert mediant/midpoint—and every
+chosen action is charged.  STOP is unavailable so every training episode has
+the same eight update opportunities.
 
 This is a finite deterministic competency probe.  It reports null and
 unverified gates as such; it does not make an agency claim.
@@ -23,7 +25,6 @@ from pathlib import Path
 import random
 import statistics
 import sys
-from time import perf_counter
 from typing import Any, Iterable, Protocol, Sequence
 
 try:  # Package import.
@@ -101,6 +102,9 @@ TEST_PATTERNS = (
 )
 GOALS = (GoalState.COVERAGE, GoalState.SPECTRAL)
 ACTION_BUDGET = 8
+# Repair-only policies cannot terminate training early. This keeps every
+# feedback condition at the same eight charged decisions per episode.
+POLICY_ACTIONS = tuple(action for action in ACTIONS if action != Action.STOP.value)
 
 
 @dataclass(frozen=True, slots=True)
@@ -118,6 +122,10 @@ class ExperimentConfig:
     recovery_f1_margin: float = 0.03
     transfer_f1_margin: float = 0.03
     structural_f1_margin: float = 0.02
+
+    def __post_init__(self) -> None:
+        if self.action_budget != ACTION_BUDGET:
+            raise ValueError("repair action budget is fixed at eight")
 
 
 DEFAULT_CONFIG = ExperimentConfig()
@@ -185,7 +193,9 @@ class CoarseRepairView:
         )
 
 
-def coarse_view(observation: StrictObservation) -> CoarseRepairView:
+def coarse_view(
+    observation: StrictObservation, *, visible_feedback: float | None = None
+) -> CoarseRepairView:
     """Erase every strict-shell channel except the preregistered coarse view."""
 
     return CoarseRepairView(
@@ -193,7 +203,7 @@ def coarse_view(observation: StrictObservation) -> CoarseRepairView:
         observation.neighbor_gap_ratio_bins,
         observation.cursor_position_bin,
         observation.remaining_budget_fraction,
-        observation.last_scalar_reward,
+        observation.last_scalar_reward if visible_feedback is None else float(visible_feedback),
         0 if observation.trusted_goal_state is GoalState.COVERAGE else 1,
     )
 
@@ -364,23 +374,23 @@ class RewardLearner:
     def __init__(self, seed: int, *, learning: bool = True) -> None:
         self._rng = random.Random(seed)
         width = len(CoarseRepairView((0, 0, 0, 0), (0, 0), 0, 1.0, 0.0, 0).features())
-        self._weights = [[0.0 for _ in range(width)] for _ in ACTIONS]
+        self._weights = [[0.0 for _ in range(width)] for _ in POLICY_ACTIONS]
         self.learning = learning
         self.updates = 0
 
     def choose(self, view: CoarseRepairView, *, epsilon: float = 0.0) -> Action:
         if epsilon and self._rng.random() < epsilon:
-            return self._rng.choice(tuple(Action(item) for item in ACTIONS))
+            return self._rng.choice(tuple(Action(item) for item in POLICY_ACTIONS))
         features = view.features()
         values = [sum(weight * value for weight, value in zip(row, features)) for row in self._weights]
         best = max(values)
-        return Action(ACTIONS[next(index for index, value in enumerate(values) if value == best)])
+        return Action(POLICY_ACTIONS[next(index for index, value in enumerate(values) if value == best)])
 
     def update(self, view: CoarseRepairView, action: Action, feedback: float, *, alpha: float = 0.10) -> None:
         if not self.learning:
             return
         features = view.features()
-        index = ACTIONS.index(action.value)
+        index = POLICY_ACTIONS.index(action.value)
         prediction = sum(weight * value for weight, value in zip(self._weights[index], features))
         error = feedback - prediction
         for position, value in enumerate(features):
@@ -401,7 +411,7 @@ class UniformRandom:
         self._rng = random.Random(seed)
 
     def choose(self, view: CoarseRepairView) -> Action:
-        return self._rng.choice(tuple(Action(item) for item in ACTIONS))
+        return self._rng.choice(tuple(Action(item) for item in POLICY_ACTIONS))
 
 
 class LocalGapMediant:
@@ -432,11 +442,11 @@ class VisibleOneStepGreedy:
             Action.STOP: -1 if view.remaining_budget_fraction > 0.125 else 0,
         }
         best = max(scores.values())
-        return next(action for action in (Action(item) for item in ACTIONS) if scores[action] == best)
+        return next(action for action in (Action(item) for item in POLICY_ACTIONS) if scores[action] == best)
 
 
 class EvaluatorOneStepOracle:
-    """Evaluator-only ceiling: exact one-step hidden-repair lookahead."""
+    """Evaluator-only reference: exact but myopic one-step hidden lookahead."""
 
     updates = 0
 
@@ -458,13 +468,15 @@ def _task_environment(task: RepairTask, arm: str) -> StrictEnvironment | _PointS
         return farey
     if arm != "scramble":
         raise ValueError("arm must be evaluator-owned farey or scramble")
-    if exact_gap_scramble is None or map_rank_damage is None:
+    if exact_gap_scramble is None:
         raise RuntimeError("exact-gap scramble adapter unavailable: " + str(_ABLATON_IMPORT_ERROR))
     scrambled = exact_gap_scramble(farey._target, seed=task.seed ^ 0x51A7)  # evaluator side
-    mapped_mask = map_rank_damage(farey._deleted_indices, scrambled)  # evaluator side
+    # Keep the same sorted-rank damage geometry. Mapping gap-token identity
+    # instead would destroy burst/isolation structure after scrambling.
+    matched_rank_mask = farey._deleted_indices
     return _PointSetRepairEnvironment(
         scrambled.points,
-        mapped_mask,
+        matched_rank_mask,
         seed=task.seed,
         goal=task.goal,
         action_budget=ACTION_BUDGET,
@@ -496,10 +508,10 @@ def _hidden_repair_metrics(environment: StrictEnvironment | _PointSetRepairEnvir
 
 
 def _oracle_action(environment: StrictEnvironment | _PointSetRepairEnvironment) -> Action:
-    """Use hidden identities only for the separately labelled ceiling."""
+    """Use hidden identities only for the labelled myopic one-step reference."""
 
     ranked: list[tuple[tuple[float, float, float, float, int], Action]] = []
-    for action_text in ACTIONS:
+    for action_text in POLICY_ACTIONS:
         probe = deepcopy(environment)
         transition = probe.step(action_text)
         hidden = _hidden_repair_metrics(probe)
@@ -524,8 +536,12 @@ def run_episode(
     environment = _task_environment(task, arm)
     visible_progress = 0.0
     actions: list[str] = []
+    last_transmitted = 0.0
     for _ in range(ACTION_BUDGET):
-        view = coarse_view(environment.observation)
+        view = coarse_view(
+            environment.observation,
+            visible_feedback=last_transmitted if training else None,
+        )
         if isinstance(policy, EvaluatorOneStepOracle):
             action = _oracle_action(environment)
         elif isinstance(policy, RewardLearner):
@@ -550,6 +566,7 @@ def run_episode(
                 raise ValueError("feedback_mode must be true, zero, or prior_reward_shuffled")
             if isinstance(policy, RewardLearner):
                 policy.update(view, action, transmitted)
+            last_transmitted = transmitted
             if feedback_reservoir is not None:
                 feedback_reservoir.append(transition.reward)
         if transition.done:
@@ -601,9 +618,11 @@ def train_reward_learner(
 ) -> RewardLearner:
     """Train only on the preregistered low-order random-isolated d=2 tasks."""
 
-    learner = RewardLearner(config.seed + seed_offset)
+    # Identical initialization, exploration stream, and task schedule isolate
+    # the feedback channel as the only training intervention.
+    learner = RewardLearner(config.seed)
     schedule = list(tasks)
-    generator = random.Random(config.seed ^ 0xA11CE ^ seed_offset)
+    generator = random.Random(config.seed ^ 0xA11CE)
     reservoir: list[float] = []
     for episode in range(config.train_episodes):
         if episode % len(schedule) == 0:
@@ -732,18 +751,17 @@ def _gate(
 
 
 def _structural_proof(tasks: Sequence[RepairTask]) -> dict[str, Any]:
-    if exact_gap_scramble is None or map_rank_damage is None:
+    if exact_gap_scramble is None:
         return {"available": False, "reason": "adapter unavailable: " + str(_ABLATON_IMPORT_ERROR)}
     checks = []
     for task in tasks:
         farey = _task_environment(task, "farey")
         scrambled = exact_gap_scramble(farey._target, seed=task.seed ^ 0x51A7)
-        mapped = map_rank_damage(farey._deleted_indices, scrambled)
         metrics = scrambled.metrics
         checks.append(
             {
                 "same_point_count": metrics.point_count_equal,
-                "same_rank_mask_count": len(mapped) == len(farey._deleted_indices),
+                "same_rank_mask_count": len(farey._deleted_indices) == task.damage_count,
                 "same_exact_gap_multiset": metrics.gap_multiset_equal,
                 "nontrivial_gap_order": metrics.is_nontrivial,
                 "closes": metrics.closes_to_one,
@@ -758,6 +776,50 @@ def _structural_proof(tasks: Sequence[RepairTask]) -> dict[str, Any]:
         "all_nontrivial_gap_order": all(check["nontrivial_gap_order"] for check in checks),
         "all_close": all(check["closes"] for check in checks),
     }
+
+
+def _initial_action_reachability(
+    environment: StrictEnvironment | _PointSetRepairEnvironment,
+) -> float:
+    """Fraction of hidden points generated by one legal local insertion.
+
+    The evaluator scans every initially visible adjacent pair, but only applies
+    the same two insertion formulas available to the controller.  This is a
+    structural diagnostic, not a controller score or a finite-horizon oracle.
+    """
+
+    points = tuple(environment._initial_points)
+    deleted = set(environment._target) - set(points)
+    candidates: set[Fraction] = set()
+    for index, left in enumerate(points):
+        right = points[(index + 1) % len(points)]
+        lifted_right = right if right > left else right + 1
+        candidates.add(
+            Fraction(
+                left.numerator + lifted_right.numerator,
+                left.denominator + lifted_right.denominator,
+            )
+            % 1
+        )
+        candidates.add(((left + lifted_right) / 2) % 1)
+    return len(deleted & candidates) / len(deleted) if deleted else 1.0
+
+
+def _structural_reachability_rows(
+    tasks: Sequence[RepairTask], arm: str
+) -> list[dict[str, Any]]:
+    return [
+        {
+            "order": task.order,
+            "pattern": task.pattern.value,
+            "goal": task.goal.value,
+            "seed": task.seed,
+            "initial_reachable_fraction": _initial_action_reachability(
+                _task_environment(task, arm)
+            ),
+        }
+        for task in tasks
+    ]
 
 
 def _source_hashes() -> dict[str, str]:
@@ -778,7 +840,6 @@ def _source_hashes() -> dict[str, str]:
 def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
     """Train, freeze, evaluate the full balanced grid, and return a receipt."""
 
-    started = perf_counter()
     source_hashes = _source_hashes()
     train_tasks = make_manifest(
         TRAIN_ORDERS,
@@ -818,8 +879,13 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
         {"prior_reward_shuffled": feedback_shuffled, "zero_feedback": feedback_zero},
         key="f1",
         margin=config.feedback_f1_margin,
-        valid=(complete_cells(in_domain_tasks, replicates=config.in_domain_replicates_per_order_goal) and feedback_updates == train_updates),
-        reason="frozen held-out low-order random-isolated d=2 cells; hidden F1 never entered a controller view or reward",
+        valid=(
+            complete_cells(in_domain_tasks, replicates=config.in_domain_replicates_per_order_goal)
+            and feedback_updates == train_updates
+            and len(set(train_updates.values())) == 1
+            and next(iter(train_updates.values())) == config.train_episodes * ACTION_BUDGET
+        ),
+        reason="matched initialization/schedule/eight updates per episode; frozen held-out low-order cells; hidden F1 never entered view or reward",
         config=config,
     )
 
@@ -861,9 +927,35 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
         config=config,
     )
 
-    proof = _structural_proof(transfer_tasks)
+    # Denominator bias has no invariant meaning after exact-gap scrambling;
+    # structural pairs therefore use only rank-geometric isolated/burst masks.
+    structural_tasks = [
+        task for task in transfer_tasks if task.pattern is not DamagePattern.DENOMINATOR_BIASED
+    ]
+    proof = _structural_proof(structural_tasks)
+    reachability_diagnostic: dict[str, Any]
     if proof.get("available"):
-        scramble_true = evaluate(true, transfer_tasks, arm="scramble")
+        structural_farey_true = evaluate(true, structural_tasks)
+        scramble_true = evaluate(true, structural_tasks, arm="scramble")
+        farey_reachability = _structural_reachability_rows(structural_tasks, "farey")
+        scramble_reachability = _structural_reachability_rows(structural_tasks, "scramble")
+        reachability_diagnostic = _gate(
+            "structural_reachability_payoff",
+            farey_reachability,
+            {"exact_gap_scramble": scramble_reachability},
+            key="initial_reachable_fraction",
+            margin=config.structural_f1_margin,
+            valid=len(structural_tasks) == 120,
+            reason=(
+                "evaluator-only diagnostic: share of deleted identities generated "
+                "by a mediant or midpoint from any initially visible adjacent pair"
+            ),
+            config=config,
+        )
+        reachability_matched = abs(
+            _mean(farey_reachability, "initial_reachable_fraction")
+            - _mean(scramble_reachability, "initial_reachable_fraction")
+        ) <= 0.01
         structural_valid = all(
             bool(proof[key])
             for key in (
@@ -873,18 +965,27 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
                 "all_nontrivial_gap_order",
                 "all_close",
             )
-        ) and complete_transfer
+        ) and len(structural_tasks) == 120 and reachability_matched
         structural_gate = _gate(
             "farey_vs_exact_gap_scramble",
-            transfer_true,
+            structural_farey_true,
             {"exact_gap_scramble": scramble_true},
             key="f1",
             margin=config.structural_f1_margin,
             valid=structural_valid,
-            reason="paired Farey-vs-scramble targets share rank-mask count, point count, and exact gap multiset",
+            reason=(
+                "controller contrast is invalid/confounded unless initial local-action "
+                f"reachability is matched; matched={reachability_matched}"
+            ),
             config=config,
         )
     else:
+        reachability_diagnostic = {
+            "name": "structural_reachability_payoff",
+            "status": "unverified",
+            "valid": False,
+            "reason": proof["reason"],
+        }
         structural_gate = {
             "name": "farey_vs_exact_gap_scramble",
             "status": "unverified",
@@ -898,15 +999,15 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
         }
 
     core = (feedback_gate, recovery_gate, transfer_gate)
-    conjunction_valid = all(gate["valid"] for gate in core) and structural_gate["valid"]
+    conjunction_valid = all(gate["valid"] for gate in core)
     conjunction_status = "positive" if conjunction_valid and all(gate["status"] == "positive" for gate in core) else "unverified"
     conjunction_gate = {
-        "name": "conjunction",
+        "name": "core_conjunction",
         "status": conjunction_status,
         "metric": "all core gates",
         "margin": None,
         "valid": conjunction_valid,
-        "reason": "positive only when feedback learning, recovery, and frozen transfer are all positive and the structural control is valid",
+        "reason": "positive only when feedback learning, recovery, and frozen transfer are all positive on the same manifest",
     }
 
     if source_hashes != _source_hashes():
@@ -915,18 +1016,17 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
         "schema_version": 1,
         "experiment": "repair-only strict Farey competency probe",
         "seed": config.seed,
-        "runtime_seconds": round(perf_counter() - started, 3),
         "provenance": {"command": "PYTHONDONTWRITEBYTECODE=1 python3 research_notes/farey_controller_competency/repair_experiment.py", "python": sys.version.split()[0]},
         "controller_boundary": {
             "visible": list(CoarseRepairView.__dataclass_fields__),
             "hidden": ["N/order", "exact fractions", "full target", "survivors", "deletion identities/ranks", "target metric values", "arm/family"],
-            "fixed_charged_actions": list(ACTIONS),
+            "fixed_charged_actions": list(POLICY_ACTIONS),
         },
         "predeclaration": {
             "train": {"orders": list(TRAIN_ORDERS), "pattern": TRAIN_PATTERN.value, "damage_count": 2, "frozen_before_evaluation": True},
             "test": {"orders": list(TEST_ORDERS), "patterns": [pattern.value for pattern in TEST_PATTERNS], "damage_count": 4, "goals": [goal.value for goal in GOALS], "replicates_per_cell": config.test_replicates_per_cell, "complete_cells": complete_transfer},
             "statistics": "paired percentile bootstrap with Bonferroni-adjusted marginal intervals; positive/null/negative/unverified taxonomy",
-            "gates": ["feedback_learning", "recovery", "frozen_transfer", "conjunction"],
+            "gates": ["feedback_learning", "recovery", "frozen_transfer", "core_conjunction"],
         },
         "model": {
             "training_updates": train_updates,
@@ -934,11 +1034,14 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict[str, Any]:
             "frozen_digest_unchanged": {name: test_digests[name] == frozen_digests[name] for name in frozen_digests},
             "digests": frozen_digests,
         },
-        "baselines": ["prior-reward-shuffled learner", "zero-feedback learner", "uniform random", "deterministic local-gap/mediant", "visible one-step greedy", "evaluator-only one-step oracle reference (not a finite-horizon ceiling)"],
+        "baselines": ["history-resampled prior-reward learner", "zero-feedback learner", "uniform random", "deterministic local-gap/mediant", "visible one-step greedy", "evaluator-only one-step oracle reference (not a finite-horizon ceiling)"],
         "primary_hidden_metrics": {name: _mean(transfer_true, name) for name in ("precision", "recall", "f1", "exact_recovery")},
         "visible_metrics": {name: _mean(transfer_true, name) for name in ("visible_progress", "cost", "charged_actions")},
         "evaluator_one_step_oracle_reference": {name: _mean(oracle, name) for name in ("precision", "recall", "f1", "exact_recovery", "visible_progress", "cost")},
         "structural_proof": proof,
+        "structural_diagnostics": {
+            reachability_diagnostic["name"]: reachability_diagnostic,
+        },
         "gates": {gate["name"]: gate for gate in (*core, structural_gate, conjunction_gate)},
         "source_and_test_hashes": source_hashes,
     }
@@ -970,12 +1073,13 @@ def _result_markdown(result: dict[str, Any]) -> str:
         "| gate | status | criterion |",
         "| --- | --- | --- |",
     ]
-    for key in ("feedback_learning", "recovery", "frozen_transfer", "farey_vs_exact_gap_scramble", "conjunction"):
+    for key in ("feedback_learning", "recovery", "frozen_transfer", "farey_vs_exact_gap_scramble", "core_conjunction"):
         gate = gates[key]
         criterion = gate.get("reason", "")
         lines.append(f"| {key} | {gate['status']} | {criterion} |")
     updates = result["model"]["measured_test_updates"]
     proof = result["structural_proof"]
+    reachability = result["structural_diagnostics"]["structural_reachability_payoff"]
     lines.extend(
         [
             "",
@@ -986,6 +1090,10 @@ def _result_markdown(result: dict[str, Any]) -> str:
             "The larger-order test grid is complete: N = 11, 13, 17; d = 4; random-isolated, burst, and denominator-biased damage; both goals; ten repetitions per cell.",
             "",
             f"Exact-gap scramble proof: `{proof}`.",
+            "",
+            "## Structural diagnostic",
+            "",
+            f"The initial local-action reachability contrast is **{reachability['status']}**: `{reachability['simultaneous']}`. This is a payoff of the Farey organization for this repair vocabulary, not evidence that the controller learned to exploit it.",
             "",
             "Positive requires every Bonferroni-adjusted paired-bootstrap lower bound to clear its preregistered margin. `null` means the simultaneous interval crosses zero; `negative` means it is wholly below zero; `unverified` covers an invalid design or an interval that is directionally positive but below the margin.",
             "",
