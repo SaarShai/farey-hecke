@@ -1,0 +1,1006 @@
+{
+  "claim_boundary": "These are evaluator-only feasibility ceilings. A positive gate says only that the interface/task has enough information or attainable signal for a later controller test; it is not evidence of learning, transfer, persistence, or a Levin-style competency.",
+  "experiment": "Stage-0 strict Farey competency feasibility diagnostics",
+  "gates": {
+    "observation_identifiability": {
+      "name": "observation_identifiability",
+      "reason": "best deterministic mapping from canonical coarse views to one-step evaluator-optimal hidden-F1 action labels",
+      "status": "positive",
+      "threshold": 0.7,
+      "valid": true,
+      "value": 0.9915032679738562
+    },
+    "observation_negative_fixture": {
+      "name": "observation_negative_fixture",
+      "reason": "all controller views intentionally collapsed to one observation key",
+      "status": "negative",
+      "threshold": 0.7,
+      "valid": true,
+      "value": 0.4980392156862745
+    },
+    "reachability_ceiling": {
+      "components": {
+        "exact_status": "positive",
+        "exact_threshold": 0.5,
+        "f1_status": "negative",
+        "f1_threshold": 0.8,
+        "mean_max_exact_recovery": 0.5,
+        "mean_max_f1": 0.7222222222222222
+      },
+      "name": "reachability_ceiling",
+      "reason": "the reported scalar is the conservative minimum of the mean exact finite-horizon F1 and exact-recovery ceilings; both component thresholds must pass",
+      "status": "negative",
+      "threshold": 0.5,
+      "valid": true,
+      "value": 0.5
+    },
+    "reachability_negative_fixture": {
+      "name": "reachability_negative_fixture",
+      "reason": "same target family but deliberately budget-starved to one action",
+      "status": "negative",
+      "threshold": 0.8,
+      "valid": true,
+      "value": 0.6666666666666666
+    },
+    "scalar_feedback_informativeness": {
+      "name": "scalar_feedback_informativeness",
+      "reason": "AUC of target-independent coverage/spectral reward for hidden identity-improving versus non-improving legal actions",
+      "status": "positive",
+      "threshold": 0.65,
+      "valid": true,
+      "value": 0.9007740863787376
+    },
+    "scalar_feedback_negative_fixture": {
+      "name": "scalar_feedback_negative_fixture",
+      "reason": "all scalar rewards intentionally replaced by the same constant",
+      "status": "negative",
+      "threshold": 0.65,
+      "valid": true,
+      "value": 0.5
+    }
+  },
+  "negative_fixtures": {
+    "observation_collapsed_views": {
+      "action_accuracy_ceiling": 0.4980392156862745,
+      "ambiguous_samples": 1530,
+      "ambiguous_view_groups": 1,
+      "collision_error_floor": 0.5019607843137255,
+      "label_counts": {
+        "insert_mediant": 762,
+        "insert_midpoint": 70,
+        "move_left": 698
+      },
+      "samples": 1530,
+      "unique_views": 1
+    },
+    "reachability": {
+      "action_budget": 1,
+      "max_f1": 0.6666666666666666,
+      "status": "negative"
+    },
+    "scalar_constant_feedback": {
+      "auc": 0.5,
+      "hidden_identity_used_in_reward": false,
+      "improving_actions": 100,
+      "mean_reward_improving": 0.0,
+      "mean_reward_non_improving": 0.0,
+      "non_improving_actions": 6020,
+      "reward_definition": "coverage or spectral change only; hidden identity is not an input",
+      "samples": 6120
+    }
+  },
+  "observation_collision": {
+    "action_accuracy_ceiling": 0.9915032679738562,
+    "ambiguous_samples": 35,
+    "ambiguous_view_groups": 11,
+    "collision_error_floor": 0.00849673202614379,
+    "label_counts": {
+      "insert_mediant": 762,
+      "insert_midpoint": 70,
+      "move_left": 698
+    },
+    "samples": 1530,
+    "unique_views": 1215
+  },
+  "predeclaration": {
+    "action_budget": 8,
+    "fixed_actions": [
+      "move_left",
+      "move_right",
+      "insert_mediant",
+      "insert_midpoint"
+    ],
+    "gates": {
+      "feedback_auc": 0.65,
+      "observation_ceiling": 0.7,
+      "reachability_exact_recovery": 0.5,
+      "reachability_f1": 0.8
+    },
+    "manifest": {
+      "collision_depth": 3,
+      "damage_count": 2,
+      "goals": [
+        "coverage",
+        "spectral"
+      ],
+      "orders": [
+        6,
+        8,
+        11
+      ],
+      "patterns": [
+        "random_isolated",
+        "burst",
+        "denominator_biased"
+      ],
+      "replicates_per_cell": 1
+    }
+  },
+  "provenance": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 research_notes/farey_controller_competency/competency_v3_feasibility.py",
+    "controller_training": false,
+    "python": "3.14.6"
+  },
+  "reachability": {
+    "action_budget": 8,
+    "action_vocabulary": [
+      "move_left",
+      "move_right",
+      "insert_mediant",
+      "insert_midpoint"
+    ],
+    "all_tasks_have_full_f1_ceiling": false,
+    "mean_max_exact_recovery": 0.5,
+    "mean_max_f1": 0.7222222222222222,
+    "mean_max_precision": 0.8333333333333334,
+    "mean_max_recall": 0.6666666666666666,
+    "tasks": [
+      {
+        "best_f1_actions": [
+          "insert_mediant",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 6,
+        "pattern": "random_isolated",
+        "seed": 756803616341141696,
+        "visited_states": 36298,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            5,
+            4,
+            3,
+            2
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 2,
+          "initial_cursor_index": 2,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_right",
+          "move_right",
+          "insert_mediant"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 6,
+        "pattern": "random_isolated",
+        "seed": 1015770662195809606,
+        "visited_states": 40529,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            0,
+            1,
+            2
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 2,
+          "initial_cursor_index": 5,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "move_left",
+          "move_left",
+          "insert_mediant",
+          "move_left",
+          "insert_mediant",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 6,
+        "pattern": "burst",
+        "seed": 258270025813046038,
+        "visited_states": 40545,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            3,
+            2,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            11
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 11,
+          "initial_cursor_index": 3,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "insert_mediant",
+          "move_left",
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 6,
+        "pattern": "burst",
+        "seed": 139380657729530163,
+        "visited_states": 40379,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            6,
+            7,
+            6,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 2,
+          "initial_cursor_index": 6,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "insert_mediant",
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 6,
+        "pattern": "denominator_biased",
+        "seed": 497709373343918187,
+        "visited_states": 35924,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            0,
+            9,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 6,
+          "initial_cursor_index": 0,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "insert_mediant",
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 6,
+        "pattern": "denominator_biased",
+        "seed": 735755146954196392,
+        "visited_states": 32674,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            7,
+            6,
+            5,
+            4
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 4,
+          "initial_cursor_index": 4,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "insert_mediant",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 8,
+        "pattern": "random_isolated",
+        "seed": 996160742566843999,
+        "visited_states": 40617,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            17,
+            18,
+            17,
+            16,
+            15,
+            14,
+            15,
+            14,
+            13
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 13,
+          "initial_cursor_index": 17,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.6666666666666666,
+        "max_precision": 1.0,
+        "max_recall": 0.5,
+        "order": 8,
+        "pattern": "random_isolated",
+        "seed": 623045241278677535,
+        "visited_states": 40640,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            5,
+            4,
+            3,
+            2,
+            1,
+            2,
+            1,
+            0,
+            20
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.6666666666666666,
+          "false_positive_count": 0,
+          "final_cursor_index": 20,
+          "initial_cursor_index": 5,
+          "insertion_count": 1,
+          "movement_count": 7,
+          "recovered_count": 1
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.0,
+        "max_precision": 0.0,
+        "max_recall": 0.0,
+        "order": 8,
+        "pattern": "burst",
+        "seed": 133180111255065053,
+        "visited_states": 40607,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            10,
+            9,
+            8,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 2,
+          "initial_cursor_index": 10,
+          "insertion_count": 0,
+          "movement_count": 8,
+          "recovered_count": 0
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "insert_mediant",
+          "insert_mediant",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 8,
+        "pattern": "burst",
+        "seed": 953685520830201487,
+        "visited_states": 40641,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            4,
+            3,
+            2,
+            1,
+            0,
+            19,
+            20,
+            21,
+            20
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 20,
+          "initial_cursor_index": 4,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.6666666666666666,
+        "max_precision": 1.0,
+        "max_recall": 0.5,
+        "order": 8,
+        "pattern": "denominator_biased",
+        "seed": 99738006595895708,
+        "visited_states": 40047,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            0,
+            20,
+            19,
+            18
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.6666666666666666,
+          "false_positive_count": 0,
+          "final_cursor_index": 18,
+          "initial_cursor_index": 15,
+          "insertion_count": 1,
+          "movement_count": 7,
+          "recovered_count": 1
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.6666666666666666,
+        "max_precision": 1.0,
+        "max_recall": 0.5,
+        "order": 8,
+        "pattern": "denominator_biased",
+        "seed": 793351650528090722,
+        "visited_states": 40481,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            9,
+            8
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.6666666666666666,
+          "false_positive_count": 0,
+          "final_cursor_index": 8,
+          "initial_cursor_index": 4,
+          "insertion_count": 1,
+          "movement_count": 7,
+          "recovered_count": 1
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.6666666666666666,
+        "max_precision": 1.0,
+        "max_recall": 0.5,
+        "order": 11,
+        "pattern": "random_isolated",
+        "seed": 742253225658289656,
+        "visited_states": 40636,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            8,
+            7
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.6666666666666666,
+          "false_positive_count": 0,
+          "final_cursor_index": 7,
+          "initial_cursor_index": 3,
+          "insertion_count": 1,
+          "movement_count": 7,
+          "recovered_count": 1
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.6666666666666666,
+        "max_precision": 1.0,
+        "max_recall": 0.5,
+        "order": 11,
+        "pattern": "random_isolated",
+        "seed": 922391591638297622,
+        "visited_states": 40639,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            16
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.6666666666666666,
+          "false_positive_count": 0,
+          "final_cursor_index": 16,
+          "initial_cursor_index": 10,
+          "insertion_count": 1,
+          "movement_count": 7,
+          "recovered_count": 1
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.0,
+        "max_precision": 0.0,
+        "max_recall": 0.0,
+        "order": 11,
+        "pattern": "burst",
+        "seed": 373063513505619249,
+        "visited_states": 40640,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            31,
+            30,
+            29,
+            28,
+            27,
+            26,
+            25,
+            24,
+            23
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 23,
+          "initial_cursor_index": 31,
+          "insertion_count": 0,
+          "movement_count": 8,
+          "recovered_count": 0
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "move_right",
+          "move_right",
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "insert_mediant",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 1.0,
+        "max_f1": 1.0,
+        "max_precision": 1.0,
+        "max_recall": 1.0,
+        "order": 11,
+        "pattern": "burst",
+        "seed": 1143500746482627591,
+        "visited_states": 40639,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            26,
+            27,
+            26
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 1.0,
+          "f1": 1.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 26,
+          "initial_cursor_index": 22,
+          "insertion_count": 2,
+          "movement_count": 6,
+          "recovered_count": 2
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_right",
+          "insert_mediant",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "coverage",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.6666666666666666,
+        "max_precision": 1.0,
+        "max_recall": 0.5,
+        "order": 11,
+        "pattern": "denominator_biased",
+        "seed": 38500828366697398,
+        "visited_states": 32714,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            38,
+            39,
+            0,
+            40,
+            39,
+            38,
+            37,
+            36,
+            35
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.6666666666666666,
+          "false_positive_count": 0,
+          "final_cursor_index": 35,
+          "initial_cursor_index": 38,
+          "insertion_count": 1,
+          "movement_count": 7,
+          "recovered_count": 1
+        }
+      },
+      {
+        "best_f1_actions": [
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left",
+          "move_left"
+        ],
+        "damage_count": 2,
+        "goal": "spectral",
+        "max_exact_recovery": 0.0,
+        "max_f1": 0.0,
+        "max_precision": 0.0,
+        "max_recall": 0.0,
+        "order": 11,
+        "pattern": "denominator_biased",
+        "seed": 706049666297293273,
+        "visited_states": 40641,
+        "witness": {
+          "actions_remaining": 0,
+          "actions_used": 8,
+          "cursor_trace": [
+            34,
+            33,
+            32,
+            31,
+            30,
+            29,
+            28,
+            27,
+            26
+          ],
+          "deleted_count": 2,
+          "exact_recovery": 0.0,
+          "f1": 0.0,
+          "false_positive_count": 0,
+          "final_cursor_index": 26,
+          "initial_cursor_index": 34,
+          "insertion_count": 0,
+          "movement_count": 8,
+          "recovered_count": 0
+        }
+      }
+    ]
+  },
+  "scalar_feedback": {
+    "auc": 0.9007740863787376,
+    "hidden_identity_used_in_reward": false,
+    "improving_actions": 100,
+    "mean_reward_improving": 0.042327250000000004,
+    "mean_reward_non_improving": -0.0021591865448504985,
+    "non_improving_actions": 6020,
+    "reward_definition": "coverage or spectral change only; hidden identity is not an input",
+    "samples": 6120
+  },
+  "schema_version": 1,
+  "seed": 20260811,
+  "source_hashes": {
+    "competency_v3_feasibility.py": "ef8191ee3df80c982a5570a57b477fe8d8e33c48267b400e6176d50764b1a048",
+    "repair_experiment.py": "e956941b60193ef301687d2633f1be88e4fa83a9a5b6f5abb0efadc2fdb594c1",
+    "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30",
+    "test_competency_v3_feasibility.py": "490d17697f5cfd64b1f7cba0646f121fec34d812fc5b2eb57755c89a6b8ce544"
+  }
+}
