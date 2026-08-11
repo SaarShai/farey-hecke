@@ -1,0 +1,165 @@
+{
+  "baselines": [
+    "seeded random fixed-action",
+    "memoryless local-geometry heuristic",
+    "prior-reward shuffled learner",
+    "zero-feedback learner"
+  ],
+  "configuration": {
+    "budget": 8,
+    "goal_discriminating_tasks": 0,
+    "in_domain_tasks": 60,
+    "test_orders": [
+      11,
+      13,
+      17
+    ],
+    "test_patterns": [
+      "burst",
+      "denominator_biased"
+    ],
+    "train_episodes": 900,
+    "train_orders": [
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "train_patterns": [
+      "random_isolated"
+    ],
+    "train_tasks": 60,
+    "transfer_goal": "spectral",
+    "transfer_replicates_per_order_damage_cell": 5,
+    "transfer_tasks": 30
+  },
+  "controller_boundary": {
+    "fixed_actions": [
+      "move_left",
+      "move_right",
+      "insert_mediant",
+      "insert_midpoint",
+      "stop"
+    ],
+    "hidden": [
+      "N/order",
+      "exact fractions",
+      "full survivor list",
+      "candidate menu",
+      "damage count/mask",
+      "target identity and target metric values"
+    ],
+    "visible": [
+      "local_relations",
+      "remaining",
+      "last_reward",
+      "trusted_goal",
+      "untrusted_goal",
+      "affordance_context"
+    ]
+  },
+  "experiment": "strict local-observation Farey repair controller",
+  "gates": {
+    "H1_goal_persistence": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "effect": 0.0,
+      "reason": "trusted goal once; three-step cue-free delay; memory ablation; 0 evaluator-certified goal-discriminating tasks",
+      "status": "unverified",
+      "threshold": 0.005,
+      "valid": false
+    },
+    "H2_variable_means": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "effect": 0.0,
+      "reason": "real mediant/midpoint mapping swap, but no evaluator-certified context-reversing task manifest",
+      "status": "unverified",
+      "threshold": 0.01,
+      "valid": false
+    },
+    "H3_feedback_learning": {
+      "ci95": [
+        -0.00541898303078749,
+        0.03346976320768455
+      ],
+      "effect": -0.0026505372164410974,
+      "reason": "true action-paired visible reward vs prior-reward shuffle and zero feedback",
+      "status": "unverified",
+      "threshold": 0.005,
+      "valid": true
+    },
+    "H4_damage_recovery": {
+      "ci95": [
+        0.09166666666666666,
+        0.26666666666666666
+      ],
+      "effect": 0.175,
+      "reason": "identity evaluator-only; conservative simultaneous comparison with random and local-geometry baselines",
+      "status": "unverified",
+      "threshold": 0.1,
+      "valid": true
+    },
+    "H5_frozen_transfer": {
+      "ci95": [
+        -0.00015931422589544794,
+        0.018118583578675983
+      ],
+      "effect": 0.0018626539437764194,
+      "reason": "frozen spectral-goal transfer over complete 3x2 order/damage grid; simultaneous controls; measured test updates=0",
+      "status": "unverified",
+      "threshold": 0.005,
+      "valid": true
+    },
+    "H6_goal_switching": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "effect": 0.0,
+      "reason": "trusted success=0.000; untrusted false-switch=0.000; 0 strictly reversing tasks; matched separate cues",
+      "status": "unverified",
+      "threshold": 0.7,
+      "valid": false
+    }
+  },
+  "leakage_probe": {
+    "accuracy": 0.152,
+    "chance": 0.2,
+    "ci95": [
+      0.11278704166232252,
+      0.20174611602341536
+    ],
+    "criterion": "95% upper bound no more than chance + 0.10",
+    "samples": 250,
+    "valid": true
+  },
+  "model": {
+    "none_digest": "1f01f80a289dd595c492ff6d437e0a5193952eb3c256ec69655f76fef00706c5",
+    "shuffled_digest": "51d183f6a71a5fc4e7e8d744270d2bbbdafac775b221ed8f5db1d69e20e7ab0f",
+    "test_updates": 0,
+    "true_digest": "19cdb51f2cbcb07622c470b10380fd2a294f12c69e732a6e9280b3f0a192dda1"
+  },
+  "provenance": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 research_notes/farey_controller_competency/strict_experiment.py",
+    "python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "schema_version": 2,
+  "seed": 20260811,
+  "source_hashes": {
+    "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30",
+    "strict_experiment.py": "b3760c70c7e328abd78f6a5b788aa5bd4c89e1b984dcad4e3f62edfc43da3889",
+    "test_strict_environment.py": "83668df9565bc9774a85aadd432ebe70782c3d451f462430b72566b46b20ddcb",
+    "test_strict_experiment.py": "fa44fae3d49a8f6ef025ab22ab8c63686d7b639a60837448de4c539d7a6fb1a4"
+  },
+  "summary": {
+    "negative": 0,
+    "preliminary_positive": 0,
+    "unverified": 6
+  }
+}

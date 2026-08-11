@@ -100,6 +100,16 @@ class StrictEnvironmentContractTests(unittest.TestCase):
         self.assertEqual(observation.untrusted_cue, UntrustedCue("untrusted_hint", -4))
         self.assertNotEqual(observation.trusted_goal_state.value, observation.untrusted_cue.tag)
 
+        environment = StrictEnvironment(7, goal=GoalState.COVERAGE)
+        changed = environment.set_cue_channels(
+            trusted_goal=GoalState.SPECTRAL,
+            untrusted_cue=("conflicting_goal", 0),
+        )
+        self.assertEqual(changed.trusted_goal_state, GoalState.SPECTRAL)
+        self.assertEqual(changed.untrusted_cue, UntrustedCue("conflicting_goal", 0))
+        with self.assertRaises(ValueError):
+            UntrustedCue("hidden-order-17", 0)
+
     def test_action_set_is_exactly_fixed(self) -> None:
         self.assertEqual(
             ACTIONS,
@@ -159,6 +169,16 @@ class StrictEnvironmentContractTests(unittest.TestCase):
         self.assertNotEqual(unrotated.indices, rotated.indices)
         self.assertEqual(rotated.rotation_offset, 3)
         self.assertEqual(len(rotate_damage_mask(unrotated.indices, 64, 3)), 2)
+
+        # A rotated cursor frame must not rotate denominator-biased target
+        # indices into unrelated denominators.
+        biased_a = StrictEnvironment(
+            17, DamagePattern.DENOMINATOR_BIASED, damage_count=2, seed=9, rotation=False
+        )
+        biased_b = StrictEnvironment(
+            17, DamagePattern.DENOMINATOR_BIASED, damage_count=2, seed=9, rotation=True
+        )
+        self.assertEqual(biased_a._deleted_indices, biased_b._deleted_indices)
 
     def test_rotation_randomizes_initial_cursor_frame_deterministically(self) -> None:
         first = StrictEnvironment(13, seed=8, rotation=True)

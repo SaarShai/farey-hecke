@@ -25,6 +25,9 @@ RATIO_BIN_COUNT = 16
 REWARD_DECIMAL_PLACES = 6
 DEFAULT_ACTION_BUDGET = 8
 SPECTRAL_MODES: tuple[int, ...] = tuple(range(1, 13))
+ALLOWED_UNTRUSTED_CUE_TAGS = frozenset(
+    {"none", "untrusted", "hint", "untrusted_hint", "conflicting_goal", "untrusted_goal"}
+)
 
 
 class GoalState(str, Enum):
@@ -121,8 +124,8 @@ class UntrustedCue:
     value: int = 0
 
     def __post_init__(self) -> None:
-        if not isinstance(self.tag, str) or not self.tag:
-            raise ValueError("untrusted cue tag must be a non-empty string")
+        if not isinstance(self.tag, str) or self.tag not in ALLOWED_UNTRUSTED_CUE_TAGS:
+            raise ValueError("untrusted cue tag is outside the fixed public vocabulary")
         if not isinstance(self.value, int):
             raise TypeError("untrusted cue value must be an integer bin")
         if not -32 <= self.value <= 32:
@@ -508,12 +511,18 @@ class StrictEnvironment:
         self._order = order
         self._target = _target_for_order(order)
         if damage_mask is None:
+            pattern_value = DamagePattern.coerce(pattern)
+            # Rotating sorted target indices destroys denominator bias. For
+            # this family, randomize only the controller cursor frame below.
+            mask_rotation: int | bool = (
+                False if pattern_value is DamagePattern.DENOMINATOR_BIASED else rotation
+            )
             mask = generate_damage_mask(
                 order,
-                pattern,
+                pattern_value,
                 damage_count,
                 seed=seed,
-                rotation=rotation,
+                rotation=mask_rotation,
             )
             deleted_indices = tuple(mask.indices)
         elif isinstance(damage_mask, DamageMask):
@@ -594,6 +603,25 @@ class StrictEnvironment:
         self._remaining_budget = self._action_budget
         self._last_reward = 0.0
         self._done = False
+        return self._make_observation()
+
+    def set_cue_channels(
+        self,
+        *,
+        trusted_goal: GoalState | str | None = None,
+        untrusted_cue: UntrustedCue | tuple[str, int] | str | int | float | None = None,
+    ) -> StrictObservation:
+        """Evaluator-controlled cue delivery without exposing hidden state.
+
+        A trusted command changes the task metric. An untrusted cue is visible
+        but cannot change evaluator semantics. Calling this method is not an
+        action and is used only at preregistered cue times.
+        """
+
+        if trusted_goal is not None:
+            self._goal = GoalState.coerce(trusted_goal)
+        if untrusted_cue is not None:
+            self._cue = UntrustedCue.coerce(untrusted_cue)
         return self._make_observation()
 
     def step(self, action: Action | str) -> StrictTransition:

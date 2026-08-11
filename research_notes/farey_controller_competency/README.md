@@ -4,6 +4,12 @@ This directory is a small Python-stdlib research engine.  It is a **local-
 candidate structural baseline**, not a production environment, a learning
 system, or evidence of agency.
 
+The corrected capability-bounded experiment is in
+[`strict_environment.py`](strict_environment.py) and
+[`strict_experiment.py`](strict_experiment.py), with findings in
+[`STRICT_RESULTS.md`](STRICT_RESULTS.md). The original files below are retained
+as an explicitly falsified pilot rather than silently rewritten.
+
 ## Question
 
 When some reduced Farey-circle points are damaged, can fixed policies choose
