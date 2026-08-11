@@ -397,6 +397,42 @@ def _source_hashes(directory: Path) -> dict[str, str]:
     return {name: sha256((directory / name).read_bytes()).hexdigest() for name in names}
 
 
+def compact_result(result: Mapping[str, Any]) -> dict[str, Any]:
+    """Drop per-task replay rows while retaining aggregate evidence.
+
+    The learner digests and update counts are already recorded in ``lanes``;
+    task-level action hashes are therefore redundant for this development
+    receipt.  Keep aggregate rows for both replay variants, summaries, gates,
+    protocol/configuration, and source/manifest hashes so the result remains
+    auditable without serializing thousands of duplicate task rows.
+    """
+
+    variants = result.get("validation_variants", {})
+    mc_variant = variants.get("mc", {})
+    tile_variant = variants.get("tile", {})
+    mc_rows = result.get("validation_aggregated_rows", mc_variant.get("aggregated_rows", {}))
+    compact = {
+        key: value
+        for key, value in result.items()
+        if key not in {"validation_task_rows", "validation_variants", "validation_aggregated_rows"}
+    }
+    protocol = dict(result["protocol"])
+    protocol["receipt_format"] = "compact aggregate-only; per-task rows omitted"
+    compact["protocol"] = protocol
+    compact["validation_aggregated_rows"] = mc_rows
+    compact["validation_variants"] = {
+        "mc": {
+            "aggregated_rows": mc_rows,
+            "summaries": result["mc_validation_summary"],
+        },
+        "tile": {
+            "aggregated_rows": tile_variant.get("aggregated_rows", {}),
+            "summaries": result["tile_validation_summary"],
+        },
+    }
+    return compact
+
+
 def run_dev(
     *,
     train_tasks: Sequence[RepairTask],
@@ -511,7 +547,8 @@ def run_dev(
     }
     if output_dir is not None:
         output_dir.mkdir(parents=True, exist_ok=True)
-        (output_dir / RECEIPT_NAME).write_text(json.dumps(_jsonable(result), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        compact = compact_result(result)
+        (output_dir / RECEIPT_NAME).write_text(json.dumps(_jsonable(compact), indent=2, sort_keys=True) + "\n", encoding="utf-8")
         (output_dir / RESULTS_NAME).write_text(result_markdown(result), encoding="utf-8")
     return result
 

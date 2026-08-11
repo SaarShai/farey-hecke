@@ -19,6 +19,7 @@ from .controller_v7_dev import (
     _replay_mc,
     _replay_td,
     aggregate_rows,
+    compact_result,
     result_markdown,
     run_dev,
     tile_features,
@@ -120,6 +121,13 @@ class ControllerV7DevTests(unittest.TestCase):
             self.assertIn("offline reward-attribution", result_markdown(result))
             self.assertIn("coarse interaction/tile variant", result_markdown(result))
             self.assertIn("tile", result["gates"])
+            compact = compact_result(result)
+            self.assertNotIn("validation_task_rows", compact)
+            self.assertEqual(set(compact["validation_variants"]), {"mc", "tile"})
+            self.assertTrue(all("task_rows" not in variant for variant in compact["validation_variants"].values()))
+            self.assertEqual(compact, compact_result(result))
+            written = (Path(directory) / "controller_v7_dev_receipt.json").read_text(encoding="utf-8")
+            self.assertLess(len(written), 500_000)
             with self.assertRaisesRegex(RuntimeError, "already exists"):
                 run_dev(train_tasks=tasks, validation_tasks=tasks, learner_seeds=(0,), output_dir=Path(directory))
 
