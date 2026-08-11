@@ -46,6 +46,7 @@ class ControllerV7DevTests(unittest.TestCase):
     def test_public_stream_preserves_fixed_budget_without_task_fields_in_view(self) -> None:
         episode = PublicEpisode(self.task(7, GoalState.COVERAGE))
         first = episode.fresh_environment()
+        self.assertFalse(hasattr(episode, "task"))
         self.assertEqual(first._remaining, V6_BUDGET)
         self.assertEqual(len(first.view.as_tuple()), 10)
         self.assertNotIn("target", first.view.__dataclass_fields__)
@@ -90,7 +91,7 @@ class ControllerV7DevTests(unittest.TestCase):
 
     def test_tile_variant_is_fixed_coarse_and_matched(self) -> None:
         view = PublicEpisode(self.task(5, GoalState.SPECTRAL)).fresh_environment().view
-        self.assertEqual(tile_features(view), tile_features(view))
+        self.assertEqual(tile_features(view), tile_features(PublicEpisode(self.task(5, GoalState.SPECTRAL)).fresh_environment().view))
         self.assertGreater(len(tile_features(view)), len(view.features()))
         lane = train_lane(TILE_KIND, "true", self.tasks(), learner_seed=2, behavior_seed=19)
         self.assertEqual(lane.update_delta, 4 * V6_BUDGET)
@@ -125,6 +126,15 @@ class ControllerV7DevTests(unittest.TestCase):
             self.assertNotIn("validation_task_rows", compact)
             self.assertEqual(set(compact["validation_variants"]), {"mc", "tile"})
             self.assertTrue(all("task_rows" not in variant for variant in compact["validation_variants"].values()))
+            self.assertEqual(compact["counts"]["logical_validation_cells"], 2)
+            self.assertEqual(compact["counts"]["validation_seed_cell_aggregates"], 4)
+            self.assertEqual(compact["costs"]["validation_actions_per_policy_per_seed"], 4 * V6_BUDGET)
+            self.assertEqual(compact["costs"]["validation_actions_per_policy_total"], 8 * V6_BUDGET)
+            self.assertTrue(all(
+                evidence["row_count"] == 8
+                for variant in compact["omitted_task_evidence"].values()
+                for evidence in variant.values()
+            ))
             self.assertEqual(compact, compact_result(result))
             written = (Path(directory) / "controller_v7_dev_receipt.json").read_text(encoding="utf-8")
             self.assertLess(len(written), 500_000)

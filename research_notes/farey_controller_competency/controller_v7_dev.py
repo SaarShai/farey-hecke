@@ -23,6 +23,8 @@ try:
         SPLIT_REPLICATES,
         TRAIN_ORDERS,
         VALIDATION_ORDERS,
+        _digest as _v6_digest,
+        _private_rows as _v6_private_rows,
         _split_seed,
     )
     from .controller_v6 import (
@@ -53,6 +55,8 @@ except ImportError:  # direct execution from this directory
         SPLIT_REPLICATES,
         TRAIN_ORDERS,
         VALIDATION_ORDERS,
+        _digest as _v6_digest,
+        _private_rows as _v6_private_rows,
         _split_seed,
     )
     from controller_v6 import (  # type: ignore[no-redef]
@@ -106,8 +110,13 @@ def _jsonable(value: Any) -> Any:
 
 
 def _digest(value: Any) -> str:
-    payload = json.dumps(_jsonable(value), sort_keys=True, separators=(",", ":")).encode()
-    return sha256(payload).hexdigest()
+    return sha256(_canonical(value)).hexdigest()
+
+
+def _canonical(value: Any) -> bytes:
+    return json.dumps(
+        _jsonable(value), sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    ).encode("utf-8")
 
 
 def _environment(task: RepairTask) -> V6Environment:
@@ -127,10 +136,10 @@ def _environment(task: RepairTask) -> V6Environment:
 class PublicEpisode:
     """Evaluator-owned task wrapper; only a fresh V6 environment crosses over."""
 
-    task: RepairTask
+    _task: RepairTask
 
     def fresh_environment(self) -> V6Environment:
-        return _environment(self.task)
+        return _environment(self._task)
 
 
 class PublicStream:
@@ -393,7 +402,14 @@ def _gate_report(rows_by_policy: Mapping[str, Sequence[Mapping[str, Any]]]) -> d
 
 
 def _source_hashes(directory: Path) -> dict[str, str]:
-    names = ("controller_v7_dev.py", "controller_v6.py", "competency_v6_final_manifest.py", "strict_environment.py", "competency_v5_feasibility.py")
+    names = (
+        "controller_v7_dev.py",
+        "controller_v6.py",
+        "competency_v6_final_manifest.py",
+        "strict_environment.py",
+        "competency_v5_feasibility.py",
+        "repair_experiment.py",
+    )
     return {name: sha256((directory / name).read_bytes()).hexdigest() for name in names}
 
 
@@ -411,14 +427,40 @@ def compact_result(result: Mapping[str, Any]) -> dict[str, Any]:
     mc_variant = variants.get("mc", {})
     tile_variant = variants.get("tile", {})
     mc_rows = result.get("validation_aggregated_rows", mc_variant.get("aggregated_rows", {}))
+    omitted_task_evidence: dict[str, dict[str, dict[str, Any]]] = {}
+    for variant_name, variant in (("mc", mc_variant), ("tile", tile_variant)):
+        task_rows = variant.get("task_rows", {})
+        omitted_task_evidence[variant_name] = {
+            str(policy): {
+                "row_count": len(policy_rows),
+                "canonical_sha256": sha256(_canonical(policy_rows)).hexdigest(),
+            }
+            for policy, policy_rows in sorted(task_rows.items())
+        }
     compact = {
         key: value
         for key, value in result.items()
         if key not in {"validation_task_rows", "validation_variants", "validation_aggregated_rows"}
     }
     protocol = dict(result["protocol"])
-    protocol["receipt_format"] = "compact aggregate-only; per-task rows omitted"
+    protocol["receipt_format"] = "compact aggregates plus hashes/counts of omitted per-task rows"
     compact["protocol"] = protocol
+    true_rows = mc_rows.get("true", ())
+    learner_seed_count = len(protocol.get("learner_seeds", ()))
+    validation_task_count = int(result["counts"]["validation_tasks"])
+    compact["counts"] = {
+        **result["counts"],
+        "logical_validation_cells": len({row["cell"] for row in true_rows}),
+        "validation_seed_cell_aggregates": len(true_rows),
+    }
+    compact["counts"].pop("validation_cells", None)
+    compact["costs"] = {
+        **result["costs"],
+        "validation_actions_per_policy_per_seed": validation_task_count * V6_BUDGET,
+        "validation_actions_per_policy_total": validation_task_count * V6_BUDGET * learner_seed_count,
+    }
+    compact["costs"].pop("validation_actions_per_policy", None)
+    compact["omitted_task_evidence"] = omitted_task_evidence
     compact["validation_aggregated_rows"] = mc_rows
     compact["validation_variants"] = {
         "mc": {
@@ -523,8 +565,19 @@ def run_dev(
             "claim_boundary": CLAIM_BOUNDARY,
         },
         "manifest_hashes": dict(manifest_hashes or {}),
-        "counts": {"train_tasks": len(train_tasks), "validation_tasks": len(validation_tasks), "validation_cells": len(rows["true"])},
-        "costs": {"train_updates_per_lane": expected_updates, "validation_actions_per_policy": len(validation_tasks) * V6_BUDGET, "test_openings": 0, "test_updates": 0},
+        "counts": {
+            "train_tasks": len(train_tasks),
+            "validation_tasks": len(validation_tasks),
+            "logical_validation_cells": len({row["cell"] for row in rows["true"]}),
+            "validation_seed_cell_aggregates": len(rows["true"]),
+        },
+        "costs": {
+            "train_updates_per_lane": expected_updates,
+            "validation_actions_per_policy_per_seed": len(validation_tasks) * V6_BUDGET,
+            "validation_actions_per_policy_total": len(validation_tasks) * V6_BUDGET * len(learner_seeds),
+            "test_openings": 0,
+            "test_updates": 0,
+        },
         "lanes": lane_receipt,
         "td_validation_summary": td_summary,
         "mc_validation_summary": summaries,
@@ -616,6 +669,23 @@ def run_from_v6_manifest(*, output_dir: Path | None = None) -> dict[str, Any]:
         seed=_split_seed("validation", DEFAULT_CONFIG),
     )
     manifest_receipt = json.loads((directory / "competency_v6_final_manifest_receipt.json").read_text(encoding="utf-8"))
+    for name in ("competency_v6_final_manifest.py", "repair_experiment.py"):
+        current = sha256((directory / name).read_bytes()).hexdigest()
+        expected = manifest_receipt["source_hashes"][name]
+        if current != expected:
+            raise RuntimeError(f"sealed V6 generator provenance mismatch: {name}")
+    regenerated_rows = _v6_private_rows(
+        {"train": train_tasks, "validation": validation_tasks, "test": ()}
+    )
+    regenerated_commitments = [
+        {"task_id": row["task_id"], "commitment_sha256": _v6_digest(row)}
+        for row in regenerated_rows
+    ]
+    expected_commitments = manifest_receipt["manifest_seal"]["task_commitments"][
+        : len(regenerated_commitments)
+    ]
+    if regenerated_commitments != expected_commitments:
+        raise RuntimeError("regenerated V6 train/validation commitments do not match sealed receipt")
     return run_dev(
         train_tasks=train_tasks,
         validation_tasks=validation_tasks,

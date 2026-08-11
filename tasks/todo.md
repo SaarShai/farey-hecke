@@ -215,6 +215,46 @@ passes the same preregistered checks.
 V6 sealed 720 new tasks on disjoint orders and seeds. All 720 tasks and all 54
 order-by-family-by-goal cells are exactly recoverable within the frozen
 eighteen-action, sixteen-step interface; visible reward AUC is 0.7941. The
-controller test accessor remains unopened and token-free. A one-shot runner is
-now being built against this frozen manifest, with no test access during its
-implementation or tests.
+controller test was opened exactly once after the model digest was frozen, but
+the process terminated before writing a final result receipt. The durable guard
+therefore retires V6: it must not be reopened or used for a competency claim.
+
+# V7 recovery after consumed V6 test
+
+- [x] Recover and preserve the V6 failure evidence without reopening its sealed test.
+- [x] Characterize learner/development behavior with a deterministic validation-only reproduction.
+- [x] Use only development train/validation tasks to determine why hidden-repair F1 remains near zero.
+- [x] Test bounded return-to-go and coarse interaction learners against locked development gates.
+- [ ] Freeze the complete V7 protocol, learner, baselines, thresholds, and one-shot failure handling.
+- [ ] Seal a wholly fresh V7 manifest with disjoint orders and seeds.
+- [ ] Run V7 exactly once, preserve an atomic result or failure receipt, and independently cold-audit it.
+- [ ] Make a narrow Levin-style competency claim only if every preregistered core and structural gate passes.
+
+## V6 incident status
+
+The immutable opening marker records the frozen model digest and V6 private
+manifest hash. No final JSON or Markdown result exists, so recovery, transfer,
+feedback, and structural gates are unverified. A validation-only synthetic run
+completed and showed very low hidden-repair F1, but it is a development
+diagnostic rather than the consumed V6 test result. V7 is gated on first making
+the learner effective on development data; another sealed run is not justified
+until then.
+
+## V7 development result
+
+The feedback-attribution redesign stopped at the development gate. Backward
+Monte Carlo return-to-go produced precision 0.0049, recall 0.0090, F1 0.0050,
+and zero exact recoveries on the 120-task validation set across 12 learner
+seeds. It beat permuted and zero feedback by small, nonzero amounts, but missed
+every absolute recovery threshold. The one allowed 64-tile coarse-interaction
+variant was slightly worse (F1 0.0044, exact 0) and did not beat the random
+baseline with a confidence bound above zero. Both variants are valid negative
+development results. No V7 manifest was sealed and no new test was opened.
+
+This locates the present blocker more precisely: the protocol produced small
+positive but subthreshold true-vs-null deltas; this does not establish useful
+causal feedback. The fixed open-loop dataset and coarse controller view do not
+turn those deltas into hidden identity recovery. The next
+protocol must change the development learning problem—most plausibly richer
+target-independent local observations and genuinely interactive exploration—
+and clear the same train/validation gates before any fresh sealed test exists.

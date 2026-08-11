@@ -3,11 +3,13 @@
     "test_openings": 0,
     "test_updates": 0,
     "train_updates_per_lane": 3840,
-    "validation_actions_per_policy": 1920
+    "validation_actions_per_policy_per_seed": 1920,
+    "validation_actions_per_policy_total": 23040
   },
   "counts": {
+    "logical_validation_cells": 12,
     "train_tasks": 240,
-    "validation_cells": 144,
+    "validation_seed_cell_aggregates": 144,
     "validation_tasks": 120
   },
   "gates": {
@@ -981,6 +983,60 @@
       "recall": 0.0
     }
   },
+  "omitted_task_evidence": {
+    "mc": {
+      "local": {
+        "canonical_sha256": "cdad635405f079c52aa8e60af941631108507da0b92b77a12ca3f10b52373a77",
+        "row_count": 1440
+      },
+      "random": {
+        "canonical_sha256": "8c0af63726ee6151a3e136caf67021a7f696be8bdb62e9fe88575aedb362e102",
+        "row_count": 1440
+      },
+      "true": {
+        "canonical_sha256": "c19bb31a45c2527004813136277f7021355a4a9edb9bb4d4ed76d29566befcd1",
+        "row_count": 1440
+      },
+      "visible_greedy": {
+        "canonical_sha256": "e89f61e9ad135bfeaa9e9710a8b46907dec77ef103907d10e282a6381d59bae7",
+        "row_count": 1440
+      },
+      "within_episode_permuted": {
+        "canonical_sha256": "ce02a1a13bb1913ea1e8425ee4eedf80cf846bac4245211c00bbc17bfd4d3f0a",
+        "row_count": 1440
+      },
+      "zero": {
+        "canonical_sha256": "532f9568ced79f8f01b2e4329fb506650ca4acc00b8c53d7f388d088aa62c840",
+        "row_count": 1440
+      }
+    },
+    "tile": {
+      "local": {
+        "canonical_sha256": "cdad635405f079c52aa8e60af941631108507da0b92b77a12ca3f10b52373a77",
+        "row_count": 1440
+      },
+      "random": {
+        "canonical_sha256": "8c0af63726ee6151a3e136caf67021a7f696be8bdb62e9fe88575aedb362e102",
+        "row_count": 1440
+      },
+      "true": {
+        "canonical_sha256": "d175f8a747e10898a118e2bea2f6af7d88d470c1d7c9ca83c0e63721a46ea1e1",
+        "row_count": 1440
+      },
+      "visible_greedy": {
+        "canonical_sha256": "e89f61e9ad135bfeaa9e9710a8b46907dec77ef103907d10e282a6381d59bae7",
+        "row_count": 1440
+      },
+      "within_episode_permuted": {
+        "canonical_sha256": "330b43297948a3bad24a9205ba021b0badf4a1d15e2f8e4b583eea2a1b6ecc43",
+        "row_count": 1440
+      },
+      "zero": {
+        "canonical_sha256": "532f9568ced79f8f01b2e4329fb506650ca4acc00b8c53d7f388d088aa62c840",
+        "row_count": 1440
+      }
+    }
+  },
   "protocol": {
     "action_budget": 16,
     "action_count": 18,
@@ -1009,14 +1065,15 @@
       10,
       11
     ],
-    "receipt_format": "compact aggregate-only; per-task rows omitted",
+    "receipt_format": "compact aggregates plus hashes/counts of omitted per-task rows",
     "tile_feature_buckets": 64
   },
   "source_hashes": {
     "competency_v5_feasibility.py": "aba069a29a9a76552f58353abd7ec7bde3b9525cd479f8cb6e2ab9cf5dab4fac",
     "competency_v6_final_manifest.py": "210179960199240179bd48f62ba5f6e5fd01575f3d4a7a1a56dc274601a743ab",
     "controller_v6.py": "3e7c2f6cfd5f95af6671c2ad3049e582e75a4df26e6e49d6b83b3790a08ef891",
-    "controller_v7_dev.py": "595b57df07fcaeeb2490b32767cc7a50c4acb5e7b7432d43bfeeac6135e6b9c1",
+    "controller_v7_dev.py": "d2153b8bbdacbb4ef898c33893fc7dd95aa1320913ad7d60244139eeccf8f1a0",
+    "repair_experiment.py": "e956941b60193ef301687d2633f1be88e4fa83a9a5b6f5abb0efadc2fdb594c1",
     "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30"
   },
   "status": "negative",
