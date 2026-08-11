@@ -1,0 +1,270 @@
+{
+  "baselines": [
+    "prior-reward-shuffled learner",
+    "zero-feedback learner",
+    "uniform random",
+    "deterministic local-gap/mediant",
+    "visible one-step greedy",
+    "evaluator-only one-step oracle reference (not a finite-horizon ceiling)"
+  ],
+  "controller_boundary": {
+    "fixed_charged_actions": [
+      "move_left",
+      "move_right",
+      "insert_mediant",
+      "insert_midpoint",
+      "stop"
+    ],
+    "hidden": [
+      "N/order",
+      "exact fractions",
+      "full target",
+      "survivors",
+      "deletion identities/ranks",
+      "target metric values",
+      "arm/family"
+    ],
+    "visible": [
+      "local_gap_bins",
+      "local_ratio_bins",
+      "cursor_relation_bin",
+      "remaining_budget_fraction",
+      "last_scalar_feedback",
+      "trusted_goal"
+    ]
+  },
+  "evaluator_one_step_oracle_reference": {
+    "cost": 8.0,
+    "exact_recovery": 0.0,
+    "f1": 0.05724867724867725,
+    "precision": 0.12037037037037038,
+    "recall": 0.03888888888888889,
+    "visible_progress": 0.0016412055555555555
+  },
+  "experiment": "repair-only strict Farey competency probe",
+  "gates": {
+    "conjunction": {
+      "margin": null,
+      "metric": "all core gates",
+      "name": "conjunction",
+      "reason": "positive only when feedback learning, recovery, and frozen transfer are all positive and the structural control is valid",
+      "status": "unverified",
+      "valid": true
+    },
+    "farey_vs_exact_gap_scramble": {
+      "comparisons": {
+        "exact_gap_scramble": {
+          "ci_high": 0.08768518518518519,
+          "ci_low": 0.04355379188712522,
+          "effect": 0.06495149911816579
+        }
+      },
+      "margin": 0.02,
+      "method": "paired percentile bootstrap (600 resamples), Bonferroni over 1 preregistered controls",
+      "metric": "f1",
+      "name": "farey_vs_exact_gap_scramble",
+      "reason": "paired Farey-vs-scramble targets share rank-mask count, point count, and exact gap multiset",
+      "simultaneous": {
+        "ci_high": 0.08768518518518519,
+        "ci_low": 0.04355379188712522,
+        "effect_min": 0.06495149911816579
+      },
+      "status": "positive",
+      "valid": true
+    },
+    "feedback_learning": {
+      "comparisons": {
+        "prior_reward_shuffled": {
+          "ci_high": 0.26366666666666666,
+          "ci_low": 0.14800000000000002,
+          "effect": 0.2053333333333333
+        },
+        "zero_feedback": {
+          "ci_high": 0.25933333333333336,
+          "ci_low": 0.14466666666666667,
+          "effect": 0.2053333333333333
+        }
+      },
+      "margin": 0.03,
+      "method": "paired percentile bootstrap (600 resamples), Bonferroni over 2 preregistered controls",
+      "metric": "f1",
+      "name": "feedback_learning",
+      "reason": "frozen held-out low-order random-isolated d=2 cells; hidden F1 never entered a controller view or reward",
+      "simultaneous": {
+        "ci_high": 0.26366666666666666,
+        "ci_low": 0.14466666666666667,
+        "effect_min": 0.2053333333333333
+      },
+      "status": "positive",
+      "valid": true
+    },
+    "frozen_transfer": {
+      "comparisons": {
+        "local_gap_mediant": {
+          "ci_high": 0.08691758858425526,
+          "ci_low": 0.03502645502645503,
+          "effect": 0.059973144139810815
+        },
+        "prior_reward_shuffled": {
+          "ci_high": 0.09755731922398589,
+          "ci_low": 0.0416358024691358,
+          "effect": 0.06653880070546737
+        },
+        "uniform_random": {
+          "ci_high": 0.0847178130511464,
+          "ci_low": 0.027826278659611993,
+          "effect": 0.053809523809523814
+        },
+        "visible_one_step_greedy": {
+          "ci_high": 0.08817460317460318,
+          "ci_low": 0.03041005291005291,
+          "effect": 0.05727954144620811
+        },
+        "zero_feedback": {
+          "ci_high": 0.0953615520282187,
+          "ci_low": 0.04098324514991182,
+          "effect": 0.06653880070546737
+        }
+      },
+      "margin": 0.03,
+      "method": "paired percentile bootstrap (600 resamples), Bonferroni over 5 preregistered controls",
+      "metric": "f1",
+      "name": "frozen_transfer",
+      "reason": "N={11,13,17}, d=4, all three damage families, both goals, ten repetitions/cell; measured test updates must be zero",
+      "simultaneous": {
+        "ci_high": 0.09755731922398589,
+        "ci_low": 0.027826278659611993,
+        "effect_min": 0.053809523809523814
+      },
+      "status": "unverified",
+      "valid": true
+    },
+    "recovery": {
+      "comparisons": {
+        "local_gap_mediant": {
+          "ci_high": 0.08886684303350971,
+          "ci_low": 0.03632635882635883,
+          "effect": 0.059973144139810815
+        },
+        "uniform_random": {
+          "ci_high": 0.07982804232804233,
+          "ci_low": 0.028253968253968254,
+          "effect": 0.053809523809523814
+        },
+        "visible_one_step_greedy": {
+          "ci_high": 0.08508818342151676,
+          "ci_low": 0.03371693121693122,
+          "effect": 0.05727954144620811
+        }
+      },
+      "margin": 0.03,
+      "method": "paired percentile bootstrap (600 resamples), Bonferroni over 3 preregistered controls",
+      "metric": "f1",
+      "name": "recovery",
+      "reason": "balanced larger-order recovery, primary evaluator-only precision/recall/F1/exact accounting",
+      "simultaneous": {
+        "ci_high": 0.08886684303350971,
+        "ci_low": 0.028253968253968254,
+        "effect_min": 0.053809523809523814
+      },
+      "status": "unverified",
+      "valid": true
+    }
+  },
+  "model": {
+    "digests": {
+      "prior_reward_shuffled": "14de518b8a97f1730b7aa6cd13dd74be9a3a5f01680b135b8e06597ca9412f7f",
+      "true": "0b3582c3443911c4a80766045d301823c9e06aff61035771349c99715ef64579",
+      "zero": "1f01f80a289dd595c492ff6d437e0a5193952eb3c256ec69655f76fef00706c5"
+    },
+    "frozen_digest_unchanged": {
+      "prior_reward_shuffled": true,
+      "true": true,
+      "zero": true
+    },
+    "measured_test_updates": {
+      "prior_reward_shuffled": 0,
+      "true": 0,
+      "zero": 0
+    },
+    "training_updates": {
+      "prior_reward_shuffled": 3646,
+      "true": 7319,
+      "zero": 7254
+    }
+  },
+  "predeclaration": {
+    "gates": [
+      "feedback_learning",
+      "recovery",
+      "frozen_transfer",
+      "conjunction"
+    ],
+    "statistics": "paired percentile bootstrap with Bonferroni-adjusted marginal intervals; positive/null/negative/unverified taxonomy",
+    "test": {
+      "complete_cells": true,
+      "damage_count": 4,
+      "goals": [
+        "coverage",
+        "spectral"
+      ],
+      "orders": [
+        11,
+        13,
+        17
+      ],
+      "patterns": [
+        "random_isolated",
+        "burst",
+        "denominator_biased"
+      ],
+      "replicates_per_cell": 10
+    },
+    "train": {
+      "damage_count": 2,
+      "frozen_before_evaluation": true,
+      "orders": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "pattern": "random_isolated"
+    }
+  },
+  "primary_hidden_metrics": {
+    "exact_recovery": 0.0,
+    "f1": 0.06653880070546737,
+    "precision": 0.13675925925925927,
+    "recall": 0.04722222222222222
+  },
+  "provenance": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 research_notes/farey_controller_competency/repair_experiment.py",
+    "python": "3.14.6"
+  },
+  "runtime_seconds": 10.115,
+  "schema_version": 1,
+  "seed": 20260811,
+  "source_and_test_hashes": {
+    "repair_ablation.py": "09ded19dfec25574c37cee142abc4cdc33ceb694f80cb231c6d8dd3b631d715e",
+    "repair_experiment.py": "63d57002f4f4a7fd88354582dd90ef09874f0c870bcd60d602cebc47265f06ed",
+    "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30",
+    "test_repair_ablation.py": "e5c8e3fc28fc841679726894f1b9274cc36c14fb08f92486131790c6f3719dc8",
+    "test_repair_experiment.py": "1f0520af6cd1203913d875254f1b91d2915b085cab97f359abada5acf3d52745"
+  },
+  "structural_proof": {
+    "all_close": true,
+    "all_nontrivial_gap_order": true,
+    "all_same_exact_gap_multiset": true,
+    "all_same_point_count": true,
+    "all_same_rank_mask_count": true,
+    "available": true,
+    "pairs": 180
+  },
+  "visible_metrics": {
+    "charged_actions": 8.0,
+    "cost": 8.0,
+    "visible_progress": 0.0023959555555555555
+  }
+}
