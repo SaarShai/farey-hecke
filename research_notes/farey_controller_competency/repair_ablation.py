@@ -299,6 +299,35 @@ def _build_points(gaps: Sequence[Fraction]) -> tuple[Fraction, ...]:
     return result
 
 
+def _build_points_with_anchor(
+    gaps: Sequence[Fraction], anchor: Fraction
+) -> tuple[tuple[Fraction, ...], tuple[Fraction, ...], int]:
+    """Build sorted points while retaining the source's angular anchor.
+
+    The unwrapped construction starts at ``anchor`` rather than introducing a
+    new random rotation.  Sorting after wrapping at one may rotate the gap
+    sequence once; the returned ``cut`` tells the caller how to rotate the
+    rank permutation by the same amount.
+    """
+
+    if not gaps or any(gap <= 0 for gap in gaps):
+        raise ValueError("gaps must be positive")
+    if sum(gaps, Fraction(0)) != 1:
+        raise ValueError("gaps must close to one")
+    origin = anchor % 1
+    unwrapped = [origin]
+    for gap in gaps[:-1]:
+        unwrapped.append(unwrapped[-1] + gap)
+    cut = next((index for index, value in enumerate(unwrapped) if value >= 1), 0)
+    points = tuple(sorted(value % 1 for value in unwrapped))
+    if len(set(points)) != len(points) or len(points) != len(gaps):
+        raise ValueError("constructed circle is not sorted and unique")
+    ordered_gaps = tuple(gaps[cut:]) + tuple(gaps[:cut]) if cut else tuple(gaps)
+    if circular_gaps(points) != ordered_gaps:
+        raise AssertionError("anchored construction changed its gap order unexpectedly")
+    return points, ordered_gaps, cut
+
+
 def _choose_derangement(
     source_gaps: Sequence[Fraction], seed: int, *, max_attempts: int = 4096
 ) -> tuple[int, ...]:
@@ -360,7 +389,7 @@ def _make_metrics(
             and sum(output_gaps, Fraction(0)) == 1
             and tuple(scrambled_points) == tuple(sorted(scrambled_points))
             and bool(scrambled_points)
-            and scrambled_points[-1] + output_gaps[-1] == 1
+            and scrambled_points[-1] + output_gaps[-1] == scrambled_points[0] + 1
         ),
         original_gap_multiset=original_multiset,
         scrambled_gap_multiset=output_multiset,
@@ -388,7 +417,13 @@ def _result_from_order(
     output_bin_labels: Sequence[int] | None = None,
 ) -> ScrambleResult:
     ordered_gaps = tuple(output_gaps or (source_gaps[index] for index in permutation))
-    scrambled_points = _build_points(ordered_gaps)
+    scrambled_points, ordered_gaps, cut = _build_points_with_anchor(
+        ordered_gaps, original_points[0]
+    )
+    # ``permutation`` is sampled relative to the source's minimum point.  If
+    # wrapping moved a prefix past one, the sorted output begins at a later
+    # gap and the rank map must rotate with it.
+    permutation = tuple(permutation[cut:]) + tuple(permutation[:cut]) if cut else tuple(permutation)
     inverse = [0] * len(permutation)
     for output_rank, source_rank in enumerate(permutation):
         inverse[source_rank] = output_rank

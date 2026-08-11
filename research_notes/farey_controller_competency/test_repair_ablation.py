@@ -70,6 +70,21 @@ class RepairAblationTests(unittest.TestCase):
         self.assertLess(result.metrics.adjacency_correlation, 1.0)
         self.assertGreater(result.metrics.adjacency_break_fraction, 0.0)
 
+    def test_nonzero_anchor_is_preserved_without_an_extra_rotation(self) -> None:
+        original = (
+            Fraction(1, 10),
+            Fraction(3, 10),
+            Fraction(11, 20),
+            Fraction(17, 20),
+        )
+        result = exact_gap_scramble(original, seed=23)
+        self.assertEqual(result.points[0], min(original))
+        self.assertEqual(circular_gaps(result.points), tuple(
+            circular_gaps(original)[index]
+            for index in result.gap_order
+        ))
+        self.assertTrue(result.metrics.closes_to_one)
+
     def test_rank_mapping_is_bijective_and_masks_are_paired(self) -> None:
         result = exact_gap_scramble(_farey(11), seed=99)
         count = len(result.points)
@@ -154,4 +169,3 @@ class RepairAblationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
