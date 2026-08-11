@@ -229,9 +229,9 @@ class ControllerV6Tests(unittest.TestCase):
         )
 
     def test_structural_training_arms_and_frozen_eval(self) -> None:
-        lanes = train_structural_lanes(Stream(2), seed=3, init_seed=11)
+        lanes = train_structural_lanes(Stream(4), seed=3, init_seed=11)
         self.assertEqual(set(lanes), {"I→I", "I→S", "S→I", "S→S"})
-        self.assertEqual({lane.update_delta for lane in lanes.values()}, {2 * V6_BUDGET})
+        self.assertEqual({lane.update_delta for lane in lanes.values()}, {4 * V6_BUDGET})
         before = {name: (lane.controller.digest(), lane.controller.updates) for name, lane in lanes.items()}
         rows = evaluate_structural_lanes(lanes, FrozenAccessor())
         self.assertEqual(set(rows), set(lanes))

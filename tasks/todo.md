@@ -1,0 +1,220 @@
+# Michael Levin "free lunches" and Farey/prime-fraction payoffs
+
+- [x] Recover the exact local definitions and existing evidence for Farey, prime-fraction, and complex-fraction distributions.
+- [x] Build a primary-source map of Levin's free-lunch/payoff argument, including the bubble-sort example and its limits.
+- [x] State an operational definition of a payoff/free lunch that can be tested on the local mathematical systems.
+- [x] Design and run minimal numerical demonstrations with matched null models and explicit payoff functions.
+- [x] Separate proved structure, numerical evidence, analogy, and speculation in one cited research note.
+- [x] Independently check the mathematical synthesis, source claims, and reproducibility artifacts.
+
+## Review / results
+
+Completed. Cold review found no P0/P1 issues and verified the Levin evidence split,
+DQN noise qualifier, Farey threshold scope, prime/Ramanujan formulas, Gaussian
+quotient calculation, published-source claims, and links. Incorporated its coverage,
+notation, publication-DOI, completed-layer, and benchmark-wording corrections.
+Deterministic probe rerun, JSON invariants, SVG/PNG rendering, and local-link
+validation passed.
+
+# Circle-radius dashboard and Levin connection
+
+- [x] Recover the exact prior dashboard and its mathematical definitions.
+- [x] Inspect what the denominator slider changes: points, radii, gaps, and patterns.
+- [x] Map the visible effects to Levin's empirical and Platonic-space premises.
+- [x] Specify matched-null and perturbation tests for any claimed payoff.
+- [x] Deliver an evidence-bounded conceptual synthesis.
+
+## Follow-up review / results
+
+Recovered the authoritative unit-circle construction and static `F_12` snapshot:
+each reduced fraction `a/b` maps to the spoke at `exp(2*pi*i*a/b)`. The original
+interactive slider source is not present in the repo, Git history, Codex
+visualization store, or searched session archives. The Levin connection is a
+structural-dividend analogy, strongest when framed as a matched-null,
+perturbation, or downstream-task experiment; the static circle alone is not an
+agent and does not demonstrate goal-directed competency.
+
+# Farey-spoke structural-payoff falsification prototype
+
+- [x] Specify fair arithmetic, scrambled, and random conditions.
+- [x] Implement deterministic damage, identification/restoration, coverage, and sampling jobs.
+- [x] Build a single-file interactive lab with visible state and guided cases.
+- [x] Run Monte Carlo comparisons with fixed seeds and report effect distributions.
+- [x] Independently review leakage, fairness, calculations, and Levin-style claims.
+- [x] Record the result, including null or negative findings.
+
+## Prototype review / results
+
+Completed deterministic post-pilot runs with 1,000 coverage/spectral replicates
+and 500 damage replicates. The completed 103-grid had exact tested low-mode
+cancellation and optimal max-gap coverage; its single-deletion zero-sum recovery
+was tied by a non-prime balanced null, proving the payoff is invariant-specific.
+Farey `F_64` beat IID and same-gap scrambles on modes 1--12 but lost raw
+worst-gap coverage to IID. Blind repair showed a narrow location advantage but
+no adaptive controller, feedback, practical-margin gate, or transfer test, so
+the result remains a structural dividend rather than Levin-style competency.
+
+Artifacts: deterministic Python experiment + JSON receipt + dated result note;
+inline interactive lab verified at 736px/360px in light/dark themes; standalone
+guided prototype captured on branch `codex/farey-spoke-competency-prototype` at
+commit `5aa2dd999e832b2f159618e1d51986cb3d3f0b81`.
+
+# Local feedback controller: Levin-style competency decomposition
+
+- [x] Define a glossary and separate gates for goal persistence, variable means, feedback learning, damage recovery, transfer, and goal switching.
+- [x] Fix the observation/action/reward boundary so the controller cannot access or enumerate the complete Farey target.
+- [x] Implement the local mediant environment and transparent fixed baselines.
+- [x] Implement and train a deterministic goal-conditioned feedback controller.
+- [x] Freeze the controller and evaluate each competency on separately declared holdouts.
+- [x] Compare against random, fixed heuristic, visible-metric greedy, and local arithmetic baselines.
+- [x] Audit leakage, practical margins, reproducibility, and Levin-style claim boundaries.
+- [x] Preserve positive, null, negative, and unverified results in a deterministic receipt and result note.
+
+## Controller review / results
+
+The original pilot was retained as a falsified protocol. Strict v2 now exposes
+only a fixed-width coarse local view and fixed charged actions; it hides N,
+fractions, global survivors/actions, damage masks, and evaluator targets. Ten
+contract tests pass and the deterministic receipt reproduces. No competency
+gate passes. H4 hidden-identity recovery is positive-direction evidence but its
+lower confidence bound misses the practical gate; H3 feedback learning and H5
+transfer cross their gates; H2 lacks context-reversing tasks; H1 persistence and
+H6 switching are unverified because no tested state had disjoint optimal-action
+sets for the two goals. The result is a reproducible structural signal and a
+negative/inconclusive controller result, not a broad agency claim.
+
+# Repair-only Farey competency bundle
+
+- [x] Preregister feedback-learning, hidden-recovery, frozen-transfer, and conjunction gates.
+- [x] Implement balanced small-order training and larger unseen-order/damage evaluation.
+- [x] Compare true feedback with history-resampled, absent-feedback, random, and fixed local controls.
+- [x] Implement an exact point-count and circular-gap-multiset-preserving scrambled ablation.
+- [x] Evaluate hidden repair precision, recall, F1, exact recovery, and action/query cost.
+- [x] Test the conjunction: feedback advantage + hidden recovery + frozen transfer.
+- [x] Build a side-by-side visible repair demonstration from frozen results.
+- [x] Cold-audit leakage, matching, statistics, determinism, and claim boundaries.
+
+## Repair-only review / results
+
+Completed a deterministic repair-only experiment with equal eight-update training
+opportunities, masked feedback channels, a frozen controller, a balanced 180-task
+larger-order test grid, and evaluator-only identity scoring. Feedback learning
+passed its preregistered gate. Recovery and frozen transfer were positive in
+direction but did not clear their practical margins; exact whole-circle recovery
+was zero, so the three-part competency bundle remains unverified.
+
+The exact-gap scramble preserved point count and the complete gap multiset, but
+scrambling also made the permitted mediant/midpoint actions far less able to
+generate deleted identities. The controller comparison is therefore marked
+invalid/confounded. That mismatch is retained separately as a structural payoff:
+initial local-action reachability was 55.2 percentage points higher for Farey
+order across 120 paired trials (95% paired-bootstrap interval 47.9--63.3).
+
+Verification: 18 tests pass; two full reruns produced byte-identical receipts;
+all five recorded source/test hashes match; desktop and mobile visualization
+renders were inspected.
+
+# Verified Levin-style competency: next protocol
+
+- [x] Separate a narrow repair-competency claim from broader agency claims.
+- [x] Identify the current limiting constraints: reachability, observability, reward informativeness, and transfer difficulty.
+- [x] Attempt an independent Kimi K3 critique of the proposed claim and protocol.
+- [ ] Define a reachability-matched structural ablation and observation-level causal ablation.
+- [ ] Preregister absolute recovery, feedback-causality, and frozen-transfer thresholds.
+- [ ] Run an identifiability/ceiling audit before training a larger controller.
+- [ ] Implement and run the smallest protocol that can support the exact scoped claim.
+
+## Next-protocol review / results
+
+Kimi K3 was launched twice with no model fallback. The first run failed after
+trying to launch internal workers (`too many background tasks`, then provider
+HTTP 500); the bounded no-subagent retry also failed with provider HTTP 500.
+No Kimi suggestions were returned, so none are attributed to it. The protocol
+synthesis proceeds from the verified local evidence and primary-source claim
+boundaries.
+
+# Execute verified-competency protocol v3
+
+- [x] Complete the fresh bounded Kimi K3 critique attempt and incorporate only returned evidence.
+- [x] Implement deterministic finite-horizon reachability ceilings on a preregistered manifest.
+- [x] Measure observation-history identifiability and contradictory-action collisions.
+- [x] Measure whether target-independent scalar feedback distinguishes identity-improving actions.
+- [x] Gate continuation: do not enlarge/train a controller if the task interface is infeasible.
+- [x] Freeze a fixed-goal/variable-means controller protocol with insert/delete/shift/move actions.
+- [x] Define a same-task, reachability-preserving structural-information ablation.
+- [x] Rerun reachability under a separately preregistered fixed quarter-circle navigation action.
+- [x] Test a separately preregistered weighted-mediant closure vocabulary on every damage cell.
+- [x] Test fixed half-circle navigation on the two remaining isolated-damage cells.
+- [x] Freeze and test the complete multiscale navigation basis with ±1/8 moves.
+- [x] Generate and seal fresh, disjoint train/validation/test manifests before learner access.
+- [x] Recheck exact reachability and visible-reward informativeness on the sealed tasks; stop before training when reachability fails.
+- [ ] If feasible, train matched true/zero/permuted-feedback learners and freeze all state.
+- [ ] Test hidden recovery on larger unseen N and novel damage against every preregistered baseline.
+- [ ] Independently audit leakage, reachability matching, statistics, freeze, and claim wording.
+- [ ] Preserve deterministic receipts and all negative/null results.
+- [x] Preserve the failed V4 sealed feasibility run and retire its task set from all later claims.
+- [x] Preregister a generic V5 navigation/budget redesign and test it only on the retired V4 feasibility set.
+- [x] Seal an entirely new V6 final manifest after the V5 feasibility pass.
+
+## V3 review / results
+
+Stage 0 rejected the original interface: exact finite-horizon mean F1 ceiling
+0.7222 < 0.80, while the exact-recovery ceiling met 0.50. Observation-history
+identifiability (0.9915) and target-independent feedback informativeness
+(AUC 0.9008) passed. Per-task witnesses show that movement cost contributes,
+while some failures also reflect insertion-closure limits. Controller training remains prohibited while a separately
+preregistered scale-free navigation action is tested. Three Kimi K3 launches
+used the requested model with no fallback; all failed provider-side with HTTP
+500 and returned no suggestions.
+
+V3.1 preserved the Stage-0 failure and changed only navigation. Fixed
+quarter-circle left/right actions raised the exact mean F1 ceiling from 0.7222
+to 0.9241 and exact recovery from 0.5000 to 0.7778, passing its locked aggregate
+gate. Two consecutive-deletion cells remain non-closed under plain
+mediant/midpoint actions, so controller training is still withheld pending a
+separate weighted-mediant closure gate.
+
+V3.2 added only fixed 2:1 and 1:2 weighted mediants. It closed every burst and
+denominator-biased cell, but the global closure gate remained negative: mean
+F1 0.963 passed, minimum F1 0.667 failed, and exact recovery in 88.9% failed
+the 90% floor. The only remaining failures are two distant N=11 isolated
+deletions, so V3.3 separately tests fixed half-circle navigation under the same
+thresholds and budget.
+
+V3.3 added fixed half-circle moves and solved one of the two isolated N=11
+cells. Its mean F1 (0.9815) and exact fraction (94.4%) pass, but minimum F1
+remains 0.667, so the unchanged gate is negative. V3.4 now freezes the generic
+multiscale basis ±1, ±1/8, ±1/4, ±1/2. Because the development manifest shaped
+this interface, it is permanently excluded from later learning/transfer claims;
+those require a newly sealed manifest.
+
+V3.4 added only fixed ±1/8 index-stride moves. On the retired 18-task
+development manifest, the exact evaluator ceiling reached F1/exact recovery
+1.0 in every cell and every damage family under the unchanged eight-action
+budget. This clears attainability for the fixed action vocabulary, not learning
+or competency. The development tasks remain excluded from all subsequent
+training and testing.
+
+The first fresh V4 manifest contains 720 balanced tasks, but its feasibility
+gate is negative before training: the fixed eight-step interface cannot exactly
+reach both hidden deletions in enough larger-order cases. Because the system is
+insertion-only, exhaustive movement plus target-only insertion search is
+complete for exact recovery: any false insertion is irreversible. This manifest
+is therefore preserved as a failed preregistration and excluded from controller
+training. The next redesign must be generic, must be tested here only as a
+development feasibility step, and must use another fresh sealed manifest for
+any learning or transfer claim.
+
+V5 froze a generic sixteen-step, dyadic multiscale navigation vocabulary and
+evaluated exact shortest repair paths on all 720 retired V4 tasks. Exact
+recovery was reachable in 720/720 tasks and every one of the 54 cells; shortest
+paths ranged from 2 to 13 actions. This clears interface feasibility only. V4
+remains retired, and the learner may run only after a wholly new V6 manifest
+passes the same preregistered checks.
+
+V6 sealed 720 new tasks on disjoint orders and seeds. All 720 tasks and all 54
+order-by-family-by-goal cells are exactly recoverable within the frozen
+eighteen-action, sixteen-step interface; visible reward AUC is 0.7941. The
+controller test accessor remains unopened and token-free. A one-shot runner is
+now being built against this frozen manifest, with no test access during its
+implementation or tests.

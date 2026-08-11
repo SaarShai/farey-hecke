@@ -513,29 +513,40 @@ def synchronous_structural_rollout(
 def train_structural_lanes(
     stream: PublicTrainStream, *, seed: int = 0, init_seed: int = 0
 ) -> Mapping[str, TrainedLane]:
-    """Train identity and scrambled channel lanes on matched physical replay."""
+    """Train identity and scrambled lanes, deranging G only within goal strata."""
 
     episodes = tuple(stream)
     if len(episodes) < MIN_TRAIN_EPISODES:
         raise ValueError("structural training needs at least two public replicas")
+    grouped: dict[int, list[PublicTrainEpisode]] = {}
+    for episode in episodes:
+        goal = episode.fresh_environment().view.trusted_goal
+        grouped.setdefault(goal, []).append(episode)
+    if set(grouped) != {0, 1}:
+        raise ValueError("structural training requires both trusted goals")
+    if any(len(group) < 2 for group in grouped.values()):
+        raise ValueError("each trusted-goal stratum needs at least two replicas")
     lanes: dict[str, TrainedLane] = {}
     for source_channel in CHANNELS:
-        environments = [episode.fresh_environment() for episode in episodes]
-        rollout = _batch_rollout(environments, None, channel=source_channel, seed=seed)
-        trajectories = []
-        for index in range(len(environments)):
-            steps = tuple(
-                TrajectoryStep(
-                    rollout.views[step][index],
-                    rollout.actions[step][index],
-                    rollout.rewards[step][index],
-                    rollout.views[step + 1][index] if step + 1 < V6_BUDGET else rollout.views[step][index],
-                    step == V6_BUDGET - 1,
-                )
-                for step in range(V6_BUDGET)
+        trajectories: list[Trajectory] = []
+        for goal, group in sorted(grouped.items()):
+            environments = [episode.fresh_environment() for episode in group]
+            rollout = _batch_rollout(
+                environments, None, channel=source_channel, seed=seed ^ (goal << 20)
             )
-            hidden = evaluator_metrics(environments[index])
-            trajectories.append(Trajectory(steps, hidden.precision, hidden.recall, hidden.f1, hidden.exact))
+            for index in range(len(environments)):
+                steps = tuple(
+                    TrajectoryStep(
+                        rollout.views[step][index],
+                        rollout.actions[step][index],
+                        rollout.rewards[step][index],
+                        rollout.views[step + 1][index] if step + 1 < V6_BUDGET else rollout.views[step][index],
+                        step == V6_BUDGET - 1,
+                    )
+                    for step in range(V6_BUDGET)
+                )
+                hidden = evaluator_metrics(environments[index])
+                trajectories.append(Trajectory(steps, hidden.precision, hidden.recall, hidden.f1, hidden.exact))
         learner = V6LinearQ(init_seed)
         before_digest, before_updates = learner.digest(), learner.updates
         for index, trajectory in enumerate(trajectories):
@@ -597,8 +608,12 @@ def paired_hierarchical_bootstrap(
 ) -> BootstrapResult:
     """Bootstrap group means, resampling groups then cells within groups."""
 
-    treatment_map = {(row.get(group_key), _row_cell(row, cell_key)): float(row[metric]) for row in treatment}
-    control_map = {(row.get(group_key), _row_cell(row, cell_key)): float(row[metric]) for row in control}
+    treatment_keys = [(row.get(group_key), _row_cell(row, cell_key)) for row in treatment]
+    control_keys = [(row.get(group_key), _row_cell(row, cell_key)) for row in control]
+    if len(treatment_keys) != len(set(treatment_keys)) or len(control_keys) != len(set(control_keys)):
+        raise ValueError("paired bootstrap received duplicate group/cell rows")
+    treatment_map = {key: float(row[metric]) for key, row in zip(treatment_keys, treatment)}
+    control_map = {key: float(row[metric]) for key, row in zip(control_keys, control)}
     keys = tuple(sorted(set(treatment_map) & set(control_map), key=repr))
     if not keys or set(treatment_map) != set(control_map):
         raise ValueError("paired bootstrap requires identical group/cell keys")
@@ -703,19 +718,25 @@ def transfer_gate(
         for key in [(row.get("seed"), _row_cell(row))]
         if key in strongest
     }
-    baseline_rows = next(iter(baselines.values())) if baselines else ()
+    comparisons: dict[str, BootstrapResult] = {}
     try:
-        comparison = paired_hierarchical_bootstrap(treatment_rows, baseline_rows, resamples=resamples, seed=17) if baseline_rows else None
+        for name, rows in baselines.items():
+            stable_seed = int.from_bytes(sha256(("transfer:" + name).encode()).digest()[:4], "big")
+            comparisons[name] = paired_hierarchical_bootstrap(
+                treatment_rows, rows, resamples=resamples, seed=stable_seed
+            )
     except (ValueError, KeyError, statistics.StatisticsError):
-        comparison = None
+        comparisons = {}
     treatment_keys = {(row.get("seed"), _row_cell(row)) for row in treatment_rows}
     frozen_keys_match = set(test_updates) == set(train_digests) == set(test_digests)
     frozen_ok = frozen_keys_match and all(value == 0 for value in test_updates.values()) and all(
         test_digests.get(name) == digest for name, digest in train_digests.items()
     )
-    valid = comparison is not None and comparison.groups >= 2 and bool(cell_effects) and set(cell_effects) == treatment_keys
-    positive = valid and frozen_ok and _positive(comparison, TRANSFER_DELTA) and all(value >= 0.0 for value in cell_effects.values())
-    return {"gate": "transfer", "valid": valid, "positive": positive, "aggregate": comparison, "cell_effects": cell_effects, "frozen_ok": frozen_ok}
+    valid = bool(comparisons) and all(result.groups >= 2 for result in comparisons.values()) and bool(cell_effects) and set(cell_effects) == treatment_keys
+    positive = valid and frozen_ok and all(
+        _positive(result, TRANSFER_DELTA) for result in comparisons.values()
+    ) and all(value >= 0.0 for value in cell_effects.values())
+    return {"gate": "transfer", "valid": valid, "positive": positive, "comparisons": comparisons, "cell_effects": cell_effects, "frozen_ok": frozen_ok}
 
 
 def structural_gate(
