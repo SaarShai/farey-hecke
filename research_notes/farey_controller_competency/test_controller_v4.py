@@ -17,12 +17,16 @@ try:
         VisibleGreedy,
         controller_geometry,
         collect_trajectory,
+        evaluate_frozen_lanes,
         derange_controller_views,
+        derange_controller_batch,
         _geometry_tuple,
         derange_whole_geometry_batch,
         episode_feedback,
         evaluator_metrics,
         geometry_multiset,
+        synchronous_batch_rollout,
+        train_reward_lanes,
         replay_trajectory,
         run_episode,
         task_environment,
@@ -40,12 +44,16 @@ except ImportError:
         VisibleGreedy,
         controller_geometry,
         collect_trajectory,
+        evaluate_frozen_lanes,
         derange_controller_views,
+        derange_controller_batch,
         _geometry_tuple,
         derange_whole_geometry_batch,
         episode_feedback,
         evaluator_metrics,
         geometry_multiset,
+        synchronous_batch_rollout,
+        train_reward_lanes,
         replay_trajectory,
         run_episode,
         task_environment,
@@ -155,6 +163,68 @@ class ControllerV4Tests(unittest.TestCase):
         view = task_environment(_task(29)).view
         for baseline in (FixedRandom(1), LocalHeuristic(), VisibleGreedy()):
             self.assertIn(baseline.choose(view), V4_ACTIONS)
+
+    def test_visible_greedy_right_branch_and_goal_coercion(self) -> None:
+        view = ControllerView((2, 1, 6, 3), (4, 5), 0, 1.0, 0.0, 0)
+        self.assertIn(VisibleGreedy().choose(view), V4_ACTIONS)
+        left_view = ControllerView((6, 5, 1, 2), (4, 5), 0, 1.0, 0.0, 0)
+        self.assertIn(VisibleGreedy().choose(left_view), V4_ACTIONS)
+        string_goal = RepairTask(6, DamagePattern.RANDOM_ISOLATED, "coverage", 33, 2)
+        self.assertEqual(task_environment(string_goal)._goal, GoalState.COVERAGE)
+
+    def test_run_episode_reports_evaluator_precision_and_recall(self) -> None:
+        task = _task(37)
+        learner = LinearQ(4)
+        result = run_episode(learner, task)
+        trajectory = collect_trajectory(task, seed=task.seed ^ 0xC0FFEE)
+        self.assertEqual(result["precision"], trajectory.precision)
+        self.assertEqual(result["recall"], trajectory.recall)
+
+    def test_training_lanes_are_matched_and_frozen_heldout_eval_is_state_stable(self) -> None:
+        train = [
+            RepairTask(6, DamagePattern.RANDOM_ISOLATED, GoalState.COVERAGE, 1, 2),
+            RepairTask(6, DamagePattern.RANDOM_ISOLATED, GoalState.SPECTRAL, 2, 2),
+        ]
+        heldout = [
+            RepairTask(11, DamagePattern.BURST, GoalState.COVERAGE, 40, 2),
+            RepairTask(13, DamagePattern.DENOMINATOR_BIASED, GoalState.SPECTRAL, 41, 2),
+        ]
+        lanes = train_reward_lanes(train, seed=7, init_seed=21)
+        self.assertEqual({lane.update_delta for lane in lanes.values()}, {16})
+        self.assertEqual({lane.action_schedule for lane in lanes.values()}, {next(iter(lanes.values())).action_schedule})
+        self.assertEqual({lane.nonzero_reward_count for lane in lanes.values()}, {3})
+        self.assertNotEqual(lanes["true"].after_digest, lanes["within_episode_permuted"].after_digest)
+        self.assertNotEqual(lanes["true"].after_digest, lanes["zero"].after_digest)
+        for lane in lanes.values():
+            self.assertFalse(lane.controller.learning)
+            self.assertEqual(lane.before_updates + lane.update_delta, lane.after_updates)
+        frozen_before = {mode: (lane.controller.digest(), lane.controller.updates) for mode, lane in lanes.items()}
+        rows = evaluate_frozen_lanes(lanes, heldout)
+        self.assertEqual({mode: len(result) for mode, result in rows.items()}, {mode: 2 for mode in lanes})
+        self.assertEqual(
+            frozen_before,
+            {mode: (lane.controller.digest(), lane.controller.updates) for mode, lane in lanes.items()},
+        )
+
+    def test_synchronous_g_derangement_records_indices_with_duplicate_geometry(self) -> None:
+        tasks = [_task(50), _task(51), _task(52)]
+        plain = synchronous_batch_rollout(tasks, seed=3)
+        deranged = synchronous_batch_rollout(tasks, seed=3, derange=True, replay_actions=plain.action_schedule)
+        self.assertEqual(deranged.reward_schedule, plain.reward_schedule)
+        for plain_views, deranged_views in zip(plain.view_schedule, deranged.view_schedule):
+            for original, observed in zip(plain_views, deranged_views):
+                self.assertEqual(
+                    (original.remaining_budget_fraction, original.last_scalar_reward, original.trusted_goal),
+                    (observed.remaining_budget_fraction, observed.last_scalar_reward, observed.trusted_goal),
+                )
+        self.assertTrue(all(
+            all(index != source for index, source in enumerate(indices))
+            for indices in deranged.source_index_schedule
+        ))
+        duplicate_views = tuple(plain.view_schedule[0][0] for _ in tasks)
+        duplicate_packet = derange_controller_batch(duplicate_views, seed=5)
+        self.assertEqual(sorted(duplicate_packet.source_indices), [0, 1, 2])
+        self.assertTrue(all(index != source for index, source in enumerate(duplicate_packet.source_indices)))
 
 
 if __name__ == "__main__":

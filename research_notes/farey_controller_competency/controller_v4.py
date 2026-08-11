@@ -58,6 +58,7 @@ V4_ACTIONS: tuple[str, ...] = (
 )
 ACTION_BUDGET = 8
 POLICY_ACTIONS = V4_ACTIONS
+TRAINING_PROTOCOL = "offline_reward_attribution_replay"
 
 
 def _circular_gaps(points: Sequence[Fraction]) -> tuple[Fraction, ...]:
@@ -156,6 +157,8 @@ class V4Environment:
     )
 
     def __init__(self, task: RepairTask, *, goal: GoalState | None = None) -> None:
+        task_goal = GoalState.coerce(task.goal)
+        active_goal = GoalState.coerce(goal) if goal is not None else task_goal
         base = StrictEnvironment(
             task.order,
             task.pattern,
@@ -163,7 +166,7 @@ class V4Environment:
             seed=task.seed,
             rotation=True,
             action_budget=ACTION_BUDGET,
-            goal=goal or task.goal,
+            goal=active_goal,
         )
         self._target = tuple(base._target)
         self._initial_points = tuple(base._initial_points)
@@ -172,7 +175,7 @@ class V4Environment:
         self._cursor = int(base._cursor)
         self._initial_cursor = int(base._initial_cursor)
         self._remaining = ACTION_BUDGET
-        self._goal = goal or task.goal
+        self._goal = active_goal
         self._done = False
         self._action_budget = ACTION_BUDGET
 
@@ -295,9 +298,9 @@ class VisibleGreedy:
 
     def choose(self, view: ControllerView) -> str:
         outer_left, left, right, outer_right = view.local_gap_bins
-        if right > left and right >= right_outer:
+        if right > left and right >= outer_right:
             return "move_right"
-        if left > right and left >= left_outer:
+        if left > right and left >= outer_left:
             return "move_left"
         return "insert_mediant" if max(left, right) >= max(outer_left, outer_right) else "insert_midpoint"
 
@@ -316,26 +319,141 @@ class TrajectoryStep:
 @dataclass(frozen=True, slots=True)
 class Trajectory:
     steps: tuple[TrajectoryStep, ...]
+    precision: float
+    recall: float
     f1: float
     exact: float
 
 
+@dataclass(frozen=True, slots=True)
+class TrainedLane:
+    """One frozen offline reward-attribution learner and its audit receipt."""
+
+    mode: str
+    controller: LinearQ
+    trajectories: tuple[Trajectory, ...]
+    before_digest: str
+    after_digest: str
+    before_updates: int
+    after_updates: int
+    update_delta: int
+    action_schedule: tuple[tuple[str, ...], ...]
+    nonzero_reward_count: int
+
+
+def batch_diagnostics(trajectories: Sequence[Trajectory]) -> dict[str, object]:
+    actions = tuple(step.action for trajectory in trajectories for step in trajectory.steps)
+    rewards = tuple(step.reward for trajectory in trajectories for step in trajectory.steps)
+    informative = sum(abs(reward) > 1.0e-12 for reward in rewards)
+    return {
+        "trajectory_count": len(trajectories),
+        "transition_count": len(actions),
+        "action_set": tuple(action for action in V4_ACTIONS if action in set(actions)),
+        "action_coverage": len(set(actions)),
+        "nonzero_reward_count": informative,
+        "distinct_reward_count": len(set(rewards)),
+    }
+
+
+def assert_informative_batch(
+    trajectories: Sequence[Trajectory], *, require_all_actions: bool = True
+) -> dict[str, object]:
+    diagnostics = batch_diagnostics(trajectories)
+    if int(diagnostics["nonzero_reward_count"]) == 0:
+        raise AssertionError("training batch has no nonzero physical rewards")
+    if require_all_actions and int(diagnostics["action_coverage"]) != len(V4_ACTIONS):
+        raise AssertionError("training batch does not cover all twelve V3.4 actions")
+    return diagnostics
+
+
 def collect_trajectory(task: RepairTask, *, seed: int = 0, epsilon: float = 0.0) -> Trajectory:
-    """Collect one fixed behavior trajectory before any feedback lane runs."""
+    """Collect one fixed exploratory trajectory before offline replay."""
 
     environment = V4Environment(task)
-    behavior = LinearQ(seed, learning=False)
     steps: list[TrajectoryStep] = []
-    for _ in range(ACTION_BUDGET):
-        # Feedback is intentionally zero in the common behavior policy.  All
-        # reward lanes replay this identical action/state schedule.
+    # A seeded cyclic schedule is deliberately action-covering.  Feedback
+    # lanes replay these same physical transitions; no lane controls data
+    # collection, so reward attribution is the only intervention.
+    offset = (int(seed) + int(task.seed)) % len(V4_ACTIONS)
+    for step_index in range(ACTION_BUDGET):
         view = _view(environment, 0.0)
-        action = behavior.choose(view, epsilon=epsilon)
+        action = V4_ACTIONS[(offset + step_index) % len(V4_ACTIONS)]
+        if epsilon and random.Random(seed ^ step_index).random() < epsilon:
+            action = V4_ACTIONS[random.Random(seed ^ (step_index << 8)).randrange(len(V4_ACTIONS))]
         reward = environment.step(action)
         next_view = _view(environment, 0.0)
         steps.append(TrajectoryStep(view, action, reward, next_view, environment._done))
     hidden = evaluator_metrics(environment)
-    return Trajectory(tuple(steps), hidden.f1, hidden.exact)
+    return Trajectory(tuple(steps), hidden.precision, hidden.recall, hidden.f1, hidden.exact)
+
+
+def train_reward_lanes(
+    tasks: Sequence[RepairTask],
+    *,
+    seed: int = 0,
+    init_seed: int = 0,
+    modes: Sequence[str] = ("true", "within_episode_permuted", "zero"),
+    require_all_actions: bool = True,
+) -> dict[str, TrainedLane]:
+    """Train matched true/permuted/zero lanes by offline reward replay.
+
+    Physical trajectories are collected once with an action-covering schedule;
+    every lane receives identical states, actions, initialization, and update
+    count.  The resulting learners are frozen before held-out evaluation.
+    """
+
+    task_list = tuple(tasks)
+    if not task_list:
+        raise ValueError("at least one training task is required")
+    trajectories = tuple(
+        collect_trajectory(
+            task,
+            seed=seed + index * ACTION_BUDGET - int(task.seed),
+        )
+        for index, task in enumerate(task_list)
+    )
+    assert_informative_batch(trajectories, require_all_actions=require_all_actions)
+    lanes: dict[str, TrainedLane] = {}
+    for lane_index, mode in enumerate(modes):
+        learner = LinearQ(init_seed)
+        before_digest, before_updates = learner.digest(), learner.updates
+        for trajectory_index, trajectory in enumerate(trajectories):
+            _replay_feedback(
+                learner,
+                trajectory,
+                mode,
+                seed ^ (lane_index << 16) ^ trajectory_index,
+            )
+        after_digest, after_updates = learner.digest(), learner.updates
+        learner.freeze()
+        lanes[mode] = TrainedLane(
+            mode,
+            learner,
+            trajectories,
+            before_digest,
+            after_digest,
+            before_updates,
+            after_updates,
+            after_updates - before_updates,
+            tuple(tuple(step.action for step in trajectory.steps) for trajectory in trajectories),
+            int(batch_diagnostics(trajectories)["nonzero_reward_count"]),
+        )
+    return lanes
+
+
+def evaluate_frozen_lanes(
+    lanes: dict[str, TrainedLane], heldout_tasks: Sequence[RepairTask]
+) -> dict[str, tuple[dict[str, object], ...]]:
+    """Evaluate frozen learners greedily on held-out tasks without updates."""
+
+    results: dict[str, tuple[dict[str, object], ...]] = {}
+    for mode, lane in lanes.items():
+        before_digest, before_updates = lane.controller.digest(), lane.controller.updates
+        rows = tuple(evaluate_policy(lane.controller, task) for task in heldout_tasks)
+        if lane.controller.digest() != before_digest or lane.controller.updates != before_updates:
+            raise AssertionError("frozen held-out evaluation changed learner state")
+        results[mode] = rows
+    return results
 
 
 def _replay_feedback(
@@ -418,7 +536,7 @@ def run_episode(
     feedback_mode: str = "true",
     epsilon: float = 0.0,
 ) -> dict[str, object]:
-    """Run exactly eight charged decisions; hidden metrics remain evaluator-side."""
+    """Run a baseline episode or offline reward-attribution replay for LinearQ."""
 
     if isinstance(controller, LinearQ):
         trajectory = collect_trajectory(task, seed=task.seed ^ 0xC0FFEE, epsilon=epsilon)
@@ -426,8 +544,8 @@ def run_episode(
         return {
             "f1": trajectory.f1,
             "exact": trajectory.exact,
-            "precision": 0.0,
-            "recall": 0.0,
+            "precision": trajectory.precision,
+            "recall": trajectory.recall,
             "reward": sum(step.reward for step in trajectory.steps),
             "actions": tuple(step.action for step in trajectory.steps),
             "feedback": transmitted,
@@ -466,6 +584,24 @@ def controller_geometry(view: ControllerView) -> tuple[object, ...]:
     return (*view.local_gap_bins, *view.local_ratio_bins, view.cursor_relation_bin)
 
 
+def _derangement_indices(size: int, seed: int) -> tuple[int, ...]:
+    if size < 2:
+        raise ValueError("at least two batch items are required")
+    permutation = list(range(size))
+    rng = random.Random(seed)
+    for _ in range(128):
+        rng.shuffle(permutation)
+        if all(index != permutation[index] for index in range(size)):
+            return tuple(permutation)
+    return tuple(range(1, size)) + (0,)
+
+
+@dataclass(frozen=True, slots=True)
+class DerangedControllerBatch:
+    views: tuple[ControllerView, ...]
+    source_indices: tuple[int, ...]
+
+
 def derange_controller_views(
     views: Sequence[ControllerView], seed: int = 0
 ) -> tuple[ControllerView, ...]:
@@ -476,16 +612,7 @@ def derange_controller_views(
     observation intervention for a controller ablation.
     """
 
-    if len(views) < 2:
-        raise ValueError("at least two views are required")
-    permutation = list(range(len(views)))
-    rng = random.Random(seed)
-    for _ in range(128):
-        rng.shuffle(permutation)
-        if all(index != permutation[index] for index in range(len(permutation))):
-            break
-    else:
-        permutation = list(range(1, len(permutation))) + [0]
+    permutation = _derangement_indices(len(views), seed)
     output: list[ControllerView] = []
     for original, source_index in zip(views, permutation):
         source = views[source_index]
@@ -502,6 +629,83 @@ def derange_controller_views(
     return tuple(output)
 
 
+def derange_controller_batch(
+    views: Sequence[ControllerView], seed: int = 0
+) -> DerangedControllerBatch:
+    """Return G-deranged views plus source indices, including duplicate Gs."""
+
+    source_indices = _derangement_indices(len(views), seed)
+    return DerangedControllerBatch(derange_controller_views(views, seed), source_indices)
+
+
+@dataclass(frozen=True, slots=True)
+class BatchRollout:
+    """Synchronous policy rollout receipt; all exact state stays evaluator-side."""
+
+    view_schedule: tuple[tuple[ControllerView, ...], ...]
+    source_index_schedule: tuple[tuple[int, ...], ...]
+    action_schedule: tuple[tuple[str, ...], ...]
+    reward_schedule: tuple[tuple[float, ...], ...]
+
+
+def synchronous_batch_rollout(
+    tasks: Sequence[RepairTask],
+    controller: LinearQ | FixedRandom | LocalHeuristic | VisibleGreedy | None = None,
+    *,
+    seed: int = 0,
+    derange: bool = False,
+    replay_actions: Sequence[Sequence[str]] | None = None,
+) -> BatchRollout:
+    """Roll out a batch synchronously, optionally deranging only controller G.
+
+    ``replay_actions`` allows a matched physical replay: changing observations
+    cannot change the recorded rewards or reachable states when actions are
+    held fixed.  Source indices are retained even if two G tuples are equal.
+    """
+
+    task_list = tuple(tasks)
+    if not task_list:
+        raise ValueError("at least one batch task is required")
+    if replay_actions is not None and len(replay_actions) != ACTION_BUDGET:
+        raise ValueError("replay_actions must have eight synchronous rows")
+    environments = [V4Environment(task) for task in task_list]
+    previous = [0.0] * len(task_list)
+    views_by_step: list[tuple[ControllerView, ...]] = []
+    indices_by_step: list[tuple[int, ...]] = []
+    actions_by_step: list[tuple[str, ...]] = []
+    rewards_by_step: list[tuple[float, ...]] = []
+    for step_index in range(ACTION_BUDGET):
+        base_views = tuple(_view(environment, previous[index]) for index, environment in enumerate(environments))
+        packet = (
+            derange_controller_batch(base_views, seed + step_index)
+            if derange and len(base_views) >= 2
+            else DerangedControllerBatch(base_views, tuple(range(len(base_views))))
+        )
+        if replay_actions is not None:
+            actions = tuple(str(action) for action in replay_actions[step_index])
+            if len(actions) != len(task_list) or any(action not in V4_ACTIONS for action in actions):
+                raise ValueError("each replay action row must match the batch and vocabulary")
+        elif controller is None:
+            actions = tuple(V4_ACTIONS[(seed + step_index + index) % len(V4_ACTIONS)] for index in range(len(task_list)))
+        else:
+            actions = tuple(
+                controller.choose(view) if not isinstance(controller, LinearQ) else controller.choose(view)
+                for view in packet.views
+            )
+        rewards = tuple(environment.step(action) for environment, action in zip(environments, actions))
+        previous = list(rewards)
+        views_by_step.append(packet.views)
+        indices_by_step.append(packet.source_indices)
+        actions_by_step.append(actions)
+        rewards_by_step.append(rewards)
+    return BatchRollout(
+        tuple(views_by_step),
+        tuple(indices_by_step),
+        tuple(actions_by_step),
+        tuple(rewards_by_step),
+    )
+
+
 def geometry_multiset(geometries: Iterable[tuple[Fraction, ...]]) -> tuple[tuple[Fraction, ...], ...]:
     """Canonical evaluator-side multiset representation for invariant tests."""
 
@@ -511,7 +715,6 @@ def geometry_multiset(geometries: Iterable[tuple[Fraction, ...]]) -> tuple[tuple
 derange_geometry_observations = derange_whole_geometry_batch
 derange_whole_geometry = derange_whole_geometry_batch
 derange_views = derange_controller_views
-derange_controller_batch = derange_controller_views
 RandomBaseline = FixedRandom
 FixedBaseline = LocalHeuristic
 VisibleGreedyBaseline = VisibleGreedy
@@ -524,11 +727,13 @@ def task_environment(task: RepairTask) -> V4Environment:
 
 
 __all__ = [
-    "ACTION_BUDGET", "POLICY_ACTIONS", "V4_ACTIONS", "ControllerView", "V4Environment",
+    "ACTION_BUDGET", "POLICY_ACTIONS", "V4_ACTIONS", "TRAINING_PROTOCOL", "ControllerView", "V4Environment",
     "HiddenMetrics", "LinearQ", "FixedRandom", "LocalHeuristic", "VisibleGreedy",
-    "TrajectoryStep", "Trajectory", "collect_trajectory", "replay_trajectory", "evaluate_policy",
+    "TrajectoryStep", "Trajectory", "TrainedLane", "collect_trajectory", "replay_trajectory",
+    "train_reward_lanes", "evaluate_frozen_lanes", "batch_diagnostics", "assert_informative_batch",
+    "evaluate_policy", "BatchRollout", "synchronous_batch_rollout",
     "episode_feedback", "run_episode", "evaluator_metrics", "derange_whole_geometry_batch",
     "derange_geometry_observations", "derange_whole_geometry", "controller_geometry",
-    "derange_controller_views", "derange_views", "derange_controller_batch", "geometry_multiset",
+    "derange_controller_views", "derange_controller_batch", "DerangedControllerBatch", "derange_views", "geometry_multiset",
     "task_environment", "RandomBaseline", "FixedBaseline", "VisibleGreedyBaseline", "_geometry_tuple",
 ]
