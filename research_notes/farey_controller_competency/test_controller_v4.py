@@ -2,13 +2,16 @@
 
 from __future__ import annotations
 
-from dataclasses import fields
+from dataclasses import fields, replace
 from fractions import Fraction
 import unittest
+from unittest.mock import patch
 
 try:
     from .controller_v4 import (
         ACTION_BUDGET,
+        MIN_DISTINCT_REWARD_VALUES,
+        MIN_NONZERO_TRANSITIONS,
         V4_ACTIONS,
         ControllerView,
         FixedRandom,
@@ -17,6 +20,7 @@ try:
         VisibleGreedy,
         controller_geometry,
         collect_trajectory,
+        assert_informative_batch,
         evaluate_frozen_lanes,
         derange_controller_views,
         derange_controller_batch,
@@ -28,14 +32,19 @@ try:
         synchronous_batch_rollout,
         train_reward_lanes,
         replay_trajectory,
+        Trajectory,
+        TrajectoryStep,
         run_episode,
         task_environment,
     )
     from .repair_experiment import RepairTask
     from .strict_environment import DamagePattern, GoalState
+    from . import controller_v4
 except ImportError:
     from controller_v4 import (  # type: ignore[no-redef]
         ACTION_BUDGET,
+        MIN_DISTINCT_REWARD_VALUES,
+        MIN_NONZERO_TRANSITIONS,
         V4_ACTIONS,
         ControllerView,
         FixedRandom,
@@ -44,6 +53,7 @@ except ImportError:
         VisibleGreedy,
         controller_geometry,
         collect_trajectory,
+        assert_informative_batch,
         evaluate_frozen_lanes,
         derange_controller_views,
         derange_controller_batch,
@@ -55,11 +65,14 @@ except ImportError:
         synchronous_batch_rollout,
         train_reward_lanes,
         replay_trajectory,
+        Trajectory,
+        TrajectoryStep,
         run_episode,
         task_environment,
     )
     from repair_experiment import RepairTask  # type: ignore[no-redef]
     from strict_environment import DamagePattern, GoalState  # type: ignore[no-redef]
+    import controller_v4  # type: ignore[no-redef]
 
 
 def _task(seed: int = 19) -> RepairTask:
@@ -97,6 +110,62 @@ class ControllerV4Tests(unittest.TestCase):
             self.assertEqual(len(delivered), ACTION_BUDGET)
             self.assertEqual(tuple(step.action for step in trajectory.steps), action_schedule)
             self.assertEqual(learner.updates, ACTION_BUDGET)
+
+    def test_informative_batch_threshold_rejection_fixtures(self) -> None:
+        trajectory = collect_trajectory(_task(43), seed=17)
+        zero = replace(
+            trajectory,
+            steps=tuple(replace(step, reward=0.0) for step in trajectory.steps),
+        )
+        one_value = replace(
+            trajectory,
+            steps=tuple(
+                replace(step, reward=0.125 if index == 0 else 0.0)
+                for index, step in enumerate(trajectory.steps)
+            ),
+        )
+        repeated = replace(
+            trajectory,
+            steps=tuple(
+                replace(step, reward=(0.125 if index < MIN_NONZERO_TRANSITIONS else 0.0))
+                for index, step in enumerate(trajectory.steps)
+            ),
+        )
+        with self.assertRaises(AssertionError):
+            assert_informative_batch((zero,), require_all_actions=False)
+        with self.assertRaises(AssertionError):
+            assert_informative_batch((one_value,), require_all_actions=False)
+        with self.assertRaises(AssertionError):
+            assert_informative_batch((repeated,), require_all_actions=False)
+
+    def test_informative_batch_passing_fixture_has_nonzero_variety(self) -> None:
+        trajectories = tuple(
+            collect_trajectory(
+                RepairTask(6, DamagePattern.RANDOM_ISOLATED, GoalState.COVERAGE if index == 0 else GoalState.SPECTRAL, index + 1, 2),
+                seed=7 + index * ACTION_BUDGET - (index + 1),
+            )
+            for index in range(2)
+        )
+        diagnostics = assert_informative_batch(trajectories)
+        self.assertGreaterEqual(diagnostics["nonzero_reward_count"], MIN_NONZERO_TRANSITIONS)
+        self.assertGreaterEqual(diagnostics["distinct_nonzero_reward_count"], MIN_DISTINCT_REWARD_VALUES)
+
+    def test_lane_rejects_identical_permutation_vectors_and_coincident_digests(self) -> None:
+        train = [
+            RepairTask(6, DamagePattern.RANDOM_ISOLATED, GoalState.COVERAGE, 1, 2),
+            RepairTask(6, DamagePattern.RANDOM_ISOLATED, GoalState.SPECTRAL, 2, 2),
+        ]
+        with patch.object(controller_v4, "episode_feedback", side_effect=lambda rewards, mode, seed: tuple(rewards)):
+            with self.assertRaisesRegex(AssertionError, "permutation"):
+                train_reward_lanes(train, seed=7)
+
+        def no_update_replay(learner, trajectory, mode, seed):
+            del learner, trajectory, seed
+            return (0.25,) if mode == "true" else (0.5,)
+
+        with patch.object(controller_v4, "_replay_feedback", side_effect=no_update_replay):
+            with self.assertRaisesRegex(AssertionError, "same post-training digest"):
+                train_reward_lanes(train, seed=7)
 
     def test_freeze_blocks_updates_and_preserves_digest(self) -> None:
         learner = LinearQ(3)

@@ -59,6 +59,8 @@ V4_ACTIONS: tuple[str, ...] = (
 ACTION_BUDGET = 8
 POLICY_ACTIONS = V4_ACTIONS
 TRAINING_PROTOCOL = "offline_reward_attribution_replay"
+MIN_NONZERO_TRANSITIONS = 2
+MIN_DISTINCT_REWARD_VALUES = 2
 
 
 def _circular_gaps(points: Sequence[Fraction]) -> tuple[Fraction, ...]:
@@ -339,12 +341,14 @@ class TrainedLane:
     update_delta: int
     action_schedule: tuple[tuple[str, ...], ...]
     nonzero_reward_count: int
+    transmitted_rewards: tuple[tuple[float, ...], ...]
 
 
 def batch_diagnostics(trajectories: Sequence[Trajectory]) -> dict[str, object]:
     actions = tuple(step.action for trajectory in trajectories for step in trajectory.steps)
     rewards = tuple(step.reward for trajectory in trajectories for step in trajectory.steps)
     informative = sum(abs(reward) > 1.0e-12 for reward in rewards)
+    nonzero_values = {reward for reward in rewards if abs(reward) > 1.0e-12}
     return {
         "trajectory_count": len(trajectories),
         "transition_count": len(actions),
@@ -352,6 +356,7 @@ def batch_diagnostics(trajectories: Sequence[Trajectory]) -> dict[str, object]:
         "action_coverage": len(set(actions)),
         "nonzero_reward_count": informative,
         "distinct_reward_count": len(set(rewards)),
+        "distinct_nonzero_reward_count": len(nonzero_values),
     }
 
 
@@ -359,8 +364,14 @@ def assert_informative_batch(
     trajectories: Sequence[Trajectory], *, require_all_actions: bool = True
 ) -> dict[str, object]:
     diagnostics = batch_diagnostics(trajectories)
-    if int(diagnostics["nonzero_reward_count"]) == 0:
-        raise AssertionError("training batch has no nonzero physical rewards")
+    if int(diagnostics["nonzero_reward_count"]) < MIN_NONZERO_TRANSITIONS:
+        raise AssertionError(
+            f"training batch needs at least {MIN_NONZERO_TRANSITIONS} nonzero transitions"
+        )
+    if int(diagnostics["distinct_nonzero_reward_count"]) < MIN_DISTINCT_REWARD_VALUES:
+        raise AssertionError(
+            f"training batch needs at least {MIN_DISTINCT_REWARD_VALUES} distinct nonzero reward values"
+        )
     if require_all_actions and int(diagnostics["action_coverage"]) != len(V4_ACTIONS):
         raise AssertionError("training batch does not cover all twelve V3.4 actions")
     return diagnostics
@@ -422,17 +433,21 @@ def train_reward_lanes(
     )
     assert_informative_batch(trajectories, require_all_actions=require_all_actions)
     lanes: dict[str, TrainedLane] = {}
+    transmitted_by_mode: dict[str, tuple[tuple[float, ...], ...]] = {}
     for lane_index, mode in enumerate(modes):
         learner = LinearQ(init_seed)
         before_digest, before_updates = learner.digest(), learner.updates
+        transmitted_rows: list[tuple[float, ...]] = []
         for trajectory_index, trajectory in enumerate(trajectories):
-            _replay_feedback(
+            transmitted = _replay_feedback(
                 learner,
                 trajectory,
                 mode,
                 seed ^ (lane_index << 16) ^ trajectory_index,
             )
+            transmitted_rows.append(tuple(transmitted))
         after_digest, after_updates = learner.digest(), learner.updates
+        transmitted_by_mode[mode] = tuple(transmitted_rows)
         learner.freeze()
         lanes[mode] = TrainedLane(
             mode,
@@ -445,7 +460,13 @@ def train_reward_lanes(
             after_updates - before_updates,
             tuple(tuple(step.action for step in trajectory.steps) for trajectory in trajectories),
             int(batch_diagnostics(trajectories)["nonzero_reward_count"]),
+            tuple(transmitted_rows),
         )
+    if "true" in transmitted_by_mode and "within_episode_permuted" in transmitted_by_mode:
+        if transmitted_by_mode["true"] == transmitted_by_mode["within_episode_permuted"]:
+            raise AssertionError("within-episode permutation produced the true reward vectors")
+    if len(lanes) > 1 and len({lane.after_digest for lane in lanes.values()}) == 1:
+        raise AssertionError("all reward lanes produced the same post-training digest")
     return lanes
 
 
@@ -735,7 +756,8 @@ def task_environment(task: RepairTask) -> V4Environment:
 
 
 __all__ = [
-    "ACTION_BUDGET", "POLICY_ACTIONS", "V4_ACTIONS", "TRAINING_PROTOCOL", "ControllerView", "V4Environment",
+    "ACTION_BUDGET", "POLICY_ACTIONS", "V4_ACTIONS", "TRAINING_PROTOCOL",
+    "MIN_NONZERO_TRANSITIONS", "MIN_DISTINCT_REWARD_VALUES", "ControllerView", "V4Environment",
     "HiddenMetrics", "LinearQ", "FixedRandom", "LocalHeuristic", "VisibleGreedy",
     "TrajectoryStep", "Trajectory", "TrainedLane", "collect_trajectory", "replay_trajectory",
     "train_reward_lanes", "evaluate_frozen_lanes", "batch_diagnostics", "assert_informative_batch",
