@@ -3,8 +3,8 @@
     "authorized": {
       "action_family_counts": {
         "boundary": 0,
-        "interior": 0,
-        "largest_gap": 11,
+        "interior": 1,
+        "largest_gap": 10,
         "small_denominator_sum": 1
       },
       "by_goal": {
@@ -105,8 +105,8 @@
     "distractor": {
       "action_family_counts": {
         "boundary": 0,
-        "interior": 0,
-        "largest_gap": 11,
+        "interior": 1,
+        "largest_gap": 10,
         "small_denominator_sum": 1
       },
       "by_goal": {
@@ -931,8 +931,8 @@
         "action_family_counts": {
           "boundary": 0,
           "interior": 0,
-          "largest_gap": 21,
-          "small_denominator_sum": 2
+          "largest_gap": 20,
+          "small_denominator_sum": 3
         },
         "by_goal": {
           "coverage": {
@@ -1238,8 +1238,8 @@
         "action_family_counts": {
           "boundary": 0,
           "interior": 0,
-          "largest_gap": 25,
-          "small_denominator_sum": 2
+          "largest_gap": 26,
+          "small_denominator_sum": 1
         },
         "by_goal": {
           "coverage": {
@@ -1339,8 +1339,8 @@
         "action_family_counts": {
           "boundary": 0,
           "interior": 0,
-          "largest_gap": 19,
-          "small_denominator_sum": 4
+          "largest_gap": 20,
+          "small_denominator_sum": 3
         },
         "by_goal": {
           "coverage": {
@@ -1487,7 +1487,8 @@
       "observed": "min(normalized_progress_vs_random.coverage, normalized_progress_vs_random.spectral)",
       "observed_value": 0.0,
       "question": "Does a goal cue remain useful across two feedback-driven decisions?",
-      "status": "negative"
+      "status": "unverified",
+      "validity_note": "The probe has no delayed goal-memory or matched goal-ablation condition."
     },
     {
       "direction": "higher_is_supportive",
@@ -1497,7 +1498,8 @@
       "observed": "fraction_tasks_with_two_near_best_action_families",
       "observed_value": 0.05555555555555555,
       "question": "Do task instances expose at least two practically successful local means?",
-      "status": "negative"
+      "status": "unverified",
+      "validity_note": "This is a descriptive action-menu diagnostic, not an adaptation test."
     },
     {
       "direction": "higher_is_supportive",
@@ -1507,7 +1509,8 @@
       "observed": "min(progress_feedback_minus_shuffled, progress_feedback_minus_none)",
       "observed_value": 0.0,
       "question": "Does true scalar feedback beat both shuffled and absent feedback?",
-      "status": "negative"
+      "status": "negative",
+      "validity_note": "No material audit invalidation found for this preliminary gate."
     },
     {
       "direction": "higher_is_supportive",
@@ -1517,7 +1520,8 @@
       "observed": "removed_recovery_feedback_minus_random",
       "observed_value": 0.0,
       "question": "Does feedback improve evaluator-only recovery of the deleted identities?",
-      "status": "negative"
+      "status": "unverified",
+      "validity_note": "Exact N and survivor labels make the hidden target reconstructible in principle."
     },
     {
       "direction": "higher_is_supportive",
@@ -1527,7 +1531,8 @@
       "observed": "transfer_gain_vs_random",
       "observed_value": 0.0,
       "question": "Does a frozen learner retain practical gain on unseen N and damage masks?",
-      "status": "negative"
+      "status": "unverified",
+      "validity_note": "Many transfer tasks have zero or negative target headroom, so normalized progress is not a valid transfer gate."
     },
     {
       "direction": "higher_is_supportive",
@@ -1537,16 +1542,17 @@
       "observed": "min(authorized_switch_alignment, distractor_coverage_alignment)",
       "observed_value": 1.0,
       "question": "Does an authorized goal switch work while an unauthorized distractor is ignored?",
-      "status": "positive"
+      "status": "unverified",
+      "validity_note": "The wrapper suppresses the distractor before observation and retained post-switch menus are singleton; resistance was not tested."
     }
   ],
   "goal_persistence": {
     "feedback_learner": {
       "action_family_counts": {
         "boundary": 0,
-        "interior": 2,
+        "interior": 1,
         "largest_gap": 20,
-        "small_denominator_sum": 2
+        "small_denominator_sum": 3
       },
       "by_goal": {
         "coverage": {
@@ -2434,7 +2440,8 @@
   "seed": 20260811,
   "source_files": {
     "controllers.py": "4b2a96bfe0f27cb4d51ff36fe8e622ae9e439f786f5db1211bba7b436b106b92",
-    "environment.py": "616146a9d5908113c13750d05689203b2ab67480affbd9e82a0a3cd11dd86ccf"
+    "environment.py": "616146a9d5908113c13750d05689203b2ab67480affbd9e82a0a3cd11dd86ccf",
+    "experiment.py": "b8b1f0c7887307ea0119c6489bc354e761abd210dfff693866f7337b7d36214a"
   },
   "status": "descriptive preliminary result; not an agency claim",
   "variable_means": {

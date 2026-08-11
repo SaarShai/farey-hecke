@@ -327,10 +327,14 @@ class FeedbackChannel:
         if self.mode == "no_feedback":
             return 0.0
         if self.mode == "reward_shuffled":
+            prior = self.seen[:]
             self.seen.append(float(feedback))
-            # The learner receives a random permutation draw from the observed
-            # reward history, not the reward paired with its last action.
-            return self.seen[self.rng.randrange(len(self.seen))]
+            # The learner receives a random draw from *prior* rewards, never
+            # the reward paired with its current action. The first update is
+            # an explicit zero because no prior reward exists.
+            if not prior:
+                return 0.0
+            return prior[self.rng.randrange(len(prior))]
         raise ValueError(f"unknown feedback mode: {self.mode!r}")
 
 
@@ -469,6 +473,8 @@ def _condition_run(
                     seed=seed + epoch * 1000 + index,
                     budget=budget,
                 )
+        # Holdout and transfer evaluation use frozen learned weights.
+        controller.learning = False
     eval_tasks = tasks if evaluation_tasks is None else evaluation_tasks
     episodes = tuple(
         run_episode(
@@ -540,11 +546,17 @@ def _variable_means(tasks: Sequence[Task]) -> dict[str, Any]:
     }
 
 
-def _paired_goal_runs(tasks: Sequence[Task], seed: int) -> dict[str, Any]:
+def _paired_goal_runs(
+    tasks: Sequence[Task], seed: int, trained_learner: Any | None = None
+) -> dict[str, Any]:
     paired_tasks = tuple(Task(task.order, task.removed, goal, task.index) for task in tasks for goal in (Goal.COVERAGE, Goal.SPECTRAL))
     results: dict[str, dict[str, Any]] = {}
     for condition in ("random", "feedback_learner"):
-        controller = _new_controller(condition, seed + (0 if condition == "random" else 10), learning=False)
+        controller = (
+            trained_learner
+            if condition == "feedback_learner" and trained_learner is not None
+            else _new_controller(condition, seed + (0 if condition == "random" else 10), learning=False)
+        )
         episodes = [
             run_episode(
                 condition,
@@ -638,6 +650,13 @@ def _gate_results(
         "H5_frozen_transfer": transfer["transfer_gain_vs_random"],
         "H6_authorized_switching": min(switching["authorized_switch_alignment"], switching["distractor_coverage_alignment"]),
     }
+    invalid = {
+        "H1_goal_persistence": "The probe has no delayed goal-memory or matched goal-ablation condition.",
+        "H2_variable_means": "This is a descriptive action-menu diagnostic, not an adaptation test.",
+        "H4_identity_damage_recovery": "Exact N and survivor labels make the hidden target reconstructible in principle.",
+        "H5_frozen_transfer": "Many transfer tasks have zero or negative target headroom, so normalized progress is not a valid transfer gate.",
+        "H6_authorized_switching": "The wrapper suppresses the distractor before observation and retained post-switch menus are singleton; resistance was not tested.",
+    }
     results: list[dict[str, Any]] = []
     for gate in PREDECLARED_GATES:
         value = float(observed[gate["id"]])
@@ -645,7 +664,8 @@ def _gate_results(
             {
                 **gate,
                 "observed_value": value,
-                "status": _classify(value, float(gate["minimum"]), float(gate["null_band"])),
+                "status": "unverified" if gate["id"] in invalid else _classify(value, float(gate["minimum"]), float(gate["null_band"])),
+                "validity_note": invalid.get(gate["id"], "No material audit invalidation found for this preliminary gate."),
             }
         )
     return results
@@ -693,7 +713,9 @@ def run_experiment() -> dict[str, Any]:
     aggregates = {
         condition: conditions[condition]["transfer_test"] for condition in CONDITIONS
     }
-    goals = _paired_goal_runs(in_domain_tasks[:8], SEED + 500)
+    goals = _paired_goal_runs(
+        in_domain_tasks[:8], SEED + 500, trained_controllers["feedback_learner"]
+    )
     variable = _variable_means(in_domain_tasks)
 
     # Identity is evaluator-only: no identity fact is sent to the controller.
@@ -764,6 +786,7 @@ def run_experiment() -> dict[str, Any]:
         "authorized_switching": switching,
         "retained_result_types": ["positive", "null", "negative"],
         "source_files": {
+            "experiment.py": _source_hash(Path(__file__)),
             "environment.py": _source_hash(Path(__file__).with_name("environment.py")),
             "controllers.py": _source_hash(Path(__file__).with_name("controllers.py")),
         },
