@@ -376,16 +376,26 @@ the remaining failure is not explained by a missing reset or update bug.
   quantized public reward, and its own public history. A first implementation
   was rejected because it used exact environment copies/raw local reward while
   planning; it produced no admissible evidence and was stopped.
-- [ ] Implement deterministic H=1..4 sequence policies from a train-fitted
+- [x] Implement deterministic H=1..4 sequence policies from a train-fitted
   public transition/return table, with paired controls, evaluator-only hidden
   metrics, support thresholds, bootstrap intervals, and negative fixtures.
-- [ ] Run alignment on train/validation only. If public-return-maximizing
+- [x] Run alignment on train/validation only. If public-return-maximizing
   sequences do not improve hidden repair, redesign the task interface before
   attempting another learner.
 - [ ] If alignment passes, implement a model-based local transition/planning
   controller and rerun train/validation gates.
 - [ ] Only after feedback and hidden recovery pass may transfer and the
   reachability-preserving structural ablation proceed.
+
+### Alignment result
+
+The leak-tight public-table audit used 3,840 train transitions and 120
+validation tasks, with zero validation updates. H=2 was selected from train
+public return, but all preregistered validation horizons H=1..4 produced hidden
+F1=0 for the public selector against every control. The receipt is therefore
+`unverified_underpowered`, not a positive or negative competency result. A
+model-based planner is not authorized by this gate; changing the learner before
+fixing the public-to-repair link would be tuning around an interface failure.
 
 ## Parallel emergent-organization probes
 
