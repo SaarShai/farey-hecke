@@ -426,15 +426,23 @@ permutations) rather than retuning this one.
 - [ ] Implement and run a coarse-bin sorting probe where any within-bin order
   is valid; measure unnecessary same-kind runs, role specialization, and
   batching against shuffled, randomized, and anti-organization controls.
-- [ ] Redesign the Farey public interface using only target-independent local
+- [x] Redesign the Farey public interface using only target-independent local
   geometry/history and a bounded public signal; prove no exact fraction, N,
   mask, target, or evaluator metric crosses the controller boundary.
-- [ ] Rerun the train/validation public-only alignment gate with zero validation
+- [x] Rerun the train/validation public-only alignment gate with zero validation
   updates and evaluator-only hidden F1.
 - [ ] Build a model-based planner only if public planning clears the locked
   hidden-F1 margin against every matched control.
 - [ ] Prepare transfer and structural ablation only if feedback and hidden
   recovery both clear their preregistered gates.
+
+### V13 result
+
+The fixed-width V13 public view passed leakage checks, but all four candidate
+signals had validation AUC near 0.50 against evaluator-only one-step hidden F1,
+below the locked 0.60 usefulness threshold. Status is
+`unverified_underpowered`; no planner, transfer, or structural ablation was
+authorized.
 
 ### V13 public-signal result
 
