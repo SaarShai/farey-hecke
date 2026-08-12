@@ -476,3 +476,49 @@ The genuine Farey arrangement's within-bin same-denominator-role rate was
 randomized ties, and 0.219 for anti-role. The predefined structural signal was
 false. The test therefore demonstrates a valid Farey-native slack protocol but
 does not show that Farey ordering creates unnecessary role organization.
+
+## Farey-guided exploration
+
+Goal: test whether the sequential organization of a Farey/BCZ-derived action
+tape gives a simple memoryless explorer useful or unexpected trajectory-level
+behavior that was not encoded as an objective.
+
+- [x] Freeze the action mapping, environment family, cost ledger, matched
+  shuffled/Markov/random controls, perturbations, and outcome taxonomy before
+  inspecting results.
+- [x] Verify that genuine and control tapes have matched length, action counts,
+  one-step marginals, and equivalent action budgets while differing in the
+  intended sequential organization.
+- [x] Implement the smallest deterministic batch experiment; omit the optional
+  viewer to keep the first instrument bounded and auditable.
+- [x] Run unseen maze/graph instances and obstacle perturbations; measure the
+  explicit objective (coverage) and preregistered secondary observables such as
+  loop avoidance, frontier returns, detours, recovery time, multiscale revisit
+  structure, and trajectory compressibility.
+- [x] Require any candidate unexpected behavior to survive multiplicity-aware
+  comparison with every matched control and reproduce on a held-out instance
+  set; otherwise record it as negative or exploratory only.
+- [x] Verify receipts, tests, source hashes, and the no-retired-test boundary;
+  record the result and decide whether a second-stage adaptive experiment is
+  justified.
+
+### First exploration run
+
+The first spatial run completed 4,608 fixed-budget trajectories across 24
+paired mazes, all 24 symbol-to-action mappings, and genuine/count-matched/
+run-matched/transition-matched action words. All arithmetic, control, maze,
+and perturbation invariants passed. It produced zero discovery candidates, but
+an independent audit found the exact test was structurally underpowered: with
+12 development tasks and 288 Bonferroni hypotheses, its minimum two-sided
+sign-permutation p-value is 0.000488, above the corrected 0.000174 cutoff.
+The result is therefore `unverified_underpowered`, not negative. Aggregate
+coverage is descriptive only (G 14.276 cells; K2 13.999; C 14.934).
+
+Version 2 retained the tape, controls, mappings, metrics, margins, and maze
+families while moving to 24 new development and 24 new held-out tasks. A
+bounded deterministic 20,000-resample sign-flip test made the 288-hypothesis
+gate statistically capable. No development candidate survived. The locked
+result is therefore negative: G coverage was 14.847 cells versus K2 14.541,
+R 15.057, and C 15.449; no preregistered secondary metric passed either. This
+rejects this particular quartile-to-relative-action interface, not all possible
+Farey-guided exploration paradigms.

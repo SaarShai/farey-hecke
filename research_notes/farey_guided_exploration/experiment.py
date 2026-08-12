@@ -58,6 +58,7 @@ PRACTICAL_THRESHOLDS = {
 PRIMARY_METRICS = ("unique_cell_coverage", "post_perturbation_coverage_gain")
 SECONDARY_METRICS = tuple(k for k in METRIC_DIRECTIONS if k not in PRIMARY_METRICS)
 GATE_METRICS = PRIMARY_METRICS + SECONDARY_METRICS
+PERMUTATION_RESAMPLES = 20_000
 
 
 @dataclass(frozen=True)
@@ -67,8 +68,8 @@ class ExperimentConfig:
     horizon: int = 96
     perturbation_step: int = 48
     farey_order: int = 37
-    dev_seeds: tuple[int, ...] = (11, 23, 37, 53, 71, 89)
-    heldout_seeds: tuple[int, ...] = (101, 113, 127, 139, 151, 167)
+    dev_seeds: tuple[int, ...] = (211, 223, 237, 253, 271, 289, 307, 331, 347, 359, 373, 389)
+    heldout_seeds: tuple[int, ...] = (401, 419, 433, 449, 467, 487, 503, 521, 541, 557, 577, 593)
     families: tuple[str, ...] = ("dfs", "prim")
     control_replicates: int = 2
     alpha: float = 0.05
@@ -530,6 +531,7 @@ def simulate_episode(
     repeated_edges = 0
     short_loops = 0
     frontier_returns = 0
+    frontier_return_events = []
     new_events = []
     pre_coverage = None
     current_maze = maze
@@ -555,6 +557,7 @@ def simulate_episode(
                     short_loops += 1
                 if any(n not in visited for n in current_maze.neighbors(position)):
                     frontier_returns += 1
+                    frontier_return_events.append(step_index + 1)
             else:
                 visited.add(position)
                 new_events.append(step_index + 1)
@@ -564,8 +567,8 @@ def simulate_episode(
         visit_counts[position] += 1
     if pre_coverage is None:
         pre_coverage = len(visited)
-    if new_events:
-        intervals = [b - a for a, b in zip(new_events, new_events[1:])]
+    if frontier_return_events:
+        intervals = [b - a for a, b in zip(frontier_return_events, frontier_return_events[1:])]
         frontier_interval = mean(intervals) if intervals else float(budget)
     else:
         frontier_interval = float(budget)
@@ -590,8 +593,8 @@ def simulate_episode(
         "frontier_return_hazard": frontier_returns / max(1, budget),
         "revisit_entropy": _entropy(visit_counts.values()),
         "longest_no_new_cell_streak": max(
-            [new_events[0] - 0 if new_events else budget]
-            + [b - a for a, b in zip(new_events, new_events[1:])]
+            [new_events[0] - 1 if new_events else budget]
+            + [b - a - 1 for a, b in zip(new_events, new_events[1:])]
             + ([budget - new_events[-1]] if new_events else [])
         ),
         "radius_multiscale_revisit_rate": mean(radius_values) if radius_values else 0.0,
@@ -614,6 +617,7 @@ def simulate_episode(
         "perturbation_edge": perturbation_edge,
         "post_perturbation_maze_connected": changed_maze.connected(),
         "total_revisits": total_revisits,
+        "frontier_return_events": tuple(frontier_return_events),
     }
 
 
@@ -711,12 +715,24 @@ def paired_differences(rows: Sequence[dict], split: str, mapping_id: str, metric
     return tuple(differences)
 
 
-def sign_permutation_pvalue(differences: Sequence[float]) -> float:
+def sign_permutation_pvalue(
+    differences: Sequence[float],
+    *,
+    resamples: int = PERMUTATION_RESAMPLES,
+    seed: int = 0,
+) -> float:
     """Two-sided paired sign-flip p-value, with tasks as the resampling unit."""
     values = tuple(float(x) for x in differences if x != 0)
     if not values:
         return 1.0
     observed = abs(sum(values))
+    if len(values) > 16:
+        rng = random.Random(seed)
+        extreme = 0
+        for _ in range(resamples):
+            signed = sum(value if rng.getrandbits(1) else -value for value in values)
+            extreme += abs(signed) >= observed - 1e-12
+        return (extreme + 1) / (resamples + 1)
     total = 0
     extreme = 0
     for mask in range(1 << len(values)):
@@ -726,6 +742,11 @@ def sign_permutation_pvalue(differences: Sequence[float]) -> float:
     return extreme / total
 
 
+def _permutation_seed(split: str, mapping_id: str, metric: str) -> int:
+    digest = hashlib.sha256(f"{split}|{mapping_id}|{metric}".encode()).digest()
+    return int.from_bytes(digest[:8], "big")
+
+
 def evaluate_discovery_confirmation(
     rows: Sequence[dict],
     mapping_ids: Sequence[str] | None = None,
@@ -733,6 +754,7 @@ def evaluate_discovery_confirmation(
 ) -> dict:
     ids = tuple(mapping_ids or sorted({_row["mapping_id"] for _row in rows}))
     hypotheses = max(1, len(ids) * len(GATE_METRICS))
+    discovery_capable = True
     discovery = []
     confirmation = []
     for mapping_id in ids:
@@ -743,10 +765,21 @@ def evaluate_discovery_confirmation(
             raw = mean(dev)
             standard_deviation = pstdev(dev) if len(dev) > 1 else 0.0
             standardized = raw / standard_deviation if standard_deviation else (math.inf if raw > 0 else 0.0)
-            p_value = sign_permutation_pvalue(dev)
+            p_value = sign_permutation_pvalue(
+                dev,
+                seed=_permutation_seed("development", mapping_id, metric),
+            )
             adjusted = min(1.0, p_value * hypotheses)
+            minimum_p_value = (
+                2.0 / (2 ** len(dev))
+                if len(dev) <= 16
+                else 1.0 / (PERMUTATION_RESAMPLES + 1)
+            )
+            minimum_adjusted_p_value = min(1.0, minimum_p_value * hypotheses)
+            test_capable = minimum_adjusted_p_value <= alpha
+            discovery_capable = discovery_capable and test_capable
             threshold = PRACTICAL_THRESHOLDS[metric]
-            candidate = raw >= threshold and adjusted <= alpha
+            candidate = test_capable and raw >= threshold and adjusted <= alpha
             record = {
                 "mapping_id": mapping_id,
                 "metric": metric,
@@ -756,6 +789,9 @@ def evaluate_discovery_confirmation(
                 "p_value": p_value,
                 "multiplicity": hypotheses,
                 "adjusted_p_value": adjusted,
+                "minimum_attainable_p_value": minimum_p_value,
+                "minimum_attainable_adjusted_p_value": minimum_adjusted_p_value,
+                "test_capable": test_capable,
                 "threshold": threshold,
                 "candidate": candidate,
             }
@@ -763,7 +799,10 @@ def evaluate_discovery_confirmation(
             if candidate:
                 heldout = paired_differences(rows, "heldout", mapping_id, metric)
                 heldout_raw = mean(heldout) if heldout else float("nan")
-                heldout_p = sign_permutation_pvalue(heldout)
+                heldout_p = sign_permutation_pvalue(
+                    heldout,
+                    seed=_permutation_seed("heldout", mapping_id, metric),
+                )
                 heldout_adjusted = min(1.0, heldout_p * hypotheses)
                 confirmed = bool(heldout and heldout_raw >= threshold and heldout_adjusted <= alpha)
                 confirmation.append({
@@ -779,11 +818,21 @@ def evaluate_discovery_confirmation(
                 })
     positive = any(item["confirmed"] for item in confirmation)
     discovered = any(item["candidate"] for item in discovery)
+    if not discovery_capable:
+        label = "unverified_underpowered"
+    elif positive:
+        label = "positive"
+    elif discovered:
+        label = "unverified"
+    else:
+        label = "negative"
     return {
         "control_reference": "K2",
+        "permutation_resamples": PERMUTATION_RESAMPLES,
         "discovery": discovery,
         "confirmation": confirmation,
-        "label": "positive" if positive else ("unverified" if discovered else "negative"),
+        "discovery_capable": discovery_capable,
+        "label": label,
         "gate": "G must beat K2 on a discovered metric with the same direction and threshold on held-out tasks; Bonferroni family is all mappings x predeclared metrics",
     }
 
@@ -860,7 +909,7 @@ def run_experiment(config: ExperimentConfig = DEFAULT_CONFIG) -> dict:
     }
     receipt = {
         "experiment": "farey_guided_spatial_exploration",
-        "version": 1,
+        "version": 2,
         "config": asdict(config),
         "question": "Does sequential organization in a BCZ/Farey-derived emitted action word change open-loop maze coverage or trajectory behavior versus matched controls?",
         "claim_boundary": "Finite deterministic action-word organization only; no latent arithmetic agency, intrinsic goal, sensing, adaptation, or controller competency claim.",
@@ -925,6 +974,7 @@ def render_results(receipt: dict) -> str:
     lines += [
         "",
         f"Discovery candidates: {sum(item['candidate'] for item in gate['discovery'])}; confirmation records: {len(gate['confirmation'])}; locked label: **{gate['label']}**.",
+        f"Multiplicity-aware discovery capable: **{gate['discovery_capable']}**. A false value means the configured finite/resampled test cannot reach the corrected alpha even under its most extreme possible outcome.",
         "",
         "Interpretation is bounded to finite action-word organization. A positive label would mean that a predeclared mapping/metric cleared the development gate and repeated with the same direction and threshold on disjoint held-out seeds in both fixed maze families; it would not establish arithmetic agency or a controller ability.",
         "",

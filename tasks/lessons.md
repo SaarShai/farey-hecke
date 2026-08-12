@@ -27,3 +27,13 @@ transition or return model from serialized public observations and quantized
 transmitted reward, then evaluate validation with zero updates. Treat any
 exact-state planner result as evaluator feasibility only, never as alignment
 evidence.
+
+## Search for unexpected behavior, not a named behavior copied from prior work
+
+When the user invokes Levin's sorting experiments as a paradigm, do not turn
+the published secondary observable (for example, batching) into the target of
+the new experiment. Preserve the experimental logic instead: a simple local
+rule, a broad explicit task, solution freedom or perturbation, and an external
+search over additional behaviors not instructed by the rule. For Farey work,
+choose a task that uses its sequential arithmetic structure and preregister a
+diverse trajectory-observable panel before inspecting outcomes.

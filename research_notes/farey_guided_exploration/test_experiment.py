@@ -21,6 +21,7 @@ try:
         rank_balanced_word,
         run_experiment,
         run_length_surrogate,
+        sign_permutation_pvalue,
         simulate_episode,
         tape_signature,
         transition_signature,
@@ -42,6 +43,7 @@ except ImportError:  # unittest discover with this directory as top-level
     rank_balanced_word,
     run_experiment,
     run_length_surrogate,
+    sign_permutation_pvalue,
     simulate_episode,
     tape_signature,
     transition_signature,
@@ -101,6 +103,21 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(result["metrics"]["unique_cell_coverage"], 3)
         self.assertEqual(result["metrics"]["blocked_rate"], 0.0)
 
+    def test_frontier_return_interval_uses_actual_frontier_returns(self):
+        maze = open_grid(3, 3)
+        mapping = ("F", "B", "L", "R")
+        result = simulate_episode(maze, (1, 1), 1, (0, 1, 1), mapping, horizon=3)
+        self.assertEqual(result["frontier_return_events"], (2, 3))
+        self.assertEqual(result["metrics"]["frontier_return_interval_mean"], 1.0)
+        self.assertEqual(result["metrics"]["frontier_return_hazard"], 2 / 3)
+
+    def test_longest_no_new_cell_streak_counts_actions_not_event_gaps(self):
+        maze = open_grid(3, 3)
+        mapping = ("F", "B", "L", "R")
+        result = simulate_episode(maze, (0, 0), 1, (1, 0), mapping, horizon=2)
+        self.assertEqual(result["positions"], ((0, 0), (0, 0), (1, 0)))
+        self.assertEqual(result["metrics"]["longest_no_new_cell_streak"], 1)
+
 
 class GateAndReplayTests(unittest.TestCase):
     def test_discovery_confirmation_negative_fixture(self):
@@ -112,10 +129,18 @@ class GateAndReplayTests(unittest.TestCase):
                     rows.append({"task_id": f"{split}-{task_index}", "split": split,
                                  "mapping_id": "m00", "arm": arm, "metrics": dict(metrics)})
         result = evaluate_discovery_confirmation(rows, ("m00",), alpha=0.05)
-        self.assertEqual(result["label"], "negative")
+        self.assertEqual(result["label"], "unverified_underpowered")
+        self.assertFalse(result["discovery_capable"])
         self.assertTrue(result["discovery"])
         self.assertFalse(any(item["candidate"] for item in result["discovery"]))
         self.assertEqual(result["confirmation"], [])
+
+    def test_resampled_sign_test_is_deterministic_at_v2_size(self):
+        differences = tuple(float(index + 1) for index in range(24))
+        first = sign_permutation_pvalue(differences, resamples=20_000, seed=77)
+        second = sign_permutation_pvalue(differences, resamples=20_000, seed=77)
+        self.assertEqual(first, second)
+        self.assertLessEqual(first, 0.05)
 
     def test_replay_is_deterministic_and_receipt_invariants_pass(self):
         config = ExperimentConfig(width=5, height=5, horizon=16, perturbation_step=8,
