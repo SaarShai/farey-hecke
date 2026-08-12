@@ -94,6 +94,15 @@ def initial_state(seed: int, *, shuffle_labels: bool) -> list[Cell]:
     return [Cell(value, label) for value, label in zip(values, labels)]
 
 
+def shuffled_observed_labels(state: list[Cell], *, seed: int) -> list[Cell]:
+    """Preserve positions/values while scrambling only the observer labels."""
+
+    rng = random.Random(seed)
+    labels = [cell.label for cell in state]
+    rng.shuffle(labels)
+    return [Cell(cell.value, label) for cell, label in zip(state, labels)]
+
+
 def _anti_score(state: list[Cell], i: int) -> int:
     score = 0
     for left, right in ((i - 1, i), (i, i + 1), (i + 1, i + 2)):
@@ -175,8 +184,11 @@ def run_experiment() -> dict[str, object]:
     rows: dict[str, list[dict[str, float | int]]] = {condition: [] for condition in CONDITIONS}
     for trial in range(TRIALS):
         for condition in CONDITIONS:
-            state = initial_state(SEED + trial, shuffle_labels=condition == "shuffled_labels")
-            final, trace, sweeps = run(state, condition, seed=SEED + trial * 17 + len(condition))
+            state = initial_state(SEED + trial, shuffle_labels=False)
+            process_condition = "role_tie" if condition == "shuffled_labels" else condition
+            final, trace, sweeps = run(state, process_condition, seed=SEED + trial * 17 + len(condition))
+            if condition == "shuffled_labels":
+                final = shuffled_observed_labels(final, seed=SEED + trial * 31)
             initial = trace[0]
             final_metrics = metrics(final)
             rows[condition].append({
@@ -213,7 +225,7 @@ def run_experiment() -> dict[str, object]:
         "perturbation_restart": perturb_restart(converged, seed=SEED + 100),
         "notes": [
             "role_tie uses a local A-before-B tie convention only when coarse bins are equal",
-            "shuffled_labels preserves the A/B count but uses an independent permutation",
+            "shuffled_labels runs the same process, then independently permutes observed labels",
             "randomized_ties randomizes equal-bin tie decisions and pair schedule",
             "anti_clustering accepts equal-bin swaps only when local same-label adjacency decreases",
         ],
