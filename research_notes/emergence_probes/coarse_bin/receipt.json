@@ -1,0 +1,237 @@
+{
+  "conditions": [
+    "role_tie",
+    "shuffled_labels",
+    "randomized_ties",
+    "anti_clustering"
+  ],
+  "config": {
+    "N": 48,
+    "bin_width": 8,
+    "bins": 6,
+    "max_sweeps": 200,
+    "seed": 20260811,
+    "trials": 128
+  },
+  "notes": [
+    "role_tie uses a local A-before-B tie convention only when coarse bins are equal",
+    "shuffled_labels preserves the A/B count but uses an independent permutation",
+    "randomized_ties randomizes equal-bin tie decisions and pair schedule",
+    "anti_clustering accepts equal-bin swaps only when local same-label adjacency decreases"
+  ],
+  "objective": "nondecreasing coarse bins; within-bin order and role adjacency are unconstrained",
+  "perturbation_restart": {
+    "after": {
+      "coarse_error": 0,
+      "max_role_run": 7,
+      "role_runs": 14,
+      "same_label_edges": 34,
+      "same_label_rate": 0.723404255319149,
+      "within_bin_edges": 42,
+      "within_bin_same_label_edges": 34,
+      "within_bin_same_label_rate": 0.8095238095238095
+    },
+    "applied": true,
+    "before": {
+      "coarse_error": 0,
+      "max_role_run": 7,
+      "role_runs": 15,
+      "same_label_edges": 33,
+      "same_label_rate": 0.7021276595744681,
+      "within_bin_edges": 42,
+      "within_bin_same_label_edges": 33,
+      "within_bin_same_label_rate": 0.7857142857142857
+    },
+    "index": 0,
+    "sweeps": 1,
+    "trace_length": 2
+  },
+  "schema": "coarse-bin-emergence-v1",
+  "source_sha256": "1eac138928c1baab9921fa62fc6b788767b42cbaf74845c8e1eef74e00a77081",
+  "summaries": {
+    "anti_clustering": {
+      "coarse_error_rate": 1.0,
+      "final_max_role_run": {
+        "count": 128,
+        "max": 11,
+        "mean": 4.3125,
+        "median": 4.0,
+        "min": 2
+      },
+      "final_role_runs": {
+        "count": 128,
+        "max": 43,
+        "mean": 36.453125,
+        "median": 37.0,
+        "min": 27
+      },
+      "final_same_label_rate": {
+        "count": 128,
+        "max": 0.44680851063829785,
+        "mean": 0.2456781914893617,
+        "median": 0.23404255319148937,
+        "min": 0.10638297872340426
+      },
+      "final_within_bin_same_label_rate": {
+        "count": 128,
+        "max": 0.4523809523809524,
+        "mean": 0.24423363095238096,
+        "median": 0.23809523809523808,
+        "min": 0.09523809523809523
+      },
+      "peak_same_label_rate": {
+        "count": 128,
+        "max": 0.7021276595744681,
+        "mean": 0.5487034574468085,
+        "median": 0.5531914893617021,
+        "min": 0.3829787234042553
+      },
+      "sweeps": {
+        "count": 128,
+        "max": 42,
+        "mean": 37.0859375,
+        "median": 38.0,
+        "min": 28
+      },
+      "trials": 128
+    },
+    "randomized_ties": {
+      "coarse_error_rate": 1.0,
+      "final_max_role_run": {
+        "count": 128,
+        "max": 12,
+        "mean": 5.421875,
+        "median": 5.0,
+        "min": 3
+      },
+      "final_role_runs": {
+        "count": 128,
+        "max": 35,
+        "mean": 25.109375,
+        "median": 25.0,
+        "min": 15
+      },
+      "final_same_label_rate": {
+        "count": 128,
+        "max": 0.7021276595744681,
+        "mean": 0.4870345744680851,
+        "median": 0.48936170212765956,
+        "min": 0.2765957446808511
+      },
+      "final_within_bin_same_label_rate": {
+        "count": 128,
+        "max": 0.6904761904761905,
+        "mean": 0.4836309523809524,
+        "median": 0.4880952380952381,
+        "min": 0.2619047619047619
+      },
+      "peak_same_label_rate": {
+        "count": 128,
+        "max": 0.8085106382978723,
+        "mean": 0.625,
+        "median": 0.6170212765957447,
+        "min": 0.5319148936170213
+      },
+      "sweeps": {
+        "count": 128,
+        "max": 33,
+        "mean": 25.8671875,
+        "median": 26.0,
+        "min": 20
+      },
+      "trials": 128
+    },
+    "role_tie": {
+      "coarse_error_rate": 1.0,
+      "final_max_role_run": {
+        "count": 128,
+        "max": 11,
+        "mean": 6.078125,
+        "median": 6.0,
+        "min": 5
+      },
+      "final_role_runs": {
+        "count": 128,
+        "max": 16,
+        "mean": 12.5390625,
+        "median": 12.0,
+        "min": 10
+      },
+      "final_same_label_rate": {
+        "count": 128,
+        "max": 0.8085106382978723,
+        "mean": 0.7544880319148937,
+        "median": 0.7659574468085106,
+        "min": 0.6808510638297872
+      },
+      "final_within_bin_same_label_rate": {
+        "count": 128,
+        "max": 0.8809523809523809,
+        "mean": 0.8327752976190476,
+        "median": 0.8333333333333334,
+        "min": 0.7380952380952381
+      },
+      "peak_same_label_rate": {
+        "count": 128,
+        "max": 0.8085106382978723,
+        "mean": 0.7634640957446809,
+        "median": 0.7659574468085106,
+        "min": 0.723404255319149
+      },
+      "sweeps": {
+        "count": 128,
+        "max": 40,
+        "mean": 35.90625,
+        "median": 37.0,
+        "min": 26
+      },
+      "trials": 128
+    },
+    "shuffled_labels": {
+      "coarse_error_rate": 1.0,
+      "final_max_role_run": {
+        "count": 128,
+        "max": 11,
+        "mean": 5.671875,
+        "median": 6.0,
+        "min": 3
+      },
+      "final_role_runs": {
+        "count": 128,
+        "max": 33,
+        "mean": 24.390625,
+        "median": 24.0,
+        "min": 15
+      },
+      "final_same_label_rate": {
+        "count": 128,
+        "max": 0.7021276595744681,
+        "mean": 0.5023271276595744,
+        "median": 0.5106382978723404,
+        "min": 0.3191489361702128
+      },
+      "final_within_bin_same_label_rate": {
+        "count": 128,
+        "max": 0.7142857142857143,
+        "mean": 0.5052083333333334,
+        "median": 0.5119047619047619,
+        "min": 0.35714285714285715
+      },
+      "peak_same_label_rate": {
+        "count": 128,
+        "max": 0.7446808510638298,
+        "mean": 0.6002327127659575,
+        "median": 0.5957446808510638,
+        "min": 0.44680851063829785
+      },
+      "sweeps": {
+        "count": 128,
+        "max": 40,
+        "mean": 35.90625,
+        "median": 37.0,
+        "min": 26
+      },
+      "trials": 128
+    }
+  }
+}
