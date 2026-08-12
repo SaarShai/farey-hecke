@@ -418,3 +418,31 @@ is false. This is a useful negative: the observed grouping metric is not by
 itself evidence of an unexpected competency. A second probe should change the
 task's underdetermination (for example, coarse-bin sorting with free within-bin
 permutations) rather than retuning this one.
+
+## Fresh staged follow-up: slack emergence + Farey public-signal redesign
+
+- [x] Freeze the prior alignment result and all V8-V12 negative receipts; never
+  reopen the retired sealed test.
+- [ ] Implement and run a coarse-bin sorting probe where any within-bin order
+  is valid; measure unnecessary same-kind runs, role specialization, and
+  batching against shuffled, randomized, and anti-organization controls.
+- [ ] Redesign the Farey public interface using only target-independent local
+  geometry/history and a bounded public signal; prove no exact fraction, N,
+  mask, target, or evaluator metric crosses the controller boundary.
+- [ ] Rerun the train/validation public-only alignment gate with zero validation
+  updates and evaluator-only hidden F1.
+- [ ] Build a model-based planner only if public planning clears the locked
+  hidden-F1 margin against every matched control.
+- [ ] Prepare transfer and structural ablation only if feedback and hidden
+  recovery both clear their preregistered gates.
+
+### Slack-probe result
+
+The coarse-bin probe supplies genuine solution slack: all four conditions sort
+the coarse bins perfectly while within-bin order remains unconstrained. The
+local role-tie rule produces within-bin same-label adjacency 0.833, versus
+0.486 for the matched observed-label shuffle, 0.484 for randomized ties, and
+0.244 for anti-clustering. A perturbation/restart returns to coarse error 0.
+This is a repeatable finite side effect, not intrinsic agency; the role tie is
+an explicit local convention, so the result demonstrates how to test slack, not
+that a hidden goal formed.

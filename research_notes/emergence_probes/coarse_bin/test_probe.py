@@ -1,7 +1,10 @@
 import json
 import unittest
 
-from probe import CONDITIONS, N, SEED, coarse_error, initial_state, perturb_restart, run, run_experiment
+try:
+    from .probe import CONDITIONS, N, SEED, coarse_error, initial_state, perturb_restart, run, run_experiment
+except ImportError:  # Direct execution from this directory.
+    from probe import CONDITIONS, N, SEED, coarse_error, initial_state, perturb_restart, run, run_experiment
 
 
 class CoarseBinProbeTests(unittest.TestCase):
