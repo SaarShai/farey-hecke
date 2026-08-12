@@ -329,3 +329,10 @@ true validation F1=.000694, causal-lagged-null F1=.001842, zero F1=0, and exact
 recovery=0. The feedback and recovery gates both failed. The receipt records
 3840 updates per lane, zero test openings/updates, matching source hashes, and
 the explicit development-only claim boundary. No sealed test is authorized.
+
+Cold audit found no P0/P1: V10 and prior V8/V9 suites pass, the local reward
+reads only visible geometry, the corrected lagged lane is distinct from zero,
+and the negative arithmetic recomputes exactly. One P2 remains for future
+hardening: V10's source-hash list omits two transitive manifest-generator
+dependencies, although their current hashes and the full manifest commitments
+match independently.
