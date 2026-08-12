@@ -502,6 +502,12 @@ behavior that was not encoded as an objective.
   record the result and decide whether a second-stage adaptive experiment is
   justified.
 
+Review/results: the corrected v2 run is complete and reproducible. It found no
+pre-registered Farey-specific trajectory effect against the transition-matched
+control or the broader matched controls. The result is negative for this
+quartile-to-relative-action interface; no adaptive controller, transfer run,
+or structural claim is justified from it.
+
 ### First exploration run
 
 The first spatial run completed 4,608 fixed-budget trajectories across 24
