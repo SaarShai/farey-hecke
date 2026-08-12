@@ -301,3 +301,31 @@ learner still failed hidden recovery: precision 0.0049, recall 0.0083, F1
 were 0.0056 with confidence intervals above zero but below the locked 0.05
 feedback margin. This rules out an observability-only explanation for the V7
 failure; no held-out test is authorized.
+
+An independent audit then found that the first V9 lagged-null implementation
+fed back its own transmitted zero rather than the previous raw reward, making
+it identical to the zero lane. The implementation now keeps those histories
+separate, has a nonzero-sequence regression test, and was rerun once without
+sealed access. The corrected true F1 is still 0.0056, causal-lagged F1 is
+0.0016, and zero F1 is 0; the true-vs-lagged effect is 0.0041 with a confidence
+interval crossing zero. V9 therefore remains a valid negative development
+result, not evidence for a competency claim.
+
+## V10 structural-objective probe
+
+- [x] Predeclare and implement one target-independent local Farey-defect
+  reward/feature, with support and leakage checks, without opening any sealed
+  accessor.
+- [x] Run exactly one train/validation-only V10 attempt with the corrected
+  causal-lagged null and unchanged hidden-recovery/feedback gates.
+- [ ] If recovery and feedback both pass, freeze a fresh manifest protocol;
+  otherwise preserve the negative and stop tuning the learner.
+
+### V10 review/results
+
+The local-defect support gate passed (1,301 nonzero rewards, 142 distinct
+values, all 18 actions, both goals), but the single locked run was negative:
+true validation F1=.000694, causal-lagged-null F1=.001842, zero F1=0, and exact
+recovery=0. The feedback and recovery gates both failed. The receipt records
+3840 updates per lane, zero test openings/updates, matching source hashes, and
+the explicit development-only claim boundary. No sealed test is authorized.
