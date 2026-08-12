@@ -13,6 +13,7 @@ from .controller_v9_feasibility import (
     RichView,
     _environment,
     _rich_view,
+    collect_public_samples,
     public_history_diagnostic,
     run_probe,
 )
@@ -61,6 +62,25 @@ class ControllerV9FeasibilityTests(unittest.TestCase):
         self.assertGreaterEqual(first["action_value_auc"], 0.0)
         self.assertLessEqual(first["action_value_auc"], 1.0)
         self.assertGreater(first["action_value_pair_count"], 0)
+
+    def test_counterfactual_action_values_have_fixed_public_width(self) -> None:
+        samples = collect_public_samples(self.tasks()[:1])
+        self.assertEqual(len(samples), ACTION_BUDGET)
+        self.assertTrue(all(len(sample.action_values) == ACTION_COUNT for sample in samples))
+        self.assertTrue(all(isinstance(value, float) for sample in samples for value in sample.action_values))
+
+    def test_source_has_no_sealed_accessor_or_exact_view_fields(self) -> None:
+        source = Path(__file__).with_name("controller_v9_feasibility.py").read_text(encoding="utf-8")
+        self.assertNotIn("open_test", source)
+        self.assertNotIn("FinalManifestAccess", source)
+        view_fields = set(RichView.__dataclass_fields__)
+        self.assertTrue(view_fields.isdisjoint({"target", "mask", "order", "fractions", "N"}))
+
+    def test_action_history_ids_are_bounded_to_the_fixed_vocabulary(self) -> None:
+        environment = _environment(self.task(8, GoalState.SPECTRAL))
+        view = _rich_view(environment, action_history=(0, 1, 18, 99), reward_history=(-9, -1, 0, 9))
+        self.assertEqual(view.action_history, (0, 1, 18, ACTION_COUNT))
+        self.assertEqual(view.reward_history, (-8, -1, 0, 8))
 
     def test_feasibility_probe_writes_compact_deterministic_receipt(self) -> None:
         tasks = self.tasks()
