@@ -330,13 +330,13 @@ class RichLinearQ:
         return _digest(self._weights)
 
 
-def _reward_channel(mode: str, previous: float, raw: float) -> float:
+def _reward_channel(mode: str, previous_raw: float, raw: float) -> float:
     if mode == "true":
         return raw
     if mode == "zero":
         return 0.0
     if mode == "causal_lagged_null":
-        return previous
+        return previous_raw
     raise ValueError(f"unsupported V9 reward mode: {mode}")
 
 
@@ -346,19 +346,22 @@ def _train_lane(tasks: Sequence[RepairTask], mode: str, seed: int) -> RichLinear
         environment = _environment(task)
         action_history: list[int] = []
         reward_history: list[int] = []
-        previous = 0.0
+        previous_raw = 0.0
         for step_index in range(ACTION_BUDGET):
             view = _rich_view(environment, action_history, reward_history)
             action_seed = ROOT_SEED ^ seed ^ (task_index * 0x45D9F3B) ^ step_index
             epsilon = 0.25 - 0.20 * step_index / max(1, ACTION_BUDGET - 1)
             action = learner.choose(view, epsilon=epsilon, action_seed=action_seed)
             raw = float(environment.step(action))
-            transmitted = _reward_channel(mode, previous, raw)
+            transmitted = _reward_channel(mode, previous_raw, raw)
             action_history.append(V6_ACTIONS.index(action) + 1)
             reward_history.append(_reward_bin(transmitted))
             next_view = _rich_view(environment, action_history, reward_history)
             learner.update(view, action, transmitted, next_view, environment._done)
-            previous = transmitted
+            # Keep the causal lag source separate from the reward delivered to
+            # the learner.  Otherwise the first zero would poison the null lane
+            # forever and make it identical to zero feedback.
+            previous_raw = raw
     learner.freeze()
     return learner
 
