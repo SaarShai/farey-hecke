@@ -366,3 +366,33 @@ zero F1=0, and exact recovery=0. The true-vs-lagged effect was negative with a
 confidence interval crossing zero; true-vs-zero was positive but far below the
 .05 feedback margin. The trace mechanism and frozen receipts passed audit, so
 the remaining failure is not explained by a missing reset or update bug.
+
+## Fresh staged alignment -> planning protocol
+
+- [ ] Freeze V8-V12 negative receipts as historical evidence; do not tune them
+  or reopen the retired V6 test.
+- [x] Define a short-horizon public-reward alignment gate: the evaluator may
+  inspect hidden F1, but the sequence selector may use only visible local state,
+  quantized public reward, and its own public history. A first implementation
+  was rejected because it used exact environment copies/raw local reward while
+  planning; it produced no admissible evidence and was stopped.
+- [ ] Implement deterministic H=1..4 sequence policies from a train-fitted
+  public transition/return table, with paired controls, evaluator-only hidden
+  metrics, support thresholds, bootstrap intervals, and negative fixtures.
+- [ ] Run alignment on train/validation only. If public-return-maximizing
+  sequences do not improve hidden repair, redesign the task interface before
+  attempting another learner.
+- [ ] If alignment passes, implement a model-based local transition/planning
+  controller and rerun train/validation gates.
+- [ ] Only after feedback and hidden recovery pass may transfer and the
+  reachability-preserving structural ablation proceed.
+
+## Parallel emergent-organization probes
+
+- [ ] Design small local goal-directed systems where batching/clustering is
+  not required by the objective, with explicit anti-clustering and shuffled
+  controls.
+- [ ] Implement one deterministic bubble-sort-like probe with unnecessary
+  organization metrics, perturbation tests, and an immutable receipt.
+- [ ] Run the probe(s) independently of the Farey competency gates; report
+  only repeatable, control-surviving patterns as preliminary signs.

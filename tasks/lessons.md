@@ -17,3 +17,13 @@ history from the transmitted value turns the lagged null into a zero lane after
 the first step and can make a reported feedback comparison invalid. Add a
 regression test that exercises a nonzero reward sequence and compares lane
 digests before any full development run.
+
+## Do not call an exact-state planner a public-reward alignment test
+
+If a selector can copy the exact environment, inspect rational points or
+cursor state, or call the raw visible-reward function on hidden physical
+state, it is not testing the controller's information boundary. Fit a frozen
+transition or return model from serialized public observations and quantized
+transmitted reward, then evaluate validation with zero updates. Treat any
+exact-state planner result as evaluator feasibility only, never as alignment
+evidence.
