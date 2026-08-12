@@ -1,0 +1,160 @@
+{
+  "costs": {
+    "test_openings": 0,
+    "test_updates": 0
+  },
+  "counts": {
+    "train_tasks": 240,
+    "validation_tasks": 120
+  },
+  "leakage_audit": {
+    "fixed_shape": true,
+    "forbidden_key_violations": [],
+    "forbidden_serialized_tokens": [],
+    "fraction_objects": false,
+    "keys": [
+      "gap_bins",
+      "ratio_bins",
+      "cursor_relation_bin",
+      "remaining_budget_fraction",
+      "action_history",
+      "reward_history",
+      "trusted_goal_bin"
+    ],
+    "passed": true,
+    "shape": 23,
+    "trusted_goal_present": true
+  },
+  "manifest_commitments": {
+    "config_sha256": "a72300da104543355c8c461e0ad687d8db7d23af95d664ab2c160e5fa63d6bd0",
+    "generator_sha256": "210179960199240179bd48f62ba5f6e5fd01575f3d4a7a1a56dc274601a743ab",
+    "splits": {
+      "train": {
+        "cell_count": 24,
+        "count": 240,
+        "deterministic": true,
+        "regenerated_sha256": "788a6828eecacb8a71c9f73c448bef37bdb7e85d73d8b60e3024d10c0bc12336",
+        "sha256": "788a6828eecacb8a71c9f73c448bef37bdb7e85d73d8b60e3024d10c0bc12336"
+      },
+      "validation": {
+        "cell_count": 12,
+        "count": 120,
+        "deterministic": true,
+        "regenerated_sha256": "8ac921e4ada9229c61f3951b71aff9dd0509cb24bd984f2189bfbf98b9a11f12",
+        "sha256": "8ac921e4ada9229c61f3951b71aff9dd0509cb24bd984f2189bfbf98b9a11f12"
+      }
+    },
+    "verified": true
+  },
+  "manifest_hashes": {
+    "private": "8c334a3bfd9e7d853cc42c53a5b058ab8077a10083c365eae36685f0bed9979a",
+    "public": "7564e0d0264822469fded09038612fd27a1307fe75f09cf5086ae810c9678118"
+  },
+  "protocol": {
+    "action_budget": 16,
+    "action_count": 18,
+    "claim_boundary": "Development-only public-interface feasibility probe. Hidden action values are evaluator diagnostics only; no sealed test or competency claim is authorized.",
+    "kind": "V13 public-interface feasibility",
+    "signals": [
+      "coverage_gain",
+      "spectral_gain",
+      "defect_reduction",
+      "active_search"
+    ]
+  },
+  "source_hashes": {
+    "controller_v6.py": "3e7c2f6cfd5f95af6671c2ad3049e582e75a4df26e6e49d6b83b3790a08ef891",
+    "controller_v8_dev.py": "86fa34f553084033e9bfa2c1859e6706d03cd88b193840819883f8a10d64d937",
+    "controller_v9_feasibility.py": "9e632f8d5f4d0ab996b04db1a0238d1c0bd2a2cba3c742cb0c57f5d982e5c7fe",
+    "public_interface_v13_feasibility.py": "76520db5688aafedad4f2a423b126cfd72093b6a8808732cf411bdb4cbe37bed",
+    "repair_experiment.py": "e956941b60193ef301687d2633f1be88e4fa83a9a5b6f5abb0efadc2fdb594c1",
+    "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30"
+  },
+  "status": "positive",
+  "train": {
+    "by_signal": {
+      "active_search": {
+        "auc": 0.5063946640129834,
+        "nonzero_action_values": 36613,
+        "pair_count": 3142,
+        "sample_count": 3840,
+        "top_action_hit_rate": 0.9895833333333334
+      },
+      "coverage_gain": {
+        "auc": 0.5017903645833334,
+        "nonzero_action_values": 56,
+        "pair_count": 3142,
+        "sample_count": 3840,
+        "top_action_hit_rate": 0.9890625
+      },
+      "defect_reduction": {
+        "auc": 0.5047464557360285,
+        "nonzero_action_values": 36613,
+        "pair_count": 3142,
+        "sample_count": 3840,
+        "top_action_hit_rate": 0.9854166666666667
+      },
+      "spectral_gain": {
+        "auc": 0.5055890920987038,
+        "nonzero_action_values": 15360,
+        "pair_count": 3142,
+        "sample_count": 3840,
+        "top_action_hit_rate": 0.9869791666666666
+      }
+    },
+    "collision_rate": 0.025520833333333333,
+    "feasible": true,
+    "hidden_positive_action_count": 76,
+    "method": "public visible-signal ranking versus evaluator-only one-step hidden F1 gain",
+    "sample_count": 3840,
+    "task_rows_sha256": "62345844adffaae16d1c95434eaa5d5f6583378863507fface8e45681165a09f",
+    "thresholds": {
+      "min_alignment_pairs": 100,
+      "min_hidden_positive_actions": 8
+    },
+    "unique_view_count": 3742
+  },
+  "validation": {
+    "by_signal": {
+      "active_search": {
+        "auc": 0.5016084558823529,
+        "nonzero_action_values": 17073,
+        "pair_count": 151,
+        "sample_count": 1920,
+        "top_action_hit_rate": 0.9973958333333334
+      },
+      "coverage_gain": {
+        "auc": 0.5002604166666667,
+        "nonzero_action_values": 4,
+        "pair_count": 151,
+        "sample_count": 1920,
+        "top_action_hit_rate": 0.9963541666666667
+      },
+      "defect_reduction": {
+        "auc": 0.5004538143382352,
+        "nonzero_action_values": 17073,
+        "pair_count": 151,
+        "sample_count": 1920,
+        "top_action_hit_rate": 0.9958333333333333
+      },
+      "spectral_gain": {
+        "auc": 0.5013174019607843,
+        "nonzero_action_values": 7680,
+        "pair_count": 151,
+        "sample_count": 1920,
+        "top_action_hit_rate": 0.996875
+      }
+    },
+    "collision_rate": 0.028645833333333332,
+    "feasible": true,
+    "hidden_positive_action_count": 9,
+    "method": "public visible-signal ranking versus evaluator-only one-step hidden F1 gain",
+    "sample_count": 1920,
+    "task_rows_sha256": "964946f6b7c0bbd448674260d0e709c177e0bf3db09461462a2c1fe93cbbb7a7",
+    "thresholds": {
+      "min_alignment_pairs": 100,
+      "min_hidden_positive_actions": 8
+    },
+    "unique_view_count": 1865
+  }
+}
