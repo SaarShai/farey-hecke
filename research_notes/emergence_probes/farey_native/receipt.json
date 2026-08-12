@@ -1,0 +1,161 @@
+{
+  "checks": {
+    "all_objectives_reached": true,
+    "claim_boundary": "finite Farey-native side effect only; no agency, intrinsic goal, or controller competency claim",
+    "preliminary_signal": false
+  },
+  "conditions": [
+    "farey_stable",
+    "scrambled_stable",
+    "randomized_ties",
+    "anti_role"
+  ],
+  "config": {
+    "coarse_bins": 6,
+    "farey_order": 13,
+    "seed": 20260811,
+    "token_count": 58,
+    "trials": 128
+  },
+  "invariants": {
+    "farey_gap_multiset_sha256": "077d153d203c3321b019be3b51ee17273c9dfd4a52021faba049fe0eed1548b3",
+    "same_exact_gap_multiset": true,
+    "same_role_counts": true,
+    "same_token_count": true,
+    "scrambled_order_differs": true
+  },
+  "local_observation": "gap_bin only; denominator role is evaluator-only",
+  "objective": "nondecreasing coarse Farey-gap bins; within-bin token order is free",
+  "perturbation_restart": {
+    "after": {
+      "coarse_error": 0,
+      "motif_count": 16,
+      "motifs": {
+        "000": 8,
+        "001": 1,
+        "011": 1,
+        "111": 8,
+        "112": 1,
+        "122": 1,
+        "222": 8,
+        "223": 1,
+        "233": 1,
+        "333": 8,
+        "334": 1,
+        "344": 1,
+        "444": 8,
+        "445": 1,
+        "455": 1,
+        "555": 6
+      },
+      "same_role_edges": 21,
+      "within_bin_edges": 52,
+      "within_bin_same_role_edges": 20,
+      "within_bin_same_role_rate": 0.38461538461538464
+    },
+    "applied": true,
+    "before": {
+      "coarse_error": 22,
+      "motif_count": 50,
+      "motifs": {
+        "001": 1,
+        "005": 1,
+        "011": 1,
+        "013": 1,
+        "032": 1,
+        "044": 2,
+        "055": 2,
+        "100": 1,
+        "105": 1,
+        "110": 1,
+        "112": 1,
+        "123": 1,
+        "124": 1,
+        "125": 1,
+        "132": 1,
+        "133": 1,
+        "142": 1,
+        "211": 1,
+        "213": 1,
+        "214": 1,
+        "230": 1,
+        "231": 1,
+        "233": 1,
+        "234": 1,
+        "241": 1,
+        "244": 1,
+        "255": 1,
+        "305": 1,
+        "310": 1,
+        "312": 1,
+        "321": 1,
+        "323": 2,
+        "324": 1,
+        "331": 1,
+        "332": 1,
+        "344": 1,
+        "404": 2,
+        "412": 1,
+        "421": 1,
+        "423": 1,
+        "432": 1,
+        "440": 2,
+        "442": 1,
+        "443": 1,
+        "500": 1,
+        "501": 1,
+        "503": 1,
+        "521": 1,
+        "550": 2,
+        "552": 1
+      },
+      "same_role_edges": 17,
+      "within_bin_edges": 13,
+      "within_bin_same_role_edges": 3,
+      "within_bin_same_role_rate": 0.23076923076923078
+    },
+    "index": 10,
+    "sweeps": 48,
+    "trace_length": 49
+  },
+  "schema": "farey-native-slack-emergence-v1",
+  "source_sha256": "99882e7c902d2b0725ba95a85d2e209b528ed5fb78db7aeecdd43e0a424c9f70",
+  "summaries": {
+    "anti_role": {
+      "coarse_error_rate": 1.0,
+      "motif_count_mean": 16.0,
+      "same_role_edges_mean": 12.1953125,
+      "trials": 128,
+      "within_bin_same_role_rate_max": 0.3076923076923077,
+      "within_bin_same_role_rate_mean": 0.2189002403846154,
+      "within_bin_same_role_rate_min": 0.15384615384615385
+    },
+    "farey_stable": {
+      "coarse_error_rate": 1.0,
+      "motif_count_mean": 16.0,
+      "same_role_edges_mean": 20.0,
+      "trials": 128,
+      "within_bin_same_role_rate_max": 0.36538461538461536,
+      "within_bin_same_role_rate_mean": 0.36538461538461536,
+      "within_bin_same_role_rate_min": 0.36538461538461536
+    },
+    "randomized_ties": {
+      "coarse_error_rate": 1.0,
+      "motif_count_mean": 16.0,
+      "same_role_edges_mean": 24.0703125,
+      "trials": 128,
+      "within_bin_same_role_rate_max": 0.6153846153846154,
+      "within_bin_same_role_rate_mean": 0.4278846153846154,
+      "within_bin_same_role_rate_min": 0.3076923076923077
+    },
+    "scrambled_stable": {
+      "coarse_error_rate": 1.0,
+      "motif_count_mean": 16.0,
+      "same_role_edges_mean": 24.2578125,
+      "trials": 128,
+      "within_bin_same_role_rate_max": 0.5769230769230769,
+      "within_bin_same_role_rate_mean": 0.43103966346153844,
+      "within_bin_same_role_rate_min": 0.28846153846153844
+    }
+  }
+}

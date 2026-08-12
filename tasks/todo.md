@@ -462,3 +462,17 @@ local role-tie rule produces within-bin same-label adjacency 0.833, versus
 This is a repeatable finite side effect, not intrinsic agency; the role tie is
 an explicit local convention, so the result demonstrates how to test slack, not
 that a hidden goal formed.
+
+### Farey-native slack result
+
+- [x] Implement and run a Farey-native coarse-gap slack probe with genuine
+  Farey tokens, exact gap-multiset/order invariants, randomized ties, and an
+  anti-role control.
+- [x] Record the result and stop before claiming a structural competency.
+
+Using order-13 Farey gaps, every condition reached the coarse-gap objective.
+The genuine Farey arrangement's within-bin same-denominator-role rate was
+0.365, versus 0.431 for the exact-gap-multiset order scramble, 0.428 for
+randomized ties, and 0.219 for anti-role. The predefined structural signal was
+false. The test therefore demonstrates a valid Farey-native slack protocol but
+does not show that Farey ordering creates unnecessary role organization.
