@@ -16,9 +16,9 @@
     "feedback": {
       "comparisons": {
         "causal_lagged_null": {
-          "ci_high": 0.010308090828924163,
-          "ci_low": 0.0020326278659611994,
-          "effect": 0.005612974987974987,
+          "ci_high": 0.008875661375661375,
+          "ci_low": -2.590388007054678e-05,
+          "effect": 0.0040587421837421835,
           "groups": 12,
           "pairs": 144
         },
@@ -82,18 +82,18 @@
     "frozen": true,
     "lane_digests": {
       "causal_lagged_null": {
-        "0": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "1": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "10": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "11": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "2": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "3": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "4": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "5": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "6": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "7": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "8": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6",
-        "9": "2cd4301a66a3d4d84b603058591ba03bef85a0bf6550cabd721efa2f0e80b6b6"
+        "0": "535d944eebe4ba61c5dcf5d46fee9a074b8c6aa9b61e26d8b29b7419e962d99b",
+        "1": "0b02e8d30d4f97355a1e82c95eae7854fdbf20e6d5b52cab185d3244596b3a9b",
+        "10": "60d4be4669c4910cb32e6f7e57eef95b9c485b627a26d0c616d98d00bc215263",
+        "11": "e8cfe913f5089808940f027a32875cf11c7377c06ab74baf2e96b6afe19c8709",
+        "2": "b55283366c2c4e5ced1f3a0616cfc217370ffeb5845629baab581aff97a562ca",
+        "3": "6cc6380bf99a8f3544fb857b33458231f7a550a3aaae0d559091e5ed6014314a",
+        "4": "6f57ca7f152c77059590a2daa873c742e7ae58692bab6377beb3b0fdc899d79b",
+        "5": "9fd56ad5131f13787308fb6ac139586ed8afe166f815831f49f3e35777638f2d",
+        "6": "f517aace7212eb63c08a48e4755080db4ab35cc7a833ac648d1054eeb336f5b4",
+        "7": "3f20eb18cf88c9bd0ba70c7abdce276153aa1f515c4a8694e263cb55ef917133",
+        "8": "b68d2309dce385c74ec4ddf920111a55db526135c4b8410b60d8d643d3814b9c",
+        "9": "8ab3615ee7277acc0afb5f2ed6b2323ea7199dd0338a9ffcb949e1af05e1e814"
       },
       "true": {
         "0": "df16d631d5ac239df77e7502770ba17dca9aff844c49e5b1dd6794e540131636",
@@ -174,7 +174,7 @@
     "validation": {
       "causal_lagged_null": {
         "count": 1440,
-        "sha256": "4d202170cdb43c4f5a6f5e74841c7375929980a4fea31a34038a4568deb6e97f"
+        "sha256": "0d213191e15e6c792c0e0fc06f3bbba6e9b13f5265f3ff3ce8f69c1773d7ab3e"
       },
       "local": {
         "count": 1440,
@@ -212,7 +212,7 @@
     "competency_v5_feasibility.py": "aba069a29a9a76552f58353abd7ec7bde3b9525cd479f8cb6e2ab9cf5dab4fac",
     "controller_v6.py": "3e7c2f6cfd5f95af6671c2ad3049e582e75a4df26e6e49d6b83b3790a08ef891",
     "controller_v8_dev.py": "86fa34f553084033e9bfa2c1859e6706d03cd88b193840819883f8a10d64d937",
-    "controller_v9_feasibility.py": "324f069dbfce436abba516e0249cbafa7380411d6ed0cea842f68e7d90c6564e",
+    "controller_v9_feasibility.py": "9e632f8d5f4d0ab996b04db1a0238d1c0bd2a2cba3c742cb0c57f5d982e5c7fe",
     "repair_experiment.py": "e956941b60193ef301687d2633f1be88e4fa83a9a5b6f5abb0efadc2fdb594c1",
     "strict_environment.py": "1ff66dcb76a4bd462f64d9280fd5eb7619bc23f3e795a9c81c058741f0929d30"
   },
@@ -899,12 +899,12 @@
         "N": 22,
         "cell": "N22:random_isolated:coverage",
         "exact": 0.0,
-        "f1": 0.0,
+        "f1": 0.028571428571428574,
         "family": "random_isolated",
         "goal": "coverage",
         "learner_seed": 4,
-        "precision": 0.0,
-        "recall": 0.0,
+        "precision": 0.02,
+        "recall": 0.05,
         "seed": 4,
         "task_count": 10
       },
@@ -951,12 +951,12 @@
         "N": 26,
         "cell": "N26:denominator_biased:coverage",
         "exact": 0.0,
-        "f1": 0.0,
+        "f1": 0.028571428571428574,
         "family": "denominator_biased",
         "goal": "coverage",
         "learner_seed": 4,
-        "precision": 0.0,
-        "recall": 0.0,
+        "precision": 0.02,
+        "recall": 0.05,
         "seed": 4,
         "task_count": 10
       },
@@ -1055,12 +1055,12 @@
         "N": 22,
         "cell": "N22:random_isolated:coverage",
         "exact": 0.0,
-        "f1": 0.0,
+        "f1": 0.06666666666666667,
         "family": "random_isolated",
         "goal": "coverage",
         "learner_seed": 5,
-        "precision": 0.0,
-        "recall": 0.0,
+        "precision": 0.1,
+        "recall": 0.05,
         "seed": 5,
         "task_count": 10
       },
@@ -1627,12 +1627,12 @@
         "N": 22,
         "cell": "N22:burst:coverage",
         "exact": 0.0,
-        "f1": 0.0,
+        "f1": 0.05,
         "family": "burst",
         "goal": "coverage",
         "learner_seed": 9,
-        "precision": 0.0,
-        "recall": 0.0,
+        "precision": 0.05,
+        "recall": 0.05,
         "seed": 9,
         "task_count": 10
       },
@@ -1653,12 +1653,12 @@
         "N": 22,
         "cell": "N22:denominator_biased:coverage",
         "exact": 0.0,
-        "f1": 0.0,
+        "f1": 0.05,
         "family": "denominator_biased",
         "goal": "coverage",
         "learner_seed": 9,
-        "precision": 0.0,
-        "recall": 0.0,
+        "precision": 0.05,
+        "recall": 0.05,
         "seed": 9,
         "task_count": 10
       },
@@ -11466,9 +11466,9 @@
   "validation_summary": {
     "causal_lagged_null": {
       "exact": 0.0,
-      "f1": 0.0,
-      "precision": 0.0,
-      "recall": 0.0
+      "f1": 0.0015542328042328043,
+      "precision": 0.0016666666666666668,
+      "recall": 0.001736111111111111
     },
     "local": {
       "exact": 0.0,
@@ -12185,12 +12185,12 @@
             "N": 22,
             "cell": "N22:random_isolated:coverage",
             "exact": 0.0,
-            "f1": 0.0,
+            "f1": 0.028571428571428574,
             "family": "random_isolated",
             "goal": "coverage",
             "learner_seed": 4,
-            "precision": 0.0,
-            "recall": 0.0,
+            "precision": 0.02,
+            "recall": 0.05,
             "seed": 4,
             "task_count": 10
           },
@@ -12237,12 +12237,12 @@
             "N": 26,
             "cell": "N26:denominator_biased:coverage",
             "exact": 0.0,
-            "f1": 0.0,
+            "f1": 0.028571428571428574,
             "family": "denominator_biased",
             "goal": "coverage",
             "learner_seed": 4,
-            "precision": 0.0,
-            "recall": 0.0,
+            "precision": 0.02,
+            "recall": 0.05,
             "seed": 4,
             "task_count": 10
           },
@@ -12341,12 +12341,12 @@
             "N": 22,
             "cell": "N22:random_isolated:coverage",
             "exact": 0.0,
-            "f1": 0.0,
+            "f1": 0.06666666666666667,
             "family": "random_isolated",
             "goal": "coverage",
             "learner_seed": 5,
-            "precision": 0.0,
-            "recall": 0.0,
+            "precision": 0.1,
+            "recall": 0.05,
             "seed": 5,
             "task_count": 10
           },
@@ -12913,12 +12913,12 @@
             "N": 22,
             "cell": "N22:burst:coverage",
             "exact": 0.0,
-            "f1": 0.0,
+            "f1": 0.05,
             "family": "burst",
             "goal": "coverage",
             "learner_seed": 9,
-            "precision": 0.0,
-            "recall": 0.0,
+            "precision": 0.05,
+            "recall": 0.05,
             "seed": 9,
             "task_count": 10
           },
@@ -12939,12 +12939,12 @@
             "N": 22,
             "cell": "N22:denominator_biased:coverage",
             "exact": 0.0,
-            "f1": 0.0,
+            "f1": 0.05,
             "family": "denominator_biased",
             "goal": "coverage",
             "learner_seed": 9,
-            "precision": 0.0,
-            "recall": 0.0,
+            "precision": 0.05,
+            "recall": 0.05,
             "seed": 9,
             "task_count": 10
           },
@@ -22752,9 +22752,9 @@
       "summaries": {
         "causal_lagged_null": {
           "exact": 0.0,
-          "f1": 0.0,
-          "precision": 0.0,
-          "recall": 0.0
+          "f1": 0.0015542328042328043,
+          "precision": 0.0016666666666666668,
+          "recall": 0.001736111111111111
         },
         "local": {
           "exact": 0.0,

@@ -12,7 +12,7 @@ View width: `23`; samples: `3840`; unique views: `3747`.
 | observability stop gate | `True` | locked |
 
 Learner ran: `True`; status: `negative`.
-- causal_lagged_null: F1=0.0000, exact=0.0000
+- causal_lagged_null: F1=0.0016, exact=0.0000
 - local: F1=0.0000, exact=0.0000
 - random: F1=0.0019, exact=0.0000
 - true: F1=0.0056, exact=0.0000
