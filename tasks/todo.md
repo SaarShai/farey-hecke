@@ -389,10 +389,22 @@ the remaining failure is not explained by a missing reset or update bug.
 
 ## Parallel emergent-organization probes
 
-- [ ] Design small local goal-directed systems where batching/clustering is
+- [x] Design small local goal-directed systems where batching/clustering is
   not required by the objective, with explicit anti-clustering and shuffled
   controls.
-- [ ] Implement one deterministic bubble-sort-like probe with unnecessary
+- [x] Implement one deterministic bubble-sort-like probe with unnecessary
   organization metrics, perturbation tests, and an immutable receipt.
-- [ ] Run the probe(s) independently of the Farey competency gates; report
+- [x] Run the probe(s) independently of the Farey competency gates; report
   only repeatable, control-surviving patterns as preliminary signs.
+
+### Emergence-probe result
+
+The first probe sorts 24 numeric values using local adjacent swaps; labels are
+passive cargo and never enter the transition rule. Across 256 deterministic
+runs, all sorting goals completed, but stable local scheduling did not produce
+more transient same-label adjacency than shuffled-label or randomized-schedule
+controls (mean excess edges 4.066 vs 4.148 and 4.234). The preliminary signal
+is false. This is a useful negative: the observed grouping metric is not by
+itself evidence of an unexpected competency. A second probe should change the
+task's underdetermination (for example, coarse-bin sorting with free within-bin
+permutations) rather than retuning this one.

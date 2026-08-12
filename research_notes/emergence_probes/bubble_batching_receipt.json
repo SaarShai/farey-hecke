@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "all_sorted": true,
+    "label_shuffle_changes_some_trace": true,
+    "positive_preliminary_signal": false,
+    "schedule_deterministic": true
+  },
+  "config": {
+    "N": 24,
+    "labels": [
+      "A",
+      "B",
+      "C"
+    ],
+    "runs": 256,
+    "seed": 20260811
+  },
+  "protocol": {
+    "claim_boundary": "preliminary dynamical probe only; no agency or competency claim",
+    "label_batching_is_required": false,
+    "labels_in_transition": false,
+    "metric": "transient same-label adjacent edges above random-label expectation",
+    "objective": "sort numeric values ascending"
+  },
+  "sha256": "98532cb81fdfde16f4bebce441a0869f84a47717856a8b64280a130ae0e69b29",
+  "summaries": {
+    "randomized_schedule": {
+      "mean_final_same_label_edges": 7.07421875,
+      "mean_goal_steps": 138.0703125,
+      "mean_max_excess_edges": 4.234375,
+      "mean_max_same_label_edges": 11.234375,
+      "p_max_excess_positive": 1.0,
+      "runs": 256
+    },
+    "shuffled_labels": {
+      "mean_final_same_label_edges": 6.86328125,
+      "mean_goal_steps": 138.0703125,
+      "mean_max_excess_edges": 4.1484375,
+      "mean_max_same_label_edges": 11.1484375,
+      "p_max_excess_positive": 1.0,
+      "runs": 256
+    },
+    "stable_local_schedule": {
+      "mean_final_same_label_edges": 7.07421875,
+      "mean_goal_steps": 138.0703125,
+      "mean_max_excess_edges": 4.06640625,
+      "mean_max_same_label_edges": 11.06640625,
+      "p_max_excess_positive": 1.0,
+      "runs": 256
+    },
+    "zero_signal_reference": {
+      "mean_final_same_label_edges": 7.07421875,
+      "mean_goal_steps": 138.0703125,
+      "mean_max_excess_edges": 0.0,
+      "mean_max_same_label_edges": 11.06640625,
+      "p_max_excess_positive": 0.0,
+      "runs": 256
+    }
+  }
+}
