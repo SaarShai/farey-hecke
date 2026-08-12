@@ -336,3 +336,33 @@ and the negative arithmetic recomputes exactly. One P2 remains for future
 hardening: V10's source-hash list omits two transitive manifest-generator
 dependencies, although their current hashes and the full manifest commitments
 match independently.
+
+## V11 active-search reward probe
+
+- [x] Correct the reward semantics so movement discovers a visible defect and
+  insertion reduces it, with sign-specific regression tests.
+- [x] Run exactly one train/validation-only attempt with the same lanes and
+  gates; do not open a sealed accessor.
+- [ ] Proceed to a fresh held-out controller test only if feedback and hidden
+  recovery both pass.
+
+V11 is a valid negative development result. The active-search reward improved
+true validation F1 to .007892, versus zero for both null lanes, but the
+feedback effect was .007892 with confidence intervals below the locked .05
+margin. Precision=.005854, recall=.015625, exact recovery=0, so the absolute
+recovery gate also failed. No transfer or structural controller arm was
+authorized.
+
+## V12 delayed-credit probe
+
+- [x] Replace one-step TD with fixed accumulating eligibility traces
+  (alpha=.04, gamma=.90, lambda=.80), with reset/decay regression tests.
+- [x] Run exactly one train/validation-only attempt with the same active-search
+  objective and feedback/recovery gates.
+- [ ] Open a fresh held-out test only after a positive development gate.
+
+V12 is also negative. True validation F1=.004003, causal-lagged-null F1=.006539,
+zero F1=0, and exact recovery=0. The true-vs-lagged effect was negative with a
+confidence interval crossing zero; true-vs-zero was positive but far below the
+.05 feedback margin. The trace mechanism and frozen receipts passed audit, so
+the remaining failure is not explained by a missing reset or update bug.
