@@ -2,7 +2,7 @@
 
 Development-only public-interface feasibility probe. Hidden action values are evaluator diagnostics only; no sealed test or competency claim is authorized.
 
-Status: `positive`; leakage audit: `True`.
+Status: `unverified_underpowered`; leakage audit: `True`. All four validation signal AUCs are approximately 0.50, below the preregistered 0.60 usefulness threshold; no learner or planner is authorized.
 
 ## train
 

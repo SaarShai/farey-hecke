@@ -436,6 +436,14 @@ permutations) rather than retuning this one.
 - [ ] Prepare transfer and structural ablation only if feedback and hidden
   recovery both clear their preregistered gates.
 
+### V13 public-signal result
+
+The candidate public views passed the fixed-shape/leakage audit and had enough
+diagnostic support, but the useful-signal test did not pass: validation AUC was
+approximately 0.50 for coverage, spectral, defect, and active-search signals
+(the locked useful-signal threshold is 0.60). This is not authorization for a
+planner or learner. The public-to-hidden-repair link remains unverified.
+
 ### Slack-probe result
 
 The coarse-bin probe supplies genuine solution slack: all four conditions sort
