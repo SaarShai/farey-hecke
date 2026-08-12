@@ -451,7 +451,7 @@ def _compact(result: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def _source_hashes(directory: Path) -> dict[str, str]:
-    names = ("controller_v9_feasibility.py", "controller_v8_dev.py", "controller_v6.py", "repair_experiment.py", "strict_environment.py")
+    names = ("controller_v9_feasibility.py", "controller_v8_dev.py", "controller_v6.py", "competency_v5_feasibility.py", "repair_experiment.py", "strict_environment.py")
     return {name: sha256((directory / name).read_bytes()).hexdigest() for name in names}
 
 

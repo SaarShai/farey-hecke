@@ -685,6 +685,7 @@ def _source_hashes(directory: Path) -> dict[str, str]:
         "controller_v8_dev.py",
         "controller_v6.py",
         "competency_v6_final_manifest.py",
+        "competency_v5_feasibility.py",
         "repair_experiment.py",
         "strict_environment.py",
     )

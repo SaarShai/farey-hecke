@@ -279,3 +279,25 @@ G-only derangement diagnostic preserved physical state, rewards, action
 reachability, and non-geometry fields, with a 1.0 effective geometry-change
 rate; it is descriptive evidence only because no structural controller arms
 were evaluated. No sealed test was opened.
+
+## V9 observability feasibility result
+
+- [x] Add a richer, fixed-width quantized egocentric view with bounded action
+  and reward history, without exposing order, N, exact fractions, targets, or
+  damage masks.
+- [x] Measure public-history collisions and target-independent action-value
+  informativeness before fitting a learner.
+- [x] Run the online learner only after the locked observability gate passed.
+- [x] Preserve compact row evidence, source hashes, manifest commitments, and
+  zero sealed-test openings.
+- [ ] Proceed to a fresh held-out transfer/structural test only if hidden
+  recovery and feedback gates pass.
+
+V9 observability passed its development preflight: 3,840 public samples,
+3,747 unique views, collision rate 0.0242, public-history action ceiling
+0.9999, and target-independent action-value AUC 0.7813. The richer online
+learner still failed hidden recovery: precision 0.0049, recall 0.0083, F1
+0.0056, and exact recovery 0. True-vs-lagged-null and true-vs-zero F1 effects
+were 0.0056 with confidence intervals above zero but below the locked 0.05
+feedback margin. This rules out an observability-only explanation for the V7
+failure; no held-out test is authorized.
