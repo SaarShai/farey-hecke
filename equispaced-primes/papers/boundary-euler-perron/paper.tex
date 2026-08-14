@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\Residue}{Res}
+\DeclareMathOperator{\Log}{Log}
+
+\title{A Boundary Prime--Power Decomposition and\\
+Local Perron Residues for Dirichlet $L$-Functions}
+\author{Saar Shai}
+\date{Proof and novelty audit --- 1 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We record a boundary prime-power decomposition and the exact local residue of
+a shifted Perron kernel.  The boundary identity is unconditional and, in fact,
+does not use that the evaluation point is a zero: its only delicate term is an
+ordinarily convergent prime sum on $\Re z=1$.  We fix the logarithm by a
+right-hand Euler-product limit, so no false path-independence assertion is
+needed.  The residue is a local Laurent calculation and has been formalized in
+Lean~4.  Neither result supplies a global partial-M\"obius-sum asymptotic:
+off-target zeros contribute non-decaying oscillatory residues on the Riemann
+hypothesis.  A targeted literature audit finds the analytic ingredients in
+earlier work of Conrad and Akatsuka; no novelty claim is made for the
+decomposition itself.
+\end{abstract}
+
+\paragraph{Status.}
+This is a proved technical note, not a submission draft.  The theorem and local
+residue below are complete at paper level.  The independent novelty gate fails
+for a standalone research paper because the theorem is an elementary
+specialization of established boundary Euler-product machinery.  No global
+$c_K$ asymptotic is claimed.
+
+\section{Setup and branch convention}
+
+Let $\chi$ be a Dirichlet character modulo $q$, let
+$s=\tfrac12+i\tau$ with $\tau\ne0$, and let $\psi$ be the primitive
+character of conductor $f\mid q$ that induces the (possibly imprimitive)
+character $\chi^2$.  Define
+\begin{equation}
+ T_K(\chi,s)
+ :=\sum_{p\le K}\sum_{k\ge2}
+       \frac{\chi(p)^k}{k p^{ks}}.
+\end{equation}
+For $z=1+2i\tau$, define the Euler-product-normalized boundary logarithm
+\begin{equation}\label{eq:boundary-log}
+ \Log_*L(z,\psi)
+ :=\lim_{\epsilon\downarrow0}
+   \sum_p\sum_{r\ge1}\frac{\psi(p)^r}{r p^{r(z+\epsilon)}}.
+\end{equation}
+The limit exists by the boundary Abel theorem used below.  This is a branch
+\emph{definition}, not a claim of path independence.  Continuation around a
+zero can change a logarithm by $2\pi i$, so arbitrary-path independence would
+be false.
+
+Set
+\begin{align}
+ \mathrm{BPC}_1(\chi,s)
+   &:=\frac12\sum_{\substack{p\mid q\\p\nmid f}}
+       \Log\!\left(1-\psi(p)p^{-2s}\right),\\
+ \mathrm{BPC}_2(\chi,s)
+   &:=-\frac12\sum_{r\ge2}\frac1r\sum_p
+       \frac{\chi(p)^{2r}}{p^{2rs}},\\
+ T_{\ge3}(\chi,s)
+   &:=\sum_{k\ge3}\frac1k\sum_p
+       \frac{\chi(p)^k}{p^{ks}}.
+\end{align}
+The last two double sums are absolutely convergent.  In $\mathrm{BPC}_1$,
+$|\psi(p)p^{-2s}|=p^{-1}<1$, so $\Log(1-w)=-\sum_{r\ge1}w^r/r$
+unambiguously denotes the principal logarithm.
+
+\section{Boundary identity}
+
+\begin{theorem}[Boundary prime-power decomposition]\label{thm:boundary}
+Under the setup above, the ordinary prime-cutoff limit exists and
+\begin{equation}\label{eq:boundary}
+ \lim_{K\to\infty}T_K(\chi,s)
+ =\frac12\Log_* L(2s,\psi)
+  +\mathrm{BPC}_1(\chi,s)
+  +\mathrm{BPC}_2(\chi,s)
+  +T_{\ge3}(\chi,s).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For every finite $K$, absolute convergence of the inner series gives
+\begin{equation}\label{eq:finite-split}
+ T_K(\chi,s)=\frac12\sum_{p\le K}\frac{\chi(p)^2}{p^{2s}}
+ +\sum_{p\le K}\sum_{k\ge3}\frac{\chi(p)^k}{k p^{ks}}.
+\end{equation}
+The second term converges absolutely as $K\to\infty$, since
+\[
+ \sum_p\sum_{k\ge3}\frac{|\chi(p)|^k}{k p^{k/2}}
+ \le \frac1{3(1-2^{-1/2})}\sum_p p^{-3/2}<\infty.
+\]
+Thus no conditional rearrangement is being made.
+
+Put $\vartheta=\chi^2$, viewed as a character modulo $q$.  Conrad's
+boundary Dirichlet-series theorem~\cite[Theorem~4.1]{Conrad2005PartialEuler},
+together with his comparison of prime and prime-power cutoff orders
+\cite[Lemma~3.1]{Conrad2005PartialEuler}, applied to the Euler-product
+logarithm of $L(z,\vartheta)$ shows that, for $z=1+2i\tau$ with
+$\tau\ne0$, the prime-cutoff series
+\begin{equation}\label{eq:full-log-series}
+ \sum_p\sum_{r\ge1}\frac{\vartheta(p)^r}{r p^{rz}}
+\end{equation}
+converges and equals its right-hand boundary value from $\Re z>1$.
+The required hypotheses follow from the classical nonvanishing of Dirichlet
+$L$-functions on $\Re z=1$; when $\vartheta$ is principal, the only pole is
+at $z=1$, excluded by $\tau\ne0$.  Akatsuka independently gives the direct
+principal-character estimate
+\begin{equation}\label{eq:akatsuka-tail}
+ \sum_{X<p\le Y}p^{-1-2i\tau}=O_\tau(1/\log X)
+\end{equation}
+in equations (2.3)--(2.5) of~\cite{Akatsuka2017EulerProduct}.
+
+The $r\ge2$ part of \eqref{eq:full-log-series} is absolutely convergent.
+Subtracting it, without changing order, proves
+\begin{equation}\label{eq:prime-isolation}
+ \sum_p\frac{\chi(p)^2}{p^{2s}}
+ =\Log_*L(2s,\vartheta)
+  -\sum_{r\ge2}\frac1r\sum_p
+       \frac{\chi(p)^{2r}}{p^{2rs}}.
+\end{equation}
+Finally, for $\Re z>1$ the inducing-character identity is
+\[
+ L(z,\vartheta)=L(z,\psi)
+ \prod_{\substack{p\mid q\\p\nmid f}}(1-\psi(p)p^{-z}).
+\]
+Take Euler-product logarithms there and then the horizontal limit to $2s$.
+The finite factors stay inside the disk $|w-1|<1$, so their principal logs
+agree with their convergent power series.  Hence
+\[
+ \Log_*L(2s,\vartheta)=\Log_*L(2s,\psi)
+ +\sum_{\substack{p\mid q\\p\nmid f}}
+   \Log(1-\psi(p)p^{-2s}).
+\]
+Multiplying \eqref{eq:prime-isolation} by $1/2$ and substituting it in
+\eqref{eq:finite-split} proves \eqref{eq:boundary}.
+\end{proof}
+
+\begin{remark}[Weakness and convergence mode]
+Theorem~\ref{thm:boundary} does not require $s$ to be a zero of
+$L(s,\chi)$, nor does it require simplicity.  The limit is ordinary
+prime-cutoff convergence.  Only the $k=2$ term is conditional; all other
+passages use absolute convergence.  The radial limit in
+\eqref{eq:boundary-log} agrees with the ordinary boundary series by Abel's
+theorem, but arbitrary complex paths are not part of the statement.
+\end{remark}
+
+\section{The local double-pole residue}
+
+\begin{lemma}[Local Perron residue]\label{lem:local-residue}
+Let $L$ be holomorphic near $\rho$, with $L(\rho)=0$ and
+$L'(\rho)\ne0$.  For $K>1$,
+\begin{equation}
+ \Residue_{w=0}\frac{K^w}{wL(\rho+w)}
+ =\frac{\log K}{L'(\rho)}-
+   \frac{L''(\rho)}{2L'(\rho)^2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Taylor expansion at the simple zero gives
+\[
+ \frac1{L(\rho+w)}
+ =\frac1{L'(\rho)w}-\frac{L''(\rho)}{2L'(\rho)^2}+O(w),
+\]
+while
+\[
+ \frac{K^w}{w}=\frac1w+\log K+O(w).
+\]
+The coefficient of $w^{-1}$ in their product is the claimed residue.
+\end{proof}
+
+\begin{remark}[Formal scope]
+Lemma~\ref{lem:local-residue} is represented by a zero-\texttt{sorry} Lean~4
+theorem for an analytic function with a simple zero at the origin.  The formal
+result certifies the local Laurent algebra; it does not certify a Perron
+contour shift or Theorem~\ref{thm:boundary}.
+\end{remark}
+
+\section{Why no global partial-sum asymptotic is claimed}
+
+Applying a truncated Perron formula to
+\[
+ c_K(\chi,\rho)=\sum_{n\le K}\frac{\mu(n)\chi(n)}{n^\rho}
+\]
+and shifting the contour crosses every off-target zero $\rho'$.  In the simple
+zero case its contribution contains a factor of the shape
+\begin{equation}
+ \frac{K^{\rho'-\rho}}
+      {(\rho'-\rho)L'(\rho',\chi)}.
+\end{equation}
+Under RH, $\Re(\rho'-\rho)=0$, so this is oscillatory with modulus independent
+of $K$; it is not automatically $o(1)$.  Inoue's explicit formula
+\cite{Inoue2021} organizes these zero contributions but does not permit them
+to be discarded.  A complete contour displacement would also have to specify
+the zero-sum ordering, bound the horizontal and left-edge integrals, and handle
+multiple zeros.  None of those global steps is used in
+Theorem~\ref{thm:boundary}.  Consequently Lemma~\ref{lem:local-residue}
+identifies one local term, not the asymptotic of $c_K$.
+
+\section{Numerical audit design}
+
+A reproducibility computation can use four fixed character/zero pairs and
+report, for every cutoff $K$: the left side of \eqref{eq:boundary}; each of
+the four right-side components; the complex residual and working precision;
+direct checks of $L(\rho)=0$, $L'(\rho)\ne0$, and the inducing character
+$\psi$; and executable source, raw values, software versions, and hashes.
+Observed rates must be separated from unconditional estimates and from
+RH-conditional bounds such as those in Soundararajan~\cite{Soundararajan2009}.
+
+\section{Novelty and disposition}
+
+The exact four-term display in Theorem~\ref{thm:boundary} was not found
+verbatim in the targeted search.  That does not make it a new theorem.
+Conrad's general boundary framework already identifies the squared-character
+second moment and controls the ordering issue
+\cite[Example~4.6 and Theorem~4.9]{Conrad2005PartialEuler}; Akatsuka proves the
+principal boundary prime-sum estimate directly; and Kaneko treats broader
+Dirichlet partial Euler-product asymptotics~\cite{Kaneko2022DirichletEuler}.
+The displayed formula is a transparent isolation of the $k=2$ term plus the
+standard imprimitive Euler factors.  The local residue is likewise standard
+Laurent algebra.  Therefore these two results do not presently clear a
+standalone-paper novelty threshold.  Their defensible use is as a technical
+appendix and reproducibility certificate supporting a paper with a genuinely
+new prime-bias theorem or numerical discovery.
+
+The remaining open work is numerical rather than theorem-closing: rerun the
+four character/zero examples from raw inputs, report interval/error control,
+and reconcile the branch convention across code and exposition.  Those checks
+can strengthen a computational section, but they do not change the novelty
+verdict above.
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}

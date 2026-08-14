@@ -1,0 +1,381 @@
+{
+  "status": "completed",
+  "verdict": "TAIL-LIMITED",
+  "source": {
+    "zeros_path": "/Users/za/Documents/farey-hecke/cluster_universality_test/zeros1.txt",
+    "zeros_sha256": "3436c916a7878261ac183fd7b9448c9a4736b8bbccf1356874a6ce1788541632",
+    "used_zero_count": 10000,
+    "backend": "PARI/GP 2.17.3 via lfuninit",
+    "realprecision_digits": 20,
+    "high_precision_crosscheck_digits": 30,
+    "strict_residual_threshold": "1e-15",
+    "max_abs_zeta_residual": 1.3250447406271794e-16,
+    "failure_count": 0,
+    "refinement": "one real Newton update from each zeros1.txt seed",
+    "convention": "two-sided sum is twice the positive-ordinate sum"
+  },
+  "partial_sums_table": [
+    {
+      "N": 100,
+      "gamma": 236.5242296658162,
+      "positive_sum": 0.014143636055307529
+    },
+    {
+      "N": 300,
+      "gamma": 541.8474371212013,
+      "positive_sum": 0.014349494265830053
+    },
+    {
+      "N": 1000,
+      "gamma": 1419.4224809459956,
+      "positive_sum": 0.014453988690945205
+    },
+    {
+      "N": 3000,
+      "gamma": 3533.328243396,
+      "positive_sum": 0.014489912328235117
+    },
+    {
+      "N": 3500,
+      "gamma": 4023.905151400087,
+      "positive_sum": 0.014492932126720924
+    },
+    {
+      "N": 4000,
+      "gamma": 4506.311496728825,
+      "positive_sum": 0.014495875642117878
+    },
+    {
+      "N": 4500,
+      "gamma": 4980.118762529119,
+      "positive_sum": 0.01449788495313407
+    },
+    {
+      "N": 5000,
+      "gamma": 5447.8619983012995,
+      "positive_sum": 0.014500060455489835
+    },
+    {
+      "N": 5500,
+      "gamma": 5909.432316004653,
+      "positive_sum": 0.014501254044012682
+    },
+    {
+      "N": 6000,
+      "gamma": 6365.852321021016,
+      "positive_sum": 0.014502447556513667
+    },
+    {
+      "N": 6500,
+      "gamma": 6817.957478321912,
+      "positive_sum": 0.014503310096631711
+    },
+    {
+      "N": 7000,
+      "gamma": 7264.7482480903,
+      "positive_sum": 0.014504274121120606
+    },
+    {
+      "N": 7500,
+      "gamma": 7708.220972632062,
+      "positive_sum": 0.014504987209119425
+    },
+    {
+      "N": 8000,
+      "gamma": 8148.188405804627,
+      "positive_sum": 0.014505585650600568
+    },
+    {
+      "N": 8500,
+      "gamma": 8585.65146315022,
+      "positive_sum": 0.014506084504021566
+    },
+    {
+      "N": 9000,
+      "gamma": 9018.424475610378,
+      "positive_sum": 0.014506541477923997
+    },
+    {
+      "N": 9500,
+      "gamma": 9449.609725389102,
+      "positive_sum": 0.014506932876632546
+    },
+    {
+      "N": 10000,
+      "gamma": 9877.782654005501,
+      "positive_sum": 0.014507394686524878
+    }
+  ],
+  "tail_model": {
+    "T": 9877.782654005501,
+    "T_decimal": "9877.7826540055011428",
+    "density": "dN/dt = log(t/(2*pi))/(2*pi)",
+    "gonek_B_prediction": "(6/pi^2)/log(t/(2*pi))",
+    "fit": {
+      "model": "B(t) = alpha * (6/pi^2)/log(t/(2*pi)), through-origin OLS on 500-zero block means",
+      "fit_lo_start": 5001,
+      "fit_block_count": 10,
+      "alpha": 0.9158452605359704,
+      "gonek_B_numerator": 0.6079271018540267,
+      "gonek_J_minus1_slope": 0.09675460329959848,
+      "mean_ratio_B_to_gonek": 0.9152021505961856,
+      "min_ratio_B_to_gonek": 0.7995026431393003,
+      "max_ratio_B_to_gonek": 1.100634807458603,
+      "residual_rmse": 0.008323645563285102,
+      "max_abs_residual": 0.01599882039544176,
+      "max_block_mean": 0.09529142150488772,
+      "blocks": [
+        {
+          "lo": 5001,
+          "hi": 5500,
+          "T_lo": null,
+          "T_hi": 5909.432316004653,
+          "T_mid": 5678.647157152976,
+          "B": 0.07665948338941109,
+          "gonek_B": 0.08931447186772902,
+          "ratio_B_to_gonek": 0.8583097653305342,
+          "fitted_B": 0.08179823575733287,
+          "residual": -0.005138752367921787,
+          "relative_residual": -0.0670334854960893
+        },
+        {
+          "lo": 5501,
+          "hi": 6000,
+          "T_lo": null,
+          "T_hi": 6365.852321021016,
+          "T_mid": 6137.642318512835,
+          "B": 0.08944199674854168,
+          "gonek_B": 0.08830606356767652,
+          "ratio_B_to_gonek": 1.012863592090645,
+          "fitted_B": 0.08087468979504467,
+          "residual": 0.008567306953497014,
+          "relative_residual": 0.09578617724270228
+        },
+        {
+          "lo": 6001,
+          "hi": 6500,
+          "T_lo": null,
+          "T_hi": 6817.957478321912,
+          "T_mid": 6591.904899671465,
+          "B": 0.07494725836560553,
+          "gonek_B": 0.08739958642640541,
+          "ratio_B_to_gonek": 0.8575241763725584,
+          "fitted_B": 0.08004449700142732,
+          "residual": -0.005097238635821788,
+          "relative_residual": -0.0680110086343197
+        },
+        {
+          "lo": 6501,
+          "hi": 7000,
+          "T_lo": null,
+          "T_hi": 7264.7482480903,
+          "T_mid": 7041.352863206106,
+          "B": 0.09529142150488772,
+          "gonek_B": 0.08657860069401067,
+          "ratio_B_to_gonek": 1.100634807458603,
+          "fitted_B": 0.07929260110944596,
+          "residual": 0.01599882039544176,
+          "relative_residual": 0.16789360619015578
+        },
+        {
+          "lo": 7001,
+          "hi": 7500,
+          "T_lo": null,
+          "T_hi": 7708.220972632062,
+          "T_mid": 7486.484610361181,
+          "B": 0.07991816929147648,
+          "gonek_B": 0.0858293136028277,
+          "ratio_B_to_gonek": 0.9311290739349863,
+          "fitted_B": 0.07860637007820524,
+          "residual": 0.0013117992132712364,
+          "relative_residual": 0.01641428006798879
+        },
+        {
+          "lo": 7501,
+          "hi": 8000,
+          "T_lo": null,
+          "T_hi": 8148.188405804627,
+          "T_mid": 7928.204689218344,
+          "B": 0.07490243584140749,
+          "gonek_B": 0.08514021691179174,
+          "ratio_B_to_gonek": 0.8797538761148452,
+          "fitted_B": 0.07797526413966895,
+          "residual": -0.003072828298261457,
+          "relative_residual": -0.04102441080511215
+        },
+        {
+          "lo": 8001,
+          "hi": 8500,
+          "T_lo": null,
+          "T_hi": 8585.65146315022,
+          "T_mid": 8366.919934477424,
+          "B": 0.0697239894499838,
+          "gonek_B": 0.08450281344990983,
+          "ratio_B_to_gonek": 0.8251084976160424,
+          "fitted_B": 0.07739150120005517,
+          "residual": -0.007667511750071368,
+          "relative_residual": -0.10996949271773418
+        },
+        {
+          "lo": 8501,
+          "hi": 9000,
+          "T_lo": null,
+          "T_hi": 9018.424475610378,
+          "T_mid": 8802.037969380299,
+          "B": 0.07083894878100397,
+          "gonek_B": 0.08391148710032811,
+          "ratio_B_to_gonek": 0.8442103844054859,
+          "fitted_B": 0.07684993776536071,
+          "residual": -0.006010988984356744,
+          "relative_residual": -0.08485429396954347
+        },
+        {
+          "lo": 9001,
+          "hi": 9500,
+          "T_lo": null,
+          "T_hi": 9449.609725389102,
+          "T_mid": 9234.01710049974,
+          "B": 0.06664671525065342,
+          "gonek_B": 0.08336021878421898,
+          "ratio_B_to_gonek": 0.7995026431393003,
+          "fitted_B": 0.07634506129076853,
+          "residual": -0.009698346040115102,
+          "relative_residual": -0.145518740175571
+        },
+        {
+          "lo": 9501,
+          "hi": 10000,
+          "T_lo": null,
+          "T_hi": 9877.782654005501,
+          "T_mid": 9663.6961896973,
+          "B": 0.08640456212410563,
+          "gonek_B": 0.08284355752683414,
+          "ratio_B_to_gonek": 1.0429846894988548,
+          "fitted_B": 0.07587187952689006,
+          "residual": 0.01053268259721557,
+          "relative_residual": 0.1218996119914032
+        }
+      ]
+    },
+    "central_one_sided": 8.970863998041125e-06,
+    "max_block_mean": 0.09529142150488772,
+    "envelope_one_sided": 1.2835990468773042e-05,
+    "tail_interval_one_sided": [
+      0.0,
+      1.2835990468773042e-05
+    ],
+    "central_formula": "alpha*(3/pi^3)*2*atan(1/(2*T))",
+    "envelope_formula": "Bmax/(2*pi)*integral_T_inf log(t/(2*pi))/(t^2+1/4) dt",
+    "interpretation": "empirical extrapolation, not a theorem-level bound"
+  },
+  "error_budget": {
+    "tail_model_two_sided": 1.794172799608225e-05,
+    "backend_two_sided": 4.90890645426e-25,
+    "backend_max_chunk_difference": 4.741780903e-26,
+    "a4_seed_two_sided": 2.127830116663328e-21,
+    "a4_max_root_error": 4.9936100044160764e-17,
+    "inherited_seed_status": "not fully per-zero propagated; reused N<=3000 receipt has residual gate and N<=1000 realprecision-30 displayed-sum cross-check",
+    "total_two_sided_error_bar": 1.7941727996082254e-05
+  },
+  "cross_checks": {
+    "a3_overlap_max_abs_difference": 0.0,
+    "a3_overlap_count": 14,
+    "backend_crosscheck_status": "completed",
+    "backend_sum_absolute_difference": 2.45445322713e-25
+  },
+  "final_estimate": {
+    "positive_partial_sum": 0.014507394686524878,
+    "positive_sum_with_central_tail": 0.014516365550522919,
+    "two_sided_S": 0.029032731101045837,
+    "two_sided_error_bar": 1.7941727996082254e-05,
+    "two_sided_interval_from_conservative_envelope": [
+      0.029014789373049757,
+      0.0290404613539873
+    ],
+    "digits_claimed": "3 significant digits; 4 significant digits are not certified by the tail bar",
+    "target_bar_1e-5_achieved": false
+  },
+  "simple_form_candidates": [
+    {
+      "form": "3/pi^4",
+      "value": 0.03079794676405301,
+      "absolute_residual": 0.001765215663007174,
+      "relative_residual": 0.06080088217892757,
+      "sigma_units": 98.38604527906261,
+      "excluded": true
+    },
+    {
+      "form": "1/pi^3 = (2/pi^2)/(2*pi)",
+      "value": 0.032251534433199495,
+      "absolute_residual": 0.003218803332153658,
+      "relative_residual": 0.11086808612496356,
+      "sigma_units": 179.4031953252504,
+      "excluded": true
+    },
+    {
+      "form": "2/pi^4",
+      "value": 0.020531964509368675,
+      "absolute_residual": 0.008500766591677162,
+      "relative_residual": 0.2927994118807149,
+      "sigma_units": 473.79865493075056,
+      "excluded": true
+    },
+    {
+      "form": "1/(2*pi^3)",
+      "value": 0.016125767216599748,
+      "absolute_residual": 0.01290696388444609,
+      "relative_residual": 0.4445659569375182,
+      "sigma_units": 719.3824300125633,
+      "excluded": true
+    },
+    {
+      "form": "1/(2*pi^2)",
+      "value": 0.05066059182116889,
+      "absolute_residual": 0.02162786072012305,
+      "relative_residual": 0.7449475092387694,
+      "sigma_units": 1205.4502623630065,
+      "excluded": true
+    },
+    {
+      "form": "(2/pi^2)/(2*pi)^2 = 1/(2*pi^4)",
+      "value": 0.005132991127342169,
+      "absolute_residual": 0.02389973997370367,
+      "relative_residual": 0.8231998529701787,
+      "sigma_units": 1332.0757052454705,
+      "excluded": true
+    },
+    {
+      "form": "6/pi^4",
+      "value": 0.06159589352810602,
+      "absolute_residual": 0.032563162427060185,
+      "relative_residual": 1.121601764357855,
+      "sigma_units": 1814.9401459085022,
+      "excluded": true
+    },
+    {
+      "form": "2/pi^2",
+      "value": 0.20264236728467555,
+      "absolute_residual": 0.1736096361836297,
+      "relative_residual": 5.979790036955077,
+      "sigma_units": 9676.305215503156,
+      "excluded": true
+    }
+  ],
+  "a3_receipt": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/j_minus1_receipt.json",
+  "a4_checkpoints": [
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_03001_03500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_03501_04000.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_04001_04500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_04501_05000.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_05001_05500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_05501_06000.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_06001_06500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_06501_07000.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_07001_07500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_07501_08000.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_08001_08500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_08501_09000.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_09001_09500.json",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/a4_checkpoints/weighted_chunk_09501_10000.json"
+  ]
+}

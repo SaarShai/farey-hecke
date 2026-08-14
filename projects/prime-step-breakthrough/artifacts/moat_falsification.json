@@ -1,0 +1,135 @@
+{
+  "claim_boundary": "Retrospective algorithmic moat test on previously revealed public data; does not establish customer demand, human-time savings, safe stopping, or monetary value.",
+  "decision_rule": "ordering moat is supported only if quota improves at least 10% over both seeded random and proportional-deficit baselines, with the paired bootstrap 95% lower bound at or above 10%, on every workload",
+  "overall_ordering_moat_supported": false,
+  "preregistered_primary_metric": "mean integrated absolute prefix error after frozen warmup",
+  "schema": "prefix-balance-moat-falsification-v1",
+  "workloads": [
+    {
+      "category_schedules": {
+        "proportional_deficit": {
+          "algorithm": "largest proportional entitlement deficit",
+          "max_prefix_discrepancy": "579/599"
+        },
+        "quota": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "898/1797",
+          "max_discrepancy": "598/599",
+          "max_prefix_discrepancy": "598/599",
+          "order_sha256": "e3ab631f6b2a50a1282147195a6cf22373c2a6fe57ca35d86c6d86229c65f061",
+          "ratio_bound": "897/449"
+        }
+      },
+      "comparisons": {
+        "vs_proportional_deficit": {
+          "baseline_mean": 0.006507504164814259,
+          "bootstrap_95_interval": [
+            -0.016507066833955752,
+            -0.00172627748650922
+          ],
+          "quota_mean": 0.006567769083083607,
+          "quota_relative_reduction": -0.009260834375673044,
+          "quota_win_rate": 0.478
+        },
+        "vs_seeded_random": {
+          "baseline_mean": 0.007501909798614279,
+          "bootstrap_95_interval": [
+            0.09784862674268446,
+            0.14985618056382422
+          ],
+          "quota_mean": 0.006567769083083607,
+          "quota_relative_reduction": 0.12452038755560912,
+          "quota_win_rate": 0.636
+        }
+      },
+      "items": 1797,
+      "mean_metrics": {
+        "proportional_deficit": {
+          "integrated_absolute_error": 0.006507504164814259,
+          "one_percent_settling_prefix": 660.208
+        },
+        "quota": {
+          "integrated_absolute_error": 0.006567769083083607,
+          "one_percent_settling_prefix": 664.81
+        },
+        "seeded_random": {
+          "integrated_absolute_error": 0.007501909798614279,
+          "one_percent_settling_prefix": 747.718
+        }
+      },
+      "ordering_moat_supported": false,
+      "pilot_id": "uci-optdigits-2026-08-01-label-blind-v2",
+      "production_metrics": {
+        "integrated_absolute_error": 0.008892942339611411,
+        "integrated_squared_error": 0.00015126300074678878,
+        "one_percent_settling_prefix": 1067
+      },
+      "strata": 50,
+      "trials": 500,
+      "warmup": 50
+    },
+    {
+      "category_schedules": {
+        "proportional_deficit": {
+          "algorithm": "largest proportional entitlement deficit",
+          "max_prefix_discrepancy": "11/12"
+        },
+        "quota": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "11/12",
+          "max_prefix_discrepancy": "11/12",
+          "order_sha256": "6d6f9e213c84900164c70a48f5b4a1890a6a667d2d79ad7304086edea031a9a2",
+          "ratio_bound": "11/6"
+        }
+      },
+      "comparisons": {
+        "vs_proportional_deficit": {
+          "baseline_mean": 0.0032718083857060766,
+          "bootstrap_95_interval": [
+            0.0,
+            0.0
+          ],
+          "quota_mean": 0.0032718083857060766,
+          "quota_relative_reduction": 0.0,
+          "quota_win_rate": 0.0
+        },
+        "vs_seeded_random": {
+          "baseline_mean": 0.0036051732671081808,
+          "bootstrap_95_interval": [
+            0.07382916533097816,
+            0.10988241936766885
+          ],
+          "quota_mean": 0.0032718083857060766,
+          "quota_relative_reduction": 0.09246847701983163,
+          "quota_win_rate": 0.66
+        }
+      },
+      "items": 24000,
+      "mean_metrics": {
+        "proportional_deficit": {
+          "integrated_absolute_error": 0.0032718083857060766,
+          "one_percent_settling_prefix": 2729.298
+        },
+        "quota": {
+          "integrated_absolute_error": 0.0032718083857060766,
+          "one_percent_settling_prefix": 2729.298
+        },
+        "seeded_random": {
+          "integrated_absolute_error": 0.0036051732671081808,
+          "one_percent_settling_prefix": 3201.352
+        }
+      },
+      "ordering_moat_supported": false,
+      "pilot_id": "neteasecrowd-human-annotation-2026-08-01",
+      "production_metrics": {
+        "integrated_absolute_error": 0.06540395169061251,
+        "integrated_squared_error": 0.006614330795953359,
+        "one_percent_settling_prefix": 21876
+      },
+      "strata": 12,
+      "trials": 500,
+      "warmup": 100
+    }
+  ]
+}

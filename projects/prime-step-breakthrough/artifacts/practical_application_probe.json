@@ -1,0 +1,385 @@
+{
+  "audit_ordering": {
+    "claim_boundary": "These are offline classification-audit replays. They do not validate a medical device, spam filter, banknote system, human-review workflow, or monetary saving.",
+    "cross_dataset_verdict": {
+      "all_shuffled_null_intervals_include_zero": true,
+      "dataset_count": 3,
+      "positive_datasets": 3,
+      "representative_prefix_signal": "supported",
+      "safe_stopping_claim": "not established; exact intervals are evaluated separately and may erase retrospective gains"
+    },
+    "datasets": [
+      {
+        "certificate": {
+          "joint_order_sha256": "34b1d7afe2904ea8ecf44a5c43c89af4ac040372b1e094b01405f46f7ae4f0c6",
+          "max_declared_cell_discrepancy": "36/37",
+          "verified": true
+        },
+        "design": {
+          "classifier": "training-standardized nearest class centroid",
+          "joint_strata": 10,
+          "margin_bins": 5,
+          "outcomes_used_for_ordering": false,
+          "safe_stop_trials": 100,
+          "split": "deterministic label-stratified 65/35",
+          "trials": 500,
+          "warmup": 25
+        },
+        "exact_safe_stopping_5pp": {
+          "mean_items_saved": -1.92,
+          "paired_bootstrap_95_interval": [
+            -2.55,
+            -1.31
+          ],
+          "simultaneous_coverage_count": {
+            "random": 100,
+            "tool": 100
+          },
+          "tool_win_rate": 0.24,
+          "trial_count": 100
+        },
+        "integrated_absolute_prefix_error": {
+          "prediction_and_margin": {
+            "bootstrap_95_interval": [
+              0.04591690669015902,
+              0.09579328630464079
+            ],
+            "paired_win_rate": 0.61,
+            "random_mean": 0.015460444072660008,
+            "relative_reduction": 0.07143052326588406,
+            "tool_mean": 0.014356096462626968
+          },
+          "prediction_only": {
+            "bootstrap_95_interval": [
+              -0.009399805968911101,
+              0.0004587164798564025
+            ],
+            "paired_win_rate": 0.458,
+            "random_mean": 0.015460444072660008,
+            "relative_reduction": -0.0044991765106927595,
+            "tool_mean": 0.015530003339476598
+          },
+          "shuffled_outcome_null": {
+            "bootstrap_95_interval": [
+              -0.010974716308067789,
+              0.01844090223492567
+            ],
+            "paired_win_rate": 0.482,
+            "random_mean": 0.015160294780318962,
+            "relative_reduction": 0.0038154954585727374,
+            "tool_mean": 0.01510245074443403
+          }
+        },
+        "name": "banknote-authentication",
+        "population": {
+          "classes": 2,
+          "features": 4,
+          "rows": 1372,
+          "test_accuracy": 0.841995841995842,
+          "test_rows": 481,
+          "train_rows": 891
+        },
+        "source": {
+          "archive_sha256": "1e2acd9a2085fadf3d8145c12d3d22af853320d52294a6590c2eaf75fdc05227",
+          "doi": "https://doi.org/10.24432/C55P57",
+          "url": "https://archive.ics.uci.edu/static/public/267/banknote+authentication.zip"
+        },
+        "stratum_accuracy_range": [
+          0.575,
+          1.0
+        ]
+      },
+      {
+        "certificate": {
+          "joint_order_sha256": "3319c89dfc6a67d1af25a082e905ac3fb2722d216183414093e1f7f237bd051d",
+          "max_declared_cell_discrepancy": "174/179",
+          "verified": true
+        },
+        "design": {
+          "classifier": "training-standardized nearest class centroid",
+          "joint_strata": 10,
+          "margin_bins": 5,
+          "outcomes_used_for_ordering": false,
+          "safe_stop_trials": 100,
+          "split": "deterministic label-stratified 65/35",
+          "trials": 500,
+          "warmup": 80
+        },
+        "exact_safe_stopping_5pp": {
+          "mean_items_saved": 0.25,
+          "paired_bootstrap_95_interval": [
+            -1.42,
+            2.0
+          ],
+          "simultaneous_coverage_count": {
+            "random": 100,
+            "tool": 100
+          },
+          "tool_win_rate": 0.5,
+          "trial_count": 100
+        },
+        "integrated_absolute_prefix_error": {
+          "prediction_and_margin": {
+            "bootstrap_95_interval": [
+              0.013458900843094201,
+              0.04494196473831058
+            ],
+            "paired_win_rate": 0.578,
+            "random_mean": 0.00709782432410167,
+            "relative_reduction": 0.029502465210862194,
+            "tool_mean": 0.006888421008907049
+          },
+          "prediction_only": {
+            "bootstrap_95_interval": [
+              -0.003668634784753655,
+              0.004447168425148917
+            ],
+            "paired_win_rate": 0.502,
+            "random_mean": 0.00709782432410167,
+            "relative_reduction": 0.00040924342207993014,
+            "tool_mean": 0.007094919586185952
+          },
+          "shuffled_outcome_null": {
+            "bootstrap_95_interval": [
+              -0.002739586275931405,
+              0.014495340131214562
+            ],
+            "paired_win_rate": 0.524,
+            "random_mean": 0.007211431504504783,
+            "relative_reduction": 0.005914774979611237,
+            "tool_mean": 0.007168777509874758
+          }
+        },
+        "name": "spambase",
+        "population": {
+          "classes": 2,
+          "features": 57,
+          "rows": 4601,
+          "test_accuracy": 0.9000620732464308,
+          "test_rows": 1611,
+          "train_rows": 2990
+        },
+        "source": {
+          "archive_sha256": "813ac1df8effac70463c09c9c4b11e8803eefcab54771af66150852bcdcd1636",
+          "doi": "https://doi.org/10.24432/C53G6X",
+          "url": "https://archive.ics.uci.edu/static/public/94/spambase.zip"
+        },
+        "stratum_accuracy_range": [
+          0.6875,
+          0.9920634920634921
+        ]
+      },
+      {
+        "certificate": {
+          "joint_order_sha256": "254a76db7bc9fa9dd306d9b05afa129fca5edea25f84b6aa815e431c5362b93e",
+          "max_declared_cell_discrepancy": "196/199",
+          "verified": true
+        },
+        "design": {
+          "classifier": "training-standardized nearest class centroid",
+          "joint_strata": 10,
+          "margin_bins": 5,
+          "outcomes_used_for_ordering": false,
+          "safe_stop_trials": 100,
+          "split": "deterministic label-stratified 65/35",
+          "trials": 500,
+          "warmup": 25
+        },
+        "exact_safe_stopping_5pp": {
+          "mean_items_saved": -0.77,
+          "paired_bootstrap_95_interval": [
+            -0.94,
+            -0.61
+          ],
+          "simultaneous_coverage_count": {
+            "random": 100,
+            "tool": 100
+          },
+          "tool_win_rate": 0.0,
+          "trial_count": 100
+        },
+        "integrated_absolute_prefix_error": {
+          "prediction_and_margin": {
+            "bootstrap_95_interval": [
+              0.06440232283784042,
+              0.11706296600230204
+            ],
+            "paired_win_rate": 0.614,
+            "random_mean": 0.016933998720306858,
+            "relative_reduction": 0.09107294299060409,
+            "tool_mean": 0.01539176962024939
+          },
+          "prediction_only": {
+            "bootstrap_95_interval": [
+              -0.008751049105266695,
+              0.004699580928332336
+            ],
+            "paired_win_rate": 0.486,
+            "random_mean": 0.016933998720306858,
+            "relative_reduction": -0.001920191905970814,
+            "tool_mean": 0.01696651524758531
+          },
+          "shuffled_outcome_null": {
+            "bootstrap_95_interval": [
+              -0.013334778810081271,
+              0.02864837338175974
+            ],
+            "paired_win_rate": 0.522,
+            "random_mean": 0.017237021387576063,
+            "relative_reduction": 0.007826040728631356,
+            "tool_mean": 0.017102123756156603
+          }
+        },
+        "name": "breast-cancer-wisconsin-diagnostic",
+        "population": {
+          "classes": 2,
+          "features": 30,
+          "rows": 569,
+          "test_accuracy": 0.9045226130653267,
+          "test_rows": 199,
+          "train_rows": 370
+        },
+        "source": {
+          "archive_sha256": "bc154869ef13f753f9e2b5a17e248cfe1ba4b6721db7c4da9f4880e40b05d3af",
+          "doi": "https://doi.org/10.24432/C5DW2B",
+          "url": "https://archive.ics.uci.edu/static/public/17/breast+cancer+wisconsin+diagnostic.zip"
+        },
+        "stratum_accuracy_range": [
+          0.6428571428571429,
+          1.0
+        ]
+      }
+    ],
+    "schema_version": "audit-generalization-probe-v1"
+  },
+  "risk_scenarios": {
+    "aligned_driver_case": {
+      "expected_shortfall_97_5": {
+        "bootstrap_95_interval": [
+          -0.06797575061088268,
+          0.025207944900801804
+        ],
+        "paired_win_rate": 0.44,
+        "random_mean": 0.05157679556271236,
+        "relative_reduction": -0.021192821119518257,
+        "tool_mean": 0.05266985336499089
+      },
+      "mean": {
+        "bootstrap_95_interval": [
+          0.030429240778850675,
+          0.183523696595688
+        ],
+        "paired_win_rate": 0.59,
+        "random_mean": 0.006606259102704673,
+        "relative_reduction": 0.11084492777807942,
+        "tool_mean": 0.005873988789582093
+      },
+      "var_97_5": {
+        "bootstrap_95_interval": [
+          0.041392725231670036,
+          0.16193691022306522
+        ],
+        "paired_win_rate": 0.62,
+        "random_mean": 0.0062423518038253216,
+        "relative_reduction": 0.10250564734626733,
+        "tool_mean": 0.0056024754912110675
+      }
+    },
+    "certificate": {
+      "max_declared_cell_discrepancy": "2047/2048",
+      "order_sha256": "cafb8f1f469cc43a890619aac7306ce6149a013bcfc4095fb91bf329db378aec",
+      "verified": true
+    },
+    "claim_boundary": "This is a stylized finite-population simulation, not a bank model, regulatory backtest, pricing engine, capital calculation, or measured cost saving.",
+    "design": {
+      "aligned_case": "loss location, scale, and tail rate depend on all three declared cell axes",
+      "checkpoints": [
+        1311,
+        3277,
+        6554,
+        13107,
+        26214,
+        52429
+      ],
+      "hostile_case": "losses are sorted low-to-high inside every cell before quota interleaving",
+      "null_case": "the same losses are permuted independently of declared cells",
+      "paired_priorities": true,
+      "trials": 100
+    },
+    "hostile_within_cell_order": {
+      "categorical_certificate_still_passes": true,
+      "integrated_relative_error": {
+        "expected_shortfall_97_5": 0.5858797836043368,
+        "mean": 0.12884210695726972,
+        "var_97_5": 0.08632003388175152
+      },
+      "unscrambled_stable_queue_error": {
+        "expected_shortfall_97_5": 0.049464790927264975,
+        "mean": 0.0049747948001062125,
+        "var_97_5": 0.006556600823609531
+      }
+    },
+    "permuted_cell_null": {
+      "expected_shortfall_97_5": {
+        "bootstrap_95_interval": [
+          -0.05157684423047648,
+          0.027973707633899503
+        ],
+        "paired_win_rate": 0.45,
+        "random_mean": 0.05878008087629931,
+        "relative_reduction": -0.011886738356062354,
+        "tool_mean": 0.05947878431822406
+      },
+      "mean": {
+        "bootstrap_95_interval": [
+          -0.047291750865227744,
+          0.03507218476585383
+        ],
+        "paired_win_rate": 0.52,
+        "random_mean": 0.007295102577392418,
+        "relative_reduction": -0.00547928472738568,
+        "tool_mean": 0.0073350745215294355
+      },
+      "var_97_5": {
+        "bootstrap_95_interval": [
+          -0.08845497619951348,
+          0.006004861069148215
+        ],
+        "paired_win_rate": 0.45,
+        "random_mean": 0.005540026397715853,
+        "relative_reduction": -0.04078412087027794,
+        "tool_mean": 0.005765971503944827
+      }
+    },
+    "population": {
+      "declared_cells": 64,
+      "final_risk": {
+        "expected_shortfall_97_5": 20.327733330849497,
+        "mean": 5.0480522006716,
+        "var_97_5": 8.900732009543024
+      },
+      "scenarios": 65536
+    },
+    "schema_version": "risk-scenario-probe-v1",
+    "source": {
+      "basel_reference": "https://www.bis.org/bcbs/publ/d457_note.pdf",
+      "preset": "finance-scenario-cells",
+      "risk_metric": "empirical 97.5% one-tailed expected shortfall"
+    },
+    "verdict": {
+      "aligned_metrics_with_positive_95_interval": {
+        "expected_shortfall_97_5": false,
+        "mean": true,
+        "var_97_5": true
+      },
+      "application_signal": "supported for metrics whose aligned-case interval is positive; not universal",
+      "falsification_signal": "the categorical certificate does not control hidden within-cell tail ordering",
+      "null_intervals_include_zero": {
+        "expected_shortfall_97_5": true,
+        "mean": true,
+        "var_97_5": true
+      }
+    }
+  },
+  "schema_version": "practical-application-probes-v1"
+}

@@ -1,0 +1,62 @@
+# M2 non-factor nonvanishing witnesses
+
+## Verdict: **PASS_ALL_WITNESSES**
+
+The lower-bound column is the actual Arb `acb.abs_lower()` value for the final ball, after the source module's dimension-tail radius is added to both coordinates. A row is `CERTIFIED-NONZERO` only when that actual lower bound is strictly positive and the tail evaluation returns a finite radius.
+
+| Surface | Zero point | Verdict | Certified lower bound on `|det|` | Tail contribution | Rounding contribution |
+|---|---:|---|---:|---:|---:|
+| G_5 (`q=5`, mms+) | zeta_1 (`gamma=14.134725141734693`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 2.221122e+00 | 5.298197e-15 | 7.416472e-110 |
+| G_5 (`q=5`, mms+) | zeta_2 (`gamma=21.022039638771554`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 4.914385e-01 | 1.587620e-12 | 1.684806e-109 |
+| G_5 (`q=5`, mms+) | zeta_3 (`gamma=25.010857580145688`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 4.562049e+00 | 4.857673e-11 | 4.903808e-108 |
+| G_8 (`q=8`, mms+) | zeta_1 (`gamma=14.134725141734693`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 2.129458e+00 | 2.090707e-07 | 7.509547e-108 |
+| G_8 (`q=8`, mms+) | zeta_2 (`gamma=21.022039638771554`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 1.283255e+01 | 4.512383e-06 | 1.022931e-105 |
+| G_8 (`q=8`, mms+) | zeta_3 (`gamma=25.010857580145688`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 5.669609e+00 | 4.959702e-06 | 3.057527e-105 |
+| G_10 (`q=10`, mms+) | zeta_1 (`gamma=14.134725141734693`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 1.285301e+00 | 4.182492e-08 | 1.812844e-107 |
+| G_10 (`q=10`, mms+) | zeta_2 (`gamma=21.022039638771554`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 1.154057e+01 | 1.603416e-06 | 5.412216e-105 |
+| G_10 (`q=10`, mms+) | zeta_3 (`gamma=25.010857580145688`) | **CERTIFIED-NONZERO**<br>`certified-modulo-tail-heuristic` | 5.550949e+00 | 3.712748e-05 | 2.438931e-104 |
+
+## Control (executed first)
+
+- G_4 at `s_1 = 0.25 + i*7.0673625708673465`: **PASS-CONSISTENT-WITH-ZERO**.
+- Finite-N midpoint: `{'abs': 4.577176449829742e-16, 'im': 1.2555658754608053e-16, 're': 4.401601820389294e-16}`; midpoint `|det|` = `4.577176e-16`.
+- Final Arb ball: `[+/- 1.94e-15] + [+/- 1.63e-15]j`.
+- Actual final `acb.abs_lower()`: `0`.
+- Tail contribution: `1.498877e-15`; rounding contribution: `6.045348e-102`.
+
+## Ball and tail accounting
+
+All evaluations used `precision_bits=400`, `N=28`, `n_head=4`, and `sign=+1` (`mms+`). The standard source tail check used dimensions `[20, 22, 24, 26, 28]`, `step=2`, `window=4`, and `q_cap=0.85`; it extrapolates the last determinant increment as `last_increment*q/(1-q)` and adds that radius to both the real and imaginary components. The reported rounding contribution is `finite-N determinant component Arb radii before tail inflation`.
+
+The q=5 rows use `zeta_cert_rosen_q5.py`'s certified builder and its q=5 odd-q block formula with `sign=+1`; the q=8 and q=10 rows use `zeta_cert_rosen_even.py`'s even-q `cert_det` path. The q=8 source explicitly says that the general even-q builder is anchor-validated only at q=8; q=10 is therefore a mechanical general-q evaluation and is disclosed as not independently anchor-validated by that module.
+
+## Required honesty statements
+
+(a) the dimension-tail component of the ball radius is heuristic (see lane_b/ADVERSARIAL_REVIEW_V1.md section 4.3) — label every witness "certified-modulo-tail-heuristic" and report the tail contribution separately from the rounding contribution;
+
+Every row with a positive lower bound is therefore labeled **certified-modulo-tail-heuristic** in the receipt/report sense: the Arb finite-N and rounding enclosure is computed by ball arithmetic, while the dimension-tail extrapolation is the existing heuristic convention.
+
+(b) if det = zeta(2s)*h with h analytic in a neighborhood, then det(s_n)=0; certified det(s_n)!=0 refutes this for the tested points;
+
+This is pointwise only: three tested points do not establish a global no-factor theorem, and the determinant here is the tested transfer-operator determinant under the stated sector/convention.
+
+## Raw Arb evidence
+
+The following strings are the source/runtime ball outputs retained in the machine-readable receipt; the lower-bound verdict was checked from the actual final `acb.abs_lower()` call, not from midpoint magnitude.
+
+| Surface / point | Finite-N `acb` ball | Tail | Final `acb` ball | Actual `abs_lower()` |
+|---|---|---:|---|---:|
+| CONTROL G_4 / zeta_1 | `[4.4016018203892941483283155384520279084678196045030314672367914008525334622591564399973e-16 +/- 8.56e-102] + [1.2555658754608052023464421500436876461597116433800906093977808921745428873480184662860e-16 +/- 7.78e-102]j` | `1.498877e-15` | `[+/- 1.94e-15] + [+/- 1.63e-15]j` | `0` |
+| G_5 / zeta_1 | `[1.315645386146027168202516739899411053889833573835378593523495307282930048662505200311562555631306226037112757 +/- 4.23e-109] + [-1.789542143375757660803345764270835134162941124068371680073230881717550167528011327283769244786421443301580066 +/- 5.45e-109]j` | `5.298197e-15` | `[1.31564538614603 +/- 8.14e-15] + [-1.78954214337576 +/- 7.64e-15]j` | `[2.2211222084804781899728009020883445569105462614230150078807794205091944145274899064837111545635379055798173363427110372 +/- 2.00e-120]` |
+| G_5 / zeta_2 | `[0.407931732312595548965271694130972235880116774980449510287317085811454010271363912753738602980775348533083254 +/- 1.83e-109] + [-0.274050147692476142408718397233565883376985670822327331044268965195615760222582641323413786242734737963376003 +/- 4.04e-109]j` | `1.587620e-12` | `[0.40793173231 +/- 4.19e-12] + [-0.27405014769 +/- 4.07e-12]j` | `[0.49143848208667749949079983487043136813689183693341237253914263321476038142051416121633365898302788227913033037616638555 +/- 3.82e-120]` |
+| G_5 / zeta_3 | `[4.14140123962530863775224103894417055097742889248393039744095750950999869467030080082882727214705167077768727 +/- 6.34e-108] + [-1.91339777470010149024954531938844461292834628496878630165563313024720052609520857346763120689320890719530231 +/- 7.70e-108]j` | `4.857673e-11` | `[4.1414012396 +/- 7.39e-11] + [-1.9133977747 +/- 4.87e-11]j` | `[4.5620494595312202469050513286319292190756525261426251299924532138207673146536171576929106145538608765411375145898098972 +/- 1.71e-119]` |
+| G_8 / zeta_1 | `[-1.61829153464427946442782712337402842830443081282838177013384887415045762098302450648550629511640749520937416 +/- 7.57e-108] + [-1.38409668853389936137235186717277647176083982875319987482957563477651951380069642214479893896471337060854517 +/- 7.82e-108]j` | `2.090707e-07` | `[-1.618292 +/- 6.75e-7] + [-1.384097 +/- 5.21e-7]j` | `[2.1294576490011154412873712257467331956005378887776733348569187369927472176565436406808783781105274666868098736409210007 +/- 3.29e-119]` |
+| G_8 / zeta_2 | `[12.56496973634199319579438275690871126985587953581156815726926035697368418499087467134415995046292294385308 +/- 3.69e-105] + [-2.60692875159453647145558478712763350632764967762617293607894390416614531075218506564142007632181454313918 +/- 3.82e-105]j` | `4.512383e-06` | `[12.56497 +/- 4.78e-6] + [-2.60693 +/- 5.77e-6]j` | `[12.832552554666461297160260386967773654544468032986986383137760176873112321944776902164489116249229370262597278158476075 +/- 1.65e-118]` |
+| G_8 / zeta_3 | `[-1.09110975738568312688659647888896059596290948590122405624396168630120673467835697154982398299510014646988 +/- 6.36e-105] + [5.56363256159515076413786532698658079931763536629519140555883072939338459282122596682288554365372680086862 +/- 4.76e-105]j` | `4.959702e-06` | `[-1.09111 +/- 5.21e-6] + [5.56363 +/- 7.53e-6]j` | `[5.6696086083680685502308780110897452458614771782672834150605137579633331658763363108164407949825249952332581233483351914 +/- 2.35e-119]` |
+| G_10 / zeta_1 | `[1.0519807668198726182633646635158407634858213176878820145285473249969140351639980739293444903679060679176907 +/- 6.78e-107] + [-0.7384681860627185468363414185557476192473742435634064011379873359532015525454729311677696048407730994754889 +/- 5.73e-107]j` | `4.182492e-08` | `[1.0519808 +/- 7.51e-8] + [-0.7384682 +/- 5.58e-8]j` | `[1.2853009942480172072886854289973630705698220481691377211100316311264371826796011772308716490837914499089296155810770227 +/- 4.82e-119]` |
+| G_10 / zeta_2 | `[10.84180084576496973349348602127460168181395401334005345098309887976068904445264604983532524332329295383941 +/- 5.62e-105] + [-3.95475629711811835391721937578115169836166853414052086542466827116170357116209711087232664592714528099904 +/- 8.73e-105]j` | `1.603416e-06` | `[10.84180 +/- 2.45e-6] + [-3.95476 +/- 5.31e-6]j` | `[11.540567382012046928826130231267994378003544942940134091658811689681923337843936515590804082984001364426088544612245710 +/- 3.87e-118]` |
+| G_10 / zeta_3 | `[4.8533284618586850303001692582793571368389135126971883015969997011467914796047229327836779797217952453273 +/- 5.50e-104] + [-2.6942155064246669385553766973234549706604075908904371361220324112502309637630621709381068708345429929387 +/- 6.76e-104]j` | `3.712748e-05` | `[4.8533 +/- 6.56e-5] + [-2.6942 +/- 5.27e-5]j` | `[5.5509489201384375699295526852472495624126693018185788509139683326938101705798034058367953956399212414049667410214088467 +/- 3.19e-119]` |
+
+## Scope
+
+Only the requested control and point evaluations were run. Existing source files and lane_b files were read-only references; this runner writes only the report and receipt named by the task.

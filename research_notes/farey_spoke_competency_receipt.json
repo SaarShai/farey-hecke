@@ -1,0 +1,708 @@
+{
+  "experiment": "Farey-spoke structural payoff and narrow competency probe",
+  "status": "finite post-pilot descriptive experiment; not externally preregistered and not evidence of intrinsic agency",
+  "seed": 20260811,
+  "pilot_disclosure": {
+    "inspected_before_lock": "Farey N=8,12,20,30,50,80; prime p=101; 10% damage; Fourier modes 1..8",
+    "post_pilot_parameter_set": "Farey N=32,64; prime p=103; 5% and 20% damage; Fourier modes 1..12",
+    "audit_limit": "The parameter separation is self-reported; no pre-run hash or timestamp independently establishes holdout status."
+  },
+  "repetitions": {
+    "coverage_sampling": 1000,
+    "damage_and_syndrome": 500
+  },
+  "farey_static": [
+    {
+      "order": 32,
+      "point_count": 324,
+      "farey": {
+        "max_gap_turns": 0.03125,
+        "fourier_rms_modes_1_12": 0.04862131645439136
+      },
+      "iid_same_count": {
+        "max_gap_turns": {
+          "count": 1000,
+          "min": 0.012917876541079676,
+          "q025": 0.014203510149694235,
+          "median": 0.018935097793230993,
+          "mean": 0.019513107379981715,
+          "q975": 0.028414677487109886,
+          "max": 0.03722992743796116
+        },
+        "fourier_rms_modes_1_12": {
+          "count": 1000,
+          "min": 0.030402782840583658,
+          "q025": 0.03879076057130063,
+          "median": 0.05534537219216565,
+          "mean": 0.055276814130541876,
+          "q975": 0.07223826492997046,
+          "max": 0.08147796673604454
+        },
+        "fraction_with_max_gap_at_most_farey": 0.993,
+        "fraction_with_fourier_rms_at_most_farey": 0.214
+      },
+      "gap_scrambled_same_gap_multiset": {
+        "max_gap_turns": 0.03125,
+        "fourier_rms_modes_1_12": {
+          "count": 1000,
+          "min": 0.03720683222364008,
+          "q025": 0.04313346629464035,
+          "median": 0.05202536816158575,
+          "mean": 0.05192529659500272,
+          "q975": 0.060269483896042454,
+          "max": 0.06530883972474144
+        },
+        "fraction_with_fourier_rms_at_most_farey": 0.22
+      }
+    },
+    {
+      "order": 64,
+      "point_count": 1260,
+      "farey": {
+        "max_gap_turns": 0.015625,
+        "fourier_rms_modes_1_12": 0.018219429021030225
+      },
+      "iid_same_count": {
+        "max_gap_turns": {
+          "count": 1000,
+          "min": 0.003946416185070856,
+          "q025": 0.004644616951912772,
+          "median": 0.0059269549437037106,
+          "mean": 0.006096081826809916,
+          "q975": 0.0083711341127305,
+          "max": 0.011379356552480457
+        },
+        "fourier_rms_modes_1_12": {
+          "count": 1000,
+          "min": 0.01536452351259258,
+          "q025": 0.020171397176603358,
+          "median": 0.02785038347368165,
+          "mean": 0.02800173869790861,
+          "q975": 0.03610651720779273,
+          "max": 0.04030673200906842
+        },
+        "fraction_with_max_gap_at_most_farey": 1.0,
+        "fraction_with_fourier_rms_at_most_farey": 0.005
+      },
+      "gap_scrambled_same_gap_multiset": {
+        "max_gap_turns": 0.015625,
+        "fourier_rms_modes_1_12": {
+          "count": 1000,
+          "min": 0.01948761239798853,
+          "q025": 0.02322723282759427,
+          "median": 0.029749118349287475,
+          "mean": 0.029932472522825875,
+          "q975": 0.036512014269798186,
+          "max": 0.04118744950928412
+        },
+        "fraction_with_fourier_rms_at_most_farey": 0.0
+      }
+    }
+  ],
+  "prime_grid_static": {
+    "prime": 103,
+    "point_count": 103,
+    "completed_prime_grid": {
+      "max_gap_turns": 0.009708737864077777,
+      "fourier_rms_modes_1_12": 2.1807227953635923e-16
+    },
+    "iid_same_count": {
+      "max_gap_turns": {
+        "count": 1000,
+        "min": 0.02692872264837043,
+        "q025": 0.034976209674016386,
+        "median": 0.048232012858274886,
+        "mean": 0.050332112213689745,
+        "q975": 0.07801571270411242,
+        "max": 0.11616479204988472
+      },
+      "fourier_rms_modes_1_12": {
+        "count": 1000,
+        "min": 0.06257987142236751,
+        "q025": 0.07250521080148593,
+        "median": 0.09711321469342585,
+        "mean": 0.0973921308995777,
+        "q975": 0.12498259559763071,
+        "max": 0.15465460334795395
+      },
+      "fraction_with_max_gap_at_most_grid": 0.0,
+      "fraction_with_fourier_rms_at_most_grid": 0.0
+    }
+  },
+  "farey_blind_damage_repair": {
+    "family": "Farey F_32",
+    "rates": {
+      "0.05": {
+        "missing_count": 16,
+        "conditions": {
+          "arithmetic": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.05117795248258016,
+              "q025": 0.05948230786335781,
+              "median": 0.08507396460465011,
+              "mean": 0.0894172337627584,
+              "q975": 0.1348965727138121,
+              "max": 0.15846615026350228
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.008064516129032251,
+              "q025": 0.008064516129032251,
+              "median": 0.008064516129032251,
+              "mean": 0.008213648378725524,
+              "q975": 0.008620689655172403,
+              "max": 0.0092592592592593
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.25806451612903203,
+              "q025": 0.25806451612903203,
+              "median": 0.25806451612903203,
+              "mean": 0.26283674811921676,
+              "q975": 0.2758620689655169,
+              "max": 0.2962962962962976
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.027547296600449907,
+              "q025": 0.030885497447039313,
+              "median": 0.03432348218549824,
+              "mean": 0.034334052122574725,
+              "q975": 0.037487247757380764,
+              "max": 0.03889686715124264
+            }
+          },
+          "same_gap_multiset_scramble": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.04253070749497062,
+              "q025": 0.059577673053402176,
+              "median": 0.10384170345405236,
+              "mean": 0.10779446552564252,
+              "q975": 0.16854387827680847,
+              "max": 0.22473522619199648
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.008064516129032251,
+              "q025": 0.008064516129032251,
+              "median": 0.008064516129032258,
+              "mean": 0.008323650204381397,
+              "q975": 0.009119449943438883,
+              "max": 0.010218253968254043
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.2580645161290311,
+              "q025": 0.25806451612903203,
+              "median": 0.25806451612903225,
+              "mean": 0.2663568065402047,
+              "q975": 0.29182239819004424,
+              "max": 0.3269841269841294
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.027376915762530877,
+              "q025": 0.031221699076709075,
+              "median": 0.039515419022916845,
+              "mean": 0.03932637013117236,
+              "q975": 0.047801842718661,
+              "max": 0.05054925553804729
+            }
+          },
+          "iid_same_count": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.03480130047435479,
+              "q025": 0.05063198389139063,
+              "median": 0.08839271589623388,
+              "mean": 0.09322237249374704,
+              "q975": 0.15527313414372584,
+              "max": 0.1867154967317908
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.008295721533448153,
+              "q025": 0.008732587834062892,
+              "median": 0.009742013182805265,
+              "mean": 0.009776659902351714,
+              "q975": 0.01089079632044216,
+              "max": 0.01145733880616967
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.25,
+              "q025": 0.3268116473746786,
+              "median": 0.5026825160047939,
+              "mean": 0.5116977184288232,
+              "q975": 0.6718596297294037,
+              "max": 0.798819881373607
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.029650792048616745,
+              "q025": 0.034670661508860515,
+              "median": 0.04800474751009975,
+              "mean": 0.04813647646860041,
+              "q975": 0.061272256876116316,
+              "max": 0.06980499069095178
+            }
+          }
+        },
+        "paired_arithmetic_minus_control_missing_location_rms": {
+          "same_gap_multiset_scramble": {
+            "mean": -0.01837723176288412,
+            "ci95_low": -0.021213990777359925,
+            "ci95_high": -0.015605436806163515
+          },
+          "iid_same_count": {
+            "mean": -0.0038051387309886338,
+            "ci95_low": -0.006635721791636449,
+            "ci95_high": -0.0010437942071516361
+          }
+        }
+      },
+      "0.2": {
+        "missing_count": 65,
+        "conditions": {
+          "arithmetic": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.022504766131367166,
+              "q025": 0.02695608538555871,
+              "median": 0.03975264560040477,
+              "mean": 0.03993284461941833,
+              "q975": 0.05797636155209018,
+              "max": 0.06583373576892537
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.005291005291005235,
+              "q025": 0.005376344086021501,
+              "median": 0.005636070853462169,
+              "mean": 0.005637397303394764,
+              "q975": 0.005952380952380987,
+              "max": 0.006249999999999978
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.16931216931216753,
+              "q025": 0.17204301075268802,
+              "median": 0.1803542673107894,
+              "mean": 0.18039671370863244,
+              "q975": 0.19047619047619158,
+              "max": 0.1999999999999993
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.013176496610795752,
+              "q025": 0.016073227609846318,
+              "median": 0.021927027936644958,
+              "mean": 0.022029561474927902,
+              "q975": 0.027648068839544362,
+              "max": 0.03113809532563222
+            }
+          },
+          "same_gap_multiset_scramble": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.025174886961530894,
+              "q025": 0.03159773012083458,
+              "median": 0.05283453296018782,
+              "mean": 0.05442385010379848,
+              "q975": 0.08699718887103633,
+              "max": 0.11050050915477161
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.005238633915104485,
+              "q025": 0.005376344086021501,
+              "median": 0.005584696471122905,
+              "mean": 0.005601448896236046,
+              "q975": 0.0059778598771781325,
+              "max": 0.006249999999999978
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.1676362852833435,
+              "q025": 0.17204301075268802,
+              "median": 0.17871028707593295,
+              "mean": 0.17924636467955346,
+              "q975": 0.19129151606970024,
+              "max": 0.19999999999999923
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.016012859035971574,
+              "q025": 0.01857346761402582,
+              "median": 0.025590935388151805,
+              "mean": 0.025590353226443888,
+              "q975": 0.03248049034958282,
+              "max": 0.038386623056457354
+            }
+          },
+          "iid_same_count": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.020566962331320923,
+              "q025": 0.02561824969108715,
+              "median": 0.0441283291821037,
+              "mean": 0.04679451126064925,
+              "q975": 0.08151478832173206,
+              "max": 0.09755086450783024
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.005829284293537351,
+              "q025": 0.006113204390747642,
+              "median": 0.0065825625147183375,
+              "mean": 0.006576133835446885,
+              "q975": 0.007051417932139022,
+              "max": 0.007344444283910345
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.19042617044079121,
+              "q025": 0.2321935966459637,
+              "median": 0.33993018965573985,
+              "mean": 0.3404993515815079,
+              "q975": 0.4503672062311205,
+              "max": 0.5156383802888074
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.021852602823100177,
+              "q025": 0.02687792123409046,
+              "median": 0.03668735237570297,
+              "mean": 0.037131537009385034,
+              "q975": 0.04881011976337213,
+              "max": 0.054800824405886225
+            }
+          }
+        },
+        "paired_arithmetic_minus_control_missing_location_rms": {
+          "same_gap_multiset_scramble": {
+            "mean": -0.014491005484380145,
+            "ci95_low": -0.01598372315729613,
+            "ci95_high": -0.013054241915067185
+          },
+          "iid_same_count": {
+            "mean": -0.0068616666412309145,
+            "ci95_low": -0.008191341225551058,
+            "ci95_high": -0.005614226876229272
+          }
+        }
+      }
+    }
+  },
+  "prime_grid_blind_damage_repair": {
+    "family": "completed prime grid p=103",
+    "rates": {
+      "0.05": {
+        "missing_count": 5,
+        "conditions": {
+          "arithmetic": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.0,
+              "q025": 0.0,
+              "median": 0.0,
+              "mean": 0.0006992085942349954,
+              "q975": 0.0024271844660194164,
+              "max": 0.08147534406232641
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.009708737864077777,
+              "q025": 0.009708737864077777,
+              "median": 0.009708737864077777,
+              "mean": 0.01057281553398067,
+              "q975": 0.014563106796116498,
+              "max": 0.014563106796116505
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 1.0,
+              "q025": 1.0,
+              "median": 1.0,
+              "mean": 1.088999999999997,
+              "q975": 1.499999999999983,
+              "max": 1.4999999999999836
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 1.8293097717572575e-16,
+              "q025": 2.1145036296724285e-16,
+              "median": 2.1807227953635923e-16,
+              "mean": 0.0006031873804930024,
+              "q975": 0.0031649861246246308,
+              "max": 0.01313632485922371
+            }
+          },
+          "balanced_zero_sum_null": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.009897441947658238,
+              "q025": 0.06303932698376831,
+              "median": 0.13179797655079795,
+              "mean": 0.13218607313955769,
+              "q975": 0.21554926510752956,
+              "max": 0.2444165553386821
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.021405623956154862,
+              "q025": 0.02311620903127813,
+              "median": 0.029765936670436033,
+              "mean": 0.03026684643197464,
+              "q975": 0.039009308553555486,
+              "max": 0.06422422690262086
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.4451906638760541,
+              "q025": 0.4999999999999989,
+              "median": 0.6923836756699357,
+              "mean": 0.6928757862013315,
+              "q975": 0.9316574006457592,
+              "max": 1.0
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.036180140367941545,
+              "q025": 0.05643592915607017,
+              "median": 0.08457952243421263,
+              "mean": 0.08622787347803941,
+              "q975": 0.12502310094654798,
+              "max": 0.14000242497729157
+            }
+          },
+          "iid_same_count": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.02863087788464305,
+              "q025": 0.06364821113703177,
+              "median": 0.15038468826401158,
+              "mean": 0.15391076846811055,
+              "q975": 0.26148891889369646,
+              "max": 0.3211289798530446
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.02307642279975808,
+              "q025": 0.025088090957830357,
+              "median": 0.029848845645448763,
+              "mean": 0.030281050391390722,
+              "q975": 0.03765368597714126,
+              "max": 0.039559531504571144
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.3718124706733567,
+              "q025": 0.41251180973878,
+              "median": 0.6007046121080679,
+              "mean": 0.6169286439639424,
+              "q975": 0.8639555291240395,
+              "max": 0.9279716676691045
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.04943418026009905,
+              "q025": 0.06323870879692838,
+              "median": 0.08470531308417246,
+              "mean": 0.08628353390348346,
+              "q975": 0.11689167553151814,
+              "max": 0.1383941392772686
+            }
+          }
+        },
+        "paired_arithmetic_minus_control_missing_location_rms": {
+          "balanced_zero_sum_null": {
+            "mean": -0.1314868645453227,
+            "ci95_low": -0.13485043822560913,
+            "ci95_high": -0.127942574507145
+          },
+          "iid_same_count": {
+            "mean": -0.15321155987387555,
+            "ci95_low": -0.1575538900554775,
+            "ci95_high": -0.14886767670413967
+          }
+        }
+      },
+      "0.2": {
+        "missing_count": 21,
+        "conditions": {
+          "arithmetic": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.0,
+              "q025": 0.0011843447487239365,
+              "median": 0.030301484420725555,
+              "mean": 0.027339715893141082,
+              "q975": 0.05690144441664623,
+              "max": 0.07484084287626591
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.009708737864077777,
+              "q025": 0.012135922330097082,
+              "median": 0.014563106796116498,
+              "mean": 0.01440291262135922,
+              "q975": 0.014563106796116498,
+              "max": 0.016990291262135915
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 1.0,
+              "q025": 1.2499999999999858,
+              "median": 1.499999999999983,
+              "mean": 1.4834999999999834,
+              "q975": 1.499999999999983,
+              "max": 1.74999999999998
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 2.1324026532402712e-16,
+              "q025": 0.0031649861246244816,
+              "median": 0.013533046263554222,
+              "mean": 0.013066203781366319,
+              "q975": 0.020564487868938663,
+              "max": 0.024238124040882825
+            }
+          },
+          "balanced_zero_sum_null": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.03210502476789641,
+              "q025": 0.03884737159887308,
+              "median": 0.06305138887997232,
+              "mean": 0.06484668313188599,
+              "q975": 0.10234615180154026,
+              "max": 0.11308550530246096
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.01632117243507969,
+              "q025": 0.017818979712861623,
+              "median": 0.020209017305728272,
+              "mean": 0.020327688016498358,
+              "q975": 0.023697830526236623,
+              "max": 0.02564291744108249
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.24236603705240764,
+              "q025": 0.2840002298992057,
+              "median": 0.48306131945476505,
+              "mean": 0.4780720865936945,
+              "q975": 0.6932591646585097,
+              "max": 0.8035037919879373
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.03381142873008056,
+              "q025": 0.04303723640550802,
+              "median": 0.06388579300701343,
+              "mean": 0.06521978690814775,
+              "q975": 0.09191060274512347,
+              "max": 0.12179761326548179
+            }
+          },
+          "iid_same_count": {
+            "missing_location_assignment_rms_turns": {
+              "count": 500,
+              "min": 0.024976282819190104,
+              "q025": 0.042098425730213204,
+              "median": 0.07501356532587397,
+              "mean": 0.0791911732164612,
+              "q975": 0.13422636725347298,
+              "max": 0.1837809790954923
+            },
+            "post_insertion_max_gap_turns": {
+              "count": 500,
+              "min": 0.01761033006812074,
+              "q025": 0.018223849743140293,
+              "median": 0.020326573891072064,
+              "mean": 0.020451587672005778,
+              "q975": 0.023365321023416007,
+              "max": 0.02450852718294383
+            },
+            "post_insertion_to_intact_max_gap_ratio": {
+              "count": 500,
+              "min": 0.21693940373146703,
+              "q025": 0.25058080533855953,
+              "median": 0.4296970266098331,
+              "mean": 0.4249443658980413,
+              "q975": 0.5945162695953169,
+              "max": 0.744930301931933
+            },
+            "post_insertion_fourier_rms_modes_1_12": {
+              "count": 500,
+              "min": 0.03902585414095892,
+              "q025": 0.047595090143778315,
+              "median": 0.06480493205492012,
+              "mean": 0.0659484570239479,
+              "q975": 0.08795099088483302,
+              "max": 0.1068845698557956
+            }
+          }
+        },
+        "paired_arithmetic_minus_control_missing_location_rms": {
+          "balanced_zero_sum_null": {
+            "mean": -0.037506967238744915,
+            "ci95_low": -0.039517673545714775,
+            "ci95_high": -0.03551474979147114
+          },
+          "iid_same_count": {
+            "mean": -0.05185145732332011,
+            "ci95_low": -0.05464490866156451,
+            "ci95_high": -0.049287977206517314
+          }
+        }
+      }
+    }
+  },
+  "single_deletion_zero_sum_syndrome": {
+    "job": "delete one spoke; predict it as minus the observed vector sum",
+    "assumption": "the intact pattern has zero vector sum",
+    "errors_turns": {
+      "completed_prime_grid": {
+        "count": 500,
+        "min": 0.0,
+        "q025": 0.0,
+        "median": 4.440892098500626e-16,
+        "mean": 4.0478731477833206e-16,
+        "q975": 6.661338147750939e-16,
+        "max": 6.661338147750939e-16
+      },
+      "balanced_zero_sum_null": {
+        "count": 500,
+        "min": 0.0,
+        "q025": 0.0,
+        "median": 4.440892098500626e-16,
+        "mean": 4.60071217234237e-16,
+        "q975": 1.2212453270876722e-15,
+        "max": 1.5543122344752192e-15
+      },
+      "iid_null": {
+        "count": 500,
+        "min": 0.0008793466286181051,
+        "q025": 0.011069908356322232,
+        "median": 0.25665744853586736,
+        "mean": 0.2545507827380121,
+        "q975": 0.49416184991026196,
+        "max": 0.49946963372348363
+      }
+    },
+    "interpretation_guardrail": "The balanced null ties the prime grid, so this payoff belongs to a known zero-sum invariant, not uniquely to primality."
+  },
+  "claim_boundaries": [
+    "Gap bisection is geometry-only and receives the same missing count in every condition.",
+    "Full F_N enumeration would make exact Farey recovery trivial and is therefore an oracle, not competency evidence.",
+    "A seeded random pattern is also exactly regenerable if its seed is supplied; description and preprocessing costs must be charged.",
+    "A structural payoff is task-relative. Coverage, Fourier sampling, and identity restoration can disagree.",
+    "A post-insertion maximum gap below the intact Farey value is coverage smoothing, not recovery of the deleted identities.",
+    "No adaptive agent, feedback loop, internal goal, or transfer learner is present here."
+  ]
+}

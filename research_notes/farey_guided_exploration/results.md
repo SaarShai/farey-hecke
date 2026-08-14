@@ -15,7 +15,7 @@ The primary outcome is unique-cell coverage (and post-perturbation gain). K2 is 
 | R | 2304 | 15.057 | 4.974 | 0.488 | 0.885 |
 
 Discovery candidates: 0; confirmation records: 0; locked label: **negative**.
-Multiplicity-aware discovery capable: **True**. A false value means the configured finite/resampled test cannot reach the corrected alpha even under its most extreme possible outcome.
+Multiplicity-aware discovery capable: **True**. A false value means the finite exact test cannot reach the corrected alpha even under its most extreme possible outcome.
 
 Interpretation is bounded to finite action-word organization. A positive label would mean that a predeclared mapping/metric cleared the development gate and repeated with the same direction and threshold on disjoint held-out seeds in both fixed maze families; it would not establish arithmetic agency or a controller ability.
 

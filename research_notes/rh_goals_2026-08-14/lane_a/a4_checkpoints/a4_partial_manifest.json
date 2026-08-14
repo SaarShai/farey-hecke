@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "base_receipt": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_a/zero_sum_receipt.json",
+  "base_nmax": 3000,
+  "zeros_path": "/Users/za/Documents/farey-hecke/cluster_universality_test/zeros1.txt",
+  "zeros_sha256": "3436c916a7878261ac183fd7b9448c9a4736b8bbccf1356874a6ce1788541632",
+  "backend": "PARI/GP via lfuninit",
+  "realprecision_digits": 20,
+  "strict_residual_threshold": "1e-15",
+  "nmax_requested": 10000,
+  "nmax_completed": 10000,
+  "base_positive_sum_decimal": "0.014489912328235117149573186429312854356887409167449",
+  "positive_sum_through_nmax_decimal": "0.014507394686524878318687256429312854356887409167449",
+  "checkpoint_files": [
+    "weighted_chunk_03001_03500.json",
+    "weighted_chunk_03501_04000.json",
+    "weighted_chunk_04001_04500.json",
+    "weighted_chunk_04501_05000.json",
+    "weighted_chunk_05001_05500.json",
+    "weighted_chunk_05501_06000.json",
+    "weighted_chunk_06001_06500.json",
+    "weighted_chunk_06501_07000.json",
+    "weighted_chunk_07001_07500.json",
+    "weighted_chunk_07501_08000.json",
+    "weighted_chunk_08001_08500.json",
+    "weighted_chunk_08501_09000.json",
+    "weighted_chunk_09001_09500.json",
+    "weighted_chunk_09501_10000.json"
+  ],
+  "created_utc": "2026-08-14T15:24:14.672761+00:00",
+  "a3_input_note": "A3 j_minus1_checkpoints/ is read-only input to the v2 analysis; no A3 file is written by this driver."
+}

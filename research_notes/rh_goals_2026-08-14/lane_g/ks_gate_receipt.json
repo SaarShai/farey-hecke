@@ -1,0 +1,673 @@
+{
+  "task": "MMS K_s divisor gate for G5 flagship pins and q4/q6 winding boxes",
+  "source": {
+    "local_extraction": {
+      "path": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/research_notes/MMS_0912.2236_EXTRACTION.txt",
+      "lines": "26-35",
+      "use": "factorization and over-counted-orbit context; Section 6.2 is absent"
+    },
+    "external_primary": {
+      "citation": "Mayer, M\u00fchlenbruch, Str\u00f6mberg, arXiv:0912.2236v2",
+      "url": "https://arxiv.org/pdf/0912.2236",
+      "locations": {
+        "definition": "\u00a76.2, equations (42)-(43), PDF text lines 2861-2894",
+        "determinant_reduction": "Lemma 6.3, PDF text lines 3313-3326",
+        "spectrum": "Proposition 2, PDF text lines 3415-3425",
+        "closed_multiplier": "Remark 4, PDF text lines 3565-3587"
+      }
+    }
+  },
+  "definition": {
+    "operator": "K_s = L_s^{O_+}",
+    "q5": "equation (43) gives the three-cycle (L1 g2, L2 g3, L2 g1)",
+    "scalar_reduction_q5": "det(1-K_s)=det(1-L1,s L2,s L2,s)"
+  },
+  "derived_zero_lattice": {
+    "formula": "s = -n + i*pi*k/a_q, n>=0, k in Z",
+    "determinant_formula": "det(1-K_s)=prod_{n>=0}(1-ell_q^(2*s+2*n))",
+    "status": "derived from MMS Section 6.2, Lemma 6.3, Proposition 2, and M\u00f6bius algebra"
+  },
+  "rectangle_scanned": {
+    "re_lo": 0.35,
+    "re_hi": 0.52,
+    "im_lo": 3.0,
+    "im_hi": 17.5
+  },
+  "rectangle_scan": {
+    "q": 5,
+    "zeros_inside": [],
+    "status": "empty exact intersection"
+  },
+  "groups": {
+    "4": {
+      "q": 4,
+      "lambda": 1.4142135623730951,
+      "operator_word": [
+        2
+      ],
+      "composition_matrix": [
+        0.0,
+        -1.0,
+        1.0,
+        2.8284271247461903
+      ],
+      "trace": 2.8284271247461903,
+      "ell": 0.4142135623730949,
+      "log_ell": -0.8813735870195434,
+      "a": 0.8813735870195434,
+      "vertical_spacing": 3.564427956382737,
+      "determinant_formula": "prod_{n>=0} (1 - ell_q^(2*s+2*n))",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "5": {
+      "q": 5,
+      "lambda": 1.618033988749895,
+      "operator_word": [
+        1,
+        2,
+        2
+      ],
+      "composition_matrix": [
+        -3.23606797749979,
+        -4.23606797749979,
+        9.47213595499958,
+        12.090169943749475
+      ],
+      "trace": 8.854101966249685,
+      "ell": 0.11442064802926044,
+      "log_ell": -2.167873726556495,
+      "a": 2.167873726556495,
+      "vertical_spacing": 1.4491585072992132,
+      "determinant_formula": "prod_{n>=0} (1 - ell_q^(2*s+2*n))",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "6": {
+      "q": 6,
+      "lambda": 1.7320508075688774,
+      "operator_word": [
+        1,
+        2
+      ],
+      "composition_matrix": [
+        -1.0,
+        -1.7320508075688774,
+        3.464101615137755,
+        5.000000000000001
+      ],
+      "trace": 4.000000000000001,
+      "ell": 0.2679491924311226,
+      "log_ell": -1.3169578969248172,
+      "a": 1.3169578969248172,
+      "vertical_spacing": 2.3854920957804477,
+      "determinant_formula": "prod_{n>=0} (1 - ell_q^(2*s+2*n))",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    }
+  },
+  "pins": [
+    {
+      "pin_id": "g5_pin_1",
+      "q": 5,
+      "s": {
+        "re": 0.4538951800749447,
+        "im": 5.7635372417301305
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.45510024372206603,
+        "n": 0,
+        "k": 4,
+        "zero": {
+          "re": 0.0,
+          "im": 5.796634029196853
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.45510024372206603,
+        "n": 0,
+        "k": 4,
+        "zero": {
+          "re": 0.0,
+          "im": 5.796634029196853
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 0.8601105203561641,
+        "im": -0.02017554282439799,
+        "abs": 0.8603471158524393,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_2",
+      "q": 5,
+      "s": {
+        "re": 0.41054373549576567,
+        "im": 7.819768247017059
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.7056870942725934,
+        "n": 0,
+        "k": 5,
+        "zero": {
+          "re": 0.0,
+          "im": 7.245792536496066
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.7056870942725934,
+        "n": 0,
+        "k": 5,
+        "zero": {
+          "re": 0.0,
+          "im": 7.245792536496066
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.135819234085772,
+        "im": 0.10417887496059292,
+        "abs": 1.1405869412312437,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_3",
+      "q": 5,
+      "s": {
+        "re": 0.3998208929499856,
+        "im": 11.664755512713677
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.40616154737305427,
+        "n": 0,
+        "k": 8,
+        "zero": {
+          "re": 0.0,
+          "im": 11.593268058393706
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.40616154737305427,
+        "n": 0,
+        "k": 8,
+        "zero": {
+          "re": 0.0,
+          "im": 11.593268058393706
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 0.8298623116313703,
+        "im": 0.05435807935843292,
+        "abs": 0.8316407019005858,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_4",
+      "q": 5,
+      "s": {
+        "re": 0.4470829807186944,
+        "im": 12.07971636884368
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.6606929319948467,
+        "n": 0,
+        "k": 8,
+        "zero": {
+          "re": 0.0,
+          "im": 11.593268058393706
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.6606929319948467,
+        "n": 0,
+        "k": 8,
+        "zero": {
+          "re": 0.0,
+          "im": 11.593268058393706
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.0746399233138153,
+        "im": 0.12545404297963786,
+        "abs": 1.0819379287555546,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_5",
+      "q": 5,
+      "s": {
+        "re": 0.46905525671927556,
+        "im": 12.785854147380606
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.534642160416305,
+        "n": 0,
+        "k": 9,
+        "zero": {
+          "re": 0.0,
+          "im": 13.042426565692919
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.534642160416305,
+        "n": 0,
+        "k": 9,
+        "zero": {
+          "re": 0.0,
+          "im": 13.042426565692919
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 0.9411951971768977,
+        "im": -0.11871958562303093,
+        "abs": 0.9486531184787006,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_6",
+      "q": 5,
+      "s": {
+        "re": 0.48527431432587564,
+        "im": 13.565375308892085
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.7134189149146775,
+        "n": 0,
+        "k": 9,
+        "zero": {
+          "re": 0.0,
+          "im": 13.042426565692919
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.7134189149146775,
+        "n": 0,
+        "k": 9,
+        "zero": {
+          "re": 0.0,
+          "im": 13.042426565692919
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.0792550158620597,
+        "im": 0.09498711836907761,
+        "abs": 1.0834269435081796,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_7",
+      "q": 5,
+      "s": {
+        "re": 0.40043857736632493,
+        "im": 15.14787226409561
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.7688068232330278,
+        "n": 0,
+        "k": 10,
+        "zero": {
+          "re": 0.0,
+          "im": 14.491585072992132
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.7688068232330278,
+        "n": 0,
+        "k": 10,
+        "zero": {
+          "re": 0.0,
+          "im": 14.491585072992132
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.1710985895107622,
+        "im": 0.052321856404639294,
+        "abs": 1.17226681391726,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "g5_pin_8",
+      "q": 5,
+      "s": {
+        "re": 0.4444809840986117,
+        "im": 16.487520683784943
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "winding_status": null,
+      "box_bounds": null,
+      "center_nearest_zero": {
+        "distance": 0.704647817090296,
+        "n": 0,
+        "k": 11,
+        "zero": {
+          "re": 0.0,
+          "im": 15.940743580291345
+        }
+      },
+      "clearance_kind": "point",
+      "clearance": {
+        "distance": 0.704647817090296,
+        "n": 0,
+        "k": 11,
+        "zero": {
+          "re": 0.0,
+          "im": 15.940743580291345
+        }
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.105801510874994,
+        "im": 0.10305146455682557,
+        "abs": 1.110592898320859,
+        "product_terms": 18
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "q4_pin_1",
+      "q": 4,
+      "s": {
+        "re": 0.25,
+        "im": 7.067362570867346
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/q4q6_winding_receipt.json",
+      "winding_status": "CERTIFIED",
+      "box_bounds": [
+        0.249999,
+        0.250001,
+        7.067361570867346,
+        7.067363570867347
+      ],
+      "center_nearest_zero": {
+        "distance": 0.25745180344639257,
+        "n": 0,
+        "k": 2,
+        "zero": {
+          "re": 0.0,
+          "im": 7.128855912765474
+        }
+      },
+      "clearance_kind": "closed_winding_box",
+      "clearance": {
+        "distance": 0.2574505935380926,
+        "n": 0,
+        "k": 2,
+        "zero": {
+          "re": 0.0,
+          "im": 7.128855912765474
+        },
+        "box_bounds": [
+          0.249999,
+          0.250001,
+          7.067361570867346,
+          7.067363570867347
+        ]
+      },
+      "det_one_minus_k_at_center": {
+        "re": 0.3124021937105843,
+        "im": -0.06557064322889641,
+        "abs": 0.3192093981834443,
+        "product_terms": 43
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "q4_pin_2",
+      "q": 4,
+      "s": {
+        "re": 0.25,
+        "im": 10.511019819386503
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/q4q6_winding_receipt.json",
+      "winding_status": "CERTIFIED",
+      "box_bounds": [
+        0.249936,
+        0.250064,
+        10.510955819386503,
+        10.511083819386503
+      ],
+      "center_nearest_zero": {
+        "distance": 0.3093867867824,
+        "n": 0,
+        "k": 3,
+        "zero": {
+          "re": 0.0,
+          "im": 10.69328386914821
+        }
+      },
+      "clearance_kind": "closed_winding_box",
+      "clearance": {
+        "distance": 0.3092973686101592,
+        "n": 0,
+        "k": 3,
+        "zero": {
+          "re": 0.0,
+          "im": 10.69328386914821
+        },
+        "box_bounds": [
+          0.249936,
+          0.250064,
+          10.510955819386503,
+          10.511083819386503
+        ]
+      },
+      "det_one_minus_k_at_center": {
+        "re": 0.3326676747380133,
+        "im": -0.19374042416920326,
+        "abs": 0.3849716012550269,
+        "product_terms": 43
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "q4_pin_3",
+      "q": 4,
+      "s": {
+        "re": 0.25,
+        "im": 12.50542878996472
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/q4q6_winding_receipt.json",
+      "winding_status": "CERTIFIED",
+      "box_bounds": [
+        0.249999,
+        0.250001,
+        12.50542778996472,
+        12.505429789964719
+      ],
+      "center_nearest_zero": {
+        "distance": 1.7700270723164642,
+        "n": 0,
+        "k": 4,
+        "zero": {
+          "re": 0.0,
+          "im": 14.257711825530947
+        }
+      },
+      "clearance_kind": "closed_winding_box",
+      "clearance": {
+        "distance": 1.770025941100617,
+        "n": 0,
+        "k": 4,
+        "zero": {
+          "re": 0.0,
+          "im": 14.257711825530947
+        },
+        "box_bounds": [
+          0.249999,
+          0.250001,
+          12.50542778996472,
+          12.505429789964719
+        ]
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.865370037060817,
+        "im": -0.0505460728525328,
+        "abs": 1.866054736776252,
+        "product_terms": 43
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "q6_pin_1",
+      "q": 6,
+      "s": {
+        "re": 0.25,
+        "im": 7.067362570867365
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/q4q6_winding_receipt.json",
+      "winding_status": "CERTIFIED",
+      "box_bounds": [
+        0.2499995,
+        0.2500005,
+        7.0673620708673655,
+        7.067363070867365
+      ],
+      "center_nearest_zero": {
+        "distance": 0.2654077136478979,
+        "n": 0,
+        "k": 3,
+        "zero": {
+          "re": 0.0,
+          "im": 7.156476287341343
+        }
+      },
+      "clearance_kind": "closed_winding_box",
+      "clearance": {
+        "distance": 0.2654070747937744,
+        "n": 0,
+        "k": 3,
+        "zero": {
+          "re": 0.0,
+          "im": 7.156476287341343
+        },
+        "box_bounds": [
+          0.2499995,
+          0.2500005,
+          7.0673620708673655,
+          7.067363070867365
+        ]
+      },
+      "det_one_minus_k_at_center": {
+        "re": 0.4761512850121354,
+        "im": -0.12030970689650174,
+        "abs": 0.4911155381295016,
+        "product_terms": 29
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    },
+    {
+      "pin_id": "q6_pin_2",
+      "q": 6,
+      "s": {
+        "re": 0.25,
+        "im": 10.511019819425393
+      },
+      "input_source": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/q4q6_winding_receipt.json",
+      "winding_status": "CERTIFIED",
+      "box_bounds": [
+        0.249999,
+        0.250001,
+        10.511018819425393,
+        10.511020819425392
+      ],
+      "center_nearest_zero": {
+        "distance": 1.0007800388707166,
+        "n": 0,
+        "k": 4,
+        "zero": {
+          "re": 0.0,
+          "im": 9.541968383121791
+        }
+      },
+      "clearance_kind": "closed_winding_box",
+      "clearance": {
+        "distance": 1.0007788207697053,
+        "n": 0,
+        "k": 4,
+        "zero": {
+          "re": 0.0,
+          "im": 9.541968383121791
+        },
+        "box_bounds": [
+          0.249999,
+          0.250001,
+          10.511018819425393,
+          10.511020819425392
+        ]
+      },
+      "det_one_minus_k_at_center": {
+        "re": 1.471603400519982,
+        "im": 0.3292002080866115,
+        "abs": 1.5079752469540881,
+        "product_terms": 29
+      },
+      "verdict": "CLEAR",
+      "tolerance": 1e-10
+    }
+  ],
+  "classification": {
+    "tolerance": 1e-10,
+    "clear_definition": "point margin for G5; closed-box margin for q4/q6",
+    "counts": {
+      "CLEAR": 13,
+      "CONTAMINATED": 0,
+      "UNRESOLVED": 0
+    }
+  },
+  "external_fetch_dependency": {
+    "required": true,
+    "local_extraction_missing_section": "Section 6.2 / K_s definition",
+    "shell_fetch": "failed: curl could not resolve arxiv.org",
+    "browser_primary_pdf": "succeeded: https://arxiv.org/pdf/0912.2236",
+    "remaining": "reproducers need the cited arXiv PDF or a local copy of its Section 6.2"
+  }
+}

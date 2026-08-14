@@ -1,0 +1,272 @@
+{
+  "circle_fourier": {
+    "composite_unit_layer": {
+      "cardinality": 48,
+      "definition": "{a/n : 1<=a<n, gcd(a,n)=1} subset R/Z",
+      "iid_uniform_circle_null": {
+        "cardinality": 48,
+        "max_nontrivial_abs": {
+          "count": 500,
+          "max": 0.43251438512533147,
+          "mean": 0.3221599426781355,
+          "median": 0.3179753342032246,
+          "min": 0.23618271343351038
+        },
+        "mode_box": [
+          1,
+          104
+        ],
+        "repetitions": 500,
+        "rng_seed": 20260812,
+        "target_mode": 35,
+        "target_mode_abs": {
+          "count": 500,
+          "max": 0.32694346615501635,
+          "mean": 0.12832423351731886,
+          "median": 0.12112103012566439,
+          "min": 0.003911630741887983
+        }
+      },
+      "n": 105,
+      "nontrivial_mode_box": [
+        1,
+        104
+      ],
+      "spike_abs_coefficient": 0.5,
+      "spike_mode": 35,
+      "spike_ramanujan_sum": -24
+    },
+    "prime": {
+      "completed_grid": {
+        "cardinality": 101,
+        "coefficient_at_mode_p": 1.0,
+        "definition": "{j/p : j=0,...,p-1} subset R/Z",
+        "max_abs_coefficient": 1.1129569184160838e-14,
+        "nontrivial_mode_box": [
+          1,
+          100
+        ]
+      },
+      "iid_uniform_circle_null": {
+        "cardinality": 101,
+        "max_nontrivial_abs": {
+          "count": 500,
+          "max": 0.304863607998268,
+          "mean": 0.22251246577173656,
+          "median": 0.22005753659463897,
+          "min": 0.15798619372464295
+        },
+        "mode_box": [
+          1,
+          100
+        ],
+        "repetitions": 500,
+        "rng_seed": 20260811
+      },
+      "p": 101,
+      "prime_increment_layer": {
+        "cardinality": 100,
+        "coefficient_magnitude_formula": "1/(p-1)",
+        "definition": "{j/p : j=1,...,p-1} (primitive p-th roots)",
+        "nonzero_mode_coefficient_magnitude": 0.01,
+        "nonzero_prime_increment_coefficient_magnitude": 0.01,
+        "signed_nonzero_mode_coefficient": -0.01,
+        "verified_nonzero_modes": 100
+      }
+    }
+  },
+  "farey": {
+    "adjacent_pair_count": 19024,
+    "denominator_recurrence": {
+      "formula": "b_(i+2)=floor((N+b_i)/b_(i+1))*b_(i+1)-b_i",
+      "mismatches": 0
+    },
+    "event_count": 2616,
+    "event_definition": "9*b_i*b_(i+1) < 2*N^2",
+    "event_fraction": 0.13751051303616485,
+    "fraction_count": 19025,
+    "order": 250,
+    "real_max_run": 2,
+    "real_triple_windows": 0,
+    "run_length_counts": {
+      "1": 338,
+      "2": 1139
+    },
+    "shuffle_null": {
+      "event_count_each_shuffle": 2616,
+      "max_run": {
+        "count": 500,
+        "max": 8,
+        "mean": 4.666,
+        "median": 5.0,
+        "min": 3
+      },
+      "preserves_event_count": true,
+      "repetitions": 500,
+      "rng_seed": 20260810,
+      "triple_windows": {
+        "count": 500,
+        "max": 80,
+        "mean": 49.534,
+        "median": 49.0,
+        "min": 28
+      }
+    }
+  },
+  "finite_scope_note": "Descriptive finite probes only; no universal speedup claim.",
+  "float_tolerance": 1e-11,
+  "gaussian_quotient": {
+    "gaussian_prime": {
+      "annihilator_condition": "3*m+11*n == 0 (mod 13)",
+      "annihilator_mode_count": 21,
+      "cardinality": 13,
+      "iid_uniform_torus_null": {
+        "cardinality": 13,
+        "minimum_torus_separation": {
+          "count": 500,
+          "max": 0.1687086957266035,
+          "mean": 0.05428565854711823,
+          "median": 0.05227130893488795,
+          "min": 0.004208508040570616
+        },
+        "non_annihilator_rms": {
+          "count": 500,
+          "max": 0.3240807437221963,
+          "mean": 0.2771143840748448,
+          "median": 0.27488295637207383,
+          "min": 0.2538376563351134
+        },
+        "repetitions": 500,
+        "rng_seed": 20260813
+      },
+      "max_annihilator_float_error": 1.2434875191342355e-15,
+      "max_non_annihilator_abs": 2.4752072559530007e-15,
+      "minimum_torus_separation": 0.2773500981126146,
+      "minimum_torus_separation_exact": "sqrt(13)/13 = 1/sqrt(13)",
+      "mode_box": {
+        "count": 289,
+        "m_max": 8,
+        "m_min": -8,
+        "n_max": 8,
+        "n_min": -8
+      },
+      "non_annihilator_mode_count": 268,
+      "non_annihilator_rms": 6.898117740142632e-16,
+      "norm": 13,
+      "pi": "3+2i",
+      "representative_rule": "z=t (0<=t<13), z/pi mod Z[i]",
+      "representatives_integer_over_norm": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          10,
+          2
+        ]
+      ],
+      "torus_points": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.23076923076923078,
+          0.8461538461538461
+        ],
+        [
+          0.46153846153846156,
+          0.6923076923076923
+        ],
+        [
+          0.6923076923076923,
+          0.5384615384615384
+        ],
+        [
+          0.9230769230769231,
+          0.38461538461538464
+        ],
+        [
+          0.15384615384615385,
+          0.23076923076923078
+        ],
+        [
+          0.38461538461538464,
+          0.07692307692307693
+        ],
+        [
+          0.6153846153846154,
+          0.9230769230769231
+        ],
+        [
+          0.8461538461538461,
+          0.7692307692307693
+        ],
+        [
+          0.07692307692307693,
+          0.6153846153846154
+        ],
+        [
+          0.3076923076923077,
+          0.46153846153846156
+        ],
+        [
+          0.5384615384615384,
+          0.3076923076923077
+        ],
+        [
+          0.7692307692307693,
+          0.15384615384615385
+        ]
+      ]
+    }
+  },
+  "matched_nulls": true,
+  "probe": "levin_farey_payoff_probe",
+  "repetitions": 500,
+  "seed": 20260810
+}

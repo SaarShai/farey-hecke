@@ -1,0 +1,215 @@
+{
+  "status": "completed_through_N3000",
+  "source": {
+    "zeros_path": "/Users/za/Documents/farey-hecke/cluster_universality_test/zeros1.txt",
+    "table_rows": 100000,
+    "seed_precision_note": "zeros1.txt entries have about 9 decimal digits. Each used seed was refined by one real Newton update on zeta(1/2+i*t) using PARI/GP; the strict residual gate was checked at every used zero.",
+    "backend": "PARI/GP 2.17.3 arbitrary precision via lfuninit",
+    "realprecision_digits": 20,
+    "high_precision_crosscheck": "A separate realprecision=30 run through N=1000 produced the same displayed partial sums; its max residual was 5.51057192390154456003139059199e-35.",
+    "requested_mpmath": "mpmath was unavailable in the supplied python3 environment and package installation was blocked by DNS/network sandboxing; this fallback is recorded rather than hidden."
+  },
+  "convention": {
+    "natural_sum": "two-sided over rho=1/2+i*gamma with gamma positive and negative",
+    "term": "1/((1/4+gamma^2)*|zeta_prime(rho)|^2)",
+    "conjugacy": "negative ordinates contribute the same term, so the two-sided sum is twice the positive-ordinate sum",
+    "reported_partial_sums": "positive and two-sided"
+  },
+  "N_values_requested": [
+    100,
+    300,
+    1000,
+    3000,
+    10000
+  ],
+  "N_values_used": [
+    100,
+    300,
+    1000,
+    3000
+  ],
+  "uncompleted_extension": {
+    "N": 10000,
+    "attempted": true,
+    "completed": false,
+    "reason": "Repeated bounded PARI/GP runs did not finish the high-ordinate extension in the available runtime; no unobserved N=10000 value is reported or inferred."
+  },
+  "partial_sums": {
+    "100": {
+      "sum_decimal": "0.014143636055307528166323303194652066514885810944939",
+      "gamma_boundary": "236.5242296658162058024755079556629786895",
+      "last_term": "1.119973820976382267588729334313511198959e-6",
+      "positive_sum": 0.014143636055307529,
+      "two_sided_sum": 0.028287272110615058
+    },
+    "300": {
+      "sum_decimal": "0.014349494265830052515341359322883050484927217144387",
+      "gamma_boundary": "541.8474371212012815471135089067366934",
+      "last_term": "1.697151397496350019791027506105626265034e-7",
+      "positive_sum": 0.014349494265830053,
+      "two_sided_sum": 0.028698988531660106
+    },
+    "1000": {
+      "sum_decimal": "0.014453988690945204289262086429312854356887409167449",
+      "gamma_boundary": "1419.422480945995686465989038079916819232",
+      "last_term": "6.401936845343375033823629646834431645181e-8",
+      "positive_sum": 0.014453988690945205,
+      "two_sided_sum": 0.02890797738189041
+    },
+    "3000": {
+      "sum_decimal": "0.014489912328235117149573186429312854356887409167449",
+      "gamma_boundary": "3533.328243396",
+      "last_term": null,
+      "positive_sum": 0.014489912328235117,
+      "two_sided_sum": 0.028979824656470234
+    }
+  },
+  "chunk_receipts": {
+    "1-1000": {
+      "positive_sum": "0.014453988690945204289262086429312854356887409167449",
+      "max_abs_zeta_residual": "2.0877261576520969455e-18"
+    },
+    "1001-2000": {
+      "positive_sum": "2.6534999055519456767e-5",
+      "max_abs_zeta_residual": "2.4389167939889694249e-18"
+    },
+    "2001-3000": {
+      "positive_sum": "9.3886382343934035441e-6",
+      "max_abs_zeta_residual": "5.2370020942838978552e-17"
+    }
+  },
+  "refined_zero_sanity": {
+    "used_zero_count": 3000,
+    "max_abs_zeta_residual": "5.2370020942838978552e-17",
+    "strict_threshold": "1e-15",
+    "failure_count": 0,
+    "first_failure_index": 0,
+    "pass": true
+  },
+  "derivative_block_statistics": [
+    {
+      "lo": 1,
+      "hi": 100,
+      "count": 100,
+      "avg_abs_zeta_prime_sq": 7.424856136465548,
+      "avg_inverse_abs_zeta_prime_sq": 0.2409816798055071
+    },
+    {
+      "lo": 101,
+      "hi": 300,
+      "count": 200,
+      "avg_abs_zeta_prime_sq": 14.27673809200597,
+      "avg_inverse_abs_zeta_prime_sq": 0.13525052228865586
+    },
+    {
+      "lo": 301,
+      "hi": 1000,
+      "count": 700,
+      "avg_abs_zeta_prime_sq": 22.94594754928511,
+      "avg_inverse_abs_zeta_prime_sq": 0.11955532029817238
+    },
+    {
+      "lo": 1001,
+      "hi": 2000,
+      "count": 1000,
+      "avg_abs_zeta_prime_sq": 31.286898629640163,
+      "avg_inverse_abs_zeta_prime_sq": 0.09610023044879973
+    },
+    {
+      "lo": 2001,
+      "hi": 3000,
+      "count": 1000,
+      "avg_abs_zeta_prime_sq": 37.185308306437456,
+      "avg_inverse_abs_zeta_prime_sq": 0.08341624298284138
+    }
+  ],
+  "tail_model": {
+    "density_model": "dN/dt ~= log(t/(2*pi))/(2*pi)",
+    "integral": "B*(log(T/(2*pi))+1)/(2*pi*T), with B the observed block mean of 1/|zeta_prime|^2",
+    "central_tail_N3000_one_sided": 2.75496602069358e-05,
+    "conservative_tail_N3000_one_sided": 7.897043387157907e-05,
+    "high_block_envelope_mean_inverse_derivative_sq": 0.11955532029817238,
+    "observed_N1000_to_N3000_one_sided_increment": 3.592363728991202e-05,
+    "central_tail_N1000_one_sided_for_consistency_check": 8.606390876775681e-05,
+    "consistency_ratio_observed_increment_over_N1000_tail": 0.4174065273615662,
+    "interpretation": "This is a numerical average-growth envelope, not a rigorous theorem-level bound on unusually small zeta derivatives."
+  },
+  "final_estimate": {
+    "positive_sum_with_central_tail": 0.014517461988442053,
+    "two_sided_S": 0.029034923976884106,
+    "two_sided_error_bar": 0.00015794086774315814,
+    "two_sided_interval_from_conservative_tail": [
+      0.028979824656470234,
+      0.02913776552421339
+    ],
+    "precision_claim": "Finite sums have more backend digits, but the source seed precision, convention audit, and heuristic tail support only about 3 significant digits for the infinite sum."
+  },
+  "E5_reproduction": {
+    "script": "projects/mimo-mini-project/code/E5_zeta_zero_sum.py",
+    "source_convention": "one-sided positive zeros n=1..N; no conjugate term; |rho|^2=1/4+gamma^2",
+    "N": 100,
+    "reproduced_positive_sum": "0.014143636055307528166323303194652066514885810944939",
+    "E5_reported_display_value": 0.0141436361,
+    "display_match": true,
+    "absolute_difference_from_display_value": 4.4692471945495527e-11,
+    "two_sided_value_at_N100": 0.028287272110615058,
+    "convention_factor": 2.0,
+    "note": "E5 itself could not be imported because mpmath is absent; the formula was independently reproduced with PARI/GP and matches its reported 10-decimal value."
+  },
+  "simple_form_candidates": [
+    {
+      "form": "3/pi^4",
+      "value": 0.03079794676405301,
+      "absolute_residual": 0.001763022787168906,
+      "relative_residual": 0.060720764709854956
+    },
+    {
+      "form": "1/pi^3 = (2/pi^2)/(2*pi)",
+      "value": 0.032251534433199495,
+      "absolute_residual": 0.00321661045631539,
+      "relative_residual": 0.11078418730754265
+    },
+    {
+      "form": "2/pi^4",
+      "value": 0.020531964509368675,
+      "absolute_residual": 0.00850295946751543,
+      "relative_residual": 0.29285282352676334
+    },
+    {
+      "form": "1/(2*pi^3)",
+      "value": 0.016125767216599748,
+      "absolute_residual": 0.012909156760284358,
+      "relative_residual": 0.44460790634622865
+    },
+    {
+      "form": "1/(2*pi^2)",
+      "value": 0.05066059182116889,
+      "absolute_residual": 0.021625667844284782,
+      "relative_residual": 0.7448157212845421
+    },
+    {
+      "form": "(2/pi^2)/(2*pi)^2 = 1/(2*pi^4)",
+      "value": 0.005132991127342169,
+      "absolute_residual": 0.023901932849541938,
+      "relative_residual": 0.8232132058816909
+    },
+    {
+      "form": "6/pi^4",
+      "value": 0.06159589352810602,
+      "absolute_residual": 0.03256096955122192,
+      "relative_residual": 1.12144152941971
+    },
+    {
+      "form": "2/pi^2",
+      "value": 0.20264236728467555,
+      "absolute_residual": 0.17360744330779143,
+      "relative_residual": 5.979262885138168
+    }
+  ],
+  "source_line_refs": {
+    "log.md": "13",
+    "FIVE_DISCOVERIES.md": "25-49",
+    "E5_zeta_zero_sum.py": "4-17, 23, 26-40, 60-63",
+    "SELBERG_INPUT_DISPROVED.md": "27-31"
+  }
+}

@@ -1,0 +1,564 @@
+{
+  "census": {
+    "eligible_rows": 143475,
+    "excluded_incomplete": 17968,
+    "source_rows": 161443
+  },
+  "claim_boundary": "This retrospective replay tests early representativeness on real human-feedback records. Creation time is not annotation-queue time; review_count is work volume, not duration. It does not establish labor savings, causal deployment benefit, or willingness to pay.",
+  "design": {
+    "batch": "ISO creation week; weeks with at least minimum_week eligible items",
+    "bootstrap_replicates": 2000,
+    "checkpoints": [
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.5
+    ],
+    "minimum_week_items": 2000,
+    "outcome_blind_strata": "language x role x text-length band",
+    "outcomes": [
+      "rejection",
+      "quality",
+      "toxicity",
+      "spam"
+    ],
+    "signal_gate": "at least 10% reduction vs random, positive paired bootstrap lower bound, wins >=70% of weeks, negative control fails",
+    "trials": 200
+  },
+  "negative_control": {
+    "comparisons": {
+      "deficit_vs_random": {
+        "bootstrap_95_interval": [
+          -0.00466525270474949,
+          0.011415383037727156
+        ],
+        "passes_ten_percent_gate": false,
+        "relative_reduction": 0.003473653816835287,
+        "win_rate": 0.5177272727272727
+      },
+      "quota_vs_deficit": {
+        "bootstrap_95_interval": [
+          -0.002864645300138413,
+          0.005165296708527167
+        ],
+        "passes_ten_percent_gate": false,
+        "relative_reduction": 0.0011532735759283153,
+        "win_rate": 0.5145454545454545
+      },
+      "quota_vs_random": {
+        "bootstrap_95_interval": [
+          -0.0032327646089358453,
+          0.01213567190276399
+        ],
+        "passes_ten_percent_gate": false,
+        "relative_reduction": 0.004622921319604734,
+        "win_rate": 0.5222727272727272
+      }
+    },
+    "descriptive_reduction_vs_creation_chronology": {
+      "proportional_deficit": -0.005960023154701677,
+      "quota": -0.004799876041557072,
+      "seeded_random": -0.009466560525639212
+    },
+    "mean_checkpoint_mae": {
+      "proportional_deficit": 0.003448538457681357,
+      "quota": 0.0034445613494025404,
+      "seeded_random": 0.00346055924250246
+    },
+    "mean_production_checkpoint_mae": 0.003428106861410558,
+    "observations_per_method": 2200,
+    "permuted_outcome_control": true,
+    "trials_per_week": 200,
+    "week_summaries": [
+      {
+        "human_reviews": 51697,
+        "items": 16775,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0022788828726104534,
+          "quota": 0.0022912398673570035,
+          "seeded_random": 0.0022833127097631177
+        },
+        "production_checkpoint_mae": 0.0013941466554104752,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "8387/16775",
+          "max_discrepancy": "16774/16775",
+          "order_sha256": "e4d8055d5744182e53b375b034d80716705d9f2c471f9e2e171ddb2f9a9fdd45",
+          "ratio_bound": "2"
+        },
+        "strata": 67,
+        "week": "2023-W05"
+      },
+      {
+        "human_reviews": 163696,
+        "items": 53077,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0012618565468506713,
+          "quota": 0.0012621187280832927,
+          "seeded_random": 0.001275051103460776
+        },
+        "production_checkpoint_mae": 0.0015242712218672457,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "26538/53077",
+          "max_discrepancy": "53076/53077",
+          "order_sha256": "355f10949a676194a62fdaa45c1114c8d2610604dabb7db321a666c060d9faf4",
+          "ratio_bound": "2"
+        },
+        "strata": 124,
+        "week": "2023-W06"
+      },
+      {
+        "human_reviews": 76873,
+        "items": 25427,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.001704548434749885,
+          "quota": 0.0017077465167065033,
+          "seeded_random": 0.0017335109406602467
+        },
+        "production_checkpoint_mae": 0.0020124773070948113,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "12713/25427",
+          "max_discrepancy": "25426/25427",
+          "order_sha256": "93554f917186b02523193b465a00ff9d09026183601c4e476cfed6525b24d2dc",
+          "ratio_bound": "2"
+        },
+        "strata": 162,
+        "week": "2023-W07"
+      },
+      {
+        "human_reviews": 41170,
+        "items": 13676,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0025767606472819064,
+          "quota": 0.0025445629832251417,
+          "seeded_random": 0.002574871366394256
+        },
+        "production_checkpoint_mae": 0.0027233447025122926,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "13675/13676",
+          "order_sha256": "fafa34d685c380b9530928ade7fe18578c5d83f436e85a203ed234afefedfea2",
+          "ratio_bound": "13675/6838"
+        },
+        "strata": 181,
+        "week": "2023-W08"
+      },
+      {
+        "human_reviews": 18058,
+        "items": 5979,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0036936451832874323,
+          "quota": 0.0036731713402663258,
+          "seeded_random": 0.0036787758625145173
+        },
+        "production_checkpoint_mae": 0.0020823795040974865,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "2989/5979",
+          "max_discrepancy": "5978/5979",
+          "order_sha256": "3360796d785bc0e1132a34512c5d8acec357ab8d27edffa75dc00dd0654938d3",
+          "ratio_bound": "2"
+        },
+        "strata": 152,
+        "week": "2023-W09"
+      },
+      {
+        "human_reviews": 15010,
+        "items": 4989,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0039168452227820744,
+          "quota": 0.0038979236801014207,
+          "seeded_random": 0.0038923489109102165
+        },
+        "production_checkpoint_mae": 0.0034961539236959666,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "2494/4989",
+          "max_discrepancy": "4988/4989",
+          "order_sha256": "32c004369dd247374c779ebe8743851634a00ac63df1ae3ae4e6d70e844dac4c",
+          "ratio_bound": "2"
+        },
+        "strata": 133,
+        "week": "2023-W10"
+      },
+      {
+        "human_reviews": 13860,
+        "items": 4615,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.004667509558728607,
+          "quota": 0.004687414060356317,
+          "seeded_random": 0.004646755469225011
+        },
+        "production_checkpoint_mae": 0.0029368451647158547,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "2307/4615",
+          "max_discrepancy": "4614/4615",
+          "order_sha256": "e9e82f1b5080be32acc7dd0f6788b9441edc768312a53a8504d1faab92c0dbd5",
+          "ratio_bound": "2"
+        },
+        "strata": 116,
+        "week": "2023-W11"
+      },
+      {
+        "human_reviews": 11082,
+        "items": 3688,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.004501296362861605,
+          "quota": 0.004447507750458985,
+          "seeded_random": 0.004613755692797607
+        },
+        "production_checkpoint_mae": 0.004220075081485511,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "3687/3688",
+          "order_sha256": "a2eea785a80cb053e7facd8219898e3d49f8041d1237f71abe269e1c8942a230",
+          "ratio_bound": "3687/1844"
+        },
+        "strata": 116,
+        "week": "2023-W12"
+      },
+      {
+        "human_reviews": 11228,
+        "items": 3734,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.004056178088374008,
+          "quota": 0.004093966866418242,
+          "seeded_random": 0.004142501980468228
+        },
+        "production_checkpoint_mae": 0.003921384229624275,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "3733/3734",
+          "order_sha256": "57cca249dbeaeb0abfb7ee7c4c3584b6c2881185e61f43d3e4fe17a35d97b3dd",
+          "ratio_bound": "3733/1867"
+        },
+        "strata": 110,
+        "week": "2023-W13"
+      },
+      {
+        "human_reviews": 22260,
+        "items": 7376,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.003533584486966529,
+          "quota": 0.0035298534627738656,
+          "seeded_random": 0.0035721939618947184
+        },
+        "production_checkpoint_mae": 0.004945352052749768,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "7375/7376",
+          "order_sha256": "7c15fd3e229a096a624a1aa274bc2ddc572bad1bd7e754692d664c3a759e44c1",
+          "ratio_bound": "7375/3688"
+        },
+        "strata": 130,
+        "week": "2023-W14"
+      },
+      {
+        "human_reviews": 8852,
+        "items": 2932,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.005742815630001754,
+          "quota": 0.005754669587680849,
+          "seeded_random": 0.0056530736694383665
+        },
+        "production_checkpoint_mae": 0.008452745632262454,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "2931/2932",
+          "order_sha256": "69de3473c958bcbd97465725e6090e7733e8d8d5e0befe8cc6f61cc259523c18",
+          "ratio_bound": "2931/1466"
+        },
+        "strata": 56,
+        "week": "2023-W15"
+      }
+    ],
+    "week_win_rates": {
+      "deficit_vs_random": 0.5454545454545454,
+      "quota_vs_random": 0.6363636363636364
+    },
+    "weeks": 11
+  },
+  "observed": {
+    "comparisons": {
+      "deficit_vs_random": {
+        "bootstrap_95_interval": [
+          0.06527735637754284,
+          0.08469651503085696
+        ],
+        "passes_ten_percent_gate": false,
+        "relative_reduction": 0.07523715950695098,
+        "win_rate": 0.6327272727272727
+      },
+      "quota_vs_deficit": {
+        "bootstrap_95_interval": [
+          -0.00966863915640892,
+          -0.0017008615974800634
+        ],
+        "passes_ten_percent_gate": false,
+        "relative_reduction": -0.005588830039066073,
+        "win_rate": 0.47
+      },
+      "quota_vs_random": {
+        "bootstrap_95_interval": [
+          0.059857217155771636,
+          0.07985740763467586
+        ],
+        "passes_ten_percent_gate": false,
+        "relative_reduction": 0.07006881716499136,
+        "win_rate": 0.6231818181818182
+      }
+    },
+    "descriptive_reduction_vs_creation_chronology": {
+      "proportional_deficit": 0.7663685690738457,
+      "quota": 0.7650628427146156,
+      "seeded_random": 0.7473607062308096
+    },
+    "mean_checkpoint_mae": {
+      "proportional_deficit": 0.0031991141517643843,
+      "quota": 0.0032169934570341666,
+      "seeded_random": 0.003459388733719811
+    },
+    "mean_production_checkpoint_mae": 0.013692995583182266,
+    "observations_per_method": 2200,
+    "permuted_outcome_control": false,
+    "trials_per_week": 200,
+    "week_summaries": [
+      {
+        "human_reviews": 51697,
+        "items": 16775,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.002279268452216396,
+          "quota": 0.002287401655741454,
+          "seeded_random": 0.00235014219361677
+        },
+        "production_checkpoint_mae": 0.012368871504148542,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "8387/16775",
+          "max_discrepancy": "16774/16775",
+          "order_sha256": "e4d8055d5744182e53b375b034d80716705d9f2c471f9e2e171ddb2f9a9fdd45",
+          "ratio_bound": "2"
+        },
+        "strata": 67,
+        "week": "2023-W05"
+      },
+      {
+        "human_reviews": 163696,
+        "items": 53077,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0011722114361790458,
+          "quota": 0.00116881626043427,
+          "seeded_random": 0.0012285336244655899
+        },
+        "production_checkpoint_mae": 0.008794416720510428,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "26538/53077",
+          "max_discrepancy": "53076/53077",
+          "order_sha256": "355f10949a676194a62fdaa45c1114c8d2610604dabb7db321a666c060d9faf4",
+          "ratio_bound": "2"
+        },
+        "strata": 124,
+        "week": "2023-W06"
+      },
+      {
+        "human_reviews": 76873,
+        "items": 25427,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0016505711989725344,
+          "quota": 0.0016598105089412581,
+          "seeded_random": 0.0017348814588106685
+        },
+        "production_checkpoint_mae": 0.00782534936831635,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "12713/25427",
+          "max_discrepancy": "25426/25427",
+          "order_sha256": "93554f917186b02523193b465a00ff9d09026183601c4e476cfed6525b24d2dc",
+          "ratio_bound": "2"
+        },
+        "strata": 162,
+        "week": "2023-W07"
+      },
+      {
+        "human_reviews": 41170,
+        "items": 13676,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.002350833464037373,
+          "quota": 0.0023553844767654113,
+          "seeded_random": 0.0025779858022233165
+        },
+        "production_checkpoint_mae": 0.030218273131121066,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "13675/13676",
+          "order_sha256": "fafa34d685c380b9530928ade7fe18578c5d83f436e85a203ed234afefedfea2",
+          "ratio_bound": "13675/6838"
+        },
+        "strata": 181,
+        "week": "2023-W08"
+      },
+      {
+        "human_reviews": 18058,
+        "items": 5979,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.003448012066896513,
+          "quota": 0.003506349138114773,
+          "seeded_random": 0.003750557674996031
+        },
+        "production_checkpoint_mae": 0.008370968072169138,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "2989/5979",
+          "max_discrepancy": "5978/5979",
+          "order_sha256": "3360796d785bc0e1132a34512c5d8acec357ab8d27edffa75dc00dd0654938d3",
+          "ratio_bound": "2"
+        },
+        "strata": 152,
+        "week": "2023-W09"
+      },
+      {
+        "human_reviews": 15010,
+        "items": 4989,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0038691866541228424,
+          "quota": 0.00393548904052252,
+          "seeded_random": 0.004228163156712133
+        },
+        "production_checkpoint_mae": 0.01611205922222794,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "2494/4989",
+          "max_discrepancy": "4988/4989",
+          "order_sha256": "32c004369dd247374c779ebe8743851634a00ac63df1ae3ae4e6d70e844dac4c",
+          "ratio_bound": "2"
+        },
+        "strata": 133,
+        "week": "2023-W10"
+      },
+      {
+        "human_reviews": 13860,
+        "items": 4615,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.004239604131122225,
+          "quota": 0.004297524775870621,
+          "seeded_random": 0.004650776345373821
+        },
+        "production_checkpoint_mae": 0.009455681957556422,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "2307/4615",
+          "max_discrepancy": "4614/4615",
+          "order_sha256": "e9e82f1b5080be32acc7dd0f6788b9441edc768312a53a8504d1faab92c0dbd5",
+          "ratio_bound": "2"
+        },
+        "strata": 116,
+        "week": "2023-W11"
+      },
+      {
+        "human_reviews": 11082,
+        "items": 3688,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.004135661712946715,
+          "quota": 0.004088728050306341,
+          "seeded_random": 0.004355661080700566
+        },
+        "production_checkpoint_mae": 0.0076158657984524685,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "3687/3688",
+          "order_sha256": "a2eea785a80cb053e7facd8219898e3d49f8041d1237f71abe269e1c8942a230",
+          "ratio_bound": "3687/1844"
+        },
+        "strata": 116,
+        "week": "2023-W12"
+      },
+      {
+        "human_reviews": 11228,
+        "items": 3734,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.003641099198386643,
+          "quota": 0.0036615301892213847,
+          "seeded_random": 0.00396126545814169
+        },
+        "production_checkpoint_mae": 0.011159183924850196,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "3733/3734",
+          "order_sha256": "57cca249dbeaeb0abfb7ee7c4c3584b6c2881185e61f43d3e4fe17a35d97b3dd",
+          "ratio_bound": "3733/1867"
+        },
+        "strata": 110,
+        "week": "2023-W13"
+      },
+      {
+        "human_reviews": 22260,
+        "items": 7376,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0031554391742754763,
+          "quota": 0.003183156278323022,
+          "seeded_random": 0.003622053986823749
+        },
+        "production_checkpoint_mae": 0.019925361364713297,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "7375/7376",
+          "order_sha256": "7c15fd3e229a096a624a1aa274bc2ddc572bad1bd7e754692d664c3a759e44c1",
+          "ratio_bound": "7375/3688"
+        },
+        "strata": 130,
+        "week": "2023-W14"
+      },
+      {
+        "human_reviews": 8852,
+        "items": 2932,
+        "mean_checkpoint_mae": {
+          "proportional_deficit": 0.0052483681802524655,
+          "quota": 0.005242737653134779,
+          "seeded_random": 0.005593255289053587
+        },
+        "production_checkpoint_mae": 0.01877692035093908,
+        "quota_certificate": {
+          "algorithm": "quota_edf_v1",
+          "lower_bound": "1/2",
+          "max_discrepancy": "2931/2932",
+          "order_sha256": "69de3473c958bcbd97465725e6090e7733e8d8d5e0befe8cc6f61cc259523c18",
+          "ratio_bound": "2931/1466"
+        },
+        "strata": 56,
+        "week": "2023-W15"
+      }
+    ],
+    "week_win_rates": {
+      "deficit_vs_random": 1.0,
+      "quota_vs_random": 1.0
+    },
+    "weeks": 11
+  },
+  "preregistered_before_replay": true,
+  "schema_version": "oasst1-public-replay-v1",
+  "source": {
+    "license": "Apache-2.0",
+    "name": "OpenAssistant OASST1",
+    "sha256": "2ff4aa8999c911ffec7972ddf70359f220b3da184b731f3649f68b1391e19341",
+    "url": "https://huggingface.co/datasets/OpenAssistant/oasst1/resolve/main/2023-04-12_oasst_all.messages.jsonl.gz"
+  },
+  "verdict": {
+    "operational_ordering_signal": false,
+    "product_demand_proven": false,
+    "proprietary_quota_signal": false
+  }
+}

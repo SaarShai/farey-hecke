@@ -1,0 +1,231 @@
+% Insertion-ready section for the joint prime-bias manuscript.
+% The host manuscript should define \spectralfigurepath before \input{section.tex}.
+% Example:
+% \newcommand{\spectralfigurepath}{path/to/spectral_reconstruction.pdf}
+
+\section{Transient spectral oscillations at the 300-trillion scale}
+\label{sec:spectral-transients}
+
+We compare the ordinary prime-count races with low-zero truncations of their
+standard explicit formulas.  This calculation has two deliberately limited
+purposes.  First, it tests whether low Dirichlet zeros account quantitatively
+for the trajectories observed through $3\times 10^{14}$.  Second, it tests the
+specific finite-scale claim that the complex-character interference has
+subsided by that range.  The calculation concerns the unregularized counting
+functions $\pi(x;N,a)$.  It neither proves the asymptotic proposed for the
+Gaussian-regularized statistic elsewhere in this paper nor transfers an
+ordering between the two statistics.
+
+\subsection{Normalization and spectral truncation}
+
+For a reduced residue class $a\pmod N$, set
+\begin{equation}
+  E_N(x;a,1)
+  :=\frac{\varphi(N)\log x}{\sqrt{x}}
+    \bigl(\pi(x;N,a)-\pi(x;N,1)\bigr).
+  \label{eq:ordinary-race-normalization}
+\end{equation}
+Let
+\[
+  C_N(a):=\#\{b\bmod N:b^2\equiv a\pmod N\}.
+\]
+Assuming the critical-line form used in the standard GRH explicit formula,
+we form the finite truncation
+\begin{equation}
+  \widetilde E_{N,K}(x;a,1)
+  :=C_N(1)-C_N(a)
+   -\sum_{\chi\ne\chi_0}\sum_{j=1}^{K}
+     2\operatorname{Re}\!\left(
+       \frac{(\overline{\chi(a)}-1)e^{i\gamma_{\chi,j}\log x}}
+            {\tfrac12+i\gamma_{\chi,j}}
+     \right),
+  \label{eq:ordinary-race-truncation}
+\end{equation}
+where $\gamma_{\chi,j}>0$ is the $j$th positive ordinate returned for
+$L(s,\chi)$.  Thus $K$ means the first $K$ positive ordinates for
+\emph{each} nonprincipal character, rather than the first $K$ modes globally.
+The coefficient $\overline{\chi(a)}-1$ is consistent with selecting the
+ordered difference between the classes $a$ and $1$.  It should not be
+confused with the separate character kernel used to define the regularized
+statistic.
+
+The ordinates were computed for every nonprincipal character modulo
+\[
+  N\in\{7,8,11,19,23\}
+\]
+through height $80$.  Two runs of \texttt{lfunzeros}, with mesh parameters
+$64$ and $96$, were required to agree character by character.  Every returned
+ordinate used in the reconstruction was also required to satisfy
+\[
+  \left|L\!\left(\tfrac12+i\gamma_{\chi,j},\chi\right)\right|<10^{-28}.
+\]
+The two mesh computations are robustness checks within one implementation,
+not an independent proof that the zero list is complete.  As a separate
+cross-check, all three first-zero anchors modulo $8$ agree with a pre-existing
+high-precision \texttt{mpmath} computation to $10^{-12}$.
+
+For the exceptional modulus-$19$ mode discussed below, a second implementation
+constructs the character directly with Python FLINT and evaluates its Hardy
+$Z$-function using Arb ball arithmetic.  Opposite, sign-definite endpoint
+balls give an independent existence certificate for a critical-line zero.
+This certificate does not assert uniqueness of that zero, completeness below
+it, or GRH.
+
+\subsection{Finite computational result}
+
+The observed data consist of 438 logarithmically spaced checkpoints through
+$3\times10^{14}$.  The ``top decade'' below is the 53-point subwindow
+$x\ge 3\times10^{13}$.
+
+\begin{compresult}[verified finite computation]
+\label{prop:finite-spectral-computation}
+For the immutable input dataset identified in the reproducibility statement
+below, the checked pipeline produces 13,578 reconstruction rows.  At
+$K=25$, the correlations between
+$\widetilde E_{N,25}(x;-1,1)$ and $E_N(x;-1,1)$ on the 53-point top-decade
+window are respectively
+\[
+  0.964909993,\quad 0.930923926,\quad 0.938516494,
+  \quad 0.971455692,\quad 0.826435845
+\]
+for $N=7,8,11,19,23$.  Across the 52 consecutive top-decade intervals,
+the observed rank of $-1$ changes respectively
+\[
+  17,\quad 23,\quad 30,\quad 17,\quad 39
+\]
+times.  In particular, for every one of these five moduli the class $-1$
+both attains rank one and leaves rank one within the top decade.
+\end{compresult}
+
+This is a computational proposition: it records the output of a specified,
+hash-checked finite calculation.  It is not a theorem about omitted zeros,
+GRH, or limiting prime-race behavior.
+
+\begin{table}[tb]
+  \centering
+  \small
+  \caption{Top-decade reconstruction of the $-1$ race.  The correlation and
+  RMSE use $K=25$ zeros per nonprincipal character.  Rank and leader changes
+  refer to the observed ordinary-count curves over 52 consecutive intervals.}
+  \label{tab:top-decade-spectral-fit}
+  \begin{tabular}{@{}rrrrrr@{}}
+    \toprule
+    $N$ & correlation & RMSE & rank changes & leader changes
+        & fraction $-1$ leads\\
+    \midrule
+     7 & 0.965 & 0.515 & 17 & 13 & 0.358\\
+     8 & 0.931 & 0.626 & 23 & 15 & 0.358\\
+    11 & 0.939 & 0.919 & 30 & 26 & 0.377\\
+    19 & 0.971 & 1.745 & 17 &  8 & 0.415\\
+    23 & 0.826 & 1.728 & 39 & 23 & 0.132\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Figure~\ref{fig:spectral-reconstruction} compares the observed curves with
+the $K=1,3,10,25$ truncations.  For $N=7,11,19$, even a few modes reproduce
+much of the slow structure.  For $N=23$, one zero per character is inadequate,
+and the fit improves only when substantially more modes are retained.  This
+behavior makes a single-mode ``onset scale'' unreliable: distinct characters
+and ordinates remain active simultaneously.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\textwidth]{\spectralfigurepath}
+  \caption{Observed normalized ordinary-count races (black), compared with
+  explicit-formula truncations using the first $K=1,3,10,25$ positive zeros of
+  every nonprincipal character.  The panels show $N=7,8,11,19,23$ and the
+  class $a=-1\pmod N$.}
+  \label{fig:spectral-reconstruction}
+\end{figure}
+
+\subsection{The very low odd-character mode modulo 19}
+
+The computation identifies a load-bearing correction to a one-mode
+description of the modulus-19 race.  For the primitive character represented
+by Conrey index $13$ modulo $19$, of character order $18$, the first returned
+positive ordinate is
+\begin{equation}
+  \gamma_{19,13,1}=0.0189563990802261\ldots,
+  \qquad \chi(-1)=-1.
+  \label{eq:mod19-low-zero}
+\end{equation}
+Both mesh runs return this ordinate, and direct evaluation at the zero passes
+the residual threshold above.  Independently, Arb gives a sign-change bracket
+of width $5.94\times10^{-84}$ around
+$0.018956399080226142994\ldots$ and an upper bound below
+$3.55\times10^{-85}$ for the modulus of the midpoint $L$-value.  The
+intermediate-value theorem therefore certifies existence of at least one zero
+in the bracket.  The corresponding mode is active in the $-1$ race: on the
+top decade its root-mean-square contribution is $6.719$, and its correlation
+with the centered observed curve is $0.728$.
+
+The conclusion is stable under a substantially deeper truncation.  Extending
+all $17$ nonprincipal characters modulo $19$ to at least $100$ positive
+ordinates improves the top-decade $-1$ correlation from $0.9715$ at $K=25$
+to $0.9925$ at $K=100$, while the RMSE decreases from $1.745$ to $1.252$.
+The $K=100$ reconstruction retains $14$ rank changes and $7$ leader changes,
+with rank and leader agreement against the observed data of $90.6\%$ and
+$98.1\%$, respectively.  Increasing spectral depth therefore strengthens,
+rather than removes, the transient-rank conclusion.
+
+Consequently, an estimate based on an ordinate near $1.74$ cannot be described
+as using the lowest relevant complex-character zero modulo $19$.  The much
+smaller ordinate in \eqref{eq:mod19-low-zero} produces a substantially slower
+oscillation that remains visible near $3\times10^{14}$.  This does not by
+itself settle the ultimate behavior of the race; it shows that the proposed
+finite scale is not a demonstrated point beyond complex-character
+interference.
+
+\subsection{Observed rankings and what they do not imply}
+
+At the final checkpoint $x=3\times10^{14}$, the class $-1$ ranks first among
+the quadratic nonresidues for $N=7$ and $N=23$, third of three for $N=8$,
+third of five for $N=11$, and sixth of nine for $N=19$.  Those endpoint ranks
+are snapshots, and the transition counts in
+Table~\ref{tab:top-decade-spectral-fit} show why they cannot be treated as
+stable asymptotic orderings.  The appropriate finite-scale conclusion is:
+
+\begin{quote}
+The unregularized races remain spectrally coherent but dynamically unsettled
+through $3\times10^{14}$.  Low-zero explicit-formula truncations reproduce the
+observed trajectories with high correlation, while frequent rank and leader
+changes persist throughout the top decade.  These data support a low-zero
+transient mechanism, not a universal stabilization threshold or an eventual
+ordinary-count ordering.
+\end{quote}
+
+The distinction between statistics is essential.  Equations
+\eqref{eq:ordinary-race-normalization}--\eqref{eq:ordinary-race-truncation}
+describe ordinary counts.  A theorem about a separately defined
+Gaussian-regularized spectral statistic would concern that statistic only.
+Inferring an eventual ordering of ordinary counts would require an additional
+transfer theorem with explicit error control; no such transfer is supplied by
+the computation here.
+
+\subsection{Reproducibility, data availability, and limitations}
+
+The authoritative input is \texttt{curve\_3e14.tsv}, with SHA-256 digest
+\begin{center}
+\ttfamily\footnotesize
+57957bdb3ce3243272c3d4b8e9ffe7dfb734b759f48b63becf7ae6f924e1caab.
+\end{center}
+The accompanying reproducibility package contains the PARI/GP zero generator,
+the reconstruction program, fit metrics, the complete transition ledger,
+per-mode attribution, figure source, a negative-test suite for the verifier,
+and a SHA-256 manifest.  Its \texttt{independent\_n19} follow-up contains the
+Arb sign-change certificate, the $K=25,50,100$ reconstruction, seven
+adversarial verifier fixtures, and a separate manifest.  Running the two
+pipeline scripts regenerates their tabular outputs and checks the declared
+invariants.  For an
+archival release, the package, input dataset, exact software versions, and
+manifest should be deposited under a permanent DOI; the DOI replaces this
+sentence before submission.
+
+The numerical interpretation has four limits.  First, the reconstruction uses
+the GRH critical-line form of the explicit formula.  Second, finite zero lists
+do not prove GRH or completeness of the zero set.  Third, correlation measures
+finite explanatory agreement, not mathematical implication.  Fourth, neither
+the observed curves nor their truncations prove a universal or eventual
+ordering.  The results are therefore best used as a controlled finite-scale
+diagnostic and as a constraint on any proposed asymptotic theory.

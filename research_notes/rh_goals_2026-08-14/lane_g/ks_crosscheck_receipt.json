@@ -1,0 +1,121 @@
+{
+  "claim_source": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/KS_GATE_REPORT.md",
+  "claim_source_worktree_copy": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/research_notes/rh_goals_2026-08-14/lane_g/KS_GATE_REPORT.md",
+  "claim_source_worktree_copy_status": "absent; main-repo copy used",
+  "overall_verdict": "CONFIRMED",
+  "odd_q5_determinant_identity_verdict": "CONFIRMED",
+  "ell4_trace_multiplier_verdict": "CONFIRMED",
+  "ell5_trace_multiplier_verdict": "CONFIRMED_AT_15_SIGNIFICANT_DIGITS",
+  "ell6_trace_multiplier_verdict": "CONFIRMED",
+  "ell4": {
+    "computed": "0.414213562373095048801689",
+    "claimed": "sqrt(2)-1",
+    "trace": "2.82842712474619009760338",
+    "attracting_multiplier": "0.171572875253809902396623",
+    "attracting_multiplier_convention": "ell4^2"
+  },
+  "ell5": {
+    "computed": "0.114420648029260201895238",
+    "quoted_decimal": "0.11442064802926044",
+    "quoted_minus_computed_abs_difference": "2.381047616323521181325596e-16",
+    "quoted_relative_difference": "2.080959737017595076821822e-15",
+    "claimed_definition": "(trace - sqrt(trace^2-4))/2",
+    "trace": "8.85410196624968454461376",
+    "trace_expected_4_plus_3_lambda5": "8.85410196624968454461376",
+    "attracting_fixed_point": "-0.353720495719932756780750",
+    "attracting_multiplier": "0.0130920846954358465237842",
+    "ell_squared": "0.0130920846954358465237842",
+    "attracting_multiplier_convention": "ell5^2"
+  },
+  "ell6": {
+    "computed": "0.267949192431122706472554",
+    "claimed": "2-sqrt(3)",
+    "trace": "4.0",
+    "attracting_multiplier": "0.0717967697244908258902146",
+    "attracting_multiplier_convention": "ell6^2"
+  },
+  "trace_values": {
+    "q4": "2.82842712474619009760338",
+    "q5": "8.85410196624968454461376",
+    "q6": "4.0"
+  },
+  "matrix_words": {
+    "q4": "M2",
+    "q5": "M2 M2 M1",
+    "q6": "M2 M1 (cyclic representative of L1 L2)"
+  },
+  "per_point": [
+    {
+      "s": {"real": 0.4, "imag": 5.0},
+      "det_1_minus_A_s": {"real": 1.170543010313244, "imag": 0.055216941104914505},
+      "det_1_minus_A_s_decimal": {"real": "1.17054301031324398568428", "imag": "0.0552169411049145046539757"},
+      "closed_form_product": {"real": 1.170543010313244, "imag": 0.055216941104914505},
+      "closed_form_product_decimal": {"real": "1.17054301031324398568428", "imag": "0.0552169411049145046539757"},
+      "relative_error": 5.257993060790085e-90,
+      "relative_n200_term": "3.79922245681e-378",
+      "truncation_dimension": 50,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "s": {"real": 0.25, "imag": 7.0674},
+      "det_1_minus_A_s": {"real": 0.7548016987710624, "imag": -0.23793284211226724},
+      "det_1_minus_A_s_decimal": {"real": "0.75480169877106239459955", "imag": "-0.237932842112267242147308"},
+      "closed_form_product": {"real": 0.7548016987710624, "imag": -0.23793284211226724},
+      "closed_form_product_decimal": {"real": "0.75480169877106239459955", "imag": "-0.237932842112267242147308"},
+      "relative_error": 1.9128506339242947e-89,
+      "relative_n200_term": "1.07797622504e-377",
+      "truncation_dimension": 50,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "s": {"real": 0.45, "imag": 13.0},
+      "det_1_minus_A_s": {"real": 0.8586746804381414, "imag": -0.026244309482899287},
+      "det_1_minus_A_s_decimal": {"real": "0.858674680438141367631145", "imag": "-0.0262443094828992872331389"},
+      "closed_form_product": {"real": 0.8586746804381414, "imag": -0.026244309482899287},
+      "closed_form_product_decimal": {"real": "0.858674680438141367631145", "imag": "-0.0262443094828992872331389"},
+      "relative_error": 1.607706451595521e-89,
+      "relative_n200_term": "4.17237938846e-378",
+      "truncation_dimension": 50,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "s": {"real": 0.1, "imag": 3.5},
+      "det_1_minus_A_s": {"real": 1.5684299182594945, "imag": 0.33851862273337597},
+      "det_1_minus_A_s_decimal": {"real": "1.56842991825949451034219", "imag": "0.338518622733375969692627"},
+      "closed_form_product": {"real": 1.5684299182594945, "imag": 0.33851862273337597},
+      "closed_form_product_decimal": {"real": "1.56842991825949451034219", "imag": "0.338518622733375969692627"},
+      "relative_error": 8.887100538582349e-90,
+      "relative_n200_term": "1.01884940552e-377",
+      "truncation_dimension": 50,
+      "verdict": "CONFIRMED"
+    }
+  ],
+  "truncation_dimension_used": 50,
+  "truncation_dimensions_tested": [30, 40, 50],
+  "cauchy_radius": "0.2",
+  "working_precision_digits": 90,
+  "convergence_check": {
+    "result": "PASS",
+    "relative_det_change_30_vs_50_by_point": {
+      "0.4+5i": 5.791500203248426e-58,
+      "0.25+7.0674i": 1.109787311227249e-57,
+      "0.45+13i": 4.6627434021829095e-58,
+      "0.1+3.5i": 2.126612851485687e-57
+    },
+    "relative_det_change_40_vs_50_by_point": {
+      "0.4+5i": 8.567993686208894e-77,
+      "0.25+7.0674i": 1.6418286008686457e-76,
+      "0.45+13i": 6.898101463919127e-77,
+      "0.1+3.5i": 3.146128782715063e-76
+    },
+    "moderate_points_pass_1e-10": true,
+    "high_imaginary_point_passes_1e-10": true
+  },
+  "sanity_checks": {
+    "q5_matrix_determinant": "1.0",
+    "q5_matrix_fixed_point_residual": "6.13636683162215819136971e-92",
+    "q5_matrix_derivative_equals_eigenvalue_ratio": true,
+    "q5_attracting_multiplier": "0.0130920846954358465237842",
+    "product_n200_tail_check": "PASS; every relative n=200 term is below 1.1e-377"
+  }
+}
