@@ -1,0 +1,109 @@
+{
+  "audit": "MMS q=5 mms+ convention audit",
+  "worktree": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore",
+  "source_paper": {
+    "title": "The transfer operator for the Hecke triangle groups",
+    "authors": [
+      "Dieter Mayer",
+      "Tobias Mühlenbruch",
+      "Fredrik Strömberg"
+    ],
+    "arxiv": "0912.2236",
+    "url": "https://arxiv.org/abs/0912.2236"
+  },
+  "files_read": [
+    "research_notes/MMS_0912.2236_EXTRACTION.txt",
+    "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/ADVERSARIAL_REVIEW_V1.md",
+    "code/zeta_mayer_rosen.py",
+    "code/zeta_cert_rosen_q5.py",
+    "projects/g5-crosscheck/results_sonnet.json",
+    "projects/g5-crosscheck/collocation_even_sonnet.py",
+    "projects/g5-crosscheck/g5_check_run.py",
+    "projects/g5-crosscheck/g5_crosscheck.py"
+  ],
+  "equation_numbers_cited": [
+    "MMS eq. (3)",
+    "MMS eq. (13)",
+    "MMS eqs. (16)-(19)",
+    "MMS Lemma 4.2",
+    "MMS eq. (26)",
+    "MMS eq. (27)",
+    "MMS eq. (28)",
+    "MMS Lemma 4.4",
+    "MMS eqs. (30)-(31)",
+    "MMS Lemma 4.9",
+    "MMS eq. (32) context",
+    "MMS eq. (34)",
+    "MMS Theorem 6.4"
+  ],
+  "operator_adjudication": {
+    "mms_correct_sector": "mms+ / P-symmetric Markov-partition reflection sector",
+    "mms_correct_sign": 1,
+    "mms_correct_pin": {
+      "re": 0.45389518,
+      "im": 5.76353724
+    },
+    "sonnet_0433_is": "the current collocation matrix's zero after a half-radius input-basis normalization mismatch, not an MMS sign/block convention",
+    "unresolved": [
+      "The MMS disc enlargement is noncanonical; the code safety=5/2 choice needs a separate nesting proof.",
+      "The off-line K_s divisor nonvanishing gate was not evaluated in this convention audit."
+    ]
+  },
+  "determinants_N22": {
+    "N": 22,
+    "n_head": 4,
+    "sign": 1,
+    "pin_labels": {
+      "certified_pin": [
+        0.45389518,
+        5.76353724
+      ],
+      "sonnet_pin": [
+        0.4331801,
+        5.67574682
+      ]
+    },
+    "mms_certified_plus_raw_finite_arb_midpoint": {
+      "certified_pin": {
+        "det_real": 1.6918012660178907e-9,
+        "det_imag": -6.608360828451736e-9,
+        "det_abs": 6.821482563395955e-9
+      },
+      "sonnet_pin": {
+        "det_real": 0.08643392081913419,
+        "det_imag": -0.344756575682436,
+        "det_abs": 0.35542639061336956
+      }
+    },
+    "sonnet_current_float_collocation": {
+      "certified_pin": {
+        "det_real": 0.017127022543292403,
+        "det_imag": 0.3338260430881057,
+        "det_abs": 0.3342651072802249
+      },
+      "sonnet_pin": {
+        "det_real": 9.275542901545827e-10,
+        "det_imag": -6.393582457896659e-9,
+        "det_abs": 6.4605149645448585e-9
+      }
+    },
+    "sonnet_corrected_input_radius_control": {
+      "certified_pin": {
+        "det_real": 1.4783554083388673e-9,
+        "det_imag": -6.328020762073989e-9,
+        "det_abs": 6.498413766343617e-9
+      },
+      "sonnet_pin": {
+        "det_real": 0.0864339205692369,
+        "det_imag": -0.34475657553460043,
+        "det_abs": 0.35542639040920104
+      }
+    }
+  },
+  "verification": {
+    "command": "/Users/za/.venvs/farey-rh/bin/python code/convention_audit/evaluate_n22.py",
+    "helper": "code/convention_audit/evaluate_n22.py",
+    "existing_sources_modified": false,
+    "new_code_scope": "code/convention_audit/ only"
+  }
+}
