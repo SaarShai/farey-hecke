@@ -326,8 +326,11 @@ reasons**, and the distinction matters for what A2 does and does not do:
   **Status: REPAIRED. (R1) HOLDS under (M4′) + (M4″).** On the pass band S_ε
   is bounded below by a positive constant — under (W′) this is now
   unconditional on the *whole* band, since a_ω = |M_W(½+iω)|r_ω is continuous
-  and strictly positive there (|M_W(½+iω)| ∈ [4.0·10^{−4}, 4/3] for
-  |ω| ≤ 100) and clause (M4″) floors the density factor at ϑ_min > 0. So
+  and strictly positive there (|M_W(½+iω)| ∈ [9.999·10^{−5}, 4/3] for
+  |ω| ≤ 100 — the minimum is at the band edge ω = 100; the value at
+  γ_d = 49.77 is 4.034·10^{−4}; bracket corrected 2026-08-15 by the
+  independent verification pass, t1_verify.py) and clause (M4″) floors
+  the density factor at ϑ_min > 0. So
   1/S_ε is bounded, the Cameron–Martin integral is finite, and all P_θ are
   equivalent Gaussian measures on the band. **The "modulo GAP-15" rider that
   v2 had to attach here is discharged by clause (M4″).**
@@ -653,8 +656,9 @@ Two facts make this benign under (W′), and the second is measured rather than
 argued:
 
 1. a_ω = |M_W(½+iω)|·r_ω is continuous and strictly positive on the band
-   (|M_W(½+iω)| runs monotonically from 4/3 at ω = 0 to 4.034·10^{−4} at
-   ω = Ω = 100), so with the floor, S_ε is bounded below by a positive
+   (|M_W(½+iω)| runs monotonically from 4/3 at ω = 0 to 9.999·10^{−5} at
+   ω = Ω = 100; 4.034·10^{−4} is its value at γ_d = 49.77 — corrected
+   2026-08-15, t1_verify.py), so with the floor, S_ε is bounded below by a positive
    constant on all of [−Ω,Ω] — the (R1) repair is complete on the whole band.
 2. The floor's *value* does not matter. Band-limited [I^{-1}]_{ωω} ÷ local at
    γ_d, Ω = 2Γ = 100, under (W′), as ϑ_min is swept:
