@@ -37,3 +37,14 @@ rule, a broad explicit task, solution freedom or perturbation, and an external
 search over additional behaviors not instructed by the rule. For Farey work,
 choose a task that uses its sequential arithmetic structure and preregister a
 diverse trajectory-observable panel before inspecting outcomes.
+
+## 2026-08-15 — framing correction (owner)
+Pattern: I presented refuting OUR OWN internal candidate (2/pi^2 for the
+Mertens mean-square constant) under a "killing conjectures" frame.
+Owner correction: self-conjecture kills are not interesting; the value
+is (a) the first-ever certified measurement of the constant and (b) its
+standing power to adjudicate ANY future proposed closed form.
+Rule: when summarizing significance, lead with the durable asset
+(first measurement / new capability); never inflate internal-hypothesis
+eliminations into "conjecture killing" — reserve that frame for
+refutations of claims that exist in the literature.

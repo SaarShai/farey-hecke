@@ -15,3 +15,15 @@ This list is the human gate before any submission decision. The six requested so
 6. **Bibliography check.** Confirm the final Garcia 2025 and Cox--Ghosh--Sultanow 2021 entries against the venue’s citation style and retain both as prior art before submission. [EXACT]
 
 **Assembly assumption.** This skeleton treats the current Lean source’s `farey_bridge_identity_unconditional` statement as the reported `[LEAN]` result while keeping fresh-build and axiom-footprint verification open, because the named FACTS ledger does not provide that receipt. [LEAN]
+
+## Outlook-section material from the Kloosterman gate (closed NO-GO 2026-08-14)
+
+Precise open problem for the outlook: the per-step Farey fluctuation is
+exactly V_residue(p) = Σ_c M(⌊(p−1)/c⌋)·s(p,c) (Mertens-weighted
+Dedekind-sum convolution; exact extraction + zero-error rational receipts
+in lane_i/V_EXTRACTION.md). Weil/Kloosterman methods cannot reach it — the
+frozen paper's own completion analysis rules the direct Kloosterman form
+invalid, and any sufficient bound embeds Mertens cancellation (RH-strength).
+State as: "sign-structure at the Franel–Landau boundary requires
+power-saving in a Mertens-weighted Dedekind convolution — beyond
+square-root cancellation."

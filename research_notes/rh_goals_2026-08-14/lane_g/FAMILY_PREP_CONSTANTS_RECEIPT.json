@@ -1,0 +1,1044 @@
+{
+  "checks": {
+    "all_requested_fixed_point_rel_errors_below_1e-15": true,
+    "all_requested_lattices_clear": true,
+    "q7_blocks_rebuilt_from_builder": true,
+    "q7_rho_lt_1": true,
+    "q8_blocks_rebuilt_from_builder": true,
+    "q8_rho_lt_1": true
+  },
+  "code_path": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/family_prep/family_prep_constants.py",
+  "constraints": {
+    "arb_scans": false,
+    "disc_arc_points": 2048,
+    "heavy_spectral_scans": false,
+    "tail_n_range": "n0..59"
+  },
+  "date": "2026-08-14",
+  "disc": {
+    "5": {
+      "blocks": [
+        {
+          "inp": 2,
+          "n": 2,
+          "neg": false,
+          "out": 1,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 3,
+          "neg": false,
+          "out": 1,
+          "tail": true
+        },
+        {
+          "inp": 2,
+          "n": 1,
+          "neg": true,
+          "out": 1,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": true,
+          "out": 1,
+          "tail": true
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": false,
+          "out": 2,
+          "tail": true
+        },
+        {
+          "inp": 2,
+          "n": 1,
+          "neg": true,
+          "out": 2,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": true,
+          "out": 2,
+          "tail": true
+        },
+        {
+          "inp": 1,
+          "n": 1,
+          "neg": false,
+          "out": 3,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": false,
+          "out": 3,
+          "tail": true
+        },
+        {
+          "inp": 2,
+          "n": 1,
+          "neg": true,
+          "out": 3,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": true,
+          "out": 3,
+          "tail": true
+        }
+      ],
+      "full_markov_unit_ratio_blocks": [
+        {
+          "block": "(1->2, n=2 head)",
+          "ratio": 1.0000000000000002
+        },
+        {
+          "block": "(2->3, n=2 tail)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(3->1, n=1 head)",
+          "ratio": 1.0000000000000013
+        },
+        {
+          "block": "(3->2, n=-1 head)",
+          "ratio": 0.9999999999999998
+        }
+      ],
+      "grid": [
+        1.0,
+        1.1,
+        1.2,
+        1.35,
+        1.5,
+        1.7,
+        1.9,
+        2.2,
+        2.6,
+        3.0
+      ],
+      "grid_points": 1000,
+      "inflations": [
+        3.1399999999999997,
+        2.27,
+        1.7
+      ],
+      "kappa": 3,
+      "method": "tb_disc_opt.py: 2048-point circles, grid, then three local +/-0.07 refinements; tail n0..59",
+      "n_1e-7_needed": 39,
+      "n_1e-7_real": 38.74663025449158,
+      "q": 5,
+      "refinement_history": [
+        {
+          "after": {
+            "inflations": [
+              3.07,
+              2.27,
+              1.7
+            ],
+            "rho": 0.660402317577109
+          },
+          "before": {
+            "inflations": [
+              3.0,
+              2.2,
+              1.7
+            ],
+            "rho": 0.6758117049872415
+          }
+        },
+        {
+          "after": {
+            "inflations": [
+              3.1399999999999997,
+              2.27,
+              1.7
+            ],
+            "rho": 0.6596888264417232
+          },
+          "before": {
+            "inflations": [
+              3.07,
+              2.27,
+              1.7
+            ],
+            "rho": 0.660402317577109
+          }
+        },
+        {
+          "after": {
+            "inflations": [
+              3.1399999999999997,
+              2.27,
+              1.7
+            ],
+            "rho": 0.6596888264417232
+          },
+          "before": {
+            "inflations": [
+              3.1399999999999997,
+              2.27,
+              1.7
+            ],
+            "rho": 0.6596888264417232
+          }
+        }
+      ],
+      "rho_star": 0.6596888264417232,
+      "unit_ratios": [
+        {
+          "block": "(1->2, n=2 head)",
+          "ratio": 1.0000000000000002
+        },
+        {
+          "block": "(1->3, n=3 tail)",
+          "ratio": 0.9447939864697464
+        },
+        {
+          "block": "(1->2, n=-1 head)",
+          "ratio": 0.7453559924999305
+        },
+        {
+          "block": "(1->3, n=-2 tail)",
+          "ratio": 0.9456123028991632
+        },
+        {
+          "block": "(2->3, n=2 tail)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(2->2, n=-1 head)",
+          "ratio": 0.44721359549995815
+        },
+        {
+          "block": "(2->3, n=-2 tail)",
+          "ratio": 0.9455041960569863
+        },
+        {
+          "block": "(3->1, n=1 head)",
+          "ratio": 1.0000000000000013
+        },
+        {
+          "block": "(3->3, n=2 tail)",
+          "ratio": 0.945151390211868
+        },
+        {
+          "block": "(3->2, n=-1 head)",
+          "ratio": 0.9999999999999998
+        },
+        {
+          "block": "(3->3, n=-2 tail)",
+          "ratio": 0.9453699732614093
+        }
+      ],
+      "worst_block": "(2->3, n=2 tail)",
+      "worst_tail_n": 2
+    },
+    "7": {
+      "blocks": [
+        {
+          "inp": 4,
+          "n": 2,
+          "neg": false,
+          "out": 1,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 3,
+          "neg": false,
+          "out": 1,
+          "tail": true
+        },
+        {
+          "inp": 4,
+          "n": 1,
+          "neg": true,
+          "out": 1,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": true,
+          "out": 1,
+          "tail": true
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": false,
+          "out": 2,
+          "tail": true
+        },
+        {
+          "inp": 4,
+          "n": 1,
+          "neg": true,
+          "out": 2,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": true,
+          "out": 2,
+          "tail": true
+        },
+        {
+          "inp": 1,
+          "n": 1,
+          "neg": false,
+          "out": 3,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": false,
+          "out": 3,
+          "tail": true
+        },
+        {
+          "inp": 4,
+          "n": 1,
+          "neg": true,
+          "out": 3,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": true,
+          "out": 3,
+          "tail": true
+        },
+        {
+          "inp": 2,
+          "n": 1,
+          "neg": false,
+          "out": 4,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": false,
+          "out": 4,
+          "tail": true
+        },
+        {
+          "inp": 4,
+          "n": 1,
+          "neg": true,
+          "out": 4,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": true,
+          "out": 4,
+          "tail": true
+        },
+        {
+          "inp": 3,
+          "n": 1,
+          "neg": false,
+          "out": 5,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": false,
+          "out": 5,
+          "tail": true
+        },
+        {
+          "inp": 4,
+          "n": 1,
+          "neg": true,
+          "out": 5,
+          "tail": false
+        },
+        {
+          "inp": 5,
+          "n": 2,
+          "neg": true,
+          "out": 5,
+          "tail": true
+        }
+      ],
+      "full_markov_unit_ratio_blocks": [
+        {
+          "block": "(1->4, n=2 head)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(2->5, n=2 tail)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(3->1, n=1 head)",
+          "ratio": 1.0000000000000036
+        },
+        {
+          "block": "(4->2, n=1 head)",
+          "ratio": 1.0000000000000056
+        },
+        {
+          "block": "(5->3, n=1 head)",
+          "ratio": 1.0000000000000029
+        },
+        {
+          "block": "(5->4, n=-1 head)",
+          "ratio": 1.0
+        }
+      ],
+      "grid": [
+        1.0,
+        1.1,
+        1.2,
+        1.35,
+        1.5,
+        1.7,
+        1.9,
+        2.2,
+        2.6,
+        3.0
+      ],
+      "grid_points": 100000,
+      "inflations": [
+        2.7900000000000005,
+        2.3900000000000006,
+        1.9,
+        1.5599999999999998,
+        1.35
+      ],
+      "kappa": 5,
+      "method": "tb_disc_opt.py: 2048-point circles, grid, then three local +/-0.07 refinements; tail n0..59",
+      "n_1e-7_needed": 66,
+      "n_1e-7_real": 65.63725009442763,
+      "q": 7,
+      "refinement_history": [
+        {
+          "after": {
+            "inflations": [
+              2.93,
+              2.5300000000000002,
+              1.9,
+              1.63,
+              1.35
+            ],
+            "rho": 0.7865753835100614
+          },
+          "before": {
+            "inflations": [
+              3.0,
+              2.6,
+              1.9,
+              1.7,
+              1.35
+            ],
+            "rho": 0.7887403358543726
+          }
+        },
+        {
+          "after": {
+            "inflations": [
+              2.8600000000000003,
+              2.4600000000000004,
+              1.9,
+              1.5599999999999998,
+              1.35
+            ],
+            "rho": 0.7844165514031479
+          },
+          "before": {
+            "inflations": [
+              2.93,
+              2.5300000000000002,
+              1.9,
+              1.63,
+              1.35
+            ],
+            "rho": 0.7865753835100614
+          }
+        },
+        {
+          "after": {
+            "inflations": [
+              2.7900000000000005,
+              2.3900000000000006,
+              1.9,
+              1.5599999999999998,
+              1.35
+            ],
+            "rho": 0.782263813617748
+          },
+          "before": {
+            "inflations": [
+              2.8600000000000003,
+              2.4600000000000004,
+              1.9,
+              1.5599999999999998,
+              1.35
+            ],
+            "rho": 0.7844165514031479
+          }
+        }
+      ],
+      "rho_star": 0.782263813617748,
+      "unit_ratios": [
+        {
+          "block": "(1->4, n=2 head)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(1->5, n=3 tail)",
+          "ratio": 0.9468889336892797
+        },
+        {
+          "block": "(1->4, n=-1 head)",
+          "ratio": 0.8679584905365586
+        },
+        {
+          "block": "(1->5, n=-2 tail)",
+          "ratio": 0.947732499761769
+        },
+        {
+          "block": "(2->5, n=2 tail)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(2->4, n=-1 head)",
+          "ratio": 0.7258733209145498
+        },
+        {
+          "block": "(2->5, n=-2 tail)",
+          "ratio": 0.9476841774107081
+        },
+        {
+          "block": "(3->1, n=1 head)",
+          "ratio": 1.0000000000000036
+        },
+        {
+          "block": "(3->5, n=2 tail)",
+          "ratio": 0.9470129638373764
+        },
+        {
+          "block": "(3->4, n=-1 head)",
+          "ratio": 0.5549581320873712
+        },
+        {
+          "block": "(3->5, n=-2 tail)",
+          "ratio": 0.9476304389186472
+        },
+        {
+          "block": "(4->2, n=1 head)",
+          "ratio": 1.0000000000000056
+        },
+        {
+          "block": "(4->5, n=2 tail)",
+          "ratio": 0.9471120105234033
+        },
+        {
+          "block": "(4->4, n=-1 head)",
+          "ratio": 0.31949667634487544
+        },
+        {
+          "block": "(4->5, n=-2 tail)",
+          "ratio": 0.9475632732502066
+        },
+        {
+          "block": "(5->3, n=1 head)",
+          "ratio": 1.0000000000000029
+        },
+        {
+          "block": "(5->5, n=2 tail)",
+          "ratio": 0.947289554844496
+        },
+        {
+          "block": "(5->4, n=-1 head)",
+          "ratio": 1.0
+        },
+        {
+          "block": "(5->5, n=-2 tail)",
+          "ratio": 0.9474659111256802
+        }
+      ],
+      "worst_block": "(2->5, n=2 tail)",
+      "worst_tail_n": 2
+    },
+    "8": {
+      "blocks": [
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": false,
+          "out": 1,
+          "tail": true
+        },
+        {
+          "inp": 3,
+          "n": 1,
+          "neg": true,
+          "out": 1,
+          "tail": true
+        },
+        {
+          "inp": 1,
+          "n": 1,
+          "neg": false,
+          "out": 2,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": false,
+          "out": 2,
+          "tail": true
+        },
+        {
+          "inp": 3,
+          "n": 1,
+          "neg": true,
+          "out": 2,
+          "tail": true
+        },
+        {
+          "inp": 2,
+          "n": 1,
+          "neg": false,
+          "out": 3,
+          "tail": false
+        },
+        {
+          "inp": 3,
+          "n": 2,
+          "neg": false,
+          "out": 3,
+          "tail": true
+        },
+        {
+          "inp": 3,
+          "n": 1,
+          "neg": true,
+          "out": 3,
+          "tail": true
+        }
+      ],
+      "full_markov_unit_ratio_blocks": [
+        {
+          "block": "(2->1, n=1 head)",
+          "ratio": 1.000000000000004
+        },
+        {
+          "block": "(3->2, n=1 head)",
+          "ratio": 1.0000000000000016
+        },
+        {
+          "block": "(3->3, n=-1 tail)",
+          "ratio": 1.0
+        }
+      ],
+      "grid": [
+        1.0,
+        1.1,
+        1.2,
+        1.35,
+        1.5,
+        1.7,
+        1.9,
+        2.2,
+        2.6,
+        3.0
+      ],
+      "grid_points": 1000,
+      "inflations": [
+        3.0,
+        1.9,
+        1.35
+      ],
+      "kappa": 3,
+      "method": "tb_disc_opt.py: 2048-point circles, grid, then three local +/-0.07 refinements; tail n0..59",
+      "n_1e-7_needed": 82,
+      "n_1e-7_real": 81.60976378887219,
+      "q": 8,
+      "refinement_history": [
+        {
+          "after": {
+            "inflations": [
+              3.0,
+              1.9,
+              1.35
+            ],
+            "rho": 0.8207784580036067
+          },
+          "before": {
+            "inflations": [
+              3.0,
+              1.9,
+              1.35
+            ],
+            "rho": 0.8207784580036067
+          }
+        },
+        {
+          "after": {
+            "inflations": [
+              3.0,
+              1.9,
+              1.35
+            ],
+            "rho": 0.8207784580036067
+          },
+          "before": {
+            "inflations": [
+              3.0,
+              1.9,
+              1.35
+            ],
+            "rho": 0.8207784580036067
+          }
+        },
+        {
+          "after": {
+            "inflations": [
+              3.0,
+              1.9,
+              1.35
+            ],
+            "rho": 0.8207784580036067
+          },
+          "before": {
+            "inflations": [
+              3.0,
+              1.9,
+              1.35
+            ],
+            "rho": 0.8207784580036067
+          }
+        }
+      ],
+      "rho_star": 0.8207784580036067,
+      "unit_ratios": [
+        {
+          "block": "(1->3, n=2 tail)",
+          "ratio": 0.9658620269247509
+        },
+        {
+          "block": "(1->3, n=-1 tail)",
+          "ratio": 0.9663865546218486
+        },
+        {
+          "block": "(2->1, n=1 head)",
+          "ratio": 1.000000000000004
+        },
+        {
+          "block": "(2->3, n=2 tail)",
+          "ratio": 0.9659325742715543
+        },
+        {
+          "block": "(2->3, n=-1 tail)",
+          "ratio": 0.9663380211554866
+        },
+        {
+          "block": "(3->2, n=1 head)",
+          "ratio": 1.0000000000000016
+        },
+        {
+          "block": "(3->3, n=2 tail)",
+          "ratio": 0.9661016949152542
+        },
+        {
+          "block": "(3->3, n=-1 tail)",
+          "ratio": 1.0
+        }
+      ],
+      "worst_block": "(3->3, n=-1 tail)",
+      "worst_tail_n": 1
+    }
+  },
+  "ks": {
+    "10": {
+      "a_q": "1.842730034701113030174286321926",
+      "attracting_derivative": "(0.025085630936916598424017703742408 + 0.0j)",
+      "ell": "0.15838444032453629383888309269437",
+      "ell_iteration": "0.15838444032453629383888309269437",
+      "ell_relative_error": "1.7731265565e-92",
+      "fixed_point": "(-0.34457651675525573410005359184626 + 0.0j)",
+      "fixed_point_iterations": 57,
+      "h": 4,
+      "kappa": 4,
+      "lattice_clear": true,
+      "lattice_spacing": "1.7048577894913147259508726081507",
+      "q": 10,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1,
+          1,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1 M_1 M_1",
+        "minpoly": "x^4 - 5*x^2 + 5",
+        "operator_word": "L_1^(h-1) L_2",
+        "trace_raw": "2*x^4 - 6*x^2 + 2",
+        "trace_reduced": "4*x^2 - 8"
+      },
+      "trace": "6.472135954999579392818347337",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "11": {
+      "a_q": "3.8593410049961162061385513896706",
+      "attracting_derivative": "(0.00044444599342769188534808268944564 + 0.0j)",
+      "ell": "0.021081887805120581405472197217452",
+      "ell_iteration": "0.021081887805120581405472197217452",
+      "ell_relative_error": "4.45734865666e-95",
+      "fixed_point": "(-0.33780211218914401578568043788456 + 0.0j)",
+      "fixed_point_iterations": 28,
+      "h": 4,
+      "kappa": 9,
+      "lattice_clear": true,
+      "lattice_spacing": "0.81402308050074853033251713873617",
+      "q": 11,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1 M_1 M_1 M_2 M_1 M_1 M_1 M_1",
+        "minpoly": "x^5 - x^4 - 4*x^3 + 3*x^2 + 3*x - 1",
+        "operator_word": "L_1^h L_2 L_1^(h-1) L_2",
+        "trace_raw": "4*x^9 - 28*x^7 + 64*x^5 - 52*x^3 + 11*x",
+        "trace_reduced": "4*x^4 + 4*x^3 - 8*x^2 - 5*x + 4"
+      },
+      "trace": "47.45516413147923407694373296",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "12": {
+      "a_q": "2.0275894218001318691330029806538",
+      "attracting_derivative": "(0.01733238012099927101897904171465 + 0.0j)",
+      "ell": "0.13165249758739585347152645740972",
+      "ell_iteration": "0.13165249758739585347152645740972",
+      "ell_relative_error": "8.22693567396e-93",
+      "fixed_point": "(-0.34108137740210887763712119135191 + 0.0j)",
+      "fixed_point_iterations": 52,
+      "h": 5,
+      "kappa": 5,
+      "lattice_clear": true,
+      "lattice_spacing": "1.5494224914631032316337757417979",
+      "q": 12,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1 M_1 M_1 M_1",
+        "minpoly": "x^4 - 4*x^2 + 1",
+        "operator_word": "L_1^(h-1) L_2",
+        "trace_raw": "2*x^5 - 8*x^3 + 6*x",
+        "trace_reduced": "4*x"
+      },
+      "trace": "7.727406610312546293997945598",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "5": {
+      "a_q": "2.1678737265564972376405532934681",
+      "attracting_derivative": "(0.013092084695435846523784163696416 + 0.0j)",
+      "ell": "0.11442064802926020189523836764788",
+      "ell_iteration": "0.11442064802926020189523836764788",
+      "ell_relative_error": "1.49456073411e-93",
+      "fixed_point": "(-0.35372049571993275678074973111783 + 0.0j)",
+      "fixed_point_iterations": 49,
+      "h": 1,
+      "kappa": 3,
+      "lattice_clear": true,
+      "lattice_spacing": "1.4491585072992118233030904940843",
+      "q": 5,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          2,
+          1
+        ],
+        "map_matrix_word": "M_2 M_2 M_1",
+        "minpoly": "x^2 - x - 1",
+        "operator_word": "L_1^h L_2 L_1^(h-1) L_2",
+        "trace_raw": "4*x^3 - 5*x",
+        "trace_reduced": "3*x + 4"
+      },
+      "trace": "8.854101966249684544613760503",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "6": {
+      "a_q": "1.316957896924816708625046347308",
+      "attracting_derivative": "(0.071796769724490825890214633976511 + 0.0j)",
+      "ell": "0.26794919243112270647255365849413",
+      "ell_iteration": "0.26794919243112270647255365849413",
+      "ell_relative_error": "7.65751617531e-93",
+      "fixed_point": "(-0.36602540378443864676372317075294 + 0.0j)",
+      "fixed_point_iterations": 80,
+      "h": 2,
+      "kappa": 2,
+      "lattice_clear": true,
+      "lattice_spacing": "2.3854920957804487699369129566343",
+      "q": 6,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1",
+        "minpoly": "x^2 - 3",
+        "operator_word": "L_1^(h-1) L_2",
+        "trace_raw": "2*x^2 - 2",
+        "trace_reduced": "4"
+      },
+      "trace": "4.0",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "7": {
+      "a_q": "2.9090410431748565955982221798624",
+      "attracting_derivative": "(0.0029733022166964395006424342879436 + 0.0j)",
+      "ell": "0.054527994798052490833925195943494",
+      "ell_iteration": "0.054527994798052490833925195943494",
+      "ell_relative_error": "9.94530285182e-95",
+      "fixed_point": "(-0.34413214421212620664701257931723 + 0.0j)",
+      "fixed_point_iterations": 37,
+      "h": 2,
+      "kappa": 5,
+      "lattice_clear": true,
+      "lattice_spacing": "1.0799409863812493600960968281985",
+      "q": 7,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1,
+          2,
+          1,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1 M_2 M_1 M_1",
+        "minpoly": "x^3 - x^2 - 2*x + 1",
+        "operator_word": "L_1^h L_2 L_1^(h-1) L_2",
+        "trace_raw": "4*x^5 - 12*x^3 + 7*x",
+        "trace_reduced": "4*x^2 + 3*x"
+      },
+      "trace": "18.39373162228438300161665299",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "8": {
+      "a_q": "1.6148909161730952861045988150985",
+      "attracting_derivative": "(0.039566129896580034754716687955737 + 0.0j)",
+      "ell": "0.19891236737965800691159762264468",
+      "ell_iteration": "0.19891236737965800691159762264468",
+      "ell_relative_error": "1.91544142687e-92",
+      "fixed_point": "(-0.3511533023570844946552312438511 + 0.0j)",
+      "fixed_point_iterations": 65,
+      "h": 3,
+      "kappa": 3,
+      "lattice_clear": true,
+      "lattice_spacing": "1.945390008778187590169189484731",
+      "q": 8,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1 M_1",
+        "minpoly": "x^4 - 4*x^2 + 2",
+        "operator_word": "L_1^(h-1) L_2",
+        "trace_raw": "2*x^3 - 4*x",
+        "trace_reduced": "2*x^3 - 4*x"
+      },
+      "trace": "5.226251859505506111426572694",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    },
+    "9": {
+      "a_q": "3.442085112884421892146343864154",
+      "attracting_derivative": "(0.0010238653800839438972785505202935 + 0.0j)",
+      "ell": "0.031997896494675144462233578913467",
+      "ell_iteration": "0.031997896494675144462233578913467",
+      "ell_relative_error": "6.61697145251e-94",
+      "fixed_point": "(-0.33996151074384285170792048244486 + 0.0j)",
+      "fixed_point_iterations": 31,
+      "h": 3,
+      "kappa": 7,
+      "lattice_clear": true,
+      "lattice_spacing": "0.91270045642688366324939011634642",
+      "q": 9,
+      "symbolic": {
+        "determinant": "1",
+        "factors": [
+          2,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1
+        ],
+        "map_matrix_word": "M_2 M_1 M_1 M_2 M_1 M_1 M_1",
+        "minpoly": "x^3 - 3*x - 1",
+        "operator_word": "L_1^h L_2 L_1^(h-1) L_2",
+        "trace_raw": "4*x^7 - 20*x^5 + 28*x^3 - 9*x",
+        "trace_reduced": "4*x^2 + 7*x + 4"
+      },
+      "trace": "31.28405223595454165837667109",
+      "zero_formula": "s = -n + i*pi*k/a_q, n>=0, k in Z"
+    }
+  },
+  "manifest_q": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "mpmath_dps": 100,
+  "numpy_version": "2.5.2",
+  "python": "/Users/za/.venvs/farey-rh/bin/python",
+  "python_version": "3.13.13",
+  "receipt_path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/FAMILY_PREP_CONSTANTS_RECEIPT.json",
+  "report_path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/FAMILY_PREP_CONSTANTS.md",
+  "source_path": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_mayer_rosen.py",
+  "source_sha256": "070732923ce4d05c1482c97727fc1824548578955ca59b1fef99c334f6ea06c4",
+  "status": "PASS_FLOAT_PREP",
+  "task": "family-prep-constants",
+  "tb_method_path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/tb_disc_opt.py",
+  "tb_sha256": "f9e6e95dde44db4859796e7d611ee3087f3ff4779c7eb73983103da576ef2134"
+}

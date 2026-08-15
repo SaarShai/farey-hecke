@@ -1,0 +1,122 @@
+{
+  "receipt": "M1C_Q4_KILLTEST",
+  "date": "2026-08-14",
+  "verdict": "CONTAINMENT_SUPPORTED_FINITE_NUMERICAL",
+  "claim_boundary": "Finite N=40/60 pointwise numerical support only; no proof of global divisor containment, multiplicity, Fricke-plus restriction, or the MMS-to-modular intertwiner.",
+  "protocol": {
+    "python": "/Users/za/.venvs/farey-rh/bin/python",
+    "precision_bits": 220,
+    "basis_sizes": [40, 60],
+    "mms_sign": 1,
+    "mms_q": 4,
+    "mms_n_head": 4,
+    "modular_n_head": 4,
+    "mayer_disc": "|z-1|<3/2",
+    "modular_basis": "normalized Taylor e_k(z)=((z-z0)/0.30)^k",
+    "modular_basis_center": 0.6180339887498948,
+    "modular_basis_scale": 0.3,
+    "tail_method": "period-2 residue grouping with exact Hurwitz-zeta continuation",
+    "requested_nice": "nice -n 15",
+    "nice_warning": "nice: setpriority: Operation not permitted",
+    "elapsed_seconds": 51.98631695797667
+  },
+  "source_files": {
+    "mms_even_builder": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen_even.py",
+    "hurwitz_primitive": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen_q5.py",
+    "q4_pin_receipt": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_b/Q4Q6_CONTROLS_RECEIPT.json",
+    "fraczek_mayer": "https://arxiv.org/abs/1011.4441",
+    "mms_parent": "research_notes/rh_goals_2026-08-14/lane_g/M1_DERIVATION_DRAFT.md",
+    "mms_construction": "research_notes/rh_goals_2026-08-14/lane_g/M1B_Q4_INTERTWINER.md"
+  },
+  "sha256": {
+    "zeta_cert_rosen_even.py": "33d50b7f905a98300601746f2413f7b4332c1eae24049560d2e935474b9eacf5",
+    "zeta_cert_rosen_q5.py": "c84c5c3f6d9f7a320bca7f1dbfd96a4859c3eea9b3de5420eb4eb223ad0d597b",
+    "Q4Q6_CONTROLS_RECEIPT.json": "dd3f0361967a12fe26877f563e437e1028ce391884f39eb2e629506556dce8a8"
+  },
+  "representation": {
+    "coset_representatives": ["I", "S", "ST"],
+    "rho_S": [[0, 1, 0], [1, 0, 0], [0, 0, 1]],
+    "rho_T": [[1, 0, 0], [0, 0, 1], [0, 1, 0]],
+    "checks": {
+      "rho_S_squared_identity": true,
+      "rho_ST_cubed_identity": true,
+      "rho_T_squared_identity": true,
+      "rho_ST_plus_equals_minus_for_m_1_to_12": true
+    },
+    "modular_block": "M_{2,s}=[[0,M^+],[M^-,0]], with M^+=M^- for this level-2 permutation representation"
+  },
+  "fricke_attempt": {
+    "projective_integer_representative_W2": [[0, -1], [2, 0]],
+    "mod_2_determinant": 0,
+    "p1_f2_permutation": false,
+    "permutation_search": "Only identity P satisfies P rho(S)=rho(S)P and P rho(T)=rho(T^-1)P among 3x3 permutation matrices.",
+    "status": "NO_NONTRIVIAL_3X3_FRICKE_ACTION_USED",
+    "subdeterminants_evaluated": false
+  },
+  "evaluations": {
+    "pins": [
+      {
+        "label": "real_s1_pin",
+        "s": {"re": 1.0, "im": 0.0},
+        "kind": "real q=4 zero",
+        "rows": [
+          {"N": 40, "q4": [8.057106250049386e-26, 0.0, 8.057106250049386e-26], "mod_minus": [9.841561173786905e-19, 0.0, 9.841561173786905e-19], "mod_plus_equals_minus": true},
+          {"N": 60, "q4": [1.1849377704254225e-37, 0.0, 1.1849377704254225e-37], "mod_minus": [2.9040501691596448e-27, 0.0, 2.9040501691596448e-27], "mod_plus_equals_minus": true}
+        ]
+      },
+      {
+        "label": "q4_pin_1",
+        "s": {"re": 0.25, "im": 7.067362570867346},
+        "kind": "lane_b q4 pin",
+        "rows": [
+          {"N": 40, "q4": [4.390413803739053e-16, -2.7950844810857503e-15, 2.829355861337881e-15], "mod_minus": [6.346200576716643e-30, 1.4053425144041805e-29, 1.5419890402953746e-29], "mod_plus_equals_minus": true},
+          {"N": 60, "q4": [4.3914810970418065e-16, -2.7950560857732947e-15, 2.8293443736800735e-15], "mod_minus": [6.377581588378953e-30, 1.4058668263318824e-29, 1.5437606688035493e-29], "mod_plus_equals_minus": true}
+        ]
+      },
+      {
+        "label": "q4_pin_2",
+        "s": {"re": 0.25, "im": 10.511019819386503},
+        "kind": "lane_b q4 pin",
+        "rows": [
+          {"N": 40, "q4": [2.5234666861308582e-12, 1.0741033675498275e-12, 2.7425503022176523e-12], "mod_minus": [2.2134078394082756e-22, 1.0876748432692677e-22, 2.4662138650641873e-22], "mod_plus_equals_minus": true},
+          {"N": 60, "q4": [2.5235668360325946e-12, 1.074328206733246e-12, 2.7427305138686582e-12], "mod_minus": [1.648958169626936e-22, 9.000989305095331e-23, 1.878627459046583e-22], "mod_plus_equals_minus": true}
+        ]
+      },
+      {
+        "label": "q4_pin_3",
+        "s": {"re": 0.25, "im": 12.50542878996472},
+        "kind": "lane_b q4 pin",
+        "rows": [
+          {"N": 40, "q4": [-7.560587282687872e-10, -1.4238419115363843e-09, 1.6121261084788003e-09], "mod_minus": [1.5173264924468062e-17, 3.507888892412861e-18, 1.5573479153663973e-17], "mod_plus_equals_minus": true},
+          {"N": 60, "q4": [-7.561517686804572e-10, -1.424085245398361e-09, 1.6123846574065055e-09], "mod_minus": [1.1481720385954391e-17, -5.421468323987031e-18, 1.2697331286897866e-17], "mod_plus_equals_minus": true}
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "label": "control_off_pin",
+        "s": {"re": 0.25, "im": 8.0},
+        "rows": [
+          {"N": 40, "q4": [2.9552943713279873, 0.3573163735638783, 2.9768170605564133], "mod_minus": [18.498221950483646, -11.493730503575124, 21.77820139998178], "mod_plus_equals_minus": true},
+          {"N": 60, "q4": [2.955295474267789, 0.3574581664060897, 2.97683517866846], "mod_minus": [18.49822195048365, -11.493730503575124, 21.778201399981782], "mod_plus_equals_minus": true}
+        ]
+      },
+      {
+        "label": "control_interior",
+        "s": {"re": 0.75, "im": 0.25},
+        "rows": [
+          {"N": 40, "q4": [0.08664614288935887, 1.5941922086701077, 1.5965451300423923], "mod_minus": [2.2442941139789347, 2.793784788065559, 3.5835861245499614], "mod_plus_equals_minus": true},
+          {"N": 60, "q4": [0.08664331097968059, 1.5941654264272458, 1.5965182335800252], "mod_minus": [2.2442941139789347, 2.793784788065559, 3.5835861245499614], "mod_plus_equals_minus": true}
+        ]
+      }
+    ]
+  },
+  "checks": {
+    "all_pin_modular_abs_below_1e-8_at_both_N": true,
+    "all_controls_modular_abs_order_one": true,
+    "all_controls_q4_abs_order_one": true,
+    "basis_convergence_repeated_at_N_40_and_60": true,
+    "fricke_plus_subdeterminants": "NOT_RUN_NO_VALID_NONTRIVIAL_3X3_ACTION",
+    "global_proof": false
+  }
+}

@@ -25,18 +25,21 @@ demonstration", "keep a ledger of all of the goals we are pursuing")
 ## Active tickets
 - [Mertens constant to 4–5 significant digits](tickets/mertens-constant-precision.md) — research; AFK; claimed; blocked by: none; claimed by: lane A4
 - [Cramér–Rao lower bound T1 in the frozen model](tickets/sample-complexity-t1.md) — research; AFK; open; blocked by: none; claimed by: none (frontier next block)
-- [Proven truncation tail bound for the G_5 operator](tickets/flagship-tail-bound.md) — research; AFK; claimed; blocked by: none; claimed by: frontier (geometry solved; rho*=0.66)
+- [Proven truncation tail bound for the G_5 operator](tickets/flagship-tail-bound.md) — CLOSED 2026-08-15: **THEOREM DECLARED** (V8 THEOREM-GRADE YES after 5 adversarial rounds; assembly v2)
 - [Uniform-protocol family re-sweep](tickets/uniform-protocol-resweep.md) — research; AFK; open; blocked by: none; claimed by: none (after B5)
 - [Re-certify G_5 boxes with the proven tail radius](tickets/flagship-certify-rerun.md) — prerequisite; AFK; open; blocked by: [Proven truncation tail bound for the G_5 operator](tickets/flagship-tail-bound.md), claimed by: none
 - [Fill family-sweep data gaps (G_8 even sector; extended q=4/6)](tickets/instrument-fill-gaps.md) — prerequisite; AFK; claimed; blocked by: none; claimed by: lane B5
 - [Run the preregistered blind test](tickets/instrument-blind-test-run.md) — prerequisite; AFK; open; blocked by: [Fill family-sweep data gaps (G_8 even sector; extended q=4/6)](tickets/instrument-fill-gaps.md); claimed by: none
-- [Extend Gonek J₋₁ test to the full 100k-zero table](tickets/gonek-extension.md) — research; AFK; open; blocked by: none; claimed by: none
+- [Extend Gonek J₋₁ test to the full 100k-zero table](tickets/gonek-extension.md) — research; AFK; claimed; blocked by: none; claimed by: Kaggle offload (5 kernels running, lane_k)
+- [Gonek 1989 first-test verdict call](tickets/gonek-verdict-call.md) — research; AFK+frontier; open; blocked by: [Extend Gonek J₋₁ test](tickets/gonek-extension.md); claimed by: frontier on harvest
+- [No-vertical-line certified corollary](tickets/no-vertical-line-corollary.md) — research; AFK-light; open; UNBLOCKED 2026-08-15; claimed by: none
 - [Fresh Lean re-verification of the Bridge identity](tickets/d3-lean-reverify.md) — prerequisite; AFK; open; blocked by: none; claimed by: none
 - [D3 priority-note submission decision](tickets/d3-submission-decision.md) — discussion; HITL; open; blocked by: [Fresh Lean re-verification of the Bridge identity](tickets/d3-lean-reverify.md); claimed by: none
-- [Kloosterman DiscrepancyStep gate spec + probe](tickets/kloosterman-gate.md) — research; AFK; open; blocked by: [Cramér–Rao lower bound T1 in the frozen model](tickets/sample-complexity-t1.md) (frontier bandwidth ordering only); claimed by: none
+- [Kloosterman DiscrepancyStep gate spec + probe](tickets/kloosterman-gate.md) — research; AFK; CLOSED NO-GO 2026-08-14 (pre-registered stop condition hit: fluctuation object is a Mertens-weighted Dedekind-sum convolution, RH-coupled; lane_i/V_EXTRACTION.md is the documented reduction → D3 outlook)
 - [Constants-paper greenlight and venue](tickets/constants-paper-greenlight.md) — discussion; HITL; open; blocked by: [Mertens constant to 4–5 significant digits](tickets/mertens-constant-precision.md), [Extend Gonek J₋₁ test to the full 100k-zero table](tickets/gonek-extension.md); claimed by: none
 - [Lab distribution decision (repo/DOI vs note vs Koyama-first)](tickets/lab-distribution-decision.md) — discussion; HITL; open; blocked by: [Winding certificates for the q=4/q=6 pins](tickets/winding-certificates-q4q6.md); claimed by: none
 
+- [Family theorem: every non-arithmetic G_q has an off-line resonance](tickets/family-offline-theorem.md) — research; AFK; open; UNBLOCKED 2026-08-15 (flagship template declared); claimed by: none — next in line
 - [M1 — Factorization theorem for arithmetic members](tickets/mechanism-m1-factorization.md) — research; AFK; claimed; blocked by: none; claimed by: lane S5 → frontier
 - [M2 — Certified non-factorization for G_5](tickets/mechanism-m2-nonfactorization.md) — research; AFK; claimed; blocked by: none; claimed by: lane M2
 
