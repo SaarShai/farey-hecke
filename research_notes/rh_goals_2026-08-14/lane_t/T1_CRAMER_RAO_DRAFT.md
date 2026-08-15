@@ -1,10 +1,23 @@
 # T1 — Cramér–Rao lower bound in the frozen model N2
 
-Draft v1, 2026-08-15. Lane T (T-opus). Status: DRAFTED, not adversarially
-reviewed, not machine-verified.
+Draft v2, 2026-08-15. Lane T (T-opus). Status: REVISED under owner-approved
+amendment A1; not adversarially reviewed, not machine-verified.
 Ticket: `plans/wayfinder/rh-goals/tickets/sample-complexity-t1.md`.
 Model authority: `research_notes/rh_goals_2026-08-14/G1_MODEL_SPEC.md` (v0,
-FROZEN 2026-08-14).
+FROZEN 2026-08-14, **+ AMENDMENT A1 of 2026-08-15** which adds clause M4′).
+
+**Changes v1 → v2.** (i) Band limitation (M4′) is now a *spec clause* via
+amendment A1, cited in the hypothesis set of T1 instead of being an
+undeclared addition — GAP-2 CLOSED. (ii) v1's claim that band-limiting gives
+a bound valid for the unrestricted record is **wrong in direction** and is
+corrected: M4′ restricts the estimator class (§1.5, §3 (R1)). (iii) The
+Fisher computation is re-derived under the band limit (new §4.0): the tones
+are interior, S_ε(γ_j) is unchanged, and the constant 24 survives — but the
+band-edge *leakage* term does not vanish at Ω = 2Γ, so T1 now carries an
+explicit leakage hypothesis (B1) and a new GAP-14. (iv) New GAP-15
+(positivity of the extended S_ε at low ω inside the band). (v) (R6)/GAP-3
+remains OPEN with a pointer to proposed amendment A2 (not approved, not
+enacted).
 
 **Honest label carried throughout:** this is a Cramér–Rao bound *in model N2*.
 N2 contains stochastic hypotheses about the zeros that are not theorems. The
@@ -25,6 +38,16 @@ substantially defuses falsification gate G-a (the heavy-tail worry of
 G1_MODEL_SPEC §3/§5): the heavy tail enters the *validity* of the Gaussian
 approximation, but not the leading constant. The sample-complexity corollary
 is X(ε) ≥ exp( (6 log(γ_d/2π))^{1/3} · ε^{-2/3} ).
+
+**Two caveats the reader must carry from here (both sharpened in v2).** The
+bound is for the *band-limited* estimator class of spec clause M4′
+(amendment A1) — it is not a bound on estimators that see the unrestricted
+record. And within that class it holds only when the band-edge leakage
+hypothesis (B1) of §2 holds; at the approved cut Ω = 2Γ, with the frozen
+Gaussian window, **(B1) fails by ~29 orders of magnitude** (§4.0, GAP-14).
+The displayed constants are therefore the correct constants of the *local*
+(white-noise-equivalent) problem, and T1 is proved only for bands narrow
+enough that (B1) holds.
 
 ---
 
@@ -98,6 +121,11 @@ I make the spec's "STATED as model hypotheses" concrete. N2 =
   spectral measure is replaced by its intensity-smoothed absolutely
   continuous version S_ε(ω)dω/2π, extended to all ω ∈ ℝ — in particular to
   ω = γ_j, where a realisation carries no atom.
+- **(M4′) Band limitation** *(spec clause since AMENDMENT A1, 2026-08-15,
+  owner-approved; it was an undeclared addition in v1)*. The observation is
+  the ideally band-passed record y_Ω, pass band ω ∈ [−Ω, Ω] with **Ω := 2Γ**.
+  All statements below are about y_Ω. See G1_MODEL_SPEC §A1 for the clause,
+  what it repairs ((R1)), and the honesty note that it is post-freeze.
 - **(M5) Resolvability.** T · min_{j≠k} |γ_j − γ_k| ≥ 2πK for a constant
   K ≥ 4, and T · (Γ − γ_d) ≥ 2πK.
 
@@ -111,9 +139,17 @@ It is flagged FRONTIER in §6 and its failure direction is analysed in §7.3.
 the observed tone amplitude. Amplitudes and phases are **unknown nuisance
 parameters** — they involve ζ′(½+iγ_j), which is not available to an
 estimator that only sees y. Estimators: any θ̂ measurable w.r.t.
-{y(t) : t ∈ [0,T]} that is unbiased on an open neighbourhood of the true θ in
-Θ (Cramér–Rao's own regularity requirement; the biased-estimator variant is
-noted in §6, GAP-7).
+**{y_Ω(t) : t ∈ [0,T]}** — the band-limited record of (M4′) — that is
+unbiased on an open neighbourhood of the true θ in Θ (Cramér–Rao's own
+regularity requirement; the biased-estimator variant is noted in §6, GAP-7).
+
+**The band limitation restricts the estimator class; it is not free.** More
+data means more Fisher information means a *smaller* CR bound, so a bound
+proved for y_Ω does **not** transfer to estimators that see the full record
+y. (v1 asserted the transfer in §3; that was backwards.) The restriction is
+forced rather than convenient: on the full record the information is infinite
+(§3 (R1)) and the only valid bound is 0. Every statement of T1 is therefore a
+statement about the M4′ class, and is labelled as such.
 
 ---
 
@@ -128,9 +164,29 @@ S_ε ≡ S₀. All constants below are tied to (2.1); a one-sided or a
 per-sample-variance convention changes them by explicit factors of 2 — see
 §6, GAP-1.)
 
-> **Theorem T1 (CR lower bound, model N2).**
-> Assume (RH) and model N2 = (M1)–(M5), with the resolvability constant
-> K ≥ 4. Let θ̂ be any unbiased estimator of θ from {y(t) : t ∈ [0,T]},
+Two hypotheses beyond the model are needed and are stated up front rather
+than buried:
+
+- **(M4′)** — band limitation, Ω = 2Γ. Since AMENDMENT A1 this is a clause of
+  the frozen spec, not an addition of this draft. It fixes the estimator
+  class (§1.5).
+- **(B1) Band-edge leakage negligibility** *(theorem hypothesis, not a model
+  clause)*. Split the pass band into the near-tone part
+  N := ∪_j {ω : ||ω| − γ_j| ≤ 2πK/T} and the rest R := {|ω| ≤ Ω} \ N, and let
+  I_N, I_R be the corresponding Fisher-information Gram matrices (both PSD,
+  I = I_N + I_R). Assume **I_R ⪯ K^{-1} I_N**. The diagnostic quantity is
+
+    ρ_j := (3/2π²) · S_ε(γ_j) / ( (Ω − γ_j)² · T · S_ε(Ω) ),          (2.2)
+
+  and (B1) requires ρ_j ≲ K^{-1}. **(B1) is FALSE at Ω = 2Γ under the frozen
+  Gaussian window** — §4.0 measures ρ_d ≈ 7·10^{28} — so T1 below is proved
+  for bands satisfying (B1) and is, at the approved cut, an *unproved*
+  statement. This is GAP-14, opened by the v2 audit.
+
+> **Theorem T1 (CR lower bound, model N2 as amended by A1).**
+> Assume (RH), model N2 = (M1)–(M5) **with clause (M4′)**, the resolvability
+> constant K ≥ 4, and the leakage hypothesis (B1). Let θ̂ be any unbiased
+> estimator of θ from the band-limited record {y_Ω(t) : t ∈ [0,T]},
 > T = log X. Then for every j ∈ {1,…,d},
 >
 >   Var(γ̂_j) ≥ (24 + O(K^{-1})) · S_ε(γ_j) / (A_j² T³)
@@ -189,18 +245,32 @@ DIVERGES. (R1) FAILS as literally stated.**
   extending (M4) to arbitrarily high ω. The observable's high-frequency
   content is superpolynomially suppressed by the Gaussian smoothing, so the
   model noise is "too clean" at high ω and the model becomes *singular*
-  (θ perfectly identifiable, information infinite) if all frequencies are
-  admitted. The frozen model must therefore be band-limited. I adopt:
+  (θ perfectly identifiable, information infinite, CR bound ≡ 0) if all
+  frequencies are admitted. The frozen model must therefore be band-limited.
+  The repair is spec clause **(M4′)** (§1.4): ideal band-pass onto
+  ω ∈ [−Ω,Ω], Ω := 2Γ.
 
-  **(M4′) Band limitation.** Observation is through an ideal band-pass onto
-  ω ∈ [−Ω, Ω] with Ω := 2Γ. All statements are for the band-limited
-  observable y_Ω.
+  **Status: REPAIRED. (R1) HOLDS under (M4′).** On the pass band S_ε is
+  bounded below by the positive constant S_ε(Ω) = a_Ω² log(Γ/π) (using
+  Ω = 2Γ, and modulo the low-frequency positivity convention of GAP-15),
+  1/S_ε is bounded, the Cameron–Martin integral is finite, and all P_θ are
+  equivalent Gaussian measures on the band.
 
-  With (M4′), S_ε is bounded below by a positive constant on the band
-  (S_ε(ω) ≥ a_Ω² log(Γ/π) > 0), 1/S_ε is bounded, and (R1) HOLDS: all P_θ
-  are equivalent Gaussian measures on the band. Band-limiting only *removes*
+  *Provenance, and a v1 correction.* (M4′) was **[ADDED]** by v1 of this
+  draft and was not in the frozen spec; the required amendment has since been
+  made and approved — G1_MODEL_SPEC **AMENDMENT A1** (2026-08-15,
+  owner-approved, post-freeze, so labelled). **GAP-2 is therefore CLOSED
+  (REPAIRED-BY-A1).** v1 added, wrongly, that "band-limiting only *removes*
   information, so any lower bound proved for y_Ω is a valid lower bound for
-  y. **[ADDED — not in the spec. GAP-2, FRONTIER-lite.]**
+  y". The direction is backwards: removing information *raises* the CR
+  bound, so the y_Ω bound does not transfer to estimators seeing y. See
+  §1.5 — M4′ restricts the estimator class, and that restriction is forced,
+  because on the unrestricted record the only valid bound is 0.
+
+  *What A1 does not do.* Making the information finite is not the same as
+  making the local white-noise computation of §4 correct. At Ω = 2Γ the
+  information is finite but astronomically larger than the local value; see
+  §4.0 and GAP-14.
 
 **(R2) Differentiability of the log-likelihood in θ.**
 Under (M4′), with W_C the whitening operator,
@@ -238,7 +308,8 @@ Assumed by hypothesis on the estimator class. Not a property of the model.
 Genuinely restrictive: periodogram-type estimators (T2) are biased at finite
 T. See §6, GAP-7 for the van-Trees/Bayesian route that removes it.
 
-**(R6) Gaussianity of ε (the approximation that (M4) makes).**
+**(R6) Gaussianity of ε (the approximation that (M4) makes). — OPEN, see
+proposed amendment A2.**
 Not a regularity condition for CR, but a validity condition for the model.
 ε = 2Σ_{γ>Γ} a_γ cos(γ t + φ_γ) is a sum of infinitely many independent
 (under M1) bounded terms; a Lindeberg condition would give a CLT provided no
@@ -248,15 +319,134 @@ ratio does **not** vanish. **(R6) FAILS: ε is not close to Gaussian; it is
 close to a small sum of a few random phases.** This is the single most
 serious honest defect of T1 as drafted. See §6, GAP-3 (FRONTIER) and §7.3.
 
-**Summary of the regularity audit.** (R2),(R3),(R4) hold. (R1) fails as
-stated and is repaired by band limitation (M4′), at no cost to the bound's
-validity. (R5) is a restriction on the estimator class, declared. (R6) fails;
-the Gaussian step is a genuine modelling assumption, not an approximation
-theorem, and T1 must be read as "CR bound in the Gaussian surrogate of N2".
+  *Status after A1: STILL OPEN, and deliberately not amended.* Band
+  limitation is orthogonal to Gaussianity, so A1 does not touch this. The
+  repair recommended by this draft — replace W by a window whose Mellin
+  transform decays polynomially — is recorded in G1_MODEL_SPEC §A1.5 as
+  **proposed amendment A2, AWAITING OWNER RULING**. It is *not* approved and
+  *not* enacted; nothing in v2 assumes it. Until a ruling, the frozen spec's
+  §3 claim that the interference is "Gaussian-approximable" stands as
+  KNOWN-FALSE AS WRITTEN, and T1 is labelled "CR bound in the **Gaussian
+  surrogate** of N2".
+
+**Summary of the regularity audit.** (R2),(R3),(R4) hold. (R1) failed as
+stated and is now REPAIRED by spec clause (M4′) (amendment A1) — at the cost
+of restricting the estimator class, which is a real cost and is declared in
+§1.5, not a free reduction. (R5) is a restriction on the estimator class,
+declared. (R6) fails; the Gaussian step is a genuine modelling assumption,
+not an approximation theorem, and T1 must be read as "CR bound in the
+Gaussian surrogate of N2" — proposed amendment A2, awaiting owner ruling.
+Separately, (R1)'s repair is *qualitative*: it restores absolute continuity
+but leaves the information far above the local white-noise value at the
+approved cut Ω = 2Γ (§4.0, GAP-14).
 
 ---
 
 ## 4. Fisher information — computed
+
+### 4.0 Re-derivation under the band limit (M4′) — verification, not assertion
+
+Everything below §4.1 was computed in v1 without a band limit. Clause (M4′)
+changes the ambient space, so each step is re-checked here against
+Ω = 2Γ. Under (M4′) the Fisher information is the Gram matrix
+
+  I_{jk}(θ) = ⟨∂_j m_θ, ∂_k m_θ⟩_C
+            = (1/2π) ∫_{|ν| ≤ Ω} ∂̂_j m(ν) · conj(∂̂_k m(ν)) / S_ε(ν) dν,   (4.0)
+
+where ∂̂_j m is the Fourier transform of the *time-limited* derivative
+(supported in t ∈ [0,T], hence spread over all ν).
+
+**(a) The target tones are interior to the band, with margin ≥ Γ.**
+(M3)/N2 fix γ_d < Γ, and (M4′) sets Ω = 2Γ, so for every j ≤ d
+
+  Ω − γ_j = 2Γ − γ_j > 2Γ − Γ = Γ > 0,
+
+and the mirror tones at −γ_j are interior by symmetry. The Lemma-1
+neighbourhoods [γ_j − 2πK/T, γ_j + 2πK/T] are interior too: (M5) gives
+T(Γ − γ_d) ≥ 2πK, hence γ_j + 2πK/T ≤ γ_d + (Γ − γ_d) = Γ < Ω, with slack
+Ω − Γ = Γ. So the band-pass touches neither a tone nor its Lemma-1
+neighbourhood. **Verified.**
+
+**(b) S_ε(γ_j) is unchanged.** An ideal band-pass multiplies the spectrum by
+1_{|ν| ≤ Ω}; it leaves the spectral density *inside* the band pointwise
+untouched. By (a), γ_j is interior, so S_ε(γ_j) in (T1-a)/(T1-b) is exactly
+the pre-amendment value a_{γ_j}² log(γ_j/2π), and the amplitude cancellation
+of §0 and Prop. 4.4 is unaffected. **Verified.** (Two riders: the low-ω end
+of the band needs a positivity convention, GAP-15; and (M4)'s extension of
+S_ε to ω = γ_j, where no interference atom lives, is still GAP-9.)
+
+**(c) The constant 24 survives the band-pass, with an O(K^{-1}) correction.**
+The band-pass removes the out-of-band energy of each ∂_j m. For a tone at ω
+with Δ := Ω − ω, the time-limited derivatives have |∂̂_A m|, |∂̂_φ m| ≲ A/|ν−ω|
+and |∂̂_ω m| ≲ AT/(2|ν−ω|), so
+
+  removed fraction of ‖∂_ω m‖²  ≤  [ (A²T²/4)·(2/Δ)/2π ] / (A²T³/6)
+                                =  6/(4π Δ T)  =  O(1/(ΔT)),
+  removed fraction of ‖∂_A m‖², ‖∂_φ m‖²  ≤  2/(π Δ T)  =  O(1/(ΔT)).
+
+By (a), Δ ≥ Γ and TΓ ≥ 2πK (from T(Γ−γ_d) ≥ 2πK and γ_d > 0), so both
+fractions are ≤ 0.08/K = O(K^{-1}) — the same order as the cross-tone error
+already carried in Lemma 3(a), hence absorbed, and *smaller* than the
+O(1/(ωT)) relative error already carried inside Lemma 2 (since Δ ≥ Γ > γ_j).
+At the §5 numbers (γ_d = 49.7738, Γ = 50, Ω = 100, T = 17.2167) the two
+fractions are 5.5·10^{−4} and 7.4·10^{−4}. So the truncation of the *signal*
+by the band-pass is harmless and **the algebra of Lemma 2 — det = (A²/S₀)²T⁴/48,
+[I^{-1}]_{ωω} = 24 S₀/(A²T³) — goes through unchanged. Verified.**
+
+Independent numerical re-check of the constant under (4.0), this session:
+exact 3×3 band-limited FIM assembled from the closed-form transforms of
+cos(ωt+φ), −At sin(ωt+φ), −A sin(ωt+φ) on [0,T] (T = 17.2167, A = 1,
+φ = 0.4), white S_ε ≡ 1, band Ω large:
+
+| ω | Ω | T³·[I^{-1}]_{ωω} |
+|---|---|---|
+| 3.7 | 400 | 23.927 |
+| 14.1347 | 400 | 23.824 |
+| 49.7738 | 600 | 23.947 |
+
+→ 24. Consistent with v1's time-domain check (23.24…23.92). **Factor 24
+re-verified under the band-limited formulation.**
+
+**(d) What does NOT survive: the band-edge leakage term.** (a)–(c) say the
+band-pass loses little *signal*. They do not say the retained out-of-band
+frequencies are uninformative. Split I = I_N + I_R as in (B1). On R the
+noise is exponentially quieter than at the tone: with the frozen Gaussian W,
+1/S_ε(ν) ≍ e^{+πν/2}, while |∂̂_ω m(ν)|² ≍ A²T²/(4(ν−ω)²) decays only
+quadratically. The ν-integral in (4.0) is therefore dominated by the band
+EDGE, giving
+
+  I_R,ωω ≈ A²T² / ( 4π² (Ω−ω)² S_ε(Ω) ),
+  ρ_ω := I_R,ωω / I_N,ωω ≈ (3/2π²) · S_ε(ω) / ( (Ω−ω)² T S_ε(Ω) ),        (4.0′)
+
+which is (2.2). Because S_ε(ω)/S_ε(Ω) ≍ e^{π(Ω−ω)/2}, ρ grows
+*exponentially* in the band width Ω − ω and only the T^{-1}(Ω−ω)^{-2} prefactor
+opposes it. Evaluated at the approved cut Ω = 2Γ with the §5 numbers:
+
+| Γ | Ω = 2Γ | S_ε(γ_d) | S_ε(Ω) | ρ_d (4.0′) | measured [I^{-1}]_{ωω} ÷ 24S_ε(γ_d)/(A²T³) |
+|---|---|---|---|---|---|
+| 51.234 (M5-tight) | 102.467 | 7.23e−35 | 7.68e−71 | 3.0e+30 | 1.6e−31 |
+| 50 | 100 | 7.23e−35 | 3.71e−69 | 6.8e+28 | 7.7e−30 |
+
+(The last column is the exact band-limited 3×3 FIM of (4.0) inverted
+numerically with the model S_ε, same session, same script as (c).) Analytic
+diagnostic and measurement agree to within a factor ≈ 2 at the approved cut.
+
+**Conclusion of the re-derivation.** At Ω = 2Γ the true CR bound in the
+amended model is smaller than the claimed (T1-a) by ~29 orders of magnitude:
+**(B1) FAILS at the approved cut, and T1's constants are therefore the
+constants of the local problem, not a proved bound for the M4′ class at
+Ω = 2Γ.** The band width that preserves them, measured the same way with the
+tone at γ_d:
+
+| Ω − γ_d | 0.5 | 1 | 1.5 | 2 | 3 | 4 | 6 | 10 |
+|---|---|---|---|---|---|---|---|---|
+| [I^{-1}]_{ωω} ÷ local 24-value | 1.158 | 1.001 | 0.870 | 0.781 | 0.566 | 0.357 | 0.061 | 4e−4 |
+
+i.e. Ω = γ_d + O(1) — not 2Γ. This is **GAP-14**. It is the same root cause
+as GAP-3 and GAP-4 (the Gaussian window's exponentially decaying Mellin
+transform), and proposed amendment A2 would control it polynomially. The cut
+Ω = 2Γ is the one the owner approved, so it is what this draft assumes;
+changing it needs a further amendment (G1_MODEL_SPEC §A1.4).
 
 ### Lemma 1 (local whitening).
 Let S_ε be continuous and bounded below on the band, and suppose S_ε varies
@@ -278,6 +468,14 @@ Under (M2) and (T1-b), S_ε varies over a band of width 4πK/T by a factor
 **[This δ estimate is the one place where the exponential decay of a_ω hurts:
 π/2 per unit ω is not small. With K = 4, T = 17 the band is width ≈ 3 and
 δ ≈ e^{π·3/2·(1/2)} — NOT negligible. See GAP-4.]**
+
+**[Scope warning, added in v2.]** Lemma 1 is stated for u, v *supported* in
+the neighbourhood of ±γ_j. The derivatives ∂_j m_θ are time-limited to [0,T]
+and hence have tails at every frequency, so (4.1) is the information of the
+near-tone part I_N only. Using (4.1) as the whole Fisher information is
+exactly hypothesis (B1), which fails at Ω = 2Γ — §4.0(d), GAP-14. GAP-4
+(the δ inside the neighbourhood) and GAP-14 (the leakage outside it) are the
+short-range and long-range halves of one defect.
 
 ### Lemma 2 (single-tone FIM with nuisance amplitude and phase).
 Let m(t) = A cos(ωt + φ) on [0,T] and let the effective noise be white with
@@ -346,16 +544,39 @@ dμ = S_ε(ω) dω / 2π gives
 
   **S_ε(ω) = a_{|ω|}² · log(|ω|/2π).**                              (4.3)
 
+**Under (M4′).** (4.3) is derived for |ω| > Γ from the actual interference and
+then extended to all ω by (M4). The band-pass does not modify it inside the
+band, and by §4.0(a),(b) the evaluation point γ_j is interior, so
+S_ε(γ_j) = a_{γ_j}² log(γ_j/2π) stands exactly as in v1. Two riders that the
+band limit makes visible:
+
+- the pass band now explicitly includes |ω| < 2π, where (4.3) is **negative**
+  (log(|ω|/2π) < 0) and therefore not a spectral density. (M4)'s "extended to
+  all ω" needs a positivity convention there. This is **GAP-15**. It is
+  benign but must be written: any floor S_min contributes to I_{γ_jγ_j} a
+  relative term ≈ 3 S_ε(γ_j)/((γ_j − 2π)² T S_min), which at γ_1 = 14.1347,
+  T = 17.2167 is 2.8·10^{−3}·S_ε(γ_1)/S_min — and since a_ω² is *larger* at
+  small ω by e^{π(γ_1−ω)/2} (a factor 3.7·10⁹ at ω = 1), every natural
+  continuation of (4.3) makes the sub-2π band far noisier than the tone, so
+  the term is negligible. The defect is bookkeeping, not substance;
+- the *upper* end of the band is not benign — see §4.0(d), GAP-14.
+
 Note GUE pair correlation (M2) does **not** enter (4.3): the first moment of
 the point process determines the mean spectral density; pair correlation
 affects only the *fluctuation* of the periodogram about it (relevant to T2's
 constants, not T1's). ∎
 
 ### Proof of Theorem T1.
-By (R1)–(R4) under (M4′) and (M5), the CR inequality applies to θ̂:
-Cov(θ̂) ⪰ I(θ)^{-1}. By Lemma 3(a), [I^{-1}]_{γ_jγ_j} equals the single-tone
-value up to relative error O(K^{-1}). By Lemma 1 the noise near γ_j is white
-of PSD S₀ = S_ε(γ_j). By Lemma 2 with A = A_j,
+By (R1)–(R4) under (M4′) and (M5), the CR inequality applies to θ̂ on the
+band-limited record: Cov(θ̂) ⪰ I(θ)^{-1}, I as in (4.0). By hypothesis (B1),
+I = I_N + I_R ⪯ (1 + K^{-1}) I_N, hence I^{-1} ⪰ (1 + K^{-1})^{-1} I_N^{-1}
+and [I^{-1}]_{γ_jγ_j} ≥ (1 − O(K^{-1})) [I_N^{-1}]_{γ_jγ_j}: the leakage
+outside the tone neighbourhoods is absorbed into the O(K^{-1}) terms. (This
+is the step that fails at Ω = 2Γ — §4.0(d), GAP-14.) By §4.0(c) the
+band-pass loses only an O(K^{-1}) fraction of each ‖∂_j m‖². By Lemma 3(a),
+[I_N^{-1}]_{γ_jγ_j} equals the single-tone value up to relative error
+O(K^{-1}). By Lemma 1 the noise near γ_j is white of PSD S₀ = S_ε(γ_j),
+unchanged by the band-pass (§4.0(b)). By Lemma 2 with A = A_j,
 
   Var(γ̂_j) ≥ (24 + O(K^{-1})) S_ε(γ_j) / (A_j² T³).
 
@@ -448,20 +669,28 @@ Every step that is sketched rather than proved, tagged **ARISTOTLE-ABLE**
 suitable for Lean formalisation via Aristotle) or **FRONTIER** (needs human
 or frontier judgement, or a modelling decision).
 
+**Ledger state after amendment A1 (v2).** 15 entries. **1 closed** (GAP-2,
+REPAIRED-BY-A1). **14 open**: the 12 surviving from v1's 13, plus GAP-14 and
+GAP-15 opened by the v2 amendment audit. (The ticket anticipated 12 open on
+the arithmetic 13 − 1; the audit that A1 required found two more, and hiding
+them to hit the predicted number would defeat the purpose of the ledger.)
+
 | # | Gap | Where | Tag |
 |---|---|---|---|
 | GAP-1 | The PSD convention (2.1) and the resulting constant 24 vs the literature's 12. Numerically checked to 3 digits, not proved. Needs a written lemma fixing convention and deriving (4.2) exactly, including the exact-N discrete version with the (N²−1) correction. | §2, Lemma 2 | **ARISTOTLE-ABLE** |
-| GAP-2 | (R1) fails without band limitation; the repair (M4′) with Ω = 2Γ is **[ADDED]**, not in the frozen spec. Requires a logged amendment to G1_MODEL_SPEC per its own header rule ("changes require a logged amendment"). Also: is Ω = 2Γ the right cut, or should it be T-dependent? | §3 (R1) | **FRONTIER** |
-| GAP-3 | (R6) fails: ε is not Gaussian-approximable, because a_γ ≍ e^{−πγ/4} makes the first few tail terms dominate — no Lindeberg. The spec asserts "Gaussian-approximable" (§3); the Gaussian smoothing W = e^{−x²} contradicts it. Either (i) change W to one with polynomially decaying M_W (then Lindeberg may hold), or (ii) prove a non-Gaussian CR/Barankin bound, or (iii) demote T1's label to "Gaussian surrogate of N2". | §3 (R6) | **FRONTIER** |
-| GAP-4 | Lemma 1's local-flatness parameter δ. Because log S_ε has slope ≈ −π/2 in ω, S_ε varies by e^{π·(bandwidth)/2} across the Lemma-1 band; with K = 4, T ≈ 17 this is **not** small, so the "O(δ) negligible" claim in (4.1) is unjustified at realistic T. Needs either an honest two-sided constant (S_ε evaluated at the band edge) or, again, a different W. Interacts with GAP-3: both are caused by the Gaussian smoothing's exponential Mellin decay. | §4 (4.1) | **FRONTIER** |
+| ~~GAP-2~~ | **CLOSED — REPAIRED-BY-A1 (2026-08-15).** (R1) fails without band limitation; the repair (M4′) with Ω = 2Γ was **[ADDED]** by v1 and not in the frozen spec. The required amendment is now logged and owner-approved: G1_MODEL_SPEC **AMENDMENT A1**. (M4′) is a spec clause, cited in T1's hypothesis set (§2), and (R1) HOLDS. Two residues were *not* closed with it and are carried as new entries: the sub-question "is Ω = 2Γ the right cut?" → **GAP-14**; the positivity of the extended S_ε at the low end of the band → **GAP-15**. | §3 (R1), §1.4 | **CLOSED** |
+| GAP-3 | (R6) fails: ε is not Gaussian-approximable, because a_γ ≍ e^{−πγ/4} makes the first few tail terms dominate — no Lindeberg. The spec asserts "Gaussian-approximable" (§3); the Gaussian smoothing W = e^{−x²} contradicts it. Either (i) change W to one with polynomially decaying M_W (then Lindeberg may hold), or (ii) prove a non-Gaussian CR/Barankin bound, or (iii) demote T1's label to "Gaussian surrogate of N2". **Status 2026-08-15: OPEN, NOT amended.** Route (i) is recorded as **proposed amendment A2 (G1_MODEL_SPEC §A1.5), AWAITING OWNER RULING — not approved, not enacted**; nothing in v2 assumes it. Route (iii) is what v2 does in the meantime (label carried in §0, §3, §8). | §3 (R6) | **FRONTIER** |
+| GAP-4 | Lemma 1's local-flatness parameter δ. Because log S_ε has slope ≈ −π/2 in ω, S_ε varies by e^{π·(bandwidth)/2} across the Lemma-1 band; with K = 4, T ≈ 17 this is **not** small, so the "O(δ) negligible" claim in (4.1) is unjustified at realistic T. Needs either an honest two-sided constant (S_ε evaluated at the band edge) or, again, a different W. Interacts with GAP-3: both are caused by the Gaussian smoothing's exponential Mellin decay. **Unchanged by A1** — band limitation acts outside the Lemma-1 neighbourhood and cannot flatten S_ε inside it. The flatness range is set by K/T, not by Ω, so the amendment neither helps nor hurts here. GAP-4 is now the short-range half of one defect whose long-range half is **GAP-14**; both are cured by A2 and by nothing else on offer. | §4 (4.1), §4.0(d) | **FRONTIER** |
 | GAP-5 | Lemma 3(a) cross-tone block-diagonality is proved by an order-of-magnitude sketch. A clean statement — "if T·Δγ ≥ 2πK then [I^{-1}]_{γγ} ≥ (1−CK^{-1})[I_j^{-1}]_{ωω} with C explicit" — is a finite linear-algebra + oscillatory-integral lemma. | §4, Lemma 3(a) | **ARISTOTLE-ABLE** |
 | GAP-6 | Lemma 3(b) (data-processing: discrete-sample FIM ⪯ continuous FIM) is stated, not proved. Standard, but load-bearing for the spec's §2 claim that samples are "cheap". | §4, Lemma 3(b) | **ARISTOTLE-ABLE** |
 | GAP-7 | Unbiasedness (R5). The T2 estimator (windowed periodogram + quadratic refinement) is biased at finite T, so T1 as stated does not directly bound it. Route: replace CR by a van Trees / Bayesian CR bound with a prior on Θ, or by a Ziv–Zakai bound (which also captures the threshold effect the periodogram exhibits). Changes constants. | §1.5, §3 (R5) | **FRONTIER** |
-| GAP-8 | The numerical FIM verification (Lemma 2) and the Γ-amplitude table (§5.1) were computed this session by throwaway scripts and are not committed as receipts. Repo convention elsewhere in this program is a `*_RECEIPT.json` with hashes. | §4, §5.1 | **ARISTOTLE-ABLE** (reproduce as a committed script + receipt) |
+| GAP-8 | The numerical FIM verification (Lemma 2) and the Γ-amplitude table (§5.1) were computed this session by throwaway scripts and are not committed as receipts. Repo convention elsewhere in this program is a `*_RECEIPT.json` with hashes. **v2 adds a third uncommitted computation**: the exact band-limited 3×3 FIM of (4.0) used for the tables in §4.0(c),(d) (white-noise re-verification of 24, ρ_d at Ω = 2Γ, and the Ω-sweep). Same obligation, now three items. | §4, §4.0, §5.1 | **ARISTOTLE-ABLE** (reproduce as a committed script + receipt) |
 | GAP-9 | (M4)'s stationary extension to ω = γ_j: the whole content of "S_ε(γ_j)". A realisation has no interference atom at γ_j, so the model assigns noise where a fixed zero configuration has none. Justifiable as a minimax-over-shifts idealisation, but not justified here. This is the honest reason the spec's N3 (minimax over admissible zero configurations) exists. | §1.4 (M4), §7.3 | **FRONTIER** |
 | GAP-10 | The amplitude truncation of (M3) at a quantile q: the sensitivity report the spec §3 promises has not been produced. Argued moot for the leading constant in §7.2, but not shown. | §1.4 (M3), §7.2 | **ARISTOTLE-ABLE** (numeric sensitivity sweep) |
 | GAP-11 | The γ_1 empirical violation (§5.2, row 2). Needs either an N1 (deterministic) re-run of Gate 1 on the *actual* frozen observable y(t) of §1.1, or an explanation why the comparison is not apples-to-apples. Currently the latter is asserted. | §5.2 | **FRONTIER** |
 | GAP-12 | Prior-art tripwire G-c: spec §5 requires a re-scout "at first-draft time". This is first-draft time. `lane_c/S2_PRIOR_ART.md` (2026-08-14, NO-COLLISION) is one day old and its own limitations section flags that a negative on "Cramér–Rao Riemann zeros" is weaker than a systematic review. Re-scout not run for this draft. | §5 of spec | **FRONTIER** |
+| **GAP-14** | **NEW (v2, opened by the A1 audit).** Band-edge leakage. (M4′) makes the Fisher information finite but not small: 1/S_ε grows like e^{+πω/2} across the pass band while each tone's window-truncation tails decay only like 1/(ν−γ_j), so the information is dominated by the band edge. Hypothesis (B1) of §2 is what the proof needs; at the approved cut Ω = 2Γ it **FAILS**, ρ_d ≈ 6.8·10^{28} and the measured band-limited [I^{-1}]_{ωω} is 7.7·10^{−30} of the local 24-value (§4.0(d)). Consequences: T1's constants are proved only for bands with Ω − γ_d = O(1) (measured ratio 1.00 at Ω−γ_d = 1, 0.36 at 4, 6·10^{−2} at 6); at Ω = 2Γ the displayed bound is *not* a proved CR bound. Routes: (i) proposed amendment A2 (polynomial M_W) makes the growth polynomial and (B1) attainable at Ω = 2Γ; (ii) a further amendment narrowing Ω — owner-gated, see G1_MODEL_SPEC §A1.4; (iii) keep (B1) as an explicit hypothesis and state where it holds. Long-range twin of GAP-4. | §2 (B1), §4.0(d) | **FRONTIER** |
+| **GAP-15** | **NEW (v2, opened by the A1 audit).** Positivity of the extended S_ε at the low end of the band. (M4) extends S_ε(ω) = a_{\|ω\|}² log(\|ω\|/2π) "to all ω", and (M4′)'s pass band now explicitly contains \|ω\| < 2π where that expression is **negative** — not a spectral density; taken as →0 it also reopens a (logarithmic) Cameron–Martin divergence, i.e. a low-frequency copy of the (R1) failure A1 was approved to fix. A positivity convention (a floor S_min) is needed for the (R1) repair to be complete on the whole band. Quantitatively benign: the induced relative term in I_{γ_jγ_j} is ≈ 3S_ε(γ_j)/((γ_j−2π)²T S_min) = 2.8·10^{−3}·S_ε(γ_1)/S_min at j = 1, and every natural continuation makes S_min ≫ S_ε(γ_1) because a_ω² is larger by e^{π(γ_1−ω)/2} at small ω. Needs to be written into the spec at the next amendment, not left implicit. | §4, Prop. 4.4 | **ARISTOTLE-ABLE** (state the convention + the bound) |
 | GAP-13 | Whether c_d should carry a genuine d-dependence. Here it does not (Lemma 3 makes blocks independent). If (M5) is relaxed toward the true zero spacing 2π/log(γ/2π), which shrinks with height, d-dependence returns through the resolution condition: T ≥ K log(γ_d/2π) is needed, i.e. X ≥ (γ_d/2π)^K. Worth stating as a second, separate resource bound. | §2 | **FRONTIER** |
 
 ---
@@ -479,6 +708,15 @@ polynomially decaying M_W (e.g. a compactly supported bump, whose Mellin
 transform decays like |s|^{−k}) would fix both and is the obvious first
 amendment to consider. **Recommendation to the spec owner: this is the
 highest-value change to the frozen model.**
+
+*Status 2026-08-15.* The v2 audit adds a third symptom of the same root
+cause — GAP-3 (Gaussianity), GAP-4 (local flatness inside the tone
+neighbourhood), GAP-14 (band-edge leakage outside it). The recommendation is
+now on the record as **proposed amendment A2** (G1_MODEL_SPEC §A1.5),
+awaiting an owner ruling; it is not approved and not enacted, and v2 assumes
+nothing from it. Note the ordering that A1 exposes: A1 (approved, enacted)
+makes the model non-singular; A2 (proposed) is what would make the §2
+constants defensible at the approved band Ω = 2Γ.
 
 ### 7.2 The heavy tail (falsification gate G-a) is largely defused
 
@@ -518,14 +756,22 @@ correct fix, and this analysis is the concrete argument for prioritising it.
 
 ## 8. What is claimed, and what is not
 
-**Claimed.** In model N2 = (M1)–(M5) with the band-limitation repair (M4′),
-for any unbiased estimator: max_j RMSE(γ̂_j) ≥ √6 (log(γ_d/2π))^{1/2}
+**Claimed.** In model N2 = (M1)–(M5) with spec clause (M4′) (amendment A1),
+*and under the leakage hypothesis (B1)*, for any unbiased estimator **of the
+band-limited record y_Ω**: max_j RMSE(γ̂_j) ≥ √6 (log(γ_d/2π))^{1/2}
 (log X)^{−3/2}, hence X(ε) ≥ exp((6 log(γ_d/2π))^{1/3} ε^{−2/3}). The
-amplitudes cancel. The Fisher-information computation is (4.1)–(4.3) with
-the constant 24 numerically confirmed.
+amplitudes cancel. The Fisher-information computation is (4.0)–(4.3) with
+the constant 24 numerically confirmed twice (time-domain, v1; band-limited
+frequency-domain, v2 §4.0(c)), and S_ε(γ_j) unchanged by the band-pass
+because the tones are interior with margin ≥ Γ (§4.0(a),(b)).
 
 **Not claimed.** Nothing unconditional about ζ. Nothing about biased
 estimators. Nothing about heights where (M5) fails. No claim that the
-Gaussian approximation in (M4) is justified — it is not (GAP-3). No claim
-that the bound applies to the Gate-1 numerics, which ran a different
-observable under N1.
+Gaussian approximation in (M4) is justified — it is not (GAP-3; proposed
+amendment A2 is not approved). No claim that the bound applies to the Gate-1
+numerics, which ran a different observable under N1. **New in v2, and the
+most important line here:** no claim that the bound holds for estimators
+seeing the *unrestricted* record y (the M4′ restriction does not transfer
+upward — §1.5), and **no claim that (B1) holds at the approved cut Ω = 2Γ —
+it does not** (§4.0(d), GAP-14), so at Ω = 2Γ the displayed constants are the
+constants of the local problem rather than a proved bound.

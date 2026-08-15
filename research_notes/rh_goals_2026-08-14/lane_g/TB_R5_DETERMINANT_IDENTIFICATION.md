@@ -97,7 +97,12 @@ existence of SOME ε > 0, per V7 §(ii).
 Every block image T f = w_B · (f ∘ θ_B) is then holomorphic on a
 neighborhood of cl(D_i) with
   sup_{cl(D_i^{0.1})} |T f| ≤ W_B^{0.1} (1 − ρ̂²)^{−1/2} ‖f‖_{H²},
-W_B^{0.1} the weight sup on the enlarged contour; a function
+W_B^{0.1} := sup over cl(D_i^{0.1}) of the block weight |w_B| — a
+finite constant since w_B is holomorphic and zero-free on a
+neighborhood of the compact cl(D_i^{0.1}) (E1's certified pole/cut
+clearance ≥ 1.0023 > 0.1 keeps the singularities out); only
+finiteness is used, no numerical value is claimed or needed
+[presentational fix 2026-08-15 per Kimi 1-E9]; a function
 holomorphic on a neighborhood of cl(D_i) lies in the disc algebra, and
 the tail-block sums converge in sup norm on the enlarged discs on Ω₀
 (weights uniformly O(n^{−2σ}), σ > 1/2). Hence L_s^H : H → B ⊂ H is

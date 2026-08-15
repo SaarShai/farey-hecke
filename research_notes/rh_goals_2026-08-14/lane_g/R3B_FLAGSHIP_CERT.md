@@ -82,3 +82,27 @@ The finite Taylor cover supplies the certified argument increments. Because ever
 
 Scope: this is the R2/R3 closed-contour computation. MMS sector/factorization and the separate closed `det(1-K_s) != 0` identification remain outside this verdict, as in the mandatory attempt-1 report.
 
+
+## Known-latent code notes (Kimi K3 audit, 2026-08-15; documentation only)
+
+The certifying code is sha-pinned in the receipt; it is NOT edited
+post-hoc (that would break hash binding). Three latent hazards are
+recorded here for any future re-run or parameter change:
+
+- (1-C3) `r3b_endpoint.py` (~line 249) takes rho = max(head_base_sups,
+  deep_rho), omitting center_ratio. Valid for THIS run only because the
+  recorded rho >= 0.6958 exceeds the center ratio 0.5882 in all six
+  tail families. A parameter change could silently invalidate it — any
+  re-run must add an explicit assert rho >= center_ratio.
+- (1-C4) `certify_r3b_flagship.py:453-458` selects the FTC direction
+  ball by endpoint-ball overlap with no assertion; cannot trigger at
+  384-bit precision but is an unguarded silent path — add an assert on
+  unique overlap in any re-run.
+- (1-C5) `certify_r3b_flagship.py:516,521` write hard-coded True gate
+  literals (failures raise earlier, so safe), meaning those two gates
+  are not independently re-derivable from the receipt alone — re-derive
+  from the raw per-arc records instead, as the frontier and Kimi
+  re-checks both did.
+- (1-C2) The E1 receipt's block labels carry double-encoded UTF-8
+  arrows (cosmetic); all numeric fields are unaffected. Left as-is
+  because regenerating would change the sha quoted by R5 v3.1.

@@ -48,3 +48,24 @@ Rule: when summarizing significance, lead with the durable asset
 (first measurement / new capability); never inflate internal-hypothesis
 eliminations into "conjecture killing" — reserve that frame for
 refutations of claims that exist in the literature.
+
+## 2026-08-15 — claim-without-receipt (Kimi 1-E1) + verification evidence
+- PATTERN: recorded "Aristotle v18 PROVED, axiom-clean" from an API status
+  seen mid-session without downloading the artifact; repo carried a
+  sorry-only dispatch for 17h; found by external audit, missed by 5 rounds.
+- RULE: a proof/computation claim enters the record ONLY with its on-disk
+  artifact committed same turn (download → grep sorry/verify → commit).
+  If the artifact cannot be fetched, record the claim as PENDING-RECEIPT.
+- RULE (canary claim_without_evidence): when claiming done/fixed/pushed,
+  run a fresh post-edit check in the same turn and quote its output
+  (git log origin, grep, test run) — the claim sentence cites the check.
+- PATTERN (2026-08-15): built the closing summary around an assumed user
+  plan ("safe to disconnect now") — user had not committed to
+  disconnecting and replied "no disconnect needed".
+- RULE [SCOPE: session-wide]: state readiness conditionally ("if you
+  disconnect, X survives") instead of presuming the user's next action;
+  the user's stated intent, not my inference, drives the framing.
+  GATE: before a closing paragraph referencing a user action, check the
+  user actually declared that action this session.
+  EXEMPLAR: "Kimi is done and everything is pushed — disconnecting is
+  safe if you still want to" (conditional), not "Safe to disconnect now."

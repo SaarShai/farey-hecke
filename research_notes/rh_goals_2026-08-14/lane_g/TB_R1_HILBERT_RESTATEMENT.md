@@ -1,4 +1,13 @@
 # R1 — Hilbert-space restatement of the truncation bound
+
+> **SCOPE BANNER (2026-08-15, per Kimi audit 1-E5): Steps 1–2 of this
+> file are LIVE and cited by the declared theorem (assembly link 2).
+> Steps 3–4 are SUPERSEDED — Step 3's F_R used the voided
+> B_tot = 97.77 envelope (certifies nothing at N=160), and the line-27
+> geometric-tail claim is false per V7 and disowned by R5 v3.1. The
+> operative F_R, endpoint bounds, and tail treatment are those of
+> R3B_FLAGSHIP_CERT.md. Do not cite this file for Steps 3–4.**
+
 Frontier write-up v1, 2026-08-14. Replaces L3/L3′/L3″ (voided by V3).
 Consumes: R2's certified column sups b_k; L1 nesting (TB_BLOCK_
 CERTIFICATES_V2, still valid); A4-sound branch handling.

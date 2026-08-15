@@ -94,3 +94,128 @@ reporting sensitivity; a clean treatment is future work.
    fan out; uses lane_a ζ′ blocks).
 2. T1 proof draft in model N2 (frontier work, me).
 3. T3 statement + finite-lemma decomposition for Aristotle dispatch.
+
+---
+
+# AMENDMENT A1 (2026-08-15, owner-approved)
+
+**Status: ENACTED.** This section is *additive*. The v0 body above is frozen
+and is NOT rewritten: the difference between what was frozen on 2026-08-14
+and what T1 actually assumes must stay readable at a glance.
+
+- **Approval:** owner, 2026-08-15 ("i approve M4"), logged at
+  `plans/wayfinder/rh-goals/tickets/sample-complexity-t1.md`.
+- **Origin:** found during the T1 proof
+  (`lane_t/T1_CRAMER_RAO_DRAFT.md` §3 (R1), GAP-2) — i.e. AFTER the freeze,
+  by the drafting work, not before it.
+- **Honesty note (preregistration discipline).** This is a POST-FREEZE
+  amendment, approved POST HOC. It is recorded as a dated additive clause,
+  not folded into §1–§6, precisely so that a reader can see that the frozen
+  model as written on 2026-08-14 did *not* support T1 and had to be changed.
+  A1 is a RESTRICTION of the model and of the estimator class, not a
+  strengthening: it does not make any earlier claim easier to prove, it makes
+  T1's claim a claim about strictly less data.
+
+## A1.1 Clause M4′ (band limitation)
+
+> **(M4′) Band limitation.** The observation is band-limited. The estimator
+> sees only the ideally band-passed record y_Ω, with pass band
+> ω ∈ [−Ω, Ω] and
+>
+>   **Ω := 2Γ**,
+>
+> where Γ is the interference cut of §3-N2 (γ_d < Γ < γ_{d+1}; Γ is the top
+> target ordinate's cut, so every target tone γ_1 < … < γ_d lies strictly
+> inside the band). All T1 statements are statements about y_Ω, and **the T1
+> estimator class is restricted accordingly** to estimators measurable with
+> respect to {y_Ω(t) : t ∈ [0,T]}.
+
+## A1.2 What A1 repairs: regularity (R1)
+
+Cramér–Rao needs mutual absolute continuity of the laws P_θ (common support,
+θ-independent). Under §3-N2's Gaussian surrogate the P_θ are Gaussian
+measures with θ-independent covariance, so Cameron–Martin gives
+P_θ ≪ P_{θ′} iff ∫ |m̂_θ(ω) − m̂_{θ′}(ω)|² / S_ε(ω) dω < ∞. With the frozen
+Gaussian window W(x) = e^{−x²} the amplitudes obey
+a_ω = |M_W(½+iω)| · r_ω ≍ e^{−πω/4}, hence S_ε(ω) ≍ e^{−πω/2}·log(ω/2π) and
+1/S_ε grows like e^{+πω/2}, while the numerator (a finite sum of tones cut to
+[0,T]) decays only like |ω|^{−2}. **The integral diverges: (R1) fails on the
+full band.**
+
+The failure is not a defect of the CR argument. It says the *model* is
+singular: admitting arbitrarily high frequencies gives a noise floor that
+decays super-exponentially, so θ becomes perfectly identifiable, the Fisher
+information is infinite and the CR bound is identically 0. That is a
+**vacuous infinite-information artifact** of extending the noise model to all
+ω, not a statement about primes.
+
+With (M4′), S_ε is bounded below by a positive constant on the pass band
+(S_ε(ω) ≥ S_ε(Ω) > 0 for Γ ≤ |ω| ≤ Ω), so 1/S_ε is bounded, all P_θ are
+equivalent Gaussian measures on the band, and
+
+- **(R1) HOLDS** (mutual absolute continuity),
+- **(R3) HOLDS** (differentiation under the integral, by domination),
+- **(R4) finiteness HOLDS** (‖∂_j m‖²_C < ∞).
+
+## A1.3 Direction of the restriction (a correction carried into T1 v2)
+
+Band limitation **removes** information. More data ⇒ larger Fisher
+information ⇒ *smaller* CR bound. Therefore a lower bound proved for y_Ω is
+**not** automatically a lower bound for the unrestricted record y. T1 draft
+v1 §3 asserted the opposite ("band-limiting only removes information, so any
+lower bound proved for y_Ω is a valid lower bound for y"); that sentence is
+wrong and is corrected in T1 v2.
+
+The correct reading is the one written into A1.1: M4′ **restricts the
+estimator class**, and T1 is a theorem about that restricted class. This is
+forced, not optional — the unrestricted class admits no positive bound at all
+(its information is infinite, per A1.2).
+
+## A1.4 Open inside A1: is Ω = 2Γ the right cut?
+
+Approved as Ω = 2Γ, and enacted as approved. The T1 v2 audit (draft §4.0,
+GAP-14) then shows that Ω = 2Γ makes the Fisher information **finite but not
+small**: 1/S_ε grows like e^{+πω/2} across the pass band, while the window
+truncation gives every tone spectral tails decaying only like 1/(ω − γ_j), so
+the *band-edge* leakage dominates the information. Measured directly (exact
+3×3 band-limited FIM, single tone at γ_d = 49.7738, T = log 3·10⁷ = 17.2167,
+Γ = 50, Ω = 100): [I^{-1}]_{ωω} is **7.7·10^{−30} times** the local
+white-noise value 24·S_ε(γ_d)/(A²T³). The band that preserves the constant is
+Ω ≈ γ_d + O(1) (measured ratio 1.00 at Ω − γ_d = 1, 0.78 at 2, 0.36 at 4,
+6·10^{−2} at 6).
+
+Recorded, **not enacted** — any change to Ω requires a further owner-approved
+amendment. T1 v2 therefore carries the leakage condition as an explicit,
+checkable theorem hypothesis (B1) and flags it as GAP-14 (currently FAILING
+at Ω = 2Γ under the Gaussian W). The root cause is the same as GAP-3/GAP-4:
+the Gaussian window's exponentially decaying Mellin transform.
+
+## A1.5 (R6) / GAP-3 is NOT amended — proposed amendment A2, AWAITING OWNER RULING
+
+§3 asserts that the interference "is an almost-periodic **Gaussian-
+approximable** process". T1 v2 §3 (R6) shows this **fails as written** under
+the frozen Gaussian window: ε = 2Σ_{γ>Γ} a_γ cos(γt+φ_γ) with
+a_γ ≍ e^{−πγ/4}, so the first few terms above Γ dominate the sum absolutely,
+the Lindeberg ratio does not vanish, and ε is close to a small sum of random
+phases rather than to a Gaussian.
+
+**Status of §3's Gaussian-approximability claim: OPEN / KNOWN-FALSE AS
+WRITTEN.** It is *not* repaired by A1 (band limitation is orthogonal to
+Gaussianity).
+
+> **Proposed amendment A2 — NOT APPROVED, NOT ENACTED.** Replace the Gaussian
+> window W(x) = e^{−x²} by a window whose Mellin transform M_W(s) decays only
+> polynomially in |s| (e.g. a compactly supported bump, M_W ≍ |s|^{−k}). Then
+> a_γ decays polynomially, no finite set of tail terms dominates, a Lindeberg
+> condition becomes plausible, and (by the same mechanism) GAP-4's
+> local-flatness parameter and GAP-14's band-edge leakage both become
+> polynomially controlled instead of exponentially out of control.
+> This would change the imported explicit formula
+> (`Smoothed_Dwf_explicit_formula_VERIFIED.md`, M_W(s) = ½Γ(s/2), R₀ = −2) and
+> therefore is a substantially larger amendment than A1. **Awaiting owner
+> ruling.**
+
+Until that ruling, T1 must be read as "CR bound in the **Gaussian surrogate**
+of N2", GAP-3 stays open, and falsification gate G-a (§5) remains fired for
+the Gaussian-approximability claim (it does *not* fire for the leading
+constant — see T1 v2 §7.2).

@@ -401,3 +401,23 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   witnesses + heuristic qualifier, G_8 dropped, 1e-11..1e-14 honest
   agreement figures, Gonek dating via Ng 2004). Part4/5 harvest
   artifacts committed to lane_k/harvest/.
+- 2026-08-15 T1 AMENDMENT A1 ENACTED + T1 REVISED TO v2 (lane_t):
+  owner-approved band-limitation clause M4′ (|ω| ≤ Ω := 2Γ, estimator
+  class restricted) appended as a dated additive amendment to the
+  frozen G1_MODEL_SPEC — repairs regularity (R1) by removing the
+  vacuous infinite-information artifact (divergent Cameron–Martin
+  integral from the super-exponentially decaying noise floor); frozen
+  v0 body untouched; post-freeze/post-hoc status stated. (R6)/GAP-3
+  left OPEN with the window replacement logged as proposed amendment
+  A2, AWAITING OWNER RULING (not enacted). T1 v2: GAP-2 CLOSED
+  (REPAIRED-BY-A1); Fisher information re-derived under the band —
+  tones interior with margin ≥ Γ, S_ε(γ_j) unchanged, factor 24
+  re-verified independently (band-limited 3×3 FIM, white noise:
+  23.93/23.82/23.95). Two new defects found by the re-derivation and
+  logged, not smoothed: v1's "band-limiting only removes information
+  so the bound transfers" is BACKWARDS (corrected, §A1.3), and at the
+  approved Ω = 2Γ band-edge leakage dominates the FIM (measured
+  [I^{-1}]_ωω = 7.7e−30 × the local 24-value at Γ=50, T=17.2167) so T1
+  carries an explicit leakage hypothesis (B1) that holds only for
+  Ω − γ_d = O(1) → GAP-14; plus GAP-15 (positivity of extended S_ε
+  below |ω| = 2π, benign). Gaps ledger 15 entries: 1 closed, 14 open.
