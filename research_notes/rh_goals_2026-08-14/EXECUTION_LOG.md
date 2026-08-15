@@ -492,3 +492,20 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   payoff: |M_W| at γ_10 up 13.8 orders (5.909e−18 → 4.034e−4), dynamic
   range over γ_1..γ_10 down from 13 orders to a factor 12.3. Ledger:
   17 entries, 4 closed (GAP-2, GAP-3, GAP-14, GAP-15), 13 open.
+
+- 2026-08-15 — **GAP-16 DERIVED + finite core DISPATCHED.** Order-1 Riesz
+  explicit formula re-derived (Prop. R): arithmetic side exact and finite,
+  Σ_{n≤N}μ(n)(1−n/N) = (1/N)Σ_{k<N}M(k); residues R₀ = −2 (unchanged) and
+  the new R_{−1}(N) = 12/N at the s = −1 pole of M_W = 1/(s(s+1)); trivial
+  zeros now give SIMPLE poles, R_triv = Σ N^{−2n}/((−2n)(1−2n)ζ′(−2n)) =
+  O(N^{−2}) with **no log N** (the Gaussian had double poles); remainder
+  O_A(N^{−A}) for fixed A ∈ (1,2), polynomial not superpolynomial. Perron +
+  contour shift remains a CITATION (Hardy–Riesz Ch. V, Montgomery–Vaughan
+  §5.1, Titchmarsh §3.7/§9.7), not a repo proof. Numeric check (mpmath,
+  non-rigorous, N = 2·10³/8·10³/2·10⁴, K = 25→200 zeros): residual monotone
+  in K, 3.8e−2 → 5.1e−3 at N = 2·10⁴; the 12/N term is required (dropping it
+  moves the N=2000 residual by 6e−3 vs a 5e−4 residual). Artifact
+  `lane_t/T1_GAP16_RIESZ_IMPORT.md`; Lean core (7 statements)
+  `projects/aristotle_dispatch_v21/RieszImport.lean`, Aristotle project
+  24c6e3df-76fd-43d0-a052-b6ddf10d6084. NOT proved; closure pending Aristotle
+  + frontier review of the analytic step.
