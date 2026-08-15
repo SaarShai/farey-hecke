@@ -22,7 +22,18 @@ demonstration", "keep a ledger of all of the goals we are pursuing")
   are recorded in "claimed by" as lane names. — source: wayfinder local-mode
   rule
 
+## Expansion run 2026-08-15 (owner: "expand as much as possible, priority =
+## most value to the math research community")
+Priority order: P1 family theorem (q=7 first) → P2 Gonek/Mertens completion
+→ P3 U₄ mechanism → P4 second G_5 pin → P5 T1 GAP-16 → P6 flagship paper
+draft → P7 d3-lean-reverify. Routing: Kimi K3 medium-high; Kaggle heavy
+compute; Aristotle formalizable lemmas. Plan: tasks/todo.md. — source: user
+directive 2026-08-15
+
 ## Active tickets
+- [Second certified G_5 pin at a distinct real part](tickets/second-g5-pin.md) — research; AFK; open (P4); blocked by: none; claimed by: none
+- [Flagship paper draft](tickets/flagship-paper-draft.md) — writing; AFK; open (P6); dissemination stays HITL; claimed by: none
+- [T1 GAP-16: explicit-formula import under Riesz](tickets/t1-gap16-riesz-import.md) — research; AFK+frontier; open (P5); claimed by: none
 - Full adversarial audit of the top ledger items + declared theorem (Kimi K3) — REPORTED 2026-08-15 (lane_g/ADVERSARIAL_AUDIT_KIMI_K3.md): **theorem STANDS**, no theorem-level defect; Kloosterman NO-GO SOUND; M1/M2 SOUND; Kaggle lane latent defect 4-D1 (guards now built + repair running); Koyama draft 3 factual errors (now corrected). All ERRATUM items repaired same day (v18 Lean receipt downloaded from Aristotle — proof existed server-side, was unreceipted; assembly stale directives/citations/margins fixed; framing softened per 2-D1/2-D2/3-D1). — source: user request 2026-08-15
 - [Mertens constant to 4–5 significant digits](tickets/mertens-constant-precision.md) — research; AFK; claimed; blocked by: none; claimed by: lane A4
 - [Cramér–Rao lower bound T1 in the frozen model](tickets/sample-complexity-t1.md) — research; AFK; v3 2026-08-15: Amendments A1 (band limit Ω=2Γ) + A2 (triangular window, owner-approved) ENACTED; (R1)/(R6)/(B1) all repaired, GAP-2/3/14/15 closed (13 open, none blocking the bound); Fisher 24 + headline constants (c=1.694/2.316) independently re-verified cold (lane_t/t1_verify.py + T1_VERIFICATION_NOTE.md); one bracket defect found by the verifier and fixed
