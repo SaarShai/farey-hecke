@@ -61,13 +61,19 @@ q = 4 operator embedding as a block of the level-2 modular one.
 **3. Two numerical firsts in the Mertens direction.** (a) The constant
 Σ_ρ 1/(|ρ|²|ζ′(ρ)|²) — the conjectural limiting mean square of
 x^{-1}Σ_{n≤x} M(n)² under RH + Gonek–Hejhal (Ng 2004) — computed for what
-appears to be the first time: 0.02903 ± 0.00016 (3000 certified-residual
-zeros; an extension to 10⁵ zeros targeting 4–5 digits is running). This
-refutes an internal conjecture of ours (2/π²) and excludes 3/π⁴ at ~11σ.
+appears to be the first time: 0.02903 ± 0.00002 (v2 receipt: 10,000
+certified-residual zeros; three significant digits certified, the error
+bar a numerical tail envelope, not a theorem-level bound; the 10⁵-zero
+extension targeting 4–5 digits is nearly complete). This refutes an
+internal conjecture of ours (2/π²) and excludes 3/π⁴ by a wide margin.
 (b) The first numerical test of Gonek's conjecture J₋₁(T) ~ (3/π³)T
-(as recorded by Ng 2004):
-at T ≈ 10⁴ we find J₋₁(T)/T ≈ 0.95 · (3/π³), slowly drifting — supportive
-but not yet asymptotic; the 10⁵-zero extension will sharpen it.
+(as recorded by Ng 2004): at T ≈ 9.88×10³, J₋₁(T)/T = 0.949 · (3/π³)
+(top-half fit 0.959), slowly drifting — a finite-height diagnostic,
+neither confirmation nor refutation (receipt verdict: TOO EARLY);
+84,501 of the 90,001 extension zeros are harvested and five-gate
+verified, the rest finishing.
+[Numbers synced to v2 receipts 2026-08-15 per the v2_MERGED stale-file
+flag; superseded values were 0.00016/3000-zeros/~11σ/"supportive".]
 
 On the joint prime-bias manuscript: our technical pre-reply packet
 (theorem audit, character-orthogonality certificate, the 3×10¹⁴ spectral

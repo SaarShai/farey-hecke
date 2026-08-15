@@ -5,6 +5,10 @@
 - Gmail verification date: 2026-05-11
 - Complete Gmail-derived record: `raw/farey-archive/correspondence/koyama-gmail-record-2026-05-11.md`
 - **Most complete raw thread (Apr 27 → Jun 8, 2026): `raw/koyama-2026-06-08-fullthread.md`** (consolidates the partial 05-12 / 05-16 raw records; carries the RISK-FLAG).
+- Latest inbound (2026-08-15, two emails: arXiv upload of the core prime-bias
+  manuscript + single-focus/Inventiones scope decision + standalone-paper
+  suggestion): `raw/koyama-2026-08-15-arxiv-and-scope.md`, attachment in
+  `raw/attachments/koyama-arxiv-nontriv-2026-08.pdf`. **No reply sent yet.**
 
 ## Gmail Search Result
 
@@ -441,3 +445,24 @@ user; body as drafted.)
 - Pre-write-up loose end on our side: the `2/9` / JMU-2007 Gauss-map coincidence
   footnote (see `PRIORART_ergodic_opt_2026-06-03.md`).
 - Still gated: nothing sent/pushed without explicit user approval.
+
+## 2026-08-15 — two inbound emails (arXiv upload + single-focus strategy)
+
+- **Inbound 1:** Koyama uploaded the core manuscript to arXiv ("The
+  Fine-Structure Hierarchy of Prime Biases and the Universal Dominance of
+  −1 (mod N)") to secure priority; joint paper targeted at Inventiones;
+  asks for thoughts on integrating the 3×10¹⁴ data + spectral transients.
+  Raw: raw/koyama-2026-08-15-arxiv-and-scope.md; attachment PDF in
+  raw/attachments/.
+- **Inbound 2:** single-focus strategy for Inventiones (prime bias only;
+  integrates our double-verified Dirichlet-pair data + Lean overview);
+  suggests our other results (elliptic curves, Decision-Audit SDK, broader
+  identities) go to a standalone single-author paper by Saar; open to
+  co-authorship there but bandwidth-committed to Inventiones.
+- **Reply drafted, NOT SENT (owner-gated):**
+  KOYAMA_REPLY_2026-08-15_v3_FINAL.md (v3 = v2_MERGED updated for the
+  external audit + 84,501-zero harvest; standalone answer per owner's
+  framing: honored to be co-author, declines standalone). Drafting chain:
+  Kimi K3 base draft → v2_MERGED (receipt-checked) → v3.
+- Owner decisions open: salutation form, §3 length, §3(i) tone,
+  attachment list. Send remains owner-only.
