@@ -439,3 +439,56 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   receipts. Also repaired: earlier harvest commit had landed under
   projects/aristotle_dispatch_v18/ via cwd drift — git mv'd to
   lane_k/harvest.
+- 2026-08-15 T1 AMENDMENT A2 ENACTED + T1 REVISED TO v3 (lane_t):
+  owner ruled on the A2 question left open at G1_MODEL_SPEC §A1.5
+  ("i trust your judgement. please do what you recommend"); the
+  frontier recommendation was APPROVE, so A2 is enacted as a second
+  additive dated amendment — frozen v0 body and A1 untouched. Clause
+  (W′) replaces the Gaussian window W = e^{−x²} (M_W = ½Γ(s/2), Mellin
+  decay e^{−π|s|/4}) by the order-1 Riesz/Fejér window W = (1−x)_+,
+  M_W(s) = 1/(s(s+1)), decay |s|^{−2} — the MILDEST smoothing that
+  keeps the observable defined (k=0 sharp cut makes Σ_γ a_γ diverge;
+  k≥2 loses the closed form and worsens the GAP-4 flatness, which
+  scales like 2(k+1)/(ωT)). R₀ = −2 survives exactly, M_W stays in
+  closed form, and the arithmetic side becomes the finite Cesàro mean
+  (1/N)Σ_{k<N}M(k) — one Möbius sieve pass, cheaper than the frozen
+  observable. Clause (M4″) adds the spectral floor ϑ_min = log(γ_1/2π).
+  T1 v3 re-derives everything and MEASURES it (script reproduces every
+  v2 Gaussian figure to 5 digits before being applied to (W′)):
+  Prop 4.4 is window-INDEPENDENT, so the amplitude cancellation and
+  hence EVERY HEADLINE CONSTANT IS UNCHANGED (c_d = √6, c = 1.6944
+  d=1 / 2.3157 d=10, X(ε) ≥ exp(2.3157 ε^{−2/3})); factor 24 verified
+  a third time, now band-limited AND coloured by the actual new S_ε at
+  Ω = 2Γ → [I^{−1}]_ωω = 0.9943 × the local 24-value (was 7.7e−30).
+  THREE GAPS CLOSED: GAP-3 (Lindeberg ratio Λ(Γ) = 6π/(Γ(log(Γ/2π)+⅓))
+  → 0, measured 0.157/0.0248/3.5e−3/2.4e−4 at Γ = 50/200/1e3/1e4 vs
+  4.76 > 1 under the Gaussian); GAP-14 ((B1) measured directly as
+  λ_max(I_N^{−1}I_R) = 0.0858 ≤ 1/K = 0.25 at γ_d, admissible out to
+  Ω ≈ 8Γ, was 1.73e+29); GAP-15 (clause M4″ + floor sweep, 4e−4
+  relative over a factor 40 in ϑ_min). GAP-4 REDUCED not closed
+  (flatness 98.2 → 1.23 at γ_d, 2.03 at γ_1; now an explicit
+  O(K/(ωT)) constant, tag FRONTIER → ARISTOTLE-ABLE). TWO GAPS OPENED
+  BY A2 AND LOGGED AT FULL WEIGHT: GAP-16 (the VERIFIED
+  explicit-formula import is Gaussian-only and no longer applies; the
+  order-1 Riesz formula — new pole term R_{−1}(N) = 12/N at s = −1,
+  absolute convergence resting on J_{−1}(T) = O(T) — is stated but NOT
+  re-derived here; largest open item) and GAP-17 (Berry–Esseen rate
+  behind the now-valid Lindeberg condition; Λ(50) = 0.157 is not
+  negligible at the operating point). Riders kept, not smoothed: (B1)
+  as an inequality still fails at the lowest tone γ_1 (λ_max 0.587)
+  and is marginal at γ_2 (0.220), but every measured deficit (max
+  0.257) sits inside T1's own declared O(K^{−1}) = 0.25 with implied
+  constant ≈1.03, and the max_j statement is attained at j = d where
+  the deficit is 0.6 %; and the γ_1 empirical tension is numerically
+  UNCHANGED and now HARDER to dismiss (at Ω = 2Γ the bound is proved,
+  not a local surrogate), with its amplitude leg reversed —
+  neighbouring interferers go from 250× weaker to comparable (0.454),
+  so N2 is less pessimistic and the residual is isolated to GAP-9.
+  Self-serving audit written into spec §A2.6 and draft §7.4: A2 moved
+  the MEASURED bound 29 orders of magnitude but changed no displayed
+  constant, made the noise model heavier-tailed, was motivated by
+  GAP-3 (which has nothing to do with the constant) before GAP-14
+  existed, and cost two new gaps. Gate G-a no longer fires. Practical
+  payoff: |M_W| at γ_10 up 13.8 orders (5.909e−18 → 4.034e−4), dynamic
+  range over γ_1..γ_10 down from 13 orders to a factor 12.3. Ledger:
+  17 entries, 4 closed (GAP-2, GAP-3, GAP-14, GAP-15), 13 open.
