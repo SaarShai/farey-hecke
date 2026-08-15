@@ -1,5 +1,11 @@
 # T-b — The proven truncation bound: lemma chain with certified constants
 
+> **FORWARD POINTER 2026-08-15: this banner is HISTORICAL. The V3
+> defects were repaired via the R1–R5 program and the theorem was
+> DECLARED — see THEOREM_G5_OFFLINE_ASSEMBLY.md (v2) and
+> ADVERSARIAL_AUDIT_KIMI_K3.md (theorem STANDS). This file remains as
+> the historical record of the broken chain and its repair path.**
+
 > **STATUS 2026-08-14 (post V3 sol adversarial review): CHAIN BROKEN AS
 > WRITTEN — see ADVERSARIAL_REVIEW_V3_TBCHAIN.md. Theorem NOT certified.**
 > Confirmed defects: (A1) finite-section vs column-truncation conflation —

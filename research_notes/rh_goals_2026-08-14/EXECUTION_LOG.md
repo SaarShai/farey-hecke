@@ -381,3 +381,23 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   part4 5 bad rows (2 duplicate zeros), part5 6 bad rows (1 duplicate)
   — residual gate provably blind to neighbor-zero convergence;
   seed-validation repair (mp.zetazero, receipts) running.
+- 2026-08-15 KIMI K3 EXTERNAL AUDIT REPORTED (lane_g/
+  ADVERSARIAL_AUDIT_KIMI_K3.md): THEOREM STANDS — no theorem-level
+  defect in the 8-link chain, code, or citations; margin-vs-F_R
+  suspicion dissolved (norms inside the exponential, verified in code
+  and by hand over all 284 records); contour closure, ball arithmetic,
+  MMS match, all 9 shas independently verified. Five issues all prior
+  rounds missed, chief = 1-E1: "Lean-proved v18" had NO local receipt
+  (dispatch file with sorries only). RESOLVED same hour: Aristotle
+  project e84ced30 shows COMPLETE — both lemmas proved 0-sorry,
+  axiom-clean; result downloaded to projects/aristotle_dispatch_v18/
+  project_aristotle/ (claim was true, receipt was missing). All other
+  errata repaired: assembly stale directives removed, dependency ledger
+  completed (4b citations, E1 receipt, R5 proofs), R1 Steps 3-4 marked
+  superseded, KS point-vs-box note, MMS q>5 footnote, rho_hat added to
+  constants table, TB_LEMMA_CHAIN forward pointer, winding-serialization
+  caveat, Kloosterman/M2 framing softened (2-D1, 2-D2, 3-D1/D2),
+  Koyama letter factual errors fixed (5-D1..D5: three-not-nine
+  witnesses + heuristic qualifier, G_8 dropped, 1e-11..1e-14 honest
+  agreement figures, Gonek dating via Ng 2004). Part4/5 harvest
+  artifacts committed to lane_k/harvest/.

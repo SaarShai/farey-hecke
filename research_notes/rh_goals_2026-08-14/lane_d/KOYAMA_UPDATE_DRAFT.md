@@ -16,13 +16,15 @@ receipts, none yet submitted anywhere.
 arithmeticity contrast.** Using an interval-certified version of the
 Mayer–Mühlenbruch–Strömberg transfer operator, we now have resonance data
 across the Hecke family under one protocol: for the arithmetic members
-q = 3, 4, 6 the determinant vanishes precisely at s = ρ/2 (ρ the Riemann
-zeros) — three differently built operators agreeing to ~10⁻¹⁵ — while for
-the non-arithmetic members G₅, G₇, G₈ the zeros scatter with
-Re-dispersion ~10⁻¹–10⁻² (no vertical-line structure), and certified
-evaluations show |det| = O(1) at the ζ(2s) points for the non-arithmetic
-surfaces. To our knowledge these are the first computed (and the first
-certified) resonance data for non-arithmetic Hecke groups; the standing
+q = 3, 4, 6 the determinant vanishes at s = ρ/2 (ρ the Riemann zeros) —
+at ~10⁻¹⁴ for q = 3 and ~10⁻¹¹–10⁻¹² for q = 4, 6, under per-surface
+protocols — while for the non-arithmetic members G₅ and G₇ the zeros
+scatter with Re-dispersion ~10⁻¹–10⁻² (no vertical-line structure; our
+G₈ sample is currently too small to include in that claim), and
+certified evaluations show |det| = O(1) at the ζ(2s) points for the
+non-arithmetic surfaces. To our knowledge these are the first computed
+(and the first certified) resonance data for non-arithmetic Hecke
+groups; the standing
 literature (Bruggeman–Pohl) leaves them conjectural. And the headline: we now have a
 computer-assisted THEOREM — the first rigorous localization, to our
 knowledge, of an off-line resonance of a non-arithmetic finite-area
@@ -42,9 +44,10 @@ and would value your judgment on, the mechanism statement: at the
 transfer-operator level the arithmetic members' determinants should carry
 an explicit ζ(2s) factor (the q = 3 case is Mayer's theorem; for q = 4, 6
 we found no published operator-level factorization — the closest tools
-are Fraczek–Mayer's symmetry results), while for G₅ we hold nine
-certified nonvanishing witnesses at ζ-zero points refuting any such
-factor pointwise. This seems to us the precise sense in which "the
+are Fraczek–Mayer's symmetry results), while for G₅ we hold three
+nonvanishing witnesses at ζ-zero points (nine across G₅, G₈, G₁₀;
+each certified modulo a truncation-tail heuristic we state explicitly)
+refuting any such factor pointwise. This seems to us the precise sense in which "the
 critical line is an arithmetic phenomenon" inside this family — very much
 adjacent to your Selberg-zeta work, hence this note. Two fresh pieces of
 evidence on the positive side: the q = 4 branch system, conjugated to the
@@ -61,7 +64,8 @@ x^{-1}Σ_{n≤x} M(n)² under RH + Gonek–Hejhal (Ng 2004) — computed for wha
 appears to be the first time: 0.02903 ± 0.00016 (3000 certified-residual
 zeros; an extension to 10⁵ zeros targeting 4–5 digits is running). This
 refutes an internal conjecture of ours (2/π²) and excludes 3/π⁴ at ~11σ.
-(b) The first numerical test of Gonek's 1989 conjecture J₋₁(T) ~ (3/π³)T:
+(b) The first numerical test of Gonek's conjecture J₋₁(T) ~ (3/π³)T
+(as recorded by Ng 2004):
 at T ≈ 10⁴ we find J₋₁(T)/T ≈ 0.95 · (3/π³), slowly drifting — supportive
 but not yet asymptotic; the 10⁵-zero extension will sharpen it.
 
@@ -80,7 +84,11 @@ Saar
 DRAFT NOTES (not part of the letter): the item-1 headline is now backed
 by the declared theorem (THEOREM_G5_OFFLINE_ASSEMBLY.md v2; R3b winding
 certificate; R5 v3.1 determinant identification; adversarial rounds
-V4–V8). Item 3's 10^5-zero extension is still running on Kaggle
-(parts 1–4; part 5 harvested and verified). Send decision, wording, and
-any attachment list are the owner's; recommended to wait for the Kimi K3
-independent audit before sending.
+V4–V8). Item 3's 10^5-zero extension is still running on Kaggle (parts 1–3;
+parts 4–5 harvested — 11 of 36,001 rows failed a monotonicity gate and
+are being re-refined with seed-validated receipts before any sum is
+computed). Kimi K3 audit REPORTED 2026-08-15: theorem STANDS; this
+letter's three factual overstatements (nine-vs-three witnesses, G₈
+inclusion, 10⁻¹⁵ agreement) were found by it and are now corrected in
+the text above. Send decision, wording, and any attachment list are the
+owner's.

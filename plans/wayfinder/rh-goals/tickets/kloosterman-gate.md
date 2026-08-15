@@ -13,7 +13,11 @@ suffices; what falls short = NO-GO), then: does the bound land, giving the
 unconditional DiscrepancyStep theorem?
 
 ## Resolution
-NO-GO, recorded per the pre-registered binding condition. Step-1 extraction
+NO-GO, by frontier adjudication against the pre-registered stop
+criteria (framing corrected 2026-08-15 per Kimi audit 2-D1: the receipt
+records go_no_go "not assessed" and gate steps 2–3 were not run — the
+closure is a judgment call on the step-1 reduction, substantively
+sound, not a mechanical trigger). Step-1 extraction
 (lane_i/V_EXTRACTION.md + v_extraction_receipt.json, exact rationals,
 probes p = 13, 8501, 92173 all zero-error) found two independent kill
 grounds, adjudicated by frontier 2026-08-14:

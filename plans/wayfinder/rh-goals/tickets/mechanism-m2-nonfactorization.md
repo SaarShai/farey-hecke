@@ -15,7 +15,10 @@ witness that no ζ(2s) factor divides the G_5 determinant — the precise
 q=8/q=10 instances (V1's null control, promoted to certified).
 
 ## Resolution
-9/9 witnesses CERTIFIED-NONZERO (Arb balls, 400 bits, N=28): G_5/G_8/G_10
+9/9 witnesses certified-modulo-tail-heuristic NONZERO (Arb balls, 400
+bits, N=28; per-row label in M2_NONFACT_WITNESSES.md — NOT yet "fully
+proven"; the q=10 rows use a builder anchor-validated only at q=8):
+G_5/G_8/G_10
 at zeta_1..3 half-points; lower bounds O(1) (e.g. G_5: 2.221, 0.491,
 4.562) vs tail contributions ≤5e-5. G_4 control correctly consistent-with-
 zero (ball ±1.9e-15). Since bounds are O(1), ANY written tail bound (even

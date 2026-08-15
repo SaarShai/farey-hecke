@@ -21,9 +21,12 @@ This list is the human gate before any submission decision. The six requested so
 Precise open problem for the outlook: the per-step Farey fluctuation is
 exactly V_residue(p) = Σ_c M(⌊(p−1)/c⌋)·s(p,c) (Mertens-weighted
 Dedekind-sum convolution; exact extraction + zero-error rational receipts
-in lane_i/V_EXTRACTION.md). Weil/Kloosterman methods cannot reach it — the
-frozen paper's own completion analysis rules the direct Kloosterman form
-invalid, and any sufficient bound embeds Mertens cancellation (RH-strength).
+in lane_i/V_EXTRACTION.md). Direct Kloosterman completion is invalid
+under the frozen paper's own analysis, and no unconditional route at
+Weil strength is known — the fluctuation object embeds Mertens
+cancellation, which is RH-coupled. (Wording softened 2026-08-15 per
+Kimi audit 2-D2: the prior "cannot reach it" was an impossibility
+claim beyond what is proved.)
 State as: "sign-structure at the Franel–Landau boundary requires
 power-saving in a Mertens-weighted Dedekind convolution — beyond
 square-root cancellation."
