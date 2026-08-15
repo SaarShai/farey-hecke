@@ -66,3 +66,22 @@ Overnight lanes (all launched this turn):
   (P2, frontier); q=7 cert execution on Kimi report (P1); second G_5 pin (P4)
   after.
 Standing: receipts before claims; ledger same turn; no dissemination.
+
+## Q=7 certification pilot lane — 2026-08-15
+
+- [x] Inspect the named q=5 scripts/receipts and bind the minimal q=7 path.
+- [x] Measure q=7 float rho-star and the Arb endpoint finite-column bound; stop because `B >= 30`.
+- [x] Gate-skipped: do not add `--arcs i:j` or seam logic after the mandatory stop.
+- [x] Gate-skipped: do not run a local pilot after the mandatory stop.
+- [x] Write `lane_f/F7_PILOT_REPORT.md`, append `EXECUTION_LOG.md`, and verify every requested field.
+
+Routing receipt: artifacts are the q=7 measurement receipts, the named R3b runner,
+the pilot report, and one execution-log entry. Scope is SPEC'D/GATED by
+`F7_CERT_PLAN.md`; authority is the owner prompt; route/owner is this luna lane;
+no delegation because the ordered gate and shared runner edits are coupled.
+
+### Review/results
+
+Stage 1 returned BLOCKED at provisional `N=224`: the finite-column endpoint
+bound alone is approximately `1.145e9`, so the full endpoint bound cannot meet
+the plan's `B approximately 30` gate. Later stages were intentionally not run.

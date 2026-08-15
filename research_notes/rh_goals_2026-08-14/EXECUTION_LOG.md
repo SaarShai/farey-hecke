@@ -667,3 +667,14 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   this is a derivation note. Not committed.
 
 - 2026-08-15 — **M1G predicted-resonance winding attempt: 0/8 rigorously certified.** Wrote `lane_g/M1G_PREDICTION_WINDING_CERTS.md` and eight receipts under `lane_g/m1g_receipts/`. At `N=60`, 400-bit Arb, `K=24`/edge, and `1e-3` half-width, all four available trivial-sector runs numerically isolated sampled winding 1 with positive sampled contour lower bounds, but the q4/q6 routine's disclosed `4*max(center,corners)` dimension-tail inflation is heuristic rather than a proven uniform contour bound, so all four are `FAILED-TO-CERTIFY`. All four chi-sector `det(1+L_+)` points are `BLOCKED`: the existing winding entry point only evaluates `det(1-L_{s,sign})` (`TypeError: winding_box() got an unexpected keyword argument 'determinant_sector'`), and no evaluator was written or modified. Pure-imaginary evaluation itself succeeded; not committed.
+
+- 2026-08-15 — **F7 q=7 pre-Kaggle pilot gate: BLOCKED at stage 1.**
+  Re-measured non-rigorous float `rho*=0.782263813617748` for factors
+  `(2.79,2.39,1.90,1.56,1.35)` (passes proposed float `<0.80` re-target).
+  The 384-bit whole-box endpoint finite-column computation gave
+  `B_finite<=18.0743955713902...` at `N=32`, but
+  `B_finite<=1145138630.686644864...` at provisional `N=224`; the production
+  endpoint formula only adds nonnegative terms. This exceeds the plan's
+  `B approximately 30` stop criterion, so the `--arcs` change and local pilot
+  were not run, no Kaggle kernel was generated, and no disc optimization was
+  improvised. Report: `lane_f/F7_PILOT_REPORT.md`.
