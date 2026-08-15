@@ -1,0 +1,14 @@
+{
+  "part": 3,
+  "index_first": 62500,
+  "index_last": 63999,
+  "rows": 1500,
+  "mpmath_dps": 25,
+  "method": "mp.findroot(secant) on zeta(1/2+i*t); mp.zeta derivative=1",
+  "residual_gate": "residual < 1e-15",
+  "max_residual": "1.4304609544757973648622771929e-20",
+  "seed_table": "/kaggle/input/datasets/saarshai/odlyzko-zeros1/zeros1.txt",
+  "seed_table_sha256": "3436c916a7878261ac183fd7b9448c9a4736b8bbccf1356874a6ce1788541632",
+  "csv": "/kaggle/working/mertens_zeros_part3.csv",
+  "wall_seconds": 7248.732003081
+}

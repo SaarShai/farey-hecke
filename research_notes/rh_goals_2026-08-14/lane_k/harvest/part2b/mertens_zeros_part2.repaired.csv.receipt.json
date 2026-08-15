@@ -1,0 +1,25 @@
+{
+ "file": "harvest/part2b/mertens_zeros_part2.csv",
+ "rows": 4000,
+ "bad": 2,
+ "method": "siegelz bisection in seed-midpoint bracket, dps=30, width 1e-21",
+ "repairs": [
+  {
+   "index": 44555,
+   "old": "36510.1959229297818032531573923",
+   "new": "36510.16638530074669927732084",
+   "seed": "36510.166385301",
+   "old_minus_seed": 0.029537628775869962,
+   "residual": "7.3208e-24"
+  },
+  {
+   "index": 44556,
+   "old": "36510.1663853007466992773208558",
+   "new": "36510.19592292978180325315737",
+   "seed": "36510.195922929",
+   "old_minus_seed": -0.029537628252001014,
+   "residual": "1.4083e-23"
+  }
+ ],
+ "monotone_after": true
+}
