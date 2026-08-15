@@ -69,3 +69,19 @@ refutations of claims that exist in the literature.
   user actually declared that action this session.
   EXEMPLAR: "Kimi is done and everything is pushed — disconnecting is
   safe if you still want to" (conditional), not "Safe to disconnect now."
+- PATTERN (2026-08-15): consumed a data table assuming 0-based indexing;
+  source kernel wrote 1-based (seeds[index-1]) — repair script was
+  re-refining 18,000 healthy rows toward WRONG zeros (caught pre-write);
+  separately, a bare `cd` in an earlier turn drifted the shell and a
+  harvest commit landed under projects/aristotle_dispatch_v18/ (the
+  documented NEVER-bare-cd trap, hit again).
+- RULE [SCOPE: repo-wide]: before consuming any indexed table, verify
+  the index base EMPIRICALLY (compare row 0 against both conventions
+  numerically) and pin the convention in a header comment of every
+  consumer. GATE: a consumer script without a stated index convention
+  fails review.
+- RULE [SCOPE: session-wide, reaffirmed]: never bare-cd; use ( cd X &&
+  cmd ) subshells or absolute paths; after any command that cd'd,
+  verify pwd before relative-path writes. GATE: relative-path cp/mkdir
+  into the repo requires a same-command pwd check when any prior
+  command in the turn changed directory.

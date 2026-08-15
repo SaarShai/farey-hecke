@@ -1,0 +1,25 @@
+{
+ "file": "kg_part2_partial/mertens_zeros_part2.csv",
+ "rows": 14000,
+ "bad": 2,
+ "method": "siegelz bisection in seed-midpoint bracket, dps=30, width 1e-21",
+ "repairs": [
+  {
+   "index": 39985,
+   "old": "33179.4015754962379284698056157",
+   "new": "33179.36529436153395204045342",
+   "seed": "33179.365294362",
+   "old_minus_seed": 0.03628113423474133,
+   "residual": "7.9685e-23"
+  },
+  {
+   "index": 39986,
+   "old": "33179.3652943615339520404536215",
+   "new": "33179.40157549623792846980564",
+   "seed": "33179.401575496",
+   "old_minus_seed": -0.036281134467571974,
+   "residual": "1.156e-23"
+  }
+ ],
+ "monotone_after": true
+}

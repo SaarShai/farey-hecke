@@ -421,3 +421,21 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   carries an explicit leakage hypothesis (B1) that holds only for
   Ω − γ_d = O(1) → GAP-14; plus GAP-15 (positivity of extended S_ε
   below |ω| = 2π, benign). Gaps ledger 15 entries: 1 closed, 14 open.
+- 2026-08-15 KAGGLE HARVEST WAVE 2: part1 + q7q8 COMPLETE and
+  harvested; parts 2/3 hit the 12h cap with checkpoints intact
+  (14000/18000, 16500/18000 rows saved) — gap-filler kernels part2b
+  (42000-45999) and part3b (62500-63999) pushed and running. CRITICAL
+  FIX before any consumption: CSV index is 1-BASED into the seed table
+  (kernel refines seeds[index-1]); gate + repair scripts had assumed
+  0-based — the misconvention repair was killed BEFORE writing output;
+  scripts fixed (convention pinned in headers), verified empirically.
+  Corrected seed-validated repair: 28 wrong-zero rows across the 5
+  tables (4/2/3/8/11) re-refined by siegelz bisection in seed-midpoint
+  brackets. FULL GATE PASS on all 5 repaired tables (G1 residual, G2
+  monotone, G3 seed-match, G4 index, G5 Riemann-von Mangoldt count —
+  the RvM check also independently confirms Odlyzko-table completeness
+  per audit 4-D2): 84,501 verified zeros to T~74,921. Receipts:
+  lane_k/harvest/GATE_RESULTS_2026-08-15.jsonl + per-part repair
+  receipts. Also repaired: earlier harvest commit had landed under
+  projects/aristotle_dispatch_v18/ via cwd drift — git mv'd to
+  lane_k/harvest.
