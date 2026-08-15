@@ -678,3 +678,28 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   `B approximately 30` stop criterion, so the `--arcs` change and local pilot
   were not run, no Kaggle kernel was generated, and no disc optimization was
   improvised. Report: `lane_f/F7_PILOT_REPORT.md`.
+
+- 2026-08-15 — **F7 q=7 stage-0 mitigation: GO (conditional on option-2 radii).**
+  Executed only the two frozen options (deeper grid; per-block/per-class
+  radii), all NON-RIGOROUS FLOAT PREPARATION with the pilot's machinery.
+  Option 1 (371,293-point grid + 245-start coordinate descent): factors
+  `(3.500,2.622,2.210,1.740,1.462)`, float `rho*=0.729128488886` (rounded
+  down), but `B_finite(N=224)=68.5653778407` — growth rate cut ~10x (x1.014
+  vs x1.155 per column) yet still exponential, ABOVE the `B~30` gate.
+  Option 2 per-block floor is 0.1959 (unrealizable: single radius per disc);
+  its realizable form — a d_5-constrained scan re-optimizing d_1..d_4 — gave
+  `(3.522,2.622,2.372,1.790,1.600)`, float `rho*=0.762251293807` (< 0.80
+  gate), with `B_finite` FLAT in N: 20.1664227119 (N=32), 20.1696344570
+  (N=128), 20.1696367902 (N=224, build 48.45 s, +norms 48.96 s) — growth
+  collapsed, PASSES the `B~30` gate. Endpoint reconstruction validated by
+  reproducing the pilot's frozen-factor `B_finite(N=32)=18.0743955713902...`
+  bit-for-bit. Diagnosis: the explosion driver is not dimension (1120 vs
+  480) or block count (19 vs 11) but exponential growth of the exact-Hurwitz
+  tail columns into the last disc, controlled by `|c_5|/rho_5 = 1/d_5`;
+  q=5's stage-0 optimum sat at d_3=1.70 (sub-threshold, 0.588) while q=7's
+  frozen d_5=1.35 (0.741) sat in the growing regime. Deviation disclosed in
+  report: the ticket's `B(32)<5` precondition for the N=224 run was not met,
+  but the designated N-scaling diagnostic showed collapse, so N=224 was run
+  to settle the verdict. Report: `lane_f/F7_MITIGATION_REPORT.md` (+ scripts
+  and JSON receipts in `lane_f/`). Not committed; no Kaggle kernels; no
+  other lanes touched.
