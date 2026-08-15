@@ -44,5 +44,25 @@ adjudication, gates.
 - No dissemination without owner word (Koyama v4 send pending).
 - Ledger updated same turn as any status change.
 
-## Review notes
-(fill as items close)
+## Overnight run 2026-08-15 (owner AFK; frontier responsible for significant progress)
+
+Closed today: P5 GAP-16 (Riesz import, 12/N, Aristotle v21); M1d (U₄ via
+Γ₀(2)◁Γ₀⁺(2); ζ(2s) = scattering determinant, 4/4 predictions); M1e (φ₆
+CONFIRMED 4/4 — two-surface family pattern); Koyama v5 FINAL (7 fixes).
+
+Overnight lanes (all launched this turn):
+- [ ] **O1 — φ₄/φ₆ Eisenstein first-principles derivation (G5 obligation).**
+  Opus 5. The step that turns the scattering mechanism into a theorem.
+  Target: lane_g/M1F_EISENSTEIN_DERIVATION.md with proof-or-obligations.
+- [ ] **O2 — Certified winding at the 8 predicted resonances.** luna (codex).
+  Upgrade M1d/M1e midpoint numerics to rigorous Arb certificates.
+  Target: lane_g/M1G_PREDICTION_WINDING_CERTS.md + receipts.
+- [ ] **O3 — Flagship paper TeX draft (P6).** Kimi K3 #2 (if bridge allows
+  concurrent; else queued behind q=7). Dissemination stays HITL.
+- [ ] **O4 — Aristotle v22: M1d's 5 ARISTOTLE-ABLE obligations.** builder
+  prepares stubs + dispatches; poll with v21.
+- [ ] **O5 — 30m poll loop.** Kimi/Aristotle/Kaggle statuses; harvest part2b/3b
+  on landing → 5-gate → merge 90,001 zeros → Gonek verdict + Mertens digits
+  (P2, frontier); q=7 cert execution on Kimi report (P1); second G_5 pin (P4)
+  after.
+Standing: receipts before claims; ledger same turn; no dissemination.
