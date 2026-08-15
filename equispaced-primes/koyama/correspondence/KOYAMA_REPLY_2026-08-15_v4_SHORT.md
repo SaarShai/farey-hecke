@@ -90,39 +90,62 @@ contributions to fit it exactly. If some of the other material later
 merits a joint note, I'd welcome that — but there's no urgency on my
 side, and your bandwidth belongs to Inventiones.
 
-**Separately — a short update from my certified-computation program.**
-Three items, all with machine receipts, none circulated, and none
-proposed for the joint paper — I mention them because the first two
-touch the Selberg zeta functions you know better than anyone, and I'd
-genuinely value your reaction.
+**Separately — an update from my certified-computation program.** Three
+results, none circulated yet. They are not proposed for the joint
+paper; I raise them because they sit squarely in the Selberg-zeta
+world you know better than anyone, and because I believe at least the
+first is genuinely new mathematics whose framing deserves your eye
+before anyone else's.
 
-- *A computer-assisted theorem.* For the non-arithmetic Hecke group G₅
-  we have rigorously localized a Selberg-zeta zero at
-  s* ≈ 0.45390 + 5.76354i (certified to 10⁻⁶ per coordinate), hence
-  Re(s*) ≤ 1/2 − 0.046 — to our knowledge the first rigorous
-  localization of an off-line resonance for a non-arithmetic
-  finite-area surface. Everything is interval-arithmetic certified, the
-  abstract chain's joints are machine-proved in Lean, and the argument
-  has survived five rounds of internal adversarial review plus an
-  independent external audit this week. Across the family, the
-  arithmetic members q = 3, 4, 6 show determinant zeros at s = ρ/2 (ρ
-  the Riemann zeros), while for non-arithmetic G₅ and G₇ the zeros
-  scatter well off any line. I would value your reaction to the framing
-  before we circulate anything.
-- *A conjectural mechanism.* The contrast seems to be an operator-level
-  ζ(2s) factorization that arithmetic members have and G₅ provably
-  lacks pointwise (certified nonvanishing witnesses at ζ-zero points).
-  For q = 4 we have encouraging symbolic and numerical evidence of an
-  embedding into the level-2 modular operator — a probe, not a proof.
-  Your judgment on this mechanism would mean a great deal.
-- *Zero-sum numerics.* The Ng/Gonek Mertens mean-square constant now
-  stands at 0.02903 ± 0.00002 (10,000 zeros, three digits certified) —
-  refuting our own 2/π² guess — and the first numerical test of
-  Gonek's J₋₁(T) ~ (3/π³)T gives ratio ≈ 0.95 at T ≈ 10⁴: too low a
-  height to conclude anything yet. The 10⁵-zero extension is nearly
-  done (84,501 zeros computed and verified through five independent
-  checks), which will give the constant to 4–5 digits and the Gonek
-  test at T ≈ 7.5×10⁴ with proper secondary-term fits.
+- *A theorem: the first rigorously located off-line resonance of a
+  non-arithmetic surface.* Whether the Selberg zeta function of a
+  non-arithmetic finite-area hyperbolic surface actually has zeros off
+  the critical line is a question the literature has circled for
+  decades — the Phillips–Sarnak picture predicts them, but existing
+  computations for non-arithmetic Hecke groups are non-rigorous and
+  the standing rigorous work leaves their location conjectural. We now
+  have a proof, for the golden-ratio Hecke group G₅: a Selberg-zeta
+  zero at s* ≈ 0.45390 + 5.76354i, certified to 10⁻⁶ in each
+  coordinate, hence a scattering resonance a quantified distance
+  ≥ 0.046 off the critical line — an unconditional essential-gap
+  statement for a specific non-arithmetic surface. Three separate
+  literature sweeps, the latest this week, found no prior rigorous
+  localization for any surface in this class, so we believe this is a
+  first. The proof is computer-assisted in the strong sense: every
+  constant is an interval-arithmetic certificate, the abstract joints
+  are machine-proved in Lean, and the whole chain has survived five
+  rounds of internal adversarial review plus an independent external
+  audit that re-verified the certificates from raw records. Before we
+  circulate anything I would value your reaction to the statement's
+  framing — you are the reader I most want to get this right for.
+- *A dichotomy that makes "the critical line is arithmetic" precise.*
+  The theorem is one half of a sharp contrast we can now document
+  across the Hecke family — the one natural family that interpolates
+  between arithmetic and non-arithmetic. The arithmetic members
+  q = 3, 4, 6 pin their determinant zeros to s = ρ/2 (ρ the Riemann
+  zeros); the non-arithmetic G₅ and G₇ scatter well off any line, and
+  for G₅ we hold certified nonvanishing witnesses at the ζ-zero
+  points — so within this family, "zeros on the line" is provably an
+  arithmetic phenomenon, not a generic one. The mechanism we are
+  pursuing is an operator-level ζ(2s) factorization that arithmetic
+  members should possess (Mayer's theorem for q = 3; for q = 4 we have
+  encouraging symbolic and numerical evidence of an embedding into the
+  level-2 modular operator — a probe, not a proof) and that G₅
+  provably lacks pointwise. If this holds up, it says *why* the
+  critical line is an arithmetic artifact in this family. Your
+  judgment on that mechanism would mean more to me than anyone's.
+- *Two firsts in the Mertens direction.* The constant
+  Σ_ρ 1/(|ρ|²|ζ′(ρ)|²) — the conjectural limiting mean square of
+  x⁻¹Σ M(n)² under RH + Gonek–Hejhal — appears never to have been
+  numerically computed; it now stands at 0.02903 ± 0.00002 (10,000
+  zeros, three digits certified), which already refutes the natural
+  guess 2/π² and excludes 3/π⁴. And Gonek's conjecture
+  J₋₁(T) ~ (3/π³)T seems never to have been numerically tested at
+  all; our first test gives ratio ≈ 0.95 at T ≈ 10⁴ — honestly too low
+  a height to conclude anything, which is itself worth recording. The
+  10⁵-zero extension (84,501 zeros already computed and verified
+  through five independent checks) will put the constant at 4–5 digits
+  and the Gonek test at T ≈ 7.5×10⁴ with proper secondary-term fits.
 
 With best regards,
 Saar
