@@ -579,3 +579,26 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   Obligations: G12 closed as compute item; G5-G9 (theory: Eisenstein
   first-principles derivation, Selberg-divisor transport) unchanged/still
   open — this probe adds a second-q confidence point, not a proof.
+
+- 2026-08-15 — **M1D ARISTOTLE-ABLE dispatch, V22 (5 finite-algebra
+  obligations from the gaps ledger, lane_g/M1D_U4_CONSTRUCTION.md §9).**
+  Extracted the 5 obligations the task named: coset-cocycle constancy
+  (`ρ⁺(A_n)=σ` for all `n`, §2.3/§4 C7), the `W₂` normalizer computation
+  `wγw⁻¹=[[d,−c],[−2b,a]]` (§2.3), weight-neutrality of the `D₂` composition
+  operator via the chain rule (§1), the block-diagonalization identity
+  (`VσV⁻¹=diag(1,−1)`, §3.3), and the exact 2×2 determinant splitting
+  `det(1−N_s)=det(1−L)·det(1+L)` (§3.3, ledger G1) restated at the finite
+  linear-algebra level (`det(1−[[0,A],[A,0]])=det(1−A)det(1+A)` for a general
+  `n×n` complex matrix `A`, dropping the note's own nuclear-operator/
+  trace-expansion route as out of scope for a finite dispatch). All 5 stated
+  self-contained and sorry-stubbed, none skipped
+  (`projects/aristotle_dispatch_v22/SKIPPED.md` records the scoping choice
+  on obligation 5). New project scaffolded on `aristotle_dispatch_v21`
+  (same lakefile.toml/lean-toolchain/lake-manifest.json, Lean/mathlib
+  v4.28.0): `projects/aristotle_dispatch_v22/M1DIntertwiner.lean` (7
+  theorems covering the 5 obligations). Dispatched via
+  `aristotle submit "<prompt>" --project-dir .` (async, not awaited).
+  Aristotle project id `a1b1fc0d-a13f-4bde-aa19-42f69835fcaa`
+  (`projects/aristotle_dispatch_v22/PROJECT_ID.txt`). G5–G9 (FRONTIER:
+  Eisenstein-derivation of `phi_4`, resonance/divisor transport) untouched,
+  out of scope per the task's own 5-obligation list.
