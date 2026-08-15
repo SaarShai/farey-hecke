@@ -85,3 +85,12 @@ refutations of claims that exist in the literature.
   verify pwd before relative-path writes. GATE: relative-path cp/mkdir
   into the repo requires a same-command pwd check when any prior
   command in the turn changed directory.
+
+## 2026-08-15 — Inherited claims rot (Koyama letter D1)
+Pattern: a factual claim ("replication still running") inherited verbatim
+across 4 draft revisions; each revision re-checked wording, none re-checked
+the fact; source was a 10-week-stale ledger line; the cited receipt actually
+stated the OPPOSITE. Rule: any outward-facing factual claim gets re-verified
+against a live artifact (file exists / process runs / number recomputed) at
+send-gate time, not inherited from the previous draft's audit table. Claims
+about ongoing processes expire immediately.
