@@ -23,8 +23,9 @@ demonstration", "keep a ledger of all of the goals we are pursuing")
   rule
 
 ## Active tickets
+- Full adversarial audit of the top ledger items + declared theorem (Kimi K3, agent fc471518) — verification; AFK; claimed 2026-08-15 by lane kimi-audit; deliverable research_notes/rh_goals_2026-08-14/lane_g/ADVERSARIAL_AUDIT_KIMI_K3.md; Koyama send held until it reports. — source: user request 2026-08-15
 - [Mertens constant to 4–5 significant digits](tickets/mertens-constant-precision.md) — research; AFK; claimed; blocked by: none; claimed by: lane A4
-- [Cramér–Rao lower bound T1 in the frozen model](tickets/sample-complexity-t1.md) — research; AFK; open; blocked by: none; claimed by: none (frontier next block)
+- [Cramér–Rao lower bound T1 in the frozen model](tickets/sample-complexity-t1.md) — research; AFK; DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, Opus lane; bound proved modulo 13-gap ledger; SPEC DEFECTS found: regularity (R1) fails as frozen — band-limitation amendment M4′ owed; (R6) fails outright — Gaussian-approximable claim contradicted; frontier review pending)
 - [Proven truncation tail bound for the G_5 operator](tickets/flagship-tail-bound.md) — CLOSED 2026-08-15: **THEOREM DECLARED** (V8 THEOREM-GRADE YES after 5 adversarial rounds; assembly v2)
 - [Uniform-protocol family re-sweep](tickets/uniform-protocol-resweep.md) — research; AFK; open; blocked by: none; claimed by: none (after B5)
 - [Re-certify G_5 boxes with the proven tail radius](tickets/flagship-certify-rerun.md) — prerequisite; AFK; open; blocked by: [Proven truncation tail bound for the G_5 operator](tickets/flagship-tail-bound.md), claimed by: none
@@ -32,7 +33,7 @@ demonstration", "keep a ledger of all of the goals we are pursuing")
 - [Run the preregistered blind test](tickets/instrument-blind-test-run.md) — prerequisite; AFK; open; blocked by: [Fill family-sweep data gaps (G_8 even sector; extended q=4/6)](tickets/instrument-fill-gaps.md); claimed by: none
 - [Extend Gonek J₋₁ test to the full 100k-zero table](tickets/gonek-extension.md) — research; AFK; claimed; blocked by: none; claimed by: Kaggle offload (5 kernels running, lane_k)
 - [Gonek 1989 first-test verdict call](tickets/gonek-verdict-call.md) — research; AFK+frontier; open; blocked by: [Extend Gonek J₋₁ test](tickets/gonek-extension.md); claimed by: frontier on harvest
-- [No-vertical-line certified corollary](tickets/no-vertical-line-corollary.md) — research; AFK-light; open; UNBLOCKED 2026-08-15; claimed by: none
+- [No-vertical-line certified corollary](tickets/no-vertical-line-corollary.md) — research; AFK-light; DRAFTED 2026-08-15 (lane_g/NO_VERTICAL_LINE_COROLLARY.md; Corollary 1 = Λ° ⊄ L certified; general single-line refutation stays open pending a second certified pin); frontier-reviewed
 - [Fresh Lean re-verification of the Bridge identity](tickets/d3-lean-reverify.md) — prerequisite; AFK; open; blocked by: none; claimed by: none
 - [D3 priority-note submission decision](tickets/d3-submission-decision.md) — discussion; HITL; open; blocked by: [Fresh Lean re-verification of the Bridge identity](tickets/d3-lean-reverify.md); claimed by: none
 - [Kloosterman DiscrepancyStep gate spec + probe](tickets/kloosterman-gate.md) — research; AFK; CLOSED NO-GO 2026-08-14 (pre-registered stop condition hit: fluctuation object is a Mertens-weighted Dedekind-sum convolution, RH-coupled; lane_i/V_EXTRACTION.md is the documented reduction → D3 outlook)

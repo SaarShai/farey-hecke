@@ -127,8 +127,13 @@ resonances conjectural; prior-art sweep lane_c).
   3-constants, 5.
 - LEAN-PROVED (Aristotle v17/v18/v19, axiom-clean): the abstract joints
   named in links 2, 3, 5.
-- CITED PUBLISHED THEOREMS: Simon Trace Ideals Thm 3.4/3.7; MMS
-  Theorem 6.4; standard Selberg/scattering theory (link 7).
+- CITED PUBLISHED THEOREMS: Simon, "Notes on infinite determinants,"
+  Adv. Math. 24 (1977) Thm 4.2 (trace-class det multiplicativity;
+  Lidskii = Cor. 4.3) and Thm 3.3 (analyticity); Grothendieck, Résumé
+  (1952) Thm 8; MMS Theorem 6.4; standard Selberg/scattering theory
+  (link 7). [Erratum 2026-08-15: this ledger previously cited "Simon
+  Trace Ideals Thm 3.4/3.7", the pre-V7 binding; corrected to match
+  R5 v3.1's citation ledger.]
 - PAPER-PROOF (short, self-contained, in R1/R3b reports): the
   restriction identity assembly, the mean-value arc-enclosure lemma,
   the enlarged-disc Cauchy output-tail bound.
@@ -151,6 +156,8 @@ resonances conjectural; prior-art sweep lane_c).
   T_tail(160)   = 6.26786e-22
   ‖L‖₁ bound    = 17.2911968
   F_R(160)      = 1.77974e-6
-  min margin    = 3.43787e-8
+  min margin    = 3.43786e-8  [lower bound; rounded DOWN from the
+                  receipt ball 3.4378649…e-8. Erratum 2026-08-15: a
+                  previous quote 3.43787e-8 rounded up, overstating]
   winding       = 1 (ball width 7.81e-114)
   δ (gap)       ≥ 0.0461038

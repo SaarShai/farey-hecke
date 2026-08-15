@@ -1,6 +1,8 @@
 # DRAFT — update to Prof. Koyama (NOT SENT; owner-gated)
-Prepared 2026-08-14. One placeholder ({{FLAGSHIP}}) pending the final
-certification receipt; everything else is receipt-backed now.
+Prepared 2026-08-14; flagship paragraph filled 2026-08-15 after the
+theorem was declared (V8 THEOREM-GRADE YES). Everything below is
+receipt-backed. A further independent audit (Kimi K3) is in progress;
+hold send until it reports.
 
 ---
 
@@ -75,7 +77,10 @@ With best regards,
 Saar
 
 ---
-DRAFT NOTES (not part of the letter): headline of item 1 waits on the
-R2R3 certificate; if it fails, the {{FLAGSHIP}} sentence is dropped and
-item 1 stands on the data + closed K_s gate alone. Send decision,
-wording, and any attachment list are the owner's.
+DRAFT NOTES (not part of the letter): the item-1 headline is now backed
+by the declared theorem (THEOREM_G5_OFFLINE_ASSEMBLY.md v2; R3b winding
+certificate; R5 v3.1 determinant identification; adversarial rounds
+V4–V8). Item 3's 10^5-zero extension is still running on Kaggle
+(parts 1–4; part 5 harvested and verified). Send decision, wording, and
+any attachment list are the owner's; recommended to wait for the Kimi K3
+independent audit before sending.

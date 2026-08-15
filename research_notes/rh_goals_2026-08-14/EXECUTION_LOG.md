@@ -243,8 +243,10 @@ optional A3 extension to N=10^5 before paper assembly.
   adaptive splits 92, max depth 8); every finite Taylor enclosure AND
   every F_R-inflated enclosure excludes 0; certified winding 1 (ball
   width 7.81e-114) + homotopy winding 1; min margin (finite lower −
-  F_R) = +3.4379e-8; rH ≤ 0.359 < 1. Frontier independent re-checks
-  from raw records: all 284x4 gates true, min margin 3.437865e-8
+  F_R) = +3.4379e-8 [erratum 2026-08-15: lower bound, quote rounded
+  DOWN = 3.43786e-8; receipt ball 3.4378649…e-8]; rH ≤ 0.359 < 1.
+  Frontier independent re-checks from raw records: all 284x4 gates
+  true, min margin ≥ 3.437864e-8
   reproduced, 71x4 census. N=128 honestly recorded FAIL (F_R=0.1498).
 - V4 ADVERSARIAL REVIEW LAUNCHED (sol): the declaration is GATED on it
   — targets: mean-value arc-enclosure lemma + H/Neumann implementation,
@@ -362,3 +364,20 @@ CLOSED; family-offline-theorem and no-vertical-line-corollary
 UNBLOCKED. Known cosmetic: E1 md arrow labels double-encoded
 (mojibake) — receipt values unaffected; fix at writer if regenerated
 (hash would change; re-quote in R5 then).
+
+no-vertical-line-corollary DRAFTED (lane_g/NO_VERTICAL_LINE_COROLLARY.md): certified Corollary 1 — Z_{G_5} has a non-real strip zero s* with Re(s*) <= 0.4538962 < 1/2 (delta >= 0.0461038), so the non-real strip zero set is not contained in Re(s)=1/2; Corollary 2 refutes the c=1/2 line ONLY (one certified pin = one real part), K_s divisor zeros handled as Re<=0 poles outside the strip, real-axis trivial/small-eigenvalue zeros excluded by stating the result for Im != 0; no density, family, or "arithmetic <=> line" claim.
+
+T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in frozen model N2 proved with explicit constants — S_eps(omega)=a_|omega|^2 log(|omega|/2pi) makes the zeta-prime amplitudes cancel, giving max_j RMSE >= sqrt(6 log(gamma_d/2pi))/(log X)^{3/2} and X(eps) >= exp((6 log(gamma_d/2pi))^{1/3} eps^{-2/3}), c=1.694 (d=1) / 2.316 (d=10); single-tone FIM constant 24 numerically confirmed to 3 digits; gate G-a does not fire on the leading constant (amplitude-free), gate G-b passes at 5.05x vs Gate-1; 13 gaps logged, 5 ARISTOTLE-ABLE / 8 FRONTIER, the load-bearing ones being a band-limitation repair owed to the spec as an amendment, failure of Gaussian-approximability under the Gaussian smoothing, and N2 being pessimistic at low height (gamma_1 empirical error sits 5.5x below the bound).
+- 2026-08-15 frontier SELF-AUDIT (parallel to the Kimi K3 external audit):
+  cross-artifact constants sweep CLEAN (s0, delta, T_tail, F_R, ||L||_1,
+  E1 sha, R2 sha consistent everywhere); seed-table sha match confirmed
+  (local zeros1.txt == Kaggle seed_table_sha256 3436c916...). Two errata
+  found+fixed: (1) min-margin quotes rounded UP in 5 places (assembly
+  constants table, ticket, corollary x2, this log) — corrected to
+  round-down 3.43786e-8 with erratum tags; (2) assembly dependency
+  ledger still cited pre-V7 "Simon Trace Ideals Thm 3.4/3.7" —
+  corrected to Simon Adv. Math. 24 (1977) Thm 4.2 / Grothendieck Thm 8
+  per R5 v3.1. Kaggle lane defect found by new monotonicity gate:
+  part4 5 bad rows (2 duplicate zeros), part5 6 bad rows (1 duplicate)
+  — residual gate provably blind to neighbor-zero convergence;
+  seed-validation repair (mp.zetazero, receipts) running.

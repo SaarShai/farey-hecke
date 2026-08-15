@@ -47,7 +47,7 @@ algorithmic, ~34 orders recoverable); per-arc T_finite prefactor also
 ruled not theorem-valid (omits high-output rows). R3b repair
 DELIVERED 2026-08-15 00:59: **THEOREM-GRADE closed-contour YES at
 N=160** — complete closed cover (284 subarcs), all enclosures exclude 0,
-winding 1, min margin +3.4379e-8, valid endpoint bound ||L||_1 <=
+winding 1, min margin >= 3.43786e-8 (round-down erratum 2026-08-15), valid endpoint bound ||L||_1 <=
 17.2912, F_R(160)=1.77974e-6. Frontier re-checks from raw records pass.
 THEOREM_G5_OFFLINE_ASSEMBLY.md written (statement + 7-link chain).
 V4 found one theorem-level gap (determinant
