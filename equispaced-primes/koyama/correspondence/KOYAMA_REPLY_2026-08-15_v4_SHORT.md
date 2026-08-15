@@ -125,8 +125,11 @@ before anyone else's.
   q = 3, 4, 6 pin their determinant zeros to s = ρ/2 (ρ the Riemann
   zeros); the non-arithmetic G₅ and G₇ scatter well off any line, and
   for G₅ we hold certified nonvanishing witnesses at the ζ-zero
-  points — so within this family, "zeros on the line" is provably an
-  arithmetic phenomenon, not a generic one. The mechanism we are
+  points — so within this family the on-line picture now *provably
+  fails* on the non-arithmetic side, while holding at machine precision
+  in all the arithmetic data. That is the precise sense in which the
+  critical line looks like an arithmetic phenomenon here, and it is a
+  theorem on one side of the contrast, data on the other. The mechanism we are
   pursuing is an operator-level ζ(2s) factorization that arithmetic
   members should possess (Mayer's theorem for q = 3; for q = 4 we have
   encouraging symbolic and numerical evidence of an embedding into the
