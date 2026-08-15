@@ -509,3 +509,32 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   `projects/aristotle_dispatch_v21/RieszImport.lean`, Aristotle project
   24c6e3df-76fd-43d0-a052-b6ddf10d6084. NOT proved; closure pending Aristotle
   + frontier review of the analytic step.
+
+- 2026-08-15 — **M1D U₄ CONSTRUCTION DELIVERED** (P3; lane_g/M1D_U4_CONSTRUCTION.md).
+  M1c's obstruction sharpened to FATAL (W₂ ∉ N(PSL(2,Z)), explicit witness w·L·w⁻¹ =
+  [[1,−1/2],[0,1]]) — no linear Fricke action on the Fraczek–Mayer 3-coset module exists,
+  killing every U₄ whose modular side is Γ₀(2)\PSL(2,Z). Repair: induce along
+  Γ₀(2) ◁ Γ₀⁺(2) (2 cosets, W₂ acts by σ); U₄ = (1⊗V)(C⊗1) with C the D₂ composition
+  operator (weight-neutral) and V the Z/2 character basis, giving the exact
+  det(1−L̂⊗σ) = det(1−L⁽⁴⁾_{s,+})·det(1+L⁽⁴⁾_{s,+}) — divisibility proved, not asserted.
+  Coset cocycle ρ⁺(word of length r) = σ^r exact-verified on ALL 335,344 words of length
+  1–6 over an 8-letter alphabet plus 46,800 exact Möbius/2s-cocycle identities: 0 failures.
+  Genuinely new content: the q=4 scattering determinant derived in closed form,
+  φ₄(s) = [√π Γ(s−½)/Γ(s)][ζ(2s−1)/ζ(2s)]·(1+2^{1−s})/(1+2^s) (χ-twist: (2^{1−s}−1)/(2^s−1)),
+  which locates ζ(2s) at the CUSP, not in coset combinatorics — so no finite-coset
+  intertwiner can ever produce it. It passes 3 self-checks (functional equation to 1e−31,
+  residue at s=1 = 1/vol exactly, p→1 degeneration) and makes 4 novel predictions of EXTRA
+  resonances at 2^s = −1 (trivial sector) and 2^s = +1 (χ sector): all 4 confirmed to
+  20–30 digits with two-way sector discrimination and order-one nearby controls
+  (|det(1−L₊)| = 5.7e−30 at iπ/log2 while |det(1+L₊)| = 1.95; reversed at 2iπ/log2).
+  Sector assignment settled numerically: the Riemann-zero divisor is in the MMS (P)-EVEN
+  sector (|D₄⁺| ≈ 7e−19 at ρ₁/2,ρ₂/2,ρ₃/2 vs |D₄⁻| = 0.25, 2.09, 6.74). Gap closed
+  outright: det(1−K_s) has ALL zeros on Re s ∈ Z_{≤0}, so it cannot interfere on
+  Re s = 1/4 — a zero of the reduced determinant there IS a zero of Z_{S,4}. Also
+  corrects M1c's pin2 (γ₂ was off in the 12th digit; the "shallow zero" was pin precision,
+  not the operator). (C4) NOT proved. Ledger: 12 obligations, 4 PROVED, 5 ARISTOTLE-ABLE,
+  5 FRONTIER (G5–G9 = the actual theorem: Eisenstein derivation of φ₄, the resonance/Z_S
+  divisor theorem, and the MMS-6.4 → Selberg sector transport), 2 cheap compute items
+  (certified winding at the 4 prediction points; the q=6 analogue φ₆ with extra resonances
+  at iπ/log 3, which would make the mechanism a family statement). Numerics are
+  NON-RIGOROUS Arb midpoints via the unmodified zeta_cert_rosen_even.py builder.
