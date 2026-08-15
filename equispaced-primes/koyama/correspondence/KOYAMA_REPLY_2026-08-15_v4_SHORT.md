@@ -1,5 +1,19 @@
 # KOYAMA REPLY — v4 SHORT (NOT SENT; owner-gated)
 
+2026-08-15 cold verification (Opus 5, independent re-derivation from
+curve_3e14.tsv + arXiv PDF): math points all PASS; five data-side
+overstatements found and FIXED in this revision — (D1) the
+"second-hardware replication still running" sentence was FALSE (no
+output file, no process; stale ledger line inherited 4 drafts) →
+replaced with an honest single-run scope statement; (D4) 567/567
+scoped to ≤1.3×10¹³; (D2/D3) "three Table 3 cells" → eight, with
+placement moved for N=11 and N=23 (not N=19; a=22 ≡ −1 mod 23 was the
+big omitted one); (D5) "insertion-ready tables" → figure drafted,
+tables promised with TeX pass; (D6) "two decades" → actual 1.36,
+now "well past"; (D7) S̃_T difference notation per Thm 1.4. v3 (long
+form) still carries the old wording — superseded, do not send v3
+without the same fixes.
+
 v3 compressed ~60% and warmed up. Nothing substantive dropped: every
 correction point, the integration plan, the standalone answer, and all
 three update items survive — details are pushed to the attachable memo
@@ -16,9 +30,11 @@ framework now was clearly the right move, and I've read the manuscript
 closely. Here are my thoughts.
 
 **The 3×10¹⁴ data.** Our race counts for N ∈ {7, 8, 11, 19, 23} now
-reach x = 3×10¹⁴ — two decades past Table 3 — and reproduce the earlier
-double-verified baseline exactly (567/567 cells; a second-hardware
-replication of the extension is still running). The interesting part is
+reach x = 3×10¹⁴ — well past Table 3's top of 1.3×10¹³ — and up to that
+height they reproduce the double-verified baseline exactly (567/567
+cells). I should be plain about scope: the extension beyond 1.3×10¹³ is
+so far a single run, and I'd want an independent replication of it
+before anything from that range goes in the paper. The interesting part is
 what they show: even at this height, −1 leads the raw race only for
 N = 7 and 23; for N = 8 it is last, for N = 19 actually negative, and
 the orderings are still shifting. I see this as the strongest possible
@@ -30,8 +46,8 @@ attack. We also traced the transients to their source: reconstructing
 the race from the first 25 zeros per character tracks the observed
 curves with correlations 0.83–0.97 (0.9925 for N = 19 with 100 zeros),
 while −1's rank keeps changing — so the noise is precisely the low-zero
-fluctuation your mollifier removes. Extended tables and figures are
-drafted and insertion-ready.
+fluctuation your mollifier removes. The reconstruction figure is drafted;
+I'll produce the extended tables together with the TeX pass below.
 
 **A few things to settle before submission.** Since my name will be on
 the paper, let me raise now what a referee would raise later — details
@@ -52,10 +68,11 @@ and suggested wording are in a short memo I'll send with the TeX:
    character of Conrey index 13, far below the γ ≈ 1.74 used as lowest.
    The e^{33.4} settling estimate should probably be revisited — our
    data independently show the transients still active at 3×10¹⁴.
-4. Three Table 3 cells (N = 11, a = 10; N = 19, a = 13 and 18) differ
-   from our reconstructed values, and they decide −1's placement for
-   those moduli. Could we reconcile against raw class counts before a
-   replacement version?
+4. Eight Table 3 cells differ from our recomputed values at the
+   1.3×10¹³ grid point — most are small, but N = 11, a = 10 and
+   N = 23, a = 22 (that is, −1 mod 23 itself) are large enough to move
+   −1's rank for those two moduli. Full cell list is in the memo. Could
+   we reconcile against raw class counts before a replacement version?
 
 One small protective remark: Conjecture 1.7 concerns L-values, not
 prime counts, and I'd say so explicitly — our race data neither support
@@ -73,7 +90,8 @@ verifies the paper.
 arXiv identifier, I can return the insertion-ready tables, figures and
 Lean paragraph within days, and we can reconcile the table cells in
 parallel. If you agree, I'd then also compute your mollified S̃_T(x, a)
-directly from our prime data and certified zero tables, for a finite-x
+directly from our prime data and certified zero tables — the difference
+S̃_T(x, 1) − S̃_T(x, a), as in Theorem 1.4 — for a finite-x
 comparison against C_N · log L(1, χ_{1,a}) — I suspect that is the
 sharpest validation figure the paper could have. I've also prepared a
 contribution statement and a short computational-assistance disclosure;
