@@ -538,3 +538,44 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   (certified winding at the 4 prediction points; the q=6 analogue φ₆ with extra resonances
   at iπ/log 3, which would make the mechanism a family statement). Numerics are
   NON-RIGOROUS Arb midpoints via the unmodified zeta_cert_rosen_even.py builder.
+
+- 2026-08-15 — **P1 LAUNCHED: FAMILY OFF-LINE THEOREM q=7 PREP COMPLETE**
+  (ticket family-offline-theorem; lane_f/F7_CONSTANTS_MANIFEST.md +
+  lane_f/F7_CERT_PLAN.md). K_s lattice for q=7 derived EXACTLY, not by q=5
+  analogy: h_7=2 keeps the full Lemma-6.3 word A_s = L_1²L_2L_1L_2 (5-cycle on
+  B_5; q=5's L_1^{h−1} factor vanishes at h=1), matrix word M_2M_1M_2M_1M_1
+  computed in Z[λ]/(λ³−λ²−2λ+1) giving trace τ_7 = 4λ_7²+3λ_7 =
+  18.393731622284383…, det = 1, ell_7 = 0.054527994798052490833925…,
+  a_7 = 2.909041043174857…, zero lattice s = −n+iπk/a_7 all Re ≤ 0 (matches
+  FAMILY_PREP digit-for-digit; fixed-point/eigenvalue cross-checks pass).
+  Block structure at κ_7=5: 19 blocks (9 heads + 10 tails) vs q=5's 11, from
+  MMS eq. (34), cross-checked against the builder's captured calls. Primary
+  pin from the q7 mms+ scan: s₀ = 0.4751647621098225+4.668743786424289i
+  (N22→N28 drift 1e−14, K_s box margin 0.5895480, δ ≥ 0.0248342). Cert plan:
+  full G5-constant change table (file:line → q=7 value), provisional
+  N = 224/192 pending the R2/endpoint F_R trade-off (ρ* = 0.7823 float,
+  0.70-gate re-targeted to 0.80), contour cost ~280 CPU-h at N=224 ⇒ Kaggle
+  chunking MANDATORY (16 chunks × 12 base arcs after an `--arcs i:j` CLI
+  addition + a pilot chunk to measure true per-eval cost). MMS eq-(34)
+  heading q>5 covers q=7 verbatim — the q=5 footnote is unneeded. No
+  execution yet; heavy cert awaits owner word / Kaggle slot.
+
+- 2026-08-15 — **M1E: q=6 φ-family probe, G12 closed (compute item).**
+  lane_g/M1E_PHI6_FAMILY_PROBE.md. Derived φ₆(s) = g(s)·(1+3^{1-s})/(1+3^s)
+  (trivial sector) and φ₆^χ(s) = g(s)·(3^{1-s}-1)/(3^s-1) (χ sector) by the
+  same p-generic Fricke-symmetrisation as M1D §5.1, p=3, G₆≅Γ₀⁺(3) (Takeuchi).
+  All 3 self-checks pass (functional eq. to ~1e-31, residue at s=1 matches
+  1/vol(Γ₀⁺(3)\H)=6/(4π) to 10 digits, degeneration argument p-generic).
+  Reused the existing even-q certified builder
+  `.worktrees/aletheia-restore/code/zeta_cert_rosen_even.py`
+  `build_reduced_matrix_ball(s,N,sign,q=6)` UNMODIFIED — no new engine
+  written (q=6 already supported: `lam_ball` has an explicit √3 branch).
+  Sector assignment at known ζ pins matches q=4 (D₆⁺≈2e-10 at both pins,
+  D₆⁻ order-one; Riemann divisor in MMS (P)-even sector at q=6 too). The 4
+  predicted extra resonances (trivial: s=i(2k+1)π/log3; χ: s=i(2k)π/log3,
+  π/log3=2.8596009) confirmed 4/4, two-way sector discrimination
+  (1e-13..1e-15 on-sector vs 10⁰-10¹ off-sector and at 4 nearby controls),
+  N=40→60 stable. Verdict: CONFIRMED-NUMERICALLY, non-rigorous throughout.
+  Obligations: G12 closed as compute item; G5-G9 (theory: Eisenstein
+  first-principles derivation, Selberg-divisor transport) unchanged/still
+  open — this probe adds a second-q confidence point, not a proof.
