@@ -1,0 +1,739 @@
+% FLAGSHIP_PAPER_DRAFT.tex
+% DRAFT ONLY — dissemination is owner-gated. Do NOT submit, circulate, or email.
+% Source of record: research_notes/rh_goals_2026-08-14/lane_g/THEOREM_G5_OFFLINE_ASSEMBLY.md (v2)
+% Statement framing per plans/wayfinder/rh-goals/tickets/flagship-statement-ruling.md (V1 ruling):
+% "first rigorous localization of a scattering resonance of a non-arithmetic
+%  finite-area hyperbolic surface, Re <= 1/2 - delta_gap". NO "law" claim.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\CC}{\mathbb{C}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\detH}{\det\nolimits_{H}}
+\newcommand{\detB}{\det\nolimits_{B}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+\title{A certified off-line resonance of the non-arithmetic Hecke
+orbifold $G_5\backslash\HH$: a computer-assisted localization of a
+Selberg zeta zero\\[4pt]
+{\large DRAFT --- not for circulation (dissemination owner-gated)}}
+\author{[Authors withheld in draft]}
+\date{Draft of 2026-08-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $G_5$ be the Hecke triangle group with $\lambda_5 = 2\cos(\pi/5)$
+(the golden ratio), $X_5 = G_5\backslash\HH$ the associated
+non-arithmetic finite-area hyperbolic orbifold, and $Z_S(s)$ its
+Selberg zeta function. We give a rigorous, computer-assisted proof that
+$Z_S$ has a zero $s^*$ with
+$|\Re(s^*) - 0.4538951800749447| \le 10^{-6}$ and
+$|\Im(s^*) - 5.7635372417301305| \le 10^{-6}$.
+In particular $\Re(s^*) \le 0.4538962 < 1/2$, so $s^*$ lies strictly
+off the critical line with essential gap
+$\delta := 1/2 - \Re(s^*) \ge 0.0461038$; by the standard spectral
+interpretation of Selberg zeros, $s^*$ is a scattering resonance of
+$X_5$. To our knowledge this is the first rigorous localization of an
+off-line resonance of a non-arithmetic finite-area hyperbolic surface
+(prior-art assessment: in-repo novelty re-scout, 2026-08-15). The proof
+combines interval-certified contour winding of a Fredholm determinant
+at truncation level $N=160$ (python-flint Arb/Acb ball arithmetic at
+384 bits), a machine-verified finite-section identity and supporting
+functional-analytic lemmas in Lean, the determinant comparison bounds
+of Gohberg--Krein/Simon, the Mayer--M\"uller--Seeger factorization
+$Z_S = \det(1-L_{s,+})\det(1-L_{s,-})/\det(1-K_s)$, and a certified
+nonvanishing gate on the $K_s$ divisor. As a corollary, the non-real
+strip zeros of $Z_{G_5}$ are not all contained in the critical line;
+no further distributional claim is made.
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Background and positioning}
+
+For a finite-area hyperbolic surface or orbifold $X = \Gamma\backslash\HH$,
+the zeros of the Selberg zeta function $Z_S(s)$ in the strip
+$0 < \Re(s) < 1$ encode both the discrete spectrum of the Laplacian
+(zeros on $\Re(s) = 1/2$ or on the real segment) and the poles of the
+meromorphically continued scattering matrix, i.e.\ the
+\emph{resonances} of $X$ (zeros off both). For arithmetic $\Gamma$
+(e.g.\ the modular group and its congruence covers), the location of
+many zeros is governed by arithmetic objects --- the nontrivial factor
+$\zeta(2s)$ pins scattering poles to the line $\Re(s) = 1/4$ --- and the
+classical Selberg theory applies. For non-arithmetic $\Gamma$ no such
+structure is available, and the Phillips--Sarnak deformation theory
+\cite{PhillipsSarnak85,PhillipsSarnak85b} suggests that cusp forms
+generically dissolve into resonances, placing zeros of $Z_S$ off the
+critical line $\Re(s) = 1/2$.
+
+For the Hecke triangle groups $G_q$, the transfer-operator approach of
+Mayer and its development by Bruggeman--Pohl, M\"uhlenbruch, Str\"omberg
+and others (see \S\ref{sec:prelim}) provides a Fredholm-determinant
+realization of $Z_S$ amenable to computation. High-precision
+\emph{numerical} studies of resonances in this and related settings
+exist --- notably Fr\k{a}czek--Mayer for Hecke triangle groups
+\cite{FraczekMayer} and the Borthwick--Weich Lagrange--Chebyshev
+computations for infinite-area Schottky surfaces \cite{BorthwickWeich21}
+--- but these computations, however accurate, do not carry rigorous
+error enclosures: they are validated numerics, not certificates. On the
+rigorous side, validated (interval/pseudospectral) enclosure methods
+for transfer-operator resonances have been implemented for uniformly
+expanding circle maps \cite{Pseudospectral25}, a different system class
+that does not include hyperbolic surfaces; and high-precision
+computations of Hausdorff dimensions for Hecke triangle groups
+\cite{HausdorffDim25} explicitly use asymptotic error bounds rather than
+interval certification. Bruggeman--Pohl leave the location of the
+non-arithmetic Hecke resonances conjectural
+\cite{BruggemanPohl09,BruggemanPohl23}; the contemporary strict
+transfer-operator framework of Pohl--Wabnitz \cite{PohlWabnitz26} is
+theoretical and does not claim computational zero localization.
+
+The present paper closes one instance of this gap with full rigor, in
+the computer-assisted sense: every numerical input is an interval
+certificate with explicit radii, and every reduction step is either a
+short self-contained paper proof, a cited published theorem, or a
+Lean-checked formal lemma.
+
+\begin{remark}[Honesty discipline of this draft]
+Per the governing statement ruling (V1), the claim made here is exactly
+\emph{``the first rigorous localization of a scattering resonance of a
+non-arithmetic finite-area hyperbolic surface, with
+$\Re \le 1/2 - \delta_{\mathrm{gap}}$''}, and nothing stronger. In
+particular we make \textbf{no} ``law'' claim relating arithmeticity to
+critical-line confinement (that framing was assessed and refuted as
+stated: the arithmetic Hecke triangle groups $\{3,4,6\}$ form a single
+commensurability class, one data point, with non-comparable protocols),
+\textbf{no} family claim for $G_q$, $q \ne 5$, and \textbf{no} density,
+counting, or maximal-gap claim. Every occurrence of ``first'' below
+refers to the in-repo prior-art re-scout \cite{NoveltyRescout}.
+\end{remark}
+
+\subsection{Main result}
+
+\begin{theorem}[Main theorem, computer-assisted]
+\label{thm:main}
+Let $G_5$ be the Hecke triangle group with
+$\lambda_5 = 2\cos(\pi/5)$, $X_5 = G_5\backslash\HH$, and $Z_S(s)$ the
+Selberg zeta function of $X_5$, meromorphically continued to $\CC$.
+Then $Z_S$ has a zero $s^*$ with
+\begin{equation}
+\label{eq:box}
+|\Re(s^*) - 0.4538951800749447| \le 10^{-6},
+\qquad
+|\Im(s^*) - 5.7635372417301305| \le 10^{-6}.
+\end{equation}
+In particular $\Re(s^*) \le 0.4538962 < 1/2$, so $s^*$ lies off the
+critical line with essential gap
+\begin{equation}
+\label{eq:gap}
+\delta := \tfrac12 - \Re(s^*) \ge 0.0461038.
+\end{equation}
+Since $\Im(s^*) \approx 5.76 \neq 0$, $s^*$ is neither a
+small-eigenvalue parameter (those are real) nor a tempered-eigenvalue
+zero (those lie on $\Re(s) = 1/2$); by the standard spectral
+interpretation of finite-area Selberg zeros in the strip
+$0 < \Re(s) < 1/2$ (Hejhal \cite{HejhalLNM1001}, Iwaniec
+\cite{IwaniecGSM53}, Borthwick \cite{BorthwickBook}), $s^*$ is a
+scattering \emph{resonance} of $X_5$.
+\end{theorem}
+
+To our knowledge Theorem~\ref{thm:main} is the first rigorous
+localization of an off-line resonance of a non-arithmetic finite-area
+hyperbolic surface \cite{NoveltyRescout}. The proof is an eight-link
+chain (\S\ref{sec:chain}) mixing machine-certified interval receipts,
+Lean-proved joints, cited published theorems, and short self-contained
+arguments; the dependency classes are made explicit in
+\S\ref{sec:deps} and the certificates are tabulated in
+\S\ref{sec:certs}.
+
+\subsection*{Round-down discipline}
+All margins quoted in this paper are \emph{lower bounds rounded down}
+from the certified interval receipts (e.g.\ the minimum exclusion
+margin is quoted as $3.43786\times 10^{-8}$ from the receipt ball
+$3.4378649\ldots\times 10^{-8}$). No certified quantity is ever rounded
+in the direction that would strengthen a claim.
+
+\section{Preliminaries, conventions, and dependency classes}
+\label{sec:prelim}
+\label{sec:deps}
+
+\subsection{The Hecke orbifold and the transfer operator}
+
+Let $G_q = \langle S, T_q \rangle$, $S z = -1/z$,
+$T_q z = z + \lambda_q$, $\lambda_q = 2\cos(\pi/q)$. For $q = 5$,
+$\lambda_5 = (1+\sqrt5)/2$ and $G_5$ is non-arithmetic (Hecke triangle
+groups are arithmetic exactly for $q \in \{3,4,6\}$). The Mayer
+transfer operator, in the reduced three-component form used by
+Mayer--M\"uller--Seeger (MMS) \cite{MMS}, acts on vector-valued
+functions on three discs $D_j = D(c_j, a_j h_j)$; we work with the
+$P$-symmetric (continued-fraction reflection) sector $L_{s,+}$ of
+\cite[eq.~(34)]{MMS} at $q = 5$, sector sign $+1$, with radius factors
+exactly $3.14$, $2.27$, $1.70$ and head split $4$, as bound to the
+sha-pinned certifying wrapper \cite{R3bReceipt}.
+
+\begin{remark}[MMS source caveat]
+\label{rem:mmsq}
+The heading above \cite[eq.~(34)]{MMS} prints ``$q = 2h_q + 3 > 5$''
+while \cite[Lemma~4.2]{MMS} states $q \ge 5$; the $q = 5$
+identification rests on the general incidence formula, not on the
+displayed heading. This footnote is mandatory per the audit trail.
+\end{remark}
+
+\begin{remark}[Sector honesty]
+$L_{s,+}$ is the MMS $P$-symmetric sector, \emph{not} the geometric
+even/odd Maass sector. Theorem~\ref{thm:main} deliberately attaches no
+parity label to $s^*$ --- only existence and location are claimed.
+\end{remark}
+
+Two realizations of the same block system are used:
+$L_s^{H}$ on $H = \bigoplus_j H^2(D_j)$ (Hardy spaces, the certified
+realization) and $L_s^{B}$ on $B = \bigoplus_j B(D_j)$ (disc algebras,
+the MMS setting, nuclear of order zero \cite[Thm~4.10]{MMS}).
+
+\subsection{Dependency classes}
+
+Each link of the proof carries exactly one of four dependency classes:
+
+\begin{itemize}
+\item \textbf{Machine-certified}: python-flint Arb/Acb ball arithmetic
+at 384 bits, with sha-pinned code and replayable receipts. We rely on
+the documented Arb/Acb ball-enclosure semantics for interval matrices
+(containment of every matrix in the ball under all certified
+operations).
+\item \textbf{Lean-proved}: formal lemmas checked by Lean
+(Aristotle dispatches v17/v18/v19), sorry-free, with axiom footprint
+exactly \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound}; receipts in-repo \cite{LeanV17,LeanV18}.
+\item \textbf{Cited published theorems}: Simon \cite{Simon77} Thm~4.2
+(trace-class determinant product; Lidskii's trace identity is
+Cor.~4.3 and is not used), Thm~3.3 (analyticity); the
+Gohberg--Krein/Simon determinant perturbation bound in the form of
+\cite{SimonTraceIdeals}; Grothendieck \cite{Grothendieck52} Thm~8
+(canonical product for $2/3$-nuclear operators); MMS
+\cite[Thms~4.10, 6.4]{MMS}; standard Selberg/scattering theory
+\cite{HejhalLNM1001,IwaniecGSM53,BorthwickBook}.
+\item \textbf{Paper-proofs}: short self-contained arguments given in
+the technical reports \cite{R1Restatement,R3bReport,R5Report} and
+summarized in \S\ref{sec:chain}.
+\end{itemize}
+
+\section{The proof chain}
+\label{sec:chain}
+
+We state the eight links; each link names its dependency class and its
+in-repo receipt. The full technical content is in the cited reports;
+here we give the logical skeleton and the certified constants.
+
+\subsection*{Link 1: Finite winding and closed-contour exclusion
+\emph{[machine-certified]}}
+
+At truncation level $N = 160$ (per component; $\kappa = 3$), the finite
+determinant $\det(I - P_N L_{s,+} P_N)$ has certified argument winding
+$1$ around the boundary of the box
+\[
+\mathrm{Box} = \{ s : |\Re(s) - 0.4538951800749447| \le 10^{-6},\
+|\Im(s) - 5.7635372417301305| \le 10^{-6} \}.
+\]
+The boundary is covered by $284$ closed Acb subarcs ($71$ per edge;
+adaptive split budget depth $8$, achieved max depth $1$; census $100$
+depth-$0$ plus $184$ depth-$1$). On every subarc, the finite Taylor
+enclosure \emph{and} the $F_R$-inflated enclosure exclude $0$; the
+minimum certified margin (finite lower bound minus $F_R$) is
+\begin{equation}
+\label{eq:margin}
+\ge 3.43786\times 10^{-8}
+\quad\text{(lower bound, rounded down from the receipt ball
+$3.4378649\ldots\times 10^{-8}$),}
+\end{equation}
+and the per-subarc self-consistency factor satisfies
+$rH \le 0.359 < 1$. Receipt: \cite{R3bReceipt} (384-bit Arb/Acb;
+\texttt{all\_theorem\_gates\_pass = True}; immutable input shas
+verified). Independent re-checks confirmed all $284$ records' four
+gates, the $71\times 4$ census, and recomputed the minimum margin from
+raw fields.
+
+\begin{remark}[Serialization caveat]
+The printed per-arc argument increments reconstruct the winding $1$
+only to $\sim 10^{-99}$, not to the receipt ball's full width
+$7.81\times 10^{-114}$; reproducing the tighter ball requires re-running
+the sha-pinned code, not the serialized deltas alone.
+\end{remark}
+
+\subsection*{Link 2: Finite section equals $\det_H(I - L P_N)$
+\emph{[paper-proof + Lean]}}
+
+The computed matrix determinant equals the Hilbert-space determinant
+$\detH(I - L P_N)$ by the finite-rank restriction identity followed by
+Sylvester's determinant identity (Steps 1--2 of \cite{R1Restatement};
+Steps 3--4 of that report are superseded --- its step-3 $F_R$ used a
+voided envelope and its geometric-tail claim was disowned; the
+operative $F_R$ and endpoint bounds are those of \cite{R3bReport}).
+The restriction identity is machine-proved in Lean as
+\texttt{det\_one\_sub\_proj\_mul\_proj} \cite{LeanV18}, sorry-free and
+axiom-clean, with one documented statement adjustment (the Euclidean
+column written via \texttt{WithLp.toLp}, same $L^2$ norm).
+
+\subsection*{Link 3: Determinant comparison
+\emph{[paper-proof + machine constants + Lean joints]}}
+
+By the Gohberg--Krein/Simon trace-ideal perturbation bound (in the form
+of \cite{SimonTraceIdeals}),
+\[
+\bigl| \det(I - L) - \det(I - L P_N) \bigr|
+\;\le\;
+T_{\mathrm{tail}}(N)\cdot
+\exp\bigl(1 + \norm{L}_1 + \norm{L P_N}_1\bigr).
+\]
+The machine-certified constants \cite{R3bReceipt} are: both endpoint
+trace norms $\norm{L}_1, \norm{L P_N}_1 \le 17.2911968$ (computed-row
+column $2$-norms plus enlarged-disc output-tail corrections plus
+$T_{\mathrm{tail}}(160)$); $T_{\mathrm{tail}}(160) = 6.26786\times
+10^{-22}$ (immutable R2 receipt \cite{R2Receipt}, all $11$ block
+families, center offsets kept, Hurwitz-closed $m=0$ term); and the
+resulting inflation constant
+\[
+F_R(160) \;=\; T_{\mathrm{tail}}(160)\,
+e^{\,1 + 2\cdot 17.2911968\ldots} \;=\; 1.77974\times 10^{-6}.
+\]
+Supporting Lean joints \cite{LeanV18,LeanV19} (all axiom-clean):
+\texttt{trace\_unitary\_le\_sum\_column\_norms},
+\texttt{l2\_le\_card\_mul\_sup\_sq},
+\texttt{coeff\_bound\_of\_uniform}, \texttt{geom\_tail\_le}.
+
+\subsection*{Link 4: A zero of the true determinant in the box
+\emph{[argument principle]}}
+
+Since every $F_R$-inflated tube excludes $0$, the straight-line
+homotopy $\det(I - L P_N) \to \det(I - L)$ never vanishes on
+$\partial\mathrm{Box}$; hence the winding of $\det(I - L_{s,+})$ around
+$\partial\mathrm{Box}$ is $1$, and $\det(I - L_{s,+})$ has exactly one
+zero $s^*$ (counted with multiplicity) in $\mathrm{Box}$.
+
+\subsection*{Link 4b: Hilbert-to-Banach transport
+\emph{[paper-proof + machine + independently reviewed]}}
+
+On the open connected region
+$\Omega^* = \{\Re s > 1/2\} \cup \{\Re s > 0,\ \Im s > 1\}$, which
+contains $\mathrm{Box}$,
+\[
+\detH(1 - L_{s,+}) = \detB(1 - L_{s,+}^{\mathrm{MMS}}).
+\]
+The proof \cite{R5Report} proceeds by: (i) smoothing via the enlarged
+discs $D_i^{0.1} = D(c_i, R_i + 0.1)$, certified to contract with
+$\hat\rho \le 0.9484 < 1$ and minimum pole/cut clearance
+$\ge 1.0023$ on all eleven block families (receipt \cite{E1Receipt},
+independently reproduced by two adversarial reviews); (ii) Jordan-chain
+equality of the nonzero spectra with algebraic multiplicities;
+(iii) spectral canonical determinants on both sides (Simon
+\cite[Thm~4.2]{Simon77} on $H$; Grothendieck \cite[Thm~8]{Grothendieck52}
+on $B$, since $L_s^{B}$ is nuclear of order zero, hence $2/3$-nuclear,
+by \cite[Thm~4.10]{MMS}); and (iv) locally uniform trace-class
+holomorphy on $\Omega^*$ plus the identity theorem.
+(Bandtlow--Jenkinson \cite{BandtlowJenkinson08} prove
+space-independence of the dynamical determinant for single-domain
+systems including $B(D)$ and $H^2(D)$ and are cited as corroboration
+only, in the standard transfer-operator usage of Ruelle
+\cite{Ruelle76}; the proof above does not rely on extending their
+hypotheses to the graph-directed setting.)
+Hence the zero of
+Link~4 is a zero of the MMS Banach determinant consumed by MMS
+Theorem~6.4.
+
+\subsection*{Link 5: No divisor cancellation \emph{[machine-certified, closed]}}
+
+$\det(1 - K_s) \neq 0$ on $\mathrm{Box}$: the zero set of
+$\det(1 - K_s)$ is the exact lattice $s = -n + i\pi k / a_q$, all with
+$\Re(s) \le 0$ \cite{KSGate,KSCrosscheck,LeanV17}, while $\mathrm{Box}$
+sits at $\Re \approx 0.454 > 0$. (Precision note: the recorded $G_5$
+distance $0.4551002$ is center-to-lattice, not box-to-lattice; the box
+half-diagonal $\sqrt2\cdot 10^{-6}$ is five orders of magnitude below
+it, so nonvanishing on the closed box follows.)
+
+\subsection*{Link 6: Selberg zeta factorization \emph{[cited]}}
+
+MMS Theorem~6.4 \cite{MMS} gives
+\[
+Z_S(s) \;=\;
+\frac{\det(1 - L_{s,+})\,\det(1 - L_{s,-})}{\det(1 - K_s)}.
+\]
+The factor $\det(1 - L_{s,-})$ is analytic near $\mathrm{Box}$: the MMS
+determinants are meromorphic with poles only at real points
+$s = (1-k)/2$ \cite[Thm~4.10]{MMS}, and $\mathrm{Box}$ has
+$\Im \approx 5.76$. With Link~5, $Z_S(s^*) = 0$ with multiplicity at
+least that of the $+$ factor.
+
+\subsection*{Link 7: Resonance interpretation \emph{[cited, standard]}}
+
+For finite-area surfaces, zeros of $Z_S$ in $0 < \Re(s) < 1/2$ off the
+real axis are resonances (scattering poles of the meromorphically
+continued resolvent/scattering matrix); discrete-spectrum zeros lie on
+$\Re(s) = 1/2$ or on the real segment
+\cite{HejhalLNM1001,IwaniecGSM53,BorthwickBook}. Since
+$\Im(s^*) \approx 5.76 \neq 0$, the discrete alternatives are excluded.
+This completes the proof of Theorem~\ref{thm:main}. \qed
+
+\section{Computational certificates}
+\label{sec:certs}
+
+Table~\ref{tab:constants} collects every certified constant entering
+the proof, in paper-ready (rounded-down) form. All receipts are
+in-repo artifacts; see Appendix~\ref{app:repro}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\hline
+Quantity & Value (rounded down) & Source \\
+\hline
+$s_0$ (box center) & $0.4538951800749447 + 5.7635372417301305\,i$ & \cite{R3bReceipt} \\
+box half-width & $10^{-6}$ per coordinate & \cite{R3bReceipt} \\
+truncation $N$ & $160$ per component ($\kappa = 3$) & \cite{R3bReceipt} \\
+$\rho^*$ (branch contraction) & $0.697802$ & \cite{TBV2Receipt} \\
+$\hat\rho$ (enlarged-disc contraction, Link 4b only) & $0.948344$ & \cite{E1Receipt} \\
+$T_{\mathrm{tail}}(160)$ & $6.26786\times 10^{-22}$ & \cite{R2Receipt} \\
+$\norm{L}_1$ bound (both endpoints) & $17.2911968$ & \cite{R3bReceipt} \\
+$F_R(160)$ & $1.77974\times 10^{-6}$ & \cite{R3bReceipt} \\
+min exclusion margin & $3.43786\times 10^{-8}$ & \cite{R3bReceipt} \\
+winding & $1$ (ball width $7.81\times 10^{-114}$) & \cite{R3bReceipt} \\
+gap $\delta$ & $\ge 0.0461038$ & Theorem~\ref{thm:main} \\
+\hline
+\end{tabular}
+\caption{Certified constants. $\rho^*$ and $\hat\rho$ are distinct
+constants (different enlargements) and must not be conflated. Margins
+are lower bounds rounded down from the interval receipts.}
+\label{tab:constants}
+\end{table}
+
+Boundary-cover statistics at $N = 160$: $284$ accepted closed Acb
+subarcs ($71$ per edge; $100$ depth-$0$ and $184$ depth-$1$; adaptive
+split budget $8$, achieved maximum depth $1$); every finite Taylor
+enclosure and every $F_R$-inflated enclosure excludes $0$; maximum
+Taylor radius $rG \approx 2.31\times 10^{-6}$; maximum self-consistency
+factor $rH \le 0.359 < 1$; minimum finite Taylor $\lvert\det\rvert$
+lower bound $\approx 1.81\times 10^{-6}$. The comparison run at
+$N = 128$ fails the $F$-inflated exclusion (margin
+$-0.1497\ldots$), illustrating that the $N = 160$ truncation is load
+bearing, not decorative.
+
+Provenance hashes (sha256): R2 envelope receipt
+\texttt{7eed214ec19da696e9a7d1c81ce255f2775e5662ddb8a0de3864b75aa1464f19};
+TB~V2 block certificates
+\texttt{73b506f8ee26b1ba9e22eac2e5badc80395bafee15ec687e620201ec6156d63d};
+E1 enlarged-contraction receipt
+\texttt{cd1dc6f409ebca7852bc12a9607b4d2a2f6a10b10be3590055e50ee62ad37187}.
+The R3b receipt consumes the first two unchanged (verified in-receipt).
+
+\section{Corollary: the non-real strip zeros are not all on the
+critical line}
+\label{sec:cor}
+
+Write
+\[
+\Lambda := \{ s \in \CC : Z_S(s) = 0 \},\quad
+\Lambda^\circ := \Lambda \cap \{ 0 < \Re(s) < 1,\ \Im(s) \neq 0 \},\quad
+L := \{ \Re(s) = \tfrac12 \}.
+\]
+The restriction to $\Lambda^\circ$ is bookkeeping, not weakness:
+real-axis zeros (trivial zeros and small-eigenvalue parameters) lie off
+$L$ for \emph{every} finite-area surface and carry no information.
+
+\begin{corollary}[weak vertical-line form]
+\label{cor:line}
+There exists $s^* \in \Lambda^\circ$ satisfying \eqref{eq:box}, with
+$\Re(s^*) \le 0.4538962$ and gap $\delta \ge 0.0461038$. Hence
+$\Lambda^\circ \not\subset L$: the non-real strip zeros of $Z_{G_5}$
+are not all on the critical line, and the deviation is quantitative.
+Equivalently, no vertical line $V_c = \{\Re(s) = c\}$ with $c = 1/2$
+contains $\Lambda^\circ$.
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:main}:
+$\Re(s^*) \le 0.4538951800749447 + 10^{-6} = 0.4538962 < 1/2$.
+\end{proof}
+
+\begin{remark}[Scope limits --- what is \emph{not} claimed]
+\label{rem:scope}
+(i) Corollary~\ref{cor:line} refutes the single line $\Re(s) = 1/2$
+only; one certified pin cannot exclude $\Lambda^\circ \subset
+V_{0.45390}$ for some other line, nor ``finitely many vertical lines''
+(excluding one line in general needs two certified pins at distinct
+real parts; that remains open). (ii) No claim about all or most zeros,
+no density or counting statement, and no assertion that
+$\delta \ge 0.0461038$ is the maximal gap. (iii) Nothing is asserted
+for $G_q$, $q \neq 5$. (iv) No ``arithmetic $\Leftrightarrow$ critical
+line'' law: the contrast with the arithmetic members $q = 3, 4, 6$
+(whose strip zeros are pinned by the $\zeta(2s)$ factor) is descriptive
+of data, within a single commensurability class, and must not be read
+as a proved equivalence or a conjecture with evidential weight.
+\end{remark}
+
+\section{Machine-verified components}
+\label{sec:lean}
+
+A modest but load-bearing portion of the chain is formally verified in
+Lean (Aristotle dispatches v17/v18/v19; receipts in-repo
+\cite{LeanV17,LeanV18,LeanV19}):
+
+\begin{itemize}
+\item \texttt{det\_one\_sub\_proj\_mul\_proj} (v18): the finite-rank
+restriction identity of Link~2, $\det(1 - PMP) = \det$ of the
+compressed matrix. Stated with the Euclidean column written via
+\texttt{WithLp.toLp} (same $L^2$ norm); documented adjustment.
+\item Supporting joints (v18/v19):
+\texttt{trace\_unitary\_le\_sum\_column\_norms},
+\texttt{l2\_le\_card\_mul\_sup\_sq},
+\texttt{coeff\_bound\_of\_uniform}, \texttt{geom\_tail\_le}.
+\item \texttt{KsZeroLattice} (v17): the exact zero lattice of the
+$K_s$ divisor of Link~5.
+\end{itemize}
+
+All listed declarations compile with zero \texttt{sorry} placeholders
+and axiom footprint exactly \texttt{propext},
+\texttt{Classical.choice}, \texttt{Quot.sound}. We emphasize what this
+does and does not mean: the \emph{abstract functional-analytic joints}
+are machine-checked; the \emph{numerical certificates} (Links 1, 3
+constants, 4b's E1 receipt, 5's crosscheck) are interval receipts
+produced by sha-pinned Python code and are not themselves formalized in
+Lean; and the cited published theorems are used at citation level. The
+combination is a computer-assisted proof in the standard sense, with
+each dependency explicitly classified in \S\ref{sec:deps}.
+
+\appendix
+
+\section{Reproducibility}
+\label{app:repro}
+
+All computational receipts, certifying code (sha-pinned), Lean
+receipts, and technical reports referenced in this paper are contained
+in the authors' working repository; the in-repo artifact bibliography
+entries below give exact paths and hashes. We make \textbf{no claim of
+external availability} at this stage: public deposit of code and
+receipts is a dissemination decision gated separately from this draft.
+
+Reproduction path for the central certificate: with python-flint at
+384-bit precision, re-run the sha-pinned orchestrator
+\texttt{tc\_rerun/certify\_r3b\_flagship.py} against the immutable R2
+and TB~V2 receipts; the resulting receipt must reproduce
+\texttt{all\_theorem\_gates\_pass = True}, the $284$-subarc census, the
+winding ball, and the minimum margin quoted in \eqref{eq:margin}.
+Known latent code notes relevant to any re-run or parameter change
+(recorded in \cite{R3bReport}, documentation only; the pinned code is
+not edited post-hoc): (i) the endpoint script selects $\rho$ without an
+explicit center-ratio assertion --- valid for this run because the
+recorded $\rho \ge 0.6958$ exceeds the center ratio $0.5882$ in all six
+tail families; (ii) an unguarded direction-ball overlap selection that
+cannot trigger at 384-bit precision; (iii) two hard-coded gate literals
+whose values are instead re-derivable from the raw per-arc records (as
+the independent re-checks did).
+
+\section{Review and audit record}
+\label{app:review}
+
+The assembly survived five adversarial review rounds (V4--V8), closing
+with a final-compliance verdict of theorem-grade acceptance, including
+an independent reproduction of the E1 enlarged-contraction receipt
+(closed-form margins, 200{,}000-point boundary sweep) and item-by-item
+verification of the prescribed errata. A separate audit independently
+re-verified the margin arithmetic, contour closure, ball-arithmetic
+integrity, operator-vs-MMS match, and all nine provenance hashes. The
+review reports are in-repo artifacts \cite{ReviewChain,AuditK3}.
+
+\begin{thebibliography}{99}
+
+% ---- Published references (real; uncertain details marked TODO-VERIFY) ----
+
+\bibitem{PhillipsSarnak85}
+R.~S. Phillips and P.~Sarnak,
+\emph{On cusp forms for co-finite subgroups of $\mathrm{PSL}(2,\mathbb{R})$},
+Invent.\ Math.\ \textbf{80} (1985), 339--364. % TODO-VERIFY: page range
+
+\bibitem{PhillipsSarnak85b}
+R.~S. Phillips and P.~Sarnak,
+\emph{The Weyl theorem and the deformation of discrete groups},
+Comm.\ Pure Appl.\ Math.\ \textbf{38} (1985), 853--866. % TODO-VERIFY: page range
+
+\bibitem{HejhalLNM1001}
+D.~A. Hejhal,
+\emph{The Selberg Trace Formula for $\mathrm{PSL}(2,\mathbb{R})$, Vol.~2},
+Lecture Notes in Mathematics \textbf{1001}, Springer, 1983.
+
+\bibitem{IwaniecGSM53}
+H.~Iwaniec,
+\emph{Spectral Methods of Automorphic Forms},
+2nd ed., Graduate Studies in Mathematics \textbf{53}, AMS, 2002.
+
+\bibitem{BorthwickBook}
+D.~Borthwick,
+\emph{Spectral Theory of Infinite-Area Hyperbolic Surfaces},
+2nd ed., Progress in Mathematics \textbf{318}, Birkh\"auser, 2016. % TODO-VERIFY: edition/volume used for the resonance framing
+
+\bibitem{Simon77}
+B.~Simon,
+\emph{Notes on infinite determinants of Hilbert space operators},
+Adv.\ Math.\ \textbf{24} (1977), 244--273.
+(Thm~4.2 and eq.~(4.2) used for the determinant product; Lidskii's
+trace identity is Cor.~4.3 and is not used.) % TODO-VERIFY: page of Thm 4.2 (reported as p. 258 in the R5 report)
+
+\bibitem{SimonTraceIdeals}
+B.~Simon,
+\emph{Trace Ideals and Their Applications},
+2nd ed., Mathematical Surveys and Monographs \textbf{120}, AMS, 2005. % TODO-VERIFY: exact theorem number of the perturbation bound used (reported as Thm 3.4 form)
+
+\bibitem{Grothendieck52}
+A.~Grothendieck,
+\emph{R\'esum\'e des r\'esultats essentiels dans la th\'eorie des
+produits tensoriels topologiques et des espaces nucl\'eaires},
+Ann.\ Inst.\ Fourier \textbf{4} (1952), 73--112. % TODO-VERIFY: page range; Thm 8 reported at pp. 108--109
+
+\bibitem{Ruelle76}
+D.~Ruelle,
+\emph{Zeta-functions for expanding maps and Anosov flows},
+Invent.\ Math.\ \textbf{34} (1976), 231--242.
+
+\bibitem{MMS}
+D.~Mayer, T.~M\"uller, and A.~Seeger, % TODO-VERIFY: full author first names and exact bibliographic record
+\emph{Transfer operators, the Selberg zeta function and the
+Lewis--Zagier theory of period functions},
+in \emph{Hyperbolic Geometry and Applications in Quantum Chaos and
+Cosmology}, London Math.\ Soc.\ Lecture Note Ser.\ \textbf{397},
+Cambridge Univ.\ Press, 2012. % TODO-VERIFY: page range; Theorems 4.10, 6.4, eq. (34) cited from this source per the in-repo reports
+
+\bibitem{BandtlowJenkinson08}
+O.~F. Bandtlow and O.~Jenkinson,
+\emph{On the Ruelle eigenvalue sequence},
+Ergodic Theory Dynam.\ Systems \textbf{28} (2008), 1701--1711. % TODO-VERIFY: page range
+
+\bibitem{BruggemanPohl09}
+R.~Bruggeman and A.~Pohl,
+\emph{The transfer operator for the Hecke triangle groups},
+arXiv:0912.2236 (2009). % TODO-VERIFY: final published venue, if any
+
+\bibitem{BruggemanPohl23}
+R.~Bruggeman and A.~Pohl,
+\emph{Period functions for Hecke triangle groups, and the Selberg zeta
+function as a Fredholm determinant},
+Ergodic Theory Dynam.\ Systems (Cambridge), 2023. % TODO-VERIFY: volume/pages
+
+\bibitem{PohlWabnitz26}
+A.~Pohl and L.~Wabnitz, % TODO-VERIFY: author given name(s)
+\emph{Selberg Zeta Functions, Cuspidal Accelerations, and Existence of
+Strict Transfer Operator Approaches},
+Memoirs of the AMS \textbf{318}, no.~1616 (2026). % TODO-VERIFY: full-text not accessed; abstract/metadata only per the novelty re-scout
+
+\bibitem{BorthwickWeich21}
+D.~Borthwick and T.~Weich,
+\emph{Numerical resonances for Schottky surfaces via
+Lagrange--Chebyshev approximation},
+Stoch.\ Dyn.\ \textbf{21}(3) (2021). % TODO-VERIFY: article number/pages; exact title per novelty re-scout
+
+\bibitem{FraczekMayer}
+M.~Fr\k{a}czek and D.~Mayer,
+\emph{[Numerical resonances / Selberg zeta computations for Hecke
+triangle groups]}. % TODO-VERIFY: exact title, venue, year -- the draft needs this entry completed before any circulation
+
+\bibitem{HausdorffDim25}
+[Authors], % TODO-VERIFY: author list
+\emph{Spectral and dynamical invariants of Hecke triangle groups via
+transfer operators}, arXiv:2509.17936 (2025).
+
+\bibitem{Pseudospectral25}
+[Authors], % TODO-VERIFY: author list
+\emph{A pseudospectral approach to rigorous numerical estimation of
+resonances of transfer operators}, arXiv:2507.09021 (2025).
+
+% ---- In-repo artifacts (NOT externally distributed; receipts of record) ----
+
+\bibitem{R3bReceipt}
+In-repo artifact (not externally distributed):
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/R3B\_FLAGSHIP\_CERT\_RECEIPT.json}
+and report \texttt{R3B\_FLAGSHIP\_CERT.md}; sha-pinned orchestrator
+\texttt{.worktrees/aletheia-restore/code/tc\_rerun/certify\_r3b\_flagship.py}
+(sha256 \texttt{5b1bb0851fbb143651471fcf7737738a84a45e126b9971a94905c74357831945}).
+
+\bibitem{R2Receipt}
+In-repo artifact:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/R2\_FLAGSHIP\_ENVELOPE\_RECEIPT.json},
+sha256 \texttt{7eed214ec19da696e9a7d1c81ce255f2775e5662ddb8a0de3864b75aa1464f19}.
+
+\bibitem{TBV2Receipt}
+In-repo artifact:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/TB\_BLOCK\_CERTIFICATES\_V2\_RECEIPT.json},
+sha256 \texttt{73b506f8ee26b1ba9e22eac2e5badc80395bafee15ec687e620201ec6156d63d}.
+
+\bibitem{E1Receipt}
+In-repo artifact:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/E1\_ENLARGED\_CONTRACTION\_RECEIPT.json}
+and \texttt{E1\_ENLARGED\_CONTRACTION\_CERT.md},
+sha256 \texttt{cd1dc6f409ebca7852bc12a9607b4d2a2f6a10b10be3590055e50ee62ad37187}.
+
+\bibitem{R1Restatement}
+In-repo technical report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/TB\_R1\_HILBERT\_RESTATEMENT.md}
+(Steps 1--2 only; Steps 3--4 superseded).
+
+\bibitem{R3bReport}
+In-repo technical report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/R3B\_FLAGSHIP\_CERT.md}.
+
+\bibitem{R5Report}
+In-repo technical report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/TB\_R5\_DETERMINANT\_IDENTIFICATION.md}, v3.1.
+
+\bibitem{KSGate}
+In-repo artifact:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/KS\_GATE\_REPORT.md}.
+
+\bibitem{KSCrosscheck}
+In-repo artifact:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/KS\_CROSSCHECK.md}
+(90-digit crosscheck).
+
+\bibitem{LeanV17}
+In-repo artifact: Aristotle v17 Lean receipt (\texttt{KsZeroLattice}),
+\texttt{projects/aristotle\_dispatch\_v17/project\_aristotle/}.
+
+\bibitem{LeanV18}
+In-repo artifact: Aristotle v18 Lean receipt
+(\texttt{det\_one\_sub\_proj\_mul\_proj} and joints), sorry-free,
+axioms \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound};
+\texttt{projects/aristotle\_dispatch\_v18/project\_aristotle/}.
+
+\bibitem{LeanV19}
+In-repo artifact: Aristotle v19 Lean receipts (supporting joints),
+\texttt{projects/aristotle\_dispatch\_v19/project\_aristotle/}.
+
+\bibitem{NoveltyRescout}
+In-repo prior-art assessment:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_c/NOVELTY\_RESCOUT\_2026-08-15.md}
+(verdict: claim safe as of 2026-08-15; limitations noted therein).
+
+\bibitem{ReviewChain}
+In-repo artifacts: adversarial review reports
+\texttt{ADVERSARIAL\_REVIEW\_V\{4,5,6,7,8\}*},
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_b/}.
+
+\bibitem{AuditK3}
+In-repo artifact: \texttt{ADVERSARIAL\_AUDIT\_KIMI\_K3.md},
+\texttt{research\_notes/rh\_goals\_2026-08-14/}.
+
+\end{thebibliography}
+
+\end{document}

@@ -665,3 +665,5 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   the note. 7 Aristotle-able items extracted (A-1..A-7; highest-value is A-4,
   the Euler-product restriction lemma). No numerics were produced or relied on;
   this is a derivation note. Not committed.
+
+- 2026-08-15 — **M1G predicted-resonance winding attempt: 0/8 rigorously certified.** Wrote `lane_g/M1G_PREDICTION_WINDING_CERTS.md` and eight receipts under `lane_g/m1g_receipts/`. At `N=60`, 400-bit Arb, `K=24`/edge, and `1e-3` half-width, all four available trivial-sector runs numerically isolated sampled winding 1 with positive sampled contour lower bounds, but the q4/q6 routine's disclosed `4*max(center,corners)` dimension-tail inflation is heuristic rather than a proven uniform contour bound, so all four are `FAILED-TO-CERTIFY`. All four chi-sector `det(1+L_+)` points are `BLOCKED`: the existing winding entry point only evaluates `det(1-L_{s,sign})` (`TypeError: winding_box() got an unexpected keyword argument 'determinant_sector'`), and no evaluator was written or modified. Pure-imaginary evaluation itself succeeded; not committed.
