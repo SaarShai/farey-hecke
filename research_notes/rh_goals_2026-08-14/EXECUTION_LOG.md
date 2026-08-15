@@ -602,3 +602,66 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   (`projects/aristotle_dispatch_v22/PROJECT_ID.txt`). G5–G9 (FRONTIER:
   Eisenstein-derivation of `phi_4`, resonance/divisor transport) untouched,
   out of scope per the task's own 5-obligation list.
+
+- 2026-08-15 — **M1F: first-principles Eisenstein derivation of the Γ₀⁺(p)
+  scattering determinant; G5 CLOSED (modulo one cited textbook formula).**
+  lane_g/M1F_EISENSTEIN_DERIVATION.md. Verdict DERIVED-MODULO-GAPS — the M1D/M1E
+  closed forms are CONFIRMED, not refuted, and no discrepancy of any kind was
+  found. Chain: (1) W_p normalises Γ₀(p) for general p, [[a,b],[pc,d]] ↦
+  [[d,−c],[−pb,a]] (§1.1, generalises M1D's p=2 G2); W_p swaps the cusps ∞↔0
+  so Γ₀⁺(p) has ONE cusp (§1.2, PROVED — M1D asserted this); the cusp width is
+  unchanged so σ_∞=I for both (§1.3). (2) G_q ≅ Γ₀⁺(p) via the EXPLICIT
+  conjugator D=diag(p^{1/4},p^{−1/4}) which is simultaneously the G_q cusp
+  scaling matrix ⇒ φ transports with NO λ^{2s−1} scalar (§1.4, a real trap
+  closed); two independent volume checks agree ((2,q,∞) triangle area
+  π(1−2/q) vs (π/6)(p+1): π/2 and 2π/3 both MATCH, §1.5).
+  (3) **The key new result**: E^+ = E_∞ + E_0 proved by a pure coset bijection
+  with zero analytic input (§2.2), using the structural coincidence that the
+  scaling matrix of Γ₀(p)'s second cusp IS the Fricke involution (§2.1);
+  χ-twist gives E^χ = E_∞ − E_0 (§2.3). So M1D §5.1's "symmetrisation" is now a
+  THEOREM, not an ansatz, and it is exactly the eigen-decomposition of the 2×2
+  Φ(s)=[[A,B],[B,A]] on the W_p-symmetric/antisymmetric vectors in the SAME
+  character basis V M1D used on the operator side (§3.1). (4) Both Γ₀(p)
+  entries DERIVED from the allowed-moduli constant-term formula + an
+  Euler-product restriction lemma: moduli pm with count φ_E(pm) giving
+  φ_∞∞ = g(s)(p−1)/(p^{2s}−1) (§3.3), and moduli n√p (p∤n) with count φ_E(n)
+  giving φ_∞0 = g(s)(p^s−p^{1−s})/(p^{2s}−1) (§3.4) — both exactly the entries
+  M1D had only CITED. φ_00=φ_∞∞ and φ_0∞=φ_∞0 computed, not assumed.
+  (5) SECOND independent route: apply the same formula DIRECTLY to Γ₀⁺(p),
+  whose modulus set is the disjoint union (rational vs irrational multiples of
+  √p — no interference, no recount), never mentioning the Γ₀(p) scattering
+  matrix at all (§3.5). Both routes agree. (6) Algebra verified symbolically in
+  sympy (exact 0, no floats): A±B → (1+p^{1−s})/(1+p^s), (p^{1−s}−1)/(p^s−1);
+  matches M1D §5.1 (p=2) and M1E §1 (p=3) character-for-character (§4).
+  (7) g(s) = Λ(2s−1)/Λ(2s) with Λ(w)=π^{−w/2}Γ(w/2)ζ(w) ⇒ g(s)g(1−s)=1 is now
+  a ONE-LINE proof from Λ(w)=Λ(1−w), replacing M1D/M1E's ~1e−31 numeric check;
+  same for Res_{s=1}φ⁺ = 6/(π(p+1)) = 1/vol (§4.3–4.4). The full divisor of g
+  falls out (poles s=ρ/2 at Re=1/4, zeros s=(1+ρ)/2 at Re=3/4, simple zero at
+  s=0, simple pole at s=1). (8) Extra resonances re-derived: poles genuine and
+  non-removable because g is finite+nonzero on Re s=0∖{0} (Re(2s)=0 and
+  Re(2s−1)=−1 both lie OUTSIDE the critical strip where Λ has no zeros) and
+  the numerators are 1−p and p−1 ≠ 0; and the χ-sector k≠0 exclusion that M1D
+  and M1E both stipulated without reason is FORCED — g has a simple zero at
+  s=0 that exactly cancels the elementary factor's simple pole (§5.3b).
+  Obligations delta: **G5 CLOSED** modulo the single CITED allowed-moduli
+  formula (Iwaniec ch. 3 / Hejhal LNM 1001 ch. 11), whose content is stated
+  explicitly but whose NUMBER is unpinned. **G6 REDUCED, still open** — §5.2
+  derives "pole of φ at non-real s₀, Re s₀<1/2 ⇒ zero of Z of the same order"
+  using only the SHAPE of the elementary factor Ψ in Z(1−s)=Z(s)φ(s)Ψ(s)
+  (Γ-ratios × exp(entire) ⇒ zero-free and pole-free off the real axis, and
+  every point of interest is non-real); multiplicity now comes for free; the
+  residue is a pinned citation for the functional equation. Notably this needs
+  NO Selberg-1/4 / spectral-gap input. **G7, G8, G9 UNCHANGED** — §3.1's
+  matching Z/2 bases explicitly flagged suggestive-only, no intertwiner
+  claimed. New obligations N1 (pin the constant-term formula), N2 (pin the
+  Selberg functional equation = G6's residue), **N3 (prior-art: is the Γ₀⁺(N)
+  scattering determinant already published? correctness does not depend on it,
+  NOVELTY does — standing instruction in §6.1 forbids any novelty claim on
+  (PHI) or the extra resonances until Huxley 1984 and arXiv:math/0702030 are
+  actually read)**, N4 (Γ₀(p) generators, trivial). A citation-pinning web
+  scout was run and **resolved nothing** — GSM 53 / LNM 1001 / Takeuchi PDFs
+  all unreadable (binary or image-scanned); outcome recorded in §6.1 so the
+  next pass does not repeat it, and NO theorem number is asserted anywhere in
+  the note. 7 Aristotle-able items extracted (A-1..A-7; highest-value is A-4,
+  the Euler-product restriction lemma). No numerics were produced or relied on;
+  this is a derivation note. Not committed.
