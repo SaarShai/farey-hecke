@@ -1,0 +1,37 @@
+{
+ "description": "P_repo / P_Mayer at large sigma -- is Sec 7.2's Euler-product check discriminating?",
+ "params": {
+  "q": 3,
+  "N_repo": 32,
+  "N_mayer": 24,
+  "t": 7.067362570867346
+ },
+ "rows": [
+  {
+   "sigma": 2.0,
+   "P_repo": 0.9665909928385937,
+   "P_mayer": 0.9788087894424617,
+   "ratio": 0.9875176880963366,
+   "abs_ratio_minus_1": 0.012482311903663446
+  },
+  {
+   "sigma": 3.0,
+   "P_repo": 0.9956484096045273,
+   "P_mayer": 0.9974890631853683,
+   "ratio": 0.9981547130201477,
+   "abs_ratio_minus_1": 0.001845286979852312
+  },
+  {
+   "sigma": 4.0,
+   "P_repo": 0.9994104301757788,
+   "P_mayer": 0.9996800777300096,
+   "ratio": 0.9997302661519043,
+   "abs_ratio_minus_1": 0.000269733848095699
+  }
+ ],
+ "verdict": {
+  "monotone_to_1": true,
+  "dev_at_sigma_3": 0.001845286979852312,
+  "sec_7_2_discriminating": false
+ }
+}

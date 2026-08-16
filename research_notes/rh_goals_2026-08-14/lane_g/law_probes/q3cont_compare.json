@@ -1,0 +1,64 @@
+{
+ "description": "verdict: is the O(1) mirror residual the repo determinant builder?",
+ "kernel": "mirror_u4_corrected.K_q_corrected (Gamma_2 = 1/G), unmodified",
+ "inputs": [
+  "q3cont_repo_builder.json",
+  "q3cont_mayer_indep.json"
+ ],
+ "rows": [
+  {
+   "sigma": 1.25,
+   "RHS_kernel": 2.213409402541707,
+   "P_repo_at_s": 0.8456371451975448,
+   "P_repo_at_1ms": 2.449147973853498,
+   "P_mayer_at_s": 0.8902729951720313,
+   "P_mayer_at_1ms": 1.970538627268415,
+   "LHS_repo": 2.8962161699760305,
+   "LHS_mayer": 2.2134094125674784,
+   "ratio_repo": 1.3084864312269755,
+   "ratio_mayer": 1.0000000045295603,
+   "P_repo_over_P_mayer_at_s": 0.9498627384897131,
+   "P_repo_over_P_mayer_at_1ms": 1.2428824992121756,
+   "residual_reconstructed_as_quotient": 1.3084864253001076
+  },
+  {
+   "sigma": 1.4,
+   "RHS_kernel": 3.3669560643668355,
+   "P_repo_at_s": 0.885966163497939,
+   "P_repo_at_1ms": 4.961751673860739,
+   "P_mayer_at_s": 0.9212003119175511,
+   "P_mayer_at_1ms": 3.1016409895152366,
+   "LHS_repo": 5.60038506918925,
+   "LHS_mayer": 3.3669560782702366,
+   "ratio_repo": 1.663337733586499,
+   "ratio_mayer": 1.0000000041293682,
+   "P_repo_over_P_mayer_at_s": 0.9617519143623937,
+   "P_repo_over_P_mayer_at_1ms": 1.5997182429021948,
+   "residual_reconstructed_as_quotient": 1.6633377267179648
+  },
+  {
+   "sigma": 1.5,
+   "RHS_kernel": 4.355451672704717,
+   "P_repo_at_s": 0.9069470136688844,
+   "P_repo_at_1ms": 7.832281702125336,
+   "P_mayer_at_s": 0.9367767559355642,
+   "P_mayer_at_1ms": 4.080085902717436,
+   "LHS_repo": 8.635875728220666,
+   "LHS_mayer": 4.355451687785135,
+   "ratio_repo": 1.982773860709106,
+   "ratio_mayer": 1.0000000034624235,
+   "P_repo_over_P_mayer_at_s": 0.9681570426703333,
+   "P_repo_over_P_mayer_at_1ms": 1.9196364706215734,
+   "residual_reconstructed_as_quotient": 1.9827738538439035
+  }
+ ],
+ "verdict": {
+  "mayer_ratio_max_abs_dev_from_1": 4.529560282406919e-09,
+  "repo_ratio_range": [
+   1.3084864312269755,
+   1.982773860709106
+  ],
+  "mayer_max_abs_log10": 1.9671630316422684e-09,
+  "call": "residual IS the repo determinant builder"
+ }
+}

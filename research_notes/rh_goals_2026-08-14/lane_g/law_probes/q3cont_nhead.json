@@ -1,0 +1,43 @@
+{
+ "description": "repo builder P_3 vs n_head at a Re s>1 point and its Re s<0 mirror",
+ "params": {
+  "q": 3,
+  "N": 32,
+  "prec": 400,
+  "t": 7.067362570867346,
+  "n_head_sweep": [
+   2,
+   4,
+   6,
+   8
+  ]
+ },
+ "pre_registered": {
+  "flat_at_both": "n_head is not the defect; discrepancy is structural",
+  "flat_right_moving_left": "head/tail split is the continuation defect"
+ },
+ "points": [
+  {
+   "label": "s sigma=1.25",
+   "Re_s": 1.25,
+   "by_n_head": {
+    "2": 0.8456371451975448,
+    "4": 0.8456371451975448,
+    "6": 0.8456371451975448,
+    "8": 0.8456371451975448
+   },
+   "rel_drift_first_to_last": 0.0
+  },
+  {
+   "label": "mirror Re=-0.25",
+   "Re_s": -0.25,
+   "by_n_head": {
+    "2": 2.4491479738534974,
+    "4": 2.4491479738534974,
+    "6": 2.4491479738534974,
+    "8": 2.4491479738534974
+   },
+   "rel_drift_first_to_last": 0.0
+  }
+ ]
+}
