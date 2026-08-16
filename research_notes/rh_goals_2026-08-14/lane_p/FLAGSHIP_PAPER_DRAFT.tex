@@ -7,6 +7,7 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
 \usepackage{hyperref}
 
 \newtheorem{theorem}{Theorem}
@@ -83,13 +84,16 @@ generically dissolve into resonances, placing zeros of $Z_S$ off the
 critical line $\Re(s) = 1/2$.
 
 For the Hecke triangle groups $G_q$, the transfer-operator approach of
-Mayer and its development by Bruggeman--Pohl, M\"uhlenbruch, Str\"omberg
+Mayer and its development by M\"uhlenbruch, Str\"omberg, M\"oller--Pohl
 and others (see \S\ref{sec:prelim}) provides a Fredholm-determinant
-realization of $Z_S$ amenable to computation. High-precision
-\emph{numerical} studies of resonances in this and related settings
-exist --- notably Fr\k{a}czek--Mayer for Hecke triangle groups
-\cite{FraczekMayer} and the Borthwick--Weich Lagrange--Chebyshev
-computations for infinite-area Schottky surfaces \cite{BorthwickWeich21}
+realization of $Z_S$ amenable to computation \cite{MMS,MoellerPohl13}.
+High-precision \emph{numerical} studies of Selberg zeta zeros and
+resonances in this and related settings exist --- notably Fr\k{a}czek's
+transfer-operator computations \cite{FraczekBook17}, the
+Bruggeman--Fr\k{a}czek--Mayer study of the zeros of $Z_S$ for
+$\Gamma_0(4)$ \cite{BFM13}, and the Lagrange--Chebyshev computations of
+Bandtlow--Pohl--Schick--Wei{\ss}e for infinite-area Schottky surfaces
+\cite{BandtlowPohlSchickWeisse21}
 --- but these computations, however accurate, do not carry rigorous
 error enclosures: they are validated numerics, not certificates. On the
 rigorous side, validated (interval/pseudospectral) enclosure methods
@@ -98,9 +102,10 @@ expanding circle maps \cite{Pseudospectral25}, a different system class
 that does not include hyperbolic surfaces; and high-precision
 computations of Hausdorff dimensions for Hecke triangle groups
 \cite{HausdorffDim25} explicitly use asymptotic error bounds rather than
-interval certification. Bruggeman--Pohl leave the location of the
-non-arithmetic Hecke resonances conjectural
-\cite{BruggemanPohl09,BruggemanPohl23}; the contemporary strict
+interval certification. The Fredholm-determinant framework of
+M\"oller--Pohl \cite{MoellerPohl13} supplies the analytic setting but
+makes no claim of localizing individual non-arithmetic Hecke
+resonances; the contemporary strict
 transfer-operator framework of Pohl--Wabnitz \cite{PohlWabnitz26} is
 theoretical and does not claim computational zero localization.
 
@@ -161,6 +166,22 @@ Lean-proved joints, cited published theorems, and short self-contained
 arguments; the dependency classes are made explicit in
 \S\ref{sec:deps} and the certificates are tabulated in
 \S\ref{sec:certs}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\textwidth]{figures/fig1_offline_zero.png}
+\caption{The certified zero $s^*$ of Theorem~\ref{thm:main} in the strip
+$0 < \Re(s) < 1$. The marked point is the box centre
+$0.4538951800749447 + 5.7635372417301305\,i$; the surrounding square is
+the certified box, whose true half-width is $10^{-6}$ per coordinate and
+which is therefore drawn greatly enlarged for visibility. The vertical
+line is the critical line $\Re(s) = 1/2$, and the double arrow is the
+proven gap $\delta \ge 0.0461038$ of \eqref{eq:gap}. Every quoted digit
+is a certified receipt value (\cite{R3bReceipt}, with margins rounded
+down); the drawing is an illustration, not a computation. Provenance of
+every plotted constant: \cite{Figures}.}
+\label{fig:offline}
+\end{figure}
 
 \subsection*{Round-down discipline}
 All margins quoted in this paper are \emph{lower bounds rounded down}
@@ -431,6 +452,23 @@ $N = 128$ fails the $F$-inflated exclusion (margin
 $-0.1497\ldots$), illustrating that the $N = 160$ truncation is load
 bearing, not decorative.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.72\textwidth]{figures/fig3_winding_cert.png}
+\caption{Schematic of the winding certificate of Link~1. The closed
+contour $\partial\mathrm{Box}$ is covered by $284$ certified closed Acb
+subarcs (shown here as equal arcs of a circle; the true contour is the
+boundary of the $10^{-6}$ box). On each subarc both the finite Taylor
+enclosure and the $F_R$-inflated enclosure exclude $0$, with minimum
+certified margin $\ge 3.43786\times 10^{-8}$ (rounded down), and the
+truncation tail satisfies $T_{\mathrm{tail}}(160) = 6.26786\times
+10^{-22}$. The certified argument winding is $1$, so by the argument
+principle exactly one zero lies inside. The figure is a schematic of the
+logical structure; the constants on it are the receipt values of
+Table~\ref{tab:constants}.}
+\label{fig:winding}
+\end{figure}
+
 Provenance hashes (sha256): R2 envelope receipt
 \texttt{7eed214ec19da696e9a7d1c81ce255f2775e5662ddb8a0de3864b75aa1464f19};
 TB~V2 block certificates
@@ -482,6 +520,226 @@ line'' law: the contrast with the arithmetic members $q = 3, 4, 6$
 (whose strip zeros are pinned by the $\zeta(2s)$ factor) is descriptive
 of data, within a single commensurability class, and must not be read
 as a proved equivalence or a conjecture with evidential weight.
+Section~\ref{sec:mechanism} derives \emph{why} the $\zeta(2s)$ factor is
+present for $q = 4, 6$ --- it is the scattering determinant of the
+corresponding Fricke group --- but a mechanism on one side of a contrast
+is not an equivalence, and \S\ref{sec:mechanism} adds no claim to
+this list.
+\end{remark}
+
+\section{The arithmetic mechanism: $\zeta(2s)$ as an Eisenstein
+scattering determinant}
+\label{sec:mechanism}
+
+Theorem~\ref{thm:main} and Corollary~\ref{cor:line} are statements about
+$G_5$ alone. This section explains, for the \emph{arithmetic} members
+$q = 4$ and $q = 6$, \emph{why} their strip zeros are pinned by
+$\zeta(2s)$: the factor is the scattering determinant of the associated
+Fricke group, obtained from the constant term of its Eisenstein series.
+The material of this section is a derivation with two cited inputs and
+some non-rigorous numerical confirmations; its dependency status is
+stated explicitly throughout, and none of it is used in the proof of
+Theorem~\ref{thm:main}. Receipt: \cite{M1F,M1D,M1E}.
+
+\subsection{The Fricke identification and the single cusp}
+
+Let $p$ be prime, $W_p z = -1/(pz)$ the normalized Fricke involution,
+and $\Gamma_0^+(p) = \Gamma_0(p) \cup \Gamma_0(p)W_p$. For
+$(q,p) = (4,2)$ and $(6,3)$ one has $\lambda_q = \sqrt{p}$, and the
+explicit conjugator $D = \operatorname{diag}(p^{1/4}, p^{-1/4})$
+satisfies $D^{-1}T_{\lambda_q}D = T$ and $D^{-1}SD = W_p$, whence
+$D^{-1}G_qD = \langle W_p, T\rangle = \Gamma_0^+(p)$
+\cite[\S1.4]{M1F} (the identification itself is classical
+\cite{Takeuchi77}). Two features of this conjugator are load bearing.
+First, $W_p$ interchanges the two cusps $\infty$ and $0$ of
+$\Gamma_0(p)$, so $\Gamma_0^+(p)$ has exactly \emph{one} cusp, of
+unchanged width \cite[\S1.2--1.3]{M1F}. Second, $D$ \emph{is} the cusp
+scaling matrix of $G_q$ at $\infty$, so the scattering function
+transports with no factor $\lambda^{2s-1}$:
+$\varphi_{G_q} = \varphi_{\Gamma_0^+(p)}$ exactly
+\cite[eq.~(1.4)]{M1F}. Two independent volume computations
+($\operatorname{vol} = \pi(1-2/q)$ from the $(2,q,\infty)$ triangle,
+and $(\pi/6)(p+1)$ from the index) agree for both $q$
+\cite[\S1.5]{M1F}.
+
+\subsection{The scattering determinant in closed form}
+
+Writing $\Gamma' = \Gamma_0(p)$, a coset decomposition
+$\Gamma'_\infty\backslash\Gamma_0^+(p) =
+(\Gamma'_\infty\backslash\Gamma') \sqcup
+(\Gamma'_\infty\backslash\Gamma'W_p)$ --- an argument with no analytic
+input --- gives the Eisenstein identities
+$E^+ = E_\infty + E_0$ and $E^\chi = E_\infty - E_0$, where $\chi$ is
+the nontrivial character of $\Gamma_0^+(p)/\Gamma_0(p)$
+\cite[\S2.2--2.3]{M1F}. Taking constant terms, the (one-cusp)
+scattering functions are $\varphi^{\pm} = \varphi_{\infty\infty} \pm
+\varphi_{\infty 0}$, i.e.\ exactly the eigenvalue decomposition of the
+$2\times 2$ matrix $\Phi(s)$ of $\Gamma_0(p)$ on the $W_p$-symmetric and
+antisymmetric vectors. Evaluating the allowed-moduli constant-term
+formula for the Fourier expansion of Eisenstein series (the single
+analytic import, taken at content level from Iwaniec
+\cite{IwaniecGSM53} and Hejhal \cite{HejhalLNM1001}; the equation
+numbering is deliberately not asserted here, see
+Remark~\ref{rem:mechscope}) against the Euler product of
+$\zeta(2s-1)/\zeta(2s)$, and doing the resulting rational algebra in
+$X = p^s$, yields \cite[\S3--4]{M1F}
+\begin{equation}
+\label{eq:phipm}
+\varphi^+_p(s) = g(s)\,\frac{1 + p^{1-s}}{1+p^s},
+\qquad
+\varphi^-_p(s) = g(s)\,\frac{p^{1-s}-1}{p^s-1},
+\qquad
+g(s) := \frac{\Lambda(2s-1)}{\Lambda(2s)},
+\end{equation}
+with $\Lambda(w) = \pi^{-w/2}\Gamma(w/2)\zeta(w)$, so that
+$g(s) = \sqrt{\pi}\,\Gamma(s-\tfrac12)\zeta(2s-1)/
+(\Gamma(s)\zeta(2s))$. A second derivation, applying the same
+constant-term formula directly to $\Gamma_0^+(p)$ and counting its own
+allowed moduli, reproduces \eqref{eq:phipm} term by term without ever
+mentioning the $\Gamma_0(p)$ scattering matrix
+\cite[\S3.5]{M1F}. Three self-checks pass exactly: the functional
+equation $\varphi^{\pm}(s)\varphi^{\pm}(1-s) = 1$, which is now a
+one-line consequence of $\Lambda(w) = \Lambda(1-w)$ rather than a
+numerical observation; the residue
+$\operatorname{Res}_{s=1}\varphi^+_p = 6/(\pi(p+1)) =
+1/\operatorname{vol}(\Gamma_0^+(p)\backslash\HH)$, the Selberg
+normalization for a one-cusp group; and the specialization to $p=2,3$
+\cite[\S4.1--4.4]{M1F}.
+
+\subsection{Consequence: the $\zeta(2s)$ pin, and a second divisor}
+
+Equation~\eqref{eq:phipm} exhibits the whole divisor of $g$. Its poles
+include $s = \rho/2$ for every nontrivial zero $\rho$ of $\zeta$, all on
+$\Re(s) = 1/4$; the elementary factors are finite and nonzero there, so
+these poles survive in both sectors. Under the classical transport of
+scattering poles into the divisor of $Z_S$ --- ``$Z$ has a zero at
+$\beta$ of the same order as the zero of $\det\Phi$ at $1-\bar\beta$''
+for $\Re\beta < 1/2$, quoted from Bruggeman--Fr\k{a}czek--Mayer
+\cite{BFM13} and independently reachable from the closed-form Selberg
+functional equation of Teo \cite{Teo20} --- this says: \emph{for the
+arithmetic Hecke triangle groups $G_4$ and $G_6$, the nontrivial zeros
+of $\zeta$ enter the Selberg divisor along the vertical line
+$\Re(s) = 1/4$, and they do so because the surface has one cusp whose
+Eisenstein constant term is \eqref{eq:phipm}} \cite[\S5]{M1F},
+\cite{LawU3}.
+
+The same closed form predicts a \emph{second}, non-Riemann divisor. The
+elementary factors have poles exactly at
+\begin{equation}
+\label{eq:elemdiv}
+\text{trivial sector: } 1 + p^s = 0
+\iff s = \frac{i(2k+1)\pi}{\log p};
+\qquad
+\text{$\chi$ sector: } p^s = 1
+\iff s = \frac{2ik\pi}{\log p},\ k \ne 0,
+\end{equation}
+all on $\Re(s) = 0$; the exclusion $k \ne 0$ in the $\chi$ sector is
+forced by an exact zero/pole cancellation between $g$ and the elementary
+factor at $s = 0$, not stipulated \cite[\S5.3]{M1F}. These points are
+neither Riemann zeros nor Maass parameters, so they are a falsifiable
+signature of the derivation.
+
+\subsection{Numerical confirmation, and its exact status}
+
+The eight points of \eqref{eq:elemdiv} with $|k| \le 2$ --- four at
+$p=2$ ($\pi/\log 2 = 4.532360\ldots$) and four at $p=3$
+($\pi/\log 3 = 2.859600\ldots$) --- were evaluated against the existing
+unmodified even-$q$ transfer-operator builder at $N = 60$. All eight
+vanish, in \emph{exactly} the sector \eqref{eq:elemdiv} assigns and not
+the other, with the off-sector determinant of order $10^0$--$10^1$ at
+the same point, against nine nearby controls of order $10^{-1}$--$10^1$
+on both determinants, and stably under $N = 40 \to 60$: at $q=4$ the
+four magnitudes are $5.67\times 10^{-30}$, $7.68\times 10^{-27}$
+(trivial sector) and $4.62\times 10^{-30}$, $7.12\times 10^{-21}$
+($\chi$ sector) \cite[\S6.2]{M1D}; at $q=6$ they are
+$1.01\times 10^{-15}$, $4.27\times 10^{-14}$ and
+$5.37\times 10^{-15}$, $1.09\times 10^{-13}$ \cite[\S4.2]{M1E}. In the
+same runs the Riemann pins $s = \rho_j/2$ on $\Re(s) = 1/4$ vanish in
+both Fricke sectors, as \eqref{eq:phipm} requires of a common factor
+$g$, while the opposite MMS sector stays of order one
+\cite[\S6.1]{M1D}, \cite[\S4.1]{M1E}.
+
+\begin{remark}[Status of these numerics --- \textbf{non-rigorous}]
+\label{rem:mechnum}
+Every number in this subsection is a floating \emph{midpoint} of an Arb
+ball at finite truncation. \textbf{No} ball enclosure, \textbf{no}
+argument-principle isolation and \textbf{no} dimension-tail certificate
+is claimed for any of them; they are validated numerics of the same
+kind this paper distinguishes from certificates in
+\S\ref{sec:prelim}. A separate attempt to promote the eight points to
+interval-certified winding certificates returned
+\textbf{$0/8$ rigorously certified} \cite{M1G}: four trivial-sector
+runs produced sampled windings equal to $1$, but through a routine that
+uses a heuristic dimension-tail inflation rather than the theorem-grade
+uniform bound of Link~3, and the four $\chi$-sector determinants have no
+existing winding entry point at all. \emph{No resonance of $G_4$ or
+$G_6$ is certified in this paper.} The only certified zero here is the
+$G_5$ zero of Theorem~\ref{thm:main}.
+\end{remark}
+
+\subsection{What the mechanism does and does not add to the
+arithmetic/non-arithmetic contrast}
+
+Alongside the derivation, nine interval evaluations record the
+\emph{absence} of the $\zeta(2s)$ pin on non-arithmetic members: at
+$s = \rho_j/2$ for $j = 1,2,3$ the relevant transfer-operator
+determinant is bounded away from zero for $q = 5, 8, 10$, with
+certified lower bounds between $4.91\times 10^{-1}$ and
+$1.28\times 10^{1}$, while the arithmetic control $q = 4$ at
+$s = \rho_1/2$ is consistent with zero (lower bound $0$, midpoint
+$4.58\times 10^{-16}$) \cite{M2}. These witnesses carry the label
+\emph{certified-modulo-tail-heuristic}: the finite-truncation and
+rounding enclosures are Arb ball arithmetic, but the dimension-tail
+component of the radius is the existing heuristic extrapolation, and
+three tested points are pointwise evidence, not a no-factor theorem.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\textwidth]{figures/fig2_dichotomy.png}
+\caption{The contrast, as data. Open squares: the arithmetic members
+$G_4, G_6$, whose determinants are numerically consistent with zero at
+$s = \rho/2$ on $\Re(s) = 1/4$ (magnitudes $\approx 10^{-10}$ at
+$0.25 + 7.0674\,i$ and $0.25 + 10.5110\,i$; non-rigorous midpoints,
+Remark~\ref{rem:mechnum}). Filled star: the certified off-line zero of
+$G_5$ from Theorem~\ref{thm:main}. Open star: a $G_7$ point at
+$0.4751647621098225 + 4.668743786424289\,i$, which is a
+\textbf{candidate} located by a floating-point scan and is
+\textbf{not certified}; its certification was in progress when this
+draft was written and nothing in this paper depends on it. The
+$\Re(s) = 1/4$ line is the arithmetic prediction of
+\eqref{eq:phipm}; the dashed line is $\Re(s) = 1/2$. The figure
+displays data and one theorem, not an equivalence.}
+\label{fig:dichotomy}
+\end{figure}
+
+\begin{remark}[Scope of \S\ref{sec:mechanism}]
+\label{rem:mechscope}
+The V1 ruling of Remark~\ref{rem:scope} continues to bind, and this
+section does not weaken it. In particular: (i) \S\ref{sec:mechanism}
+concerns $q = 4, 6$ only, which lie in a single commensurability class,
+so it supplies a \emph{mechanism} for the arithmetic side, not a second
+data point and not a law; there is still \textbf{no} claim that
+arithmeticity is equivalent to critical-line confinement, and
+\textbf{no} family claim for $G_q$, $q \ne 5$. The honest statement of
+the contrast is: on the arithmetic side the pinning is explained by a
+derived closed form together with non-rigorous numerics; on the
+non-arithmetic side one point is a theorem
+(Theorem~\ref{thm:main}). (ii) The derivation of \eqref{eq:phipm}
+imports one constant-term formula whose \emph{content} is textbook but
+whose theorem number we do not assert, and the transport statement is
+cited to \cite{BFM13,Teo20}, which in turn attribute it to Hejhal
+\cite{HejhalLNM1001}; the primary page check is an open obligation
+\cite{LawU3}. (iii) On novelty: an in-repo prior-art scout
+\cite{FrickePriorArt} did not locate \eqref{eq:phipm}, nor the divisor
+\eqref{eq:elemdiv}, in any accessible source (Friedman
+\texttt{math/0702030}, the Jorgenson--Smajlovi\'c--Then moonshine-group
+literature). We therefore say only that \emph{we are not aware of} a
+published closed form for the Fricke scattering determinant or of these
+resonances; two canonical sources --- Hejhal \cite{HejhalLNM1001} and
+Huxley's \emph{Scattering matrices for congruence subgroups} (1984) ---
+were \textbf{not} accessible to that scout and remain unresolved, and
+the prior base rate for such a formula already existing is high. No
+priority claim is made for \eqref{eq:phipm} or \eqref{eq:elemdiv}.
 \end{remark}
 
 \section{Machine-verified components}
@@ -562,12 +820,14 @@ review reports are in-repo artifacts \cite{ReviewChain,AuditK3}.
 \bibitem{PhillipsSarnak85}
 R.~S. Phillips and P.~Sarnak,
 \emph{On cusp forms for co-finite subgroups of $\mathrm{PSL}(2,\mathbb{R})$},
-Invent.\ Math.\ \textbf{80} (1985), 339--364. % TODO-VERIFY: page range
+Invent.\ Math.\ \textbf{80} (1985), no.~2, 339--364.
+DOI \texttt{10.1007/BF01388610}. % RESOLVED 2026-08-16 (publisher record)
 
 \bibitem{PhillipsSarnak85b}
-R.~S. Phillips and P.~Sarnak,
+R.~Phillips and P.~Sarnak,
 \emph{The Weyl theorem and the deformation of discrete groups},
-Comm.\ Pure Appl.\ Math.\ \textbf{38} (1985), 853--866. % TODO-VERIFY: page range
+Comm.\ Pure Appl.\ Math.\ \textbf{38} (1985), 853--866.
+% RESOLVED 2026-08-16 (author bibliography)
 
 \bibitem{HejhalLNM1001}
 D.~A. Hejhal,
@@ -588,6 +848,7 @@ D.~Borthwick,
 B.~Simon,
 \emph{Notes on infinite determinants of Hilbert space operators},
 Adv.\ Math.\ \textbf{24} (1977), 244--273.
+DOI \texttt{10.1016/0001-8708(77)90057-3}. % page range RESOLVED 2026-08-16
 (Thm~4.2 and eq.~(4.2) used for the determinant product; Lidskii's
 trace identity is Cor.~4.3 and is not used.) % TODO-VERIFY: page of Thm 4.2 (reported as p. 258 in the R5 report)
 
@@ -600,7 +861,9 @@ B.~Simon,
 A.~Grothendieck,
 \emph{R\'esum\'e des r\'esultats essentiels dans la th\'eorie des
 produits tensoriels topologiques et des espaces nucl\'eaires},
-Ann.\ Inst.\ Fourier \textbf{4} (1952), 73--112. % TODO-VERIFY: page range; Thm 8 reported at pp. 108--109
+Ann.\ Inst.\ Fourier \textbf{4} (1952), 73--112.
+% page range RESOLVED 2026-08-16 (Numdam/Centre Mersenne)
+% TODO-VERIFY: Thm 8 reported at pp. 108--109
 
 \bibitem{Ruelle76}
 D.~Ruelle,
@@ -608,53 +871,95 @@ D.~Ruelle,
 Invent.\ Math.\ \textbf{34} (1976), 231--242.
 
 \bibitem{MMS}
-D.~Mayer, T.~M\"uller, and A.~Seeger, % TODO-VERIFY: full author first names and exact bibliographic record
-\emph{Transfer operators, the Selberg zeta function and the
-Lewis--Zagier theory of period functions},
-in \emph{Hyperbolic Geometry and Applications in Quantum Chaos and
-Cosmology}, London Math.\ Soc.\ Lecture Note Ser.\ \textbf{397},
-Cambridge Univ.\ Press, 2012. % TODO-VERIFY: page range; Theorems 4.10, 6.4, eq. (34) cited from this source per the in-repo reports
+D.~Mayer, T.~M\"uhlenbruch, and F.~Str\"omberg,
+\emph{The transfer operator for the Hecke triangle groups},
+Discrete Contin.\ Dyn.\ Syst.\ \textbf{32} (2012), no.~7, 2453--2484;
+arXiv:0912.2236.
+% CORRECTED 2026-08-16: the v1 entry read "D. Mayer, T. Muller, A. Seeger,
+% Transfer operators ... LMS Lecture Note Ser. 397" -- a misattribution.
+% MMS throughout this paper and the in-repo reports is
+% Mayer--Muhlenbruch--Stromberg, DCDS 32 (2012) 2453--2484, as cited in
+% lane_g/M1F_EISENSTEIN_DERIVATION.md and M1D.
+% TODO-VERIFY: Theorems 4.10, 6.4 and eq. (34) numbering against the primary PDF.
 
 \bibitem{BandtlowJenkinson08}
 O.~F. Bandtlow and O.~Jenkinson,
 \emph{On the Ruelle eigenvalue sequence},
-Ergodic Theory Dynam.\ Systems \textbf{28} (2008), 1701--1711. % TODO-VERIFY: page range
+Ergodic Theory Dynam.\ Systems \textbf{28} (2008), no.~6, 1701--1711;
+arXiv:0802.1468. % page range RESOLVED 2026-08-16
 
-\bibitem{BruggemanPohl09}
-R.~Bruggeman and A.~Pohl,
-\emph{The transfer operator for the Hecke triangle groups},
-arXiv:0912.2236 (2009). % TODO-VERIFY: final published venue, if any
-
-\bibitem{BruggemanPohl23}
-R.~Bruggeman and A.~Pohl,
+\bibitem{MoellerPohl13}
+M.~M\"oller and A.~Pohl,
 \emph{Period functions for Hecke triangle groups, and the Selberg zeta
 function as a Fredholm determinant},
-Ergodic Theory Dynam.\ Systems (Cambridge), 2023. % TODO-VERIFY: volume/pages
+Ergodic Theory Dynam.\ Systems \textbf{33} (2013), no.~1, 247--283;
+arXiv:1103.5235.
+% CORRECTED 2026-08-16: the v1 draft carried this title under
+% "R. Bruggeman and A. Pohl, ... 2023" with volume/pages TODO. The verified
+% record is Moller--Pohl, ETDS 33 (2013) 247--283.
+% TODO-VERIFY: whether the in-repo reports additionally intended a distinct
+% Bruggeman--Pohl item; if so it must be located and added separately.
 
 \bibitem{PohlWabnitz26}
-A.~Pohl and L.~Wabnitz, % TODO-VERIFY: author given name(s)
+A.~Pohl and P.~Wabnitz, % given name RESOLVED 2026-08-16: Paul Wabnitz
 \emph{Selberg Zeta Functions, Cuspidal Accelerations, and Existence of
 Strict Transfer Operator Approaches},
-Memoirs of the AMS \textbf{318}, no.~1616 (2026). % TODO-VERIFY: full-text not accessed; abstract/metadata only per the novelty re-scout
+Mem.\ Amer.\ Math.\ Soc., memoir no.~1616 (2026); arXiv:2209.05927.
+% CORRECTED 2026-08-16: the v1 entry's "volume 318" is not part of the
+% verified record; AMS Memoirs identifies this item by memoir number 1616.
+% TODO-VERIFY: full text not accessed; abstract/metadata only per the novelty re-scout.
 
-\bibitem{BorthwickWeich21}
-D.~Borthwick and T.~Weich,
+\bibitem{BandtlowPohlSchickWeisse21}
+O.~F. Bandtlow, A.~Pohl, T.~Schick, and A.~Wei{\ss}e,
 \emph{Numerical resonances for Schottky surfaces via
 Lagrange--Chebyshev approximation},
-Stoch.\ Dyn.\ \textbf{21}(3) (2021). % TODO-VERIFY: article number/pages; exact title per novelty re-scout
+Stoch.\ Dyn.\ \textbf{21} (2021), no.~3, art.~2140005.
+% CORRECTED 2026-08-16: the v1 entry attributed this paper to
+% "D. Borthwick and T. Weich". The verified authors are
+% Bandtlow--Pohl--Schick--Weisse. All citations in the text were updated.
 
-\bibitem{FraczekMayer}
-M.~Fr\k{a}czek and D.~Mayer,
-\emph{[Numerical resonances / Selberg zeta computations for Hecke
-triangle groups]}. % TODO-VERIFY: exact title, venue, year -- the draft needs this entry completed before any circulation
+\bibitem{FraczekBook17}
+M.~S. Fr\k{a}czek,
+\emph{Selberg Zeta Functions and Transfer Operators: An Experimental
+Approach to Singular Perturbations},
+Lecture Notes in Mathematics \textbf{2139}, Springer, 2017.
+% RESOLVED 2026-08-16 (publisher record). This replaces the v1 placeholder
+% bibitem "FraczekMayer". No jointly authored Fraczek--Mayer paper on Hecke
+% triangle group resonances was located; see BFM13 for the Fraczek+Mayer
+% Gamma_0(4) study actually read in-repo.
+
+\bibitem{BFM13}
+R.~W. Bruggeman, M.~Fr\k{a}czek, and D.~Mayer,
+\emph{Perturbation of zeros of the Selberg zeta-function for
+$\Gamma_0(4)$},
+Exp.\ Math.\ \textbf{22} (2013), 217--242; arXiv:1201.2324.
+% Known-good per lane_g/LAW_U3_TRANSPORT.md (read in-repo, sec. 2.2/References).
+
+\bibitem{Teo20}
+L.-P. Teo,
+\emph{Ruelle zeta function for cofinite hyperbolic Riemann surfaces with
+ramification points},
+Lett.\ Math.\ Phys.\ \textbf{110} (2020), 61--82; arXiv:1901.07898.
+% Known-good per lane_g/LAW_U3_TRANSPORT.md.
+% TODO-VERIFY: journal numbering of Thm 2.2 / Prop. 2.5 (obligation V3 there;
+% the arXiv v2 numbering was the version actually read).
+
+\bibitem{Takeuchi77}
+K.~Takeuchi,
+\emph{Arithmetic triangle groups},
+J.\ Math.\ Soc.\ Japan \textbf{29} (1977), no.~1, 91--106.
+% RESOLVED 2026-08-16 (Project Euclid). TODO-VERIFY: theorem number for
+% G_4 = Gamma_0^+(2), G_6 = Gamma_0^+(3); the scan is image-only. Sec. 5 of
+% this paper does not rely on it (the identification is proved from the
+% explicit conjugator).
 
 \bibitem{HausdorffDim25}
-[Authors], % TODO-VERIFY: author list
+K.~Fedosova, % author RESOLVED 2026-08-16 (arXiv metadata)
 \emph{Spectral and dynamical invariants of Hecke triangle groups via
 transfer operators}, arXiv:2509.17936 (2025).
 
 \bibitem{Pseudospectral25}
-[Authors], % TODO-VERIFY: author list
+A.~Blumenthal, I.~Nisoli, and T.~Taylor-Crush, % authors RESOLVED 2026-08-16
 \emph{A pseudospectral approach to rigorous numerical estimation of
 resonances of transfer operators}, arXiv:2507.09021 (2025).
 
@@ -724,6 +1029,52 @@ In-repo artifact: Aristotle v19 Lean receipts (supporting joints),
 In-repo prior-art assessment:
 \texttt{research\_notes/rh\_goals\_2026-08-14/lane\_c/NOVELTY\_RESCOUT\_2026-08-15.md}
 (verdict: claim safe as of 2026-08-15; limitations noted therein).
+
+\bibitem{M1F}
+In-repo derivation note:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/M1F\_EISENSTEIN\_DERIVATION.md}
+(first-principles Eisenstein derivation of the $\Gamma_0^+(p)$ scattering
+determinant; verdict DERIVED-MODULO-GAPS, obligations N1--N4 open).
+
+\bibitem{M1D}
+In-repo report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/M1D\_U4\_CONSTRUCTION.md}
+(\S5 closed form at $p=2$; \S6 $q=4$ numerics, explicitly non-rigorous
+floating midpoints).
+
+\bibitem{M1E}
+In-repo report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/M1E\_PHI6\_FAMILY\_PROBE.md}
+(\S4 $q=6$ numerics, same non-rigorous protocol as \cite{M1D}).
+
+\bibitem{M1G}
+In-repo report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/M1G\_PREDICTION\_WINDING\_CERTS.md}
+(verdict: $0/8$ predicted resonances rigorously certified; per-point
+receipts in \texttt{lane\_g/m1g\_receipts/}).
+
+\bibitem{M2}
+In-repo report and receipt:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/M2\_NONFACT\_WITNESSES.md},
+\texttt{m2\_nonfact\_receipt.json} (nine nonvanishing witnesses at
+$q = 5, 8, 10$ plus the $q=4$ control; every row labelled
+\emph{certified-modulo-tail-heuristic}).
+
+\bibitem{LawU3}
+In-repo report:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_g/LAW\_U3\_TRANSPORT.md}
+(scattering-pole $\to$ Selberg-zero transport: CLOSED-BY-CITATION via
+\cite{BFM13,Teo20}; the Hejhal Ch.~X page check remains open).
+
+\bibitem{FrickePriorArt}
+In-repo prior-art scout:
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_c/N3\_FRICKE\_SCATTERING\_PRIORART.md}
+(closed-form $\Gamma_0^+(p)$ scattering determinant not found in
+accessible sources; Hejhal LNM~1001 and Huxley 1984 unresolved).
+
+\bibitem{Figures}
+In-repo figure-generation script (provenance of every plotted constant):
+\texttt{research\_notes/rh\_goals\_2026-08-14/lane\_p/figures/make\_theorem\_figures.py}.
 
 \bibitem{ReviewChain}
 In-repo artifacts: adversarial review reports
