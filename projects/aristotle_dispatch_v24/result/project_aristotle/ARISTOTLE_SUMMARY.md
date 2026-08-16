@@ -1,0 +1,14 @@
+# Summary of changes for run 1d1ab41e-0a30-45d7-a6b8-45cc1c912085
+All four dispatched obligations in `HeckeSystole.lean` are now proved — the file builds cleanly with Mathlib and contains no `sorry`; each target theorem depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+
+**One necessary correction to the input file.** As drafted, the A2 and A3 statements wrote the product of a family of matrices as `∏ i, A i`. That notation is `Finset.prod`, which requires a `CommMonoid` on the target; matrix multiplication is not commutative and Mathlib provides no such instance, so those statements did not elaborate and the file did not compile. I introduced `matProd A := (List.ofFn A).prod`, the ordered product `A 0 * A 1 * ⋯ * A (n-1)`, and used it in exactly those spots. Nothing else in any statement changed (the scalar products such as `∏ i, A i 0 0` are untouched). This is documented in the file header.
+
+**A1 — Chebyshev normal form.** `Rmat_sq` (`R² = lam • R - 1`), `Rmat_pow` (`R^a = u_a • R - u_{a-1} • 1` for `a ≥ 1`, by induction on the recursion), `SR_pow` (`S R^a = -M_a`), and `det_Mmat` (`det M_a = 1`, obtained from `det S · (det R)^a = 1` through `SR_pow`).
+
+**A2 — nonnegative-matrix trace-path bounds.** Proved from two reusable facts about ordered products of entrywise-nonnegative 2×2 matrices: the product is entrywise nonnegative, and every state path contributes a single term to the corresponding entry (`matProd_ge_path`). These give `trace_prod_nonneg`, `trace_ge_diag`, and `trace_ge_path` (the cyclic path `ZMod n → Fin 2` is unrolled to a path from `i 0` to `i 0`). The stated hypothesis `hn : 0 < n` is kept as given but turned out not to be needed.
+
+**A3 — systole trace bound.** Proved using A1 + A2. The Chebyshev closed form `u_j(2 cos θ) sin θ = sin(jθ)` is established, giving for `lam_q = 2 cos(π/q)` and `q ≥ 4`: `u_j ≥ 0` for `j ≤ q`, `u_j ≥ 1` for `1 ≤ j ≤ q-1`, `u_j ≥ lam_q` for `2 ≤ j ≤ q-2`, and the boundary values `u_{q-1} = 1`, `u_q = 0`, `u_{q-2} = lam_q`. Hence all letter matrices are entrywise nonnegative and the trace is nonnegative. The argument then splits: if some letter lies in `[2, q-2]`, both diagonal paths already give `t ≥ 2 lam_q`; otherwise every letter is `1` or `q-1`, in which case an all-`1` (resp. all-`q-1`) word gives a unitriangular product of trace exactly 2, contradicting hyperbolicity, and a mixed word has both off-diagonal entries of the product at least `lam_q`, so `det = 1` forces `p·s ≥ 1 + lam_q²` and therefore `t = p + s ≥ 2 lam_q`.
+
+**A6 — non-monotonicity counterexample.** `u5_not_monotone` is proved with the explicit pair `1.1 < 1.2434` in `(1,2]`, where the value decreases (the drafted witness `lam = 1` is not in the open-below interval, so the interior pair is used). `u5_witness_triple` verifies the three stated values, including `√2⁴ = 4`.
+
+`SKIPPED.md` (A4/A5, the analytic items) is unchanged. All work is committed and pushed.

@@ -26,3 +26,22 @@ assembly q=30: |K_q(1/2+i t_inf)| = 1.000000000000
   B2 q=22 sigma=1.4: LHS=3.936680e+05  RHS=7.625984e-12  ratio=51621929942855872.000000   (|phi|=6.607989e-02)
   B2 q=22 sigma=1.5: LHS=2.874585e+06  RHS=5.554405e-13  ratio=5175324548921952256.000000   (|phi|=6.138161e-02)
   B1 q=22 dU_0 s=0.5000+7.0674i: P(s)=2.6968e-01 P(1-s)=2.6968e-01 |K|=1.0000e+00 |phi^proxy(s)|=1.000000e+00  |phi^proxy(1-s)|q^(2s'-1)=1.0
+  B1 q=22 dU_1 s=0.4268+7.2441i: P(s)=1.5247e-01 P(1-s)=1.4732e-01 |K|=6.7238e+00 |phi^proxy(s)|=1.437077e-01  |phi^proxy(1-s)|q^(2s'-1)=10.942417174588988
+  B1 q=22 dU_2 s=0.2500+7.3174i: P(s)=1.0645e+00 P(1-s)=4.2355e-01 |K|=7.1331e+02 |phi^proxy(s)|=5.578109e-04  |phi^proxy(1-s)|q^(2s'-1)=8408.613070626883
+  q=22 wall=890s
+
+--- q=30  lam=1.989044  n_elts=2500234
+  B2 q=30 sigma=1.25: LHS=5.700957e+04  RHS=2.978702e-10  ratio=191390642355457.812500   (|phi|=7.178123e-02)
+  B2 q=30 sigma=1.4: LHS=1.276982e+06  RHS=5.742405e-12  ratio=222377537172359296.000000   (|phi|=6.595481e-02)
+  B2 q=30 sigma=1.5: LHS=1.033268e+07  RHS=4.039231e-13  ratio=25580813587497922560.000000   (|phi|=6.105954e-02)
+  B1 q=30 dU_0 s=0.5000+7.0674i: P(s)=1.5025e-01 P(1-s)=1.5025e-01 |K|=1.0000e+00 |phi^proxy(s)|=1.000000e+00  |phi^proxy(1-s)|q^(2s'-1)=1.0
+  B1 q=30 dU_1 s=0.4268+7.2441i: P(s)=1.5769e-01 P(1-s)=1.3454e-01 |K|=6.8899e+00 |phi^proxy(s)|=1.238318e-01  |phi^proxy(1-s)|q^(2s'-1)=13.28883919555546
+  B1 q=30 dU_2 s=0.2500+7.3174i: P(s)=2.8875e+00 P(1-s)=4.7597e-01 |K|=7.7698e+02 |phi^proxy(s)|=2.121551e-04  |phi^proxy(1-s)|q^(2s'-1)=25817.08116581062
+  q=30 wall=2016s
+
+=== U4-conditional q-slope of |phi_q| at the mirrored dU points ===
+  dU_0: Re(1-s)=0.5000  measured slope=+0.0000   required=-0.0000
+  dU_1: Re(1-s)=0.5732  measured slope=+0.7026   required=-0.1464
+  dU_2: Re(1-s)=0.7500  measured slope=+1.1304   required=-0.5000
+
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/mirror_u4.json
