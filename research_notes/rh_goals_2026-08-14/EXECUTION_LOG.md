@@ -1364,3 +1364,72 @@ Nothing committed; `lane_f/` and `law_probes/u1_guard_extended.*` untouched.
   with the constant-term formula as hypothesis), B3 (the triangle split), B4 (the alias bound).
   All downstream of U2b's A1. The tail constant `sup_q T_q(σ) < 1` is *not* Aristotle-able.
 - **Not touched:** `lane_f/`, `u1_guard_extended.*`, `probe_u1phi*.py`. No commit, no certificate.
+
+## 2026-08-16 — Lane G (Opus audit lane): MINIMAL-HYPOTHESIS AUDIT of the tail argument
+
+Artifact: `lane_g/LAW_MINIMAL_HYPOTHESES.md`. **Audit only** — no new numerics, no probe run,
+no certificate, no commit, `lane_f/` untouched.
+
+**Brief.** Re-derive the (T2′) Vitali+Hurwitz continuation end-to-end and determine the MINIMAL
+hypothesis set, rather than continuing to serve "the tail needs U1".
+
+- **VERDICT — split, and both halves matter.** U1 is minimal in **kind** and grossly over-stated
+  in **domain**. All three candidate weakenings named in the brief fail: a disc around `s_∞`
+  alone is **provably insufficient** (Lemma M-1 — Montel gives a limit that nothing identifies,
+  since the only proved convergence set is `Re s > 1`); "one-point bound + equicontinuity" is
+  **equivalent, not weaker** (Cauchy estimates both ways; the one point is free from U2b);
+  Montel-via-zero-free-right-edge + FE is **dead twice** (disjoint-region witness in
+  `LAW_U1_GROWTH.md` §5.3, plus `Uφp.12`'s proved `|Z_{G_q}(1−σ₀−it)| → ∞`). Vitali is already
+  at its classical floor; Osgood does not locate the good set.
+- **THE CHAIN.** 12 numbered steps with the exact hypothesis each consumes. **Only Step 6
+  (local uniform boundedness) is open.** Steps 2,3,4,5,8,9,11 are `PROVED`; 7,10 are classical
+  citations; 12 (finite base, `Q₀` effectivity) is off-audit and unchanged.
+- **(U1-min), the sharpest true obligation.** `∃ r ∈ (0,1/4), δ, σ_R ≥ 3.5, Q₁, A`: the family
+  `{Z_{G_q}}_{q≥Q₁}` is locally uniformly bounded on an open connected corridor
+  `(1/4 − r, σ_R+1) × (t_∞ ± δ)`. **No exponential order-2 shape** (already U1.1), **no
+  `t`-uniformity** (`δ` arbitrarily small), **no `Re s ≤ 1/8`**. The one irreducible clause is
+  connectivity: the boundedness domain and Vitali's accumulation set must be the SAME connected
+  domain, and the latter is pinned to `Re s > 1` by the Euler product's abscissa.
+- **THE LOAD-BEARING FINDING.** The historical `Ω̃`'s left edge `Re s = −1/10` is required by
+  **nothing**. With it, the FE reflection forces `σ ≥ 11/10 > 1` — inside Theorem E3's kill
+  zone. **The lane's crux was refuted at an abscissa the theorem never needed to visit.**
+  Independently confirms `LAW_U1PHI_PROOF_ROUTE.md` §5.1 by a route not passing through
+  `LAW_U1PHI_TEST.md`.
+- **SHARPENING of (U1-φ-a′).** `r` is free in `(0,1/4)` — the parent's `r < 1/8` is over-tight
+  (true margin is `1/4 − r`, not `1/8 − r`). Sending `r ↓ 0` sends `σ ↓ 3/4` and the required
+  `φ_q` decay exponent `2σ−1 ↓ 1/2`, **while enlarging the delivered off-line margin**. No
+  trade-off. **Any decay exponent `> 1/2` at any single abscissa in `(3/4,1)` suffices.**
+- **THE CRUX, correctly located, is one sentence:** *how large is `φ_q(s)` on `3/4 < Re s < 1`?*
+  U1-min and (U1-φ-a′)(ii) are **the same unknown, oppositely signed** — §4.3's adverse
+  retrodiction `|κ_q| ≍ q^{1−2σ}` presumes exactly `|φ_q| ≍ 1` at the reflected abscissa. The
+  lane has **zero evidence either way**: E3/E4 are proved only for `Re s > 1`; the phase work
+  sits at `Re s = 1/2` where unitarity makes the modulus trivial; the `σ = 0.75` receipt rows are
+  self-flagged truncation artefacts.
+- **DEFECT — (U1-φ-a′) omits the horizontal edges.** The max principle on
+  `[1−σ,σ] × [t_∞ ± δ]` needs four sides; (i)+(ii) supply two. Repair = Phragmén–Lindelöf in the
+  strip (`PROVABLE`, `Z_Γ` of order 2), **at the price of requiring (i),(ii) for all real `t`**.
+  So `t`-uniformity is a feature of the implementation, not of the theorem.
+- **DEFECT — `LAW_U1_GROWTH.md` §6 over-claims for (U1-φ-b).** A uniform resonance count on one
+  disc controls only local Hadamard factors; the global zero distribution is `PROVED`
+  non-uniform at fixed height (U1.16, elliptic mass `(log q)/π ≈ 17.6` vs `T²` term `16.0` at
+  `T ≈ 8`, `q = 1000`), and the Hadamard exponential is untouched. **(U1-φ-b) is an ingredient,
+  not a closure**, and should be delisted as a live alternative.
+- **EVIDENCE RE-SORTED.** Every adverse measurement the lane holds (§7.3's `+1.50`, §4.3's
+  `dU_3`/`dU_4` slopes, `Uφp.12`) lives at `Re s ≤ 0.0732`, **outside `Ω̃_min`**. Every
+  supportive one (`dU_0` at `Re s = 1/2` slope `−0.574`; the flat `+0.071` identified-domain
+  aggregate) lives **inside** it. **One adverse point lies inside:** `dU_2` at `Re s = 1/4` —
+  the abscissa of `s_∞` — slope `+0.61` over `q = 12…40`, unreconciled with the flat aggregate
+  over `q = 12…100`.
+- **CHEAPEST NEXT ACT (named, not run — this is an audit):** read out and refit the **per-point
+  `q`-slope at `dU_2` (`Re s = 1/4`) over the full `q = 12…100` range** from the existing
+  `law_probes/u1_guard_extended.json`. **No new compute.** It measures U1-min at the only
+  abscissa that matters and discriminates between the two contradictory readings the lane
+  currently holds.
+- **Corrections owed:** `LAW_T2_DETERMINANT.md` §3.2 (`r < 1/4`, margin `1/4 − r`; add the
+  unstated hypothesis that `Ω̃` avoids `Z_{Γ_θ}`'s real poles); `LAW_U1_GROWTH.md` §9 (same `r`),
+  §6 ((U1-φ-b)), §1.2 + `LAW_U2B_CLOSURE.md` Lemma U2b-8 (left edge `−1/10` → `1/4 − r`);
+  `LAW_U1PHI_PROOF_ROUTE.md` §5.1 (`σ > 3/4 + r`; exponent `> 1/2`; all-`t` from P–L).
+- **Conditionality, stated:** this audit takes the parents' `PROVED` labels at face value and does
+  not re-verify E3/E4, U2b's constants, or U3's citations (`V1`–`V3` still owed).
+  `LAW_U1PHI_PROOF_ROUTE.md` is itself PENDING adversarial verification, and findings M.11–M.13
+  inherit that pendency.
