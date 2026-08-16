@@ -856,3 +856,56 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   Im∈[6.6,7.6] and test whether a pin migrates toward `s_∞` like `q^{-2}`.
   Run Probe B1 (float disc optimizer at q=10..30) alongside to test the
   `1−ρ*` extrapolation.
+
+## 2026-08-15 — lane_g LAW leg 1: (T1) Γ_θ two-cusp scattering matrix — **ANCHOR HOLDS**
+
+Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
+`lane_g/LAW_ANCHOR_T1_THETA.md`. No commit; no other lane's files touched.
+
+- **(T1) HOLDS.** `G_∞ = Γ_θ = ⟨S,T²⟩`: index 3 in PSL(2,Z), `vol = π` (matches
+  the `(2,∞,∞)` triangle area — independent cross-check), **two cusps**: `∞`
+  (width 2) and `1` (width 1), widths summing to the index. Derived by the M1F
+  allowed-moduli constant-term method, run directly in `Γ_θ` with
+  `σ_∞ = diag(√2,1/√2)`, `σ_1 = [[1,0],[1,1]]`:
+  `Φ_θ = [[A,B],[B,A]]`, `A = g(s)/(4^s−1)`,
+  `B = g(s)(2^s−2^{1−s})/(4^s−1)`, `g = Λ(2s−1)/Λ(2s)`;
+  `det Φ_θ = g(s)² (4−4^s)/(4^s(4^s−1))`, which equals M1F's `φ⁺₂·φ⁻₂` (sympy, exact).
+- **Load-bearing point survives an adversarial read.** The `s = ρ/2` poles come
+  from the `Λ(2s)` denominator of `g²` (order `2m(ρ)`). The elementary factor
+  `E = (4−4^s)/(4^s(4^s−1))` has **all** zeros on `Re s = 1` and **all** poles on
+  `Re s = 0`, so it is finite and non-zero on `Re s = 1/4`. Four candidate
+  cancellation channels (E, `Λ(2s−1)`, Γ-factors, zero coincidence) each excluded.
+  With de la Vallée Poussin (`Re ρ < 1`): unconditional off-line resonance,
+  `s_∞ = ρ₁/2 = 0.25 + 7.0673625708…i`, margin `η = 1/8` for the named `ρ₁`.
+- **Self-checks all pass.** `Φ_θ(s)Φ_θ(1−s) = I` proved exactly (`g·g(1−s)=1`,
+  `E(s)E(1−s)=1`, sympy) and numerically `< 5e−40` at 5 points (full 2×2, mpmath
+  40 dps). `Res_{s=1}φ_{ab} = 1/π = 1/vol` for **all four** entries (exact + 9
+  digits). Independent brute force over 26 318 elements of `Γ_θ` (entries ≤ 90)
+  reproduces both moduli sets and both counts (`φ_E(2c)` on evens; `φ_E(n)`,
+  `n` odd, at moduli `n√2`) — 12/12 digits on truncated Dirichlet series.
+- **Pole signature confirmed (NON-RIGOROUS numerics).** `mean|det Φ_θ|` on circles
+  about `s_∞`: `4.22e3 / 4.21e5 / 4.21e7 / 4.21e9` at `r = 1e−2…1e−5` — exact
+  `r^{−2}` ⇒ order-2 pole; `(s−s_∞)²·det → −0.149433 − 0.393982 i` (finite,
+  non-zero). Three controls clean (`|det| = 2.67, 5.38, 123`).
+- **CORRECTION to `LAW_TAIL_SCOPING.md` §2.2 (write into lane text).** "`Γ₀(4)`,
+  to which `Γ_θ` is conjugate" is **FALSE** — `[PSL(2,Z):Γ₀(4)] = 6 ≠ 3`. The
+  correct conjugacy is `Γ_θ = V Γ₀(2) V^{-1}`, `V = [[1,0],[1,1]]` (proved via the
+  mod-2 image: two conjugate order-2 subgroups of `S₃`).
+- **HONEST DOWNGRADE of the anchor's strategic value.** `det Φ_θ = φ⁺₂φ⁻₂` is
+  literally the object M1F already derived for `G_4 = Γ₀⁺(2)`. The `g(s)` factor
+  and its `Re = 1/4` poles are common to **every** arithmetic member (`q = 4, 6, ∞`)
+  and are `p`-generic in M1F — so the `λ=2` endpoint supplies an off-line
+  resonance but **no mechanism distinguishing it** from the arithmetic interior.
+  Meanwhile the repo's scanned `q = 7, 8` pins sit at `Re ≈ 0.42–0.48`, nothing
+  converging to `Re = 1/4` at `Im ≈ 7.07` (HEURISTIC, inconclusive). Net: (T1) is
+  closed, so **Probe D1 now carries the entire discriminating load** of the merged
+  (a)+(d) route. Also: **no novelty claim** for `det Φ_θ` — the `Γ₀(2)` scattering
+  matrix is the standard textbook example (obligation TN3).
+- **Aristotle-able (v23) ledger:** T-1 index-3 mod-2 count; T-2 cusp inventory
+  (widths + the `∞ ≁ 1` parity argument); T-3 the `V`-conjugacy and `Γ_θ ≇ Γ₀(4)`;
+  **T-4 the two moduli-count lemmas (highest value, brute-verified to bound 90,
+  no synthetic proof written)**; T-5 Euler-product restriction at `p=2` (= M1F A-4);
+  T-6 the rational-function identities in `X = 2^s`; T-7 divisor of `E`;
+  T-8 non-cancellation/order bookkeeping; T-9 the residue evaluations.
+  **Not Aristotle-able:** the Selberg-zeta transport (M1F N2/G6, still GAP) and
+  the Artin/induction shape check against PSL(2,Z) (non-load-bearing).
