@@ -703,3 +703,42 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   to settle the verdict. Report: `lane_f/F7_MITIGATION_REPORT.md` (+ scripts
   and JSON receipts in `lane_f/`). Not committed; no Kaggle kernels; no
   other lanes touched.
+
+- 2026-08-15 — **F7 q=7 stages 2-3 (CLI + pilot chunk): CLI done and
+  unit-verified; pilot NO-GO (structural, not timing).** Recomputed `N*`
+  arithmetic explicitly against the plan's `F_R = T_tail·exp(1+2B)` rule
+  using option-2's `B_finite(N=224)=20.1696367902`: reproduced the plan's
+  q=5 `F_R=1.78e-6` from its own stated `T_tail`/`B`, confirmed
+  `rho*^224=3.8904e-27` is *smaller* (not merely comparable to) q=5's
+  `rho*^160≈1e-25`, and — extrapolating `T_tail(N)≈C·rho*^N` at q=5's
+  measured order-of-magnitude prefactor `C≈4.6e-3` — got `F_R(224)≈1.6e-11`,
+  ~5 orders below q=5's certified margin, so `N*=224` remains the consistent
+  provisional freeze (non-rigorous scaling argument; the real `T_tail(N)`
+  and `m0` need q=7's not-yet-built R2 envelope, stage 2b/2 of the plan).
+  Added `--arcs i:j` to `certify_r3b_flagship.py`
+  (`evaluate_closed_cover_parallel` gained an `arc_range` slice + chunk-mode
+  status labels `CHUNK_ARCS_CLEAR`/`CHUNK_NOT_CLEAR` distinct from the
+  whole-cover `CERTIFIED`/`NOT_CERTIFIED`) and a new
+  `merge_chunks_and_verify_closure` seam-closure re-verification helper
+  (checks contiguous tiling of the 192-arc base cover, then re-runs the
+  adjacent-box winding polygon over the full merged, ordered arc set); both
+  unit-tested (malformed/inverted `--arcs` rejected; synthetic seam-gap,
+  under-tile, and record-count-mismatch chunk sets all correctly rejected;
+  live q=5 base cover confirmed at 192 arcs, matching the plan's chunk
+  table) — 122 insertions / 4 deletions,
+  `.worktrees/aletheia-restore/code/tc_rerun/certify_r3b_flagship.py`.
+  Pilot chunk 0 was **not run**: direct inspection of the runner found it
+  hardcoded to q=5 (`ENGINE_PATH` → `zeta_cert_rosen_q5.py`, `EXACT_FACTORS`
+  a 3-tuple, `N_PRIMARY/N_COMPARISON`=160/128, q=5 pin box, and
+  `verify_immutable_inputs()` hash-pinning `lane_g`'s q=5
+  `R2_FLAGSHIP_ENVELOPE_RECEIPT.json`/`TB_BLOCK_CERTIFICATES_V2_RECEIPT.json`
+  — no q=7 analogs exist anywhere in the repo). Running against q=7 would
+  either hard-fail the hash check or silently certify the wrong (q=5)
+  problem; neither is an honest measurement, so no full or reduced pilot was
+  attempted at any arc count, and no timing/memory/extrapolation figures
+  were produced (the plan's unmeasured `~280 CPU-h` estimate is unchanged
+  and not promoted). Verdict: NO-GO on stage 3 pending stage-1 (TB block
+  certs) + stage-2 (R2 envelope) q=7 ports per `F7_CERT_PLAN.md` §2; GO on
+  the CLI/seam-closure work in isolation (q-independent, no risk of baked-in
+  q=5 assumptions). Report: `lane_f/F7_PILOT2_REPORT.md`. Not committed; no
+  Kaggle kernels; no other lanes touched.
