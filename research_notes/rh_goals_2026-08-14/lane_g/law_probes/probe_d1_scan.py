@@ -56,7 +56,7 @@ def newton_refine(q, seed: complex, N: int, iters=NEWTON_ITERS):
             break
         nxt = point - value / deriv
         # keep inside the probe box, generously padded
-        nxt = complex(min(max(nxt.real, 0.02), 0.49), min(max(nxt.imag, IM_LO - 1), IM_HI + 1))
+        nxt = complex(min(max(nxt.real, 0.02), RE_HI + 0.10), min(max(nxt.imag, IM_LO - 1), IM_HI + 1))
         nval = det_mid(q, nxt, N)
         delta = abs(nxt - point)
         history.append({"re": nxt.real, "im": nxt.imag, "absdet": abs(nval), "delta": delta})
@@ -107,6 +107,14 @@ def run_q(q: int) -> dict:
     viable.sort(key=lambda c: c["refine_N48"]["absdet"])
     pin = viable[0] if viable else (candidates[0] if candidates else None)
 
+    # Reject pins that hit clamp boundaries (within 1e-6 of edge)
+    clamp_boundary_rejected = False
+    if pin is not None:
+        re_clamp_lo, re_clamp_hi = 0.02, RE_HI + 0.10
+        if abs(pin["refine_N48"]["re"] - re_clamp_lo) < 1e-6 or abs(pin["refine_N48"]["re"] - re_clamp_hi) < 1e-6:
+            clamp_boundary_rejected = True
+            pin = None
+
     stability = None
     if pin is not None:
         seed_pt = complex(pin["refine_N48"]["re"], pin["refine_N48"]["im"])
@@ -120,6 +128,7 @@ def run_q(q: int) -> dict:
         "surface_min_absdet": flat_min, "median_absdet": median, "seed_threshold": threshold,
         "n_seeds": len(seeds), "candidates": candidates,
         "pin_N48": pin["refine_N48"] if pin else None,
+        "clamp_boundary_rejected": clamp_boundary_rejected,
         "wall_seconds": time.time() - t0,
     }
     OUTDIR.joinpath(f"d1_q{q}.json").write_text(json.dumps(result, indent=2) + "\n")
