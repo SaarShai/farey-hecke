@@ -41,7 +41,18 @@ checked against live artifacts before acceptance.
 ## Pending
 
 - PRIOR_ART_QMC_HYPERUNIFORMITY.md — not yet landed.
-- DEMAND_TRANSFER_OPERATOR.md — not yet landed.
+
+## KT1_MSM_INCUMBENT_CHECK.md (adjudicated 2026-08-16)
+
+- ACCEPTED on first read; every claim source-linked; honest that "not found"
+  means bounded-scan-only. Verdict PROCEED-TO-KT2 stands: the literal kill
+  conjunction fails (Bayesian intervals cover sampling uncertainty only, not
+  floating-point/eigensolver error; PyEMMA release history shows real
+  timescale-output trust bugs #1116/#1248), and no MSM-specific certified
+  spectral enclosure exists (Rump 2001 / Hladík 2010 are generic primitives,
+  unpackaged for MSM). Framing accepted: niche/assurance play, NOT
+  "numerical error dominates". KT2 = measure certificate width vs posterior
+  width on real well-sampled MSM matrices + frequency of close spectral gaps.
 
 ## DEMAND_TRANSFER_OPERATOR.md (adjudicated 2026-08-16)
 
