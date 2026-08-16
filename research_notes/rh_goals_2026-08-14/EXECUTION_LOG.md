@@ -987,3 +987,63 @@ Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
 - Full tables, residual breakdowns, and the builder-substitution rationale:
   `lane_g/LAW_PROBES_D1_B1.md`. Receipts: `lane_g/law_probes/`. Not
   committed (per instruction).
+
+## 2026-08-15 — Lane G: LAW (T2) determinant — obstruction proved, route replaced
+
+- **Deliverable:** `lane_g/LAW_T2_DETERMINANT.md`. Probe script + receipts:
+  `lane_g/law_probes/probe_t2_shape.py`, `t2_shape.json` (L=5, r_max=7),
+  `t2_shape_L6.json` (L=6, r_max=9). Not committed (per instruction).
+- **(T2) as posed is STRUCTURALLY-BLOCKED**, with three `PROVED` obstructions.
+  (a) **Lemma T2-A**: `ψ_1(z) = −1/(z+λ)` has fixed points on the unit circle
+  with multiplier of modulus 1 for **every** `λ ∈ (0,2]` (elliptic for `λ<2`,
+  parabolic at `λ=2`), so by Denjoy–Wolff/Schwarz **no disc** satisfies
+  `ψ_1(cl D) ⊂ D`. The unreduced fixed-disc operator that
+  `LAW_TAIL_SCOPING.md` §2.2 named as B-I's rescue **does not exist at any
+  `λ`**, not merely at the endpoint. Corollary T2-A′ (exact, verified at
+  `q=8,10,12,14,20,22,30,50`): for even `q`, `ψ_1^{q/2}(−λ_q/2) = ∞`.
+  (b) **Lemma T2-B**: `ψ_1 = R = S T_λ` **is** the group's elliptic generator,
+  of order `q` at `λ_q` and infinite order at `λ=2` — so the *induced*
+  alphabet `{ψ_1^k ∘ ψ_n}` is finite (`|k| < q`) at every `λ_q` and infinite
+  at `λ=2`, its cardinality being the denominator of the rotation number
+  `ν(λ)=arccos(λ/2)/π`. **Inducing is anti-rescue.**
+  (c) **Lemma T2-C**: any λ-independent index set (branch alphabet, or words
+  in `Z/2 * Z`) has **infinite fibres** at every `λ_q` because `R^q = 1`.
+  B-I and B-II are therefore **one** obstruction, not two.
+- **Bonus mechanism (explains two open puzzles).** The parabolic `k`-sum at
+  `λ=2` **is** `ζ(2s)` — the same `ζ(2s)` whose zeros give the anchor's
+  `s=ρ/2` poles via `g = Λ(2s−1)/Λ(2s)`. At `λ_q` that sum is **truncated at
+  `k ≍ q`**, so there is no exact `ζ(2s)` factor and hence **no exact pole at
+  `s_∞`** — which is why `LAW_ANCHOR_T1_THETA.md` §6.2 found no `q=7,8` pin at
+  `Re=0.25` and why D1's pins only *migrate* toward `s_∞`. `HEURISTIC`.
+- **Replacement (T2′), CONSTRUCTIBLE.** `{λ_q}` is a *sequence*, so
+  **Vitali + Hurwitz replaces Rouché**: no interpolation, no non-group `λ`,
+  and **the transfer operator leaves the tail argument entirely** (it is
+  needed only for the certified finite base). New crux = **U1**, a
+  `q`-uniform order-2 growth bound on `Z_{G_q}`, structurally available
+  because `vol(G_q\H) = π(1−2/q) ≤ π` makes the Weyl counting uniform.
+- **Numeric probe (NON-RIGOROUS, float64).** The brief's requested probe
+  (`det(1−L_{s,λ})` at `λ=1.8,1.9,1.95,2.0`) is **not well-posed** given
+  Lemma T2-A — flagged, and redirected. What was run instead: BFS enumeration
+  of primitive hyperbolic conjugacy classes of `G_q = Z/2 * Z/q` and of
+  `Γ_θ = Z/2 * Z` (the requested `λ` grid ≡ `q ≈ 7, 10, 14, ∞`, all included).
+  Results: **`Z_{G_q}(s) → Z_{Γ_θ}(s)` for `Re s > 1` at rate `q^{-2}`**
+  (fitted exponents `−2.10/−2.15/−2.18` at three `s`; `< 0.05` change when the
+  geodesic count is nearly tripled). Systole: `sys = 2 arccosh λ` **exactly**
+  (`PROVED`, class `[S R²]`), gap `= (2/√3)(2−λ_q) + O(ε²)`, measured ratio
+  `1.15529` vs `2/√3 = 1.154701`; **monotone increasing ⇒ no pinching**.
+  Three independently computed quantities — systole gap, `|Z_q − Z_θ|`, and
+  D1's pin migration — all scale as `q^{-2} ≍ (2−λ_q)`.
+- **Literature scout (5 questions, honest):** Ruelle 1976 / Fried 1986 /
+  Isola 2002 / Wolpert 1992 retrieved and all **inapplicable** as stated.
+  **No** published result on (a) jointly-`(s,λ)`-holomorphic determinants
+  across a Markov-structure change, (b) spectral behaviour under cone-angle→0
+  at bounded area, (c) `lim_{q→∞}` of Hecke spectra/zeta. Re-confirms
+  `LAW_TAIL_SCOPING.md` §1.1 — and means **no import will do this for us**.
+- **Retire from lane text:** the "unreduced operator may rescue B-I" line
+  (`LAW_TAIL_SCOPING.md` §2.2); the framing of B-I/B-II as two blockers;
+  "(T3) is a routine Cauchy estimate".
+- **Next tickets, in order:** (1) **U3** — scattering-pole → Selberg-zero
+  transport for `Γ_θ` (M1F N2/G6, inherited, blocks **both** formulations,
+  textbook-shaped, cheapest); (2) **U1** — the `q`-uniform Hadamard bound
+  (the real work); (3) **U2b** — uniform systole + geodesic counting.
+  **Do not fund further work on a two-variable determinant.**
