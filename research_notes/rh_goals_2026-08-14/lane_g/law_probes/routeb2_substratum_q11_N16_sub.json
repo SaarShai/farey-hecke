@@ -1,0 +1,125 @@
+{
+  "q": 11,
+  "N": 16,
+  "grid": "sub",
+  "grid_re": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "n_head": 4,
+  "prec_bits": 128,
+  "builder": "zeta_cert_rosen.py",
+  "rigor_label": "NON-RIGOROUS PROBE: midpoint float eval of the Arb-ball builder, reduced precision, float arg-unwrap winding with half-turn guard; no Arb winding certificate",
+  "window": {
+    "im": [
+      2.0,
+      12.0
+    ],
+    "re_grid": [
+      0.2,
+      0.3,
+      0.4
+    ]
+  },
+  "theta_max": 1.5707963267948966,
+  "max_depth": 6,
+  "signs": [
+    1,
+    -1
+  ],
+  "per_sign": {
+    "1": {
+      "dV": [
+        -62.20071735312328,
+        -55.70598914710981,
+        -36.82869369042386
+      ],
+      "H1": [
+        0.0,
+        -0.30953256115790984,
+        -0.4963099385434833
+      ],
+      "H2": [
+        0.0,
+        -0.09798966232404316,
+        -0.2570275045624174
+      ],
+      "cells": [
+        {
+          "re_lo": 0.2,
+          "re_hi": 0.3,
+          "winding_raw": 1.0000000000000033,
+          "count": 1,
+          "residual": 3.3306690738754696e-15
+        },
+        {
+          "re_lo": 0.3,
+          "re_hi": 0.4,
+          "winding_raw": 2.9999999999999987,
+          "count": 3,
+          "residual": 1.3322676295501878e-15
+        }
+      ],
+      "total_count": 4
+    },
+    "-1": {
+      "dV": [
+        -42.46036410940546,
+        -42.37500574850864,
+        -42.43859152759268
+      ],
+      "H1": [
+        0.0,
+        -0.15851821459145307,
+        -0.27455130502316033
+      ],
+      "H2": [
+        0.0,
+        -0.07315985369462552,
+        -0.2527787232103734
+      ],
+      "cells": [
+        {
+          "re_lo": 0.2,
+          "re_hi": 0.3,
+          "winding_raw": -1.1308638867425838e-15,
+          "count": 0,
+          "residual": 1.1308638867425838e-15
+        },
+        {
+          "re_lo": 0.3,
+          "re_hi": 0.4,
+          "winding_raw": 1.1308638867425838e-15,
+          "count": 0,
+          "residual": 1.1308638867425838e-15
+        }
+      ],
+      "total_count": 0
+    }
+  },
+  "combined_strata": [
+    {
+      "re_lo": 0.2,
+      "re_hi": 0.3,
+      "count": 1,
+      "max_residual": 3.3306690738754696e-15
+    },
+    {
+      "re_lo": 0.3,
+      "re_hi": 0.4,
+      "count": 3,
+      "max_residual": 1.3322676295501878e-15
+    }
+  ],
+  "deep_count_re_lt_0.4": 4,
+  "det_calls": 555,
+  "min_absdet_on_contours": 0.024186491640908667,
+  "min_absdet_at": [
+    0.3,
+    3.65625
+  ],
+  "warnings": [],
+  "n_warnings": 0,
+  "wall_seconds": 628.7130491733551
+}
