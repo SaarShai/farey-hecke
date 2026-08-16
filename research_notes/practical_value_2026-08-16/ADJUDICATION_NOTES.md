@@ -42,3 +42,15 @@ checked against live artifacts before acceptance.
 
 - PRIOR_ART_QMC_HYPERUNIFORMITY.md — not yet landed.
 - DEMAND_TRANSFER_OPERATOR.md — not yet landed.
+
+## DEMAND_TRANSFER_OPERATOR.md (adjudicated 2026-08-16)
+
+- ACCEPTED on first read; source-linked, honest about weak pull. Ranked:
+  (1) MD/Markov-state-models best first pilot; (2) chaotic control highest
+  long-run value but needs new control-oriented error bounds; (3) power-grid
+  partnership demonstrator; ResDMD is the incumbent for "rigorous DMD";
+  climate wants uncertainty-spanning robustness, NOT interval arithmetic on
+  a fixed Ulam matrix; RL/epidemiology: no pull. Key line: "A 100-digit
+  eigenvalue enclosure for one fixed Ulam matrix is not the requested
+  outcome" — the certified-stack transfer is conditional-certificate
+  tooling, not raw precision.
