@@ -89,3 +89,6 @@ directive 2026-08-15
   per-step significance pivot, spectroscopy-as-tool, QMC applications). —
   source: memory DO-NOT-RE-CHASE list + kill-gate records
 - Practical-value scouting (owner directive 2026-08-16): 4 luna/codex research lanes launched — prior art on (1) AI-verified math pipeline, (2) certified spectral computation, (3) QMC/hyperuniformity crossover; (4) demand assessment for certified transfer-operator numerics (climate/Koopman/MSM/control). Reports land in research_notes/practical_value_2026-08-16/ (file-drop = completion signal; codex unpollable). Frontier to synthesize on landing.
+- [Pipeline packaging (public repo)](tickets/pipeline-packaging.md) — open; design-doc first, packaging after flagship paper; owner directive 2026-08-16
+- [Certified spectral engine library](tickets/spectral-engine-packaging.md) — open; companion artifact to flagship paper; owner directive 2026-08-16
+- [MD timescale certificate pilot](tickets/md-timescale-certificate-pilot.md) — open; KT1 (incumbent check) launched 2026-08-16; kill-first ladder, KT3 owner-gated
