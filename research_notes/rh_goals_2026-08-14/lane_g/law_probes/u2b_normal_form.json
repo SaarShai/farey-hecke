@@ -1,0 +1,46 @@
+{
+ "claim": "S R^a = -M_a, S R^-a = M_a^T, det M_a = 1, exact in Z[lam]",
+ "exact_identity": {
+  "all_ok": true,
+  "a_range": "1..25",
+  "rows": [
+   {
+    "a": 1,
+    "SRa_eq_negMa": true,
+    "SRnega_eq_MaT": true,
+    "detMa_eq_1": true
+   },
+   {
+    "a": 2,
+    "SRa_eq_negMa": true,
+    "SRnega_eq_MaT": true,
+    "detMa_eq_1": true
+   },
+   {
+    "a": 3,
+    "SRa_eq_negMa": true,
+    "SRnega_eq_MaT": true,
+    "detMa_eq_1": true
+   },
+   {
+    "a": 4,
+    "SRa_eq_negMa": true,
+    "SRnega_eq_MaT": true,
+    "detMa_eq_1": true
+   },
+   {
+    "a": 5,
+    "SRa_eq_negMa": true,
+    "SRnega_eq_MaT": true,
+    "detMa_eq_1": true
+   }
+  ]
+ },
+ "numeric_q_4_to_400": {
+  "all_nonneg": true,
+  "M1_M q-1_shape": true,
+  "heavy_u_ge_lam": true,
+  "light_u_eq_1": true,
+  "min_entry": -4.054142719820999e-14
+ }
+}

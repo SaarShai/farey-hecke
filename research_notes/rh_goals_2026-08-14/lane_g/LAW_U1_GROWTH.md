@@ -741,3 +741,17 @@ over an 8× range of q.
 float, finite q-range, proxy modulo U4). The T2′ tail argument survives its
 third and final deciding test of 2026-08-16 (D1 migration ✓, U1-φ exponent
 −3 ✓ overdetermined, guard flat ✓). Routing per plan: fund U2b.**
+
+## §11 Correction notice 2026-08-16 (from LAW_U2B_CLOSURE.md)
+
+Two defects in §2.3, found and repaired by the U2b lane:
+1. **Conjecture U1-2 is FALSE as stated** — counterexample |tr(S R⁵)| =
+   2|λ⁴−3λ²+1|: 2.00 → 2.50 → 0 → 10 across λ = 1 → 1.2434 → λ₅ → 2
+   (independently re-verified by frontier). Correct theorem: monotone on
+   [2cos(π/(A+1)), 2], A = max|a_i| — exactly the normal-form levels. The
+   19,765-pair test never entered the false region (faithful lifts only).
+2. **The Γ_θ comparison inference was backwards**: ℓ_w(λ_q) ≤ ℓ_w(2) gives
+   N_q(L) ≥ N_θ(L) (more short geodesics, not fewer). The multi-syllable
+   non-faithful excess bound this note asked for is DISSOLVED, not deferred.
+Status of §2's bound: superseded by LAW_U2B_CLOSURE.md §§2-4 (uniform bound
+proved for Re s ≥ 3.5 with explicit constants; method floor σ₀ = 3.05).

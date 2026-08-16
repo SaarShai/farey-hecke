@@ -1182,3 +1182,131 @@ Deliverable `lane_g/LAW_U1_GROWTH.md`; probes `lane_g/law_probes/probe_u1_growth
 - Receipts/report: `lane_g/m1g_receipts/q4_chi_k2_v2.json`,
   `lane_g/M1G_V2_THEOREM_GRADE.md`. Verdict unchanged at 0/8
   CANDIDATE-CERTIFIED (v1 was 0/8 CERTIFIED).
+
+## 2026-08-16 — Lane G: SECOND_PIN_PREP (prep only, ticket second-g5-pin)
+
+- Prepared (NOT executed) the certification package for a second G_5 pin at
+  `0.24302842340131198 + 10.560296779143401 i` (N=22 value; scan source
+  `resonance_v2.json g5_even_localization[9]`, winding=1 at scan level).
+  Deliverable: `lane_g/SECOND_PIN_PREP.md`.
+- Reuse verdicts vs the flagship R3b chain: TB V2 blocks, E1 enlarged, and the
+  K_s gate are box-INDEPENDENT and reusable verbatim (sha pins stand); W V2
+  envelope, R2 envelope, and the endpoint B bound are box-LOCAL and must be
+  re-run — all degrade at the new box (p: 0.908 → 0.486, |t|: 5.76 → 10.56).
+- K_s gate at the new pin: exact lattice Re ≤ 0 covers it; point clearance
+  **0.481952** (rounded down; NON-RIGOROUS float re-eval of the flagship metric)
+  — larger than the flagship's own 0.455100. CLEAR.
+- Plan: Phase 0 re-pin at N=22/28/36/44 (scan re_spread 4.5e-6 exceeds the 1e-6
+  half-width — box not yet freezable); Phase 1 box-local receipt re-runs in
+  copies; Phase 2 local smoke arc (~7 min); Phase 3 16-chunk Kaggle run reusing
+  the lane_f kaggle_f7 pattern (~17–27 CPU-h, NON-RIGOROUS flagship
+  calibration); Phase 4 merge (helper currently REJECTS subdivided chunks —
+  flagship needed 92); Phase 5 control arm + assembly.
+- Blockers recorded (B1–B8): box freeze, F_R closure at N=160 not inferable,
+  merge-helper subdivision rejection, bundle generator rewrite, hash-pin
+  plumbing, K3 latent-hazard guards, V1 convention sensitivity, live-lane
+  constraints. No compute run; no receipts touched; nothing committed.
+
+## 2026-08-16 — Lane G: (U1-φ) prediction test — `lane_g/LAW_U1PHI_TEST.md`
+
+- Ran the second deciding test for the LAW tail: the falsifiable prediction (5.1) of
+  `lane_g/LAW_U1_GROWTH.md`, `|φ_q(2+it)| = O(q⁻³)` (obligation **U1-φ-a**).
+  Independent of the running sup-guard extension; `law_probes/u1_guard_extended.*`
+  and `lane_f` untouched; nothing committed.
+- **Literature: NEGATIVE and honest.** Hejhal, *Eigenvalues of the Laplacian for Hecke
+  triangle groups*, Memoirs AMS 469 (1992) — existence confirmed, **text not obtained**
+  (AMS paywall); likewise Hejhal ASPM 21 (1992) and Winkler (1988). No explicit `φ_q`,
+  no table, no cusp-width normalisation factor, and no `q → ∞` asymptotic was retrieved
+  for non-arithmetic Hecke groups anywhere. **Nothing imported; nothing attributed.**
+  `LAW_U1_GROWTH.md` §9's "literature lookup plus one plot" is not executable at this
+  access level, so the test was redesigned onto the repo's own machinery.
+- **Derivation.** (5.1) re-derived from scratch by comparing Teo Prop. 2.5 for signature
+  `(0;1;2,q)` against `(0;2;2)` — exact match including the `π` (= `2π` from `E_q`'s
+  asymptotic ÷ `2` from the cusp-count difference `C = −n log 2`). The Γ-skeleton
+  satisfies `R(s)R(1−s) = 1` identically (verified to `1.1e−42`), i.e. it is exactly
+  unitarity-compatible — the provable-today half. **New: Lemma U1φ-1, `(U1-φ-a) ⟺ U1`**
+  (the parent note recorded only sufficiency), which is what made this a deciding test.
+- **Method.** On `Re s = 1/2`, `κ_q = exp(−2i·arg Z_q)`, so one determinant evaluation per
+  point gives the whole functional-equation kernel and `Re s = −1` is never visited. All
+  factors have modulus 1 there, so (5.1) becomes a pure **phase** statement — disjoint from
+  what the sup-guard (a modulus) can see. Probe `law_probes/probe_u1phi.py`, N=32, 400-bit,
+  two heights `t = 1.5` (10 `q`) and `t = t_∞ = 7.0674` (8 `q`), `q` even, 12…40.
+- **VERDICT: PREDICTION-CONSISTENT. Fitted exponent −3.08 (LSQ) / −3.07 (endpoint), vs
+  predicted −3, vs null 0.** Model-free: the null demands a monotone 17.02 rad phase drift
+  at `t = t_∞`; observed span is 2.02 rad and non-monotone — factor 8.4 too small, wrong shape.
+- **Caveats reported, not buried.** The pure-power ansatz *alone* is refuted (slope ratio
+  1.37 vs the required 4.71); it is repaired by a `t`-independent additive drift `δ ≈ −0.71`,
+  and that two-height repair (`α = 1.026`) is a **zero-degree-of-freedom fit**. Single-height
+  fits disagree (−3.79 vs −3.23) and a `γ/q` robustness term flips the slope's sign at
+  `t = 1.5`. All float, midpoint, no certificate; the object measured is the transfer-operator
+  proxy, so **U4 is promoted** — it now carries a phase, not just a modulus.
+- **Unasked-for, and it corrects a parent note.** Broke `u1_sup.json` down **per point** for
+  the first time: of the eight `∂U` points, **five decrease** in `q`, and the `+1.50` rise is
+  confined to `Re s ≤ 0.0732` — the two points on/beside `∂Ω*` where R5 gives no identification.
+  At `Re s = 1/2` the slope is **−0.78**. `LAW_U1_GROWTH.md` §7.3's "the quantity U1 asserts to
+  be bounded is growing" over-reads its own data; correction owed there.
+- **Also new:** `arg P_q(2.0) = 0` exactly at 14 values of `q`, so the determinant proxy carries
+  no spurious `q`-dependent phase (never checked before — earlier probes used `|P_q|` only);
+  and `|P_q|` reproduces `u1_sup.log`'s control column to all printed digits on a different
+  interpreter.
+- **Next, cheapest first:** a **third height** `t = 3.5` (~25 min) to give (4.1) a degree of
+  freedom and test `δ`'s `t`-independence; then pin `δ` from the closed-form `t`-independent
+  factors of `κ_q`; then extend to `q = 56, 72`. Hejhal Memoirs 469 remains owed to a human
+  with library access.
+
+---
+
+## 2026-08-16 — Lane G: **U2b CLOSED** (both halves), and two corrections to `LAW_U1_GROWTH.md` §2.3
+
+**Artifact:** `lane_g/LAW_U2B_CLOSURE.md`. Probes: `lane_g/law_probes/u2b_normal_form.py`,
+`u2b_systole.py`, `u2b_monotone.py`, `u2b_counting.py`, `u2b_direction.py` (+ `.json` receipts).
+Nothing committed; `lane_f/` and `law_probes/u1_guard_extended.*` untouched.
+
+- **One mechanism did both halves.** In the free-product normal form `G_q ≅ Z/2 * Z/q`,
+  `S R^a = −M_a` with `M_a = [[u_a, u_{a+1}],[u_{a−1}, u_a]]`, `u_j = sin(jπ/q)/sin(π/q)` —
+  **entrywise nonnegative, `det = 1`**. So `|tr w|` is a sum of nonnegative path products and
+  every bound is "keep one path". Verified in **exact integer-polynomial arithmetic** (`a ≤ 25`).
+- **(a) SYSTOLE — `PROVED`.** `min |tr γ| = 2λ_q` over primitive hyperbolic `γ ∈ G_q`, `q ≥ 4`,
+  equality **iff** `[S R^{±2}]`. Hence **`sys(G_q) = 2 arccosh λ_q` exactly**. Exhaustive check:
+  **1 508 638** primitive cyclic words at 18 levels `q = 3…100`, five independent checks, all
+  pass. The same proof returns the classical `sys(PSL(2,Z)) = 2 arccosh(3/2)` at `q = 3` — an
+  independent confirmation the mechanism is right. **Discharges `LAW_U1_GROWTH.md` U1.4 and
+  `LAW_T2_DETERMINANT.md` §3.4's `HEURISTIC`**; the collar-lemma `GAP` there is now moot.
+- **No citation closes it.** Literature scout (Schmidt–Sheingorn Math. Z. 220 (1995),
+  Haas–Series J. LMS 34 (1986), Schmutz Schaller) found **no published systole of `G_q`**.
+  Schmidt–Sheingorn is paywalled and remains a `TODO-VERIFY` on **priority**, not correctness.
+- **CORRECTION 1 — Conjecture U1-2 is FALSE as literally stated.** `|tr w(λ)|` is *not*
+  nondecreasing on `(1,2]`: `|tr(S R⁵)| = 2|λ⁴−3λ²+1|` runs `2.00 → 2.50 → 0 → 10` across
+  `λ = 1 → 1.2434 → λ₅ → 2`. The **correct** version is a theorem, proved here: monotone on
+  `[2cos(π/(A+1)), 2]`, `A = max|a_i|` — exactly the levels `q ≥ A+1` where the word is
+  normal-form. The 19 765-pair test was restricted to faithful lifts and so never entered the
+  false region; the test was right, the statement it was read as supporting was not.
+- **CORRECTION 2 — the `Γ_θ` comparison inference is backwards, and it is load-bearing.**
+  `ℓ_w(λ_q) ≤ ℓ_w(2)` gives *shorter* `G_q` geodesics, hence **more** below `L`:
+  `N_q(L) ≥ N_θ(L)`, not `≤`. Measured independently: `N_θ(4) = 7` (matching the parent note
+  exactly) against `N_q(4) = 10, 10, 11, 9, 7, 7, 7`; `N_q ≥ N_θ` at **all 21** `(L,q)` pairs.
+  §2.3's "crossover at `q ≈ 22`" is equality reached **from above**. Consequence: the
+  "multi-syllable non-faithful excess" the brief asked to bound is **dissolved, not deferred** —
+  no bound on it could have worked, because the inequality it repairs points the wrong way.
+- **(b) COUNTING — `PROVED` directly, at a stated price.** Two path bounds
+  (`|tr w| ≥ 2∏_{heavy}u_{a_i}` and `|tr w| ≥ λ^k∏p_j` over maximal light runs) interpolate to a
+  block-multiplicative bound, giving `Σ|tr|^{−2σ} ≤ 2^{−e_h}log(1/(1−W_q))` with
+  `W_q = Σ_{a=2}^{q−2}u_a^{−e_h} + 2λ_q^{−e_l}ζ(e_l)`. Result: **`S_q(σ) ≤ 0.4861` and
+  `|Z_{G_q}(s)| ≤ 1.6259` for `Re s ≥ 3.5`, every `q ≥ 5`**, explicit constants.
+- **The price, stated plainly.** The method's convergence floor is **`σ₀ = 3.05`, not `3/2`**
+  (`sup_q W_q = 4.99` at `σ = 3/2`). Lemma U1-0 is restated and re-proved for a general
+  threshold (§4.4) — harmless, since Vitali needs only accumulation points, not all of
+  `{Re s > 1}` — but the compact rectangle grows `0.6×1.6 → 0.6×3.6`.
+- **The one liability created for another lane.** With `σ₀ = 3.5` the functional-equation
+  reflection moves to `Re s = −2.5`, so **(U1-φ)'s exponent becomes `q^{−(2σ₀−1)} = q^{−6}`,
+  not `q^{−3}`**. `LAW_U1PHI_TEST.md` fitted `−3` at `Re s = 2`. **`TODO-VERIFY`: re-run
+  `probe_u1phi.py` at `Re s = 3.5`** — one abscissa change, and it is the cheapest next step.
+- **Remaining `GAP`s, both small.** `sup_q W_q < 1` verified at 44 values `q ≤ 3000`, not proved
+  for all `q` (both ingredients are already proved above — a writing gap, Aristotle target A4).
+  Recovering `σ₀ = 3/2` needs `tr(∏M_{a_i}) ≥ ∏ρ(M_{a_i})`, which is false for general
+  nonnegative `SL₂` matrices but may hold on this never-diagonal family; not attempted, not urgent.
+- **Aristotle-able, numbered in `LAW_U2B_CLOSURE.md` §6.** A1 (the Chebyshev normal form —
+  exact, short, and everything depends on it), A2 (trace ≥ any nonnegative cyclic path product),
+  A3 (the systole theorem given A1+A2), A6 (the counterexample). A5 (`t cot t` antitone) is the
+  one item that is genuinely analysis; A4 follows from it. **A1 is worth submitting alone.**
+- **U2b was never the crux, and closing it does not move the crux.** (U1-φ) is untouched.

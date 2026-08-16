@@ -1,0 +1,209 @@
+{
+ "probe": "u2b_monotone",
+ "g_tcot_decreasing": {
+  "monotone": true,
+  "n_samples": 200001,
+  "g(0+)": 0.9999999999996667,
+  "g(pi-)": -3141591.654160034
+ },
+ "u_j_increasing_on_its_interval": {
+  "all_ok": true,
+  "j_range": "2..25",
+  "rows": [
+   {
+    "j": 2,
+    "lam_lo=2cos(pi/j)": 1.2246467991473532e-16,
+    "increasing_on_[lo,2]": true,
+    "min_u": 1.2246467991473532e-16
+   },
+   {
+    "j": 3,
+    "lam_lo=2cos(pi/j)": 1.0000000000000002,
+    "increasing_on_[lo,2]": true,
+    "min_u": 1.414100318299876e-16
+   },
+   {
+    "j": 4,
+    "lam_lo=2cos(pi/j)": 1.4142135623730951,
+    "increasing_on_[lo,2]": true,
+    "min_u": 1.7319121124709868e-16
+   },
+   {
+    "j": 5,
+    "lam_lo=2cos(pi/j)": 1.618033988749895,
+    "increasing_on_[lo,2]": true,
+    "min_u": 2.0834935792808685e-16
+   }
+  ]
+ },
+ "counterexample_literal_U1_2": {
+  "word": "S R^5  (single syllable a=5, legitimate normal form for every q >= 6)",
+  "table": [
+   {
+    "lam": 1.0,
+    "u_5": -1.0,
+    "|tr(SR^5)|": 2.0
+   },
+   {
+    "lam": 1.1,
+    "u_5": -1.1659,
+    "|tr(SR^5)|": 2.3318
+   },
+   {
+    "lam": 1.2434,
+    "u_5": -1.24788,
+    "|tr(SR^5)|": 2.49576
+   },
+   {
+    "lam": 1.35,
+    "u_5": -1.145994,
+    "|tr(SR^5)|": 2.291987
+   },
+   {
+    "lam": 1.414214,
+    "u_5": -1.0,
+    "|tr(SR^5)|": 2.0
+   },
+   {
+    "lam": 1.5,
+    "u_5": -0.6875,
+    "|tr(SR^5)|": 1.375
+   },
+   {
+    "lam": 1.618034,
+    "u_5": 0.0,
+    "|tr(SR^5)|": 0.0
+   },
+   {
+    "lam": 1.75,
+    "u_5": 1.191406,
+    "|tr(SR^5)|": 2.382813
+   },
+   {
+    "lam": 1.732051,
+    "u_5": 1.0,
+    "|tr(SR^5)|": 2.0
+   },
+   {
+    "lam": 1.95,
+    "u_5": 4.051506,
+    "|tr(SR^5)|": 8.103012
+   },
+   {
+    "lam": 2.0,
+    "u_5": 5,
+    "|tr(SR^5)|": 10
+   }
+  ],
+  "monotone_on_(1,2]": false,
+  "note": "|tr| rises to ~2.50 at lam=1.2434, falls to 0 at lam=lam_5, then rises to 10 at lam=2"
+ },
+ "monotone_on_correct_interval": {
+  "words_tested": 1212,
+  "violations": 0
+ },
+ "direction_check": {
+  "rows": [
+   {
+    "L": 4.0,
+    "q": 8,
+    "N_q": 10,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 4.0,
+    "q": 10,
+    "N_q": 10,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 4.0,
+    "q": 12,
+    "N_q": 11,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 4.0,
+    "q": 16,
+    "N_q": 9,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 4.0,
+    "q": 22,
+    "N_q": 7,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 4.0,
+    "q": 30,
+    "N_q": 7,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 4.0,
+    "q": 50,
+    "N_q": 7,
+    "N_theta": 3,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 8,
+    "N_q": 26,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 10,
+    "N_q": 24,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 12,
+    "N_q": 26,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 16,
+    "N_q": 26,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 22,
+    "N_q": 25,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 30,
+    "N_q": 23,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   },
+   {
+    "L": 5.0,
+    "q": 50,
+    "N_q": 23,
+    "N_theta": 9,
+    "N_q>=N_theta": true
+   }
+  ],
+  "all_N_q_ge_N_theta": true,
+  "claim": "N_q(L) >= N_theta(L); the note's N_q <= N_theta inference is backwards"
+ }
+}
