@@ -1,0 +1,38 @@
+import math, itertools, sys
+def u(j,lam):
+    if abs(lam-2.0)<1e-15: return float(j)
+    th=math.acos(lam/2.0); return math.sin(j*th)/math.sin(th)
+def tr_word(w,uu):
+    P=((1.0,0.0),(0.0,1.0))
+    for a in w:
+        aa=abs(a)
+        B=((uu[aa],uu[aa+1]),(uu[aa-1],uu[aa])) if a>0 else ((uu[aa],uu[aa-1]),(uu[aa+1],uu[aa]))
+        P=((P[0][0]*B[0][0]+P[0][1]*B[1][0],P[0][0]*B[0][1]+P[0][1]*B[1][1]),
+           (P[1][0]*B[0][0]+P[1][1]*B[1][0],P[1][0]*B[0][1]+P[1][1]*B[1][1]))
+    return abs(P[0][0]+P[1][1])
+def count(alpha,lam,L,mmax,amax):
+    uu={j:u(j,lam) for j in range(0,amax+2)}
+    n=0
+    for m in range(1,mmax+1):
+        for w in itertools.product(alpha,repeat=m):
+            if w!=min(w[i:]+w[:i] for i in range(m)): continue
+            rots=set(w[i:]+w[:i] for i in range(m))
+            if len(rots)!=m: continue
+            t=tr_word(w,uu)
+            if t>2+1e-9 and 2*math.acosh(t/2)<=L+1e-9: n+=1
+    return n
+print("N_theta(L) truncation sensitivity:")
+for L in (4.0,5.0,6.0):
+    row=[]
+    for (amax,mmax) in [(8,4),(14,4),(30,4),(8,5),(14,5)]:
+        alpha=[a for a in range(-amax,amax+1) if a!=0]
+        row.append(((amax,mmax),count(alpha,2.0,L,mmax,amax)))
+    print("  L=",L,row); sys.stdout.flush()
+print("small-q N_q vs N_theta (both m<=4, N_theta amax=8):")
+for L in (4.0,5.0,6.0):
+    alpha=[a for a in range(-8,9) if a!=0]
+    nth=count(alpha,2.0,L,4,8)
+    for q in (5,6,7,8):
+        nq=count(list(range(1,q)),2*math.cos(math.pi/q),L,4,q)
+        print(f"   L={L} q={q}: N_q={nq}  N_theta={nth}  ok={nq>=nth}")
+    sys.stdout.flush()
