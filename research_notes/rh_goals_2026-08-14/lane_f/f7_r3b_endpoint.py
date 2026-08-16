@@ -29,6 +29,11 @@ import f7_r3b_engine as f7eng  # noqa: E402
 EXACT_FACTORS = f7eng.EXACT_FACTORS
 KAPPA = f7eng.KAPPA
 ENLARGEMENT_MARGIN_DIVISOR = 4
+# Stage-4b re-optimization (F7_4B_REOPT_REPORT.md): the clearance-only rule
+# `clearance/4` produced enlargements 2-6x the source radius itself, pushing six
+# full-Markov blocks' enlarged-contour ratios above 1.  Cap the enlargement at a
+# fraction of the disc's own radius as well; "0" disables the cap (legacy rule).
+ENLARGEMENT_RELATIVE_CAP = "0.15"
 
 PIN_RE = "0.4751647621098225"
 PIN_IM = "4.668743786424289"
@@ -68,7 +73,7 @@ def _clearance_map(rows: list[dict[str, Any]]) -> dict[tuple[Any, ...], arb]:
 
 
 def derive_enlarged_discs(tb_v2: dict[str, Any]) -> dict[tuple[Any, ...], dict[str, arb]]:
-    """Use one quarter of each certified clearance as enlargement slack."""
+    """Enlargement slack = min(certified clearance / DIVISOR, CAP * own radius)."""
 
     radii = [arb(value) for value in tb_v2["source_radii"]]
     pole = _clearance_map(tb_v2["pole_clearance"])
@@ -82,6 +87,9 @@ def derive_enlarged_discs(tb_v2: dict[str, Any]) -> dict[tuple[Any, ...], dict[s
             raise ArithmeticError(f"nonpositive source clearance for {block}")
         original = radii[i - 1].upper()
         enlargement = (clearance / arb(ENLARGEMENT_MARGIN_DIVISOR)).lower()
+        if ENLARGEMENT_RELATIVE_CAP != "0":
+            relative_cap = (arb(ENLARGEMENT_RELATIVE_CAP) * original).lower()
+            enlargement = arb.min(enlargement, relative_cap).lower()
         enlarged = (original + enlargement).lower()
         eta = (original / enlarged).upper()
         remaining = (clearance - enlargement).lower()
@@ -297,6 +305,11 @@ def certify_enlarged_contour_sups(
             "original_radius_upper_bound": arb_text(geometry["original_radius"]),
             "certified_clearance_lower_bound": arb_text(geometry["certified_clearance"]),
             "enlargement_clearance_fraction": f"1/{ENLARGEMENT_MARGIN_DIVISOR}",
+            "enlargement_relative_cap": ENLARGEMENT_RELATIVE_CAP,
+            "enlargement_rule": (
+                f"min(clearance/{ENLARGEMENT_MARGIN_DIVISOR}, "
+                f"{ENLARGEMENT_RELATIVE_CAP}*R_i)"
+            ),
             "enlargement_lower_bound": arb_text(geometry["enlargement"]),
             "enlarged_radius": arb_text(enlarged_radius),
             "remaining_pole_cut_clearance_lower_bound": arb_text(

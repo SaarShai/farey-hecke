@@ -1,0 +1,45 @@
+{
+  "F_R_formula": "T_tail(N) * exp(1 + 2*B_same(N))",
+  "N_star_smallest_passing": 238,
+  "difference_from_v1": "v1 used the endpoint-B receipt's finite column-norm sum (20.1696...) with no enlarged-disc output-tail correction; v2 uses the certified B_same from the capped enlarged contours.",
+  "m0": {
+    "status": "NON-RIGOROUS FLOAT PREPARATION \u2014 sampled boundary minimum, NOT a cover",
+    "value": 3.313176035446919e-06
+  },
+  "rows": [
+    {
+      "B_same_float": 20.169636790269674,
+      "B_same_upper_bound": "[20.1696367902696746667976746659570679754174432188490594458046194339054412890875478124709463735949966440340201135109903123 +/- 9.55e-120]",
+      "F_R_float": 1.3287614234625837e-05,
+      "F_R_upper_bound": "[1.32876142346258370491175394259e-5 +/- 4.94e-35]",
+      "N": 224,
+      "T_tail_upper_bound": "[1.47920582813255397486038026195541655523776485765482749995690405400258176646612178491584090780000001972005630934915596117e-23 +/- 4.33e-143]",
+      "margin_lower_bound_float": -1.2956296631081146e-05,
+      "passes_F_R_le_0_1_m0": false
+    },
+    {
+      "B_same_float": 20.169636861088687,
+      "B_same_upper_bound": "[20.1696368610886860149786475712975456754156102554749124101987302173381657045539373903233976140417425258217947341526978723 +/- 3.96e-119]",
+      "F_R_float": 2.931669174250948e-07,
+      "F_R_upper_bound": "[2.93166917425094802529145088166e-7 +/- 1.95e-37]",
+      "N": 238,
+      "T_tail_upper_bound": "[3.26359678864612749250095529680497293774238895103758139549649774396432023341218675966958434300000015432779531779420793694e-25 +/- 1.30e-145]",
+      "margin_lower_bound_float": 3.8150686119597096e-08,
+      "passes_F_R_le_0_1_m0": true
+    },
+    {
+      "B_same_float": 20.169636923385173,
+      "B_same_upper_bound": "[20.1696369233851726616432679821677504941481029718723014577764950291883553354354494436604270933728235101806024026057766324 +/- 1.53e-119]",
+      "F_R_float": 2.1662244648940724e-09,
+      "F_R_upper_bound": "[2.16622446489407224798885434148e-9 +/- 1.49e-40]",
+      "N": 256,
+      "T_tail_upper_bound": "[2.41148707650088217867409951361730712860260167938400980276768866388874131596635410539861890808000003354449905512392399933e-27 +/- 3.48e-147]",
+      "margin_lower_bound_float": 3.2915137907979784e-07,
+      "passes_F_R_le_0_1_m0": true
+    }
+  ],
+  "rule": "N* = smallest N with F_R(N) <= 0.1 * m0",
+  "rule_status": "PLANNING GATE, NOT A CERTIFICATE: F_R is certified (Arb), m0 is a NON-RIGOROUS sampled boundary minimum.",
+  "schema": "f7-stage2-FR-decision/v2",
+  "threshold_0_1_m0": 3.313176035446919e-07
+}

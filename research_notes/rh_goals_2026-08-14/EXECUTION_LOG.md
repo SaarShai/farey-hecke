@@ -777,3 +777,45 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   No structural blocker: the q=5 certification design generalizes to κ=5 /
   19 blocks unchanged. Report: `lane_f/F7_TB_R2_RECEIPTS.md`; receipts under
   `lane_f/f7_receipts/`. Not committed; no Kaggle; no other lanes touched.
+
+## 2026-08-15 — F7 STAGE 4b UNBLOCKED (enlarged-contour re-optimization)
+
+- **Blocker** (`f7_receipts/smoke/F7_R3B_SMOKE_CERT.md`): the stage-4b ENLARGED
+  contour pushed six full-Markov head/tail blocks' ratios above 1 (worst 2.7353,
+  `4→2, +1, head`), so `U_{B,k}` grew like ρ̂^k, the output-tail corrections hit
+  7.07e+7 at N=256, and `F_R` overflowed to ~1.98e+61452309.
+- **Root cause — a porting defect, not κ=5 geometry.** The enlargement rule
+  `e_B = clearance_B/4` referenced only the pole/branch-cut clearance, never the
+  disc's own radius. At q=7 the clearances are 1.0–4.4 while the radii are
+  0.14–0.29, so a quarter-clearance is **2.4–6.3× the radius**. The q=5 analogue's
+  flat `ε = 0.1` had been an implicit ~30–50% relative enlargement; the q=7 port
+  silently left that regime.
+- **Fix (5 lines, `f7_r3b_endpoint.py`)**: `e_B = min(clearance_B/4, CAP·R_i)`,
+  `CAP = 0.15` (`"0"` restores the legacy rule; the rule + cap are written into
+  every per-block record). **Radii unchanged** at the adopted
+  `(3.522, 2.622, 2.372, 1.79, 1.6)` — deliberately, so d₅ = 1.6 and the
+  endpoint tail-column-growth lesson are not regressed.
+- Cap scan (Arb 384-bit, M=512, all 19 blocks): ρ̂ = 0.8635 (CAP 0.10),
+  **0.9152 (0.15)**, 0.9682 (0.20), 1.0223 (0.25 — FAIL). Binding block is
+  `5→3, +1, head` at every cap — the same block that binds the un-enlarged ρ\*.
+- **All three gates PASS** (`f7_stage4b_reopt.py`, 174.7 s):
+  1. un-enlarged **ρ\* ≤ 0.763212029206899202166157** < 0.80 — TB, W and R2
+     receipts all re-run and reproduced **byte-identically**;
+  2. **ρ̂ ≤ 0.9152411837446922** (rounded UP), all 19 enlarged ratios < 1,
+     η ≤ 0.8695652173913044, all remaining clearances positive — *below* the
+     q=5 chain's ρ̂ ≤ 0.9484;
+  3. **B_same ≤ 20.1696369234** < 30 and flat (ΔB < 1.4e−7 over N=224→256).
+     Output-tail corrections fell from 7.07e+7 to **7.71e−13**.
+- **F_R** (= T_tail·exp(1+2·B_same)): 1.328761e−05 (224, fails), **2.931669e−07
+  (238, PASS ×1.13)**, **2.166224e−09 (256, PASS ×153)** vs 0.1·m₀ = 3.313176e−07.
+  m₀ stays NON-RIGOROUS (96-point N=32 sample), so this is the planning gate for
+  freezing N\*, not a certificate. N\* = 238; frozen N_PRIMARY = 256 unchanged.
+- **Verdict: GO for the Kaggle closed-contour launch.** Nothing upstream needs
+  revision (radii, N\* freeze, and the 16-way chunk table all stand). The winding
+  phase remains unexecuted — its ~420 CPU-h cost is still an estimate.
+- Report: `lane_f/F7_4B_REOPT_REPORT.md`. New receipts:
+  `F7_E1_ENLARGED_CONTRACTION_V2_RECEIPT.json`,
+  `F7_R3B_ENDPOINT_V2_RECEIPT.json`, `F7_STAGE2_FR_V2_RECEIPT.json`.
+  Old receipts kept; `f7_r3b_endpoint.py` sha256 moved
+  `3ad7918899c70bda…` → `3d397de009122966…`, so the smoke receipts' recorded
+  hash is now historical. Not committed; no Kaggle; no other lanes touched.
