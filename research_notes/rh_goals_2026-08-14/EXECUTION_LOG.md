@@ -929,3 +929,31 @@ Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
   Mathlib API and not finitely stateable without draining the claim's content —
   see `SKIPPED.md`). Submitted via `aristotle submit --project-dir .`, project
   id `2fc741e0-31f6-4559-a8cc-b4200f6feb25`, not awaited.
+
+## Lane F — q=7 R3b stage-3 Kaggle launch (2026-08-15/16)
+
+- Stage 4b's enlarged-contour fix (`F7_4B_REOPT_REPORT.md`) verified: both
+  hardcoded sha256 pins in `f7_certify_r3b_flagship.py` (R2, TB V2 receipts)
+  already matched the live files — no pin edit was needed; the fixed
+  `f7_r3b_endpoint.py`'s hash is computed live, never pinned, in that script.
+- **One-arc smoke (`--arcs 0:1`, N=256/224, 4 workers): PASS.** 2622.9 s
+  (43.7 min, under the 45-min ceiling). Base arc 0 at N=256 is FINITE and
+  gate-passing (`chunk_gate_pass=True`, no subdivision needed); N=224's
+  control arm fails on arc 0 exactly as designed (NOT_CERTIFIED below the m₀
+  threshold, `F_R≈1.329e-5` reproducing the stage-4b report's table value).
+- Built 16 self-contained private Kaggle bundles (`lane_f/kaggle_f7/`),
+  `--arcs 0:12 .. 180:192` per the frozen chunk table. Each embeds its full
+  dependency closure (zlib+base64, ≈275–285 KB, under Kaggle's 1 MB script
+  cap) at the exact hardcoded absolute paths `f7_certify_r3b_flagship.py`'s
+  import graph and hash pins require — discovered iteratively via three
+  Kaggle-side `ModuleNotFoundError`/`FileNotFoundError` failures
+  (`tc_rerun`, `lane_g/tb_disc_opt.json`, `f7_certify_r2_flagship.py`, etc.),
+  each fixed and re-pushed until chunk 00 sustained `RUNNING` past 9.5 min
+  (real compute, not an import crash).
+- Extrapolated CPU-h/chunk from the smoke arc: ≈5.4 CPU-h optimistic /
+  ≈10.7 CPU-h with a 2× subdivision buffer — no chunk needs splitting.
+- **Pushed and RUNNING (5/16, Kaggle's concurrent-CPU-session cap):**
+  `saarshai/f7-r3b-chunk-00` .. `f7-r3b-chunk-04`. **Queued (11/16, bundles
+  built and verified, ready to push as slots free):** chunks 05–15, in
+  order. See `lane_f/F7_STAGE3_LAUNCH.md` for the full slug/queue table and
+  caveats.
