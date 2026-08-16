@@ -1,0 +1,16 @@
+C1 assembly q=3: |K_3(1/2+i t_inf)| = 1.000000000000
+C1 unitarity: |phi_3(1/2+i t_inf)| = 1.000000000000
+q=3 sigma=1.25: P(s)=8.456371e-01 P(1-s)=2.449148e+00 LHS=2.896216e+00 |phi3|exact=4.593593e-01 |K3|=6.852875e-05 RHS=3.147932e-05  ratio=9.200377e+04
+q=3 sigma=1.4: P(s)=8.859662e-01 P(1-s)=4.961752e+00 LHS=5.600385e+00 |phi3|exact=5.109524e-01 |K3|=1.005076e-05 RHS=5.135459e-06  ratio=1.090533e+06
+q=3 sigma=1.5: P(s)=9.069470e-01 P(1-s)=7.832282e+00 LHS=8.635876e+00 |phi3|exact=5.366999e-01 |K3|=2.793609e-06 RHS=1.499330e-06  ratio=5.759824e+06
+
+C2 N-convergence, N = 24,32,48,64
+  s sigma=1.25           Re s=+1.2500  P=0.8456371451975448  drift(48->64)=3.938650392536164e-16
+  mirror sigma=-0.25     Re s=-0.2500  P=2.449147973853498  drift(48->64)=1.8132396024701237e-16
+  s sigma=1.4            Re s=+1.4000  P=0.885966163497939  drift(48->64)=0.0
+  mirror sigma=-0.40     Re s=-0.4000  P=4.961751673860739  drift(48->64)=0.0
+  s sigma=1.5            Re s=+1.5000  P=0.9069470136688844  drift(48->64)=2.4482643592021046e-16
+  mirror sigma=-0.50     Re s=-0.5000  P=7.832281702125336  drift(48->64)=0.0
+
+VERDICT: max |log10(LHS/RHS)| = 6.760 -> (b) Teo kappa assembly is the fault
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/mirror_q3.json

@@ -1,0 +1,76 @@
+{
+ "description": "back-solve the Barnes-bracket exponent e that would make P_q(1-s)/P_q(s) = |phi_q(s)||K_q(s)| hold",
+ "nominal_exponent": "(1-2/q)/2",
+ "rows": [
+  {
+   "q": 3,
+   "sigma": 1.25,
+   "LHS_ratio": 2.89621616997603,
+   "abs_bracket": 2.407659969028515e-15,
+   "required_bracket_power": 336.8253869446964,
+   "required_exponent_e": -0.1728919703384106,
+   "nominal_exponent": 0.16666666666666666,
+   "e_minus_nominal": -0.33955863700507727
+  },
+  {
+   "q": 3,
+   "sigma": 1.4,
+   "LHS_ratio": 5.60038506918925,
+   "abs_bracket": 2.861720094623069e-18,
+   "required_bracket_power": 1299.4008679421497,
+   "required_exponent_e": -0.17748828458975424,
+   "nominal_exponent": 0.16666666666666666,
+   "e_minus_nominal": -0.3441549512564209
+  },
+  {
+   "q": 3,
+   "sigma": 1.5,
+   "LHS_ratio": 8.635875728220665,
+   "abs_bracket": 3.2082527682272526e-20,
+   "required_bracket_power": 3246.7883336248074,
+   "required_exponent_e": -0.18013246929041418,
+   "nominal_exponent": 0.16666666666666666,
+   "e_minus_nominal": -0.34679913595708084
+  },
+  {
+   "q": 4,
+   "sigma": 1.25,
+   "LHS_ratio": 8.373042094166713,
+   "abs_bracket": 2.407659969028515e-15,
+   "required_bracket_power": 1881.6838649564836,
+   "required_exponent_e": -0.2240016400554229,
+   "nominal_exponent": 0.25,
+   "e_minus_nominal": -0.4740016400554229
+  },
+  {
+   "q": 4,
+   "sigma": 1.5,
+   "LHS_ratio": 62.00982311570933,
+   "abs_bracket": 3.2082527682272526e-20,
+   "required_bracket_power": 55671.90654407847,
+   "required_exponent_e": -0.24344421248179687,
+   "nominal_exponent": 0.25,
+   "e_minus_nominal": -0.4934442124817969
+  },
+  {
+   "q": 6,
+   "sigma": 1.25,
+   "LHS_ratio": 157.90281468361394,
+   "abs_bracket": 2.407659969028515e-15,
+   "required_bracket_power": 58293.53890117606,
+   "required_exponent_e": -0.3260013983026702,
+   "nominal_exponent": 0.3333333333333333,
+   "e_minus_nominal": -0.6593347316360035
+  },
+  {
+   "q": 6,
+   "sigma": 1.5,
+   "LHS_ratio": 3269.361149882285,
+   "abs_bracket": 3.2082527682272526e-20,
+   "required_bracket_power": 5509847.929149068,
+   "required_exponent_e": -0.3458106335066112,
+   "nominal_exponent": 0.3333333333333333,
+   "e_minus_nominal": -0.6791439668399445
+  }
+ ]
+}
