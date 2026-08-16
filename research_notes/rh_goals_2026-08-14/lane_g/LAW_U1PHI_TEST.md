@@ -584,3 +584,27 @@ because the sup it reports is set by the two points where the identification is 
 - Interpreter: `/Users/za/miniforge3/envs/pari-arb/bin/python3` (python-flint 0.8.0). Its control
   values reproduce `law_probes/u1_sup.log` to all printed digits, so it is interchangeable with the
   `.venvs/farey-rh` interpreter the earlier probes used.
+
+---
+
+## Addendum 2026-08-16: third height t = 3.5 — the fit is now overdetermined
+
+Per §5.2 recommendation 1. Runner: `law_probes/probe_u1phi_t35.py` (reuses
+`probe_u1phi.py`'s proxy verbatim; N = 32, same q grid 12–40). Receipts:
+`law_probes/u1phi_t35.json`, `u1phi_t35.log`, `u1phi_threeheight.json`.
+
+- **t = 3.5 standalone**: β = +0.0931 → α = 0.9867 → **exponent −2.9601**
+  (max unwrap step 1.3845 rad, branch-safe).
+- **Joint three-height fit** β(t) = a + m·t over t ∈ {1.5, 3.5, 7.0674}:
+  m = −0.0845, a = −0.2507 (max resid 0.6397 rad) →
+  **α_joint = 1.0423 → exponent −3.1268**.
+- **Null killed with dof to spare**: the no-decay null demands m = 2
+  (β = 2t); measured m = −0.08. The single-height disagreement flagged in
+  §5.2 (−3.79 at t=1.5 vs −3.23 at t_phys) resolves as the t-independent
+  drift δ absorbing the low-t distortion: the t=3.5 point falls between
+  them at −2.96, monotone toward −3 as t grows.
+- Caveat unchanged: all three heights float on the U4-unidentified proxy.
+
+**VERDICT (upgraded): PREDICTION-CONSISTENT, overdetermined. The zero-dof
+limitation of the original fit is discharged; the exponent brackets −3
+from both sides (−2.96 / −3.13).**
