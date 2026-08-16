@@ -38,9 +38,19 @@ checked against live artifacts before acceptance.
   read; 32 sources; ValEncIA/Barrera-Vega uncertainties disclosed. No claim
   found that contradicts live artifacts.
 
-## Pending
+## PRIOR_ART_QMC_HYPERUNIFORMITY.md (adjudicated 2026-08-16; relaunched lane after codex original died)
 
-- PRIOR_ART_QMC_HYPERUNIFORMITY.md — not yet landed.
+- ACCEPTED. Verdict "niche-contribution tending to commodity" consistent with
+  the earlier FunSearch-pivot verdict (salvage = modest Exp. Math. note).
+  Fatal-for-sampling point is decisive: D(F_Q)=1/Q at |F_Q|~3Q²/π² is
+  Monte-Carlo rate in d=1 — Farey is not a sampler, and HU doesn't rescue
+  discrepancy. Certified-discrepancy tool: Thiémard 2001/Gnewuch 2024 own the
+  bounds; only a packaging gap (no credit). Farey S(k)~k^1.8 plausibly
+  unpublished (4 keyword attacks negative) but ≤80% confidence pending a
+  MathSciNet/zbMATH sweep (HITL — no database access here). Best artifact:
+  ~6-page "Farey point set is critically hyperuniform" note, explicitly
+  disclaiming sampler value. NO new lanes warranted; note-writing is
+  owner-gated and queued behind the law program.
 
 ## KT1_MSM_INCUMBENT_CHECK.md (adjudicated 2026-08-16)
 
