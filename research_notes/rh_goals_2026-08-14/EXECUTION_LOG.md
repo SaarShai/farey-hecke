@@ -909,3 +909,23 @@ Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
   T-8 non-cancellation/order bookkeeping; T-9 the residue evaluations.
   **Not Aristotle-able:** the Selberg-zeta transport (M1F N2/G6, still GAP) and
   the Artin/induction shape check against PSL(2,Z) (non-load-bearing).
+- 2026-08-15 — **v23 dispatch submitted**: `projects/aristotle_dispatch_v23/`
+  (Lean/mathlib v4.28.0, modeled on v22). `ThetaGroupAnchor.lean` states
+  sorry-stubbed finite/algebraic theorems for **T-1** (mod-2 `SL(2,Z)→S₃`
+  reduction, index 3), **T-2** (cusp widths `2+1=3`, the `∞ ≁ 1` parity
+  argument, `VTV⁻¹` parabolic), **T-3** (`V Γ₀(2) V⁻¹ = Γ_θ` matrix-identity
+  family + `Γ_θ ≇ Γ₀(4)` via index `6≠3`), **T-4** (the two moduli-count
+  lemmas, stated as the finite per-modulus counting bijection with `φ_E` as an
+  unspecified imported totient — the reduction recorded in the doc-comment,
+  per the task's fallback instruction), **T-6** (rational-function identities
+  in `X=2^s` over `ℚ`), **T-7** (divisor of `E` via `4^s=exp(s·log4)`, finite
+  nonzero on `Re s=1/4`), **T-9** (residue evaluations given `Res_{s=1}g=3/π`
+  as hypothesis). **Skipped: T-5** (M1F A-4 Euler-product restriction — grepped
+  the full `projects/aristotle_dispatch_v*` tree, no prior dispatch found; still
+  skipped, since it is a genuine infinite Dirichlet-series identity, not
+  finitely stateable — T-4 already carries its finite core) and **T-8**
+  (non-cancellation order bookkeeping needs the full divisor of `Λ(2s)`, i.e.
+  the nontrivial-ζ-zero multiplicity function `m(ρ)`, not available as a usable
+  Mathlib API and not finitely stateable without draining the claim's content —
+  see `SKIPPED.md`). Submitted via `aristotle submit --project-dir .`, project
+  id `2fc741e0-31f6-4559-a8cc-b4200f6feb25`, not awaited.
