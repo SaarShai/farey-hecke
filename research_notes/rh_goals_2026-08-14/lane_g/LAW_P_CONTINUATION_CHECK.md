@@ -119,7 +119,10 @@ That is the whole claim; the extra digits are reported only because they are wha
 
 `q3cont_repo_builder.py` re-runs `zeta_cert_rosen.py` at the six points, `N = 32` **and** `N = 64`,
 `ctx.prec = 400`; every value reproduces `mirror_q3.json` to the printed digit, and
-`rel drift(32 → 64) ≤ 1.8e−16` everywhere. The kernel `|φ_3||K_3|` is imported **unchanged** from
+`rel drift(32 → 64) ≤ 2.51e−16` everywhere **[CORRECTED 2026-08-16: was stated as `1.8e−16`;
+the max over the six mirror-test points in `law_probes/q3cont_repo_builder.json` is
+`2.5062e−16` at `σ = 1.40`, not `1.81e−16` (the `σ = −0.25` value). The `N`-flatness
+conclusion is unchanged.]**. The kernel `|φ_3||K_3|` is imported **unchanged** from
 `mirror_u4_corrected.py`. Only the determinant evaluator differs between the two ratio columns.
 
 | `σ` | `RHS = \|φ_3\|\|K_3\|` | `P_repo(1−s)/P_repo(s)` | **ratio repo** | `P_May(1−s)/P_May(s)` | **ratio indep.** |
@@ -268,7 +271,7 @@ was measured to move. Whether that is the even-`q` builder's analogue of `R` or 
 | PC.3 | **With it, `(*)` holds at `q = 3` at `σ = 1.25, 1.40, 1.50`** — printed deviation `≤ 4.5e−9`, defensible bound `≤ 3e−7` (§1.2) | **the finding** | §0, §2 |
 | PC.4 | **The `O(1)` residual is the repo builder's `q = 3` determinant, entirely** — reconstructed exactly as the quotient of its per-point errors | **the finding** | §2.1 |
 | PC.5 | **U4 at `q = 3` and the corrected Teo `κ_3` are jointly confirmed**, to `≤ 3e−7` against an `O(1)` residual | **`PROVED`** numerically | §0 |
-| PC.6 | The builder's error is `N`-flat (`1.8e−16` to `N = 64`) **and** `n_head`-flat (bit-identical, `n_head = 2…8`) — structural, not a truncation | **`PROVED`** numerically | §3 |
+| PC.6 | The builder's error is `N`-flat (**`≤ 2.51e−16`** to `N = 64` — **[CORRECTED 2026-08-16]**, was `1.8e−16`) **and** `n_head`-flat (bit-identical, `n_head = 2…8`) — structural, not a truncation | **`PROVED`** numerically | §3 |
 | PC.7 | The discrepancy factor `R(s) = P_repo/P_indep` is smooth and zero-free where measured (`0.9499 → 0.9682` on `Re s > 1`; `1.2429 → 1.9196` on `Re s < 0`; `→ 1` as `σ → ∞`) | **measured** | §2.1, §4 |
 | PC.8 | `LAW_U1_GROWTH.md` §7.2's Euler-product validation is **structurally blind**: `\|R − 1\| = 1.85e−3` at `σ = 3`, inside its own `2e−3` tolerance | **`PROVED`** numerically | §4 |
 | PC.9 | Cause of the builder's defect: **not diagnosed.** Leading hypothesis = the `q = 3` scalar eq. (33) branch / nearest-integer-vs-Gauss CF; **MMS source not opened** | **`GAP` + `TODO-VERIFY`** | §3.1 |

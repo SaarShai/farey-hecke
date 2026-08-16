@@ -2,6 +2,15 @@
 **Date:** 2026-08-14  
 **Query:** Three specific questions on factorization results for arithmetic/non-arithmetic Hecke groups.
 
+> **[CORRECTION 2026-08-16]** Every statement of the factorization below (lines ~18, ~34,
+> ~64) is written as `Z(s) = det(1−L_s^+)·det(1−L_s^−)`. **That form is incomplete.** The
+> correct identity carries the Möller–Mayer–Strömberg divisor:
+> `det(1−L_s^+)·det(1−L_s^−) = Z(s)·det(1−K_s)`, i.e. `Z(s) = det(1−L_s)/det(1−K_s)`.
+> `det(1−K_s) = Π_{n≥0}(1 − b_q^{s+n})` is elementary and **zero-free on `Re s > 0`**, so no
+> zero-location statement in this note changes; only the magnitude reading does. See
+> `research_notes/rh_goals_2026-08-14/lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md` (Q3D.2, Q3D.3,
+> Q3D.7) and `lane_g/LAW_DETK_IMPACT_AUDIT.md`. Text below is left as originally written.
+
 ---
 
 ## Question 1: Selberg Zeta Factorization into ζ- and Dirichlet-L Pieces (Arithmetic G₄, G₆)

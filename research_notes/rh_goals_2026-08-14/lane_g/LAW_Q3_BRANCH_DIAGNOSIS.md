@@ -41,7 +41,7 @@ the right paper and the wrong line.
 | test | what | result |
 |---|---|---|
 | **T1** | `P_repo/P_indep` at the six `q = 3` mirror points **vs** `|det(1−K_s)|` | rel err `2.5e−11` … `4.5e−9` (= the independent evaluator's own `N`-drift, §1.2 of the parent) |
-| **T2** | same at `σ = 2, 3, 4` (the §4 "structurally blind Euler check" points) | rel err `6.3e−12`, `1.1e−10`, `9.3e−10` |
+| **T2** | same at `σ = 2, 3, 4` (the §4 "structurally blind Euler check" points) | rel err `9.3e−10`, `1.1e−10`, `6.3e−12` **[CORRECTED 2026-08-16: the three values were listed in reverse order against `σ = 2, 3, 4`; §3.2 and the receipt are right]** |
 | **T3** | mirror-identity ratio `× D(s)/D(1−s)`, **`q = 3, 4, 6`**, 21 `σ` values in `[0.55, 1.50]` | **`1.000000000`** (`q = 3, 6`), **`1.00000004`** (`q = 4`) |
 
 **Consequences.** PC.9 → `PROVED`. PC.10 (`q = 4, 6` unexplained) → `PROVED`, same cause, no new
@@ -177,7 +177,8 @@ repo's `n_head`-split Arb tail, and reproduces the banked Arb determinants:
 (monotone in `N`: `1.5e−6` → `6.1e−9` → `4.4e−10` at `N = 20, 28, 36`.)
 
 > **Q3D.1 `PROVED` numerically.** The Arb builder computes the operator MMS's `q = 3` lemma
-> defines, to `1.5e−10`. **The defect is not in the operator, the discs, the start indices, the
+> defines, to `4.42e−10` **[CORRECTED 2026-08-16: was `1.5e−10`, which is only the `σ = ±1.25`
+> row; the worst of the three gates in the table above is `4.42e−10` at `σ = −0.25`]**. **The defect is not in the operator, the discs, the start indices, the
 > symmetry reduction, or the Arb tail closure. It is one missing factor in the theorem.**
 
 This matters for the blast radius: an operator-level transcription error would have been `q = 3`-
@@ -358,7 +359,7 @@ near its trivial value."* This note adds the complementary failure:
 
 | id | claim | status | where |
 |---|---|---|---|
-| Q3D.1 | The repo's `q = 3` Arb operator is a **faithful** transcription of MMS's `q = 3` lemma — independently re-implemented in mpmath, agreeing to `1.5e−10`. The defect is not in the operator. | **`PROVED`** numerically | §2 |
+| Q3D.1 | The repo's `q = 3` Arb operator is a **faithful** transcription of MMS's `q = 3` lemma — independently re-implemented in mpmath, agreeing to `4.42e−10` (worst gate; `1.53e−10` at `σ = ±1.25`) **[CORRECTED 2026-08-16]**. The defect is not in the operator. | **`PROVED`** numerically | §2 |
 | Q3D.2 | MMS's Theorem is `Z_S = det(1−L_s)/det(1−K_s)`; **the repo builders compute the numerator only** | **`CITATION` + the finding** | §1.1 |
 | Q3D.3 | `det(1−K_s) = prod_{n≥0}(1 − b_q^{s+n})`, `b_q = prod_{l<κ_q}(f_q^l(r_q))²`; `b_3 = φ^{−4}`, `b_4 = 3−2√2`, `b_6 = 7−4√3`, `b_5 = 0.0130921` | **`CITATION`** (MMS Prop.) + **`PROVED`** (even-`q` closed form reproduced to `4e−41`) | §1.2 |
 | Q3D.4 | `P_repo/P_indep = |det(1−K_s)|` at all six `q = 3` mirror points, rel err `2.5e−11`–`4.5e−9` (bounded by the independent evaluator's own drift) | **`PROVED`** numerically — the finding | §3.1 |

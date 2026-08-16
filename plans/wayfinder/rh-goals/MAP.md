@@ -1,5 +1,10 @@
 # RH goals — decision map
 
+> **LEDGER RULE (adopted 2026-08-16, Kimi audit C.1.11):** a MAP bullet may
+> not upgrade a status beyond the source note's own most-caveated phrasing.
+> Float agreements are "confirmed-measured", never "PROVED"; compressions
+> must keep the caveat a decision-maker needs.
+
 ## Destination
 Deliver article-style, receipts-grade contributions to RH research from this
 repo's verified bank: the flagship G_5 off-line-resonance theorem, the

@@ -72,7 +72,19 @@ Thm 2.2 / Prop. 2.5 and eq. (2.4)/(2.6) are unchanged.)` This is the *same* outs
 ### 1.3 `Γ₂`, verbatim (p. 5) — **the load-bearing definition**
 
 > "Recall the definition of the Alekseevskii-Barnes double gamma function `Γ₂(s)` [1, 2]:
-> `Γ₂(s+1) = (1/(2π)^{s/2}) · s · e^{((γ+1)/2)s²} · ∏_{k=1}^{∞} (1 + s/k)^{−k} e^{s − s²/(2k)}`."
+> `Γ₂(s+1) = (2π)^{−s/2} · e^{s/2 + ((γ+1)/2)s²} · ∏_{k=1}^{∞} (1 + s/k)^{−k} e^{s − s²/(2k)}`."
+
+**[CORRECTED 2026-08-16]** The quote block above previously read `(1/(2π)^{s/2}) · s ·
+e^{((γ+1)/2)s²} · ∏…`, i.e. the paper's `e^{s/2}` had been transcribed as a factor `s·`. That
+transcription was wrong and is repaired above. Verified two ways: (i) the repaired form is the
+Weierstrass product of `1/G(1+s)` (Barnes `G`, `G(1+z) = (2π)^{z/2}
+e^{−(z+z²(1+γ))/2} ∏(1+z/k)^k e^{−z+z²/(2k)}`); (ii) numerically at `dps = 30`, the repaired
+form equals `1/barnesg(s+1)` to `28` digits at `s = 0.7, 1.3`, while the garbled form gives
+`0.4710` / `0.7068` against the true `0.9548` / `1.0415`. **Lemma K-1 (`Γ₂ = 1/G`) and every
+downstream number are unaffected** — they were derived from the p. 24 / p. 10 recursion and
+residue, not from this product. `TODO-VERIFY`: the arXiv-v2 PDF is not banked in-repo, so the
+repair rests on the mathematics, not on a re-read of the source glyphs; re-open
+arXiv:1901.07898v2 p. 5 to confirm the exact printed form.
 
 with `[1] V. P. Alekseevskii, On functions similar to the gamma function, Comm. Kharkov Math. Soc.
 1, 169–238, 1889` and `[2] E. W. Barnes, The theory of the G-function, Q. J. Math. 31, 264–314,
@@ -293,7 +305,18 @@ reinforced.** Two corrections owed to §3.2: (i) the numeric slopes understate t
 sentence attributing the growth to `E_q` is wrong — the **Barnes bracket is the larger driver**
 (`+2.30` vs `+1.41` at `σ = 2`). `TODO`. Note also that the *old* transcription gives an
 equal-and-opposite **negative** slope, so any past reading that folded the old bracket into a
-`q`-trend is contaminated by `~10⁹` across `q = 12 → 100` at `σ = 1.25`.
+`q`-trend is contaminated by `~10^{2.1}` across `q = 12 → 100` at `σ = 1.25`
+**[CORRECTED 2026-08-16: was `~10⁹`, which no reading reproduces.** The corrected/old bracket
+ratio is `[G(1−s)/G(s)]^{4·(1−2/q)/2}`; at `σ = 1.25`, `t = t_∞`, `dps = 40` it is
+`1.311e+12` at `q = 12` and `1.779e+14` at `q = 100`, i.e. **pointwise `10^{12.1}…10^{14.3}`**
+and a **trend discrepancy of `10^{2.13}`** over `q = 12 → 100`. Neither figure is `10⁹`. The
+qualitative point — the old bracket contaminates any `q`-trend that folded it in — is
+unchanged.**]**
+
+**Convention note [ADDED 2026-08-16].** The three slope rows in the table above are
+**endpoint** fits (`q = 12 → 100`), not the LSQ fits banked elsewhere in the lane; the LSQ
+values are `+1.110 / +2.220 / +4.440`. Neither convention changes the sign or the ordering,
+and the "Barnes bracket is the larger driver" reading holds in both.
 
 ### 4.4 `LAW_STRIP_AND_MIRROR.md` / `LAW_MIRROR_Q3_DISCRIMINATOR.md`
 

@@ -1152,6 +1152,18 @@ Deliverable `lane_g/LAW_U1_GROWTH.md`; probes `lane_g/law_probes/probe_u1_growth
 - **Bonus, unasked:** `|det(1−L^+)·det(1−L^−)|` matches the truncated Selberg Euler product to
   `3e−4 … 2e−3` at two control points with `Re s > 1`, for `q = 12, 16, 22, 30, 40`. **First
   general-`q` numerical evidence for U4** — the repo had it only at `q = 5` (R5).
+- **[CORRECTION 2026-08-16]** The two bullets above quote the repo determinant *numerator*
+  as if it were `Z_{G_q}`. The MMS identity is
+  `det(1−L^+)·det(1−L^−) = Z_{G_q}·det(1−K_q)`, not `= Z_{G_q}`; the repo builders omit the
+  `det(1−K_q)` divisor. `det(1−K_q) = Π_{n≥0}(1 − b_q^{s+n})` is **zero-free on `Re s > 0`**,
+  so no zero-location claim moves. Magnitudes do: the excl.-`dU_4` guard column
+  `25.14 → 49.47 → 92.81 → 99.40` becomes `33.32 → 45.95 → 56.45 → 61.59` and the log-log
+  slope `+1.50` becomes **`+0.67`** (endpoint `+0.670`, LSQ `+0.673`) — **still positive,
+  the ADVERSE verdict stands.** The U4 bonus *strengthens* (8 of 9 control-point residuals
+  improve) once the identity is restated with the divisor. Receipt:
+  `lane_g/law_probes/q3impact_u1_sup_corrected.json`; see
+  `lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md` (Q3D.2/Q3D.7) and `lane_g/LAW_DETK_IMPACT_AUDIT.md`
+  (§3.2, §4). Text above left as originally logged.
 - **Next, and the order has CHANGED:** (1) **extend the guard to `q = 56, 72, 100`** — two more `q`
   decide whether (T2′) is alive; cost is background hours, and the answer gates everything else.
   (2) Test prediction (5.1) against Hejhal Memoirs 469. (3) **U2b** — still cheap, still worth
@@ -1496,3 +1508,64 @@ depends on `LAW_U1PHI_PROOF_ROUTE.md`.
 **Follow-ups (cheap):** (i) clamp fix in `probe_d1_scan.py`; (ii) `q = 3` as a
 third null, which also exercises the odd builder in the negative arm;
 (iii) one arithmetic null in the `mms−` sector.
+
+---
+
+## 2026-08-16 — Lane G compute: the crux strip measured, and the U4 mirror test
+
+**Artifact:** `lane_g/LAW_STRIP_AND_MIRROR.md`. **Receipts:** `lane_g/law_probes/strip_*.py|json`,
+`mirror_*.py|json`. **Nothing committed; `lane_f/` untouched.**
+
+- **TASK A — `(U1-φ-a′)(ii)` MEASURED, ADVERSE.** `|φ_q(σ+it)|` on the crux strip, `q = 8…56`,
+  via main-term-subtracted continuation of the Eisenstein Dirichlet series.
+  **The brief's 6-digit gate is unreachable and the note says so with a number:** the continuation
+  error is `X^{−(2σ−1)}` (measured exactly at `q=3` against `ζ(2s−1)/ζ(2s)` out to `X = 10⁷`), so
+  6 digits at `σ=0.90` needs the `c`-spectrum to `X ≈ 3.7e6`, i.e. `≈1.4e12` group elements; the
+  reachable budget is `X = 200`. **What is validated instead is the `q`-SLOPE** — reproduced to
+  `≤ 0.07` against the three arithmetic closed forms on the same strip points.
+  **Result (`q = 12…56`, truncation-stable to `0.021`, budget-stable to `1.2 %`):** `|φ_q|` decays
+  at `t = t_∞` (`−0.785` at `σ=0.90`, `−0.581` at `σ=0.95`) but **GROWS** at `t = 1.5` (`+0.477`,
+  `+0.391`) and `t = 3.5`. Since (ii) is a `sup` over `|t| ≤ t_∞+1`, **it fails on the measured
+  grid at both abscissae of the corrected window `(7/8,1)`**, by ~1 unit of exponent against the
+  minimal-hypothesis bar `< −1/2`. Honest limit: the rise is non-monotone, so growth in the limit
+  is NOT established — measured-adverse, not refuted.
+- **TASK B — CLEAN DISAGREEMENT; U4-as-identification refuted OR the Teo `κ_q` assembly is wrong.**
+  Comparable combination derived first: under U4 + Teo, `P_q(1−s)/P_q(s)` (transfer operator only)
+  must equal `|φ_q(s)|·|K_q(s)|` (Eisenstein + Teo kernel only) — no shared machinery.
+  **Measured ratio `5.0e12` … `2.6e19`** at `σ = 1.25,1.40,1.50`, `q = 12,16,22,30`, and the two
+  sides disagree in **direction**, not only magnitude.
+  **Three controls close every cheap escape:** (1) the determinant is **`N`-converged to `1e−16`**
+  at `Re s = −0.25,−0.40,−0.50` and at every `∂U` point, `N = 24…64` (pre-registered rule met with
+  10 orders to spare); (2) `|K_q(1/2+i t_∞)| = 1.000000000000` at four `q`; (3) **the failure
+  survives at arithmetic `q = 4, 6` where `φ_q` is the exact closed form** (`8.5e6`–`1.7e13`),
+  eliminating the new evaluator as the cause.
+- **`dU_0` is VACUOUS** and is flagged as such: both sides are `1` by Schwarz reflection plus
+  unitarity, independent of U4. At `dU_1`/`dU_2` the identity is not checkable (both `s` and `1−s`
+  sit in the divergent region), so it is **inverted** to read a U4-conditional `|φ_q|` off the
+  guard — giving `≈2.0e3` at the `dU_2` mirror `Re s = 3/4`, against a direct `≈0.097`. A `2e4`
+  disagreement at the guard's own point. **On the coordinator's `dU_2` target:** the
+  U4-conditional `|φ_q|` slope at `dU_2`'s mirror (`Re s = 3/4`) is **`+1.130`** (`+0.703` at
+  `dU_1`), sitting next to the guard refit's flagged `+1.06` — but that is the **same determinant
+  read twice**, not independent corroboration, and the underlying sequence is non-monotone
+  (`q=16` sits `2.6×` below its neighbours). **The contradiction is what survives:** the
+  U4-conditional reading says `|φ_q(3/4−it)|` GROWS like `q^{+1.13}` while the direct evaluator
+  says it DECAYS like `q^{−0.79}`, and the two disagree by `2e4` in value.
+- **CONSEQUENCE, loud.** `LAW_U1_GROWTH.md` §7.3, its §10 addendum, and
+  `LAW_U1PHI_PROOF_ROUTE.md` §4.3 all read `Z_{G_q}` off the proxy at `Re s ≤ 1/2` and argue about
+  what its `q`-slope means. The disagreement is `q`-dependent (`q^{+5.6}` at `σ=1.5`), so it does
+  **not** cancel in a slope. **That argument cannot be settled on its current terms: the instrument
+  has not been shown to measure `Z_{G_q}` anywhere the argument is being conducted.**
+- **Fault localised, not separated.** `|K_q|`'s magnitude and its whole `q`-dependence sit in the
+  **Barnes bracket** (`3.2e−20` at `s=1.5+i t_∞`) raised to `(1−2/q)/2` — and the `Re s = 1/2`
+  assembly check is **structurally blind** to that exponent, because the bracket has modulus `1`
+  there for every exponent. Correction owed to `LAW_U1_GROWTH.md` §3.1.
+- **CHEAPEST NEXT ACT (named, not run):** repeat the §3.3 mirror test at **`q = 3`** using
+  `zeta_cert_rosen.py` (odd-`q` module) instead of `zeta_cert_rosen_even.py`, which raised
+  `NotImplementedError` here. `q=3` is `PSL(2,Z)`: `φ_3 = g(s)` exact, `Z` classical, Teo applies
+  verbatim. Failure there ⇒ the fault is the **assembly** (an afternoon's fix). Success there with
+  failure at `q ≥ 4` ⇒ the fault is **U4**, and the guard literature is measuring the wrong object.
+  Six determinant evaluations, under an hour.
+- **Conditionality, stated:** `LAW_U1PHI_PROOF_ROUTE.md` is itself PENDING ADVERSARIAL
+  VERIFICATION and was not re-verified here; its E2/E3/E4 and its `CITATION(Iwaniec Thm 3.4)` are
+  taken at face value. All numbers are float / `mpmath` midpoints — no interval arithmetic, no
+  winding certificate, no ball radii.

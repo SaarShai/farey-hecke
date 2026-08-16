@@ -18,7 +18,7 @@ its §5 `TODO` on `LAW_U1_GROWTH.md` §7.3/§10.
 > ### **Conclusion-flips: 0.**
 > Twenty-two quoted magnitudes were classified. **No stated conclusion changes sign,
 > direction, or status.** Two numbers move materially (`LAW_U1_GROWTH.md` §7.3's adverse
-> slope `+1.50 → +0.67`; the same note's `sup` column falls by up to `1.7×`), but the
+> slope `+1.50 → +0.67`; the same note's all-8 `sup` column falls by up to `2.0×`, `q = 12`: `170.01 → 85.21`), but the
 > verdict attached to each is unchanged. Three results get **quantitatively better** after
 > correction (§7.2's U4 support, `LAW_U1PHI_TEST.md`'s `−3.08` exponent, `LAW_U2B_CLOSURE`'s
 > consistency with the proxy).
@@ -79,8 +79,8 @@ a magnitude presented as `Z_S`, or compared against a `Z_S`-quantity — `AFFECT
 
 | # | quoted magnitude | where | class | correction factor | corrected value | flip? |
 |--:|---|---|---|---|---|---|
-| 1 | `sup_{∂U}` guard column, all 8 points: `170.0 / 92.8 / 49.5 / 266.4 / 275.4` | `U1_GROWTH` §7.3 | **(c)** | `1/|det(1−K_q)|`, per point, `0.24 … 2.00` | `179.2 / 111.0 / 101.6 / 145.5 / 178.0` | **no** |
-| 2 | `sup_{∂U}` excl. `dU_4`: `81.84 / 25.14 / 49.47 / 92.81 / 99.40` (`q=12…40`) | `U1_GROWTH` §7.3 | **(c)** | idem | `47.01 / 33.33 / 45.95 / 56.45 / 61.59` | **no** |
+| 1 | `sup_{∂U}` guard column, all 8 points: `170.0 / 92.8 / 49.5 / 266.4 / 275.4` | `U1_GROWTH` §7.3 | **(c)** | `1/|det(1−K_q)|`, per point, `0.24 … 2.00` | `85.2 / 74.6 / 101.6 / 145.5 / 178.0` | **no** |
+| 2 | `sup_{∂U}` excl. `dU_4`: `81.84 / 25.14 / 49.47 / 92.81 / 99.40` (`q=12…40`) | `U1_GROWTH` §7.3 | **(c)** | idem | `47.01 / 33.32 / 45.95 / 56.45 / 61.59` | **no** |
 | 3 | **adverse log-log slope `+1.50`** (`q = 16→40`, endpoint) | `U1_GROWTH` §7.3, §8 U1.20, §10 | **(c)** | `d log|det(1−K_q)|/d log q` | **`+0.67`** (`+1.564 → +0.673` LSQ) | **no** — still `> 0`, still adverse |
 | 4 | slope `+1.17` (`q = 22→40`, endpoint) | `U1_GROWTH` §7.3 | **(c)** | idem | **`+0.49`** | **no** |
 | 5 | §10 extended slope, ALL 8 points, `+0.893` | `U1_GROWTH` §10 | **(c)** | idem | **`+0.890`** | **no** — still FAILS `≤ 0` |
@@ -147,8 +147,8 @@ reason is that the repo's proxy is not `Z` there in a way that is unbounded in `
 
 | `q` | sup all-8 repo | **all-8 corrected** | sup excl. `dU_4` repo | **excl. `dU_4` corrected** | identified-domain repo | **identified corrected** | `dU_0` repo | **`dU_0` corrected** |
 |--:|---|---|---|---|---|---|---|---|
-| 12 | `170.01` | `179.24` | `81.84` | `47.01` | `13.695` | `10.393` | `0.6430` | `0.6531` |
-| 16 | `92.79` | `111.03` | `25.14` | `33.33` | `2.295` | `3.316` | `0.5081` | `0.5171` |
+| 12 | `170.01` | `85.21` | `81.84` | `47.01` | `13.695` | `10.393` | `0.6432` | `0.5715` |
+| 16 | `92.79` | `74.62` | `25.14` | `33.32` | `2.295` | `3.316` | `0.5075` | `0.5166` |
 | 22 | `49.47` | `101.63` | `49.47` | `45.95` | `6.101` | `5.667` | `0.2697` | `0.2885` |
 | 30 | `266.36` | `145.53` | `92.81` | `56.45` | `8.273` | `6.938` | `0.1502` | `0.1450` |
 | 40 | `275.41` | `177.97` | `99.40` | `61.59` | `3.936` | `4.023` | `0.2524` | `0.2503` |
@@ -157,6 +157,16 @@ reason is that the repo's proxy is not `Z` there in a way that is unbounded in `
 | 100 | `831.11` | `471.11` | `243.38` | `161.94` | `8.085` | `7.604` | `0.2119` | `0.2100` |
 
 ("identified domain" = §10's `dU_0, dU_1, dU_2, dU_6, dU_7`, i.e. `Re s ≥ 0.25`.)
+
+**Note (2026-08-16).** Every cell of the table above was recomputed from
+`law_probes/q3impact_u1_sup_corrected.json` and corrected where it disagreed (`q = 12`
+and `q = 16` all-8 corrected, `q = 12`/`q = 16` `dU_0`, `q = 16` excl.-`dU_4` rounding);
+the same two all-8 values were corrected in §2 items 1–2 and the fall factor in §0. The
+slope conclusions below were computed from the receipt, not from the table, and are
+unchanged — verified against the receipt's `slopes` block
+(`+0.8926 → +0.8900`, `+0.0715 → +0.0613`, `−0.5739 → −0.5542`) and, for the excl.-`dU_4`
+window, recomputed from the receipt's `detail` rows (`+1.564 → +0.673` LSQ,
+`+1.500 → +0.670` endpoint; `+1.178 → +0.492` / `+1.167 → +0.490`).
 
 Slopes, both conventions:
 
