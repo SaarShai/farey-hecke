@@ -819,3 +819,40 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   Old receipts kept; `f7_r3b_endpoint.py` sha256 moved
   `3ad7918899c70bda…` → `3d397de009122966…`, so the smoke receipts' recorded
   hash is now historical. Not committed; no Kaggle; no other lanes touched.
+
+## 2026-08-15 — Lane G: LAW step-4 (uniform tail) attack scoping
+
+- Deliverable: `lane_g/LAW_TAIL_SCOPING.md`. Scoping only — no certificate, no
+  commit, no other lane's files. All claims labelled PROVED/CITATION/HEURISTIC/GAP.
+- **Ranking: (d)+(a) merged > (b) > (a) alone > (c).**
+- **Retired premise (important):** "G_q degenerates toward the parabolic/thin
+  limit as q→∞" is FALSE. `vol(G_q\H) = π(1−2/q) → π` (bounded, no pinching),
+  and the limit group `G_∞ = ⟨S,T_2⟩` is the theta group — **arithmetic**. What
+  degenerates is the TRANSFER OPERATOR: `tr M_1 = λ_q → 2`, so the `n=1` branch
+  generator goes elliptic → parabolic (indifferent fixed point).
+- **Winner = Rouché/Hurwitz continuation from the λ=2 arithmetic anchor.** The
+  anchor has a *provable, unconditional* off-line resonance at `s = ρ₁/2 ≈
+  0.25 + 7.0673626 i` (M1F's g(s)=Λ(2s−1)/Λ(2s) factor + de la Vallée Poussin
+  `Re ρ < 1`), and the perturbation parameter is explicit: `2−λ_q = π²/q² + O(q⁻⁴)`
+  (0.0204 at q=22). Crux = **(T2)**: a determinant holomorphic in `(s,λ)` up to
+  λ=2 whose λ=λ_q divisor is the Selberg divisor. Blockers stated: `κ_q → ∞`
+  kills the *reduced* MMS operator as a λ-family; `{G_{λ_q}}` is a **discrete**
+  family so Kato/Phillips–Sarnak perturbation theory does not apply to the groups.
+- **(b) refuted as a tail route** (kept as the finite-base engine): certified/float
+  `1−ρ*` = 0.3403 (q=5), 0.2177 (q=7), 0.1792 (q=8) → fits `q^{-1.33..-1.46}`
+  (3 points, float, HEURISTIC), mechanism = the parabolic n=±1 branch. Also noted:
+  Lemma B would not close an infinite tail even if true (link 1 is per-q).
+  Transferable asset: the scale-free cap `e_B = min(clearance/4, 0.15R)`.
+- **(c) = FALSE-FRIEND, closed on argument.** Onset's q≥22 uniformity is an
+  explicit scalar inequality (`33/256 > 2arccos(2√6/5)/π`) whose margin is
+  monotone to `δ_inf = 5.77e−5 > 0`; ours tends to 0. Plus `X_Ω` is an
+  inf-over-invariant-measures essSup (L∞ support edge), not spectral.
+- Data corrections banked: `δ_q` is **non-monotone** (0.0461, 0.0248, 0.0748 at
+  q=5,7,8 — q=8 from the lane_k scan), and "lowest-Im pin" is a conditioning
+  artifact, not a canonical family label.
+- Next step (ticket `law-tail-anchor-probe`): Leg 1 — derive the `G_∞ = Γ_θ`
+  two-cusp scattering matrix by M1F's moduli-count method, closing (T1). Leg 2
+  (Probe D1) — narrow-box Arb scan at q=12,16,22 over Re∈[0.15,0.45],
+  Im∈[6.6,7.6] and test whether a pin migrates toward `s_∞` like `q^{-2}`.
+  Run Probe B1 (float disc optimizer at q=10..30) alongside to test the
+  `1−ρ*` extrapolation.
