@@ -351,6 +351,12 @@ simplification and it retires the entire `κ_q → ∞` worry from the tail.
 The Rouché one-liner of `LEMMA T` is replaced by a Hurwitz one-liner; **all** content is in
 (T2′-a) and (T2′-b), which are §5's U1 and U2.
 
+**Amendment 2026-08-16 (from U2b review D2).** §3.2's requirement `Ω̃ ⊇ {Re s > 1}` is amended:
+`Ω̃` is redefined as the rectangle `K` ∪ tube in `{σ₀ < Re s < σ₀ + 1/2}` ∪ `{Re s ≥ σ₀}`. Vitali
+needs only a domain with accumulation points, so all downstream uses survive. Enacted per the
+verifier's ruling (`ADVERSARIAL_REVIEW_U2B.md` D2; repair carried out in `LAW_U2B_CLOSURE.md`
+Lemma U2b-8).
+
 ### 3.3 Why the two hypotheses are the *right* pair (and are plausible)
 
 - **(T2′-a)** is a growth bound, and the Selberg/Weyl relation makes it uniform *for free at the

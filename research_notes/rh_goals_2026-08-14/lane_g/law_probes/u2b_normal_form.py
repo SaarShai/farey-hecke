@@ -77,6 +77,7 @@ for q in range(4, 401):
         m = min(uu[a-1], uu[a], uu[a+1])
         num["min_entry"] = min(num["min_entry"], m)
         if m < -1e-12: num["all_nonneg"] = False
+        if a in (1, q-1) and abs(uu[a]-1) > 1e-10: num["light_u_eq_1"] = False
     if not (abs(uu[1]-1) < 1e-11 and abs(uu[2]-L) < 1e-11 and abs(uu[0]) < 1e-14): num["M1_M q-1_shape"] = False
     if not (abs(uu[q-1]-1) < 1e-10 and abs(uu[q]) < 1e-10 and abs(uu[q-2]-L) < 1e-10): num["M1_M q-1_shape"] = False
     if q >= 5 and any(uu[a] < L - 1e-11 for a in range(2, q-1)): num["heavy_u_ge_lam"] = False

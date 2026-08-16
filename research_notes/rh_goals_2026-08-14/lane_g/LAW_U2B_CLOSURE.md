@@ -11,7 +11,8 @@ Conjecture U1-2, the multi-syllable gap paragraph, §9 the obligation table),
 in exact arithmetic. `PROVED-MODULO-CITATION` = complete given a named import.
 `HEURISTIC` = float evidence. `GAP` = not justified, missing statement written out.
 
-**No certificate is produced. Nothing is committed. `lane_f/` and
+**No certificate is produced. Work is committed as `6b51411`; repairs in this pass are uncommitted
+[REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D8]. `lane_f/` and
 `law_probes/u1_guard_extended.*` are untouched.**
 
 ---
@@ -31,6 +32,9 @@ in exact arithmetic. `PROVED-MODULO-CITATION` = complete given a named import.
 > convergence floor is `σ₀ = 3.05`, not `3/2`.** Lemma U1-0's half-plane threshold must move
 > from `Re s ≥ 3/2` to `Re s ≥ σ₀`; §4.4 shows this is harmless (Lemma U1-0 is restated and
 > re-proved for a general threshold), but it is a real change to `LAW_U1_GROWTH.md` §1.2 and §2.1.
+> **The forced (U1-φ) exponent is `2σ₀ − 1` for any `σ₀ > 3.05`, i.e. `> 5.1`; the quoted `6`
+> is the `σ₀ = 3.5` convenience point, not a floor** [REPAIRED 2026-08-16 per
+> ADVERSARIAL_REVIEW_U2B.md D5].
 >
 > **Two corrections are owed to `LAW_U1_GROWTH.md` §2.3, and one of them is a logical error.**
 > 1. **Conjecture U1-2 as literally stated is FALSE.** `|tr w(λ)|` is *not* nondecreasing on
@@ -132,7 +136,7 @@ the heavy alphabet is empty; for `q = 4` it is `{2}`.
 
 **Cross-check at `q = 3` (outside the theorem's range, and it is the right answer).** For `q = 3`
 the heavy alphabet is empty, so only Case B applies and the minimum is `2 + λ₃² = 3` — the
-classical minimal trace of `PSL(2,Z)`, `sys = 2 arccosh(3/2) = 1.08707`, realised by
+classical minimal trace of `PSL(2,Z)`, `sys = 2 arccosh(3/2) = 1.9248473` [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D1], realised by
 `[S R][S R²] = [[2,1],[1,1]]`-type classes. The probe reproduces exactly this
 (`q=3: min|tr| = 3.000000000, argmin = [1,2]`).
 
@@ -186,13 +190,13 @@ The note writes: *"for every faithful lift, `ℓ_w(λ_q) ≤ ℓ_w(2)`, so `N_q^
 `{w : ℓ_w(2) ≤ L} ⊆ {w : ℓ_w(λ_q) ≤ L}`, i.e.
 
 ```
-   N_q(L)  >=  # { Gamma_theta classes with all |a_i| <= q-1 and l <= L }  -->  N_theta(L) ,
+   N_q(L)  >=  # { Gamma_theta classes with all |a_i| < q/2 and l <= L }  -->  N_theta(L) ,   [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D4]
 ```
 
 the **opposite** of what is claimed. This is not a small-`q` blemish: it is the direction of the
 implication, and it holds for every `q`.
 
-### 2.2 The note's own data says the same thing
+### 2.2 The note's own data says the same thing [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D3]
 
 `LAW_U1_GROWTH.md` §2.3 reports `N_q(4) = 12, 11, 9, 7, 7, 7` at `q = 10,12,16,22,30,50` against
 `N_θ(4) = 7`, and reads this as a crossover to `N_q ≤ N_θ` "setting in at `q ≈ 22`". It is not a
@@ -202,9 +206,11 @@ crossover — it is **`N_q(L) ≥ N_θ(L)` throughout, decreasing to equality** 
 > **Receipt:** `law_probes/u2b_direction.py`, `u2b_direction.json` — counts recomputed
 > independently from the normal form, `Γ_θ` enumerated with **signed** syllables
 > `a ∈ {±1,…,±8}`, `m ≤ 4`, at `L = 4, 5, 6` and `q = 8,10,12,16,22,30,50`.
-> **`N_θ(4) = 7` reproduces the parent note's value exactly**, which pins the comparison:
+> **`N_θ(4) = 7` reproduces the parent note's value exactly**, which pins the comparison. **Table
+> columns are `m ≤ 4`-truncated counts** (syllable-length cap; not the true, uncapped `N_θ(L)`,
+> `N_q(L)`) [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D3]:
 >
-> | `L` | `N_θ(L)` | `N_q(L)` at `q = 8, 10, 12, 16, 22, 30, 50` |
+> | `L` | `N_θ(L)`, `m ≤ 4` | `N_q(L)`, `m ≤ 4`, at `q = 8, 10, 12, 16, 22, 30, 50` |
 > |---|---|---|
 > | 4 | **7** | 10, 10, 11, 9, **7, 7, 7** |
 > | 5 | **23** | 26, 24, 26, 26, 25, **23, 23** |
@@ -213,6 +219,12 @@ crossover — it is **`N_q(L) ≥ N_θ(L)` throughout, decreasing to equality** 
 > `N_q(L) ≥ N_θ(L)` at **every one of the 21 pairs**, with equality reached from above at large
 > `q` for `L = 4, 5` and not yet reached by `q = 50` for `L = 6`. This is the §2.1 implication,
 > not a crossover.
+>
+> **Converged values (verifier, uncapped DFS with monotone-trace prune; see
+> `law_probes/u2b_verifier/`):** `N_θ(4,5,6) = 7, 25, 67` — the `m ≤ 4`-truncated `L=5,6` entries
+> above (`23`, `51`) undercount the true, converged `N_θ`. `N_q ≥ N_θ` re-confirmed at all **30**
+> converged pairs `q = 5…50`. The parent note's `N_q(4) = 12` at `q = 10` (`LAW_U1_GROWTH.md`
+> §2.3) is **wrong**; the converged value is **10**.
 
 ### 2.3 Consequence for the ledger
 
@@ -393,18 +405,21 @@ instead of `Re s ≥ 3/2`.
 The threshold change is not free, so it is discharged explicitly.
 
 > **Lemma U2b-8 (restatement of `LAW_U1_GROWTH.md` Lemma U1-0 for a general threshold).**
+> [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D2 — tube relocated to
+> `{σ₀ < Re s < σ₀ + 1/2}`, covering sentence fixed accordingly.]
 > Fix any `σ₀ > 1` and set
 > ```
 >    Om~  :=  { -1/10 < Re s < sigma_0 + 1/2 ,  | Im s - t_inf | < 3/10 }
 >             u  { | s - sigma_0 - 1/4 | < 1/4 }                                (a disc in Re s > 1)
->             u  a thin connecting tube inside { 1 < Re s < sigma_0 + 1/2 } ,
+>             u  a thin connecting tube inside { sigma_0 < Re s < sigma_0 + 1/2 } ,
 >    K    :=  [ -1/10 , sigma_0 ] x [ t_inf - 3/10 , t_inf + 3/10 ]     (compact) .
 > ```
 > `Ω̃` is open, connected, contains `s_∞` and an open subset of `{Re s > 1}` (which has
 > accumulation points in `Ω̃` — all Vitali requires). Then (T2′-a) on `Ω̃` **iff**
 > `sup_q sup_K |Z_{G_q}| < ∞` and `sup_q sup_{Re s ≥ σ₀, |Im s| ≤ t_∞+1} |Z_{G_q}| < ∞`.
 > `PROVED` — identical to Lemma U1-0; every compact subset of `Ω̃` is bounded in `Im s` by
-> construction, so it is covered by `K` together with a bounded piece of `{Re s ≥ σ₀}`.
+> construction, so it is covered by `K` together with the tube in `{σ₀ < Re s < σ₀ + 1/2}` and a
+> bounded piece of `{Re s ≥ σ₀}`.
 
 **What this costs.** `LAW_U1_GROWTH.md` §1.2 states `Ω̃ ⊇ {Re s > 1}`. That is more than (T2′)
 needs — Vitali needs only a set with accumulation points — and dropping it is what allows the
@@ -415,8 +430,10 @@ moves to `Re s = 1 − σ₀ = −2.5`, where the elliptic factor's growth becom
 (q/2π)^6` instead of `(q/2π)^3`. **(U1-φ) therefore changes exponent, from `q^{−3}` to
 `q^{−(2σ₀−1)}`, but not in kind.** Flagged for the U1-φ lane: `LAW_U1PHI_TEST.md`'s measured
 exponent `−3` was fitted at `Re s = 2`; if `σ₀ = 3.5` is adopted the corresponding prediction at
-`Re s = 3.5` is `q^{−6}`. **`TODO-VERIFY` — not tested this session, and it is the one place where
-this note's price lands on someone else's lane.**
+`Re s = 3.5` is `q^{−6}`. **The forced exponent is `2σ₀ − 1` for any `σ₀ > 3.05`, i.e. `> 5.1`;
+the quoted `6` is the `σ₀ = 3.5` convenience point, not a floor** [REPAIRED 2026-08-16 per
+ADVERSARIAL_REVIEW_U2B.md D5]. **`TODO-VERIFY` — not tested this session, and it is the one place
+where this note's price lands on someone else's lane.**
 
 ---
 
@@ -433,7 +450,7 @@ this note's price lands on someone else's lane.**
 | U2b.7 | `u_j` increasing, `≥ 0` on `[2cos(π/j), 2]` | **`PROVED`** | §3.1 |
 | U2b.8 | Theorem U2b-B: `|tr w(λ)|` nondecreasing on `[2cos(π/(A+1)), 2]` | **`PROVED`** (replaces Conjecture U1-2) | §3.1 |
 | U2b.9 | **Conjecture U1-2 as literally stated on `(1,2]` is FALSE** | **`PROVED`** (explicit counterexample `S R⁵`) | §3.2 |
-| U2b.10 | **The `ℓ_w(λ_q) ≤ ℓ_w(2) ⟹ N_q ≤ N_θ` inference is backwards; `N_q(L) ≥ N_θ(L)`** | **`PROVED`** | §2 |
+| U2b.10 | **The `ℓ_w(λ_q) ≤ ℓ_w(2) ⟹ N_q ≤ N_θ` inference is backwards; `N_q(L) ≥ N_θ(L)`** | **`PROVED-ASYMPTOTIC` + `MEASURED`** (flat inequality every `q`) [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D4] | §2 |
 | U2b.11 | Lemma U2b-4/5: `|tr w| ≥ A(w)`, `|tr w| ≥ B(w)` | **`PROVED`** (+ 1.5M-word check) | §4.1 |
 | U2b.12 | `sup_{q≥5} W_q(e_h,e_l) < 1` for `σ ≥ 3.05` | **`PROVED`** numerically, explicit closed-form summand, `q ≤ 3000` | §4.2 |
 | U2b.13 | **`S_q(σ) ≤ 0.4861` for `σ ≥ 3.5`, all `q ≥ 5`; `|Z_{G_q}| ≤ 1.6259` there** | **`PROVED`** | §4.2 |
@@ -446,13 +463,18 @@ this note's price lands on someone else's lane.**
 
 `W_q` was evaluated at 44 values of `q` up to `3000`, and it decreases in `q` past `q = 5`, so the
 supremum is at `q = 5`. A proof needs two lines that were not written: (i) `W_q → W_∞ =
-2(ζ(e_h) − 1 − 2^{-e_h}·[q=4 term correction]) + 2·2^{−e_l}ζ(e_l)` monotonically, from
+2(ζ(e_h) − 1) + 2·2^{−e_l}ζ(e_l)` monotonically [REPAIRED 2026-08-16 per
+ADVERSARIAL_REVIEW_U2B.md D6], from
 `u_a(λ_q) = sin(aπ/q)/sin(π/q) ↑ a` (which **is** Lemma U2b-3 applied at `j = a`, so the heavy sum
 is decreasing in `q` term by term) and `λ_q ↑ 2` (so the light term decreases too); (ii) hence
 `W_q ≤ W_5` for all `q`. **Both ingredients are already proved above** — item (i) is exactly
 Lemma U2b-3 and item (ii) follows, so this is a *writing* gap, not a mathematical one, but it is
 labelled `GAP` because the monotone-in-`q` claim for the *number of heavy terms* (which grows with
 `q`) was not written out. Cheap to close; it is Aristotle target **A4** below.
+
+**Verifier's bonus [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D6]:** `W_q` is verified
+**strictly antitone** for `q = 5…2000`, with `W_∞ = 0.867 < 1`. **`GAP` U2b.15 is discharged**:
+the `q > 3000` tail is safe.
 
 ### 5.2 `GAP` — the `σ₀ = 3.05 → 3/2` gap, and why it is not urgent
 
