@@ -1,0 +1,68 @@
+b_q = prod (f^l(r_q))^2   [MMS Prop., Sec. secK]
+  q=3  kappa=1  word=[3]  b_q=0.145898033750  1/b_q=6.854101966
+  q=4  kappa=1  word=[2]  b_q=0.171572875254  1/b_q=5.828427125   [MMS remark (2-lam)/(2+lam) rel err 0.00e+00]
+  q=5  kappa=3  word=[1, 2, 2]  b_q=0.013092084695  1/b_q=76.382029544
+  q=6  kappa=2  word=[1, 2]  b_q=0.071796769724  1/b_q=13.928203230   [MMS remark (2-lam)/(2+lam) rel err 4.00e-41]
+  q=7  kappa=5  word=[1, 1, 2, 1, 2]  b_q=0.002973302217  1/b_q=336.326389690
+  q=8  kappa=3  word=[1, 1, 2]  b_q=0.039566129897  1/b_q=25.274142369   [MMS remark (2-lam)/(2+lam) rel err 3.63e-41]
+  q=3 check: phi^-4 = 0.145898033750315
+
+T1  q=3: is  P_repo/P_indep == |det(1-K_s)| ?
+   sigma    point  measured P_repo/P_indep   |det(1-K)| predicted    rel err
+    1.25        s              0.949862738            0.949862738   2.53e-11
+    1.25      1-s              1.242882499            1.242882505   4.50e-09
+    1.40        s              0.961751914            0.961751914   4.41e-11
+    1.40      1-s              1.599718243            1.599718249   4.09e-09
+    1.50        s              0.968157043            0.968157043   3.91e-11
+    1.50      1-s              1.919636471            1.919636477   3.42e-09
+
+T2  q=3 large sigma (Sec.4 of the parent note)
+  sigma=2.0  measured=0.987517688096  predicted=0.987517689018  rel err=9.33e-10
+  sigma=3.0  measured=0.998154713020  predicted=0.998154712908  rel err=1.13e-10
+  sigma=4.0  measured=0.999730266152  predicted=0.999730266158  rel err=6.25e-12
+
+T3  mirror-identity ratio, corrected:  ratio_corr = ratio_repo * D(s)/D(1-s)
+
+  q = 3
+     sigma   ratio_repo    D(s)/D(1-s)  ratio_corrected
+      0.55     0.981971       1.018360      1.000000000
+      0.60     0.965198       1.036057      1.000000000
+      0.70     0.939025       1.064935      1.000000000
+      0.80     0.928990       1.076438      1.000000000
+      0.90     0.943452       1.059937      1.000000000
+      1.00     0.991350       1.008726      1.000000000
+      1.10     1.081071       0.925009      1.000000000
+      1.25     1.308486       0.764242      1.000000000
+      1.50     1.982774       0.504344      1.000000000
+
+  q = 4
+     sigma   ratio_repo    D(s)/D(1-s)  ratio_corrected
+      0.55     0.870837       1.148321      1.000000003
+      0.60     0.755414       1.323777      1.000000005
+      0.70     0.551751       1.812411      1.000000011
+      0.80     0.370415       2.699675      1.000000016
+      0.90     0.206612       4.839992      1.000000021
+      1.00     0.108344       9.229847      1.000000026
+      1.10     0.207596       4.817052      1.000000031
+      1.25     0.455610       2.194860      1.000000038
+      1.50     0.840166       1.190242      1.000000049
+
+  mirror_u4_corrected.json three-point table, all q:
+     q  sigma   ratio_repo    D(s)/D(1-s)  ratio_corrected
+     3   1.25     1.308486       0.764242      1.000000000
+     3   1.40     1.663338       0.601201      1.000000000
+     3   1.50     1.982774       0.504344      1.000000000
+     4   1.25     0.455610       2.194860      1.000000038
+     4   1.40     0.701397       1.425727      1.000000045
+     4   1.50     0.840166       1.190242      1.000000049
+     6   1.25     0.879730       1.136713      1.000000000
+     6   1.40     1.546651       0.646558      1.000000000
+     6   1.50     2.054840       0.486656      1.000000000
+
+T4  zeros of det(1-K_s):  s = -n + 2 pi i k / log b_q
+  q=3: Re s in -N_0, Im spacing 3.264251303  (zero-free for Re s > 0)
+  q=4: Re s in -N_0, Im spacing 3.564427956  (zero-free for Re s > 0)
+  q=5: Re s in -N_0, Im spacing 1.449158507  (zero-free for Re s > 0)
+  q=6: Re s in -N_0, Im spacing 2.385492096  (zero-free for Re s > 0)
+
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/q3diag_detK.json
