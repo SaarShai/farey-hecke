@@ -1,0 +1,122 @@
+{
+  "schema": "f7-stage2-FR-decision/v1",
+  "rule": "N* = smallest N with F_R(N) <= 0.1 * m0   (F7_CERT_PLAN.md section 3)",
+  "rule_status": "PLANNING GATE, NOT A CERTIFICATE: F_R is certified (Arb), but m0 is a NON-RIGOROUS sampled boundary minimum and over-estimates the true minimum.",
+  "F_R_formula": "T_tail(N) * exp(1 + 2*B_finite)",
+  "m0": {
+    "value": 3.313176035446919e-06,
+    "N_scan": 32,
+    "status": "NON-RIGOROUS FLOAT PREPARATION \u2014 sampled boundary minimum, NOT a cover",
+    "source": "F7_M0_PRESCAN_RECEIPT.json"
+  },
+  "threshold_0_1_m0": 3.313176035446919e-07,
+  "B_measurements": {
+    "224": "[20.1696367902021933887065412675 +/- 1.86e-29]",
+    "240": "[20.1696368693982737399997723391 +/- 1.54e-29]",
+    "256": "[20.1696369233843988041045344390 +/- 4.25e-29]"
+  },
+  "B_flat_in_N": true,
+  "rows": [
+    {
+      "N": 192,
+      "T_tail_upper_bound": "[8.9157654346977777415591223171079927853292207803630118344837783635714454525608861604259684e-20 +/- 1.52e-109]",
+      "B_used": "[20.169636923384398804 +/- 1.05e-19]",
+      "B_source": "conservative: largest measured, N=256",
+      "F_R_upper_bound": "[0.080089789392086347402 +/- 4.35e-23]",
+      "F_R_float": 0.08008978939208634,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": -0.0800894580744828,
+      "passes_F_R_le_0_1_m0": false
+    },
+    {
+      "N": 224,
+      "T_tail_upper_bound": "[1.4792058281325539748603802619554165552377648576548274999569040540025817664661217849158409e-23 +/- 7.80e-113]",
+      "B_used": "[20.169636790202193389 +/- 2.94e-19]",
+      "B_source": "measured at N=224",
+      "F_R_upper_bound": "[1.3287614232832506667e-5 +/- 4.31e-25]",
+      "F_R_float": 1.3287614232832506e-05,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": -1.2956296629287814e-05,
+      "passes_F_R_le_0_1_m0": false
+    },
+    {
+      "N": 232,
+      "T_tail_upper_bound": "[1.6738553737157652110170447135786522505559706187078873757601070194763479244817816358250222e-24 +/- 3.26e-113]",
+      "B_used": "[20.169636923384398804 +/- 1.05e-19]",
+      "B_source": "conservative: largest measured, N=256",
+      "F_R_upper_bound": "[1.5036143036243065808e-6 +/- 7.28e-27]",
+      "F_R_float": 1.5036143036243067e-06,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": -1.1722967000796146e-06,
+      "passes_F_R_le_0_1_m0": false
+    },
+    {
+      "N": 234,
+      "T_tail_upper_bound": "[9.7066807500808655697319584968183036837368339525614341796642805971899929552682186330345265e-25 +/- 2.59e-114]",
+      "B_used": "[20.169636923384398804 +/- 1.05e-19]",
+      "B_source": "conservative: largest measured, N=256",
+      "F_R_upper_bound": "[8.7194534520248668505e-7 +/- 1.25e-27]",
+      "F_R_float": 8.719453452024866e-07,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": -5.406277416577948e-07,
+      "passes_F_R_le_0_1_m0": false
+    },
+    {
+      "N": 236,
+      "T_tail_upper_bound": "[5.6285531659092600671426151522979161995451786914814926310692171680805652470889905224688059e-25 +/- 3.20e-114]",
+      "B_used": "[20.169636923384398804 +/- 1.05e-19]",
+      "B_source": "conservative: largest measured, N=256",
+      "F_R_upper_bound": "[5.0560957546671272502e-7 +/- 1.17e-27]",
+      "F_R_float": 5.056095754667127e-07,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": -1.7429197192202084e-07,
+      "passes_F_R_le_0_1_m0": false
+    },
+    {
+      "N": 238,
+      "T_tail_upper_bound": "[3.2635967886461274925009552968049729377423889510375813954964977439643202334121867596695843e-25 +/- 4.30e-114]",
+      "B_used": "[20.169636923384398804 +/- 1.05e-19]",
+      "B_source": "conservative: largest measured, N=256",
+      "F_R_upper_bound": "[2.9316695395118125232e-7 +/- 1.88e-27]",
+      "F_R_float": 2.9316695395118124e-07,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": 3.8150649593510645e-08,
+      "passes_F_R_le_0_1_m0": true
+    },
+    {
+      "N": 240,
+      "T_tail_upper_bound": "[1.8922146190273206484482479837372679387216790063819978486871161357018313663713033715755697e-25 +/- 2.47e-115]",
+      "B_used": "[20.169636869398273740 +/- 2.5e-22]",
+      "B_source": "measured at N=240",
+      "F_R_upper_bound": "[1.6997649284251810591e-7 +/- 3.96e-27]",
+      "F_R_float": 1.699764928425181e-07,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": 1.613411107021738e-07,
+      "passes_F_R_le_0_1_m0": true
+    },
+    {
+      "N": 256,
+      "T_tail_upper_bound": "[2.4114870765008821786740995136173071286026016793840098027676886638887413159663541053986189e-27 +/- 8.08e-117]",
+      "B_used": "[20.169636923384398804 +/- 1.05e-19]",
+      "B_source": "measured at N=256",
+      "F_R_upper_bound": "[2.1662244648907195497e-9 +/- 2.34e-29]",
+      "F_R_float": 2.1662244648907194e-09,
+      "threshold_0_1_m0": 3.313176035446919e-07,
+      "margin_lower_bound": 3.291513790798012e-07,
+      "passes_F_R_le_0_1_m0": true
+    }
+  ],
+  "N_star_smallest_measured_passing": 238,
+  "sources": {
+    "R2": {
+      "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_receipts/F7_R2_FLAGSHIP_ENVELOPE_RECEIPT.json",
+      "status": "CERTIFIED"
+    },
+    "endpoint_B": {
+      "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_receipts/F7_ENDPOINT_B_RECEIPT.json"
+    },
+    "m0_prescan": {
+      "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_receipts/F7_M0_PRESCAN_RECEIPT.json"
+    }
+  }
+}

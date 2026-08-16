@@ -1,0 +1,59 @@
+{
+  "schema": "f7-endpoint-column-norm-bound/v1",
+  "label": "matrix entries and column 2-norms are 384-bit Arb/Acb balls over the closed 1e-6 flagship box; rigorous upper bound GIVEN the adopted radii",
+  "q": 7,
+  "kappa": 5,
+  "sign": 1,
+  "n_head": 4,
+  "precision_bits": 384,
+  "pin": {
+    "re": "0.4751647621098225",
+    "im": "4.668743786424289",
+    "half_width": "1e-6"
+  },
+  "radius_multipliers_exact_strings": [
+    "3.522",
+    "2.622",
+    "2.372",
+    "1.79",
+    "1.6"
+  ],
+  "radii_source": "F7_MITIGATION_REPORT.md section 7 (option 2), ADOPTED",
+  "builder": {
+    "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_mitigation_endpoint.py",
+    "function": "build_reduced_matrix_ball_factors",
+    "origin": "verbatim copy of zeta_cert_rosen.build_reduced_matrix_ball (q-generic)"
+  },
+  "B_finite_definition": "sum over all kappa*N retained columns of the Arb upper endpoint of the column Euclidean 2-norm",
+  "runs": [
+    {
+      "N": 224,
+      "dim": 1120,
+      "B_finite_upper": "[20.1696367902021933887065412675 +/- 1.85e-29]",
+      "B_finite_float": 20.169636790202194,
+      "build_seconds": 49.70182776451111,
+      "build_plus_norms_seconds": 50.289551973342896
+    },
+    {
+      "N": 240,
+      "dim": 1200,
+      "B_finite_upper": "[20.1696368693982737399997723391 +/- 1.53e-29]",
+      "B_finite_float": 20.169636869398275,
+      "build_seconds": 57.128926277160645,
+      "build_plus_norms_seconds": 57.765491247177124
+    },
+    {
+      "N": 256,
+      "dim": 1280,
+      "B_finite_upper": "[20.1696369233843988041045344390 +/- 4.24e-29]",
+      "B_finite_float": 20.1696369233844,
+      "build_seconds": 65.10870599746704,
+      "build_plus_norms_seconds": 65.83144497871399
+    }
+  ],
+  "cross_check_vs_mitigation_report": {
+    "reported_B_224": "20.1696367902",
+    "reproduced_B_224": "[20.1696367902021933887065412675 +/- 1.85e-29]",
+    "agrees": true
+  }
+}

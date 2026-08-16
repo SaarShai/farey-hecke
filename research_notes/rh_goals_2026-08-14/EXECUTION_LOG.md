@@ -742,3 +742,38 @@ T1 DRAFTED 2026-08-15 (lane_t/T1_CRAMER_RAO_DRAFT.md, lane T-opus): CR bound in 
   the CLI/seam-closure work in isolation (q-independent, no risk of baked-in
   q=5 assumptions). Report: `lane_f/F7_PILOT2_REPORT.md`. Not committed; no
   Kaggle kernels; no other lanes touched.
+
+- **2026-08-15 — Lane F, q=7 certification stages 1 + 2 + 2b (PORTED AND RUN).**
+  Ported the q=5 TB/W/R2 chain to q=7 at the ADOPTED radii
+  `(3.522, 2.622, 2.372, 1.79, 1.6)` (`F7_MITIGATION_REPORT.md` §7). New
+  scripts, all in `lane_f/` with an `f7_` prefix and all importing the q=5
+  modules rather than forking them (`f7_tb_disc_sweep.py` — the 19-block
+  source, captured from the authoritative `zeta_mayer_rosen.build_reduced_matrix`
+  at q=7 and matching `F7_CONSTANTS_MANIFEST.md` §3;
+  `f7_certify_tb_blocks.py`; `f7_certify_tb_weights.py`;
+  `f7_certify_r2_flagship.py`; `f7_stage2_endpoint_B.py`; `f7_m0_prescan.py`;
+  `f7_stage2_FR.py`). No q=5 file was modified.
+  **Stage 1 PASS**: certified ρ\* ≤ **0.763212029206899202166157** (Arb, 384
+  bits, M=512), worst block (5→3, +1, head) — the same block the float stage-0
+  identified; gate re-targeted 0.70 → 0.80 per plan §2, with the rationale
+  recorded in the receipt; all 19 blocks, all pole and branch-cut clearances
+  pass; every tail family closed at the starting K=12. Float ρ\* 0.762251293807
+  reproduced exactly as a NON-RIGOROUS cross-check.
+  **W envelope** ported (schema `tb-weight-envelope-cert/v2`, q=7, κ=5, one box
+  `g7_pin_1`): W^(≥1) = 7.0850126115, W^(0) = 6.5496061371. q=7 has no T-c
+  stage, so the contour-comparison fields carry
+  `NOT_APPLICABLE_NO_Q7_TC_STAGE` instead of a manufactured verdict.
+  **Stage 2 CERTIFIED**: T_tail(224) ≤ 1.4792e−23, T_tail(238) ≤ 3.2636e−25,
+  T_tail(256) ≤ 2.4115e−27; B_total (R2 column sum) = 119.0628556. Endpoint
+  B_finite re-run and banked: 20.1696367902 (N=224, reproducing the mitigation
+  report to every digit), 20.1696368694 (240), 20.1696369234 (256) — flat in N.
+  **Stage 2b** m₀ = 3.313176e−06 (N=32, 96 sampled boundary points — NON-RIGOROUS,
+  a sample not a cover). Decision rule `F_R = T_tail·exp(1+2B) ≤ 0.1·m₀`:
+  **the plan's provisional N=224 FAILS it** (F_R = 1.33e−05 vs 3.31e−07); the
+  rule is first met at N = 238 (×1.13 margin) and clears by ×153 at N = 256.
+  **Verdict: GO for stage 3**, with N\* re-frozen to **N_PRIMARY = 256,
+  N_COMPARISON = 224** (224 is now a justified NOT_CERTIFIED control arm).
+  Contour cost re-estimate ~420 CPU-h, to be replaced by a measured pilot chunk.
+  No structural blocker: the q=5 certification design generalizes to κ=5 /
+  19 blocks unchanged. Report: `lane_f/F7_TB_R2_RECEIPTS.md`; receipts under
+  `lane_f/f7_receipts/`. Not committed; no Kaggle; no other lanes touched.
