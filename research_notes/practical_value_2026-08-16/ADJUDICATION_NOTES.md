@@ -52,6 +52,18 @@ checked against live artifacts before acceptance.
   disclaiming sampler value. NO new lanes warranted; note-writing is
   owner-gated and queued behind the law program.
 
+## KT2_CERT_VS_POSTERIOR.md (adjudicated 2026-08-16)
+
+- ACCEPTED, verdict **KILL** upheld. The lane's handling of its own
+  pre-registration defect is exemplary: clause 1 ("widths not materially
+  smaller") is literally false — widths are 1e11–1e15× smaller — but that
+  falsity is precisely the evidence that floating-point error contributes
+  nothing to MSM uncertainty; the substantive condition "certificate adds
+  nothing" is met. Receipts banked (kt2_/ JSONs); matched-rational comparison
+  (sliding-effective counts) makes it clean. MD-timescale path CLOSED; KT3
+  moot. Narrow survivor noted (regression-receipt artefact) — parked, not a
+  program. Limits honest: one model system, dgeev only, no protein MD.
+
 ## KT1_MSM_INCUMBENT_CHECK.md (adjudicated 2026-08-16)
 
 - ACCEPTED on first read; every claim source-linked; honest that "not found"
