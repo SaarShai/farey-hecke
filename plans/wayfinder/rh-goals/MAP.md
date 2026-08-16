@@ -31,6 +31,7 @@ compute; Aristotle formalizable lemmas. Plan: tasks/todo.md. — source: user
 directive 2026-08-15
 
 ## Active tickets
+- [LAW: off-line resonances for ALL non-arithmetic Hecke groups](tickets/family-law-theorem.md) — **TOP PRIORITY** (owner 2026-08-16: 'aim for a law'); research; finite instances (q=5 DONE, q=7 in flight) + template hardening + instance sweep q=8..12 + UNIFORM tail argument (model: onset theorem's q=5..21 + q>=22 reduction); claimed by: lane_f (q=7 leg)
 - [M1g upgrade: theorem-grade winding certs for the 8 predicted resonances](tickets/m1g-theorem-grade-certs.md) — research; AFK+frontier gate; open; blocked by: none; claimed by: none
 - [Second certified G_5 pin at a distinct real part](tickets/second-g5-pin.md) — research; AFK; open (P4); blocked by: none; claimed by: none
 - [Flagship paper draft](tickets/flagship-paper-draft.md) — writing; AFK; open (P6); dissemination stays HITL; claimed by: none
