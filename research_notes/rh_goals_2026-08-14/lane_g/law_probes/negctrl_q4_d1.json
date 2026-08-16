@@ -1,0 +1,119 @@
+{
+  "q": 4,
+  "box": "d1",
+  "box_spec": {
+    "re": [
+      0.15,
+      0.45,
+      16
+    ],
+    "im": [
+      6.6,
+      7.6,
+      21
+    ]
+  },
+  "sign": 1,
+  "builder": "zeta_cert_rosen_even.py (even q)",
+  "backend": "python-flint (Arb balls)",
+  "precision_bits": 300,
+  "rigor_label": "NON-RIGOROUS PROBE (midpoint float eval of Arb-ball builder; no winding certificate)",
+  "N_coarse": 16,
+  "N_refine": 48,
+  "N_stability": 96,
+  "acceptance": {
+    "absdet_max": 1e-12,
+    "online_tol": 1e-05,
+    "offline_tol": 0.001,
+    "stability_tol": 1e-06,
+    "lines": {
+      "quarter": 0.25,
+      "half": 0.5
+    }
+  },
+  "surface_min_absdet": 0.05431007478818673,
+  "median_absdet": 0.8190936154553938,
+  "seed_threshold": 0.4095468077276969,
+  "seed_rule": "local-min",
+  "n_seeds": 1,
+  "candidates": [
+    {
+      "seed": {
+        "re": 0.25,
+        "im": 7.05,
+        "absdet": 0.05431007478818673
+      },
+      "refine_N48": {
+        "re": 0.25,
+        "im": 7.067362570867347,
+        "absdet": 1.3285226647296685e-15,
+        "converged": true,
+        "clamped": false,
+        "n_steps": 4,
+        "N": 48,
+        "history_tail": [
+          {
+            "re": 0.2499997781506243,
+            "im": 7.067362430310402,
+            "absdet": 8.300288977964213e-07,
+            "delta": 0.00042971285110313475
+          },
+          {
+            "re": 0.24999999999997666,
+            "im": 7.067362570867251,
+            "absdet": 3.107194177048606e-13,
+            "delta": 2.6262780344950057e-07
+          },
+          {
+            "re": 0.25,
+            "im": 7.067362570867347,
+            "absdet": 1.3285226647296685e-15,
+            "delta": 9.87225559904946e-14
+          }
+        ]
+      },
+      "accepted_as_pin": true,
+      "refine_N96": {
+        "re": 0.25,
+        "im": 7.067362570867347,
+        "absdet": 1.3285211978796398e-15,
+        "converged": true,
+        "clamped": false,
+        "n_steps": 1,
+        "N": 96,
+        "history_tail": [
+          {
+            "re": 0.25,
+            "im": 7.067362570867347,
+            "absdet": 1.3285211978796398e-15,
+            "delta": 0.0
+          }
+        ]
+      },
+      "N_shift": 0.0,
+      "N_stable": true,
+      "classification": {
+        "distances": {
+          "quarter": 0.0,
+          "half": 0.25
+        },
+        "nearest_line": "quarter",
+        "verdict": "ON-LINE"
+      },
+      "dist_to_s_inf": 8.881784197001252e-16
+    }
+  ],
+  "n_pins": 1,
+  "n_offline_pins": 0,
+  "n_grey_pins": 0,
+  "summary": [
+    {
+      "re": 0.25,
+      "im": 7.067362570867347,
+      "absdet": 1.3285226647296685e-15,
+      "verdict": "ON-LINE",
+      "N_stable": true
+    }
+  ],
+  "wall_seconds": 90.58052778244019
+}

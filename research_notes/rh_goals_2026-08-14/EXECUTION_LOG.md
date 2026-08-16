@@ -1433,3 +1433,66 @@ hypothesis set, rather than continuing to serve "the tail needs U1".
   not re-verify E3/E4, U2b's constants, or U3's citations (`V1`–`V3` still owed).
   `LAW_U1PHI_PROOF_ROUTE.md` is itself PENDING adversarial verification, and findings M.11–M.13
   inherit that pendency.
+
+---
+
+## 2026-08-16 — Lane G · NEGATIVE CONTROL on the pin-migration machinery — **CONTROL-PASS**
+
+Deliverable `lane_g/LAW_NEGATIVE_CONTROL.md`. Script
+`lane_g/law_probes/probe_negctrl.py`; receipts
+`lane_g/law_probes/negctrl_q{4,6}_d1.json`,
+`negctrl_q{4,5,6}_flagship.json` + logs. No commit; `lane_f/` untouched.
+
+**Premise audited.** The D1 scan/Newton locator had only ever been run at
+non-arithmetic `q`, i.e. exactly where off-line pins are expected. The
+family law asserts arithmetic `q ∈ {3,4,6}` have none. Blind run at
+arithmetic `q` = a genuine null.
+
+**Method.** Protocol identical to `probe_d1_scan.py` — same box grid density
+(`Re` step 0.02, `Im` step 0.05), `N=16` coarse / `N=48` Newton, same seeding
+rule, `sign=+1`, 300-bit Arb midpoints — **pre-registered in §1 before any
+run launched**, including acceptance (`|det| < 1e−12` + convergence + in-box)
+and classification (`ON-LINE` `≤1e−5` from `Re=1/4` or `1/2`; `OFF-LINE`
+`≥1e−3` from both; `GREY` between). Every accepted pin re-refined at `N=96`.
+One pre-registered deviation: the Newton clamp `Re ≤ 0.49` → `RE_HI + 0.10`,
+because `0.49` lies inside the flagship box.
+
+**Results.**
+
+| q | box | pins | OFF-LINE | location | class |
+|--:|---|--:|--:|---|---|
+| 4 | D1 `[0.15,0.45]×[6.6,7.6]` | 1 | **0** | `0.25 + 7.067362570867347 i` | ON-LINE `Re=1/4` |
+| 6 | D1 | 1 | **0** | `0.25 + 7.067362570867347 i` | ON-LINE `Re=1/4` |
+| 4 | flagship `[0.40,0.50]×[5.5,6.0]` | **0** | **0** | — (grid `min|det| = 1.32`, no minimum) | — |
+| 6 | flagship | 1 | **0** | `0.5 + 5.098741908729560 i` | ON-LINE `Re=1/2` |
+| 5 | flagship | 1 | 1 | `0.453895180075 + 5.763537241730 i` | **OFF-LINE** (positive arm) |
+
+- **Positive arm reproduces exactly**: `q=5` returns the flagship pin to every
+  published digit (`THEOREM_G5_OFFLINE_ASSEMBLY.md`), `N`-stable to 16 digits.
+- **The arithmetic nulls are correct, not merely empty**: run blind, the
+  `G_4` and `G_6` operators put their only D1-box pin at `Re = 1/4` to
+  `1e−16` and `Im = 7.067362570867347` — distance to `ρ₁/2` = **`8.9e−16`**,
+  i.e. the machinery independently re-derived the first Riemann zero with no
+  `ζ` input. Consistent with `M2_NONFACT_WITNESSES.md`'s `G_4` control row.
+- **Surface-level discrimination**: flagship-box `min|det|` = `0.057` (`q=5`,
+  has a pin) vs `1.32`/`1.24` (`q=4`/`q=6`, none) — a 21–23× gap visible in
+  the raw grid, before any acceptance rule.
+
+**Defect found (real, in the lane's own script).** `probe_d1_scan.py`'s
+hard-coded Newton clamp `Re ∈ [0.02, 0.49]` would have pinned run D's
+`Re = 1/2` root at `0.49` and reported a **false** off-line pin. All seven
+`d1_q{12,16,22}` candidates were re-inspected: none touched a clamp boundary,
+so **no published D1 number changes** — the defect is latent. Fix owed: port
+the relative clamp into `probe_d1_scan.py`.
+
+**Verdict: CONTROL-PASS.** No machinery-artifact alarm. The locator does not
+generate off-line pins where the law forbids them, and does find the one it
+should. Removes "the scan may be manufacturing roots" from the live
+objections to D1; **does not** upgrade D1's rigor (both are non-rigorous
+midpoint scans, no winding certificate). Limits stated in §2.6: only
+`κ = 1,2` tested, `q = 3` not run, `mms−` sector untested. No claim here
+depends on `LAW_U1PHI_PROOF_ROUTE.md`.
+
+**Follow-ups (cheap):** (i) clamp fix in `probe_d1_scan.py`; (ii) `q = 3` as a
+third null, which also exercises the odd builder in the negative arm;
+(iii) one arithmetic null in the `mms−` sector.

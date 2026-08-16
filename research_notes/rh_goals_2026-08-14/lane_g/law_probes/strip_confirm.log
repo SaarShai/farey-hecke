@@ -1,0 +1,57 @@
+q=8 done 50s
+q=12 done 36s
+q=16 done 31s
+q=22 done 29s
+q=30 done 29s
+q=40 done 24s
+q=56 done 23s
+hi-budget q=16 n_elts=7410454 75s
+hi-budget q=40 n_elts=6825306 69s
+
+=== slopes (q=8..56 | q=12..56), three truncations ===
+  sigma=0.9,t=1.5000
+     X= 40:  q8-56 +0.0267   q12-56 +0.3849
+     X= 80:  q8-56 +0.0885   q12-56 +0.4814
+     X=120:  q8-56 +0.0857   q12-56 +0.4770
+     bars: minimal-hypothesis < -0.50 ; (2sigma-1) < -0.80
+  sigma=0.9,t=3.5000
+     X= 40:  q8-56 -0.0883   q12-56 +0.1589
+     X= 80:  q8-56 -0.0473   q12-56 +0.2340
+     X=120:  q8-56 -0.0415   q12-56 +0.2434
+     bars: minimal-hypothesis < -0.50 ; (2sigma-1) < -0.80
+  sigma=0.9,t=7.0674
+     X= 40:  q8-56 -0.9260   q12-56 -0.7218
+     X= 80:  q8-56 -0.9725   q12-56 -0.8059
+     X=120:  q8-56 -0.9698   q12-56 -0.7853
+     bars: minimal-hypothesis < -0.50 ; (2sigma-1) < -0.80
+  sigma=0.95,t=1.5000
+     X= 40:  q8-56 +0.0112   q12-56 +0.3220
+     X= 80:  q8-56 +0.0573   q12-56 +0.3943
+     X=120:  q8-56 +0.0555   q12-56 +0.3914
+     bars: minimal-hypothesis < -0.50 ; (2sigma-1) < -0.90
+  sigma=0.95,t=3.5000
+     X= 40:  q8-56 -0.0923   q12-56 +0.1288
+     X= 80:  q8-56 -0.0632   q12-56 +0.1813
+     X=120:  q8-56 -0.0600   q12-56 +0.1861
+     bars: minimal-hypothesis < -0.50 ; (2sigma-1) < -0.90
+  sigma=0.95,t=7.0674
+     X= 40:  q8-56 -0.7611   q12-56 -0.5305
+     X= 80:  q8-56 -0.7955   q12-56 -0.5958
+     X=120:  q8-56 -0.7924   q12-56 -0.5810
+     bars: minimal-hypothesis < -0.50 ; (2sigma-1) < -0.90
+
+=== higher enumeration budget (norm_bound 2000, cmax 200) ===
+  q=16 sigma=0.9 t=1.5000: X120=0.148953  X200=0.147128  rel_diff=0.012
+  q=16 sigma=0.9 t=3.5000: X120=0.318347  X200=0.317266  rel_diff=0.003
+  q=16 sigma=0.9 t=7.0674: X120=0.085092  X200=0.085755  rel_diff=0.008
+  q=16 sigma=0.95 t=1.5000: X120=0.165355  X200=0.164236  rel_diff=0.007
+  q=16 sigma=0.95 t=3.5000: X120=0.287529  X200=0.286907  rel_diff=0.002
+  q=16 sigma=0.95 t=7.0674: X120=0.081320  X200=0.081702  rel_diff=0.005
+  q=40 sigma=0.9 t=1.5000: X120=0.337438  X200=0.338942  rel_diff=0.004
+  q=40 sigma=0.9 t=3.5000: X120=0.301067  X200=0.298962  rel_diff=0.007
+  q=40 sigma=0.9 t=7.0674: X120=0.047465  X200=0.051919  rel_diff=0.086
+  q=40 sigma=0.95 t=1.5000: X120=0.308097  X200=0.309038  rel_diff=0.003
+  q=40 sigma=0.95 t=3.5000: X120=0.274799  X200=0.273483  rel_diff=0.005
+  q=40 sigma=0.95 t=7.0674: X120=0.055414  X200=0.057994  rel_diff=0.044
+
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/strip_confirm.json
