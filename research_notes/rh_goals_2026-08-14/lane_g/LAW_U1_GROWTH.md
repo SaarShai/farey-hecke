@@ -714,3 +714,30 @@ all".
   (19 765 pairs, 0 violations) and the numerical identification of `C(s)` in Lemma U1-4b.
 - Reused unchanged: `law_probes/probe_t2_shape.py` (word enumerator, truncated Euler product),
   `.worktrees/aletheia-restore/code/zeta_cert_rosen_even.py` (even-`q` Arb determinant builder).
+
+---
+
+## §10 Addendum 2026-08-16: extended guard q = 56/72/100 — VERDICT
+
+Runner: `law_probes/probe_u1_sup.py --qs 56,72,100` (N=32, same ∂U 8-point
+ring, radius 0.25 around s_∞). Receipts: `law_probes/u1_guard_extended.json`,
+`.log`. Combined with the q=12..40 baseline (`u1_sup.json`, `u1_sup_q40.json`),
+log-log slopes of sup |det⁺·det⁻| over q = 12..100:
+
+| domain | slope | uniform bound needs |
+|---|---|---|
+| ALL 8 ∂U points | +0.893 | ≤ 0 — FAILS |
+| IDENTIFIED domain (excl. dU_3/dU_4/dU_5, Re ≤ 0.0732) | **+0.071** | ≤ 0 — **CONSISTENT (flat)** |
+| Re = 1/2 point (dU_0) | **−0.574** | ≤ 0 — **PASSES (decays)** |
+
+Identified-domain sups oscillate in [2.29, 13.69] with no trend (13.69 is
+q=12, the smallest q; for q ≥ 16 the range is [2.29, 8.31]). The §7.3
+adverse slope +1.50 is hereby CORRECTED per the U1-φ per-point breakdown:
+the growth is confined to the three unidentified boundary points; on the
+domain where the proxy is identified with Z_q the family is flat-to-decaying
+over an 8× range of q.
+
+**VERDICT: U1 CORROBORATED on the identification domain (HEURISTIC —
+float, finite q-range, proxy modulo U4). The T2′ tail argument survives its
+third and final deciding test of 2026-08-16 (D1 migration ✓, U1-φ exponent
+−3 ✓ overdetermined, guard flat ✓). Routing per plan: fund U2b.**
