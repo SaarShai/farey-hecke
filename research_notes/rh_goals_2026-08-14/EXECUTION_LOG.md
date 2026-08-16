@@ -1310,3 +1310,57 @@ Nothing committed; `lane_f/` and `law_probes/u1_guard_extended.*` untouched.
   A3 (the systole theorem given A1+A2), A6 (the counterexample). A5 (`t cot t` antitone) is the
   one item that is genuinely analysis; A4 follows from it. **A1 is worth submitting alone.**
 - **U2b was never the crux, and closing it does not move the crux.** (U1-φ) is untouched.
+
+---
+
+## 2026-08-16 — Lane G — (U1-φ) PROOF ROUTE: the crux is REFUTED, and relocated
+**Artifact:** `lane_g/LAW_U1PHI_PROOF_ROUTE.md`.
+**Probes:** `lane_g/law_probes/u1phiproof_eisenstein.py|.json`, `u1phiproof_kappa.py|.json`.
+**Brief:** rank routes 1–3 for proving (U1-φ-a), attempt the best. **Verdict: BLOCKED —
+(U1-φ-a) is FALSE. Status: REDUCED-TO-(U1-φ-a′) on `σ ∈ (3/4, 1)`.**
+
+- **Route 3 (Eisenstein column direct) won, and it decides the question with the sign reversed.**
+  `φ_q` is *computable* for every `q` — arithmetic or not — from the allowed-moduli constant-term
+  formula the repo already imports as `M1F_EISENSTEIN_DERIVATION.md` (3.2). It is a Dirichlet
+  series with **non-negative** coefficients on `Re s > 1`. The brief's "trivial bounding by
+  positivity" works — and yields a **lower** bound.
+- **Lemma E2 (`PROVED`).** After scaling the width-`λ_q` cusp to width 1, the least modulus is
+  exactly `λ_q < 2` with multiplicity exactly `1` (all `c = 1` elements are `T^αST^δ`, one double
+  coset). Confirmed at 15 levels `q = 3…100`.
+- **THEOREM E3/E4 (`PROVED`).** `|φ_q(σ+it)| ≥ c(σ) > 0` uniformly in `q`, for every fixed
+  `σ > 1`. Hence **(U1-φ-a) is false**: measured `q`-slope of `|φ_q|` is **`−0.054`** at `σ = 2`
+  and **`−0.096`** at `σ = 3.5`, against the required `−3` and `−6`; shortfall at `q = 100` is
+  `3.6e4` and `4.8e9`. Machinery validated to `1.1e−8` against `g(s)`, `φ_4`, `φ_6` at `q = 3,4,6`.
+  Independent corroboration: `Res_{s=1}φ_q = 1/(π(1−2/q)) → 1/π ≠ 0`.
+- **Route 2 (FE) is dead for every admissible threshold, and dead in the strong sense.** With
+  `E_q` evaluated exactly, `|φ_q E_q|` has log-log slope **`+1.37`** at `σ₀ = 2` and **`+2.71`**
+  at `σ₀ = 3.5` where `O(1)` is required; combined with U2b Theorem C's lower bound this **proves**
+  `|Z_{G_q}(1−σ₀−it)| → ∞`. The left edge is not badly estimated — it is unbounded. And the right
+  edge cannot move to `σ₀ ≤ 1`: the Selberg Euler product's abscissa is `1`.
+  **U2b's `TODO-VERIFY` U2b.17 (re-test at the new threshold) is discharged: it fails harder.**
+- **CORRECTION 1 — `LAW_U1PHI_TEST.md` Lemma U1φ-1 is WRONG in the necessity direction.**
+  Its `(⇐)` proof needs `Z_{G_q}` bounded at `Re s = −1`, a line outside **every** `Ω̃` the lane
+  uses (`K` starts at `−1/10`). So `(U1-φ-a) ⟺ U1` is false; only `⟹` holds. The test was
+  corroborating, **not deciding**. This is also what **saves U1**: the refutation does not
+  propagate. Consistent with the extended guard, which reads U1 as *true* (flat/decaying) while
+  (U1-φ-a) is *false* — both are possible only if necessity fails.
+- **CORRECTION 2 — `LAW_U1PHI_TEST.md` §4.3's headline aliases.** Branch-safety was checked
+  against the *observed* step, not the *null's*: at `t = t_∞` the null's `q = 12→16` step is
+  **`4.07` rad `> π`** (and `16→20` is `3.16`). The "`17.02` rad required, `2.02` observed"
+  statistic (Uφ.14, "the most robust claim here") is **void at the physical height**. It survives
+  on `t = 1.5` (null step `0.46`) and `t = 3.5` (`1.08`), so the null exclusion stands — but must
+  be re-attributed.
+- **CORRECTION 3 — `LAW_U1_GROWTH.md` §10's dismissal of the adverse guard is wrong.** The rise at
+  `Re s ≤ 0.0732` is **predicted** by the functional equation once `φ_q ≍ 1` is known:
+  slope `1−2σ`, i.e. `+1.00` at `Re s = 0` and `+0.854` at `0.0732`, against measured `+0.893`
+  (all-8 sup, `q = 12…100`) and `+0.84` (`dU_3`). `HEURISTIC`, data ragged, but "unidentified
+  domain, therefore artefact" is not supported.
+- **THE REDUCTION (the positive deliverable).** `Ω̃` need not reach `Re s ≤ 0`. Shrinking it to
+  `{Re s > 1−σ}` forces the crux into **`σ ∈ (3/4, 1)`** — `> 3/4` by `Re s_∞ = 1/4`, `< 1` by
+  Theorem E3 — where the Dirichlet series diverges and positivity says nothing. **(U1-φ-a′)**:
+  a uniform bound on `|Z_{G_q}|` **and** `|φ_q| = O(q^{−(2σ−1)})` on one vertical segment
+  `Re s = σ ∈ (3/4,1)`. Sharper than (U1-φ-a), which was posed where it is false.
+- **Aristotle-able:** B1 (the `c = 1` double coset — pure algebra), B2 (positivity lower bound,
+  with the constant-term formula as hypothesis), B3 (the triangle split), B4 (the alias bound).
+  All downstream of U2b's A1. The tail constant `sup_q T_q(σ) < 1` is *not* Aristotle-able.
+- **Not touched:** `lane_f/`, `u1_guard_extended.*`, `probe_u1phi*.py`. No commit, no certificate.
