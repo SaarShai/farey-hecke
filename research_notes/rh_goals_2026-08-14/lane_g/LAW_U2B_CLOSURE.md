@@ -407,6 +407,9 @@ The threshold change is not free, so it is discharged explicitly.
 > **Lemma U2b-8 (restatement of `LAW_U1_GROWTH.md` Lemma U1-0 for a general threshold).**
 > [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U2B.md D2 — tube relocated to
 > `{σ₀ < Re s < σ₀ + 1/2}`, covering sentence fixed accordingly.]
+> [Note, 2026-08-16, from U1-phi route review D8: `K`'s left edge here is still `−1/10`;
+> `LAW_T2_DETERMINANT.md`'s Amendment 2 moves the left edge of `K`/`Ω̃` to `+1/8` — re-amendment of
+> this lemma's `K` is owed on the same terms.]
 > Fix any `σ₀ > 1` and set
 > ```
 >    Om~  :=  { -1/10 < Re s < sigma_0 + 1/2 ,  | Im s - t_inf | < 3/10 }

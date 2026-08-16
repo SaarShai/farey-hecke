@@ -635,3 +635,10 @@ whether `det(1 − L_{s,λ})` on a fixed disc "works, needs an induced/regulariz
 fails structurally." It fails structurally, and the induced version fails worse. That is reported as
 the headline rather than softened, and the numeric probe was redirected to test the construction
 that *does* survive rather than to produce a number from an operator that does not exist.
+
+---
+
+**Amendment 2 (2026-08-16, from U1-phi route review D8):** the left edge of `K`/`Ω̃` is moved from
+`−1/10` to `+1/8` (any value in `(1/8, 1/4)` is admissible); all enacted uses survive since no
+proved statement used `Re s < 1/8`; the FE-reflection consequences are recomputed in
+`LAW_U1PHI_PROOF_ROUTE.md` §5.1.

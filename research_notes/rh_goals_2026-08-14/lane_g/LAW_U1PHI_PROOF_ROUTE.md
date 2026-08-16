@@ -57,14 +57,16 @@ lane was written.**
 > **What survives (§5) — and this is the note's positive deliverable.** The FE route survives in
 > exactly one window, and the window is sharp:
 > ```
->    (U1-phi-a')   for some fixed sigma in (3/4, 1) :
+>    (U1-phi-a')   for some fixed sigma in (7/8, 1) :   [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D7]
 >                  sup_q sup_{|t|<=T} | Z_{G_q}(sigma+it) | < infinity      [right edge]
 >            and   | phi_q(sigma + it) |  =  O( q^{-(2 sigma - 1)} )        [left edge via FE]
 > ```
-> `σ > 3/4` is forced by `Re s_∞ = 1/4`; `σ < 1` is forced by **THEOREM E3**, which kills every
-> `σ ≥ 1`. The obstruction is *exactly* the abscissa of convergence of the `φ_q` Dirichlet series.
+> `σ ≥ 7/8` is forced by the fixed `r = 1/8` Hurwitz disc at `s_∞ = 1/4 + i t_∞` used in §5.1
+> (the window opens toward `3/4` only as `r → 0`); `σ < 1` is forced by **THEOREM E3**, which kills
+> every `σ ≥ 1`. The obstruction is *exactly* the abscissa of convergence of the `φ_q` Dirichlet
+> series.
 >
-> ### **STATUS: REDUCED-TO-(U1-φ-a′), σ ∈ (3/4, 1).** Not closed. Strictly better posed than
+> ### **STATUS: REDUCED-TO-(U1-φ-a′), σ ∈ (7/8, 1).** Not closed. Strictly better posed than
 > ### (U1-φ-a), which was posed at an abscissa where it is false.
 
 **Five things are settled here, all of them new.**
@@ -109,8 +111,9 @@ was the borrow-check: the tool was already in the repo, one file away, used for 
 
 `G_q` has a single cusp, at `∞`, of width `λ_q = 2cos(π/q) ∈ [1,2)`; `Φ_q(s)` is `1 × 1` and
 `φ_q = det Φ_q = φ_{∞∞}`. Let `σ_∞ = diag(λ_q^{1/2}, λ_q^{−1/2})`, the scaling matrix that
-normalises the cusp to width `1`. Then (`CITATION(Iwaniec, *Spectral Methods of Automorphic
-Forms*, Thm 3.4 / (3.21))`, which is the **same import** the repo already uses as
+normalises the cusp to width `1`. Then (`CITATION([Iwaniec, Spectral Methods — exact numbering
+TODO-VERIFY per M1F §3.2's warning])` [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md
+D1], which is the **same import** the repo already uses as
 `M1F_EISENSTEIN_DERIVATION.md` (3.2)):
 
 ```
@@ -127,11 +130,24 @@ Since `σ_∞^{-1}[[a,b],[c,d]]σ_∞ = [[a, b/λ],[cλ, d]]`, one has `C_q = λ
 > (`CITATION`, Iwaniec Ch. 3; the abscissa is exactly `1` because
 > `Σ_{c' ≤ X} N_q(c') ≍ X²·π/|F_q|`). Positivity is what makes a **lower** bound free.
 
-### 2.2 `PROVED` — the leading term of (2.1) is `λ_q^{−2s}`, with coefficient exactly `1`
+### 2.2 `CONCLUSION-TRUE/PROOF-OWED` — the leading term of (2.1) is `λ_q^{−2s}`, with coefficient exactly `1`
+[REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D2/D3: the proof below is
+**INVALID-AS-WRITTEN**, for two independent reasons the reviewer identified. (1) *Attainment ≠
+minimality*: showing `c = 1` is attained by `S` proves `min C_q ≤ λ_q`, not `min C_q = λ_q` — the
+argument needs a lower bound ruling out `0 < c < 1`, which requires the Ford isometric-circle
+argument (no element of a Fuchsian group has an isometric circle smaller than the fundamental
+domain allows) and is not supplied. (2) *The multiplicity step is unjustified as stated*: "the
+top-left and bottom-right entries … lie in `λ_q Z`" is asserted, but U2b-1's normal form does not
+by itself force `a, d ∈ λ_q Z` for every `c = 1` element — that containment is exactly what needs
+proving, not read off. **The lemma's conclusion (`min C_q = λ_q`, `N_q(λ_q) = 1`) is still believed
+TRUE** — it is confirmed numerically at 15 levels below — but the written proof does not establish
+it. Re-proof owed before Aristotle target **B1** (§7) is submitted; B1 depends on this lemma and
+must wait.]
 
 > **Lemma E2.** For every `q ≥ 3`: `min C_q = λ_q`, and `N_q(λ_q) = 1`.
 >
-> *Proof.* The `c`-entries of `G_q` are `0` (the cusp stabiliser) and, among the rest, `|c| ≥ 1`
+> *Proof (INVALID-AS-WRITTEN — see repair note above).* The `c`-entries of `G_q` are `0` (the cusp
+> stabiliser) and, among the rest, `|c| ≥ 1`
 > because `S = [[0,−1],[1,0]] ∈ G_q` has `c = 1`; so `min C_q = λ_q · 1 = λ_q`, provided `c = 1`
 > is attained, which it is. For the multiplicity: an element with `c = 1` is
 > `[[a,b],[1,d]]` with `ad − b = 1`, i.e. `[[a, ad−1],[1,d]] = T^α S T^δ` where `a = αλ_q`,
@@ -309,7 +325,7 @@ reaches `σ₀ ≤ 1` through the Euler product. And by §2.4, every `σ₀ > 1`
 
 ---
 
-## 4. Three corrections owed to parent notes
+## 4. Four corrections owed to parent notes [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D8: item 4.4 added]
 
 ### 4.1 **`LAW_U1PHI_TEST.md` Lemma U1φ-1 — the necessity half is invalid** (`PROVED`)
 
@@ -319,10 +335,18 @@ Lemma U1φ-1 claims `(U1-φ-a) ⟺ U1` and calls necessity "*the note's main str
 > *U1 ⟹ `Z_{G_q} → Z_{Γ_θ}` locally uniformly on `Ω̃ ⊃ {Re s > 1}` … so
 > `κ_q(2+it) = Z_q(−1−it)/Z_q(2+it)` is bounded.*
 
-The step requires `Z_{G_q}` to be uniformly bounded at **`Re s = −1`**. Every `Ω̃` in the lane —
-`LAW_U1_GROWTH.md` §1.2 (`K = [−1/10, 3/2] × …`) and `LAW_U2B_CLOSURE.md` Lemma U2b-8
-(`K = [−1/10, σ₀] × …`) — has left edge `−1/10`. **`Re s = −1 ∉ Ω̃`.** U1 says nothing there, so
-U1 does not imply `κ_q(2+it) = O(1)`. `(⇐)` is a `GAP`.
+[REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D9] The reflection abscissa in this
+step is **not fixed at `2`**: `κ_q(σ+it) = Z_q(1−σ−it)/Z_q(σ+it)` is bounded for U1's purposes at
+**any** `σ ∈ (1, 11/10]`, and at those `σ` both `s = σ+it` and `1−s` lie **inside** the enacted
+`Ω̃` (`LAW_U1_GROWTH.md` §1.2, `LAW_U2B_CLOSURE.md` Lemma U2b-8: left edge `−1/10`, right edge well
+past `11/10`). So the `(⇐)`-gap argument alone — "`Re s = −1 ∉ Ω̃`" — does **not** save U1; a
+reflection abscissa that keeps both `s` and `1−s` inside `Ω̃` is freely available. **What actually
+saves U1 is that THEOREM E4's hypothesis (tail domination, `sup_q T_q(σ) < 1`) fails at exactly the
+`σ` this reflection needs**: measured `T_q(1.05) ≈ 2.1–2.8` (`u1phiproof_kappa.json`), rising as
+the truncation cutoff is raised, for `σ ≲ 1.25`. E3/E4's lower bound therefore cannot be
+transmitted through any admissible reflection abscissa — the machinery that refutes (U1-φ-a) at
+`σ = 2` does not apply near `σ = 1`, where U1's reflection would need it. `(⇐)` remains a `GAP`,
+but for the corrected reason above, not for the abscissa-outside-`Ω̃` reason originally given.
 
 > **This is not a technicality; it is load-bearing in both directions.**
 > (i) It retracts the claim that the U1-φ test was *deciding*. It was corroborating only.
@@ -353,9 +377,11 @@ The first two exceed `π = 3.1416`. **A genuine `17` rad drift on this `q`-grid 
 distinguishable from a small one** — it wraps. §4.3's factor-`8.4` statistic and the "`17.02` rad"
 headline (Uφ.14, called "*the most robust claim here*") are **void at `t = t_∞`**.
 
-**The conclusion survives, on the other two heights.** At `t = 1.5` the null's largest step is
-`0.462` rad and at `t = 3.5` it is `1.079` rad — both safely `< π` — and both series exclude the
-null cleanly. So Uφ.14 should be re-attributed to `t = 1.5, 3.5` and the `t = t_∞` row deleted.
+**The conclusion survives, on the other two heights.** [REPAIRED 2026-08-16 per
+ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D4] The largest step on this `q`-grid is at `q: 22→26`: at
+`t = 1.5` it is `0.501` rad and at `t = 3.5` it is `1.169` rad — both safely `< π` — and both
+series exclude the null cleanly. So Uφ.14 should be re-attributed to `t = 1.5, 3.5` and the
+`t = t_∞` row deleted.
 
 ### 4.3 **`LAW_U1_GROWTH.md` §10's dismissal of the adverse guard is wrong** (`HEURISTIC`)
 
@@ -372,19 +398,35 @@ dropped. §2–§3 predict that the rise at those points is **real**: for `σ < 
 | `dU_0` | `0.5000` | `0.00` | `−0.78` | `−0.574` |
 | all 8 (sup) | — | **`+1.00`** (set by `dU_4`) | — | **`+0.893`** |
 
-The all-8 sup slope `+0.893` against a predicted `+1.00`, and `dU_3`'s `+0.84` against `+0.854`,
-are close enough to be worth saying out loud. The per-point pattern is ragged (`dU_5`, at the same
-abscissa as `dU_3`, has slope `−0.70`), so this is `HEURISTIC` and no more. But **the "these points
-are unidentified, therefore their growth is an artefact" reading is not supported**: the growth
-those points show is the growth the functional equation now demands. The correct statement is that
-U1 **on the amended `Ω̃`, whose left edge is `Re s = −1/10`, is in trouble**, and that shrinking
-`Ω̃` to `{Re s ≥ 1/8}` (§5) is not merely convenient — it is necessary.
+[REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D6 — downgraded from confirmation to
+suggestive-only.] The all-8 sup slope `+0.893` against a predicted `+1.00`, and `dU_3`'s `+0.84`
+against `+0.854`, are close enough to be worth saying out loud, but they are **suggestive only, not
+a confirmation**: §3.2 above measures `|E_q|`'s own slope as still short of its asymptotic `2σ−1`
+at `q ≤ 100` (the asymptotic is "not reached," e.g. `q=60→100` sub-slope `2.21` against a `3.00`
+target at `σ=2`), so the predicted exponents `1−2σ` in this table are themselves not yet at their
+limiting value over the same `q`-range; and the all-8 sup sequence is **non-monotone** in `q` (its
+own driving points swap rank as `q` grows), which is not what a clean confirmation of a single
+power law would show. The per-point pattern is ragged (`dU_5`, at the same abscissa as `dU_3`, has
+slope `−0.70`), so this is `HEURISTIC` and no more. But **the "these points are unidentified,
+therefore their growth is an artefact" reading is not supported**: the growth those points show is
+directionally consistent with the growth the functional equation now demands. The correct
+statement is that U1 **on the amended `Ω̃`, whose left edge is `Re s = −1/10`, is in trouble**, and
+that shrinking `Ω̃` to `{Re s ≥ 1/8}` (§5) is not merely convenient — it is necessary.
+
+### 4.4 **`LAW_T2_DETERMINANT.md` §3.2 and `LAW_U2B_CLOSURE.md` Lemma U2b-8 still carry the wrong
+left edge** (`PROVED`, correction owed) [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D8]
+
+`T2 §3.2`'s enacted amendment and `U2b-8`'s `K` both still fix the left edge of `Ω̃`/`K` at
+`Re s = −1/10`. §5.1 above establishes that `(U1-φ-a′)` needs a left edge `a ≥ 1/8`. `−1/10 < 1/8`,
+so the currently-enacted `Ω̃` does not reach the window this note requires: a re-amendment of the
+left edge is owed on both notes. See the amendment appended to `LAW_T2_DETERMINANT.md` and the
+mirrored note next to `LAW_U2B_CLOSURE.md` Lemma U2b-8's `[REPAIRED]` block.
 
 ---
 
 ## 5. What survives: the sharp reformulation
 
-### 5.1 `PROVED` — the admissible window is exactly `σ ∈ (3/4, 1)`
+### 5.1 `PROVED` — the admissible window is exactly `σ ∈ (7/8, 1)` [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D7]
 
 `Ω̃` is a free choice, constrained only by: **(a)** connected, contains `s_∞ = 1/4 + i t_∞` and a
 set with an accumulation point (Vitali); **(b)** contains a disc `D(s_∞, r)`, `r < 1/8`, on whose
@@ -395,7 +437,7 @@ The maximum principle over a rectangle containing `K_a` and closed under `s ↦ 
 `σ ≥ 1 − a ≥ 7/8`, and needs `a ≤ 1/4 − r`, i.e. `a ≤ 1/8` for `r = 1/8`. Hence:
 
 > ### **(U1-φ-a′) — the crux, relocated.**
-> There is a fixed `σ ∈ (3/4, 1)` and constants `A, Q₁` independent of `q` with
+> There is a fixed `σ ∈ (7/8, 1)` and constants `A, Q₁` independent of `q` with
 > ```
 >   (i)   sup_{q>=Q1} sup_{|t| <= t_inf+1} | Z_{G_q}(sigma + i t) |  <=  A       [right edge]
 >   (ii)  sup_{q>=Q1} sup_{|t| <= t_inf+1} | phi_q(sigma + i t) | * q^{2 sigma - 1}  <=  A   [left edge]
@@ -403,12 +445,15 @@ The maximum principle over a rectangle containing `K_a` and closed under `s ↦ 
 > Then U1 holds on `Ω̃ ⊂ {Re s > 1 − σ}`, and the (T2′) tail theorem follows as in
 > `LAW_U1_GROWTH.md` §9.
 >
-> **`σ > 3/4` is forced by `Re s_∞ = 1/4`. `σ < 1` is forced by THEOREM E3.** The window is
-> non-empty and it is the *only* window: `(1/2, 3/4]` fails to enclose `s_∞`; `[1, ∞)` is refuted.
+> **`σ ≥ 7/8` is forced by the fixed-`r = 1/8` disc `D(s_∞, r)` this note uses (`a ≤ 1/4 − r = 1/8`,
+> so `σ ≥ 1 − a ≥ 7/8`); the window opens toward `(3/4, 1)` only in the limit `r → 0`, which is not
+> available while a genuine Hurwitz disc must be kept. `σ < 1` is forced by THEOREM E3.** The
+> window is non-empty and it is the *only* window at this `r`: `(1/2, 7/8)` fails to enclose the
+> required disc; `[1, ∞)` is refuted.
 
-### 5.2 Why `(3/4, 1)` is genuinely different from `[1, ∞)`
+### 5.2 Why `(7/8, 1)` is genuinely different from `[1, ∞)` [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D7]
 
-At `σ ∈ (3/4, 1)` the Dirichlet series (2.1) **diverges**. Positivity — the entire engine of §2 —
+At `σ ∈ (7/8, 1)` the Dirichlet series (2.1) **diverges**. Positivity — the entire engine of §2 —
 supplies nothing, and `φ_q` there is the analytic continuation, governed by the `q`-dependent
 resonances rather than by the leading modulus `λ_q`. There is no obstruction of the §2 kind, and
 the lane's own critical-line phase measurement (`α ≈ 1.02–1.04`, i.e. a `q^{−(2s−1)}`-shaped phase
@@ -435,7 +480,7 @@ own note), but it is the first time the two agree numerically.
 
 | # | Claim | Status | Where |
 |---|---|---|---|
-| Uφp.1 | `φ_q` computable for **all** `q` from the Eisenstein constant term, non-arithmetic included | `PROVED` given `CITATION(Iwaniec Thm 3.4)` = `M1F` (3.2) | §2.1 |
+| Uφp.1 | `φ_q` computable for **all** `q` from the Eisenstein constant term, non-arithmetic included | `PROVED` given `CITATION([Iwaniec, Spectral Methods — exact numbering TODO-VERIFY])` = `M1F` (3.2) | §2.1 |
 | Uφp.2 | (2.1) has **non-negative** coefficients; abscissa of convergence `Re s = 1` | `CITATION` | §2.1 |
 | Uφp.3 | `min C_q = λ_q`, `N_q(λ_q) = 1`; `c_2/c_1 ≥ 1.618` | **`PROVED`** (+ 15 levels numeric) | §2.2 Lemma E2 |
 | Uφp.4 | Machinery validated against `g(s)`, `φ_4`, `φ_6` to `1.1e−8` | `HEURISTIC` (at truncation level) | §2.3 — re-derives `M1F` (1.4) |
@@ -453,7 +498,7 @@ own note), but it is the first time the two agree numerically.
 | Uφp.16 | **`LAW_U1PHI_TEST.md` §4.3's `t_∞` null test aliases** (null steps `4.07`, `3.16` rad `> π`) | **`PROVED`** | §4.2 — Uφ.14 void at `t_∞` |
 | Uφp.17 | Null exclusion survives on `t = 1.5` and `t = 3.5` (null steps `0.46`, `1.08` rad) | `PROVED` (branch-safety) | §4.2 |
 | Uφp.18 | Guard's rise at `Re s ≤ 0.0732` is **predicted**, not an identification artefact (`+0.893` vs `+1.00`) | `HEURISTIC` | §4.3 — corrects `LAW_U1_GROWTH.md` §10 |
-| Uφp.19 | **(U1-φ-a′) on `σ ∈ (3/4, 1)`; the window is forced from both sides** | **`PROVED`** (the window), `GAP` (the statement) | §5.1 — **the reduction** |
+| Uφp.19 | **(U1-φ-a′) on `σ ∈ (7/8, 1)`; the window is forced from both sides** [REPAIRED 2026-08-16 per ADVERSARIAL_REVIEW_U1PHI_ROUTE.md D7] | **`PROVED`** (the window), `GAP` (the statement) | §5.1 — **the reduction** |
 | Uφp.20 | Right edge (i) at `σ < 1` is a **new** obligation the Euler product cannot supply | `GAP` | §5.2 |
 | Uφp.21 | Route 1's `q^{1−2σ}` and route 2's `q^{2σ−1}` are the same exponent across the FE | `HEURISTIC` | §5.3 |
 | Uφp.22 | Prior art for `φ_q` of non-arithmetic `G_q` | **`TODO-VERIFY`** — Hejhal Memoirs 469 still not opened | inherited from `LAW_U1PHI_TEST.md` §2 |
@@ -521,7 +566,7 @@ prediction (5.1) is false as an identity on `Re s > 1` (§2.6). (v) Route 2 is d
 `σ₀ > 1`, and `σ₀ ≤ 1` is unreachable by the Euler product (§3). (vi) **Lemma U1φ-1's necessity
 half is invalid** (§4.1) — which is what prevents (iv) from refuting U1. (vii)
 `LAW_U1PHI_TEST.md` §4.3's `t_∞` statistic aliases (§4.2). (viii) The reduction to (U1-φ-a′) on the
-forced window `σ ∈ (3/4, 1)` (§5.1).
+forced window `σ ∈ (7/8, 1)` (§5.1).
 
 **Does not claim.** **U1 is not proved, not refuted, and not advanced.** (U1-φ-a′) is `GAP` and so
 is its right-edge half; no bound of any kind is established on `K`. Formula (2.1) is a
