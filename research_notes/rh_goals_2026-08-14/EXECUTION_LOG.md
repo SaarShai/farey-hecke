@@ -1156,3 +1156,29 @@ Deliverable `lane_g/LAW_U1_GROWTH.md`; probes `lane_g/law_probes/probe_u1_growth
   decide whether (T2′) is alive; cost is background hours, and the answer gates everything else.
   (2) Test prediction (5.1) against Hejhal Memoirs 469. (3) **U2b** — still cheap, still worth
   closing, but **no longer on the critical path**.
+
+## M1G v2 (2026-08-16, builder pass)
+
+- **Item 2 delivered:** `code/zeta_cert_rosen_even.py` (worktree
+  `aletheia-restore`) gained a `determinant_sector="trivial"|"chi"` kwarg on
+  `cert_det`/`winding_box`, via new local `_det_block_signed` /
+  `dim_tail_from_matrix_signed` (Q5's shared primitives untouched). Fixes the
+  v1 `TypeError: winding_box() got an unexpected keyword argument
+  'determinant_sector'` blocker. Verified functional at small N and at a
+  full N=60/K=24/400-bit run (q4 k2 chi point, wall 145.6s).
+- **Item 1 NOT delivered.** R3b's proven tail bound is q=5-specific: it rests
+  on a multi-day per-disc contraction-margin search
+  (`ta_recon.py`/`tb_disc_sweep.py`/`tb_disc_opt.py`) that found the naive
+  uniform-safety scheme fatal (a full Markov branch onto the target disc,
+  ratio exactly 1) before any lemma chain could be written. No equivalent
+  search/proof exists for q=4/q=6's even-q geometry. Faking an analogous
+  formula was rejected as dishonest; flagging as its own follow-on ticket.
+- **Item 3: 1/8 sampled.** New chi-sector point q4 k2
+  (`2i*pi/log(2)`, N=60, K=24, box half-width 0.001) isolates winding **0**,
+  not the predicted 1 — an open discrepancy (box escalation vs. sign/
+  normalization convention question), not resolved; stopped per the
+  two-failed-attempt rule rather than iterating blindly. Remaining 7 boxes
+  not run (would only add more heuristic-tail samples pending item 1).
+- Receipts/report: `lane_g/m1g_receipts/q4_chi_k2_v2.json`,
+  `lane_g/M1G_V2_THEOREM_GRADE.md`. Verdict unchanged at 0/8
+  CANDIDATE-CERTIFIED (v1 was 0/8 CERTIFIED).
