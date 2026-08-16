@@ -551,3 +551,9 @@ lever than the scoping note implied, and that Probe D1 now carries the discrimin
 residue missed `1/vol`, or had the brute-force moduli disagreed with the closed form, this note
 would have said so and the merged (a)+(d) route would have lost its anchor. None of that
 happened; the failure modes were checked explicitly and all three self-checks pass.
+
+## Erratum (2026-08-16, from LAW_U3_TRANSPORT.md)
+§4.4 correction: the poles of det Φ_θ at s = ikπ/log 2 are SIMPLE, not
+"order 2 in E" (r·E → 3/(2 log 2) = 2.164042, r²·E → 0). Hence Z_{Γ_θ}
+has simple zeros there. Non-load-bearing for the anchor (which sits at
+s_∞ = ρ₁/2, an order-2·m(ρ₁) point via the Λ(2s)² factor).

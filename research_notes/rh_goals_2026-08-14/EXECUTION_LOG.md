@@ -1047,3 +1047,61 @@ Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
   textbook-shaped, cheapest); (2) **U1** — the `q`-uniform Hadamard bound
   (the real work); (3) **U2b** — uniform systole + geodesic counting.
   **Do not fund further work on a two-variable determinant.**
+
+## 2026-08-15 — Lane G: LAW obligation **U3** — scattering-pole → Selberg-zero transport — **CLOSED**
+
+- **Deliverable:** `lane_g/LAW_U3_TRANSPORT.md`. Probe script:
+  `lane_g/law_probes/probe_u3_orders.py` (mpmath, 40 dps). Not committed.
+- **Verdict: CLOSED-BY-CITATION *and*, independently, CLOSED-WITH-PROOF.**
+  `Z_{Γ_θ}` has a zero at `s_∞ = ρ₁/2 = 0.25 + 7.0673625708673468952…i` of
+  order **exactly `2·m(ρ₁)`**, hence **≥ 2** unconditionally and **= 2** given
+  `ρ₁` simple. This is exactly the input `LAW_T2_DETERMINANT.md` §3.2's
+  Hurwitz step consumes. **U3 = C14 (T1) = G6/N2 (M1F) is discharged.**
+- **The divisor identity, found and quoted verbatim (this is what M1F §6.1's
+  scout failed to find):** Bruggeman–Fraczek–Mayer, *Perturbation of zeros of
+  the Selberg zeta-function for `Γ₀(4)`*, **Exp. Math. 22 (2013) 217–242**,
+  §3.4(b): "*At points with `Re β < ½` and `Im β > 0` the function `Z(α,·)` has
+  **a zero of the same order as the zero of the determinant of the scattering
+  matrix at `1 − β̄`***" — attributed there to **Hejhal LNM 1001 vol. II,
+  Chapter X, Theorem 5.3, p. 498**. Corroborated by the full 7-item divisor of
+  `Z_Γ` in Friedman–Jorgenson–Smajlović, **LMP 111 (2021) art. 15**, §2.5
+  (standing hypothesis "*possibly with elliptic fixed points*"; cites Venkov
+  1990 p. 49 and Hejhal vol. II p. 499), whose **item 6 is U3**.
+- **M1F obligation N2 discharged in content.** The Selberg-zeta functional
+  equation M1F §5.2 assumed only the *shape* of is found in closed form, for
+  exactly our class (cofinite, cusps **and ramification points**): Teo,
+  **LMP 110 (2020) 61–82**, Prop. 2.5 — `Z(1−s) = κ(s)Z(s)` with `κ` = const ×
+  `e^{C(2s−1)}` × `φ(s)` × `sin`-powers (elliptic) × Barnes-`Γ₂` factor
+  (identity) × `[Γ(3/2−s)/Γ(s+½)]^n` (parabolic). Every factor but `φ` has all
+  its zeros and poles **on the real axis**, so `ord_{s₀}Z = −ord_{s₀}φ` for
+  non-real `s₀` with `Re s₀ < ½`. **Second, independent proof of U3.**
+- **Hazard found and removed.** The classical statement is about the
+  **conjugate** point `1 − β̄`, not the pole at `β`. Rather than import
+  "`φ` is real on `R`", `det Φ_θ` was evaluated at `1 − s̄_∞ = (1+ρ₁)/2`
+  **directly in closed form**: `Λ(2s−1) = Λ(ρ₁) = 0`, `Λ(2s) ≠ 0,∞`, `E` finite
+  and non-zero on `Re s = 3/4` ⇒ **order-2 zero**, confirmed numerically
+  (`det/(s−w)² → −0.841624 − 2.218948i`). The transport is applied in the exact
+  form in which it is stated.
+- **Half-integer / trivial-divisor exclusion made explicit, as asked.**
+  `Im s_∞ = 7.0673625708… ≠ 0`, and **every** non-resonance divisor point of
+  `Z_Γ` is real (topological poles on `½ − N₀`; `s = ½`; trivial zeros on `−N₀`,
+  which is also where the **elliptic** contribution of `S` lands; small-eigenvalue
+  and residual zeros). Decisively: `Z_Γ` is **pole-free off the real axis**, so no
+  coincident pole exists to cancel the zero.
+- **`G_q` version: pure citation, no per-`q` input.** `G_q` is cofinite
+  (`vol = π(1−2/q)`), one cusp, elliptic orders `{2,q}` — the same theorem
+  applies verbatim for every `q`. **Honest limitation:** the poles of `φ_q` are
+  unknown for non-arithmetic `q` (Phillips–Sarnak), so (U3-q) has no known
+  input — **but it is not needed**: under (T2′) the `q`-side zeros come from
+  Hurwitz, and U3 is consumed **only once, at the anchor `Γ_θ`**.
+- **Correction owed to `LAW_ANCHOR_T1_THETA.md` §4.4** (non-load-bearing):
+  the poles of `det Φ_θ` at `s = ikπ/log 2` are **simple**, not "order 2 in `E`"
+  (`r·E → 3/(2 log 2) = 2.164042`, `r²·E → 0`). So `Z_{Γ_θ}` has **simple**
+  zeros there.
+- **Citation hygiene still owed (V1–V3, none blocking):** open Hejhal LNM 1001
+  vol. II p. 498–499 (Ch. X Thm 5.3) and Venkov 1990 p. 49 to confirm the
+  numbers and item 6's multiplicity; confirm Teo's journal numbering. **Note
+  for the lane text: the divisor + functional equation of `Z_Γ` are in Hejhal
+  vol. II Chapter X, ~pp. 498–499 — not "ch. 6+" or "ch. 11" as M1F guessed.**
+- **Next, unchanged and now unblocked:** **U1** (the `q`-uniform order-2 growth
+  bound — the real crux), then **U2b** (uniform systole + geodesic counting).
