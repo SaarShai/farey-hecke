@@ -1105,3 +1105,54 @@ Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
   vol. II Chapter X, ~pp. 498–499 — not "ch. 6+" or "ch. 11" as M1F guessed.**
 - **Next, unchanged and now unblocked:** **U1** (the `q`-uniform order-2 growth
   bound — the real crux), then **U2b** (uniform systole + geodesic counting).
+
+---
+
+## 2026-08-16 — Lane G, obligation **U1** (q-uniform growth bound): `LAW_U1_GROWTH.md`
+
+**Verdict: U1-OPEN-REDUCED, GUARD-ADVERSE. The (T2′) tail route is now AT RISK.**
+Deliverable `lane_g/LAW_U1_GROWTH.md`; probes `lane_g/law_probes/probe_u1_growth.py`,
+`probe_u1_sup.py`, `u1_stab.py` with receipts `u1_growth.json`, `u1_sup.json`,
+`u1_sup_q40.json`, `u1_stab.json` and logs. Nothing committed; `lane_f` untouched.
+
+- **The hypothesis is weaker than advertised.** (T2′-a)'s exponential order-2 shape is never used:
+  Vitali needs only local uniform boundedness, and `Ω̃` can be chosen with bounded imaginary part.
+  **U1 ⟺ boundedness on ONE compact `0.6 × 1.6` rectangle** plus `Re s ≥ 3/2`, where the Euler
+  product already gives `|Z_{G_q}| ≤ e^{0.19144} = 1.211` uniformly (measured, monotone decreasing
+  in `q`, maximised at `q = 5`). `PROVED` / `HEURISTIC` respectively.
+- **The brief's named danger — the order-`q` elliptic data — is SETTLED, and it is harmless on `U`.**
+  Exact identity `E_q(s) = Z_{ell,q}(s)/Z_{ell,q}(1−s)` (`PROVED`), `|E_q(1/2+it)| = 1` (`PROVED`),
+  and `log E_q(s) = (2s−1) log(q/2π) + log(Γ(1−s)/Γ(s)) + O(1/q)` (identified numerically to 4 dp
+  at 7 points, `q ≤ 4800`, `O(1/q)` residual confirmed by exact halving). Hence `|E_q| ≤ C` and
+  `→ 0` on `U`. **But it grows like `q^{2Re s−1}`, i.e. `≍ (q/2π)³` at `Re s = 2`** — so any route
+  through the functional equation at `Re s = 2` imports a `q³`.
+- **The brief's named fallback — renormalise by `C(q)` — is REFUTED.** If `C(q) → ∞` then
+  `Z_{G_q}/C(q) → 0` on `Re s > 1` (since `Z_{G_q} → Z_{Γ_θ} ≢ 0` there), so Vitali forces the
+  limit `≡ 0` and Hurwitz says nothing. `PROVED`. **U1 has no soft landing.**
+- **Correction owed to `LAW_T2_DETERMINANT.md` §3.3.** Uniform Weyl counting is NOT free from
+  `|F_q| ≤ π`. Only the `T²` coefficient is uniform. The elliptic mass
+  `M(q) = Σ_k 1/(2q sin(kπ/q)) = (1/π) log(2e^γ q/π) + O(q^{−2})` (`PROVED` numerically, 5 dp,
+  `q ≤ 10⁴`) enters the **linear** coefficient: at `T ≈ 8` the `T²` term is `≈ 16` and the elliptic
+  term `≈ 17.6` at `q = 1000` — **the same size**. Also `N + M` is the *winding*, not the resonance
+  count.
+- **U1 reduces to ONE obligation, `(U1-φ)`:** either `|φ_q(2+it)| = O(q^{−3})` (cancelling the
+  elliptic `q³`), or a `q`-uniform resonance count on `|s − 1/2| ≤ 8`. Every standard route —
+  FE+convexity, Hadamard+counting, Landau's `Z'/Z`, Borel–Carathéodory — was checked and all end
+  there; three were shown to be circular or impossible without it (`PROVED`).
+- **Falsifiable prediction (5.1):** if U1 holds globally, `φ_q(s) ≍ (π/q)^{2s−1} φ_θ(s) ·
+  Γ(s)Γ(3/2−s)/(Γ(1−s)Γ(1/2+s))`. Testable against Hejhal, Memoirs AMS 469 (1992).
+- **THE ADVERSE RESULT.** `sup_{∂U}|Z_{G_q}|` was measured with the certified even-`q` Rosen/MMS
+  determinant (both `P`-sectors, product), `q = 12, 16, 22, 30, 40`. Dropping `dU_4` (`Re s = 0`,
+  exactly on `∂Ω*`, outside R5's identification domain), the sup **increases monotonically**:
+  `25.14 → 49.47 → 92.81 → 99.40`, log-log slope **`+1.50`** (`q = 16 → 40`). **U1 requires slope
+  `0`.** The slope is the shape the *trivial* `|φ_q| ≤ 1` estimate predicts (`O(q^{2−σ})`).
+  **Not a discretisation artefact:** `N = 32, 48, 64` agree to all 9 printed digits at
+  `dU_2, dU_3, dU_4, dU_5` for `q = 30`. Caveats: 5 points, ragged per-point pattern, and the proxy's
+  identification with `Z_{G_q}` is itself obligation **U4** (`GAP` for `q ≠ 5`).
+- **Bonus, unasked:** `|det(1−L^+)·det(1−L^−)|` matches the truncated Selberg Euler product to
+  `3e−4 … 2e−3` at two control points with `Re s > 1`, for `q = 12, 16, 22, 30, 40`. **First
+  general-`q` numerical evidence for U4** — the repo had it only at `q = 5` (R5).
+- **Next, and the order has CHANGED:** (1) **extend the guard to `q = 56, 72, 100`** — two more `q`
+  decide whether (T2′) is alive; cost is background hours, and the answer gates everything else.
+  (2) Test prediction (5.1) against Hejhal Memoirs 469. (3) **U2b** — still cheap, still worth
+  closing, but **no longer on the critical path**.
