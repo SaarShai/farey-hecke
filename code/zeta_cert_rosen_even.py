@@ -59,6 +59,33 @@ dimension tail, argument-principle (winding=1) zero isolation.
 
 OUT OF SCOPE: no Lean; no q != 8 claims (the builder is general even q but only
 q=8 is anchor-validated and certified here).
+
+WARNING -- WHAT cert_det RETURNS IS det(1 - L_s), NOT THE SELBERG ZETA
+----------------------------------------------------------------------
+MMS's theorem is a QUOTIENT, and it covers even q in the same sentence
+(eq. (transfereven) is the even-q K_s):
+
+      Z_S(s) = det(1 - L_s) / det(1 - K_s)
+             = det[(1 - L_{s,+})(1 - L_{s,-})] / det(1 - K_s)
+
+(Mayer-Muehlenbruch-Stroemberg, arXiv:0912.2236, Theorem `main-theorem` /
+eq. (LoverK)).  Every determinant function in this module returns the
+NUMERATOR only: r_q and -r_q are two f_q-periodic points of the SAME closed
+geodesic, so det(1 - L_s) counts that orbit twice.  Consequences:
+
+  * MAGNITUDES off the zero set are wrong by |det(1 - K_s)|; b_4 = 3 - 2 sqrt2,
+    b_6 = 7 - 4 sqrt3, b_8 = 0.0395661299 (= (2-lam_q)/(2+lam_q) for even q).
+  * ZERO LOCATIONS on Re s > 0 are UNAFFECTED (det(1 - K_s) is zero-free there;
+    its zeros are exactly s in -N_0 + i(2 pi / log(1/b_q)) Z).
+  * ZERO COUNTING / WINDING touching Re s <= 0 must divide det(1 - K_s) out.
+
+Pre-existing functions are LEFT UNCHANGED (banked certificates bound
+det(1 - L^+) as such and must stay byte-reproducible).  The repair is ADDITIVE:
+`det_K(q, s)` (imported from zeta_cert_rosen.py, q-agnostic) and the even-q
+`selberg_Z(q, s, N)` at the end of this file.  Diagnosis + numerics:
+research_notes/rh_goals_2026-08-14/lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md (even q is
+consistency-confirmed there, Q3D.9, not independently measured) and
+LAW_DETK_IMPACT_AUDIT.md for the blast radius.
 """
 from __future__ import annotations
 import math
@@ -220,12 +247,93 @@ def build_reduced_matrix_ball(s, N, sign, q, n_head=4):
 
 
 # ---------------------------------------------------------------------------
-# Certified det evaluation: returns (det_ball, tail, info, kappa).
+# Signed-identity determinant primitives, LOCAL to this module (Q5's
+# _det_block / dim_tail_from_matrix are reused UNCHANGED elsewhere and always
+# compute det(1-L); these wrappers add det(1+L) -- the "chi" sector -- without
+# touching the shared q-agnostic file).  determinant_sector in
+# {"trivial", "chi"}: "trivial" reproduces the existing det(1-L) path exactly
+# (det_sign=+1 below); "chi" computes det(1+L) (det_sign=-1, i.e. det(1 -
+# (-1)*L)).
 # ---------------------------------------------------------------------------
-def cert_det(s, N, sign, q, n_head=4):
+def _det_block_signed(M, N, kappa, d, det_sign):
+    """det(1 - det_sign*L) with per-component truncation d (d<=N).
+
+    det_sign=+1 reproduces zeta_cert_rosen_q5._det_block exactly (trivial
+    sector, det(1-L)); det_sign=-1 gives the chi sector det(1+L).
+    """
+    idx = [comp * N + m for comp in range(kappa) for m in range(d)]
+    dim = len(idx)
+    B = acb_mat(dim, dim)
+    ds = acb(det_sign)
+    for a in range(dim):
+        ia = idx[a]
+        for b in range(dim):
+            B[a, b] = ds * M[ia, idx[b]]
+    Iden = acb_mat(dim, dim)
+    for a in range(dim):
+        Iden[a, a] = acb(1)
+    return (Iden - B).det()
+
+
+def dim_tail_from_matrix_signed(M, N, kappa, det_sign, step=2, window=4,
+                                 q_cap=0.85):
+    """Same det-increment geometric-ratio tail heuristic as
+    zeta_cert_rosen_q5.dim_tail_from_matrix, but over det(1-det_sign*L) so it
+    applies to the chi sector too.  Disclosed as heuristic identically to the
+    trivial-sector version (see dimension_tail_heuristic in the M1G receipts)
+    -- this is NOT a proven uniform tail bound.
+    """
+    ds = [N - (window - m) * step for m in range(window + 1)]
+    Ds = {d: _det_block_signed(M, N, kappa, d, det_sign) for d in ds}
+    gmag = []
+    for m in range(window):
+        delta = Ds[ds[m + 1]] - Ds[ds[m]]
+        gmag.append(delta.abs_upper())
+    ratios = []
+    ok = True
+    for m in range(1, window):
+        if gmag[m - 1] == 0:
+            ratios.append(arb(0))
+            continue
+        rr = gmag[m] / gmag[m - 1]
+        ratios.append(rr)
+        if not (rr < q_cap):
+            ok = False
+    info = {"dims": ds,
+            "increment_mag": [float(g) for g in gmag],
+            "ratios": [float(r) for r in ratios],
+            "q_cap": q_cap, "det_sign": det_sign}
+    if not ok or not ratios:
+        return None, info
+    q = arb(0)
+    for rr in ratios:
+        if rr > q:
+            q = rr
+    if not (q < q_cap):
+        return None, info
+    g_last = gmag[-1]
+    tail = g_last * q / (1 - q)
+    info["q"] = float(q)
+    info["tail_radius"] = float(tail)
+    return tail, info
+
+
+# ---------------------------------------------------------------------------
+# Certified det evaluation: returns (det_ball, tail, info, kappa).
+# determinant_sector in {"trivial", "chi"} selects det(1-L) vs det(1+L);
+# default "trivial" is byte-identical to the pre-existing behavior.
+# ---------------------------------------------------------------------------
+def cert_det(s, N, sign, q, n_head=4, determinant_sector="trivial"):
     M, kappa = build_reduced_matrix_ball(s, N, sign, q, n_head=n_head)
-    det = _det_block(M, N, kappa, N)
-    tail, info = dim_tail_from_matrix(M, N, kappa)
+    if determinant_sector == "trivial":
+        det = _det_block(M, N, kappa, N)
+        tail, info = dim_tail_from_matrix(M, N, kappa)
+    elif determinant_sector == "chi":
+        det = _det_block_signed(M, N, kappa, N, -1)
+        tail, info = dim_tail_from_matrix_signed(M, N, kappa, -1)
+    else:
+        raise ValueError(f"unknown determinant_sector={determinant_sector!r}")
+    info["determinant_sector"] = determinant_sector
     return det, tail, info, kappa
 
 
@@ -261,16 +369,20 @@ def det_on_line_ball(r, N, sign, q, n_head=4):
 # s-plane around (1/2 + re0_off) + i*im0; certifies winding(det around 0)=1.
 # Here re0 is the dx-offset from 1/2 (0 for an on-line zero).
 # ---------------------------------------------------------------------------
-def winding_box(im0, hx, hy, N, sign, q, n_head=4, K=24, re0=0.0, log=None):
-    """Argument-principle winding of det(1-L_{s,sign}) around 0 on the box
-    { s = (1/2 + re0 + dx) + i(im0 + dy) : |dx|<=hx, |dy|<=hy }.
+def winding_box(im0, hx, hy, N, sign, q, n_head=4, K=24, re0=0.0, log=None,
+                 determinant_sector="trivial"):
+    """Argument-principle winding of det(1-L_{s,sign}) (determinant_sector=
+    "trivial") or det(1+L_{s,sign}) (determinant_sector="chi") around 0 on
+    the box { s = (1/2 + re0 + dx) + i(im0 + dy) : |dx|<=hx, |dy|<=hy }.
     Returns (winding:int|None, info)."""
     half = arb(1) / 2 + arb(re0)
-    # uniform dim-tail over box corners + center, inflate x4 (rigorous bound).
+    # uniform dim-tail over box corners + center, inflate x4 (heuristic, same
+    # disclosure as the trivial-sector path -- see dim_tail_from_matrix{,_signed}).
     radii = []
     for sx, sy in [(0, 0), (-1, -1), (1, -1), (1, 1), (-1, 1)]:
         s = acb(half + arb(sx) * arb(hx), arb(im0) + arb(sy) * arb(hy))
-        det, tail, info, kappa = cert_det(s, N, sign, q, n_head)
+        det, tail, info, kappa = cert_det(s, N, sign, q, n_head,
+                                           determinant_sector=determinant_sector)
         if tail is None:
             if log is not None:
                 log.append(f"  winding: dim-tail UNCERTIFIED at corner "
@@ -297,7 +409,8 @@ def winding_box(im0, hx, hy, N, sign, q, n_head=4, K=24, re0=0.0, log=None):
     dets = []
     for dx, dy in pts:
         s = acb(half + arb(dx), arb(im0) + arb(dy))
-        det, _t, _i, _k = cert_det(s, N, sign, q, n_head)
+        det, _t, _i, _k = cert_det(s, N, sign, q, n_head,
+                                    determinant_sector=determinant_sector)
         det = acb(det.real + arb(0, tail_fix), det.imag + arb(0, tail_fix))
         if not (det.abs_lower() > 0):
             if log is not None:
@@ -358,6 +471,38 @@ def locate_online_zero(r_guess, N, sign, q, n_head=4, iters=8):
         if abs(r1 - r0) < 1e-12:
             break
     return r1
+
+
+# ---------------------------------------------------------------------------
+# MMS det(1 - K_s): the missing DENOMINATOR of Z_S = det(1-L_s)/det(1-K_s).
+# ADDITIVE -- nothing above this line is touched.  det_K / b_q_ball are
+# q-agnostic (the r_q word already branches on the parity of q), so they are
+# reused from the odd-q module rather than duplicated.
+# ---------------------------------------------------------------------------
+from zeta_cert_rosen import (                                    # noqa: E402
+    b_q_ball, det_K, _to_acb,
+)
+
+
+def selberg_Z(q, s, N, n_head=4, n_terms=400, cycles=200,
+              determinant_sector="trivial"):
+    """The Selberg zeta function itself, as an Arb ball, for EVEN q:
+
+        Z_S(s) = det(1 - L_{s,+}) det(1 - L_{s,-}) / det(1 - K_s)
+
+    (MMS arXiv:0912.2236, Theorem `main-theorem`).  cert_det and friends return
+    the NUMERATOR only -- see this module's header warning and
+    research_notes/rh_goals_2026-08-14/lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md.
+
+    The returned ball carries the determinant midpoints only (dimension tails
+    are NOT folded in) -- same epistemic status as cert_det_complex_mid.
+    """
+    sa = _to_acb(s)
+    dp, _t, _i, _k = cert_det(sa, N, +1, q, n_head=n_head,
+                              determinant_sector=determinant_sector)
+    dm, _t, _i, _k = cert_det(sa, N, -1, q, n_head=n_head,
+                              determinant_sector=determinant_sector)
+    return (dp * dm) / det_K(q, sa, n_terms=n_terms, cycles=cycles)
 
 
 # ---------------------------------------------------------------------------

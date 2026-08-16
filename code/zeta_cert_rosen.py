@@ -40,6 +40,31 @@ VALIDATION GATE (run zeta_cert_rosen_q5_selfcheck()):
 RIGOR.  Same as zeta_cert_rosen_q5.py: exact Hurwitz tail, acb_series AD,
 acb_mat.det in ball arithmetic, certified det-increment dimension tail.  For
 OFF-LINE resonance CLAIMS only the certified Arb path is used.
+
+WARNING -- WHAT cert_det RETURNS IS det(1 - L_s), NOT THE SELBERG ZETA
+----------------------------------------------------------------------
+MMS's theorem is a QUOTIENT:
+
+      Z_S(s) = det(1 - L_s) / det(1 - K_s)
+             = det[(1 - L_{s,+})(1 - L_{s,-})] / det(1 - K_s)
+
+(Mayer-Muehlenbruch-Stroemberg, arXiv:0912.2236, Theorem `main-theorem` /
+eq. (LoverK)).  Every function in this module below `build_reduced_matrix_ball`
+returns the NUMERATOR only -- the periodic point r_q and -r_q of the
+Hurwitz-Nakada map f_q give the SAME closed geodesic, so det(1 - L_s) counts
+that orbit twice.  Consequences:
+
+  * MAGNITUDES off the zero set (|det|, sup bounds, Euler-product checks) are
+    wrong by the factor |det(1 - K_s)| -- use selberg_Z / det_K below.
+  * ZERO LOCATIONS on Re s > 0 are UNAFFECTED: det(1 - K_s) is zero-free there
+    (its zeros are exactly s in -N_0 + i(2 pi / log(1/b_q)) Z).
+  * ZERO COUNTING / WINDING touching Re s <= 0 must divide det(1 - K_s) out.
+
+The pre-existing functions are LEFT UNCHANGED (banked certificates bound
+det(1 - L^+) as such and must stay byte-reproducible).  The repair is ADDITIVE:
+`det_K(q, s)` and `selberg_Z(q, s, N)` at the end of this file.
+Diagnosis + numerics: research_notes/rh_goals_2026-08-14/lane_g/
+LAW_Q3_BRANCH_DIAGNOSIS.md (and LAW_DETK_IMPACT_AUDIT.md for the blast radius).
 """
 from __future__ import annotations
 import math
@@ -322,6 +347,110 @@ def winding_offline(re0, im0, hx, hy, N, sign, q, n_head=4, K=24, log=None):
         log.append(f"  winding: sum/2pi ball [{float(lo):.4f},{float(hi):.4f}] "
                    f"no integer")
     return None, {"winding_ball": [float(lo), float(hi)], "K_per_edge": K}
+
+
+# ---------------------------------------------------------------------------
+# MMS det(1 - K_s): the missing DENOMINATOR of Z_S = det(1-L_s)/det(1-K_s).
+# ADDITIVE -- nothing above this line is touched.
+#
+# MMS (arXiv:0912.2236) Proposition in Sec. `secK`:
+#     sigma(K_s) = { prod_{l=0}^{kappa_q-1} (f_q^l(r_q))^{2s+2n},  n >= 0 }
+# so, writing b_q := prod_{l=0}^{kappa_q-1} (f_q^l(r_q))^2 in (0,1),
+#     det(1 - K_s) = prod_{n>=0} (1 - b_q^{s+n}).                          (D)
+# r_q (MMS Lemma `lemma:det_op`) is the purely periodic lambda-CF
+#     q = 3      : [0; ov(3)]
+#     q even=2h+2: [0; ov(1^{h-1}, 2)]
+#     q odd >= 5 : [0; ov(1^h, 2, 1^{h-1}, 2)],   h = (q-3)/2
+# and the orbit {f_q^l(r_q)} is the set of cyclic shifts of that word.
+# Cross-checked against MMS's own even-q closed form b_q = (2-lam)/(2+lam) and
+# against lane_g/law_probes/q3diag_detK.json (q = 3,4,5,6,7,8).
+# ---------------------------------------------------------------------------
+_B_Q_CACHE = {}
+
+
+def _r_word(q):
+    """The purely periodic lambda-CF word of MMS's periodic point r_q."""
+    if q == 3:
+        return [3]
+    if q % 2 == 0:
+        h = (q - 2) // 2
+        return [1] * (h - 1) + [2]
+    h = (q - 3) // 2
+    return [1] * h + [2] + [1] * (h - 1) + [2]
+
+
+def _periodic_cf_ball(word, lam, cycles=200):
+    """[0; ov(word)] as an Arb ball, in the convention x = -1/(a*lam + x)."""
+    x = acb(0)
+    for _ in range(cycles):
+        for a in reversed(word):
+            x = acb(-1) / (acb(a) * lam + x)
+    return x
+
+
+def b_q_ball(q, cycles=200):
+    """(b_q, kappa_q) with b_q = prod_{l<kappa} (f_q^l(r_q))^2 as an Arb ball."""
+    key = (q, cycles, ctx.prec)
+    hit = _B_Q_CACHE.get(key)
+    if hit is not None:
+        return hit
+    lam = lam_ball(q)
+    w = _r_word(q)
+    prod = acb(1)
+    for i in range(len(w)):
+        v = _periodic_cf_ball(w[i:] + w[:i], lam, cycles)
+        prod = prod * v * v
+    out = (prod, len(w))
+    _B_Q_CACHE[key] = out
+    return out
+
+
+def _to_acb(s):
+    if isinstance(s, acb):
+        return s
+    z = complex(s)
+    return acb(arb(z.real), arb(z.imag))
+
+
+def det_K(q, s, n_terms=400, cycles=200):
+    """det(1 - K_s) = prod_{n>=0} (1 - b_q^{s+n}), MMS eq. (D), as an Arb ball.
+
+    This is the factor by which every det(1-L_s) magnitude produced by this
+    module overstates the Selberg zeta function: Z_S = det(1-L_s)/det(1-K_s)
+    (MMS arXiv:0912.2236, Theorem `main-theorem`).  Zero-free on Re s > 0; its
+    zeros are exactly s in -N_0 + i(2 pi / log(1/b_q)) Z.
+    """
+    b, _kappa = b_q_ball(q, cycles=cycles)
+    sa = _to_acb(s)
+    logb = b.log()
+    out = acb(1)
+    cutoff = 2.0 ** (-ctx.prec)
+    for n in range(n_terms):
+        t = ((sa + acb(n)) * logb).exp()
+        out = out * (acb(1) - t)
+        if n > 2 and abs(complex(float(t.real.mid()), float(t.imag.mid()))) < cutoff:
+            break
+    return out
+
+
+def selberg_Z(q, s, N, n_head=4, n_terms=400, cycles=200):
+    """The Selberg zeta function itself, as an Arb ball:
+
+        Z_S(s) = det(1 - L_{s,+}) det(1 - L_{s,-}) / det(1 - K_s)
+
+    (MMS arXiv:0912.2236, Theorem `main-theorem`).  The RAW determinants
+    returned by cert_det / cert_det_complex_mid / cert_absdet_mid are the
+    NUMERATOR only -- see this module's header warning and
+    research_notes/rh_goals_2026-08-14/lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md.
+
+    The returned ball carries the determinant midpoints only (the dimension
+    tails from cert_det are NOT folded in) -- same epistemic status as
+    cert_det_complex_mid.
+    """
+    sa = _to_acb(s)
+    dp, _t, _i, _k = cert_det(sa, N, +1, q, n_head=n_head)
+    dm, _t, _i, _k = cert_det(sa, N, -1, q, n_head=n_head)
+    return (dp * dm) / det_K(q, sa, n_terms=n_terms, cycles=cycles)
 
 
 # ---------------------------------------------------------------------------
