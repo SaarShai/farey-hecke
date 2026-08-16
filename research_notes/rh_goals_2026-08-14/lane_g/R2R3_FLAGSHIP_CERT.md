@@ -1,5 +1,12 @@
 # THEOREM-GRADE (closed-contour, corrected-envelope): NO at attempted N=128, 160
 
+> **SUPERSEDED 2026-08-15 by [`R3B_FLAGSHIP_CERT.md`](R3B_FLAGSHIP_CERT.md)** —
+> the R3b re-run (repaired contour scheme + proven tail F_R) reached
+> THEOREM-GRADE closed-contour **YES** at N=160 (winding 1, min margin
+> ≥ 3.43786e-8). This file records the honest NO of the earlier attempt and is
+> kept as a negative receipt only. An external audit (2026-08-16) misread this
+> file as the current flagship status; this banner prevents a repeat.
+
 Date: 2026-08-14
 Run status: `complete`.
 
