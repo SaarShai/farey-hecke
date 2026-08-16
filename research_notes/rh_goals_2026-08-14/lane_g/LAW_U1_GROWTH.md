@@ -519,6 +519,15 @@ The residual is the size of the `ℓ ≤ 6` Euler truncation. **This is independ
 for the U4 identification `det(1−L^+)·det(1−L^−) = Z_{G_q}` at even `q = 12, 16, 22, 30, 40` — the
 repo had it only at `q = 5` (R5).** `HEURISTIC`, unasked for, banked.
 
+> **[CORRECTION 2026-08-16, LAW_Q3_BRANCH_DIAGNOSIS.md + LAW_DETK_IMPACT_AUDIT.md]**
+> The identity as written above is FALSE: the MMS theorem is the quotient
+> `det(1−L^+)·det(1−L^−) = Z_{G_q} · det(1−K_q)` (arXiv:0912.2236, main
+> theorem). `det(1−K_q)` is zero-free on `Re s > 0` with closed form
+> `Π_{n≥0}(1−b_q^{s+n})`. The numerical evidence in this section survives and
+> IMPROVES under the corrected identity (8 of 9 control rows tighten; worst
+> `1.6e−3 → 5.6e−4`). All §7.3/§10 slope conclusions re-audited under the
+> correction: 0 flips (impact audit, 22 magnitudes classified).
+
 ### 7.3 The guard table — `sup_{∂U}` against `q`, and **it rises**
 
 `∂U = {|s − s_∞| = 1/4}`, 8 equispaced points `s_j = s_∞ + (1/4)e^{2πi j/8}`, `j = 0 … 7`.
