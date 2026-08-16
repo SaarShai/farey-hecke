@@ -1,6 +1,7 @@
 # DRAFT STATUS — FLAGSHIP_PAPER_DRAFT.tex
 
-Date: 2026-08-16 (v2; v1 was 2026-08-15). Lane P. Ticket:
+Date: 2026-08-16 (v2.1 novelty-framing correction; v2 same day; v1 was
+2026-08-15). Lane P. Ticket:
 `plans/wayfinder/rh-goals/tickets/flagship-paper-draft.md`.
 
 **Status: DRAFTING COMPLETE. NOT for circulation.** Dissemination
@@ -25,6 +26,81 @@ the HITL tickets. Nothing has been submitted or emailed.
   (which carries the provenance of every plotted constant). All three
   are now included in the .tex via `graphicx` with relative paths
   `figures/…`, so the TeX must be compiled from the `lane_p/` directory.
+
+## v2.1 correction — novelty framing vs Selberg–Hejhal (2026-08-16)
+
+**Reason.** A frontier verification against the primary source
+(Garbin–Jorgenson, *L'Enseign. Math.* (2) **64** (2018) 161–206, DOI
+10.4171/LEM/64-1/2-7, pp. 161–163, fetched and read) confirmed verbatim
+that Hejhal, *Selberg Trace Formula for PSL(2,R)*, Vol. 2 (LNM 1001,
+1983), **Theorem 7.11 + Corollary 7.12** — attributed by Hejhal to
+**Selberg** (Göttingen lectures, part 2) — already assert that, for any
+`t₀` and any `0 < δ < 1`, the rectangle `[1/2, 1/2+δ] × [t₀±δ]` contains
+zeros of the Hecke scattering determinant `φ_N(s)` and
+`[1/2−δ, 1/2] × [t₀±δ]` contains poles, for all sufficiently large `N`.
+Garbin–Jorgenson Thm 5.7 / Rmk 5.8 additionally quantify pole
+accumulation. See `lane_g/LAW_DEFORMATION_PRIOR_ART.md`, "Frontier
+verification 2026-08-16" and "Frontier ruling".
+
+The v2 draft's novelty framing did not cite this. It has been corrected.
+The theorem is **asymptotic and ineffective in N**: no explicit
+threshold, no named surface, no constants, no certificates — so the
+paper's instance-level claim stands, but it must be stated against the
+antecedent, not in ignorance of it.
+
+**Sections touched (novelty framing ONLY).**
+
+1. **Abstract** — replaced "To our knowledge this is the first rigorous
+   localization of an off-line resonance of a non-arithmetic finite-area
+   hyperbolic surface (prior-art assessment: in-repo novelty re-scout,
+   2026-08-15)" with a sentence that states the Selberg–Hejhal result and
+   then positions ours as localization at a *specific* surface with an
+   explicit certified box, constants, and machine-checkable receipts.
+2. **New §1.2, "Prior art: the Selberg–Hejhal large-N theorem"**
+   (`\label{sec:priorart}`), inserted between the background paragraph
+   and the transfer-operator paragraph. States Thm 7.11 / Cor. 7.12 in
+   full and neutrally, records the Garbin–Jorgenson restatement and
+   quantification, notes that unitarity of `φ_N` on the regular part of
+   `Re(s)=1/2` makes the zeros/poles genuinely off-line, and then gives
+   the four-point repositioning of this paper: (a) first rigorous
+   localization at a *specific* non-arithmetic surface with explicit
+   box/gap/margins; (b) machine-checkable certificates plus partial Lean
+   formalization; (c) the arithmetic-side `ζ(2s)` mechanism of §6 as what
+   makes the contrast a mechanism; (d) the effective-threshold `Q₀`
+   program, which the literature lacks and which is **not** claimed here.
+3. **Remark "Honesty discipline of this draft"** — the sentence
+   "Every occurrence of 'first' below refers to the in-repo prior-art
+   re-scout" now adds that every "first" is qualified by Selberg–Hejhal,
+   and that priority is claimed **only** for instance-level rigorous
+   localization with certificates, **not** for the qualitative existence
+   of off-line scattering data in the Hecke family.
+4. **Post-theorem sentence (§1.4)** — "first rigorous localization of an
+   off-line resonance of a non-arithmetic finite-area hyperbolic surface"
+   → "…at a **specific** non-arithmetic finite-area hyperbolic surface",
+   with a pointer to §1.2 and the note that the present statement is
+   independent of the antecedent (no threshold is extracted there, and
+   q = 5 is the smallest non-arithmetic member).
+5. **Bibliography** — `HejhalLNM1001` (already Vol. 2 = LNM 1001; **not**
+   duplicated) gained the DOI 10.1007/BFb0061302 and a parenthetical
+   naming Thm 7.11 / Cor. 7.12 and the Selberg attribution. New bibitem
+   **`GarbinJorgenson18`** added. Both carry provenance comments.
+
+**Not touched (verified by `git diff`: 86 insertions, 6 deletions, and
+every deleted line is one of the four novelty sentences above).** The
+theorem statement, all certified constants, the round-down discipline
+paragraph, the certificates section, the corollary, §6 (mechanism), the
+Lean section, and both appendices are **byte-identical**.
+
+**Deliberately not touched.** Remark "Scope of §6" still lists Hejhal
+LNM 1001 as *unresolved* for the **Fricke closed form** (PHI) and the
+Re = 0 divisor. That is a different obligation (N3), and it remains
+open: only Garbin–Jorgenson's *quotation* of Hejhal §7 has been read,
+not Hejhal's primary text. Do not read the §1.2 correction as closing N3.
+
+**New open obligation.** Hejhal Vol. 2, §7 primary text is a HITL library
+item. §1.2 currently rests on Garbin–Jorgenson's verbatim reproduction
+(high confidence, but a secondary source). Obtain the primary pages
+before circulation.
 
 ## v2 changes (2026-08-16)
 

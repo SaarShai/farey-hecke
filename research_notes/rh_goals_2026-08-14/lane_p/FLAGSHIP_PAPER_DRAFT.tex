@@ -50,9 +50,16 @@ In particular $\Re(s^*) \le 0.4538962 < 1/2$, so $s^*$ lies strictly
 off the critical line with essential gap
 $\delta := 1/2 - \Re(s^*) \ge 0.0461038$; by the standard spectral
 interpretation of Selberg zeros, $s^*$ is a scattering resonance of
-$X_5$. To our knowledge this is the first rigorous localization of an
-off-line resonance of a non-arithmetic finite-area hyperbolic surface
-(prior-art assessment: in-repo novelty re-scout, 2026-08-15). The proof
+$X_5$. A theorem of Selberg, published by Hejhal
+\cite[Thm~7.11, Cor.~7.12]{HejhalLNM1001} and restated by
+Garbin--Jorgenson \cite{GarbinJorgenson18}, already asserts that
+arbitrarily small rectangles adjacent to the critical line contain
+zeros and poles of the Hecke scattering determinant $\varphi_N$ for all
+sufficiently large $N$; that statement is asymptotic and ineffective in
+$N$, and names no individual group. What is new here is the
+localization at a \emph{specific} non-arithmetic surface, with an
+explicit certified box, explicit constants, and machine-checkable
+receipts. The proof
 combines interval-certified contour winding of a Fredholm determinant
 at truncation level $N=160$ (python-flint Arb/Acb ball arithmetic at
 384 bits), a machine-verified finite-section identity and supporting
@@ -82,6 +89,51 @@ structure is available, and the Phillips--Sarnak deformation theory
 \cite{PhillipsSarnak85,PhillipsSarnak85b} suggests that cusp forms
 generically dissolve into resonances, placing zeros of $Z_S$ off the
 critical line $\Re(s) = 1/2$.
+
+\subsection{Prior art: the Selberg--Hejhal large-$N$ theorem}
+\label{sec:priorart}
+
+That off-line scattering data occur in the Hecke triangle family is not
+new, and we state the antecedent before positioning our own result.
+Let $\varphi_N(s)$ denote the scalar scattering determinant of $G_N$.
+Hejhal \cite[Thm~7.11 and Cor.~7.12]{HejhalLNM1001}, attributing the
+result to Selberg (ending remarks of Selberg's G\"ottingen lectures,
+part~2), proves: given $t_0 \in \mathbb{R}$ and $0 < \delta < 1$, the
+rectangle $[\tfrac12, \tfrac12+\delta]\times[t_0-\delta, t_0+\delta]$
+contains zeros of $\varphi_N(s)$, and the reflected rectangle
+$[\tfrac12-\delta, \tfrac12]\times[t_0-\delta, t_0+\delta]$ contains
+poles of $\varphi_N(s)$, for all sufficiently large $N$. The statement
+is reproduced verbatim, and set in the framework of elliptic
+degeneration $G_N \to G_\infty$, by Garbin--Jorgenson
+\cite[p.~162]{GarbinJorgenson18}, who additionally quantify the
+accumulation of scattering poles
+\cite[Thm~5.7, Rmk~5.8]{GarbinJorgenson18}. Since $\varphi_N$ is
+unitary on the regular part of $\Re(s) = 1/2$, these zeros and poles
+are genuinely off the critical line. The qualitative existence of
+off-line scattering data in this family is therefore a theorem of long
+standing.
+
+What that theorem does not supply is exactly what a certificate
+supplies. It is asymptotic in $N$: no threshold $N_0$ is extracted, so
+it settles no individual group; it names no surface, produces no box,
+no constants, and no verifiable receipts; and arithmeticity plays no
+role in its mechanism. Accordingly we position the present paper as
+follows. (a) Theorem~\ref{thm:main} is, to our knowledge
+\cite{NoveltyRescout}, the first rigorous localization of an off-line
+resonance at a \emph{specific} non-arithmetic finite-area hyperbolic
+surface, with an explicit box, an explicit gap
+$\delta \ge 0.0461038$, and explicit certified margins. (b) Every
+numerical input is a machine-checkable interval certificate and several
+functional-analytic joints are formally verified in Lean
+(\S\ref{sec:lean}). (c) \S\ref{sec:mechanism} derives the mechanism on
+the arithmetic side --- $\zeta(2s)$ appearing as the scattering
+determinant of the associated Fricke group --- which is the ingredient
+that makes the arithmetic/non-arithmetic contrast a mechanism rather
+than a coincidence of data. (d) The natural continuation is an
+\emph{effective} version: an explicit threshold $Q_0$ beyond which the
+Selberg--Hejhal conclusion holds, together with certified verification
+below it. The literature does not currently contain such a threshold,
+and none is claimed here.
 
 For the Hecke triangle groups $G_q$, the transfer-operator approach of
 Mayer and its development by M\"uhlenbruch, Str\"omberg, M\"oller--Pohl
@@ -126,7 +178,11 @@ stated: the arithmetic Hecke triangle groups $\{3,4,6\}$ form a single
 commensurability class, one data point, with non-comparable protocols),
 \textbf{no} family claim for $G_q$, $q \ne 5$, and \textbf{no} density,
 counting, or maximal-gap claim. Every occurrence of ``first'' below
-refers to the in-repo prior-art re-scout \cite{NoveltyRescout}.
+refers to the in-repo prior-art re-scout \cite{NoveltyRescout}, and is
+in every case qualified by the Selberg--Hejhal large-$N$ theorem
+recorded in \S\ref{sec:priorart}: we claim priority only for
+instance-level rigorous localization with certificates, not for the
+qualitative existence of off-line scattering data in the Hecke family.
 \end{remark}
 
 \subsection{Main result}
@@ -159,8 +215,13 @@ scattering \emph{resonance} of $X_5$.
 \end{theorem}
 
 To our knowledge Theorem~\ref{thm:main} is the first rigorous
-localization of an off-line resonance of a non-arithmetic finite-area
-hyperbolic surface \cite{NoveltyRescout}. The proof is an eight-link
+localization of an off-line resonance at a specific non-arithmetic
+finite-area hyperbolic surface \cite{NoveltyRescout}; the qualitative
+large-$N$ antecedent of Selberg--Hejhal
+\cite[Thm~7.11, Cor.~7.12]{HejhalLNM1001}, \cite{GarbinJorgenson18} is
+recalled in \S\ref{sec:priorart}, and the present statement is
+independent of it (that theorem yields no threshold, and $q = 5$ is the
+smallest non-arithmetic member). The proof is an eight-link
 chain (\S\ref{sec:chain}) mixing machine-certified interval receipts,
 Lean-proved joints, cited published theorems, and short self-contained
 arguments; the dependency classes are made explicit in
@@ -833,6 +894,25 @@ Comm.\ Pure Appl.\ Math.\ \textbf{38} (1985), 853--866.
 D.~A. Hejhal,
 \emph{The Selberg Trace Formula for $\mathrm{PSL}(2,\mathbb{R})$, Vol.~2},
 Lecture Notes in Mathematics \textbf{1001}, Springer, 1983.
+DOI \texttt{10.1007/BFb0061302}.
+(Theorem~7.11 and Corollary~7.12 are the large-$N$ off-line
+zero/pole statements for the Hecke scattering determinant used in
+\S\ref{sec:priorart}; Hejhal attributes the result to Selberg,
+G\"ottingen lectures part~2.)
+% Thm 7.11 / Cor. 7.12 statements verified 2026-08-16 against the verbatim
+% reproduction in Garbin--Jorgenson (2018), p. 162.
+% TODO-VERIFY: Vol. 2 Sec. 7 primary text not opened in-repo; only the
+% Garbin--Jorgenson quotation. Obtain the primary pages before circulation.
+
+\bibitem{GarbinJorgenson18}
+D.~Garbin and J.~Jorgenson,
+\emph{Spectral asymptotics on sequences of elliptically degenerating
+Riemann surfaces},
+L'Enseign.\ Math.\ (2) \textbf{64} (2018), 161--206.
+DOI \texttt{10.4171/LEM/64-1/2-7}; arXiv:1603.01494.
+% Primary source fetched and read (pp. 161--163), 2026-08-16: reproduces
+% Hejhal Thm 7.11 / Cor. 7.12 verbatim on p. 162; Thm 5.7 / Rmk 5.8 quantify
+% scattering-pole accumulation for the Hecke family.
 
 \bibitem{IwaniecGSM53}
 H.~Iwaniec,
