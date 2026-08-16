@@ -1,6 +1,6 @@
 # Practical-value: certified spectral engine as a reusable library
 
-- status: open — ships naturally as companion artifact to the flagship paper
+- status: ACTIVE 2026-08-16 — owner upgraded to full public-repo build; deep-research lanes launched, Opus 5 builders next; frontier orchestrates
 - kind: engineering
 - created: 2026-08-16 (owner directive)
 - blocked by: flagship paper timing (soft)

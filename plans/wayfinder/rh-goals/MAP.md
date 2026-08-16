@@ -92,3 +92,4 @@ directive 2026-08-15
 - [Pipeline packaging (public repo)](tickets/pipeline-packaging.md) — open; design-doc first, packaging after flagship paper; owner directive 2026-08-16
 - [Certified spectral engine library](tickets/spectral-engine-packaging.md) — open; companion artifact to flagship paper; owner directive 2026-08-16
 - [MD timescale certificate pilot](tickets/md-timescale-certificate-pilot.md) — open; KT1 (incumbent check) launched 2026-08-16; kill-first ladder, KT3 owner-gated
+- Public-repo builds ACTIVATED (owner 2026-08-16): pipeline-packaging + spectral-engine-packaging upgraded from design-doc to full public repos; 2 codex deep-research lanes (gap/demand/design) → frontier repo specs → Opus 5 builders → secret-scan + frontier review → publish. MD-timescale-certificate pilot unchanged (KT1 in flight). Nothing dropped.

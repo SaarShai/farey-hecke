@@ -1,6 +1,6 @@
 # Practical-value: package the AI-verified-math pipeline as a public repo
 
-- status: open — design-doc phase first; packaging AFTER flagship paper ships
+- status: ACTIVE 2026-08-16 — owner upgraded to full public-repo build ("create a new public repo, separate from this one"); deep-research lanes launched, Opus 5 builders next; frontier orchestrates
 - kind: engineering/writing
 - created: 2026-08-16 (owner directive: "can/should this be a github repo…")
 - blocked by: flagship paper (soft; design doc can start anytime)
