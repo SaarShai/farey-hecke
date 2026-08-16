@@ -1,0 +1,201 @@
+{
+  "q_list": [
+    10,
+    14,
+    18,
+    22,
+    26,
+    30
+  ],
+  "one_minus_rho_star": [
+    0.18670368766518286,
+    0.14330420833983026,
+    0.0859969546829974,
+    0.07053440014890788,
+    0.056999997438886285,
+    0.04979790611610391
+  ],
+  "power_law_fit": {
+    "C": 3.6097563877421077,
+    "p": -1.2678876038463722,
+    "r2": 0.9748578204635767,
+    "residuals": [
+      -0.0080969121274585,
+      0.016154208275907772,
+      -0.006458692913551625,
+      -0.0011520074827436472,
+      -0.0010030385456661628,
+      0.0014192093200992573
+    ]
+  },
+  "per_q": [
+    {
+      "q": 10,
+      "kappa": 4,
+      "n_blocks": 11,
+      "rho_star": 0.8132963123348171,
+      "worst_block": "(3->2, n=1 head)",
+      "best_factors": [
+        3.75,
+        2.65,
+        1.91,
+        1.3700000000000003
+      ],
+      "starts_tried": 3,
+      "steps": [
+        0.1,
+        0.05,
+        0.02,
+        0.01,
+        0.005
+      ],
+      "wall_seconds": 0.4190659523010254,
+      "label": "NON-RIGOROUS FLOAT PREPARATION (float64, 2048 circle points, tail n0..59); coarser search than the q=7 f7_mitigation_stage0.py run (fewer starts/steps)"
+    },
+    {
+      "q": 14,
+      "kappa": 6,
+      "n_blocks": 17,
+      "rho_star": 0.8566957916601697,
+      "worst_block": "(6->6, n=-1 tail)",
+      "best_factors": [
+        3.8999999999999995,
+        3.09,
+        2.47,
+        1.9800000000000002,
+        1.58,
+        1.2450000000000003
+      ],
+      "starts_tried": 3,
+      "steps": [
+        0.1,
+        0.05,
+        0.02,
+        0.01,
+        0.005
+      ],
+      "wall_seconds": 0.6124091148376465,
+      "label": "NON-RIGOROUS FLOAT PREPARATION (float64, 2048 circle points, tail n0..59); coarser search than the q=7 f7_mitigation_stage0.py run (fewer starts/steps)"
+    },
+    {
+      "q": 18,
+      "kappa": 8,
+      "n_blocks": 23,
+      "rho_star": 0.9140030453170026,
+      "worst_block": "(3->2, n=1 head)",
+      "best_factors": [
+        3.655,
+        3.187142857142857,
+        2.789285714285714,
+        2.4414285714285717,
+        2.1285714285714286,
+        1.7857142857142858,
+        1.442857142857143,
+        1.2000000000000002
+      ],
+      "starts_tried": 3,
+      "steps": [
+        0.1,
+        0.05,
+        0.02,
+        0.01,
+        0.005
+      ],
+      "wall_seconds": 0.7333509922027588,
+      "label": "NON-RIGOROUS FLOAT PREPARATION (float64, 2048 circle points, tail n0..59); coarser search than the q=7 f7_mitigation_stage0.py run (fewer starts/steps)"
+    },
+    {
+      "q": 22,
+      "kappa": 10,
+      "n_blocks": 29,
+      "rho_star": 0.9294655998510921,
+      "worst_block": "(3->2, n=1 head)",
+      "best_factors": [
+        3.655,
+        3.288333333333333,
+        2.966666666666667,
+        2.6750000000000003,
+        2.4133333333333336,
+        2.166666666666667,
+        1.9,
+        1.6333333333333333,
+        1.3666666666666667,
+        1.12
+      ],
+      "starts_tried": 3,
+      "steps": [
+        0.1,
+        0.05,
+        0.02,
+        0.01,
+        0.005
+      ],
+      "wall_seconds": 0.9056539535522461,
+      "label": "NON-RIGOROUS FLOAT PREPARATION (float64, 2048 circle points, tail n0..59); coarser search than the q=7 f7_mitigation_stage0.py run (fewer starts/steps)"
+    },
+    {
+      "q": 26,
+      "kappa": 12,
+      "n_blocks": 35,
+      "rho_star": 0.9430000025611137,
+      "worst_block": "(3->2, n=1 head)",
+      "best_factors": [
+        3.63,
+        3.3418181818181814,
+        3.0836363636363635,
+        2.8454545454545457,
+        2.6172727272727276,
+        2.409090909090909,
+        2.190909090909091,
+        1.9727272727272727,
+        1.7545454545454544,
+        1.5363636363636364,
+        1.3181818181818183,
+        1.1
+      ],
+      "starts_tried": 3,
+      "steps": [
+        0.1,
+        0.05,
+        0.02,
+        0.01,
+        0.005
+      ],
+      "wall_seconds": 1.0606279373168945,
+      "label": "NON-RIGOROUS FLOAT PREPARATION (float64, 2048 circle points, tail n0..59); coarser search than the q=7 f7_mitigation_stage0.py run (fewer starts/steps)"
+    },
+    {
+      "q": 30,
+      "kappa": 14,
+      "n_blocks": 41,
+      "rho_star": 0.9502020938838961,
+      "worst_block": "(3->2, n=1 head)",
+      "best_factors": [
+        3.605,
+        3.365384615384615,
+        3.145769230769231,
+        2.9411538461538465,
+        2.746538461538462,
+        2.566923076923077,
+        2.3923076923076927,
+        2.207692307692308,
+        2.023076923076923,
+        1.8384615384615386,
+        1.6538461538461537,
+        1.4692307692307693,
+        1.2846153846153847,
+        1.1
+      ],
+      "starts_tried": 3,
+      "steps": [
+        0.1,
+        0.05,
+        0.02,
+        0.01,
+        0.005
+      ],
+      "wall_seconds": 1.270339012145996,
+      "label": "NON-RIGOROUS FLOAT PREPARATION (float64, 2048 circle points, tail n0..59); coarser search than the q=7 f7_mitigation_stage0.py run (fewer starts/steps)"
+    }
+  ]
+}

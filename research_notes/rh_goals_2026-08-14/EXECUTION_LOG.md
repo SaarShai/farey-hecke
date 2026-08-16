@@ -957,3 +957,33 @@ Ticket `law-tail-anchor-probe.md` Leg 1. Deliverable:
   built and verified, ready to push as slots free):** chunks 05–15, in
   order. See `lane_f/F7_STAGE3_LAUNCH.md` for the full slug/queue table and
   caveats.
+
+## 2026-08-15/16 — Lane G leg 2: LAW tail falsification probes D1 + B1 (builder)
+
+- **Probe D1 (narrow-box migration scan, q=12,16,22).** Ticket named
+  `zeta_cert_rosen.py` (odd-q only); q=12,16,22 are all even, so the sibling
+  even-q generalized builder `zeta_cert_rosen_even.py` was used instead
+  (flagged, not silent). Two-stage midpoint scan (`N=16` grid → `N=48`
+  Newton refine, `N=96` spot-check at q=22 — zero change, stable). Adopted
+  pin per q = lowest-`absdet` candidate in the box (independent of distance
+  to `s_∞`, checked to coincide with nearest-to-`s_∞` at q=16,22 — no
+  selection bias). Distances to `s_∞ = 0.25+7.0674i`: `0.4161 → 0.2797 →
+  0.1378` (q=12→16→22), **monotone decreasing**. `q^{-2}` fits best of the
+  three tested exponents (SS_log 0.016 vs 0.056 for `q^{-4/3}` vs 0.138 for
+  `q^{-1}`); free-regression slope `−1.83`. **Verdict: MIGRATION-CONSISTENT**
+  (weak — 3 points, non-rigorous midpoint scan, no winding certificate — but
+  unambiguous in direction and closer to `q^{-2}` than the alternatives).
+- **Probe B1 (float disc-optimizer scaling curve, q=10,14,18,22,26,30).**
+  Coarser search than the q=7 `f7_mitigation_stage0.py` run; corrected
+  mid-run when a uniform-inflation start gave `ρ*≥1` for `κ≥6`
+  (needs an F7-style large-near-1/small-near-κ profile — recorded, not
+  hidden). `1−ρ*(q)`: `0.187 → 0.143 → 0.086 → 0.071 → 0.057 → 0.050`,
+  monotone, no plateau through q=30. Fit `1−ρ*(q) ≈ 3.61·q^{-1.268}`,
+  `R²=0.975` — shallower than the scoping note's 3-point range
+  (`[−1.46,−1.33]`, q=5,7,8), but qualitatively the same story (decay
+  continues, not `→ q^{-1.4}` plateau). **Verdict: closes (b) as a tail
+  route (no plateau, no uniform `ρ_max<1`), exponent ≈ −1.27 this run** —
+  confirms rather than overturns the scoping note's ranking.
+- Full tables, residual breakdowns, and the builder-substitution rationale:
+  `lane_g/LAW_PROBES_D1_B1.md`. Receipts: `lane_g/law_probes/`. Not
+  committed (per instruction).
