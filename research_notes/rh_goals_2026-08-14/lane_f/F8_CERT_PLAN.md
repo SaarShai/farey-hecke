@@ -7,6 +7,15 @@ R3b / `kaggle_f8/` / canary are gated on judging this pass, per coordinator
 scope confirmation (this session, following commit 1f2b578 which banked
 `make_bundles.py` and the box-selection work).
 
+**Update (this pass, gates-resolution round):** commit 51faa5d banked Stage
+0–2 and promoted the two flags raised in §2/§3 below to blocking gates on R2.
+Both are now resolved — see §"Gates (resolved this pass)" at the end of this
+file for the verdicts, receipts, and the updated §2 factors this changed.
+§2's original narrative below is left in place except for the factors table,
+which now reflects the GATE-2-hardened geometry; the *old* (thin-margin)
+factors and their ρ*=0.9987 result are preserved verbatim in the gates
+section for the record.
+
 ## 0. Box (carried from the prior pass, unchanged)
 
 s₀ = 0.4252310423737965 + 4.345760788321986 i, sign = +1 (mms+ sector),
@@ -93,6 +102,12 @@ already 1.02 at factor 1.0) found non-uniform per-disc factors
 | 3→2, +1 | head (finite) | ≤ 0.873181440360437… | PASS |
 | 3→3, +2 | tail (K=11) | ≤ 0.996646888568821… | PASS |
 | 3→3, −1 | tail (K=12) | ≤ 0.996646888568821… | PASS |
+
+**SUPERSEDED this pass — see §"Gates (resolved this pass)" / GATE 2.** The
+factors (1.7, 1.4, 1.15) and ρ*=0.9987 above are the historical record of
+what Stage 1 first certified; `f8_certify_tb_blocks.py` and
+`f8_receipts/F8_TB_BLOCK_CERTIFICATES_RECEIPT.json` now hold the
+GATE-2-hardened geometry `(3.4, 2.2, 1.4)`, certified ρ* = 0.9074127334.
 
 **rho\* = 0.998676850298546231512835 (Arb ball, both endpoints agree to
 1.11e-25)** — `PASS_RHO_LT_1.0`. **Caveat, stated plainly: this margin is
@@ -218,3 +233,179 @@ measurement, not from this single interior point):**
 
 No existing file was modified except as listed. No commits, no Kaggle
 pushes, this pass.
+
+## Gates (resolved this pass)
+
+Coordinator promoted §3's double-precision-selfcheck anomaly and §2's thin
+ρ*=0.9987 to blocking gates on R2 (commit 51faa5d banked Stage 0–2). Both
+resolved below. R2 remains a separate, not-yet-started pass.
+
+### GATE 1 — `selfcheck_vs_doubleprec(8, N=10)` anomaly
+
+**(a) Locate the max-rel entry.** Re-ran the selfcheck with per-entry
+instrumentation (not part of the banked module; a diagnostic-only script, not
+committed). The worst-relative-error entry is **`(row=0, col=29)`** — the
+top-right corner of the truncated `30×30` (`κN=3×10`) matrix, i.e. the
+**deepest tail column at the truncation edge** (component 3, series index
+`m=9` of `N=10`, the last basis function kept before truncation):
+
+```
+idx=(0,29)  mine = 4.928149e-09 + 9.467264e-09j   (|mine| ≈ 1.07e-08)
+            dp   = 7.932121e-09 − 6.464881e-09j   (|dp|   ≈ 1.02e-08)
+abs diff = 1.621e-08     rel diff = 1.519  (i.e. 151.9%)
+```
+
+Both values are **near-zero relative to the matrix scale** (Frobenius norm
+≈107): this is a truncation-edge coefficient near the double-precision
+builder's own FFT noise floor (its `n_head=8000`-term tail sum has residual
+FFT/aliasing error at exactly this kind of small, high-index entry), not a
+disagreement between two well-resolved values. Recomputing with the
+matrix-norm-normalized metric the coordinator asked for:
+
+```
+max |diff| (absolute, whole matrix)      = 6.183e-05
+Frobenius norm of the certified matrix   = 106.98
+max |diff| / Frobenius norm              = 5.780e-07
+max |diff| / operator (spectral) 2-norm  = 6.375e-07   (2-norm = 96.998)
+```
+
+Both normalized figures land **inside** the module's stated ~1e-6 to ~1e-7
+resolution band. The raw `max_rel=1.519` figure the module prints is an
+artifact of dividing by `max(|mine|, |dp|, 1e-12)` at an entry where both
+operands are ~1e-8 — a standard cross-precision-comparison pitfall (relative
+error is meaningless near zero), not evidence the matrices disagree.
+
+**(b) Is q=8 an outlier, or does the harness do this everywhere?** Ran the
+identical selfcheck at q=12 (the multi-q note's own validated even case) and
+q=4 (algebraically the simplest even case, kappa=1):
+
+| q | dim (κN) | max abs diff | max rel diff | rel-worst entry | Frobenius norm | max abs / Frobenius |
+|---:|---:|---:|---:|---|---:|---:|
+| 4  | 10 | 1.105e-04 | 7.782e-03 | (0, 9)  — truncation-edge column | 102.32 | 1.080e-06 |
+| 8  | 30 | 6.183e-05 | 1.519e+00 | (0, 29) — truncation-edge column | 106.98 | 5.780e-07 |
+| 12 | 50 | 6.237e-05 | 1.173e+00 | (0, 49) — truncation-edge column | 64.43  | 9.681e-07 |
+
+**Everywhere.** All three q have their worst-relative-error entry at the
+identical structural location — row 0, the LAST column (the deepest
+truncation-edge basis coefficient) — and q=8's `max_rel=1.519` is not an
+outlier among q=4's `7.8e-3` / q=12's `1.173`: q=4 happens to have a
+larger-magnitude worst-entry so its naive relative metric looks smaller, but
+the underlying absolute-error and Frobenius-normalized figures are the same
+order of magnitude (`~1e-4` abs, `~1e-6` to `1e-7` normalized) at all three
+q. The harness's raw `max_rel` print is unreliable everywhere it's used, not
+specifically broken for q=8.
+
+**Verdict: HARNESS-ARTIFACT.** The builder is not defective — its Frobenius-
+and operator-norm-normalized agreement with the double-precision reference is
+`5.8e-7` at q=8 (`9.7e-7` at q=12, `1.1e-6` at q=4), consistent with the
+module's own stated resolution claim. The module's raw printed `max_rel`
+statistic (division by `max(|a|,|b|,1e-12)` with no near-zero guard) is a
+**harness-metric defect**, not a stated-claim-wrong situation either — the
+module's header text describes absolute/FFT resolution (`~1e-6`), which is
+correct; it is the `max_rel` PRINT LINE specifically that is misleading and
+should be read with the near-zero caveat above (not itself a blocking
+finding, since the header's actual documented claim was about absolute
+resolution, which holds). No change made to `zeta_cert_rosen_even.py` (out of
+scope — it is the trusted, already-cross-validated engine; this gate was
+about explaining an anomaly, not patching upstream code this pass).
+
+Diagnostic scripts used for (a)/(b) are not committed to the repo (adhoc,
+inline `python3 - <<'PYEOF'` runs this session); the numbers above are the
+receipt.
+
+### GATE 2 — harden ρ*
+
+**Optimization.** No `scipy` in the venv (`ModuleNotFoundError`); used a
+hand-rolled Nelder–Mead simplex search (float, `M=128` arc cover, fast
+surrogate) over the three per-disc safety factors, minimizing the worst
+block ratio, then re-verified the winner at `M=512` and finally at full Arb
+rigor via `f8_certify_tb_blocks.py`.
+
+- **Unconstrained** Nelder–Mead converges to ratio ≈ **0.650** at factors ≈
+  `(14.67, 5.04, 2.19)`. **Rejected as geometrically unsound**: disc 1 would
+  then have radius ≈1.16 around center ≈−0.845, i.e. it would extend past
+  `Re s = 0` and heavily overlap discs 2 and 3 — untested against pole/
+  branch-cut clearance at that scale, and far outside any precedent (q=7's
+  own largest adopted factor is 3.522). Not adopted.
+- **Bounded grid + refine** (factors capped at ≤5.0, ≈1.4× q=7's largest
+  adopted factor, to stay within a geometrically-precedented range): best
+  found at coarse `M=64` is **(3.4, 2.2, 1.4) → ratio ≈ 0.803** (`M=512`
+  recheck: 0.745 float estimate). **Adopted.**
+- Pushing the cap further (up to 5.0) continued to improve the float ratio
+  marginally (best 0.746 at `(5.0, 2.8, 1.6)`), but with diminishing returns
+  and larger, less-precedented discs for no material gain over the already-
+  passing (3.4, 2.2, 1.4) point — not adopted, to keep the geometry
+  conservative.
+
+**Full Arb certification at (3.4, 2.2, 1.4)**
+(`f8_receipts/F8_TB_BLOCK_CERTIFICATES_RECEIPT.json`, `PREC_BITS=384`,
+`M=512`, `K_start=6`, `max_K=24` — same discipline as the original run):
+
+| block | kind | certified ratio upper bound | K used |
+|---|---|---:|---:|
+| 1→3, +2 | tail | ≤ 0.884413361619760… | 6 |
+| 1→3, −1 | tail | ≤ 0.907412733398576… | 6 |
+| 2→1, +1 | head (finite) | ≤ 0.781324224626880… | — |
+| 2→3, +2 | tail | ≤ 0.882096403418673… | 6 |
+| 2→3, −1 | tail | ≤ 0.904432463312020… | 6 |
+| 3→2, +1 | head (finite) | ≤ 0.735980304555347… | 6 |
+| 3→3, +2 | tail | ≤ 0.879466587362801… | 6 |
+| 3→3, −1 | tail | ≤ 0.901063013512934… | 6 |
+
+**Certified ρ\* = 0.907412733398576057385920 (Arb ball, endpoints agree to
+4.69e-25). `PASS_RHO_LT_0.99`, verdict `worst_block = "1→3, −1, tail"`.** All
+pole clearances PASS, all branch-cut clearances PASS (`all_pole_clearances_pass:
+true`, `all_branch_cut_clearances_pass: true` in the receipt). K collapses
+from 11–12 (old geometry) to **6** (new geometry) for every tail family — the
+crude deep-tail bound now dominates much earlier, direct evidence the
+geometry, not just the threshold, improved.
+
+**Target ρ\* ≤ 0.99 is REACHED with real margin**: 0.99 − 0.9074 = 0.083
+(8.3% headroom below the gate itself); margin to the hard convergence bound
+of 1.0 is 9.26%. This is now in the **same range as q=7's own certified
+ρ\* = 0.7623** (float) / **0.762251293807** (the q=7 chain's own reported
+comparison value) — not identical, but no longer an outlier requiring
+special-casing.
+
+**Block re-cutting / merging.** The coordinator asked whether the two finite
+head blocks (`2→1`, `3→2`) admit restructuring (as the odd-q pipeline's
+block-choice notes allow) to structurally improve the margin. **Not
+attempted**, because the geometry search alone already reached the target
+with comfortable headroom (§ above) — re-cutting the block list would change
+`f8_source_builder.py`'s assembly (currently an exact transcription of
+`zeta_cert_rosen_even`'s eq.(32) loop, cross-validated byte-identical in
+Stage 0's §3(a)) and is not needed to clear GATE 2. Flagged as an available
+lever for a FUTURE pass only if R2's boundary-sup work later finds the
+current geometry insufficient there (R2's `F_R(N)` inequality is a different,
+stricter quantity than this TB-layer ratio — see below).
+
+**Error-budget headroom vs the q=7 pipeline's ~1113x.** The q=7 R3b margin/
+`F_R` ratio at `N=256` is `1113.85` (`ADVERSARIAL_REVIEW_G7_V1.md`). That
+downstream figure depends on ρ\* through the exponential decay rate
+`|ln ρ*|` in `F_R(N) ~ T_tail(N)·exp(1+2B(N))`, `T_tail(N) ~ ρ*^N` (roughly —
+the exact R2 formula is not yet ported to q=8; this is the same qualitative
+dependence F7_CERT_PLAN §3 itself uses to argue N-budget). Comparing the OLD
+and NEW ρ\* by that exponent:
+
+| | ρ\* | \|ln ρ\*\| | N needed for 1113.85× decay (≈ q=7's headroom) |
+|---|---:|---:|---:|
+| OLD (Stage 1, pre-gate) | 0.9987 | 0.00130 | **≈5393** — infeasible at any practical N |
+| NEW (GATE 2, this pass) | 0.9074 | 0.09717 | **≈72** — well inside q=8's already-observed N-convergence range (Stage 2's N-convergence table showed the actual operator tail dominant by N=28–32 using the determinant-build geometry, a related but distinct quantity) |
+| q=7 (reference) | 0.7623 | 0.2716 | 26 (consistent with q=7 reaching its 1113× margin at N=256, i.e. q=7's actual N budget is set by the boundary-sup R2 formula, not this floor estimate — this table is an order-of-magnitude sanity check, not a substitute for R2) |
+
+**Conclusion: the OLD thin ρ\*=0.9987 would have genuinely threatened the
+final cert** — its decay exponent is ~75× worse than q=7's, which would have
+needed an N in the thousands (infeasible at any Kaggle-chunk budget) to reach
+comparable headroom, and R2's actual boundary-sup formula (stricter than
+this floor estimate) would likely have needed even more. **The NEW ρ\*=0.9074
+removes that threat**: its decay exponent is only ~2.8× worse than q=7's
+(0.09717 vs 0.2716), putting q=8's projected N-budget for comparable headroom
+in the same cost class as q=7's (tens, not thousands) — consistent with
+q=8's smaller κ=3 (vs q=7's κ=5) actually making it a CHEAPER contour cert
+than q=7 if R2/R3b proceed with this geometry.
+
+**Verdicts:**
+
+- **GATE 1: HARNESS-ARTIFACT.**
+- **GATE 2: RESOLVED — ρ\* = 0.9074127334 ≤ 0.99 target, geometry (3.4, 2.2,
+  1.4), full Arb certificate PASS, pole/branch-cut clearance PASS.**

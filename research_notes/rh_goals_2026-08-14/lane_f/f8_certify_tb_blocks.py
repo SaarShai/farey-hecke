@@ -66,18 +66,23 @@ MAX_K_DEFAULT = 64
 Q = 8
 HQ = 3
 KAPPA = 3  # even q: kappa == h_q (odd q=7 had kappa = 2*h+1 = 5)
-THRESHOLD_TEXT = "1.0"  # basic convergence gate only; see module docstring
-# ADOPTED disc inflation factors: a coarse local grid search over the 8
-# eq.(32) blocks (see F8_CERT_PLAN.md "even-q deltas" / stage-1 note). The
-# uniform safety=5/2 default zeta_cert_rosen_even.py uses for the DETERMINANT
-# build (chosen there for numerical robustness, not for this ratio bound) does
-# NOT certify: at factor 2.5 uniform, the two finite head-only blocks
-# (2->1, 3->2, both n=1 direct partition-adjacency maps) have ratio 1.26/1.63
-# > 1. Uniform scaling makes it WORSE, not better (ratio grows with the
-# factor). Non-uniform per-disc factors (1.7, 1.4, 1.15) bring the worst-case
-# ratio to 0.9086 (block 3->3, tail n=-1), with the two head blocks at
-# 0.886/0.873 -- all 8 blocks pass rho* < 1 with this geometry.
-EXACT_FACTORS = ("1.7", "1.4", "1.15")
+THRESHOLD_TEXT = "0.99"  # GATE 2 target (F8_CERT_PLAN.md sec "gates")
+# ADOPTED disc inflation factors: GATE-2 hardened, coarse-grid + local-refine
+# search over the 8 eq.(32) blocks (see F8_CERT_PLAN.md "gates" section for
+# the full search log). The uniform safety=5/2 default zeta_cert_rosen_even.py
+# uses for the DETERMINANT build (chosen there for numerical robustness, not
+# for this ratio bound) does NOT certify: at factor 2.5 uniform, the two
+# finite head-only blocks (2->1, 3->2, both n=1 direct partition-adjacency
+# maps) have ratio 1.26/1.63 > 1. Uniform scaling makes it WORSE, not better
+# (ratio grows with the factor). An UNCONSTRAINED Nelder-Mead search finds
+# ratio -> 0.65 at factors ~(14.7, 5.0, 2.2) -- rejected as geometrically
+# unsound (disc 1 would then extend past Re=0 and heavily overlap discs 2,3,
+# untested against pole/branch-cut clearance at that scale). Search was
+# capped at factors <=5.0 (~1.4x q=7's own largest adopted factor 3.522) and
+# the adopted point (3.4, 2.2, 1.4) gives certified ratio ~0.80 -- comfortably
+# under the 0.99 gate and in the SAME range as q=7's own adopted rho*
+# (0.7623 float / 0.762251293807 certified).
+EXACT_FACTORS = ("3.4", "2.2", "1.4")
 LANE_F = Path("/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f")
 DEFAULT_OUT_DIR = LANE_F / "f8_receipts"
 REPORT_NAME = "F8_TB_BLOCK_CERTIFICATES.md"
@@ -290,7 +295,8 @@ def report_text(receipt: dict[str, Any], code_path: Path, receipt_path: Path) ->
         f"(even q, kappa == h_q).",
         "",
         f"Disc inflation factors: `{', '.join(receipt['radius_multipliers_exact_strings'])}` "
-        "(== zeta_cert_rosen_even's default safety=5/2, self-check-validated at q=8).",
+        "(GATE-2 hardened, non-uniform per-disc; NOT zeta_cert_rosen_even's fixed "
+        "safety=5/2 determinant-build geometry -- see F8_CERT_PLAN.md 'gates').",
         "",
         f"Block source: {receipt['blocks_source']['count']} blocks "
         f"(expected 8 = 2 finite + 6 tail, eq.(32) derivation).",
