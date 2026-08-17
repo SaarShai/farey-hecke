@@ -140,3 +140,22 @@ R5. Assemble N₀(δ, t₀) at t₀ = γ₁/2; compare against certified base ra
 
 Status: extraction complete; R1–R5 not started. LEDGER RULE applies: nothing
 above claims a proved rate — §2's (RATE) sketch is a plan, not a lemma.
+
+## 5. Addendum 2026-08-17: Vol. 2 table of contents (second Koyama mail)
+
+Koyama also sent the Vol. 2 ToC. Precise locations of the remaining literature
+dependencies (not yet in hand; owner-gated follow-up targets):
+
+- Ch. 11 §3 "The theta group", pp. 524–532 — contains eq. (3.1), the explicit
+  φ_∞ that Thm 7.11's contradiction targets. Our φ_∞ (LAW_ANCHOR_T1_THETA) is
+  independently derived; a cross-check vs Hejhal's printed (3.1) would harden
+  R4. Priority: MEDIUM (R4 already numerically self-consistent).
+- Ch. 6 §12 "Apriori bounds for φ(s), E(z;s;χ), φ_m(s)", pp. 149–166 — source
+  of the 155(12.2) derivation behind Lemma 7.7's C₆ (gap M2's constant chain).
+  Priority: HIGH if M2/R3 stall on making C₆ explicit.
+- Appendix E "Some Estimates Related to Kloosterman Sums", pp. 665–710 —
+  possible backup route for tail majorants (gap N3/M2). Priority: LOW.
+- Ch. 6 §11 pp. 108–149 (analytic continuation of Eisenstein series) and ch. 6
+  prop 5.1 (p. 27 "A useful estimate" — Lemma 7.2's proof template).
+
+If a follow-up request is ever approved, ask for pp. 149–166 + 524–532 only.
