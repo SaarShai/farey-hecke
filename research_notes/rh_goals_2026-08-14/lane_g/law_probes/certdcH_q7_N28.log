@@ -1,0 +1,17 @@
+q=7 sector sign=+1 N=28 builder=zeta_cert_rosen.cert_det
+  [sign +1] bottom Im=16: dArg=+1.360765 segs=8 bisect=0 depth=0 27s
+  [sign +1] right Re=0.4: dArg=-24.812520 segs=102 bisect=2 depth=2 317s
+  [sign +1] top Im=18: dArg=-0.675741 segs=8 bisect=0 depth=0 25s
+  [sign +1] left Re=0.023: dArg=+30.410681 segs=100 bisect=0 depth=0 313s
+q=7 sector sign=-1 N=28 builder=zeta_cert_rosen.cert_det
+  [sign -1] bottom Im=16: dArg=-1.044598 segs=8 bisect=0 depth=0 28s
+  [sign -1] right Re=0.4: dArg=-26.959190 segs=100 bisect=0 depth=0 310s
+  [sign -1] top Im=18: dArg=+0.565231 segs=8 bisect=0 depth=0 25s
+  [sign -1] left Re=0.023: dArg=+27.438557 segs=100 bisect=0 depth=0 307s
+{
+  "q": 7,
+  "N": 28,
+  "certified_deep_count": 1,
+  "wall_s": 1352.2
+}
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/certdcH_winding_q7_N28.json
