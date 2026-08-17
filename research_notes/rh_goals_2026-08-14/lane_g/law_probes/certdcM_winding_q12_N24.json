@@ -1,0 +1,276 @@
+{
+  "label": "CERTIFIED (Arb ball) -- conditional on the geometric dimension-tail bound of dim_tail_from_matrix",
+  "q": 12,
+  "N": 24,
+  "n_head": 4,
+  "prec_bits": 300,
+  "window": {
+    "re": [
+      0.023,
+      0.4
+    ],
+    "im": [
+      2.0,
+      12.0
+    ]
+  },
+  "evaluator": "zeta_cert_rosen_even.cert_det (unmodified)",
+  "sectors": {
+    "1": {
+      "sign": 1,
+      "N": 24,
+      "prec_bits": 300,
+      "winding_ball": [
+        4.9878194108605385,
+        5.0121714025735855
+      ],
+      "winding_mid": 4.999995406717062,
+      "certified_integer": 5,
+      "integer_isolated": true,
+      "det_calls": 227,
+      "min_det_abs_lower_on_contour": 0.14538647503559873,
+      "max_dim_tail": 0.07517069200697571,
+      "max_dim_tail_at": [
+        0.023,
+        12.0
+      ],
+      "N_escalated_points": [
+        [
+          0.4,
+          7.1,
+          28
+        ]
+      ],
+      "tail_safety": 4,
+      "edges": [
+        {
+          "edge": "bottom Im=2",
+          "from": [
+            0.023,
+            2.0
+          ],
+          "to": [
+            0.4,
+            2.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -1.0452909445157275,
+          "delta_arg_rad_ball": [
+            -1.045297583797982,
+            -1.0452843052334728
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 16.9
+        },
+        {
+          "edge": "right Re=0.4",
+          "from": [
+            0.4,
+            2.0
+          ],
+          "to": [
+            0.4,
+            12.0
+          ],
+          "initial_samples": 101,
+          "certified_segments": 107,
+          "bisections": 7,
+          "max_bisection_depth": 1,
+          "delta_arg": -44.426488164884645,
+          "delta_arg_rad_ball": [
+            -44.44981739936294,
+            -44.40315893040635
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 236.0
+        },
+        {
+          "edge": "top Im=12",
+          "from": [
+            0.4,
+            12.0
+          ],
+          "to": [
+            0.023,
+            12.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -0.04780422403928242,
+          "delta_arg_rad_ball": [
+            -0.0659900345162896,
+            -0.029618413562275236
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 19.7
+        },
+        {
+          "edge": "left Re=0.023",
+          "from": [
+            0.023,
+            12.0
+          ],
+          "to": [
+            0.023,
+            2.0
+          ],
+          "initial_samples": 101,
+          "certified_segments": 102,
+          "bisections": 2,
+          "max_bisection_depth": 1,
+          "delta_arg": 76.93548097768,
+          "delta_arg_rad_ball": [
+            76.90049874378967,
+            76.97046321157033
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 228.2
+        }
+      ]
+    },
+    "-1": {
+      "sign": -1,
+      "N": 24,
+      "prec_bits": 300,
+      "winding_ball": [
+        -0.007663480431801872,
+        0.007654785669728881
+      ],
+      "winding_mid": -4.34738103649579e-06,
+      "certified_integer": 0,
+      "integer_isolated": true,
+      "det_calls": 226,
+      "min_det_abs_lower_on_contour": 0.09808068063047326,
+      "max_dim_tail": 0.04172146948124308,
+      "max_dim_tail_at": [
+        0.023,
+        12.0
+      ],
+      "N_escalated_points": [
+        [
+          0.4,
+          7.3,
+          28
+        ],
+        [
+          0.4,
+          8.2,
+          32
+        ],
+        [
+          0.4,
+          8.3,
+          32
+        ],
+        [
+          0.4,
+          9.4,
+          32
+        ],
+        [
+          0.023,
+          6.2,
+          28
+        ]
+      ],
+      "tail_safety": 4,
+      "edges": [
+        {
+          "edge": "bottom Im=2",
+          "from": [
+            0.023,
+            2.0
+          ],
+          "to": [
+            0.4,
+            2.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -0.5307347767229658,
+          "delta_arg_rad_ball": [
+            -0.5307411602116545,
+            -0.530728393234277
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 17.3
+        },
+        {
+          "edge": "right Re=0.4",
+          "from": [
+            0.4,
+            2.0
+          ],
+          "to": [
+            0.4,
+            12.0
+          ],
+          "initial_samples": 101,
+          "certified_segments": 100,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -43.749820987161,
+          "delta_arg_rad_ball": [
+            -43.7611716331794,
+            -43.7384703411426
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 236.2
+        },
+        {
+          "edge": "top Im=12",
+          "from": [
+            0.4,
+            12.0
+          ],
+          "to": [
+            0.023,
+            12.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -0.24867159633140545,
+          "delta_arg_rad_ball": [
+            -0.2694553074106807,
+            -0.22788788525213022
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 17.5
+        },
+        {
+          "edge": "left Re=0.023",
+          "from": [
+            0.023,
+            12.0
+          ],
+          "to": [
+            0.023,
+            2.0
+          ],
+          "initial_samples": 101,
+          "certified_segments": 101,
+          "bisections": 1,
+          "max_bisection_depth": 1,
+          "delta_arg": 44.52920004477393,
+          "delta_arg_rad_ball": [
+            44.51321703343321,
+            44.54518305611465
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 223.6
+        }
+      ]
+    }
+  },
+  "certified_deep_count": 5,
+  "wall_s": 995.4
+}
