@@ -7,6 +7,39 @@ is either derived here or tagged [NUMERIC-CONJECTURED]. Per
 (measured D(q;s)), `LAW_R4_THETA_DEFECT.md` (target: ε must beat ~0.66 after
 transport).
 
+## [MACHINE-VERIFIED 2026-08-17]
+
+Aristotle dispatch v26 (`projects/aristotle_dispatch_v26/`, project
+`4730142e-cc15-417a-bccf-ca30b25f2bcf`) formalized and machine-verified the
+§5-tagged "Aristotle: YES" foundational pieces of the P1–P6 chain, plus two
+finite depth-bounded instances of gap M1. Local `lake build` (reusing the
+v25 `.lake`/Mathlib cache) confirms this independently of Aristotle's cloud
+report: `Build completed successfully (8027 jobs)`, 0 errors, 0 live
+`sorry`. Result file: `projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle/RateCore.lean`.
+
+- **P1, P2, P3, P5, P6 (+ P6's λ=2 corollary): PROVED as stated.**
+- **P4: proved in CORRECTED form only** — see `[CORRECTION v26]` at §1(P4)
+  below; the unconditional statement is false, the version with `Re s ≥
+  -1/2` is proved.
+- **M1: two finite instances proved** (depth-1, in corrected form — see
+  `[CORRECTION v26]` at §5(M1) below; and depth-2, as stated). The general
+  (all-`K`, all-`q`) M1 bijection claim is untouched — left as a standing
+  `axiom` (`wordLimitMap_injective_on_matched`), confirmed **unused** by
+  anything proved, i.e. no proved result in this dispatch secretly depends
+  on the unproved general M1.
+- **Unchanged (not in scope for v26):** N1's universal (C1) bound, N2–N4,
+  M2, M3, and §3's assembled candidate lemma with its NUMERIC-CONJECTURED
+  constants (11/20, C(1.1,1.5) ≤ 2.0). The RATE lemma remains DRAFT status.
+- **Downstream-impact check (P4 correction vs §3/§4's ε-table): NO
+  impact.** The draft's candidate lemma is stated and validated at `σ ≥
+  σ₀ = 1.1` throughout (§3 lemma statement, §4 validation table all use
+  `s = 1.1 + 1.5i`, i.e. `Re s = 1.1`). The corrected P4 needs `Re s ≥
+  -1/2`, which `1.1 ≥ -1/2` satisfies with wide margin — the domain the
+  draft actually works in was never in the region where the uncorrected
+  P4 fails (that region is `Re s < -1/2`, never visited). §4's ε(q) table
+  inputs (Δ_X, E_q, E_θ, T_X, all evaluated at σ=1.1) are unaffected;
+  no entry in that table needs recomputation.
+
 **Date:** 2026-08-17. **Lane:** G. **Interpreter:**
 `/Users/za/miniforge3/envs/pari-arb/bin/python3`. **Probe:**
 `law_probes/r2_drift.py` → `law_probes/r2_drift_data.json`.
@@ -68,6 +101,19 @@ one Q replaced by (1/λ)EQ.
 
 **(P4)** For x, y > 0, s = σ+it: |x^{−2s} − y^{−2s}| ≤ 2|s|·min(x,y)^{−2σ−1}·|x−y|
 (mean value on t ↦ t^{−2s}, |d/dt| = 2|s| t^{−2σ−1}, monotone).
+
+> **[CORRECTION v26]** Aristotle proved this statement is FALSE as written
+> without a hypothesis on `Re s` (counterexample `x=1, y=2, s=-1`:
+> LHS = 3 > RHS = 2 — the mean-value sup sits at `max(x,y)` instead of
+> `min(x,y)` once the exponent `-2σ-1` turns positive, i.e. for `σ <
+> -1/2`). The corrected, proved statement adds the hypothesis `Re s ≥
+> -1/2`:
+>     |x^{−2s} − y^{−2s}| ≤ 2|s|·min(x,y)^{−2σ−1}·|x−y|,  σ = Re s ≥ -1/2.
+> This is harmless for the draft: §3/§4 work at `σ ≥ σ₀ = 1.1`, well inside
+> `σ ≥ -1/2`, so no downstream constant changes (see the
+> `[MACHINE-VERIFIED 2026-08-17]` block above). Lean names:
+> `cpow_neg_two_s_bound_false` (falsity), `cpow_neg_two_s_bound'`
+> (corrected form), `projects/aristotle_dispatch_v26/result/.../RateCore.lean`.
 
 **(P5)** 2 − λ_q = 2(1 − cos(π/q)) ≤ π²/q².
 
@@ -274,6 +320,25 @@ word is **MAYBE via interval arithmetic**), P5 (cos inequality —
   split in §3(i) is data, not proof. **Aristotle: NOT as stated** (needs a
   normal-form/geodesic argument in ℤ₂ * ℤ_q vs ℤ₂ * ℤ); a finite-depth
   restricted version (all words of depth ≤ K) is **YES** per (q, K).
+
+  > **[CORRECTION v26]** Two finite-depth instances of this "YES per (q,K)"
+  > claim were sent to Aristotle and proved. The depth-2 instance
+  > (`c_w[n]` for word `[n]`, the pair `(QS^nQ)`) closes exactly as stated:
+  > `c_{[n]}(λ) = n·λ²`, injective in `n` for fixed `λ ≠ 0` (Lean:
+  > `c_depth_two`). The depth-1 instance (`w = []`, the single letter `Q`)
+  > was stated with the WRONG closed form: the working notes' assumed
+  > value `c_{[]}(λ) = -1/λ` is the *upper-right* entry of `Q_λ = (0,
+  > -1/λ; λ, 0)`, not the *lower-left* entry that `c_w` is defined to be
+  > throughout this draft (§1). Aristotle proved the assumed value false
+  > (`wordLimitMap_matched_depth_one_false`, witness `λ=1`) and proved the
+  > entry-convention-consistent value `c_{[]}(λ) = λ`
+  > (`wordLimitMap_matched_depth_one'`) — which also matches P6 at `m=1`
+  > (`c = λ·U_0(λ/2) = λ`), so it is a pure bookkeeping/convention fix, not
+  > a change to the underlying `Q_λ` matrix or to any other proved result.
+  > No downstream constant in §3/§4 references this depth-1 value directly
+  > (the general M1 bijection, not the depth-1 special case, is what §3's
+  > proof skeleton needs — still open). Lean:
+  > `projects/aristotle_dispatch_v26/result/.../RateCore.lean`.
 - **M2**: rigorous N-independent beyond-window majorant = making Hejhal
   Lemma 7.2's C(ε) explicit (route: ch.6 prop 5.1 tiny-disk argument, per
   the extraction note). **Aristotle: NO** (analytic, infinite sum) until a

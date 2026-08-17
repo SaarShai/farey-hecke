@@ -1,3 +1,51 @@
+## HARVEST — 2026-08-17
+
+Task `cc1d7494-eb9d-418e-beff-28fe4e107db6` returned **COMPLETE**. Downloaded
+to `projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle/`
+(`RateCore.lean` + `ARISTOTLE_SUMMARY.md` + manifest/lakefile/toolchain).
+
+**Sorry count: 0 live.** Two `sorry` occurrences in the raw file (lines 199,
+387) are both inside `/- FALSE AS STATED ... -/` comment blocks that keep
+the draft's original (disproved) statements visible for reference — neither
+is a live declaration. Confirmed by inspection of surrounding context.
+
+**Corrections present, as documented:**
+- `cpow_neg_two_s_bound_false` (proves the unconditional P4 statement is
+  false, witness `x=1,y=2,s=-1`) + `cpow_neg_two_s_bound'` (same bound with
+  added hypothesis `-1/2 ≤ Re s`) — both present and proved.
+- `wordLimitMap_matched_depth_one_false` (proves the draft's stated
+  depth-1 identity `c_{[]}(λ) = -1/λ` is false, witness `λ=1`) +
+  `wordLimitMap_matched_depth_one'` (proves the correct identity
+  `c_{[]}(λ) = λ`) — both present and proved.
+
+**Axiom usage: `wordLimitMap_injective_on_matched` confirmed unused.**
+Declared once (line 371) as a standing hypothesis; grep for the identifier
+elsewhere in the file returns no other occurrence — nothing in the proved
+theorems depends on it.
+
+**Local build: SUCCEEDED (not skipped).** v25's `.lake` cache
+(`projects/aristotle_dispatch_v25/result/project_aristotle/.lake`, ~12 GB)
+was reused — `lake-manifest.json` for v26 is byte-identical to v25's (same
+Mathlib rev `8f9d9cff6bd728b17a24e163c9402775d9e6a365` pinned via `v4.28.0`,
+same toolchain `leanprover/lean4:v4.28.0`), so the cache was copied wholesale
+into the v26 result dir and `lake build RateCore` ran against it rather than
+rebuilding Mathlib from scratch. `lake build RateCore` completed in the
+result directory: `Build completed successfully (8027 jobs)`, only two
+`unused variable` linter warnings (`hq` at line 263, `hlam` at line 415, both
+noted in-file as intentionally-unneeded hypotheses kept for draft-fidelity),
+zero errors, zero sorry-warnings. This is a genuine local re-verification,
+not just Aristotle's cloud report.
+
+**Verdict: P1, P2, P3, P5, P6 (+ P6 corollary) and the M1 depth-1/depth-2
+finite instances are now machine-verified** (both locally rebuilt and
+Aristotle-cloud-reported). P4 is machine-verified in its corrected form
+(`Re s ≥ -1/2` hypothesis added — see downstream-impact note below, and the
+updated draft file for the domain check). The general N1/N2–N4/M2/M3/§3
+gaps remain untouched, exactly as scoped in this dispatch's original note
+below.
+
+---
+
 # V26 dispatch note — RATE lemma formalizable core
 
 **Date:** 2026-08-17. **Lane G.**
