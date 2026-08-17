@@ -1,5 +1,21 @@
 # LAW Route B — the CONDITIONAL THEOREM
 
+> **[AMENDMENT RB-A1, 2026-08-16 — B5-J FAILED; B5 RESTATED AS (THRESH).]**
+> LAW_B5J_JENSEN.md: §6.3(1)'s "entire of order 0 in s, no U1 needed" is
+> REFUTED — order 0 holds for the Fredholm/eigenvalue expansion, not the
+> s-plane; measured s-plane growth 11.8–16.2 per unit Re s, increasing in q.
+> The Jensen sup bound IS U1 in disguise; a disc cannot resolve depth (any
+> covering disc swallows the shallow band), realised C_J ≈ 35–71 growing
+> linearly in q ⇒ no Q₀ from that route. B5 is hereby RESTATED as (THRESH):
+> deep-count slope c₂ < 0.14903 at δ₀=0.2 suffices (materially weaker than
+> O(1)); the winding-measured deep count (flat, {5,6,7}) passes comfortably.
+> Banked positives: Lemma H (continuation into the strip is NOT the
+> obstruction; uniform |ζ(2s+m+j,a₀)| ≤ 0.94 bound, 36/36 verified) and the
+> mechanism statement "the degeneration making the theorem true destroys the
+> uniform operator bound" (1−sup|h'| = π²/q²; Markov partition forces
+> κ/(1−θ) = Ω(q³)). Critical path now: certified winding counts (the only
+> depth-resolving instrument) + N-B4/N-B4b + t₀-uniformity probe.
+
 **Date:** 2026-08-16. **Lane G, drafting lane.**
 **Parents:** `LAW_SH_EFFECTIVIZATION_SKELETON.md` §3 (Route B, steps B1–B6);
 `LAW_ROUTEB_DEEPCOUNT.md`, `LAW_ROUTEB_SUBSTRATUM.md`, `LAW_ROUTEB_Q18Q21.md` (the measurements);
