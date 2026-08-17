@@ -94,3 +94,20 @@ stated the OPPOSITE. Rule: any outward-facing factual claim gets re-verified
 against a live artifact (file exists / process runs / number recomputed) at
 send-gate time, not inherited from the previous draft's audit table. Claims
 about ongoing processes expire immediately.
+
+## 2026-08-16 — Source-discrepancy branches are load-bearing until excluded
+Pattern: LAW_ROUTEB_CONDITIONAL_THEOREM §1.5 found its derived numerator
+2(s_k−1/2) disagreed with the fetched GJ text's 1−s_k, and ruled the
+discrepancy "non-load-bearing since both are ≥ 0 and subtracted." That
+ruling was wrong: the branches differ off the exceptional point, and the
+wrong branch manufactured a false refutation of the positivity lemma at
+arithmetic q=3,4,6 (LAW_AGAMMA_PROBE), which nearly killed Route B for the
+wrong reason (COLD_REVIEW_ROUTEB_FATE reversed it — the printed source has
+the misprint).
+Rule: when a derived formula disagrees with a source, CARRY BOTH BRANCHES
+through every downstream computation until one is excluded by an
+independent check (closed-form validation at a known case). Never rule a
+discrepancy non-load-bearing by an argument about signs/positivity alone.
+Corollary: validate any instantiation of a cited lemma at the KNOWN cases
+(here: arithmetic q) before consuming it at the unknown ones — and if the
+known cases fail, suspect the instantiation before the lemma.
