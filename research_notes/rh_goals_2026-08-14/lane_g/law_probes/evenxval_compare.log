@@ -1,0 +1,28 @@
+sign=+1 s=0.1+i2.0   |ref|=         1.05605  rel_err=3.96e-31 PASS
+sign=+1 s=0.1+i7.0   |ref|=         4.61803  rel_err=1.01e-30 PASS
+sign=+1 s=0.1+i12.0  |ref|=         87.6606  rel_err=4.18e-31 PASS
+sign=+1 s=0.1+i17.0  |ref|=         283.018  rel_err=3.31e-31 PASS
+sign=+1 s=0.25+i2.0   |ref|=        0.816539  rel_err=6.4e-31 PASS
+sign=+1 s=0.25+i7.0   |ref|=         1.59682  rel_err=4.91e-31 PASS
+sign=+1 s=0.25+i12.0  |ref|=         19.4383  rel_err=2.07e-30 PASS
+sign=+1 s=0.25+i17.0  |ref|=         24.4606  rel_err=1.82e-30 PASS
+sign=+1 s=0.4+i2.0   |ref|=        0.798194  rel_err=2.77e-31 PASS
+sign=+1 s=0.4+i7.0   |ref|=        0.670795  rel_err=1.02e-30 PASS
+sign=+1 s=0.4+i12.0  |ref|=         5.97487  rel_err=6.4e-31 PASS
+sign=+1 s=0.4+i17.0  |ref|=         2.45777  rel_err=4.23e-31 PASS
+sign=-1 s=0.1+i2.0   |ref|=        0.888558  rel_err=5.34e-31 PASS
+sign=-1 s=0.1+i7.0   |ref|=         10.8682  rel_err=1.62e-31 PASS
+sign=-1 s=0.1+i12.0  |ref|=         68.1341  rel_err=5.91e-31 PASS
+sign=-1 s=0.1+i17.0  |ref|=         310.694  rel_err=1.08e-30 PASS
+sign=-1 s=0.25+i2.0   |ref|=        0.818661  rel_err=6.43e-31 PASS
+sign=-1 s=0.25+i7.0   |ref|=         5.20757  rel_err=1.04e-30 PASS
+sign=-1 s=0.25+i12.0  |ref|=         13.0966  rel_err=6.32e-31 PASS
+sign=-1 s=0.25+i17.0  |ref|=         26.7212  rel_err=1.9e-30 PASS
+sign=-1 s=0.4+i2.0   |ref|=        0.808901  rel_err=3.12e-31 PASS
+sign=-1 s=0.4+i7.0   |ref|=         2.89604  rel_err=1.97e-30 PASS
+sign=-1 s=0.4+i12.0  |ref|=         2.87869  rel_err=1.98e-30 PASS
+sign=-1 s=0.4+i17.0  |ref|=          1.8523  rel_err=2.05e-30 PASS
+
+worst rel err 2.07e-30 at (0.25, 12.0, 1)
+PASS: all 24 evaluations agree to <= 1e-8
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/evenxval_compare.json

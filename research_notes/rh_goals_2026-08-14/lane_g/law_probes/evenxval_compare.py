@@ -25,6 +25,11 @@ def load(name):
         return json.load(f)
 
 
+def arb_mid(s):
+    """Midpoint of an Arb ball string '[mid +/- rad]' (or a plain number)."""
+    return s.split("+/-")[0].strip().lstrip("[").rstrip("]").strip()
+
+
 def main():
     mp_rows = load("evenxval_mp.json")["points"]
     ref_rows = load("evenxval_ref.json")["points"]
@@ -37,7 +42,8 @@ def main():
         key = (r["sigma"], r["t"], r["sign"])
         rr = ref[key]
         z_mp = mp.mpc(mp.mpf(r["det_re"]), mp.mpf(r["det_im"]))
-        z_rf = mp.mpc(mp.mpf(rr["det_re"]), mp.mpf(rr["det_im"]))
+        z_rf = mp.mpc(mp.mpf(arb_mid(rr["det_re"])),
+                      mp.mpf(arb_mid(rr["det_im"])))
         rel = abs(z_mp - z_rf) / abs(z_rf)
         row = {
             "sigma": r["sigma"], "t": r["t"], "sign": r["sign"],
