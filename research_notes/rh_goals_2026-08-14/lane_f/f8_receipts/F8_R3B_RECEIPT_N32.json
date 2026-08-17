@@ -1,0 +1,125 @@
+{
+  "smoke_test": false,
+  "N": 32,
+  "sign": 1,
+  "winding_ball": [
+    0.9999997949595856,
+    1.0000002050404135
+  ],
+  "winding_mid": 0.9999999999999996,
+  "certified_integer": 1,
+  "integer_isolated": true,
+  "closed_contour_status": "CLOSED_CONTOUR_CERTIFIED",
+  "complete_closed_cover": true,
+  "chunk_gate_pass": true,
+  "det_calls": 16,
+  "min_det_abs_lower_on_contour": 3.0010277758816717e-06,
+  "max_dim_tail_upper": 2.6808675469426935e-14,
+  "max_dim_tail_at": [
+    0.4252300423737965,
+    4.345759788321986
+  ],
+  "N_escalated_points": [],
+  "tail_safety": 4,
+  "edges": [
+    {
+      "edge": "bottom",
+      "from": [
+        0.4252300423737965,
+        4.345759788321986
+      ],
+      "to": [
+        0.42523204237379647,
+        4.345759788321986
+      ],
+      "initial_samples": 5,
+      "certified_segments": 4,
+      "bisections": 0,
+      "max_bisection_depth": 0,
+      "delta_arg": 1.5707957884764263,
+      "delta_arg_rad_ball": [
+        1.5707954497671248,
+        1.5707961271857278
+      ],
+      "wall_s": 6.66
+    },
+    {
+      "edge": "right",
+      "from": [
+        0.42523204237379647,
+        4.345759788321986
+      ],
+      "to": [
+        0.42523204237379647,
+        4.345761788321986
+      ],
+      "initial_samples": 5,
+      "certified_segments": 4,
+      "bisections": 0,
+      "max_bisection_depth": 0,
+      "delta_arg": 1.570793071410689,
+      "delta_arg_rad_ball": [
+        1.5707927598688727,
+        1.5707933829525054
+      ],
+      "wall_s": 5.32
+    },
+    {
+      "edge": "top",
+      "from": [
+        0.42523204237379647,
+        4.345761788321986
+      ],
+      "to": [
+        0.4252300423737965,
+        4.345761788321986
+      ],
+      "initial_samples": 5,
+      "certified_segments": 4,
+      "bisections": 0,
+      "max_bisection_depth": 0,
+      "delta_arg": 1.57079686477611,
+      "delta_arg_rad_ball": [
+        1.5707965546641245,
+        1.5707971748880953
+      ],
+      "wall_s": 5.33
+    },
+    {
+      "edge": "left",
+      "from": [
+        0.4252300423737965,
+        4.345761788321986
+      ],
+      "to": [
+        0.4252300423737965,
+        4.345759788321986
+      ],
+      "initial_samples": 5,
+      "certified_segments": 4,
+      "bisections": 0,
+      "max_bisection_depth": 0,
+      "delta_arg": 1.5707995825163596,
+      "delta_arg_rad_ball": [
+        1.5707992545922145,
+        1.5707999104405048
+      ],
+      "wall_s": 3.99
+    }
+  ],
+  "q": 8,
+  "pin_name": "g8_pin_1",
+  "s_box": {
+    "re": "0.4252310423737965",
+    "im": "4.345760788321986",
+    "half_width": "1e-6"
+  },
+  "engine": {
+    "path": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen_even.py",
+    "sha256": "693d2a88fd525e94c8ab6a63486e82fe0670d9dce142effbd5be5e324597212a"
+  },
+  "arcs_total": 16,
+  "arcs_per_edge": 4,
+  "N_head": 4,
+  "prec_bits": 300
+}

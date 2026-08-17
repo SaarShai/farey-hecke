@@ -409,3 +409,177 @@ than q=7 if R2/R3b proceed with this geometry.
 - **GATE 1: HARNESS-ARTIFACT.**
 - **GATE 2: RESOLVED — ρ\* = 0.9074127334 ≤ 0.99 target, geometry (3.4, 2.2,
   1.4), full Arb certificate PASS, pole/branch-cut clearance PASS.**
+
+## R2 + R3b (this pass, gated on both gates above being resolved)
+
+Both gates cleared (commit e91e3f0 banked them). This pass ports the
+remainder of the pipeline. **Architecture deviation from F7, stated
+explicitly, not hidden:** F7's R2 (`f7_certify_r2_flagship.py`, 550 lines,
+requires a further undocumented dependency — a "W-envelope" weight-bound
+receipt from `certify_tb_weights.py`, which does not exist for q=8) and R3b
+(`f7_certify_r3b_flagship.py` + `f7_r3b_endpoint.py`, 1673 + 387 lines) are a
+heavy analytic-block-envelope pipeline, built because F7's box needed N up to
+224–256 (5N×5N matrices, 192 arcs, mandatory multi-day Kaggle chunking) — an
+analytic `T_tail(N)` formula was necessary there to avoid brute-force N
+escalation at that cost. **q=8's box needs only N≈30–34** (3N×3N matrices,
+established below) — direct, brute-force-but-fully-rigorous per-point Arb
+ball certification is cheap enough that no analytic envelope layer or 16-way
+chunk split is needed. This pass therefore reuses the ALREADY-VALIDATED,
+ALREADY-CERTIFIED-AT-THREE-`q` (7, 9, 12 — q=12 is EVEN, same builder pairing)
+methodology of `lane_g/law_probes/certdcM_winding.py`
+(`LAW_CERTIFIED_DEEPCOUNT_MULTI.md`), narrowed from that script's big
+deep-count window to the single 1e-6 flagship box, in a new file
+**`f8_certify_r3b_flagship.py`** — same criteria (a) nonvanishing / (b)
+certified argument increment, same `TAIL_SAFETY=4`, same bisection discipline
+(max depth 10), same engine call (`zeta_cert_rosen_even.cert_det`,
+UNMODIFIED). This is a smaller, simpler, but equally rigorous proof of the
+same fact F7's R2+R3b prove: a certified winding-1 closed contour around the
+flagship box.
+
+### R2-equivalent: boundary-sup-driven N freeze
+
+`f8_certify_r3b_flagship.py --boundary-sup-check` samples the 4 box corners
+**plus the box center** (the worst-case point in the closed box for margin —
+it is closest to the pin's own scan-estimated zero, so `|det|` is smallest
+there; more conservative than checking only the topological boundary) and
+reports the worst `TAIL_SAFETY·tail / |det|` ratio — the direct brute-force
+analogue of F7's `F_R(N) < m0` inequality, computed with the SAME rigorous
+Arb tail bound (`dim_tail_from_matrix_signed`) F7's own engine uses, rather
+than an analytic block-series bound:
+
+| N | worst-point ratio (4·tail/\|det\|) | worst point | criterion (a) |
+|---:|---:|---|---|
+| 24 | 4.260 | center | **FAIL** |
+| 28 | — (raises: det ball contains 0 at center) | center | **FAIL** |
+| 30 | 0.0562 (17.8× margin) | center | PASS |
+| 32 | 0.00272 (367× margin) | center | PASS |
+| 34 | 2.15e-4 (4657× margin) | center | PASS |
+| 36 | 2.27e-5 (44000× margin) | center | PASS |
+
+**Revises the Stage-2 provisional N_PRIMARY=32/N_COMPARISON=28.** N=28 was
+picked at Stage 2 from an interior-point probe WITHOUT the `TAIL_SAFETY=4`
+factor; with the factor and the box-center-inclusive check, N=28 genuinely
+fails criterion (a) (the tail-inflated det ball contains zero). **Revised
+decision: N_PRIMARY = 32, N_COMPARISON = 30** — both clear the boundary-sup
+check with real margin (367× and 17.8× respectively), and N=30 is a
+meaningfully independent lower-N cross-check (not a designed-to-fail
+control, matching F7's own N_PRIMARY/N_COMPARISON convention of "both should
+pass").
+
+**Caveat, stated plainly**: checking corners+center is strong evidence but
+not a continuum supremum proof over every point in the closed box (F7's
+analytic block envelope bounds the true continuum sup; this brute-force
+check samples 5 points). It is not needed for the winding certificate's own
+soundness (that only requires criteria (a)/(b) on the actually-traversed,
+bisection-refined contour — proven below, independent of this diagnostic),
+but is the honest scope of this N-freeze decision.
+
+### Local smoke test (one arc)
+
+```
+$ f8_certify_r3b_flagship.py --one-arc --N 32
+{
+  "smoke_test": true,
+  "one_arc": {"edge": "bottom",
+              "from": [0.4252300423737965, 4.345759788321986],
+              "to":   [0.42523054237379654, 4.345759788321986]},
+  "delta_arg": 0.3217504197904403,
+  "delta_arg_ball": [0.32175033315478985, 0.3217505064260907],
+  "criterion_a_pass": true,
+  "criterion_b_pass": true,
+  "chunk_gate_pass": true,
+  "det_calls": 2,
+  "wall_seconds": 2.66
+}
+```
+
+Confirms the endpoint executes end-to-end (imports the engine, evaluates two
+boundary points, certifies one segment, emits `chunk_gate_pass`) before
+committing to the full 16-arc box run.
+
+### Full closed-contour box certificate
+
+Ran the complete 4-edge, 16-arc closed contour (`--N 32`, `--N 30`, and — for
+comparison, not adoption — `--N 28`):
+
+| N | certified integer | winding ball | `chunk_gate_pass` | `closed_contour_status` | min \|det\| lower on contour | det calls |
+|---:|---:|---|---|---|---:|---:|
+| 28 | 1 | [0.9999985, 1.0000015] | True | CLOSED_CONTOUR_CERTIFIED | 3.001e-06 | 16 |
+| 30 | **1** | [0.99999925, 1.00000075] | **True** | **CLOSED_CONTOUR_CERTIFIED** | 3.001e-06 | 16 |
+| 32 | **1** | [0.99999979, 1.00000021] | **True** | **CLOSED_CONTOUR_CERTIFIED** | 3.001e-06 | 16 |
+
+**All three N give winding = 1, certified** — the contour-only argument-
+principle certificate (criteria a+b on the sampled+bisected boundary points)
+is valid even at N=28, because the contour samples never touch the box
+center (the point that fails the STRICTER center-inclusive boundary-sup
+check at N=28 above). This is worth flagging honestly: **the two checks
+answer different questions.** The closed-contour certificate (this table)
+proves "exactly one zero of `det(1−L_{s,+})` lies inside the box," using only
+the points actually walked on the boundary. The boundary-sup check (previous
+section) is a stronger, separate diagnostic that also verifies nonvanishing
+at the box's worst INTERIOR point (relevant to a from-scratch N-budget
+decision, not to the winding certificate's own validity). N_PRIMARY=32 is
+adopted because it clears BOTH checks with large margin; N=28 is reported as
+a third, informative data point, not adopted, since it fails the stricter
+check even though its contour certificate is independently valid.
+
+`min_det_abs_lower_on_contour` (3.001e-06) — note this is on the actual
+CONTOUR points (corners + edge midpoints), not the center, consistent with
+the corners being farther from the pin's zero than the center (explaining
+why this figure looks comfortable even at N=28 where the CENTER check
+fails).
+
+### Bundling and canary push
+
+`make_bundles_f8.py` (new, adapted from the validated `kaggle_f7/
+make_bundles.py`; provenance comment at its own header) packages a SINGLE
+chunk — `kaggle_f8/f8-r3b-chunk-00/` — because q=8's box fits one Kaggle
+session (unlike F7's mandatory 16-way split). Embeds 4 files as
+zlib+base64 blobs:
+
+| file | sha256 |
+|---|---|
+| `zeta_cert_rosen_even.py` | `693d2a88fd525e94c8ab6a63486e82fe0670d9dce142effbd5be5e324597212a` |
+| `zeta_cert_rosen.py` | `965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac` |
+| `zeta_cert_rosen_q5.py` | `c84c5c3f6d9f7a320bca7f1dbfd96a4859c3eea9b3de5420eb4eb223ad0d597b` |
+| `f8_certify_r3b_flagship.py` | `a8fd1d4ed48ede0343fcec3ce7d8f96699d993391cb97f9578b1e1878787e0ca` |
+
+Validated by decompressing all 4 embedded blobs and diffing against the live
+source files: **all 4 byte-identical** (integrity check, not a full
+container-environment run — matching F7's own precedent that Kaggle-
+container behavior can only be confirmed by an actual push, per
+`F7_STAGE3_LAUNCH.md` §6).
+
+**Pushed `saarshai/f8-r3b-chunk-00` (private) to Kaggle.**
+`kaggle kernels push` succeeded; `kaggle kernels status` confirms:
+
+```
+saarshai/f8-r3b-chunk-00 has status "KernelWorkerStatus.RUNNING"
+```
+
+**Update — the canary finished during this pass** (q=8's N=32 box is cheap:
+`wall_seconds: 59.6` inside the Kaggle container, not the multi-hour-per-
+chunk cost F7's N=224–256 needed). `kaggle kernels status` progressed
+RUNNING → `KernelWorkerStatus.COMPLETE`; downloaded the container's own
+output via `kaggle kernels output` and confirmed the Kaggle-produced
+receipts **independently reproduce the local run**: `F8_R3B_CHUNK_00_N32_
+RECEIPT.json` and `..._N30_RECEIPT.json` both show `certified_integer: 1`,
+`chunk_gate_pass: true`, `closed_contour_status: "CLOSED_CONTOUR_CERTIFIED"`,
+matching the local receipts exactly; kernel log shows `EXIT CODE: 0` for
+both N. Per the coordinator's instruction, **no further chunks/pushes this
+pass** — checking the canary's inference against the pipeline's own theorem-
+assembly criteria (K_s gate re-verification, sector-honesty writeup, etc.)
+is deferred to the next pass.
+
+### Artifacts (this section)
+
+- `f8_certify_r3b_flagship.py` — R2-equivalent boundary-sup check + R3b
+  closed-contour certificate, single file.
+- `make_bundles_f8.py` — bundler (provenance comment points to the validated
+  `kaggle_f7/make_bundles.py`).
+- `kaggle_f8/f8-r3b-chunk-00/{f8_r3b_chunk_00.py,kernel-metadata.json}` —
+  pushed bundle.
+- `f8_receipts/F8_R3B_RECEIPT_N{28,30,32}.json`,
+  `f8_receipts/F8_R3B_CERT_N{28,30,32}.md` — local closed-contour receipts.
+
+No commits, no further Kaggle pushes this pass.
