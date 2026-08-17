@@ -1,0 +1,50 @@
+/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/rate_measure.py:55: SyntaxWarning: invalid escape sequence '\G'
+  lambda -> 2 -- and the single-cusp double-coset sum [S]\G_N/[S] Hejhal writes
+=== GATE 1: phi_q branch-corrected vs exact closed form, q=3,4,6 ===
+  q=3 sig=1.1 t=0.5: reldiff=3.459e-13  (8.2s)
+  q=3 sig=1.1 t=1.5: reldiff=4.838e-13  (8.1s)
+  q=3 sig=1.1 t=3.5: reldiff=5.369e-13  (8.1s)
+  q=3 sig=1.1 t=7.0665: reldiff=1.187e-12  (16.4s)
+  q=3 sig=1.1 t=14.0: reldiff=1.431e-11  (16.6s)
+  q=3 sig=1.25 t=0.5: reldiff=4.167e-13  (4.3s)
+  q=3 sig=1.25 t=1.5: reldiff=5.407e-13  (8.0s)
+  q=3 sig=1.25 t=3.5: reldiff=6.192e-13  (7.9s)
+  q=3 sig=1.25 t=7.0665: reldiff=1.380e-12  (8.3s)
+  q=3 sig=1.25 t=14.0: reldiff=1.764e-11  (16.4s)
+  q=4 sig=1.1 t=0.5: reldiff=1.287e-07  (8.0s)
+  q=4 sig=1.1 t=1.5: reldiff=2.805e-07  (7.9s)
+  q=4 sig=1.1 t=3.5: reldiff=7.438e-07  (7.9s)
+  q=4 sig=1.1 t=7.0665: reldiff=2.082e-06  (16.2s)
+  q=4 sig=1.1 t=14.0: reldiff=3.588e-04  (16.4s)
+  q=4 sig=1.25 t=0.5: reldiff=1.478e-07  (4.4s)
+  q=4 sig=1.25 t=1.5: reldiff=2.901e-07  (8.0s)
+  q=4 sig=1.25 t=3.5: reldiff=7.542e-07  (7.9s)
+  q=4 sig=1.25 t=7.0665: reldiff=2.373e-06  (8.3s)
+  q=4 sig=1.25 t=14.0: reldiff=4.692e-04  (16.5s)
+  q=6 sig=1.1 t=0.5: reldiff=4.677e-12  (8.9s)
+  q=6 sig=1.1 t=1.5: reldiff=8.417e-12  (8.9s)
+  q=6 sig=1.1 t=3.5: reldiff=7.494e-12  (8.8s)
+  q=6 sig=1.1 t=7.0665: reldiff=2.010e-11  (17.0s)
+  q=6 sig=1.1 t=14.0: reldiff=2.892e-05  (17.4s)
+  q=6 sig=1.25 t=0.5: reldiff=5.458e-12  (5.2s)
+  q=6 sig=1.25 t=1.5: reldiff=8.961e-12  (8.9s)
+  q=6 sig=1.25 t=3.5: reldiff=9.550e-12  (8.8s)
+  q=6 sig=1.25 t=7.0665: reldiff=2.376e-11  (9.1s)
+  q=6 sig=1.25 t=14.0: reldiff=6.728e-05  (17.5s)
+GATE1 worst reldiff = 4.692e-04  FAIL
+
+=== GATE 2: |phi_infty(1/2+it)| -- is it 1? (naive task expectation) ===
+  t=1.0: phi_infty(1/2+it)=(-0.47038993609535756-0.11461011504937636j)  |phi_infty|=0.484151
+  t=3.0: phi_infty(1/2+it)=(-0.09365572499833964+0.3633459835278733j)  |phi_infty|=0.375222
+  t=5.0: phi_infty(1/2+it)=(-0.24222472903121445-0.7023883006669714j)  |phi_infty|=0.742982
+  t=7.0665: phi_infty(1/2+it)=(0.19363546893761416-0.27765066205853023j)  |phi_infty|=0.338503
+  t=10.0: phi_infty(1/2+it)=(-0.4831393420185651+0.14794143776236357j)  |phi_infty|=0.505282
+  t=20.0: phi_infty(1/2+it)=(-0.12125627552049155+0.32273170383664684j)  |phi_infty|=0.344759
+
+=== GATE 3: pole of phi_infty at s=rho_1/2 ===
+  r=0.01: |phi_infty(s_inf+r)|=2.104758e+01
+  r=0.001: |phi_infty(s_inf+r)|=2.161497e+02
+  r=0.0001: |phi_infty(s_inf+r)|=2.167210e+03
+  r=1e-05: |phi_infty(s_inf+r)|=2.167782e+04
+
+GATE 1 FAILED -- do not trust q>6 measurements without further repair.
