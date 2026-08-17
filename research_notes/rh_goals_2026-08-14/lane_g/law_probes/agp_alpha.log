@@ -1,0 +1,16 @@
+=== alpha from the archimedean term A_q(r) = Re (log K_q)'(1/2+ir) ===
+  r= 3.00000: alpha_local(q=5..21) =  2.6545 (R2=0.99181), alpha_asymptotic =  2.0000   T(0.2) = -0.07892 / -0.02272
+  r= 5.50000: alpha_local(q=5..21) =  3.8590 (R2=0.97516), alpha_asymptotic =  2.0001   T(0.2) = -0.18236 / -0.02272
+  r= 7.06736: alpha_local(q=5..21) =  4.7525 (R2=0.96858), alpha_asymptotic =  2.0001   T(0.2) = -0.25909 / -0.02272
+  r=10.00000: alpha_local(q=5..21) =  6.5462 (R2=0.96289), alpha_asymptotic =  2.0002   T(0.2) = -0.41312 / -0.02273
+
+=== per-window: (1/2) slope of K-mass, and slope of the resonance part ===
+  W=3.0-5.0: alpha_windowK =  3.1011 (R2=0.9847)   slope_G(resonance) =  -1.6407 (R2=0.0912)   slope_total =  +4.5615   T(0.2) = -0.11727
+  W=6.0-8.0: alpha_windowK =  4.7164 (R2=0.9689)   slope_G(resonance) =  -0.3672 (R2=0.0398)   slope_total =  +9.0655   T(0.2) = -0.25598
+  W=9.0-11.0: alpha_windowK =  6.5474 (R2=0.9629)   slope_G(resonance) =  -1.8471 (R2=0.0745)   slope_total = +11.2477   T(0.2) = -0.41322
+
+ALPHA over all estimators: [2.0000, 6.5474]
+T(0.2) over that range:    [-0.41322, -0.02272]  (0.14903 at alpha=0)
+PRE-REGISTERED VERDICT (worst-case, smallest alpha): P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS
+all estimators fire P4: True
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/agp_alpha.json

@@ -1,0 +1,128 @@
+{
+  "probe": "agp_sliver",
+  "q": 15,
+  "N": 16,
+  "n_head": 4,
+  "prec_bits": 128,
+  "builder": "zeta_cert_rosen.py",
+  "rigor_label": "NON-RIGOROUS PROBE.  Midpoint float evaluation of the Arb-ball\nbuilders (`zeta_cert_rosen.py` odd q, `zeta_cert_rosen_even.py` even q); ctx.prec\nis lowered for speed; NO certified enclosure of the boundary values and no\ncertified dim-tail.  The winding integers are float-unwrap integers with a\nhalf-turn guard, not Arb winding certificates.  Adequate for a measurement /\nkill-or-advance decision; NOT a proof.\n\nNote on the determinant: raw det(1-L_s) = Z_S(s) * det(1-K)(s) with det(1-K)\nzero-free on Re s > 0, so for ZERO COUNTING on 0 < Re s < 1/2 the raw\ndeterminant counts exactly the Selberg-zeta zeros (resonances).",
+  "window": {
+    "im": [
+      2.0,
+      12.0
+    ],
+    "re_grid": [
+      0.487,
+      0.494,
+      0.4985
+    ]
+  },
+  "signs": [
+    1,
+    -1
+  ],
+  "per_sign": {
+    "1": {
+      "dV": [
+        -6.827602050634577,
+        -0.5295211536007399,
+        -0.5199401407864317
+      ],
+      "H1": [
+        0.0,
+        -0.00485417900263143,
+        -0.007943579113158093
+      ],
+      "H2": [
+        0.0,
+        0.010041410851620467,
+        0.01653302355540182
+      ],
+      "cells": [
+        {
+          "re_lo": 0.487,
+          "re_hi": 0.494,
+          "winding_raw": 0.9999999999999999,
+          "count": 1,
+          "residual": 1.1102230246251565e-16
+        },
+        {
+          "re_lo": 0.494,
+          "re_hi": 0.4985,
+          "winding_raw": 3.533949646070574e-17,
+          "count": 0,
+          "residual": 3.533949646070574e-17
+        }
+      ],
+      "total_count": 1
+    },
+    "-1": {
+      "dV": [
+        -44.74073508724696,
+        -44.73300157984948,
+        -44.72805637261967
+      ],
+      "H1": [
+        0.0,
+        -0.0022858161038919102,
+        -0.003732661272308201
+      ],
+      "H2": [
+        0.0,
+        0.005447691293597263,
+        0.008946053355000313
+      ],
+      "cells": [
+        {
+          "re_lo": 0.487,
+          "re_hi": 0.494,
+          "winding_raw": -1.1308638867425838e-15,
+          "count": 0,
+          "residual": 1.1308638867425838e-15
+        },
+        {
+          "re_lo": 0.494,
+          "re_hi": 0.4985,
+          "winding_raw": -1.1308638867425838e-15,
+          "count": 0,
+          "residual": 1.1308638867425838e-15
+        }
+      ],
+      "total_count": 0
+    }
+  },
+  "combined_strata": [
+    {
+      "re_lo": 0.487,
+      "re_hi": 0.494,
+      "count": 1,
+      "max_residual": 1.1308638867425838e-15
+    },
+    {
+      "re_lo": 0.494,
+      "re_hi": 0.4985,
+      "count": 0,
+      "max_residual": 1.1308638867425838e-15
+    }
+  ],
+  "sliver_count_re_in_0487_0498": 1,
+  "det_calls": 638,
+  "min_absdet_on_contours": 0.0029827385643213604,
+  "min_absdet_at": [
+    0.4985,
+    9.677734375
+  ],
+  "warnings": [
+    {
+      "label": "V sign=1 Re=0.487",
+      "t": [
+        0.7138671875,
+        0.7140625
+      ],
+      "darg": 2.2278493262494248,
+      "reason": "half-turn guard hit at MAX_DEPTH"
+    }
+  ],
+  "n_warnings": 1,
+  "wall_seconds": 1125.359431028366
+}

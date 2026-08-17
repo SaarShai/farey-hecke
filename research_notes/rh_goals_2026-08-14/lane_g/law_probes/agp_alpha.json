@@ -1,0 +1,98 @@
+{
+ "probe": "agp_alpha",
+ "reads": [
+  "agp_kgrowth.json",
+  "agp_window.json"
+ ],
+ "alpha_definition": "A_Gamma(r) = alpha * log q (LAW_SELFBOUND_TRACE sec.5.1)",
+ "supersedes": "agp_window.json field 'alpha_implied' (different quantity)",
+ "per_r": {
+  "3.0": {
+   "alpha_local_q5_21": 2.6545166943396508,
+   "R2_local": 0.9918092975398293,
+   "alpha_asymptotic": 2.0000202086886465,
+   "T_0.2_at_alpha_local": -0.07892033454317228,
+   "T_0.2_at_alpha_asymptotic": -0.022715938546265805,
+   "verdict_local": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS",
+   "verdict_asymptotic": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  },
+  "5.5": {
+   "alpha_local_q5_21": 3.8590422277574405,
+   "R2_local": 0.9751639738640957,
+   "alpha_asymptotic": 2.000067485394758,
+   "T_0.2_at_alpha_local": -0.182358063473466,
+   "T_0.2_at_alpha_asymptotic": -0.022719998398029698,
+   "verdict_local": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS",
+   "verdict_asymptotic": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  },
+  "7.067362570867346": {
+   "alpha_local_q5_21": 4.752530873128137,
+   "R2_local": 0.9685773076176798,
+   "alpha_asymptotic": 2.0001113077460926,
+   "T_0.2_at_alpha_local": -0.25908573236721744,
+   "T_0.2_at_alpha_asymptotic": -0.02272376160966171,
+   "verdict_local": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS",
+   "verdict_asymptotic": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  },
+  "10.0": {
+   "alpha_local_q5_21": 6.546202634507914,
+   "R2_local": 0.9628919507492189,
+   "alpha_asymptotic": 2.000222659294399,
+   "T_0.2_at_alpha_local": -0.4131159528118442,
+   "T_0.2_at_alpha_asymptotic": -0.022733323840556895,
+   "verdict_local": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS",
+   "verdict_asymptotic": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  }
+ },
+ "per_window": {
+  "3.0-5.0": {
+   "n_q": 7,
+   "slope_massK": 6.202240776306623,
+   "R2_massK": 0.9846749902216094,
+   "alpha_windowK": 3.1011203881533116,
+   "slope_massZ_resonance_part": -1.6407480784269144,
+   "R2_massZ": 0.0911679747714641,
+   "slope_total_mass": 4.56149269787971,
+   "R2_total": 0.4312625897328125,
+   "T_0.2_at_alpha_windowK": -0.11727209259091337,
+   "verdict_windowK": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  },
+  "6.0-8.0": {
+   "n_q": 7,
+   "slope_massK": 9.432777307605532,
+   "R2_massK": 0.9688785099899785,
+   "alpha_windowK": 4.716388653802766,
+   "slope_massZ_resonance_part": -0.3672464480530516,
+   "R2_massZ": 0.039815174286214394,
+   "slope_total_mass": 9.06553085955248,
+   "R2_total": 0.8958383457880863,
+   "T_0.2_at_alpha_windowK": -0.25598204632503846,
+   "verdict_windowK": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  },
+  "9.0-11.0": {
+   "n_q": 7,
+   "slope_massK": 13.094813746213083,
+   "R2_massK": 0.9629286606807363,
+   "alpha_windowK": 6.547406873106541,
+   "slope_massZ_resonance_part": -1.8470667344766365,
+   "R2_massZ": 0.07447541734999508,
+   "slope_total_mass": 11.247747011736447,
+   "R2_total": 0.7948910972976557,
+   "T_0.2_at_alpha_windowK": -0.4132193659004641,
+   "verdict_windowK": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+  }
+ },
+ "verdicts": {
+  "alpha_range_over_all_estimators": [
+   2.0000202086886465,
+   6.547406873106541
+  ],
+  "alpha_headline_asymptotic": 2.0000202086886465,
+  "all_estimators_fire_P4": true,
+  "T_0.2_range": [
+   -0.4132193659004641,
+   -0.022715938546265805
+  ],
+  "pre_registered_verdict": "P4: alpha >= 1.7355 -- THE ROUTE B BUDGET FAILS"
+ }
+}

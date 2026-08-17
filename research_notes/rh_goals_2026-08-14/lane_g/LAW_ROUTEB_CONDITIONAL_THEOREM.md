@@ -1,5 +1,17 @@
 # LAW Route B — the CONDITIONAL THEOREM
 
+> **[AMENDMENT RB-A2, 2026-08-16 — BUDGET ARITHMETIC FAILS; ROUTE SUSPENDED
+> PENDING COLD REVIEW.]** LAW_AGAMMA_PROBE.md: α = 2.000 (closed-form, q to
+> 4000, not determinant-dependent) — the ENTIRE 2 log q positivity budget is
+> supplied by the order-q elliptic point's own Γ-factor (91%), not resonance
+> mass; the resonance part 𝒢_q has NO positive log q content (slope −1.8…−0.4,
+> R² ≤ 0.09). T(0.2) → −0.023: (B4★) degenerates to P_q ≥ 0 and the pigeonhole
+> forces nothing. Also: (B4★) pointwise with q_M = q REFUTED at arithmetic
+> q=3,4,6 (inf_r LHS negative) — this note's §1.2(d) identification needs
+> re-opening; the winding-blindness alternative is dead (sliver: 1–2 poles,
+> no growth). A cold frontier review must rule DEAD vs MIS-INSTANTIATED
+> before any further Route-B work.
+
 > **[AMENDMENT RB-A1, 2026-08-16 — B5-J FAILED; B5 RESTATED AS (THRESH).]**
 > LAW_B5J_JENSEN.md: §6.3(1)'s "entire of order 0 in s, no U1 needed" is
 > REFUTED — order 0 holds for the Fredholm/eigenvalue expansion, not the

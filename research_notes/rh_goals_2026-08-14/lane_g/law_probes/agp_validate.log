@@ -1,0 +1,26 @@
+=== V0  exact closed form: step independence ===
+  q=3: h=1e-3 8.1151265055  h=1e-4 8.1151687411  h=1e-5 8.1151691635  analytic 8.1151691678  maxdev 4.27e-05
+  q=4: h=1e-3 9.0049677793  h=1e-4 9.0050099932  h=1e-5 9.0050104154  analytic 9.0050104196  maxdev 4.26e-05
+  q=6: h=1e-3 9.7235027251  h=1e-4 9.7235448234  h=1e-5 9.7235452444  analytic 9.7235452486  maxdev 4.25e-05
+
+=== V1  Z(1-s) == conj(Z(s)) on the critical line ===
+  q=3: Z=0.413865945058+0.0885963687756j  Z(1-s)=0.413865945058-0.0885963687756j  rel_err=0.000e+00
+  q=4: Z=0.0706218125597-0.157925470453j  Z(1-s)=0.0706218125597+0.157925470453j  rel_err=0.000e+00
+  q=5: Z=2.62393220648+1.95765712195j  Z(1-s)=2.62393220648-1.95765712195j  rel_err=0.000e+00
+  q=12: Z=-0.230367142867-0.522981113948j  Z(1-s)=-0.230367142867+0.522981113948j  rel_err=0.000e+00
+
+=== GATE  determinant route vs exact, q = 3, 4, 6 ===
+  q=3: exact=8.115168741  det=8.115168741  abs_err=1.794e-11  imagres=-3.63e-13  PASS  (0.9s)
+  q=4: exact=9.005009993  det=9.005006823  abs_err=3.170e-06  imagres=3.24e-13  PASS  (0.9s)
+  q=6: exact=9.723544823  det=9.723544823  abs_err=8.600e-11  imagres=-2.34e-12  PASS  (2.3s)
+
+=== V2  N-stability of the determinant route ===
+  q=3 N=16: 8.1151687534
+  q=3 N=24: 8.1151687411
+  q=3 N=32: 8.1151687411
+  q=4 N=16: 9.0047642895
+  q=4 N=24: 9.0050068232
+  q=4 N=32: 9.0050099394
+
+VERDICT: all_pass=True  max_abs_err=3.170e-06
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/agp_validate.json

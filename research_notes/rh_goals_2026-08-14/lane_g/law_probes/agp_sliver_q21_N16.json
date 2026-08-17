@@ -1,0 +1,118 @@
+{
+  "probe": "agp_sliver",
+  "q": 21,
+  "N": 16,
+  "n_head": 4,
+  "prec_bits": 128,
+  "builder": "zeta_cert_rosen.py",
+  "rigor_label": "NON-RIGOROUS PROBE.  Midpoint float evaluation of the Arb-ball\nbuilders (`zeta_cert_rosen.py` odd q, `zeta_cert_rosen_even.py` even q); ctx.prec\nis lowered for speed; NO certified enclosure of the boundary values and no\ncertified dim-tail.  The winding integers are float-unwrap integers with a\nhalf-turn guard, not Arb winding certificates.  Adequate for a measurement /\nkill-or-advance decision; NOT a proof.\n\nNote on the determinant: raw det(1-L_s) = Z_S(s) * det(1-K)(s) with det(1-K)\nzero-free on Re s > 0, so for ZERO COUNTING on 0 < Re s < 1/2 the raw\ndeterminant counts exactly the Selberg-zeta zeros (resonances).",
+  "window": {
+    "im": [
+      2.0,
+      12.0
+    ],
+    "re_grid": [
+      0.487,
+      0.494,
+      0.4985
+    ]
+  },
+  "signs": [
+    1,
+    -1
+  ],
+  "per_sign": {
+    "1": {
+      "dV": [
+        -14.001287056299644,
+        -7.670415964061492,
+        -1.3570447431168253
+      ],
+      "H1": [
+        0.0,
+        -0.0015753935705424792,
+        -0.002540121730917133
+      ],
+      "H2": [
+        0.0,
+        0.0461103914880254,
+        0.07533157709272932
+      ],
+      "cells": [
+        {
+          "re_lo": 0.487,
+          "re_hi": 0.494,
+          "winding_raw": 0.9999999999999996,
+          "count": 1,
+          "residual": 4.440892098500626e-16
+        },
+        {
+          "re_lo": 0.494,
+          "re_hi": 0.4985,
+          "winding_raw": 1.0000000000000002,
+          "count": 1,
+          "residual": 2.220446049250313e-16
+        }
+      ],
+      "total_count": 2
+    },
+    "-1": {
+      "dV": [
+        -45.514259592582505,
+        -45.485588994312174,
+        -45.46713771853227
+      ],
+      "H1": [
+        0.0,
+        0.0009260499051504772,
+        0.001492903201973351
+      ],
+      "H2": [
+        0.0,
+        0.029596648175474135,
+        0.048614777252187484
+      ],
+      "cells": [
+        {
+          "re_lo": 0.487,
+          "re_hi": 0.494,
+          "winding_raw": 1.1308638867425838e-15,
+          "count": 0,
+          "residual": 1.1308638867425838e-15
+        },
+        {
+          "re_lo": 0.494,
+          "re_hi": 0.4985,
+          "winding_raw": 2.2617277734851675e-15,
+          "count": 0,
+          "residual": 2.2617277734851675e-15
+        }
+      ],
+      "total_count": 0
+    }
+  },
+  "combined_strata": [
+    {
+      "re_lo": 0.487,
+      "re_hi": 0.494,
+      "count": 1,
+      "max_residual": 1.1308638867425838e-15
+    },
+    {
+      "re_lo": 0.494,
+      "re_hi": 0.4985,
+      "count": 1,
+      "max_residual": 2.2617277734851675e-15
+    }
+  ],
+  "sliver_count_re_in_0487_0498": 2,
+  "det_calls": 636,
+  "min_absdet_on_contours": 0.0018367994611681372,
+  "min_absdet_at": [
+    0.4985,
+    9.6953125
+  ],
+  "warnings": [],
+  "n_warnings": 0,
+  "wall_seconds": 3107.537568092346
+}
