@@ -1,7 +1,20 @@
 # LAW Route B — the CONDITIONAL THEOREM
 
-> **[AMENDMENT RB-A2, 2026-08-16 — BUDGET ARITHMETIC FAILS; ROUTE SUSPENDED
-> PENDING COLD REVIEW.]** LAW_AGAMMA_PROBE.md: α = 2.000 (closed-form, q to
+> **[AMENDMENT RB-A3, 2026-08-16 — COLD REVIEW RULING: MIS-INSTANTIATED, AND
+> THE CORRECTED INSTANTIATION IS O(1) ⇒ ROUTE B VIA (B4★) IS DEAD; Q₀ = 1465
+> IS WITHDRAWN AS UNSUPPORTED.]** COLD_REVIEW_ROUTEB_FATE.md: q_{M_q} appears
+> ONCE in GJ and is never defined; it is NOT the elliptic order q — three
+> independent lines identify it as λ_q = 2cos(π/q) (σ→∞ limits measured to
+> 1/(2σ) residuals: 0, log 2, log 3 = 2 log λ_q exactly; Herglotz structure;
+> q_M>1 excludes exactly q=3). Budget is 2 log λ_q ≤ 2 log 2 — BOUNDED. The
+> pigeonhole has bounded LHS vs growing RHS: no contradiction for any C, δ₀.
+> REVERSALS: correctly instantiated lemma HOLDS at q=3,4,6 with positive
+> margin (the "refutation" came from GJ's misprinted numerator, which §1.5
+> wrongly ruled non-load-bearing); the A_Γ log-q fear is UNFOUNDED (true
+> A_Γ = O(1), |A_Γ| ≤ 1.64 for r ≥ 2 — the probe's 𝒜_q was the FE kernel,
+> not A_Γ); B3 (averaged log q counts, constants from unpublished Hejhal)
+> RESTORED to critical path as the only genuine log q growth in GJ. Hejhal
+> p.160 / HJL primary text now decides the only open question (HITL). LAW_AGAMMA_PROBE.md: α = 2.000 (closed-form, q to
 > 4000, not determinant-dependent) — the ENTIRE 2 log q positivity budget is
 > supplied by the order-q elliptic point's own Γ-factor (91%), not resonance
 > mass; the resonance part 𝒢_q has NO positive log q content (slope −1.8…−0.4,
