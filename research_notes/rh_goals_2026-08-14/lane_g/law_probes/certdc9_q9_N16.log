@@ -1,0 +1,15 @@
+sector sign=+1 N=16
+  [sign +1] bottom Im=2: dArg=+2.637475 segs=8 bisect=0 depth=0 20s
+  [sign +1] right Re=0.4: dArg=-30.074772 segs=108 bisect=8 depth=2 233s
+  [sign +1] top Im=12: dArg=+4.196982 segs=8 bisect=0 depth=0 16s
+  [sign +1] left Re=0.023: dArg=+67.187805 segs=106 bisect=6 depth=2 201s
+sector sign=-1 N=16
+  [sign -1] bottom Im=2: dArg=-1.034627 segs=8 bisect=0 depth=0 17s
+  [sign -1] right Re=0.4: dArg=-39.536251 segs=100 bisect=0 depth=0 191s
+  [sign -1] top Im=12: dArg=-0.566524 segs=8 bisect=0 depth=0 15s
+  [sign -1] left Re=0.023: dArg=+41.144870 segs=102 bisect=2 depth=1 170s
+{
+  "certified_deep_count": 7,
+  "wall_s": 863.3
+}
+wrote /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/law_probes/certdc9_winding_q9_N16.json
