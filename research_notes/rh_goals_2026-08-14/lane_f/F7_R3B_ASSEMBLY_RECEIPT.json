@@ -1,0 +1,757 @@
+{
+  "schema": "f7-r3b-assembly-certificate/v1",
+  "verdict": "THEOREM-GRADE closed-contour YES at N=256",
+  "all_assembly_gates_pass": true,
+  "precision_bits": 384,
+  "backend": "python-flint Arb/Acb ball arithmetic",
+  "q": 7,
+  "sign": 1,
+  "pin": {
+    "name": "g7_pin_1",
+    "re": "0.4751647621098225",
+    "im": "4.668743786424289",
+    "coordinate_half_width": "1e-6"
+  },
+  "N_primary": 256,
+  "N_comparison": 224,
+  "k_per_edge": 48,
+  "base_closed_arc_count": 192,
+  "chunk_count": 16,
+  "exact_factor_strings": [
+    "3.522",
+    "2.622",
+    "2.372",
+    "1.79",
+    "1.6"
+  ],
+  "gates": {
+    "coverage": {
+      "pass": true,
+      "chunk_arc_ranges": [
+        [
+          0,
+          12
+        ],
+        [
+          12,
+          24
+        ],
+        [
+          24,
+          36
+        ],
+        [
+          36,
+          48
+        ],
+        [
+          48,
+          60
+        ],
+        [
+          60,
+          72
+        ],
+        [
+          72,
+          84
+        ],
+        [
+          84,
+          96
+        ],
+        [
+          96,
+          108
+        ],
+        [
+          108,
+          120
+        ],
+        [
+          120,
+          132
+        ],
+        [
+          132,
+          144
+        ],
+        [
+          144,
+          156
+        ],
+        [
+          156,
+          168
+        ],
+        [
+          168,
+          180
+        ],
+        [
+          180,
+          192
+        ]
+      ],
+      "tiles_exactly": [
+        0,
+        192
+      ],
+      "failures": []
+    },
+    "hash_pinning": {
+      "pass": true,
+      "common_source_bindings": {
+        "R2_receipt": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_receipts/F7_R2_FLAGSHIP_ENVELOPE_RECEIPT.json",
+          "sha256": "4e5f0105e80f6f4fc0e173750abc628534bbc944928f759b1cf3e12bb9202efc"
+        },
+        "TB_V2_receipt": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_receipts/F7_TB_BLOCK_CERTIFICATES_RECEIPT.json",
+          "sha256": "93baddf565b2dca6e94da441a9d7e906ab81576c4acf3506ab334bcf1251f4f6"
+        },
+        "attempt1_report": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/F7_PILOT2_REPORT.md",
+          "sha256": "2bbebd689de07814ed888aab0998c24d70539b12712dcfd50615c4f1dda24e30"
+        },
+        "R1_restatement": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/F7_TB_R2_RECEIPTS.md",
+          "sha256": "02230ad94f4480659d2b5b0ffbdaaa99a01a7b6c0557a907c752c59c51e20ba7"
+        },
+        "engine": {
+          "path": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen.py",
+          "sha256": "b6ee87fd8f35f0b704323a1f4c0f7d1c510b5ac6c79a0d6dbf58c95d70e28a0f"
+        },
+        "R2_code": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_certify_r2_flagship.py",
+          "sha256": "56d30d4771a832998c790096fba8026b7ecbd6257d443d29733c1db12fbb296f"
+        },
+        "R3b_orchestrator": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_certify_r3b_flagship.py",
+          "sha256": "df9873d9f1e47c47f2e846d38d906f8f77619a17871e6d7c6da8c225bb63f687"
+        },
+        "R3b_derivative": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_r3b_engine.py",
+          "sha256": "661a4d2b132d1821d18499a302f58805bf7565e560d8f1520379dde156bc7d1a"
+        },
+        "R3b_endpoint": {
+          "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_r3b_endpoint.py",
+          "sha256": "3d397de0091229668cd73be2f353e19b67cd4e710bc2e552685123f111cb8c9d"
+        }
+      },
+      "mismatched_bindings": {},
+      "R2_constants_canonical_sha256": [
+        "afe91fa35d1604853d8eec699e936f774ea3ba569a16cca54fc39c9af70a1d6b"
+      ],
+      "precision_bits": [
+        384
+      ],
+      "immutable_hashes_verified": [
+        true
+      ],
+      "orchestrator_pin_agreement": {
+        "R2_receipt_matches_orchestrator_pin": true,
+        "TB_V2_receipt_matches_orchestrator_pin": true
+      },
+      "live_file_sha256_agrees_with_receipts": {
+        "R2_receipt": true,
+        "TB_V2_receipt": true,
+        "attempt1_report": true,
+        "R1_restatement": true,
+        "engine": false,
+        "R2_code": true,
+        "R3b_orchestrator": true,
+        "R3b_derivative": true,
+        "R3b_endpoint": true
+      },
+      "primary_path_drift_since_run": {
+        "engine": {
+          "primary_path": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen.py",
+          "receipt_sha256": "b6ee87fd8f35f0b704323a1f4c0f7d1c510b5ac6c79a0d6dbf58c95d70e28a0f",
+          "live_primary_sha256": "965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac",
+          "certified_bytes_recovered_at": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/out/kaggle_top4/hecke-gap-sweep/zeta_cert_rosen.py",
+          "all_16_chunks_agree_on_receipt_sha256": true
+        }
+      },
+      "chunk_receipt_sha256": {
+        "chunk-00": "f168db74c94fb52c8b6aa79f2041368dcde045a2680efd03782c0d43627cb2d4",
+        "chunk-01": "641e938b6ec543e639afba4b61d14fbe546a6e2b49fcda5d99d7f745d0228144",
+        "chunk-02": "66be48002f84128c8d00cb7c00a5d0509b07385478a5ac955801c2ba0acfbac9",
+        "chunk-03": "fa6ea791d07c8200503363b1a04188cf8d6cf1da4225e9ffc0bc28a8b34f591e",
+        "chunk-04": "c79aa1cc32413e3cdb2f573785952cf8f007d7f37fde39ea2bb6eddc33b9b071",
+        "chunk-05": "44b4a012365c4509afdc1534b328557712c802a255e41aefdcc5e376f323ae87",
+        "chunk-06": "363359c10cf5dbb5090571ec80c46c53dd00a35f6baa19b5f1fb2911bd96296c",
+        "chunk-07": "bd452eb323f0db1cb10cb2c562a8d01e7d6e3b20fd50bf121e0d65b3e39fc0cf",
+        "chunk-08": "bd2a945d78daa117187ab29a9f452f56fbdd49f2e3d5d936579cc11e278f779e",
+        "chunk-09": "f75553db3374d49f12efc5e2d3177d96df109cb80654a514dd6253aedbf27d35",
+        "chunk-10": "45e6ac62a04012cf49b784822d06a8137b29e9d7bc817a87884a8602d5992eb8",
+        "chunk-11": "1a5eb887f610fc5a2b9c2f09b8f9dc1e0fe7067783a2447447915af3b9d48890",
+        "chunk-12": "46e4283d8ab240e1fab4353f799a094fa0cca8b2fad16509189e74e20ef85a58",
+        "chunk-13": "12918160ae897f23aae795cbead12ae788ccaa0e22a5fa07108c8e78ed449107",
+        "chunk-14": "3ef0bef51fa8b691477cac2f14d31b5b65c5ff8eeebc2b869f19d911b7841d30",
+        "chunk-15": "bd1bec06a0b0cebff36e3284cef7eed86910c444135c689fe7fc12bb43cb6738"
+      }
+    },
+    "seam_closure": {
+      "pass": true,
+      "junction_count_checked": 192,
+      "all_contour_endpoints_chain": true,
+      "all_adjacent_finite_det_boxes_overlap": true,
+      "merged_base_arc_indices_are_0_to_191_in_order": true,
+      "chunk_seam_count": 16,
+      "chunk_seams": [
+        {
+          "junction_base_arc_index": 0,
+          "left_chunk": 15,
+          "right_chunk": 0,
+          "left_arc_index": 191,
+          "right_arc_index": 0,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475163762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996770 +/- 1.45e-116]",
+            "imag": "[4.66874278642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988554 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 12,
+          "left_chunk": 0,
+          "right_chunk": 1,
+          "left_arc_index": 11,
+          "right_arc_index": 12,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475164262109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999992877 +/- 2.72e-116]",
+            "imag": "[4.66874278642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988554 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 24,
+          "left_chunk": 1,
+          "right_chunk": 2,
+          "left_arc_index": 23,
+          "right_arc_index": 24,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475164762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988983 +/- 2.72e-116]",
+            "imag": "[4.66874278642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988554 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 36,
+          "left_chunk": 2,
+          "right_chunk": 3,
+          "left_arc_index": 35,
+          "right_arc_index": 36,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165262109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999985090 +/- 2.72e-116]",
+            "imag": "[4.66874278642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988554 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 48,
+          "left_chunk": 3,
+          "right_chunk": 4,
+          "left_arc_index": 47,
+          "right_arc_index": 48,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999993886 +/- 1.45e-116]",
+            "imag": "[4.66874278642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988554 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 60,
+          "left_chunk": 4,
+          "right_chunk": 5,
+          "left_arc_index": 59,
+          "right_arc_index": 60,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999993886 +/- 1.45e-116]",
+            "imag": "[4.66874328642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999980551 +/- 4.79e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 72,
+          "left_chunk": 5,
+          "right_chunk": 6,
+          "left_arc_index": 71,
+          "right_arc_index": 72,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999993886 +/- 1.45e-116]",
+            "imag": "[4.66874378642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999972548 +/- 4.79e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 84,
+          "left_chunk": 6,
+          "right_chunk": 7,
+          "left_arc_index": 83,
+          "right_arc_index": 84,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999993886 +/- 1.45e-116]",
+            "imag": "[4.66874428642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999984848 +/- 4.79e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 96,
+          "left_chunk": 7,
+          "right_chunk": 8,
+          "left_arc_index": 95,
+          "right_arc_index": 96,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999993886 +/- 1.45e-116]",
+            "imag": "[4.66874478642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999976845 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 108,
+          "left_chunk": 8,
+          "right_chunk": 9,
+          "left_arc_index": 107,
+          "right_arc_index": 108,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475165262109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999985090 +/- 2.72e-116]",
+            "imag": "[4.66874478642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999976845 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 120,
+          "left_chunk": 9,
+          "right_chunk": 10,
+          "left_arc_index": 119,
+          "right_arc_index": 120,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475164762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999988983 +/- 2.72e-116]",
+            "imag": "[4.66874478642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999976845 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 132,
+          "left_chunk": 10,
+          "right_chunk": 11,
+          "left_arc_index": 131,
+          "right_arc_index": 132,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475164262109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999992877 +/- 2.72e-116]",
+            "imag": "[4.66874478642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999976845 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 144,
+          "left_chunk": 11,
+          "right_chunk": 12,
+          "left_arc_index": 143,
+          "right_arc_index": 144,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475163762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996770 +/- 1.45e-116]",
+            "imag": "[4.66874478642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999976845 +/- 2.76e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 156,
+          "left_chunk": 12,
+          "right_chunk": 13,
+          "left_arc_index": 155,
+          "right_arc_index": 156,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475163762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996770 +/- 1.45e-116]",
+            "imag": "[4.66874428642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999964544 +/- 4.79e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 168,
+          "left_chunk": 13,
+          "right_chunk": 14,
+          "left_arc_index": 167,
+          "right_arc_index": 168,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475163762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996770 +/- 1.45e-116]",
+            "imag": "[4.66874378642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999972548 +/- 4.79e-115]"
+          }
+        },
+        {
+          "junction_base_arc_index": 180,
+          "left_chunk": 14,
+          "right_chunk": 15,
+          "left_arc_index": 179,
+          "right_arc_index": 180,
+          "contour_endpoints_chain": true,
+          "adjacent_finite_det_boxes_overlap": true,
+          "s_junction": {
+            "real": "[0.475163762109822499999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996770 +/- 1.45e-116]",
+            "imag": "[4.66874328642428899999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999960247 +/- 4.79e-115]"
+          }
+        }
+      ]
+    },
+    "margins": {
+      "pass": true,
+      "per_chunk": [
+        {
+          "chunk": "chunk-00",
+          "chunk_arc_range": [
+            0,
+            12
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.81662514926721232928678459033234782998401162952916932799574650162160318058030570547299161301311172734603253926962588224e-6 +/- 9.96e-125]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000281662514926721232928678",
+          "maximum_rH": "[0.157624246037497537130697199426541042199053767881660706122421770361635204988398297037046930683157937582227086383889840959 +/- 1.26e-119]",
+          "wall_seconds": 15252.695410105
+        },
+        {
+          "chunk": "chunk-01",
+          "chunk_arc_range": [
+            12,
+            24
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.43478101506489600523288795453848311195327193163655830731568691327180158956046314236851854681160999014300433371790855556e-6 +/- 9.95e-125]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000243478101506489600523288",
+          "maximum_rH": "[0.209248816370015501568863839258051037180434882478123030856784528448463338448828287077222679231496203542435886419619454982 +/- 1.32e-119]",
+          "wall_seconds": 27539.238766039998
+        },
+        {
+          "chunk": "chunk-02",
+          "chunk_arc_range": [
+            24,
+            36
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.41285307347605238320287913058976399932040288162804342519958259154964973727271369022091327006464419937658357593072952730e-6 +/- 1.97e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000241285307347605238320287",
+          "maximum_rH": "[0.211063792195725835973919114483394357716342725764926992932375125713112689012041720064663757061808603887886532464116279688 +/- 1.25e-119]",
+          "wall_seconds": 29654.671338294
+        },
+        {
+          "chunk": "chunk-03",
+          "chunk_arc_range": [
+            36,
+            48
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.72360662199040605120561758630980647151989035348279773808802760860723704725758879598874364295754819347765061854771001087e-6 +/- 1.95e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000272360662199040605120561",
+          "maximum_rH": "[0.168100840588559384191935113756408833619512951727233611213868142576239026827445339711096211623075807166631590299597914588 +/- 1.27e-119]",
+          "wall_seconds": 29456.328381023
+        },
+        {
+          "chunk": "chunk-04",
+          "chunk_arc_range": [
+            48,
+            60
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.81662323786929766696360215696986659638035681710672288935589785913020468352195325232626894701486599433462433274144054232e-6 +/- 1.95e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000281662323786929766696360",
+          "maximum_rH": "[0.157623217041208736078454284976144777530505512981106554081570664681031254297004385366751149070980907707115179771212120455 +/- 6.52e-120]",
+          "wall_seconds": 24467.175356697
+        },
+        {
+          "chunk": "chunk-05",
+          "chunk_arc_range": [
+            60,
+            72
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.43478102572880428669938723860475068778142039257245754090916856430823724939472045173230703375392752062845579882221454661e-6 +/- 9.83e-125]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000243478102572880428669938",
+          "maximum_rH": "[0.209247839762594582410693542819819765028738602833445173090640132084851187073814306335993217684520154271169668157347824193 +/- 1.30e-119]",
+          "wall_seconds": 15345.960347256001
+        },
+        {
+          "chunk": "chunk-06",
+          "chunk_arc_range": [
+            72,
+            84
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.41285276269068356797445899436723923863302307932658329703015428728494464067638054863561310108346294229247140664058485876e-6 +/- 9.49e-125]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000241285276269068356797445",
+          "maximum_rH": "[0.211063081791492783177399738503783118080222697141650260225977305760902635322663414297177472699895642400099723757717145576 +/- 6.42e-120]",
+          "wall_seconds": 26214.939299339
+        },
+        {
+          "chunk": "chunk-07",
+          "chunk_arc_range": [
+            84,
+            96
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.72360607581385377254603295675350600867290311011693947055742289480682360333765017848197649220262399890717681253467847587e-6 +/- 1.90e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000272360607581385377254603",
+          "maximum_rH": "[0.168100635996697780232718771789334619560839425978322732211026529503409085314778918320286090617449931303918491664102634678 +/- 6.49e-120]",
+          "wall_seconds": 26223.71241462
+        },
+        {
+          "chunk": "chunk-08",
+          "chunk_arc_range": [
+            96,
+            108
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.81662137054547307075060992985023792804973029479090644493646940511025624813522032590405824782694637661537995083048184589e-6 +/- 1.94e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000281662137054547307075060",
+          "maximum_rH": "[0.157623598455303855408207435341055672927982794446297542263239492940136353272108958199375743321815003601773841662581392489 +/- 1.31e-119]",
+          "wall_seconds": 15168.689676611
+        },
+        {
+          "chunk": "chunk-09",
+          "chunk_arc_range": [
+            108,
+            120
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.43478064552118595669220239902046486688702781066723398882115357878116096799831862007812801639123987793240501903995764714e-6 +/- 1.96e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000243478064552118595669220",
+          "maximum_rH": "[0.209248721294762752482077914927149149435436428500338528927768045426042689199961699013728519094618469141917506745242888224 +/- 6.64e-120]",
+          "wall_seconds": 29168.515263558
+        },
+        {
+          "chunk": "chunk-10",
+          "chunk_arc_range": [
+            120,
+            132
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.41285380530118956012129676683210495601606866410337633466195199007117256627396036352247008992945747582134627729365453219e-6 +/- 1.01e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000241285380530118956012129",
+          "maximum_rH": "[0.211063924743695573064727361150339119414874896563201578568383981013938997959206747411356504809408970530257821563536386734 +/- 1.30e-119]",
+          "wall_seconds": 25407.50790978
+        },
+        {
+          "chunk": "chunk-11",
+          "chunk_arc_range": [
+            132,
+            144
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.72360764157905368024681421458300376923664880843037444075344209447083458386801802536317504885476524490660538081796432240e-6 +/- 1.95e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000272360764157905368024681",
+          "maximum_rH": "[0.168101592913664429946183800780215461809734347282905548594230222431332425034755567237746266466581503553931636615395115941 +/- 6.37e-120]",
+          "wall_seconds": 29244.855788074
+        },
+        {
+          "chunk": "chunk-12",
+          "chunk_arc_range": [
+            144,
+            156
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.81662281806238277401688997814427917166427662608857934602975134138867853330378322565870501080934278669125319044274932283e-6 +/- 1.01e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000281662281806238277401688",
+          "maximum_rH": "[0.157624696502690801339343825553430952975020372250437516942422743582299937123193469137362771336861870908737070405938159031 +/- 6.40e-120]",
+          "wall_seconds": 26454.295907687
+        },
+        {
+          "chunk": "chunk-13",
+          "chunk_arc_range": [
+            156,
+            168
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.43478010465359930660943393481786752730129359623036030300438851498354983457688669703630711442571071215516903740735740163e-6 +/- 9.85e-125]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000243478010465359930660943",
+          "maximum_rH": "[0.209249798053091009468047471910989674318388547844681101674890946196324823559759570445477642922309527803168978366674056680 +/- 7.20e-120]",
+          "wall_seconds": 15102.490047231
+        },
+        {
+          "chunk": "chunk-14",
+          "chunk_arc_range": [
+            168,
+            180
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.41285353703405127403857900727634851407340228967119990053309770473965265085409176386364649562469713805816840986802921226e-6 +/- 1.93e-124]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000241285353703405127403857",
+          "maximum_rH": "[0.211064737207127407537371618081753781121263565653008776757471219430865587845058940641342043492064754124913909257767045850 +/- 1.33e-119]",
+          "wall_seconds": 26393.496401224
+        },
+        {
+          "chunk": "chunk-15",
+          "chunk_arc_range": [
+            180,
+            192
+          ],
+          "status": "CHUNK_ARCS_CLEAR",
+          "chunk_gate_pass": true,
+          "complete_closed_cover": true,
+          "accepted_closed_subarc_count": 12,
+          "adaptive_subdivision_count": 0,
+          "all_finite_Taylor_enclosures_exclude_zero": true,
+          "all_F_inflated_closed_arc_enclosures_exclude_zero": true,
+          "minimum_finite_lower_minus_F_margin": "[2.72360762402099572694119843220634954954723920310856411685481477743122878583786603221650076503754722448550366124812368342e-6 +/- 9.67e-125]",
+          "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000272360762402099572694119",
+          "maximum_rH": "[0.168101877333800843488739595883998005144446682351639430754923697523371535737397249221684614170419137792413316235738963888 +/- 1.25e-119]",
+          "wall_seconds": 26814.402692404
+        }
+      ],
+      "minimum_finite_lower_minus_F_margin_ball": "[2.41285276269068356797445899436723923863302307932658329703015428728494464067638054863561310108346294229247140664058485876e-6 +/- 1.90e-124]",
+      "minimum_finite_lower_minus_F_margin_rounded_down": "0.00000241285276269068356797445",
+      "minimum_finite_lower_minus_F_margin_from_per_arc_records_rounded_down": "0.00000241285276269068356797445",
+      "per_arc_and_per_chunk_minima_agree": true,
+      "margin_certified_strictly_positive": true,
+      "minimum_finite_Taylor_abs_lower_bound_ball": "[2.41501898715557778515214258163664391994473503416052364421993308291284075137637738574532416360765571715625700752559054653e-6 +/- 3.86e-124]",
+      "minimum_finite_Taylor_abs_lower_bound_rounded_down": "0.00000241501898715557778515214",
+      "maximum_Taylor_radius_rG_ball": "[8.88500440571987887571863437576910746940118614426528129588044961994363154915197609987784457398335869997592496174979904226e-7 +/- 4.77e-125]",
+      "maximum_Taylor_radius_rG_rounded_up": "8.88500440571987887571864E-7",
+      "maximum_rH_ball": "[0.211064737207127407537371618081753781121263565653008776757471219430865587845058940641342043492064754124913909257767045850 +/- 2.62e-119]",
+      "maximum_rH_rounded_up": "0.211064737207127407537372",
+      "maximum_rH_strictly_below_one": true,
+      "total_base_closed_arc_count": 192,
+      "total_accepted_closed_subarc_count": 192,
+      "total_arc_evaluation_count": 192,
+      "total_adaptive_subdivision_count": 0,
+      "total_chunk_wall_seconds": 387908.974999943,
+      "total_chunk_runtime_seconds": 441267.10927032103
+    },
+    "arc_exclusions": {
+      "pass": true,
+      "all_chunks_finite_Taylor_enclosures_exclude_zero": true,
+      "all_chunks_F_inflated_enclosures_exclude_zero": true,
+      "all_chunks_complete_closed_cover": true,
+      "all_chunks_gate_pass": true
+    },
+    "winding": {
+      "pass": true,
+      "merged_winding": 1,
+      "winding_ball": "[0.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998426476 +/- 5.17e-114]",
+      "argument_increment_record_count": 192,
+      "info": {
+        "method": "convex overlap-midpoint polygon homotopic inside nonzero arc boxes",
+        "winding_ball": "[0.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998426476 +/- 5.17e-114]",
+        "candidate_integer": 1,
+        "integer_pinned": true
+      },
+      "merge_function": "f7_certify_r3b_flagship.merge_chunks_and_verify_closure (the pinned orchestrator's own merge/closure routine)"
+    },
+    "comparison_control_arm": {
+      "pass": true,
+      "N": 224,
+      "statuses": [
+        "NOT_CERTIFIED"
+      ],
+      "closed_contour_gate_pass": [
+        false
+      ],
+      "role": "designed control arm; a PASS here would signal a tail-bound bug"
+    }
+  },
+  "assembly_script_sha256": "8e52840ecd6974d9e4ec079cddbed5b1505f619acff116ac8f4d2d8a957d4b0f"
+}
