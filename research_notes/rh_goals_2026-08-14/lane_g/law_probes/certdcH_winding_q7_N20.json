@@ -1,0 +1,244 @@
+{
+  "label": "CERTIFIED (Arb ball) -- conditional on the geometric dimension-tail bound of dim_tail_from_matrix",
+  "q": 7,
+  "N": 20,
+  "n_head": 4,
+  "prec_bits": 300,
+  "window": {
+    "re": [
+      0.023,
+      0.4
+    ],
+    "im": [
+      16.0,
+      18.0
+    ]
+  },
+  "evaluator": "zeta_cert_rosen.cert_det (unmodified)",
+  "sectors": {
+    "1": {
+      "sign": 1,
+      "N": 20,
+      "prec_bits": 300,
+      "winding_ball": [
+        -0.599487766623497,
+        2.59108080342412
+      ],
+      "winding_mid": 0.9957965184003115,
+      "certified_integer": null,
+      "integer_isolated": false,
+      "det_calls": 82,
+      "min_det_abs_lower_on_contour": 0.04576860907488833,
+      "max_dim_tail": 23.281216875552676,
+      "max_dim_tail_at": [
+        0.023,
+        17.75
+      ],
+      "N_escalated_points": [],
+      "tail_safety": 4,
+      "edges": [
+        {
+          "edge": "bottom Im=16",
+          "from": [
+            0.023,
+            16.0
+          ],
+          "to": [
+            0.4,
+            16.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": 1.3635816997848451,
+          "delta_arg_rad_ball": [
+            1.1787513704039156,
+            1.5484120291657746
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 11.6
+        },
+        {
+          "edge": "right Re=0.4",
+          "from": [
+            0.4,
+            16.0
+          ],
+          "to": [
+            0.4,
+            18.0
+          ],
+          "initial_samples": 25,
+          "certified_segments": 35,
+          "bisections": 11,
+          "max_bisection_depth": 4,
+          "delta_arg": -24.794206831254996,
+          "delta_arg_rad_ball": [
+            -26.188569901161827,
+            -23.399843761348166
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 45.2
+        },
+        {
+          "edge": "top Im=18",
+          "from": [
+            0.4,
+            18.0
+          ],
+          "to": [
+            0.023,
+            18.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -0.7894751320709474,
+          "delta_arg_rad_ball": [
+            -2.9097794930567034,
+            1.3308292289148085
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 10.3
+        },
+        {
+          "edge": "left Re=0.023",
+          "from": [
+            0.023,
+            18.0
+          ],
+          "to": [
+            0.023,
+            16.0
+          ],
+          "initial_samples": 25,
+          "certified_segments": 30,
+          "bisections": 6,
+          "max_bisection_depth": 1,
+          "delta_arg": 30.47687428444624,
+          "delta_arg_rad_ball": [
+            24.152905337512493,
+            36.800843231379986
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 39.0
+        }
+      ]
+    },
+    "-1": {
+      "sign": -1,
+      "N": 20,
+      "prec_bits": 300,
+      "winding_ball": [
+        -0.41879757959395647,
+        0.4127456797286868
+      ],
+      "winding_mid": -0.0030259499326348305,
+      "certified_integer": 0,
+      "integer_isolated": true,
+      "det_calls": 68,
+      "min_det_abs_lower_on_contour": 0.8303648172871705,
+      "max_dim_tail": 24.02046346406706,
+      "max_dim_tail_at": [
+        0.023,
+        18.0
+      ],
+      "N_escalated_points": [],
+      "tail_safety": 4,
+      "edges": [
+        {
+          "edge": "bottom Im=16",
+          "from": [
+            0.023,
+            16.0
+          ],
+          "to": [
+            0.4,
+            16.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": -1.0459491104702465,
+          "delta_arg_rad_ball": [
+            -1.1484141074470244,
+            -0.9434841134934686
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 11.6
+        },
+        {
+          "edge": "right Re=0.4",
+          "from": [
+            0.4,
+            16.0
+          ],
+          "to": [
+            0.4,
+            18.0
+          ],
+          "initial_samples": 25,
+          "certified_segments": 27,
+          "bisections": 3,
+          "max_bisection_depth": 1,
+          "delta_arg": -26.957545255310833,
+          "delta_arg_rad_ball": [
+            -27.451656359713525,
+            -26.463434150908142
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 35.0
+        },
+        {
+          "edge": "top Im=18",
+          "from": [
+            0.4,
+            18.0
+          ],
+          "to": [
+            0.023,
+            18.0
+          ],
+          "initial_samples": 9,
+          "certified_segments": 8,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": 0.6013758551562205,
+          "delta_arg_rad_ball": [
+            0.0186822327086702,
+            1.1840694776037708
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 10.1
+        },
+        {
+          "edge": "left Re=0.023",
+          "from": [
+            0.023,
+            18.0
+          ],
+          "to": [
+            0.023,
+            16.0
+          ],
+          "initial_samples": 25,
+          "certified_segments": 24,
+          "bisections": 0,
+          "max_bisection_depth": 0,
+          "delta_arg": 27.383105903398246,
+          "delta_arg_rad_ball": [
+            25.950005448888987,
+            28.816206357907504
+          ],
+          "status": "CERTIFIED (a)+(b)",
+          "wall_s": 27.5
+        }
+      ]
+    }
+  },
+  "certified_deep_count": null,
+  "wall_s": 190.1
+}

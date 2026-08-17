@@ -1,5 +1,13 @@
 # LAW Route B — window-2 deep-count probe (gap M3, `t₀`-uniformity)
 
+> **[SUPERSEDED-IN-PART 2026-08-16 by LAW_ROUTEB_HEIGHT2_CERT.md]** — the
+> adverse log-q trend below is a TRUNCATION ARTIFACT: certified (Arb ball)
+> height-2 counts at t₀=17 read (1, 2, 0) for q=(7,9,12) — all within the
+> Route-B budget, non-monotone, largest q smallest. N=20, which carries this
+> note's entire float table, certifies NOTHING at t₀=17 (two failed
+> cross-checks banked). This note's N-instability finding stands; its §9
+> adverse-trend recommendation is revised, not executed.
+
 **Date:** 2026-08-16. **Lane G, measurement lane.**
 **Target:** the `t₀`-uniformity gap of `LAW_ROUTEB_CONDITIONAL_THEOREM.md` §gaps. B5/B6 are
 stated *per* `t₀`; `LAW_ROUTEB_DEEPCOUNT.md` measured **one** height window, `Im s ∈ [2,12]`,
