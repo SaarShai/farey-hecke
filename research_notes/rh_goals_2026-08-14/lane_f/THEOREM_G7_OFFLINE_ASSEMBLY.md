@@ -5,20 +5,28 @@ Lane F, 2026-08-17. Template: `lane_g/THEOREM_G5_OFFLINE_ASSEMBLY.md` v2
 theorem links from the q=5 flagship to q=7 on top of the banked
 closed-contour YES (`lane_f/F7_R3B_ASSEMBLY_CERT.md`).
 
-STATUS: **ASSEMBLED — all seven links closed at the machine/paper/citation
-level; NOT YET DECLARED.** The q=5 chain earned "THEOREM-GRADE YES" only
-after five adversarial review rounds (V4–V8) plus an independent hostile
-audit (Kimi K3). **No adversarial round has been run against this q=7
-assembly.** That is the one substantive difference in epistemic status,
-and it is a review gap, not a named mathematical gap (§Link table, row 8).
-Dissemination stays owner-gated.
+STATUS: **ASSEMBLED, ONE ADVERSARIAL ROUND PASSED (SOUND-WITH-REPAIRS,
+repairs enacted 2026-08-17); NOT YET DECLARED.** `ADVERSARIAL_REVIEW_G7_V1.md`
+(independent cold pass, 2026-08-17) ruled **SOUND-WITH-REPAIRS**: no
+theorem-level defect, one FALSE printed bound inside the Link-5 lemma (D1,
+the det(1−K_s) upper bound — non-load-bearing but false), two editorial
+defects (D2 link renumbering, D3 mis-attributed erratum) and two disclosure
+defects (D4, D5). All five repairs are enacted in this revision, and the
+review's clarifying notes are recorded in §"Review notes". The q=5 chain
+earned "THEOREM-GRADE YES" only after **five** adversarial rounds (V4–V8)
+plus an independent hostile audit (Kimi K3); q=7 has had **one**. The owner
+may commission further rounds before dissemination. Dissemination stays
+owner-gated.
 
-New work in this session: **Link 4** (K_s divisor gate, certified from
-scratch in ball arithmetic), **Link 4b** (E1 validity at the box,
-re-derived from the banked raw fields), **Link 5** (the det(1−K_7) lemma
-that closes the "determinant zero ⇒ Z_S zero" step for this box). Every
-other link is quoted from an existing artifact with its status label. No
-existing file was modified; no `git` command was run.
+New work in the assembly session: **Link 4b** (E1 validity at the box,
+re-derived from the banked raw fields) and **Link 5** (the K_s divisor
+gate, certified from scratch in ball arithmetic, together with the
+det(1−K_7) lemma that closes the "determinant zero ⇒ Z_S zero" step for
+this box). Every other link is quoted from an existing artifact with its
+status label. Repair session 2026-08-17: this document and
+`f7links_ks_gate.py` (with its own receipt) were edited to enact review
+defects D1–D5; no other existing file was modified and no `git` command
+was run.
 
 ## Statement (essential-gap form, the q=5 phrasing instantiated at q=7)
 
@@ -45,14 +53,26 @@ of X_7. With the declared G_5 result this is the second member of the
 non-arithmetic Hecke family to carry a rigorously localized off-line
 resonance, and the first at h_q = 2 (Bruggeman–Pohl leave the
 non-arithmetic Hecke resonances conjectural; prior-art sweep lane_c).
+**This last sentence is a literature claim, not a certified one**: it rests
+on the lane_c prior-art sweep, which was not redone in this session and not
+re-run by the V1 reviewer — logged as open item 9 (q=5 class 1-C8,
+recurring).
 
-Erratum inherited from the plan: `F7_CERT_PLAN.md` §1 and
-`F7_CONSTANTS_MANIFEST.md` §5 print "Re(s*) ≤ 0.4751648". That is the
-box CENTRE rounded up, not a bound on the closed box; the correct
+Erratum inherited from the plan: `F7_CERT_PLAN.md` §1 (line 8) prints
+"Re(s*) ≤ 0.4751648". That is the box CENTRE rounded up, not a bound on the
+closed box; the correct
 rounded-up bound is **0.4751658** = 0.4751647621098225 + 10⁻⁶. The
 δ ≥ 0.0248342 figure is unaffected (it was computed with the half-width
 included; re-verified here as
 1/2 − Re₀ − 10⁻⁶ = 0.02483423789017750, rounded DOWN to 0.0248342).
+Attribution corrected per review defect D3: an earlier revision of this
+paragraph also charged `F7_CONSTANTS_MANIFEST.md` §5 with the same figure.
+It does not carry it — manifest §5 line 207 writes
+δ = 1/2 − 0.4751647621098225 − 10⁻⁶ = 0.0248342 **with the half-width
+included, i.e. correctly**. The erratum is against `F7_CERT_PLAN.md:8` only.
+(The separate erratum against the manifest — the 0.5895480 round-UP of the
+K_s box margin at manifest lines 210 and 270 — stands and is verified; see
+§"Link 5 in detail".)
 
 ## Proof chain and verification status of every link
 
@@ -128,11 +148,15 @@ included; re-verified here as
    `f7_receipts/F7LINKS_E1_RECHECK_RECEIPT.json` (this session).
 
 5. NO DIVISOR CANCELLATION + Z_S IDENTIFICATION [MACHINE, CLOSED at q=7].
-   det(1−K_s) ≠ 0 on Box, and in fact 0.936818983390 ≤ |det(1−K_s)| ≤
-   1.000000000001 for every s in the closed Box (certified two-sided).
+   det(1−K_s) ≠ 0 on Box — the load-bearing claim, and the only one the
+   R5 identification consumes — with the certified lower bound
+   |det(1−K_s)| ≥ 0.936818983390 for every s in the closed Box (rounded
+   DOWN). The certified elementary upper bound is |det(1−K_s)| ≤
+   1.063204693008 (rounded UP; grid-measured true modulus ≈ 1.0295836).
    The K_s divisor is the exact lattice s = −n + iπk/a_7 (n ≥ 0, k ∈ ℤ),
    all Re ≤ 0; certified box-to-lattice distance ≥ **0.5895479**. See
-   §"Link 5 in detail". Receipt (new): `f7links_ks_gate.py` →
+   §"Link 5 in detail, part 1 — the K_s divisor gate at q=7" and part 2.
+   Receipt (new): `f7links_ks_gate.py` →
    `f7_receipts/F7LINKS_KS_GATE_RECEIPT.json`, verdict
    `PASS_KS_BOX_CLEAR_AND_DETK_NONVANISHING`.
 
@@ -140,10 +164,15 @@ included; re-verified here as
    Z_S(s) = det(1−L_{s,+})·det(1−L_{s,−}) / det(1−K_s). The factor
    det(1−L_{s,−}) is analytic near Box (MMS Theorem 4.10: the MMS
    determinants are meromorphic with poles only on the real points
-   s = (1−k)/2; Box has Im ≈ 4.67). **The q=5 footnote is NOT needed
-   here**: the heading above MMS eq. (34) prints "q = 2h_q + 3 > 5", which
-   applies to q = 7 verbatim; Lemma 4.2 (q ≥ 5) is still cited for the
-   reduced-sector validity. Journal-numbering caveat inherited from
+   s = (1−k)/2; Box has Im ≈ 4.67). The q=5 footnote appears not to be
+   needed here: per the MMS heading condition as transcribed in
+   `F7_CONSTANTS_MANIFEST.md` — "q = 2h_q + 3 > 5" above MMS eq. (34) —
+   the condition holds at q = 7 arithmetically (2·2 + 3 = 7 > 5). **The
+   heading's source text is not banked in-repo (no MMS e-print or PDF in
+   the tree), so this is a TODO-VERIFY against the e-print, not a
+   repo-verifiable claim** (review defect D5; open item 8). Lemma 4.2
+   (q ≥ 5) is still cited for the reduced-sector validity.
+   Journal-numbering caveat inherited from
    `lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md` §1: the arXiv e-print labels the
    factorization `\label{main-theorem}` with no printed number — confirm
    DCDS 32 (2012) 2453–2484 numbering before printing "Theorem 6.4".
@@ -166,12 +195,17 @@ included; re-verified here as
 | 4 | Zero in box by argument principle | **PROVED** (from 1 + 3) | this document |
 | 4b | Hilbert → Banach (R5 Clauses 1–3) | **PROVED** (paper, q-independent) + **CERTIFIED** (q=7 E1) | `TB_R5_…md` v3.1; `F7_E1_…V2_RECEIPT.json`; `F7LINKS_E1_RECHECK_RECEIPT.json` |
 | 5 | det(1−K_7) ≠ 0 on box ⇒ Z_S zero | **CERTIFIED** (machine, q=7, new) | `F7LINKS_KS_GATE_RECEIPT.json` |
-| 6 | MMS factorization + pole set | **CITED** (heading applies verbatim at q=7) | MMS Thm 6.4, Thm 4.10, Lemma 4.2 |
+| 6 | MMS factorization + pole set | **CITED**; heading condition holds at q=7 arithmetically, source text **TODO-VERIFY** (D5) | MMS Thm 6.4, Thm 4.10, Lemma 4.2; heading as transcribed in `F7_CONSTANTS_MANIFEST.md` |
 | 7 | Resonance interpretation | **CITED** (standard) | Hejhal; Iwaniec; Borthwick |
-| 8 | Adversarial review of THIS assembly | **GAP** | no V-round or hostile audit run at q=7 |
+| 8 | Adversarial review of THIS assembly | **ONE ROUND PASSED** (SOUND-WITH-REPAIRS; repairs D1–D5 enacted 2026-08-17). Not equivalent to q=5's five rounds + hostile audit | `ADVERSARIAL_REVIEW_G7_V1.md` |
 | 9 | Lean statement of the q=7 K_s lattice | **GAP (minor)** | q=5 had v17 `KsZeroLattice`; no q=7 dispatch. The 384-bit ball certificate of Link 5 stands in; the Lean joint would be a formalization of an already-machine-certified finite computation |
 
-## Link 4 in detail — the K_s divisor gate at q=7
+## Link 5 in detail, part 1 — the K_s divisor gate at q=7
+
+(Renumbered per review defect D2: this section carries LINK 5's content. An
+earlier revision headed it "Link 4 in detail", which collided with the
+chain's Link 4 = argument principle. Link 4 needs no detail section; its
+detail is the chain entry plus Link 1's certificate.)
 
 Receipt: `f7links_ks_gate.py` → `f7_receipts/F7LINKS_KS_GATE_RECEIPT.json`
 (python-flint Arb/Acb, 384 bits, `PASS_KS_BOX_CLEAR_AND_DETK_NONVANISHING`).
@@ -303,7 +337,7 @@ method, not an independent implementation; the "twice independently"
 status q=5 enjoys (our run + the V7 reviewer's diagnostic) has no q=7
 analogue yet.
 
-## Link 5 in detail — determinant zero ⇒ Z_S zero, at this box
+## Link 5 in detail, part 2 — determinant zero ⇒ Z_S zero, at this box
 
 `lane_g/LAW_Q3_BRANCH_DIAGNOSIS.md` established (Q3D.2, Q3D.7) that the
 repo engines compute MMS's NUMERATOR det(1−L_{s,+})·det(1−L_{s,−}) only,
@@ -317,9 +351,15 @@ step for this box, as follows.
 > 0.00297330221669643950…, so
 > det(1 − K_s) = Π_{n≥0}(1 − b_7^{s+n}). Then for every s ∈ Box
 >
->   0.936818983390 ≤ |det(1 − K_s)| ≤ 1.000000000001,
+>   0.936818983390 ≤ |det(1 − K_s)| ≤ 1.063204693008,
 >
-> both bounds certified in 384-bit ball arithmetic. Consequently
+> both bounds certified in 384-bit ball arithmetic (lower rounded DOWN,
+> upper rounded UP). **The load-bearing claim is NON-VANISHING, i.e. the
+> LOWER bound alone** — that is all the R5 identification step below
+> consumes; finiteness follows from Σ_n t_n < ∞ and needs no numeric bound.
+> The upper bound is elementary context: it is Π_{n≥0}(1 + t_n), not tight,
+> and the true modulus on this box is ≈ 1.0295836 (grid-measured, not
+> certified). Consequently
 > det(1 − K_s) is finite and non-vanishing on Box, and by MMS Theorem 6.4
 > together with the analyticity of det(1−L_{s,−}) near Box (Theorem 4.10:
 > poles only at the real points s = (1−k)/2; Box has Im ≈ 4.67), the zero
@@ -333,21 +373,43 @@ t_0 ≤ 0.063004963347 < 1, so each factor satisfies
 |1 − b_7^{s+n}| ≥ 1 − t_n ≥ 1 − t_0 ≥ 0.936995036653 > 0. Therefore
 |det(1−K_s)| ≥ Π_{n<24}(1 − t_n) · (1 − Σ_{n≥24} t_n) with
 Σ_{n≥24} t_n = t_0·ell_7^{48}/(1 − ell_7²) ≤ 1e-60, giving the stated
-lower bound 0.936818983390 (rounded DOWN); the same tail bound gives
-|det| ≤ 1 + 1e-60, printed as 1.000000000001 (rounded UP). ∎
+lower bound 0.936818983390 (rounded DOWN) — which is the load-bearing
+non-vanishing claim. For the upper bound, |1 − b_7^{s+n}| ≤ 1 + t_n on
+every factor, so |det(1−K_s)| ≤ Π_{n≥0}(1 + t_n) ≤ Π_{n<24}(1 + t_n) ·
+exp(Σ_{n≥24} t_n) ≤ 1.063204693008 (rounded UP), using 1 + t ≤ e^t on the
+tail. ∎
+
+*Repair note (review defect D1).* An earlier revision printed the upper
+bound as 1.000000000001, from `1 + Σ_{n≥24} t_n`. That is **not** an upper
+bound on |Π_{n≥0}(1 − z_n)|: it applies |1 − z| ≤ 1 + |z| to the tail only
+and drops the n = 0 factor, whose modulus exceeds 1 because b_7^{s} is far
+from the positive reals (arg ≈ −2.0304 rad, modulus ≈ 0.06300460). The true
+modulus on the box is ≈ 1.0295836, so the old figure was FALSE by ≈ 3%,
+not merely loose. `f7links_ks_gate.py` now computes Π_{n<24}(1 + t_n)·
+exp(tail) in balls, rounded UP, and the receipt field
+`abs_detK_upper_bound_rounded_up` reads `1.063204693008`. Nothing
+load-bearing changed: the lower bound, the box, δ, and the conclusion are
+untouched.
 
 Two consequences worth stating plainly:
 
 - **The identification link is now CLOSED for this box by a machine
   certificate, not by a citation-level appeal.** At q=5 the corresponding
   step rested on the K_s lattice being confined to Re ≤ 0 plus a
-  point-margin artifact (Kimi 1-E6); here the divisor is bounded away
-  from 0 *and* from ∞ on the closed box, two-sidedly.
+  point-margin artifact (Kimi 1-E6); here the divisor is certified
+  bounded away from 0 on the closed box — which is the whole of what the
+  identification consumes — with an elementary finite upper bound
+  alongside it.
 - **The LAW numerator defect does not touch this theorem.** The certified
   winding is of the + sector's Fredholm determinant, and the divisor
-  correction on this box multiplies |Z_S| by a factor in
-  [0.9368, 1.0000000001] — it moves MAGNITUDES by at most ~6.4% and moves
-  NO zero, because it neither vanishes nor blows up there. Magnitude
+  correction on this box multiplies |Z_S| by a factor whose certified
+  range is [0.936818983390, 1.063204693008] — grid-measured, the true
+  modulus is ≈ 1.0295836, so the magnitude effect is **≈ 2.9%** (division
+  by 1.0295836); the certified elementary bounds allow at most ~6.3%
+  in either direction (1 − 0.9368 = 6.32%, 1.0632 − 1 = 6.32%). The
+  load-bearing clause is unchanged and does not
+  depend on either number: the divisor moves NO zero, because on this box
+  it neither vanishes nor blows up. Magnitude
   claims elsewhere (and any winding on Re s ≤ 0) remain subject to
   `LAW_Q3_BRANCH_DIAGNOSIS.md` §5.
 
@@ -374,7 +436,7 @@ Two consequences worth stating plainly:
   constants (`F7_R3B_ENDPOINT_V2_RECEIPT.json`, `F7_R2_FLAGSHIP_ENVELOPE_RECEIPT.json`,
   `F7_TB_BLOCK_CERTIFICATES_RECEIPT.json`), Link 4b
   (`F7_E1_ENLARGED_CONTRACTION_V2_RECEIPT.json`, re-derived in
-  `F7LINKS_E1_RECHECK_RECEIPT.json`), Links 4 & 5
+  `F7LINKS_E1_RECHECK_RECEIPT.json`), Link 5
   (`F7LINKS_KS_GATE_RECEIPT.json`). Named dependency: python-flint
   Arb/Acb ball-matrix enclosure semantics.
 - LEAN-PROVED (Aristotle v18/v19, axiom-clean, q-independent, REUSED):
@@ -420,16 +482,24 @@ Two consequences worth stating plainly:
   τ_7            ≥ 18.393731622284383001616652;  det of the word = 1
   ell_7          = 0.05452799479805249083392519594349…;  b_7 = ell_7²
   a_7            = 2.909041043174856595598222179862…;  π/a_7 = 1.0799409863812493600960968281…
-  K_s box margin ≥ 0.5895479   [manifest's 0.5895480 is a round-UP; see Link 4]
-  |det(1−K_s)| on Box ∈ [0.936818983390, 1.000000000001]
+  K_s box margin ≥ 0.5895479   [manifest's 0.5895480 is a round-UP; see Link 5]
+  |det(1−K_s)| on Box ∈ [0.936818983390, 1.063204693008]
+                 (LOWER = the load-bearing non-vanishing bound; UPPER =
+                  elementary Π(1+t_n) context bound; true modulus ≈ 1.0295836
+                  grid-measured, not certified)
   Re(s*)         ≤ 0.4751658   [plan's 0.4751648 omits the half-width]
   δ (gap)        ≥ 0.0248342
 
 ## What remains open — q=7 versus the declared q=5 chain
 
-1. **Adversarial review (the material gap).** q=5 survived V4–V8 plus the
-   Kimi K3 hostile audit; this assembly has had none. Until at least one
-   independent hostile pass, the honest label is ASSEMBLED, not DECLARED.
+1. **Adversarial review depth.** q=5 survived V4–V8 plus the Kimi K3
+   hostile audit; this assembly has had ONE independent hostile round
+   (`ADVERSARIAL_REVIEW_G7_V1.md`, SOUND-WITH-REPAIRS, repairs enacted).
+   That round read code and receipts and re-derived every constant, but did
+   not open Simon, Grothendieck or MMS, ran no Lean build, and did not
+   re-execute the 107.8-hour contour certification or the E1 run from
+   scratch. Until the owner is satisfied with the round count, the honest
+   label stays ASSEMBLED, not DECLARED.
 2. **Lean coverage of the q=7 K_s lattice** (Link table row 9). Minor: it
    would formalize a finite computation that is already ball-certified.
 3. **MMS sector labeling.** No geometric parity claim, at either q. Open
@@ -445,14 +515,52 @@ Two consequences worth stating plainly:
 7. **m₀ non-rigor.** The N* freeze used a 96-point float sample at N=32;
    it is a planning gate only and no theorem statement depends on it (the
    theorem consumes the certified F_R and the certified boundary minimum).
-8. **MMS journal numbering** of the factorization theorem
-   (`TODO-VERIFY`, LAW §1).
+8. **MMS primary-source items, both `TODO-VERIFY`** (review defect D5):
+   (a) the journal numbering of the factorization theorem (LAW §1); and
+   (b) the **heading text above eq. (34)** on which Link 6's dissolution of
+   the q=5 footnote rests. No MMS e-print or PDF is banked in this repo, so
+   the heading wording is currently taken from the transcription in
+   `F7_CONSTANTS_MANIFEST.md`. Verify both against the e-print, or paste
+   the heading into the manifest as a quoted source line, before printing.
+9. **The h_q = 2 priority claim is not repo-verifiable** (review defect D4;
+   q=5 class 1-C8, recurring). "The first at h_q = 2" and "the second
+   member of the non-arithmetic Hecke family" rest on the lane_c prior-art
+   sweep, which was not redone in this session and not re-run by the V1
+   reviewer. Either redo the sweep or downgrade the sentence to a citation
+   of lane_c before any priority claim is circulated.
 
 Things that are BETTER at q=7 than at q=5, for the record: the boundary
 margin is ~1.11e3 × F_R instead of 2% of F_R; ρ̂ is 0.9152 instead of
 0.9484; the K_s box margin is 0.5895 instead of 0.4551 (and is a box
-margin from the outset, not a point margin); and MMS's eq.-(34) heading
-applies verbatim, so the q=5 erratum footnote is not needed.
+margin from the outset, not a point margin); and the MMS eq.-(34) heading
+condition holds at q = 7 arithmetically, so the q=5 erratum footnote looks
+unnecessary — subject to open item 8(b).
+
+## Review notes (from `ADVERSARIAL_REVIEW_G7_V1.md`, non-defect findings)
+
+Two anomalies a referee may hit are explained here so they are not
+re-litigated:
+
+- **The 16 per-chunk margin minima cluster into four near-identical groups
+  by chunk index mod 4** (≈2.81662e-6 / 2.43478e-6 / 2.41285e-6 /
+  2.72361e-6, agreeing to ~8 significant digits across groups) even though
+  the groups sit on different edges of the box. This is NOT a copy-paste
+  artifact: each 48-arc edge is split into exactly 4 chunks of 12, so chunk
+  index mod 4 **is** position-within-edge, and over a box of diameter 2e-6
+  the determinant is near-constant while the four edges are near-symmetric.
+  The reviewer independently confirmed each chunk's own `chunk_arc_range`,
+  the 48-per-edge `edge_name` census, and that the 192 `s_start`/`s_end`
+  balls form one closed cycle — the four groups are genuinely distinct
+  arcs, not duplicated records.
+- **E1's disc radii are not the R2 receipt's radius balls, and the balls do
+  not overlap.** E1 block 1's `original_radius_upper_bound` =
+  0.174393823623839918698224185000000418… against the R2 receipt's
+  certified radius [0.174393823623839918698223815347389… ± 2.19e-115];
+  they diverge at ~3.7e-21. The direction is **conservative** for the
+  source enlargement (the field is an upper bound), and the induced
+  perturbation of the ρ̂ ratio is ~1e-20 against 0.0848 of headroom to 1,
+  so the gate cannot flip. Stated here so the difference is not read as a
+  geometry mismatch between Link 1's operator and Link 4b's certificate.
 
 ## Reproduce
 

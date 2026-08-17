@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.82in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.35em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\definecolor{navy}{HTML}{18324B}
+\definecolor{pale}{HTML}{EEF3F7}
+\newcommand{\status}[1]{\fcolorbox{navy}{pale}{\strut\textbf{#1}}}
+\begin{document}
+
+{\Large\bfseries\color{navy} Joint manuscript review packet}\par
+{\large Regularized Spectral Statistics for Prime Races and Low-Zero Transient Reversals}\par
+\vspace{3pt}
+Prepared for Shin-ya Koyama by Saar Shai \hfill 16 August 2026
+
+\vspace{5pt}\hrule\vspace{7pt}
+
+\textbf{Purpose.} This packet contains the complete joint revision, the
+numerical and formal sources needed to inspect its finite claims, and a precise
+record of what remains conjectural. The manuscript is ready for joint review;
+it is not yet cleared for an arXiv replacement or journal submission.
+
+\section*{What is included}
+
+\begin{itemize}
+  \item submission-shaped TeX and an eight-page compiled PDF;
+  \item the low-zero reconstruction figure, source curve through
+  $3\times10^{14}$, complete tabular outputs, and executable verifiers;
+  \item the independent modulus-19 Arb certificate and 100-zero stability run;
+  \item compact Lean sources for the corrected character selector and four
+  finite quadratic-nonresidue statements;
+  \item a technical change log, verification report, source diff, provenance,
+  and packet-wide SHA-256 checksums.
+\end{itemize}
+
+\section*{Scientific status at a glance}
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.44\textwidth}p{0.43\textwidth}@{}}
+\toprule
+Item & Status \\
+\midrule
+Conjugated character selector & \status{PROVED FINITE ALGEBRA} \\
+567-cell baseline comparison & \status{PASS: 567/567} \\
+Low-zero reconstruction & \status{VERIFIED FINITE COMPUTATION} \\
+Very low odd-character mode mod 19 & \status{ARB EXISTENCE CERTIFICATE} \\
+Two-parameter regularized limit & \status{CONJECTURE / OPEN} \\
+Universal $-1$ apex and $1$ nadir & \status{CONJECTURE / OPEN} \\
+Eventual ordinary-count ordering & \status{NOT CLAIMED} \\
+Finite-$x$ mollified comparison plot & \status{PENDING DEFINITION} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Main numerical findings}
+
+The ordinary-count file has 438 checkpoints for
+$N\in\{7,8,11,19,23\}$ and agrees exactly with the independently checked
+baseline in all 567 shared cells through $1.3\times10^{13}$. The continuation
+to $3\times10^{14}$ is one full run, not an independent replication.
+
+Using 25 positive zeros per nonprincipal character, the top-decade
+correlations for the normalized $-1$ trajectories are $0.965$, $0.931$,
+$0.939$, $0.971$, and $0.826$. At the final checkpoint, the ranks of $-1$ are
+$1/3$, $3/3$, $3/5$, $6/9$, and $1/11$, respectively. These continuing
+reversals motivate regularization but do not test the conjectural hierarchy.
+
+For the odd character of Conrey index 13 modulo 19, an independent Arb
+sign-change computation certifies a critical-line zero near
+$\gamma=0.018956399080226143$. With 100 positive ordinates per nonprincipal
+character modulo 19, the $-1$ correlation is $0.9925$, while rank and leader
+changes remain active. The earlier $e^{33.4}$ settling estimate is therefore
+not retained.
+
+\section*{Why the requested mollified plot is pending}
+
+The current analytic argument does not yet fix a unique finite statistic,
+normalization, logarithm branch, or admissible regime $T=T(x)$. It also lacks a
+summed off-diagonal estimate. A comparison against
+$C_{N,T}\,B_N(a)$ before those choices are fixed could be rescaled after the
+fact. The revision therefore states the two-parameter limit honestly as a
+conjectural target and supplies the verified ordinary-count reconstruction
+instead.
+
+\section*{Decisions requested from both authors}
+
+\begin{enumerate}
+  \item Approve or revise the theorem/conjecture boundary and analytic proof
+  obligations.
+  \item Confirm title, author order, affiliations, and contribution wording.
+  \item Confirm the raw-count table and numerical interpretation.
+  \item Choose a permanent public data/code archive and insert its DOI.
+  \item Approve one identical final compiled PDF before any arXiv replacement
+  or journal submission.
+\end{enumerate}
+
+\vfill
+\small\color{navy}
+Start with the top-level README and the PDF in the manuscript folder. Packet
+file integrity is recorded in the checksum list in the support folder.
+
+\end{document}

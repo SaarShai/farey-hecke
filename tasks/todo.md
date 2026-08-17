@@ -1,5 +1,97 @@
 # Expansion run — 2026-08-15 (owner directive: maximize research value)
 
+## Koyama joint-manuscript integration — 2026-08-16
+
+- [x] Bind the three supplied attachments and identify the latest TeX/PDF pair.
+- [x] Reopen the live numerical, spectral, Table 3, and Lean receipts.
+- [x] Create an isolated manuscript working copy and preserve source provenance.
+- [x] Correct the character selector and propagate its conjugation convention.
+- [x] Replace the unsupported fixed-$T$ theorem by an honest two-parameter analytic target.
+- [x] Reconcile Table 3 against raw class counts and add the $3\times10^{14}$ endpoint data.
+- [x] Integrate the verified low-zero reconstruction, transient correction, and figure.
+- [x] Add contribution, Lean-scope, computational-assistance, and data-availability text.
+- [x] Build the TeX, inspect warnings/logs, render every page, and visually verify the PDF.
+- [x] Add a review/results section recording delivered artifacts and unresolved analytic gates.
+
+Routing receipt: the artifacts are the supplied `nontriv2607.tex`, its two PDFs,
+the current `projects/minus1-dominance` receipts, and the new isolated joint-manuscript
+directory. The user authorized direct TeX integration. The work is coupled and
+judgment-dense; it remains in the main thread. Unrelated dirty-worktree files are excluded.
+
+### Review/results
+
+- Source provenance: supplied TeX SHA-256
+  `d6acb7680e4225d1e0d51237a1aacfa14e073ed9edf9a6010f9f9fb93fbb875c`;
+  the Downloads copy was not changed.
+- Numerical checks: 567/567 baseline cells match; base spectral verifier passes
+  55/55 zero checks and 13,578 rows; independent modulus-19 Arb/deep verifier
+  passes with 7/7 adversarial tests.
+- Formal checks: selector project builds; all four finite nonresidue theorems
+  compile against Mathlib v4.28.0.
+- Artifact checks: Tectonic build is warning-free; all 8 rendered letter-size
+  pages were inspected; the figure, tables, references, and declarations are
+  unclipped and correctly ordered.
+- Completion gate: 10/10 verification criteria pass; introduced-code security
+  triage reports risk `NONE`; blast radius is low and limited to the isolated
+  manuscript transformation/build artifacts.
+- Open analytic gate: the two-parameter regularized limit, summed off-diagonal
+  bound, branch convention, and any transfer to ordinary counts remain
+  conjectural. The requested finite-$x$ regularized comparison plot was not
+  fabricated.
+
+## Koyama external share packet — 2026-08-16
+
+- [x] Assemble a clean, self-contained packet with manuscript source/PDF,
+  figure, numerical data and verifiers, compact Lean sources, and provenance.
+- [x] Write an external-facing read-me, technical change log, verification
+  report, and concise transmittal memo PDF.
+- [x] Draft the reply email, including the unresolved analytic gate and the
+  decisions needed before any arXiv replacement or journal submission.
+- [x] Generate a deterministic file manifest and checksums, archive the packet,
+  and verify archive extraction and all packaged checksums.
+- [x] Render and visually inspect every page of the new transmittal PDF; scan
+  the packet for internal-only material, credentials, placeholders, and broken
+  absolute paths.
+- [x] Record final artifacts and verification results here.
+
+Routing receipt: the packet is a new external artifact derived from the already
+verified isolated manuscript and receipts. It is SPEC'D/GATED by the user's
+request and the manuscript's existing analytic caveats. The work remains in the
+main thread because selection, scientific wording, and disclosure boundaries
+are coupled and judgment-dense. No correspondence archive or unrelated project
+material is in scope.
+
+### Review/results
+
+- Deliverable: `output/koyama_share_packet_2026-08-16.zip` (updated archive),
+  SHA-256 `54f16b94803b29545c9320044aee06f7357e376d293d936c5137d92459a2ed76`.
+- Contents: 62 files covering the read-me, two-page transmittal
+  memo, change log, verification report, eight-page manuscript, figure,
+  authoritative curve, independent baseline, all derived spectral/N=19
+  outputs, portable scripts, two compact Lean projects, original source, diff,
+  and packet-wide checksums.
+- The reply email is deliberately outside the packet at
+  `output/koyama_reply_email_draft_2026-08-16.md`.
+- Archive/integrity: `unzip -t` reports no errors; a fresh extraction passes
+  every entry in `support/SHA256SUMS.txt`.
+- Numerical live proof from packet paths: baseline 567/567; spectral verifier
+  55/55 with 13,578 rows; six base adversarial tests; independent N=19 verifier
+  with 17/17 deep checks; seven N=19 adversarial tests.
+- Formal live proof: the exact packaged selector source and exact packaged
+  four-theorem nonresidue source compile in their pinned Lean 4.28.0/Mathlib
+  environments; no `sorry` or `admit` appears in the claimed files.
+- PDF live proof: the manuscript rebuilds cleanly to eight letter pages; the
+  memo rebuilds cleanly to two letter pages, with no layout warnings. Both memo
+  pages were rendered at 144 dpi and visually inspected without clipping,
+  overlap, or missing content.
+- External-content gate: the reply draft passes all six required criteria
+  (scope, corrections, numerics, analytic limits, decisions, tone) at 1.0.
+- Security triage: no secret, dangerous sink, dependency, or HIGH/MEDIUM
+  finding. Seven lexical REVIEW matches are false positives on mathematical
+  uses of “verify”/“role”; there is no authentication or authorization logic.
+- Blast radius: LOW and isolated to new external packet artifacts plus this
+  task record. No existing source, attachment, or correspondence was modified.
+
 Priority = value to the math research community; significance first.
 Routing: Kimi K3 = medium-high lanes; Kaggle = heavy compute; Aristotle =
 formalizable lemmas; Opus agents = judgment-dense drafting; frontier = synthesis,

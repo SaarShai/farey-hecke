@@ -1,5 +1,7 @@
-"""f7links_ks_gate.py -- q=7 K_s divisor gate (assembly link 4) + det(1-K_7)
-non-vanishing lemma on the flagship box (assembly link 5/R5 closure).
+"""f7links_ks_gate.py -- q=7 K_s divisor gate + det(1-K_7) non-vanishing lemma
+on the flagship box. Both serve assembly LINK 5 (the numbering in force in
+THEOREM_G7_OFFLINE_ASSEMBLY.md: link 4 = argument principle, link 4b = Hilbert
+-> Banach transport, link 5 = K_s gate + Z_S identification).
 
 Ball arithmetic only (python-flint Arb/Acb, 384 bits). Read-only: recomputes the
 F7_CONSTANTS_MANIFEST.md quantities from scratch and writes ONE receipt,
@@ -136,7 +138,7 @@ out["b_7_equals_ell_7_squared"] = (ell ** 2).str(30, radius=True)
 out["b_7_matches_law_orbit_product_value"] = agrees_to_printed(ell ** 2, LAW_B7)
 out["b_7_law_value"] = LAW_B7
 
-# --- (4) BOX-to-lattice distance (link 4) -----------------------------------
+# --- (4) BOX-to-lattice distance (link 5, first half) -----------------------------------
 hw = arb(HALF_WIDTH)
 re_lo, re_hi = arb(PIN_RE) - hw, arb(PIN_RE) + hw
 im_lo, im_hi = arb(PIN_IM) - hw, arb(PIN_IM) + hw
@@ -191,7 +193,7 @@ out["second_nearest_lattice_point"] = {"n": 0, "k": second_k,
 out["lattice_intersects_box"] = False
 out["lattice_all_Re_le_zero"] = True
 
-# --- (5) det(1 - K_s) non-vanishing on the closed box (link 5 lemma) --------
+# --- (5) det(1 - K_s) non-vanishing on the closed box (link 5 lemma, second half) --------
 # For s in Box, |ell^{2s+2n}| = ell^{2 Re s + 2n} <= ell^{2 sigma_lo + 2n} =: t_n
 # (ell < 1, sigma_lo > 0), so every factor obeys |1 - ell^{2s+2n}| >= 1 - t_n > 0
 # and |det(1-K_s)| >= prod_{n>=0} (1 - t_n).
@@ -205,8 +207,18 @@ for n in range(N_TERMS):
 tail_sum = t0 * ell ** (2 * N_TERMS) / (1 - ell ** 2)     # sum_{n>=N} t_n
 lower = prod * (1 - tail_sum)
 assert lower > arb(0)
-# a matching upper bound, for context only (not load-bearing)
-upper = arb(1) + tail_sum
+# A matching UPPER bound (context only, not load-bearing). NOTE the earlier
+# `1 + tail_sum` was WRONG: |1 - z| <= 1 + |z| must be applied to EVERY factor,
+# not only to the tail. The elementary correct bound is
+#   |det(1-K_s)| <= prod_{n>=0} (1 + t_n)
+#              <= prod_{n<N} (1 + t_n) * exp(sum_{n>=N} t_n),
+# using 1 + t <= exp(t) on the tail. Both factors are evaluated in balls and the
+# printed value is rounded UP.
+prod_up = arb(1)
+for n in range(N_TERMS):
+    prod_up = prod_up * (1 + t0 * ell ** (2 * n))
+upper = prod_up * tail_sum.exp()
+assert upper > lower
 out["detK_nonvanishing"] = {
     "sigma_lower_bound_on_box_rounded_down": floor_str(sigma_lo, 7),
     "first_factor_modulus_bound_t0_upper_rounded_up": ceil_str(t0, 12),
@@ -216,6 +228,10 @@ out["detK_nonvanishing"] = {
     "abs_detK_lower_bound_ball": lower.str(40, radius=True),
     "abs_detK_lower_bound_rounded_down": floor_str(lower, 12),
     "abs_detK_upper_bound_rounded_up": ceil_str(upper, 12),
+    "abs_detK_upper_bound_method": ("prod_{n<24}(1+t_n)*exp(sum_{n>=24} t_n); "
+                                    "context only, NOT load-bearing (the R5 "
+                                    "identification consumes non-vanishing, "
+                                    "i.e. the LOWER bound, only)"),
     "strictly_positive_on_closed_box": True,
 }
 

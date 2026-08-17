@@ -1,0 +1,400 @@
+   REGULARIZED SPECTRAL STATISTICS FOR PRIME RACES AND
+             LOW-ZERO TRANSIENT REVERSALS
+
+                                SHIN-YA KOYAMA AND SAAR SHAI
+
+       Abstract. We study a proposed Gaussian-regularized statistic for prime races and a sepa-
+       rate finite-scale reconstruction of ordinary prime-count races. Character orthogonality gives
+       the exact selector
+                            1 X
+                                   (1 − χ(a))χ(x) = 1x≡1 (mod N ) − 1x≡a (mod N ) .
+                          φ(N ) χ
+       For the regularized statistic we formulate an explicit two-parameter analytic target with
+       T = T (x); the fixed-T asymptotic is not asserted, because the diagonal coeﬀicient depends
+       on T and a summed off-diagonal estimate remains to be proved. The proposed extremality
+       of −1 (mod N ) and recessiveness of 1 (mod N ) are therefore stated as conjectural fine-
+       structure principles.
+          Independently, we analyze ordinary prime-count data for N ∈ {7, 8, 11, 19, 23} at 438
+       checkpoints through 3 × 1014 . The extended computation agrees with an independently
+       checked baseline in 567 of 567 shared cells through 1.3 × 1013 . Low-zero explicit-formula
+       truncations using 25 positive zeros per nonprincipal character correlate with the observed
+       top-decade −1 trajectories at levels 0.826–0.971. Nevertheless, frequent rank and leader
+       changes persist. In particular, an Arb sign-change computation certifies a critical-line zero
+       near 0.018956399080226143 for the odd character of Conrey index 13 modulo 19. These
+       results explain the observed transients but do not establish an eventual ordering of ordinary
+       prime counts or validate the proposed regularized asymptotic.
+
+
+
+                            1. Introduction and Main Results
+   Since Chebyshev’s seminal observation in 1853 that primes congruent to 3 (mod 4) ap-
+pear more frequently than those congruent to 1 (mod 4), the phenomenon of prime number
+races and residue bias has been a central topic in analytic number theory. Rubinstein and
+Sarnak [4] established a rigorous probabilistic framework for prime biases under the Gen-
+eralized Riemann Hypothesis (GRH) and the Grand Simplicity Hypothesis (GSH). Later,
+Feuerverger and Martin [2] investigated weighted prime sums and observed subtle determin-
+istic hierarchies governed by special values of Dirichlet L-functions.
+1.1. Beyond Chebyshev’s Bias: Discovering the Fine-Structure Hierarchy. Clas-
+sical studies on prime number races, stemming from Chebyshev’s original observation, pre-
+dominantly attribute the prime bias to the accumulation of prime squares (k = 2), which
+creates a systematic deficit in quadratic residue classes (e.g., 3 (mod 4) > 1 (mod 4)). How-
+ever, this classical mechanism suffers from a fundamental limitation: it fails to distinguish
+or predict any bias among residue classes that share identical quadratic character values.
+   For instance, modulo N = 8, every non-trivial residue class satisfies x2 ≡ 1 (mod 8).
+Consequently, the traditional prime-square effect predicts complete equiprobability among
+the non-principal classes 3, 5, 7 (mod 8).
+  Date: August 16, 2026.
+                                                    1
+2                              SHIN-YA KOYAMA AND SAAR SHAI
+
+   The regularized construction below should be read as an analytic program, not as a com-
+pleted asymptotic theorem. Its arithmetic selector is exact, but the Gaussian argument
+must control two coupled parameters and the total off-diagonal contribution. We therefore
+separate three levels of evidence: proved finite character algebra, a conjectural regularized
+limit, and verified finite computations for ordinary prime counts.
+
+1.2. Motivation and relation to Aoki–Koyama. The use of the Deep Riemann Hypoth-
+esis (DRH) in prime-bias problems is motivated by Aoki and Koyama [1]. Here it motivates
+a proposed spectral regularization across Dirichlet characters. No transfer from this regular-
+ized statistic to eventual ordinary-count dominance is assumed.
+
+1.3. Gaussian localization and its two parameters. For a scale T > 0 and a prime
+power pk , consider
+                                              cos(kγ log p) −(γ/T )2
+                                hpk ,T (γ) :=              e         .                    (1.1)
+                                                  pk/2
+For each fixed pk and T this is a Schwartz function. The diﬀiculty is uniformity after summing
+over all prime-power pairs up to x: logarithmic separations between distinct prime powers
+shrink as x grows. Accordingly, x and T must be treated jointly.
+
+1.4. Corrected selector and analytic target. Let G = (Z/N Z)× and let G∗ be its
+complete character group.
+Lemma 1.1 (Character selector). For a, x ∈ G,
+                             1 X
+                κa (x) :=            (1 − χ(a))χ(x) = 1x=1 − 1x=a .                       (1.2)
+                          φ(N ) χ∈G∗
+
+Proof. Character orthogonality evaluates the first term at x = 1. Since χ(a) = χ(a−1 ), the
+second evaluates at a−1 x = 1, equivalently x = a. Without the conjugate, the negative class
+would instead be a−1 .                                                                    □
+  Choose logarithm branches in conjugate pairs and define, whenever those branches are
+specified consistently,
+                                    1 X
+                        BN (a) :=            (1 − χ(a)) Logχ L(1, χ),            (1.3)
+                                  φ(N ) χ̸=χ
+                                              0
+
+
+with Logχ̄ L(1, χ̄) = Logχ L(1, χ). This pairing makes BN (a) real. It also gives BN (1) = 0;
+any proposed “nadir” statement for the identity class therefore needs a sign convention and
+a separate inequality, rather than following from the selector alone.
+Conjecture 1.2 (Two-parameter regularized limit). There is a precisely normalized regu-
+larized difference RN,a (x, T ) and a growth regime T = T (x) such that, as x → ∞,
+                       RN,a (x, T (x)) = CN,T (x) BN (a) + EN,a (x, T (x)),               (1.4)
+where CN,T > 0 is explicit and real and maxa∈G |EN,a (x, T (x))| → 0. The regime must justify
+                                                                                          √
+every order interchange and a summed off-diagonal bound. In particular, the factor T /(4 π)
+arising in the diagonal Gaussian calculation is retained in CN,T unless an actual cancellation
+is proved.
+                            REGULARIZED PRIME-RACE STATISTICS                                  3
+
+  If Conjecture 1.2 is proved and the values BN (a) are distinct, their ordering would govern
+that regularized statistic only. An eventual ordering of ordinary counts would require a
+separate transfer theorem with explicit error control.
+Conjecture 1.3 (Apex and nadir fine structure). Within a fixed quadratic family, −1
+(mod N ) is extremal for the consistently normalized values BN (a). With the same sign
+convention, the identity class 1 (mod N ) is the opposite endpoint. Both assertions concern
+the proposed regularized hierarchy; neither is inferred from finite ordinary-count data.
+1.5. Primary and secondary scales. The motivating two-tier template is
+                                x      NQ (a) √      ′
+                 ψ(x; N, a) =       −           x + CN,T BN (a) + remainder,           (1.5)
+                              φ(N )    φ(N )
+                                                                     √
+where NQ (a) is the number of unit square roots of a modulo N . The x term is the primary
+Chebyshev-bias scale; the proposed bounded BN (a) term is secondary. Formula√(1.5) is a
+structural target, not an asymptotic expansion established here: an error of order x/ log x,
+for example, would be larger than the proposed secondary term and could not certify its
+ordering.
+
+      2. Gaussian regularization and finite-scale spectral diagnostics
+2.1. What remains to prove for the Gaussian statistic. For a fixed distinct pair
+of prime powers, Fourier inversion supplies Gaussian decay in T |log(q m /pk )|. It does not
+supply a positive separation constant uniform over all pairs below a growing bound x. A
+proof of Conjecture 1.2 must therefore give a complete summed off-diagonal estimate in its
+chosen T (x) regime, justify the prime/zero/order interchanges, control the k = 1, 2 terms
+and the k ≥ 3 tail, and include the Archimedean, conductor, and imprimitive Euler-factor
+contributions. Principal character cancellation from Lemma 1.1 is exact, but by itself it does
+not evaluate the remaining sums.
+   For the same reason, a finite-x plot of a proposed RN,a (x, T ) against CN,T BN (a) is not
+reported here. Such a plot becomes meaningful only after the statistic, branch convention,
+normalization, and T (x) regime are fixed by the analytic statement; otherwise the constant
+can be rescaled after the fact.
+
+2.2. Ordinary-count data and reconciliation of the former Table 3. The ordinary-
+count dataset contains 438 logarithmically spaced checkpoints for N ∈ {7, 8, 11, 19, 23}
+through 3 × 1014 . A fresh comparison with the previous independently checked baseline
+gives 567 exact integer agreements in 567 shared cells through 1.3 × 1013 . The extension
+above that bound is one full run and is not described as an independent replication.
+   Table 1 replaces the former Table 3 directly from the raw class counts. It corrects eight
+cells at 1.3 × 1013 , corrects the sign of the N = 19, a = 10 entry at 1.3 × 1011 , and restores
+the omitted class a = 20 modulo 23. Each entry is DN (a) = π(x; N, a) − π(x; N, 1); the
+classes shown are all quadratic nonresidues.
+   At the final checkpoint, −1 leads only for N = 7 and 23. For N = 7, 8, 11, 19, 23, its
+respective ranks are
+                            1/3,      3/3,     3/5,    6/9,     1/11.
+This finite observation neither supports nor contradicts Conjecture 1.3, which concerns a
+separate regularized statistic.
+4                               SHIN-YA KOYAMA AND SAAR SHAI
+
+2.3. Low-zero reconstruction of the transient trajectories. For a unit class a, define
+the normalized ordinary race
+                                      φ(N ) log x                         
+                      EN (x; a, 1) :=    √         π(x; N, a) − π(x; N, 1) .                (2.1)
+                                           x
+The finite GRH-form truncation used in the computation is
+                                                                                        !
+                                                 XX   K
+                                                                (χ(a) − 1)e iγχ,j log x
+           eN,K (x; a, 1) := CN (1) − CN (a) −
+           E                                             2 Re                             , (2.2)
+                                                                     1
+                                                χ̸=χ j=1             2
+                                                                       + iγ χ,j
+                                                    0
+
+where CN (a) counts unit square roots of a and K denotes the first K positive ordinates for
+each nonprincipal character.
+  The ordinates were generated through height 80 by two PARI/GP mesh runs (parameters
+64 and 96) and required to agree character by character. Every used ordinate also satisfies a
+direct residual bound below 10−28 . These are robustness checks within one implementation,
+not a proof of zero completeness or GRH. Three first-zero anchors modulo 8 independently
+agree with earlier mpmath values to 10−12 .
+Computational Result 2.1 (verified finite computation). The checked pipeline produces
+13,578 reconstruction rows. On the 53-point window x ≥ 3 × 1013 , the correlations between
+eN,25 (x; −1, 1) and EN (x; −1, 1) are
+E
+                            0.965,   0.931,   0.939,     0.971,   0.826
+for N = 7, 8, 11, 19, 23. Across the 52 consecutive intervals, the observed rank of −1 changes
+17, 23, 30, 17, 39 times, respectively.
+
+2.4. The very low odd-character mode modulo 19. For the primitive character of
+Conrey index 13 modulo 19, of order 18,
+                        γ = 0.0189563990802261 . . . ,       χ(−1) = −1.                     (2.3)
+An independent Python FLINT/Arb computation gives opposite, sign-definite Hardy-Z end-
+point balls across a bracket of width 5.94 × 10−84 and a midpoint L-value upper bound below
+3.55 × 10−85 . This certifies existence of a critical-line zero in the bracket, but not uniqueness,
+completeness, or GRH. Its top-decade RMS contribution to the −1 race is 6.719, and its
+correlation with the centered observed curve is 0.728.
+   Using 100 positive ordinates for every nonprincipal character modulo 19 raises the −1
+correlation from 0.9715 at K = 25 to 0.9925 at K = 100; the reconstruction still has 14 rank
+changes and 7 leader changes. Therefore the previous γ ≈ 1.74 one-mode calculation and
+its e33.4 “settling scale” cannot be retained. The data show a slow active mode and do not
+identify 3 × 1014 as a stabilization threshold.
+   The defensible finite-scale conclusion is that the ordinary races remain spectrally coherent
+but dynamically unsettled through 3 × 1014 . Low-zero truncations explain much of the
+observed motion; they do not prove an eventual ordinary-count ordering.
+
+                                 3. Conditional examples
+  The special-value combinations for small moduli are useful test cases for Conjecture 1.2,
+but they are not unconditional rankings of prime counts. For N = 3 and 4 the character
+groups contain one nonprincipal real character, and the selector of Lemma 1.1 reduces the
+                                          REGULARIZED PRIME-RACE STATISTICS                                                                     5
+
+                                  Observed ordinary−count race and low−zero explicit−formula truncations
+                         N=7
+                                                                                   observed           3 zeros/character    25 zeros/character
+                     6                                                             1 zero/character   10 zeros/character
+
+
+                     4
+
+
+  E7(x, − 1, 1)
+                     2
+
+                     0
+
+                   −2
+
+
+
+
+                         N=8
+                     8
+
+
+
+
+  E8(x, − 1, 1)
+                     6
+
+
+                     4
+
+
+                     2
+
+
+
+
+                         N = 11
+                    10
+
+
+                     5
+
+
+  E11(x, − 1, 1)     0
+
+
+                   −5
+
+
+
+
+                         N = 19
+
+                    20
+
+                    15
+
+
+
+  E19(x, − 1, 1)
+                    10
+
+                     5
+
+                     0
+
+                   −5
+
+
+
+                         N = 23
+                    15
+
+                    10
+
+
+
+
+  E23(x, − 1, 1)
+                     5
+
+                     0
+
+                   −5
+
+                   −10
+
+                   −15
+
+                           6                    8                   10                       12                            14
+
+                                                                 log10(x)
+
+
+Figure 1. Observed normalized ordinary-count races (black) and explicit-
+formula truncations using K = 1, 3, 10, 25 positive zeros per nonprincipal char-
+acter. The panels show the class a = −1 (mod N ).
+6                              SHIN-YA KOYAMA AND SAAR SHAI
+
+proposed value to the corresponding real logarithm. For N = 8 and 12 several real characters
+contribute. Any displayed ordering in these cases is conditional on the two-parameter limit,
+the common normalization, and the independently recomputed BN (a) values. We therefore
+do not promote the previous small-modulus tables to theorems in this revision.
+
+                             4. Open analytic obligations
+   A theorem-level regularized result requires: (i) an unambiguous definition of the statistic
+on both the prime and spectral sides; (ii) a proved T (x) regime; (iii) a summed off-diagonal
+estimate uniform over the prime powers up to x; (iv) justified order interchanges; (v) sep-
+arate control of prime powers, conductor, gamma, and imprimitive factors; (vi) a specified
+logarithm branch with a reality proof; and (vii) strict inequalities if a universal ordering is
+claimed. The earlier Fejér-kernel “independent proof” is omitted because its claimed uniform
+prime-tail bound was not established.
+
+              5. Reproducibility, formalization, and declarations
+5.1. Data and code. The authoritative ordinary-count file has SHA-256 digest
+            57957bdb3ce3243272c3d4b8e9ffe7dfb734b759f48b63becf7ae6f924e1caab.
+The versioned computational package contains the zero generator, reconstruction code, com-
+plete tabular outputs, transition ledger, figure source, verifier, and SHA-256 manifests. The
+extended 3 × 1014 curve is one run; the 567 shared baseline cells through 1.3 × 1013 have an
+independent comparison. A permanent public archive identifier has not yet been assigned
+and must be added before submission.
+5.2. Lean scope. Lean 4 formalizes selected finite and algebraic components only. These
+are the corrected character-selector identity (including the inverse-class witness modulo 7)
+and four finite statements about the leading quadratic-nonresidue mean. The checked files
+contain no sorry or admit. Lean does not formalize Conjecture 1.2, the explicit-formula
+estimates, the numerical pipeline, DRH, or this manuscript as a whole.
+5.3. Author contributions. Shin-ya Koyama initiated the regularized prime-bias frame-
+work and developed its analytic formulation and intended number-theoretic applications.
+Saar Shai designed and performed the ordinary prime-count computations through 3 × 1014 ,
+checked the shared baseline, developed the low-zero spectral reconstruction and verification
+pipeline, analyzed rank transitions and individual modes, identified and independently cer-
+tified the very low active modulus-19 mode, formalized selected finite character-algebra and
+quadratic-nonresidue statements in Lean 4, and wrote the numerical and reproducibility sec-
+tions. Both authors are responsible for the interpretation, the final mathematical claims,
+and approval of the submitted version.
+5.4. Computational and AI assistance. Large-language-model tools assisted with man-
+uscript revision, portions of the computational workflow, code review, and proposals for
+selected Lean 4 proof code. The character-selector certificate returned through the Aristotle
+interface was downloaded and recompiled against the stated Lean 4 and Mathlib environ-
+ment. It does not certify the analytic results or the manuscript as a whole. Numerical
+claims were checked against versioned data, executable verifiers, and artifact manifests. The
+authors remain responsible for all mathematical statements, computations, code, interpre-
+tations, and final text.
+                             REGULARIZED PRIME-RACE STATISTICS                                       7
+
+                                           References
+[1] M. Aoki and S. Koyama, Chebyshev’s bias against splitting and principal primes in global fields, J.
+    Number Theory 245 (2023), 233–262.
+[2] A. Feuerverger and G. Martin, Biases in the prime number race, Experiment. Math. 9 (2000), no. 4,
+    535–570.
+[3] H. Iwaniec and E. Kowalski, Analytic Number Theory, American Mathematical Society Colloquium
+    Publications, vol. 53, American Mathematical Society, Providence, RI, 2004.
+[4] M. Rubinstein and P. Sarnak, Chebyshev’s bias, Exp. Math. 2 (1994), no. 3, 173–197.
+
+  Department of Mechanical Engineering, Toyo University, 2100 Kujirai, Kawagoe-shi, 350-
+8585 Japan
+  Email address: koyama@toyo.jp
+
+  Independent researcher
+  Email address: saar.shai@gmail.com
+8                                   SHIN-YA KOYAMA AND SAAR SHAI
+
+    Table 1. Reconciled ordinary prime-count differences from raw class counts.
+
+    N            x    a : DN (a)
+    7    1.3 × 1011
+                      3 : 3393, 5 : 3286, 6 : 13119
+         1.3 × 1013   3 : −10947, 5 : 47864, 6 : 26129
+           3 × 1014   3 : 311978, 5 : 310735, 6 : 324843
+    8    1.3 × 1011   3 : 9199, 5 : 16125, 7 : 8937
+         1.3 × 1013   3 : 102728, 5 : 126743, 7 : 164951
+           3 × 1014   3 : 635892, 5 : 732174, 7 : 505845
+    11   1.3 × 1011   2 : 2389, 6 : 4161, 7 : 2134, 8 : −2400, 10 : 2799
+         1.3 × 1013   2 : 5327, 6 : 30403, 7 : 7351, 8 : 74838, 10 : 11503
+           3 × 1014   2 : 122407, 6 : 265991, 7 : 334065, 8 : 70212, 10 : 137533
+    19   1.3 × 1011   2 : 4934, 3 : 8419, 8 : 137, 10 : 5156, 12 : 2974, 13 : 5167, 14 : 5172, 15 :
+                      −1918, 18 : 9401
+         1.3 × 1013   2 : 17964, 3 : 60702, 8 : 13926, 10 : 79470, 12 : 30889, 13 : 24559, 14 : 48327, 15 :
+                      −5154, 18 : 54192
+          3 × 1014    2 : 34332, 3 : 294945, 8 : 103206, 10 : 210171, 12 : −60071, 13 : 126960, 14 :
+                      −171431, 15 : −57410, 18 : −16802
+    23   1.3 × 1011   5 : −1905, 7 : 4520, 10 : −1682, 11 : 803, 14 : 1002, 15 : 3253, 17 : 3576, 19 :
+                      −4922, 20 : −556, 21 : 5791, 22 : −5114
+         1.3 × 1013   5 : 16922, 7 : 29658, 10 : 43160, 11 : −6940, 14 : −1663, 15 : −23007, 17 :
+                      −13718, 19 : 79327, 20 : 30864, 21 : 54784, 22 : 15725
+          3 × 1014    5 : 237020, 7 : 158368, 10 : 155559, 11 : 214431, 14 : 168616, 15 : 205644, 17 :
+                      46103, 19 : 130729, 20 : 77241, 21 : 285454, 22 : 294472
+
+         Table 2. Top-decade K = 25 reconstruction and observed instability.
+
+         N    correlation RMSE rank changes leader changes fraction −1 leads
+          7           0.965        0.515              17                   13                  0.358
+          8           0.931        0.626              23                   15                  0.358
+         11           0.939        0.919              30                   26                  0.377
+         19           0.971        1.745              17                    8                  0.415
+         23           0.826        1.728              39                   23                  0.132
+

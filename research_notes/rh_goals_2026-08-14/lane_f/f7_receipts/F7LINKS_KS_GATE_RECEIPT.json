@@ -16,7 +16,8 @@
  "detK_nonvanishing": {
   "abs_detK_lower_bound_ball": "[0.9368189833904026963033671209126567399736 +/- 2.62e-41]",
   "abs_detK_lower_bound_rounded_down": "0.936818983390",
-  "abs_detK_upper_bound_rounded_up": "1.000000000001",
+  "abs_detK_upper_bound_method": "prod_{n<24}(1+t_n)*exp(sum_{n>=24} t_n); context only, NOT load-bearing (the R5 identification consumes non-vanishing, i.e. the LOWER bound, only)",
+  "abs_detK_upper_bound_rounded_up": "1.063204693008",
   "first_factor_modulus_bound_t0_upper_rounded_up": "0.063004963347",
   "per_factor_min_modulus_lower_rounded_down": "0.936995036653",
   "sigma_lower_bound_on_box_rounded_down": "0.4751637",

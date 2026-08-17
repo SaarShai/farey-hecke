@@ -1,0 +1,131 @@
+{
+  "character": {
+    "chi_minus_one": "-1",
+    "chi_minus_one_exponent_mod_18": 9,
+    "conductor": 19,
+    "conrey_m": 13,
+    "modulus": 19,
+    "order": 18,
+    "parity": 1,
+    "primitive": true,
+    "principal": false,
+    "real_character": false
+  },
+  "curve_sha256": "57957bdb3ce3243272c3d4b8e9ffe7dfb734b759f48b63becf7ae6f924e1caab",
+  "method": {
+    "bisection_steps": 220,
+    "claim": "existence of at least one critical-line zero in bracket by sign change",
+    "independent_of_pari_for_root_search": true,
+    "library": "python-flint 0.9.0 / Arb ball arithmetic",
+    "not_claimed": [
+      "uniqueness in bracket",
+      "completeness below bracket",
+      "GRH"
+    ],
+    "precision_bits": 384
+  },
+  "mode_contribution": {
+    "correlation_with_observed_centered": "0.727600207814534860894972408247",
+    "endpoint_contribution": "6.62485017856398649139309882012",
+    "log_x_period": "331.454580618832927927296910437",
+    "maximum_absolute_amplitude": "7.99425666971368587537438323844",
+    "n_top_decade_points": 53,
+    "rms_top_decade": "6.71932703334982214826479580548",
+    "top_decade_phase_excursion_radians": "0.0436339043030932417144031228043"
+  },
+  "pari_comparison_after_independent_search": {
+    "absolute_difference": "1.922139970200425815339804622467206810227e-40",
+    "pari_gamma": "0.018956399080226142994164161422846756552"
+  },
+  "phase_table": [
+    {
+      "a": 1,
+      "exponent_mod_18": 0
+    },
+    {
+      "a": 2,
+      "exponent_mod_18": 5
+    },
+    {
+      "a": 3,
+      "exponent_mod_18": 11
+    },
+    {
+      "a": 4,
+      "exponent_mod_18": 10
+    },
+    {
+      "a": 5,
+      "exponent_mod_18": 8
+    },
+    {
+      "a": 6,
+      "exponent_mod_18": 16
+    },
+    {
+      "a": 7,
+      "exponent_mod_18": 12
+    },
+    {
+      "a": 8,
+      "exponent_mod_18": 15
+    },
+    {
+      "a": 9,
+      "exponent_mod_18": 4
+    },
+    {
+      "a": 10,
+      "exponent_mod_18": 13
+    },
+    {
+      "a": 11,
+      "exponent_mod_18": 6
+    },
+    {
+      "a": 12,
+      "exponent_mod_18": 3
+    },
+    {
+      "a": 13,
+      "exponent_mod_18": 7
+    },
+    {
+      "a": 14,
+      "exponent_mod_18": 17
+    },
+    {
+      "a": 15,
+      "exponent_mod_18": 1
+    },
+    {
+      "a": 16,
+      "exponent_mod_18": 2
+    },
+    {
+      "a": 17,
+      "exponent_mod_18": 14
+    },
+    {
+      "a": 18,
+      "exponent_mod_18": 9
+    }
+  ],
+  "root_bracket": {
+    "below_manuscript_1_74": true,
+    "left_decimal": "0.01895639908022614299416416142284675655219221399702004258153398046224672068102271928157962443842821018",
+    "left_denominator": "168499666669691498716668844293872691710232152640878578006897564057600000000000000000",
+    "left_hardy_z": "[2.649106962534442447655401933271e-84 +/- 4.82e-115]",
+    "left_numerator": "3194146926275751609292829650242866950453509414632705038466085453755671282619726257",
+    "left_sign": 1,
+    "midpoint_decimal": "0.01895639908022614299416416142284675655219221399702004258153398046224672068102271928454698935897814729",
+    "midpoint_l_abs_upper": "[3.540616796861935390428592865383403317380e-85 +/- 1.51e-125]",
+    "midpoint_l_value": "[-1.18733260704017743626160428205e-85 +/- 5.00e-115] + [3.33559718528482498302903536944e-85 +/- 4.94e-115]j",
+    "right_decimal": "0.0189563990802261429941641614228467565521922139970200425815339804622467206810227192875143542795280844",
+    "right_denominator": "84249833334845749358334422146936345855116076320439289003448782028800000000000000000",
+    "right_hardy_z": "[-3.357230321906829525741120506347e-84 +/- 6.46e-115]",
+    "right_numerator": "1597073463137875804646414825121433475226754707316352519233042726877835641309863129",
+    "right_sign": -1,
+    "width": "5.93472984109987421717077641848e-84"
+  }
+}
