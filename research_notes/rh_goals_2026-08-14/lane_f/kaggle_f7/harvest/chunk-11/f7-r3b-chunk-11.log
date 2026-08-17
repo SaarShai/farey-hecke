@@ -1,0 +1,29 @@
+[{"stream_name":"stdout","time":4.423442135,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 32.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.521378645,"data":"RUNNING: /usr/bin/python3 /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f7_certify_r3b_flagship.py --arcs 132:144 --workers 4 --receipt /kaggle/working/F7_R3B_CHUNK_11_RECEIPT.json --checkpoint /kaggle/working/F7_R3B_CHUNK_11_CHECKPOINT.json --report /kaggle/working/F7_R3B_CHUNK_11_CERT.md\n"}
+,{"stream_name":"stdout","time":10060.009376189,"data":"N=256 event=ACCEPTED_ARC eval=1 accepted=1 pending=11\n"}
+,{"stream_name":"stdout","time":10071.935460618,"data":"N=256 event=ACCEPTED_ARC eval=2 accepted=2 pending=10\n"}
+,{"stream_name":"stdout","time":10072.522488743,"data":"N=256 event=ACCEPTED_ARC eval=3 accepted=3 pending=9\n"}
+,{"stream_name":"stdout","time":10079.420719311,"data":"N=256 event=ACCEPTED_ARC eval=4 accepted=4 pending=8\n"}
+,{"stream_name":"stdout","time":19803.249155666,"data":"N=256 event=ACCEPTED_ARC eval=5 accepted=5 pending=7\n"}
+,{"stream_name":"stdout","time":19813.779949858,"data":"N=256 event=ACCEPTED_ARC eval=6 accepted=6 pending=6\n"}
+,{"stream_name":"stdout","time":19826.196111883,"data":"N=256 event=ACCEPTED_ARC eval=7 accepted=7 pending=5\n"}
+,{"stream_name":"stdout","time":19837.414820118,"data":"N=256 event=ACCEPTED_ARC eval=8 accepted=8 pending=4\n"}
+,{"stream_name":"stdout","time":29652.5608732,"data":"N=256 event=ACCEPTED_ARC eval=9 accepted=9 pending=3\n"}
+,{"stream_name":"stdout","time":29658.768883056,"data":"N=256 event=ACCEPTED_ARC eval=10 accepted=10 pending=2\n"}
+,{"stream_name":"stdout","time":29665.297262362,"data":"N=256 event=ACCEPTED_ARC eval=11 accepted=11 pending=1\n"}
+,{"stream_name":"stdout","time":29674.22918046,"data":"N=256 event=ACCEPTED_ARC eval=12 accepted=12 pending=0\n"}
+,{"stream_name":"stdout","time":33150.034013883,"data":"N=224 event=FAILURE eval=1 accepted=0 pending=191\n"}
+,{"stream_name":"stdout","time":33150.273526096,"data":"{\n"}
+,{"stream_name":"stdout","time":33150.273588663,"data":"  \"verdict\": \"THEOREM-GRADE closed-contour NO at N=256\",\n"}
+,{"stream_name":"stdout","time":33150.273604843,"data":"  \"receipt\": \"/kaggle/working/F7_R3B_CHUNK_11_RECEIPT.json\",\n"}
+,{"stream_name":"stdout","time":33150.273612025,"data":"  \"checkpoint\": \"/kaggle/working/F7_R3B_CHUNK_11_CHECKPOINT.json\",\n"}
+,{"stream_name":"stdout","time":33150.273618692,"data":"  \"report\": \"/kaggle/working/F7_R3B_CHUNK_11_CERT.md\"\n"}
+,{"stream_name":"stdout","time":33150.273624559,"data":"}\n"}
+,{"stream_name":"stdout","time":33150.387472067,"data":"EXIT CODE: 0   wall_seconds: 33142.86586403847\n"}
+,{"stream_name":"stderr","time":33153.401360144,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":33153.401400791,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":33153.818182842,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":33153.818215363,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":33154.839699364,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":33156.612245745,"data":"[NbConvertApp] Writing 565690 bytes to __results__.html\n"}
+]
