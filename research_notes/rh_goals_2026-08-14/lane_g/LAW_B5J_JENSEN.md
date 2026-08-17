@@ -41,10 +41,10 @@ next lane*, ranked #1 of 6); `LAW_SH_EFFECTIVIZATION_SKELETON.md` §3 (Route B).
 >
 > **(F3) The measured Jensen ratio is `≈ 35` where the measured deep count is `≈ 1.0`, and it grows.**
 > With the **true** sup (not an estimate of it) on the best disc, summed over both sign sectors:
-> `C_J = 35.0, 46.8, 56.6, 49.6, 71.2, 57.7` at `q = 5, 7, 9, 12, 15, 18`. These fit
-> **`C_J ≈ 3.364·κ + 29.8` (`R² = 0.933`)** — linear in the number of Markov components, hence
-> **linear in `q`** on each parity family — equivalently `≈ 20.5·log q + 5.6` (`R² = 0.660`).
-> The survival threshold on the `log q` slope is `0.1490` (§5.3): **off by a factor of 137, and
+> `C_J = 35.0, 46.8, 56.6, 49.6, 71.2, 57.7, 78.8` at `q = 5, 7, 9, 12, 15, 18, 21`. These fit
+> **`C_J ≈ 2.536·κ + 34.8` (`R² = 0.916`)** — growing in the number of Markov components, hence
+> **linearly in `q`** on each parity family — equivalently `≈ 24.7·log q − 3.1` (`R² = 0.755`).
+> The survival threshold on the `log q` slope is `0.1490` (§5.3): **off by a factor of 166, and
 > a linear-in-`q` `C` misses it by an unbounded margin.** The linear-in-`κ` shape is exactly what
 > §3's analysis predicts (`log M = Ω(κ/(1−θ))`), which is the internal consistency check.
 > Substituted into the parent's `Q₀` formula, `C = 35.0` gives `Q₀ = e^{235.6} ≈ 10^{102}` — and
@@ -314,6 +314,7 @@ an estimate of it — so `C_J` below is what Jensen gives **with a perfect sup b
 | 12 | **2.0** | 19.353 | — | — | — | **49.56** |
 | 15 | **2.0** | 28.686 | — | — | — | **71.17** |
 | 18 | **2.0** | 22.312 | — | — | — | **57.69** |
+| 21 | **2.0** | 32.136 | — | — | — | **78.83** |
 
 **`R` is optimised, not guessed.** Full sweep at `q = 5`, `+` sector (`b5j_growth.json`):
 
@@ -329,18 +330,23 @@ in `R` (`7.4 → 38.3` as `R: 1.1 → 4`, consistent with order `≈ 2`), reinfo
 > ### **Measured: `C_J ≈ 35` where the measured deep count is `C ≈ 1.0`, and where the measured
 > TOTAL count per width-2 interval is `≈ 1.8`. Jensen overcounts by a factor `≈ 20`, worsening.**
 > **The growth variable is `κ`, not `q` directly.** `κ = q − 2` for odd `q` but `κ = (q−2)/2` for
-> even `q`, so the two parity families interleave. Least-squares over all six points
-> `q = 5, 7, 9, 12, 15, 18` (`κ = 3, 5, 7, 5, 13, 8`):
+> even `q`, so the two parity families interleave. Least-squares over all seven points
+> `q = 5, 7, 9, 12, 15, 18, 21` (`κ = 3, 5, 7, 5, 13, 8, 19`):
 >
 > ```
->    C_J  ≈  3.364 · κ  +  29.81        (R² = 0.933)      <-- the clean fit
->    C_J  ≈  20.48 · log q  +  5.58     (R² = 0.660)      <-- the fit the threshold is stated in
+>    C_J  ≈  2.536 · κ  +  34.78        (R² = 0.916)      <-- the clean fit
+>    C_J  ≈  24.72 · log q  −  3.08     (R² = 0.755)      <-- the fit the threshold is stated in
 > ```
 >
-> `C_J` grows **linearly in the number of Markov components**, i.e. **linearly in `q`** on each
+> `C_J` grows **monotonically in the number of Markov components**, i.e. **linearly in `q`** on each
 > parity family — not logarithmically. Against the survival threshold `c₂ < 0.1490` (§5.3), which
-> is a bound on the `log q` slope, `20.48` fails by a factor of **137**; and a genuinely linear-in-`q`
+> is a bound on the `log q` slope, `24.72` fails by a factor of **166**; and a genuinely linear-in-`q`
 > `C` fails (THRESH) by an unbounded margin, since `q/log q → ∞`.
+>
+> *(The `κ` fit is slightly concave: the `q = 21`, `κ = 19` point came in at `78.83` against a
+> linear-fit prediction of `≈ 94`. Recorded because it was a pre-registered prediction that missed.
+> Sublinear-in-`κ` growth would still have to flatten to `o(log q)` to matter, and nothing in the
+> data suggests that.)*
 
 **Why Jensen loses so much, in one sentence.** `log|det|` on the disc is dominated by the
 archimedean growth of §4.2, not by the zeros inside; Jensen charges the whole of that growth to the
@@ -363,6 +369,7 @@ Parent §5.1: `log Q₀ = [C(2/δ₀ + π²/6) + (π²/3)δ₀a + A_Γ] / [2 −
 | 46.80 | `q = 7` | 314.6 | `10^{137}` |
 | 56.57 | `q = 9` | 380.2 | `10^{165}` |
 | 71.17 | `q = 15` | 478.7 | `10^{208}` |
+| 78.83 | `q = 21` | 530.1 | `10^{230}` |
 
 The parent's sensitivity warning (§5.3, `log Q₀` slope `6.71` per unit `C`) is exactly what is
 being paid: `+34` in `C` costs `+228` in `log Q₀`.
@@ -403,13 +410,13 @@ Measured against (THRESH):
 |---|---|---|
 | deep count (parent §3 M1, winding) | `≈ 0` (flat, max 5 at `q=12`) | **passes**, by a wide margin |
 | total count per width-2 (parent §3 M2) | `0.402` | **fails ×2.7** — so F2 |
-| **Jensen `C_J` (this note)** | **`36.6`** | **fails ×245** |
+| **Jensen `C_J` (this note)** | **`24.72`** | **fails ×166** |
 
 ### 5.4 The verdict on B5-J, assembled
 
 - Jensen with a disc bounds the total, not the deep, count (F2): slope `0.402 > 0.149`. Dead by
   a factor 2.7 **even with a perfect bound**.
-- The realised Jensen ratio is 20× worse still (F3): slope `36.6`. Dead by a factor 245.
+- The realised Jensen ratio is 20× worse still (F3): slope `24.72`. Dead by a factor 166.
 - And the sup bound needed to make any of it rigorous is U1 (F1), so nothing was bypassed.
 
 > **There is no version of `M` and `m` — including the exact, measured, optimal ones used here —
@@ -462,10 +469,10 @@ Measured against (THRESH):
 | J6 | consequence for any nuclear bound | `log M = Ω(κ/(1−θ)) = Ω(q³)` | `PROVED-here` given J5 |
 | **F1** | **`det(1−L_s)` not of order 0 in `s`** | growth `11.8/14.1/16.2` per unit `−Re s` at `q=5/7/9` | **`REFUTED-here`** (parent §6.3 item 1) |
 | J7 | lower bound `m` | `2.57/3.26/1.09` (`+` sector), `2.79/4.18/3.54` (`−`), at `0.25+7i` | `MEASURED`; **`GAP`** as a proof |
-| **F3** | **realised Jensen ratio** | `C_J = 35.03/46.80/56.57/49.56/71.17/57.69` at `q=5/7/9/12/15/18`, `R=2` optimal; `C_J ≈ 3.364κ + 29.8` (`R²=0.933`), `≈ 20.5 log q + 5.6` | `MEASURED` with the TRUE sup |
+| **F3** | **realised Jensen ratio** | `C_J = 35.03/46.80/56.57/49.56/71.17/57.69/78.83` at `q=5/7/9/12/15/18/21`, `R=2` optimal; `C_J ≈ 2.536κ + 34.8` (`R²=0.916`), `≈ 24.7 log q − 3.1` (`R²=0.755`) | `MEASURED` with the TRUE sup |
 | **THRESH** | **survival criterion** | route closes iff `c₂ < [2−(π²/3)δ₀b]/[2/δ₀+π²/6] = 0.14903` | **`PROVED-here`** |
 | **F2** | **disc-Jensen bounds total, not deep** | total slope `0.402 > 0.149` | `PROVED-here` (geometry) + `MEASURED` (parent §3 M2) |
-| J8 | `Q₀` with the Jensen `C` | `C=35.03 ⇒ log Q₀ = 235.6`, `Q₀ ≈ 10^{102}`; and `c₂ = 36.6 ⇒ bracket < 0 ⇒ no `Q₀`` | `PROVED-here` given the above |
+| J8 | `Q₀` with the Jensen `C` | `C=35.03 ⇒ log Q₀ = 235.6`, `Q₀ ≈ 10^{102}`; and `c₂ = 24.72 ⇒ bracket < 0 ⇒ no `Q₀`` | `PROVED-here` given the above |
 
 ---
 
@@ -481,9 +488,9 @@ operator bound is available. (v) B5 should be restated as (THRESH): `C ≤ c₂ 
 `c₂ < 0.14903` suffices — a materially weaker obligation than `C = O(1)`.
 
 **Does not claim.** Any `q`-uniform `M` or `m` (neither is proved; §4.1 is `GAP`). That `C_J` is
-exactly `3.364κ + 29.8` — six points across two parity families, `N = 16`, float midpoints,
+exactly `2.536κ + 34.8` — seven points across two parity families, `N = 16`, float midpoints,
 one height window `t₀ = 7`; the *shape* of the growth is measured, not derived, and only the
-linear-in-`κ` reading is well fitted (`R² = 0.933` vs `0.660` for `log q`). What is claimed is only
+linear-in-`κ` reading is well fitted (`R² = 0.916` vs `0.755` for `log q`), and it is mildly concave. What is claimed is only
 that `C_J` grows steeply and passes the `0.149` threshold by two orders of magnitude. That `1 − sup|h'| = π²/q²` is proved — it is measured to
 3–4 s.f. and conjectured in closed form. That a Littlewood/Levinson rectangle argument would work
 (§6 item 1 is a suggestion with its own named cost, not a plan). That anything here bears on the
@@ -499,9 +506,6 @@ assumption.
 `b5j_growth.py` → `b5j_growth.json` + `.log`. Interpreter
 `/Users/za/.venvs/farey-rh/bin/python` (python-flint 0.9.0 / Arb, 300-bit), evaluators
 `.worktrees/aletheia-restore/code/zeta_cert_rosen{,_even}.py`, `N = 16`, `n_head = 4`, `t₀ = 7`.
-The `q = 21` row of `b5j_jensen` (≈ 8 s per determinant, `κ = 19`) had not returned when this note
-was written; the six rows tabulated in §4.3 are the complete evidence base, and `q = 21` will land
-in `b5j_jensen.json` as a seventh. It cannot change the verdict — the fit already spans `κ = 3…13`
-with `R² = 0.933`, and `q = 21` (`κ = 19`) is predicted at `C_J ≈ 94`.
-All determinant figures are ball **midpoints** with **no certified dimension tail** —
+All seven `q` rows of `b5j_jensen` (`q = 5, 7, 9, 12, 15, 18, 21`, `κ = 3…19`) completed and are
+tabulated in §4.3. All determinant figures are ball **midpoints** with **no certified dimension tail** —
 `NON-RIGOROUS PROBE`. No git was run; no existing file was modified.
