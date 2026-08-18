@@ -1,0 +1,48 @@
+=== GATE 1: phi_q branch-corrected vs exact closed form, q=3,4,6 ===
+  q=3 sig=1.1 t=0.5: reldiff=5.051e-16  (9.1s)
+  q=3 sig=1.1 t=1.5: reldiff=9.507e-17  (9.0s)
+  q=3 sig=1.1 t=3.5: reldiff=1.141e-16  (9.1s)
+  q=3 sig=1.1 t=7.0665: reldiff=0.000e+00  (17.4s)
+  q=3 sig=1.1 t=14.0: reldiff=2.038e-15  (17.7s)
+  q=3 sig=1.25 t=0.5: reldiff=3.563e-16  (5.3s)
+  q=3 sig=1.25 t=1.5: reldiff=1.314e-16  (9.1s)
+  q=3 sig=1.25 t=3.5: reldiff=1.625e-16  (9.1s)
+  q=3 sig=1.25 t=7.0665: reldiff=3.821e-16  (9.3s)
+  q=3 sig=1.25 t=14.0: reldiff=1.689e-15  (17.3s)
+  q=4 sig=1.1 t=0.5: reldiff=2.031e-10  (8.9s)
+  q=4 sig=1.1 t=1.5: reldiff=4.253e-10  (8.8s)
+  q=4 sig=1.1 t=3.5: reldiff=9.606e-10  (8.6s)
+  q=4 sig=1.1 t=7.0665: reldiff=9.015e-10  (16.7s)
+  q=4 sig=1.1 t=14.0: reldiff=1.083e-07  (16.7s)
+  q=4 sig=1.25 t=0.5: reldiff=2.341e-10  (5.0s)
+  q=4 sig=1.25 t=1.5: reldiff=4.412e-10  (8.6s)
+  q=4 sig=1.25 t=3.5: reldiff=9.720e-10  (8.6s)
+  q=4 sig=1.25 t=7.0665: reldiff=1.106e-09  (9.1s)
+  q=4 sig=1.25 t=14.0: reldiff=1.154e-07  (17.0s)
+  q=6 sig=1.1 t=0.5: reldiff=5.744e-17  (11.6s)
+  q=6 sig=1.1 t=1.5: reldiff=1.409e-16  (11.7s)
+  q=6 sig=1.1 t=3.5: reldiff=5.754e-17  (11.7s)
+  q=6 sig=1.1 t=7.0665: reldiff=3.323e-15  (19.6s)
+  q=6 sig=1.1 t=14.0: reldiff=1.492e-13  (20.0s)
+  q=6 sig=1.25 t=0.5: reldiff=2.393e-16  (8.0s)
+  q=6 sig=1.25 t=1.5: reldiff=2.174e-16  (11.6s)
+  q=6 sig=1.25 t=3.5: reldiff=2.602e-16  (11.6s)
+  q=6 sig=1.25 t=7.0665: reldiff=3.460e-16  (12.0s)
+  q=6 sig=1.25 t=14.0: reldiff=3.551e-13  (19.8s)
+GATE1 worst reldiff = 1.154e-07  PASS
+
+=== GATE 2: |phi_infty(1/2+it)| -- is it 1? (naive task expectation) ===
+  t=1.0: phi_infty(1/2+it)=(-0.47038993609535756-0.11461011504937636j)  |phi_infty|=0.484151
+  t=3.0: phi_infty(1/2+it)=(-0.09365572499833964+0.3633459835278733j)  |phi_infty|=0.375222
+  t=5.0: phi_infty(1/2+it)=(-0.24222472903121445-0.7023883006669714j)  |phi_infty|=0.742982
+  t=7.0665: phi_infty(1/2+it)=(0.19363546893761416-0.27765066205853023j)  |phi_infty|=0.338503
+  t=10.0: phi_infty(1/2+it)=(-0.4831393420185651+0.14794143776236357j)  |phi_infty|=0.505282
+  t=20.0: phi_infty(1/2+it)=(-0.12125627552049155+0.32273170383664684j)  |phi_infty|=0.344759
+
+=== GATE 3: pole of phi_infty at s=rho_1/2 ===
+  r=0.01: |phi_infty(s_inf+r)|=2.104758e+01
+  r=0.001: |phi_infty(s_inf+r)|=2.161497e+02
+  r=0.0001: |phi_infty(s_inf+r)|=2.167210e+03
+  r=1e-05: |phi_infty(s_inf+r)|=2.167782e+04
+
+GATE 1 PASSED.

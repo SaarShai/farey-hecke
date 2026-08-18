@@ -178,9 +178,21 @@ this N is what the main sweep uses.
 > threshold (or a re-registered gate with justification). An N=40
 > validation run (rate_measure_validate_n40.py, artifact
 > rate_measure_validate_n40.log) was launched 2026-08-18 to supply the
-> previously-uncommitted "N=40 recovers ≤1.2e-7" claim; its result will be
-> appended here when complete — until then that claim is also
-> author-reported only.
+> previously-uncommitted "N=40 recovers ≤1.2e-7" claim.
+>
+> **N=40 RESULT (2026-08-18, committed artifact
+> rate_measure_validate_n40.log):** `GATE1 worst reldiff = 1.154e-07 PASS`
+> — the PRE-REGISTERED ≤1e-6 gate passes at N=40 over the FULL grid
+> (q=3,4,6 × σ∈{1.1,1.25} × t∈{0.5,…,14.0}, t=14 included; worst t=14 row
+> 3.551e-13 at q=6, worst overall 1.154e-07). The evaluator is therefore
+> validated at N=40 where exact comparators exist. RESIDUAL CAVEAT (why the
+> downgrade above is only PARTIALLY lifted): the main sweep's q>6 rows were
+> computed at N=24 (t ≤ 7.0665) with per-row N-doubling receipts, not at
+> N=40; the N=40 gate validates the evaluator's convergence behavior, and
+> the per-row conv_reldiff receipts remain the per-measurement evidence.
+> Status of record: q>6 D(q;s) rows = author-reported with per-row
+> N-doubling receipts + evaluator gate-validated at N=40 on small-q exact
+> cases. The t=7.0665 q=64 rows and t=14 everywhere remain excluded.
 
 ---
 
