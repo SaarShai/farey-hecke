@@ -1,0 +1,96 @@
+[{"stream_name":"stdout","time":5.250634827,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 66.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.299929786,"data":"RUNNING: /usr/bin/python3 /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py --q 9 --N 32 --receipt /kaggle/working/F9_R3B_CHUNK_00_N32_RECEIPT.json --report /kaggle/working/F9_R3B_CHUNK_00_N32_CERT.md\n"}
+,{"stream_name":"stdout","time":316.06533853,"data":"{\n"}
+,{"stream_name":"stdout","time":316.065376295,"data":"  \"smoke_test\": false,\n"}
+,{"stream_name":"stdout","time":316.065384741,"data":"  \"q\": 9,\n"}
+,{"stream_name":"stdout","time":316.065390783,"data":"  \"N\": 32,\n"}
+,{"stream_name":"stdout","time":316.06539635,"data":"  \"sign\": 1,\n"}
+,{"stream_name":"stdout","time":316.06540031,"data":"  \"winding_ball\": [\n"}
+,{"stream_name":"stdout","time":316.065404333,"data":"    0.9999999999999665,\n"}
+,{"stream_name":"stdout","time":316.065408095,"data":"    1.0000000000000335\n"}
+,{"stream_name":"stdout","time":316.065411698,"data":"  ],\n"}
+,{"stream_name":"stdout","time":316.065415312,"data":"  \"winding_mid\": 1.0,\n"}
+,{"stream_name":"stdout","time":316.065419143,"data":"  \"certified_integer\": 1,\n"}
+,{"stream_name":"stdout","time":316.065422855,"data":"  \"integer_isolated\": true,\n"}
+,{"stream_name":"stdout","time":316.065426757,"data":"  \"closed_contour_status\": \"CLOSED_CONTOUR_CERTIFIED\",\n"}
+,{"stream_name":"stdout","time":316.065430795,"data":"  \"complete_closed_cover\": true,\n"}
+,{"stream_name":"stdout","time":316.065434515,"data":"  \"chunk_gate_pass\": true,\n"}
+,{"stream_name":"stdout","time":316.065438125,"data":"  \"det_calls\": 16,\n"}
+,{"stream_name":"stdout","time":316.065443384,"data":"  \"min_det_abs_lower_on_contour\": 3.3786140676871098e-06,\n"}
+,{"stream_name":"stdout","time":316.065449374,"data":"  \"max_dim_tail_upper\": 3.754947331675394e-21,\n"}
+,{"stream_name":"stdout","time":316.065453257,"data":"  \"max_dim_tail_at\": [\n"}
+,{"stream_name":"stdout","time":316.065456905,"data":"    0.37424980913253375,\n"}
+,{"stream_name":"stdout","time":316.065460521,"data":"    4.080140082773367\n"}
+,{"stream_name":"stdout","time":316.065464095,"data":"  ],\n"}
+,{"stream_name":"stdout","time":316.065467571,"data":"  \"N_escalated_points\": [],\n"}
+,{"stream_name":"stdout","time":316.065471301,"data":"  \"tail_safety\": 4,\n"}
+,{"stream_name":"stdout","time":316.065474932,"data":"  \"pin_name\": \"g9_pin_1\",\n"}
+,{"stream_name":"stdout","time":316.065478771,"data":"  \"pin_source\": \"f9f12_pin_finder.py -\u003e f9_receipts/F9_PIN_SCAN.json (pins[0])\",\n"}
+,{"stream_name":"stdout","time":316.06548353,"data":"  \"s_box\": {\n"}
+,{"stream_name":"stdout","time":316.065509638,"data":"    \"re\": \"0.3742488091325338\",\n"}
+,{"stream_name":"stdout","time":316.065518005,"data":"    \"im\": \"4.080139082773367\",\n"}
+,{"stream_name":"stdout","time":316.065524015,"data":"    \"half_width\": \"1e-6\"\n"}
+,{"stream_name":"stdout","time":316.06552947,"data":"  },\n"}
+,{"stream_name":"stdout","time":316.065535014,"data":"  \"engine\": {\n"}
+,{"stream_name":"stdout","time":316.06554079,"data":"    \"path\": \"/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen.py\",\n"}
+,{"stream_name":"stdout","time":316.065547148,"data":"    \"sha256\": \"965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac\",\n"}
+,{"stream_name":"stdout","time":316.065553362,"data":"    \"module\": \"zeta_cert_rosen\",\n"}
+,{"stream_name":"stdout","time":316.065559253,"data":"    \"parity\": \"odd\"\n"}
+,{"stream_name":"stdout","time":316.065577212,"data":"  },\n"}
+,{"stream_name":"stdout","time":316.065580577,"data":"  \"arcs_total\": 16,\n"}
+,{"stream_name":"stdout","time":316.065583657,"data":"  \"arcs_per_edge\": 4,\n"}
+,{"stream_name":"stdout","time":316.065586635,"data":"  \"N_head\": 4,\n"}
+,{"stream_name":"stdout","time":316.065589597,"data":"  \"prec_bits\": 300\n"}
+,{"stream_name":"stdout","time":316.065592585,"data":"}\n"}
+,{"stream_name":"stdout","time":316.086841492,"data":"EXIT CODE: 0   wall_seconds: 307.7870898246765\n"}
+,{"stream_name":"stdout","time":316.086872134,"data":"RUNNING: /usr/bin/python3 /Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py --q 9 --N 28 --receipt /kaggle/working/F9_R3B_CHUNK_00_N28_RECEIPT.json --report /kaggle/working/F9_R3B_CHUNK_00_N28_CERT.md\n"}
+,{"stream_name":"stdout","time":531.765602042,"data":"{\n"}
+,{"stream_name":"stdout","time":531.765643999,"data":"  \"smoke_test\": false,\n"}
+,{"stream_name":"stdout","time":531.765650164,"data":"  \"q\": 9,\n"}
+,{"stream_name":"stdout","time":531.76565431,"data":"  \"N\": 28,\n"}
+,{"stream_name":"stdout","time":531.765658538,"data":"  \"sign\": 1,\n"}
+,{"stream_name":"stdout","time":531.765662366,"data":"  \"winding_ball\": [\n"}
+,{"stream_name":"stdout","time":531.765666175,"data":"    0.9999999999730801,\n"}
+,{"stream_name":"stdout","time":531.765669839,"data":"    1.0000000000269198\n"}
+,{"stream_name":"stdout","time":531.765673398,"data":"  ],\n"}
+,{"stream_name":"stdout","time":531.765677062,"data":"  \"winding_mid\": 1.0,\n"}
+,{"stream_name":"stdout","time":531.765680831,"data":"  \"certified_integer\": 1,\n"}
+,{"stream_name":"stdout","time":531.765684519,"data":"  \"integer_isolated\": true,\n"}
+,{"stream_name":"stdout","time":531.765688309,"data":"  \"closed_contour_status\": \"CLOSED_CONTOUR_CERTIFIED\",\n"}
+,{"stream_name":"stdout","time":531.765692435,"data":"  \"complete_closed_cover\": true,\n"}
+,{"stream_name":"stdout","time":531.765696267,"data":"  \"chunk_gate_pass\": true,\n"}
+,{"stream_name":"stdout","time":531.765699911,"data":"  \"det_calls\": 16,\n"}
+,{"stream_name":"stdout","time":531.765703522,"data":"  \"min_det_abs_lower_on_contour\": 3.3786140676735547e-06,\n"}
+,{"stream_name":"stdout","time":531.76570741,"data":"  \"max_dim_tail_upper\": 3.0176558383945667e-18,\n"}
+,{"stream_name":"stdout","time":531.765711279,"data":"  \"max_dim_tail_at\": [\n"}
+,{"stream_name":"stdout","time":531.765714847,"data":"    0.37424980913253375,\n"}
+,{"stream_name":"stdout","time":531.765718527,"data":"    4.080138082773367\n"}
+,{"stream_name":"stdout","time":531.765722076,"data":"  ],\n"}
+,{"stream_name":"stdout","time":531.765725607,"data":"  \"N_escalated_points\": [],\n"}
+,{"stream_name":"stdout","time":531.765729298,"data":"  \"tail_safety\": 4,\n"}
+,{"stream_name":"stdout","time":531.765732909,"data":"  \"pin_name\": \"g9_pin_1\",\n"}
+,{"stream_name":"stdout","time":531.765736744,"data":"  \"pin_source\": \"f9f12_pin_finder.py -\u003e f9_receipts/F9_PIN_SCAN.json (pins[0])\",\n"}
+,{"stream_name":"stdout","time":531.765741165,"data":"  \"s_box\": {\n"}
+,{"stream_name":"stdout","time":531.765744821,"data":"    \"re\": \"0.3742488091325338\",\n"}
+,{"stream_name":"stdout","time":531.765748662,"data":"    \"im\": \"4.080139082773367\",\n"}
+,{"stream_name":"stdout","time":531.765752345,"data":"    \"half_width\": \"1e-6\"\n"}
+,{"stream_name":"stdout","time":531.765756078,"data":"  },\n"}
+,{"stream_name":"stdout","time":531.765759569,"data":"  \"engine\": {\n"}
+,{"stream_name":"stdout","time":531.765774044,"data":"    \"path\": \"/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/zeta_cert_rosen.py\",\n"}
+,{"stream_name":"stdout","time":531.765777849,"data":"    \"sha256\": \"965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac\",\n"}
+,{"stream_name":"stdout","time":531.765781186,"data":"    \"module\": \"zeta_cert_rosen\",\n"}
+,{"stream_name":"stdout","time":531.765784158,"data":"    \"parity\": \"odd\"\n"}
+,{"stream_name":"stdout","time":531.765787234,"data":"  },\n"}
+,{"stream_name":"stdout","time":531.765790032,"data":"  \"arcs_total\": 16,\n"}
+,{"stream_name":"stdout","time":531.76579306,"data":"  \"arcs_per_edge\": 4,\n"}
+,{"stream_name":"stdout","time":531.76579615,"data":"  \"N_head\": 4,\n"}
+,{"stream_name":"stdout","time":531.765799132,"data":"  \"prec_bits\": 300\n"}
+,{"stream_name":"stdout","time":531.765802478,"data":"}\n"}
+,{"stream_name":"stdout","time":531.787881623,"data":"EXIT CODE: 0   wall_seconds: 215.7009472846985\n"}
+,{"stream_name":"stderr","time":534.700034117,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":534.700088167,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":535.110978327,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":535.111005051,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":536.188966332,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":537.867747926,"data":"[NbConvertApp] Writing 328360 bytes to __results__.html\n"}
+]

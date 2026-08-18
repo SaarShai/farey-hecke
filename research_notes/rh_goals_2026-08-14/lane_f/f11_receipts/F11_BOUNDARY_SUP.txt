@@ -1,0 +1,139 @@
+# F11 boundary-sup / N-freeze sweep (R2-equivalent), captured 2026-08-18T07:18:41Z
+# runner: f9f12_certify_r3b_flagship.py --q 11 --N <N> --boundary-sup-check
+# verbatim stdout+stderr, including low-N FAILURES (det ball contains 0 at box centre).
+# gate: criterion_a_pass = worst_margin_ratio < 1.0
+
+=================== q=11 N=24 ===================
+Traceback (most recent call last):
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 345, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 314, in main
+    print(json.dumps(boundary_sup_check(q, args.N), indent=2, default=str))
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 191, in boundary_sup_check
+    ev.det_ball(*pt)
+    ~~~~~~~~~~~^^^^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 138, in det_ball
+    raise RuntimeError(
+        f"det ball contains 0 at ({re},{im}); TAIL_SAFETY*tail={float(r):.3e}"
+    )
+RuntimeError: det ball contains 0 at (0.3055125027342933,3.6592963976938098); TAIL_SAFETY*tail=7.747e-15
+[exit code: 1]
+
+=================== q=11 N=28 ===================
+{
+  "q": 11,
+  "N": 28,
+  "kappa": 9,
+  "points_checked": [
+    [
+      0.30551150273429334,
+      3.6592953976938096
+    ],
+    [
+      0.3055135027342933,
+      3.6592953976938096
+    ],
+    [
+      0.3055135027342933,
+      3.65929739769381
+    ],
+    [
+      0.30551150273429334,
+      3.65929739769381
+    ],
+    [
+      0.3055125027342933,
+      3.6592963976938098
+    ]
+  ],
+  "worst_margin_ratio_TAIL_SAFETY_times_tail_over_abs_det": 0.02036787933202949,
+  "worst_point": [
+    0.3055125027342933,
+    3.6592963976938098
+  ],
+  "criterion_a_pass": true,
+  "min_abs_det_lower_on_points": 4.670351533713303e-16,
+  "max_tail_upper": 2.4446013877066267e-18,
+  "N_escalated_points": []
+}
+[exit code: 0]
+
+=================== q=11 N=32 ===================
+{
+  "q": 11,
+  "N": 32,
+  "kappa": 9,
+  "points_checked": [
+    [
+      0.30551150273429334,
+      3.6592953976938096
+    ],
+    [
+      0.3055135027342933,
+      3.6592953976938096
+    ],
+    [
+      0.3055135027342933,
+      3.65929739769381
+    ],
+    [
+      0.30551150273429334,
+      3.65929739769381
+    ],
+    [
+      0.3055125027342933,
+      3.6592963976938098
+    ]
+  ],
+  "worst_margin_ratio_TAIL_SAFETY_times_tail_over_abs_det": 2.5905460401545156e-05,
+  "worst_point": [
+    0.3055125027342933,
+    3.6592963976938098
+  ],
+  "criterion_a_pass": true,
+  "min_abs_det_lower_on_points": 4.819199406801271e-16,
+  "max_tail_upper": 3.121714825050494e-21,
+  "N_escalated_points": []
+}
+[exit code: 0]
+
+=================== q=11 N=36 ===================
+{
+  "q": 11,
+  "N": 36,
+  "kappa": 9,
+  "points_checked": [
+    [
+      0.30551150273429334,
+      3.6592953976938096
+    ],
+    [
+      0.3055135027342933,
+      3.6592953976938096
+    ],
+    [
+      0.3055135027342933,
+      3.65929739769381
+    ],
+    [
+      0.30551150273429334,
+      3.65929739769381
+    ],
+    [
+      0.3055125027342933,
+      3.6592963976938098
+    ]
+  ],
+  "worst_margin_ratio_TAIL_SAFETY_times_tail_over_abs_det": 3.338869118247692e-08,
+  "worst_point": [
+    0.3055125027342933,
+    3.6592963976938098
+  ],
+  "criterion_a_pass": true,
+  "min_abs_det_lower_on_points": 4.819396570187148e-16,
+  "max_tail_upper": 4.026304887844992e-24,
+  "N_escalated_points": []
+}
+[exit code: 0]

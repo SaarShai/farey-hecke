@@ -1,0 +1,118 @@
+# F10 boundary-sup / N-freeze sweep (R2-equivalent), captured 2026-08-18T07:18:41Z
+# runner: f9f12_certify_r3b_flagship.py --q 10 --N <N> --boundary-sup-check
+# verbatim stdout+stderr, including low-N FAILURES (det ball contains 0 at box centre).
+# gate: criterion_a_pass = worst_margin_ratio < 1.0
+
+=================== q=10 N=24 ===================
+Traceback (most recent call last):
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 345, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 314, in main
+    print(json.dumps(boundary_sup_check(q, args.N), indent=2, default=str))
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 191, in boundary_sup_check
+    ev.det_ball(*pt)
+    ~~~~~~~~~~~^^^^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 138, in det_ball
+    raise RuntimeError(
+        f"det ball contains 0 at ({re},{im}); TAIL_SAFETY*tail={float(r):.3e}"
+    )
+RuntimeError: det ball contains 0 at (0.333692861999034,3.853631836813213); TAIL_SAFETY*tail=5.851e-13
+[exit code: 1]
+
+=================== q=10 N=28 ===================
+Traceback (most recent call last):
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 345, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 314, in main
+    print(json.dumps(boundary_sup_check(q, args.N), indent=2, default=str))
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 191, in boundary_sup_check
+    ev.det_ball(*pt)
+    ~~~~~~~~~~~^^^^^
+  File "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/f9f12_certify_r3b_flagship.py", line 138, in det_ball
+    raise RuntimeError(
+        f"det ball contains 0 at ({re},{im}); TAIL_SAFETY*tail={float(r):.3e}"
+    )
+RuntimeError: det ball contains 0 at (0.333692861999034,3.853631836813213); TAIL_SAFETY*tail=2.824e-15
+[exit code: 1]
+
+=================== q=10 N=32 ===================
+{
+  "q": 10,
+  "N": 32,
+  "kappa": 4,
+  "points_checked": [
+    [
+      0.333691861999034,
+      3.853630836813213
+    ],
+    [
+      0.33369386199903395,
+      3.853630836813213
+    ],
+    [
+      0.33369386199903395,
+      3.853632836813213
+    ],
+    [
+      0.333691861999034,
+      3.853632836813213
+    ],
+    [
+      0.333692861999034,
+      3.853631836813213
+    ]
+  ],
+  "worst_margin_ratio_TAIL_SAFETY_times_tail_over_abs_det": 0.012510075798798264,
+  "worst_point": [
+    0.333692861999034,
+    3.853631836813213
+  ],
+  "criterion_a_pass": true,
+  "min_abs_det_lower_on_points": 4.4342703744787363e-16,
+  "max_tail_upper": 1.1369444072329022e-14,
+  "N_escalated_points": []
+}
+[exit code: 0]
+
+=================== q=10 N=36 ===================
+{
+  "q": 10,
+  "N": 36,
+  "kappa": 4,
+  "points_checked": [
+    [
+      0.333691861999034,
+      3.853630836813213
+    ],
+    [
+      0.33369386199903395,
+      3.853630836813213
+    ],
+    [
+      0.33369386199903395,
+      3.853632836813213
+    ],
+    [
+      0.333691861999034,
+      3.853632836813213
+    ],
+    [
+      0.333692861999034,
+      3.853631836813213
+    ]
+  ],
+  "worst_margin_ratio_TAIL_SAFETY_times_tail_over_abs_det": 0.00037504823924091343,
+  "worst_point": [
+    0.333692861999034,
+    3.853631836813213
+  ],
+  "criterion_a_pass": true,
+  "min_abs_det_lower_on_points": 4.497391169000891e-16,
+  "max_tail_upper": 8.112681309521898e-16,
+  "N_escalated_points": []
+}
+[exit code: 0]
