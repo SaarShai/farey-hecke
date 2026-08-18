@@ -14,7 +14,7 @@
 > A_Γ = O(1), |A_Γ| ≤ 1.64 for r ≥ 2 — the probe's 𝒜_q was the FE kernel,
 > not A_Γ); B3 (averaged log q counts, constants from unpublished Hejhal)
 > RESTORED to critical path as the only genuine log q growth in GJ. Hejhal
-> p.160 / HJL primary text now decides the only open question (HITL). LAW_AGAMMA_PROBE.md: α = 2.000 (closed-form, q to
+> Hejhal LNM 1001 Vol.2 Ch.11 notes 7-8-77-86 / HJL primary text now decides the only open question (HITL). LAW_AGAMMA_PROBE.md: α = 2.000 (closed-form, q to
 > 4000, not determinant-dependent) — the ENTIRE 2 log q positivity budget is
 > supplied by the order-q elliptic point's own Γ-factor (91%), not resonance
 > mass; the resonance part 𝒢_q has NO positive log q content (slope −1.8…−0.4,
@@ -621,7 +621,7 @@ practical argument for B5-J over any route requiring U1.
 
 | # | Step | Statement | Status |
 |---|---|---|---|
-| B4.1 | HJL Lemma 5.3 | `−(φ'/φ)(½+ir) − Σ_k (1−s_k)/((s_k−½)²+r²) ≥ 2 log q_M > 0` | **`PROVED-cited`** (HJL 97 L.5.3 / He 83 p.160, via G–J §5); **`TODO-VERIFY` N-B4** (transcription channel) |
+| B4.1 | HJL Lemma 5.3 | `−(φ'/φ)(½+ir) − Σ_k (1−s_k)/((s_k−½)²+r²) ≥ 2 log q_M > 0` | **`PROVED-cited`** (HJL 97 L.5.3 / Hejhal LNM 1001 Vol.2 Ch.11 notes 7-8-77-86, via G–J §5); **`TODO-VERIFY` N-B4** (transcription channel) |
 | B4.2 | `q_M = q` for `G_q` | degenerating elliptic order `= q`; orders 2, 3 fixed | **`PROVED-here`** from G–J Ex. 5.8 |
 | B4.3 | Poisson identity (1.4) | pole at depth `d` ⇒ `+2d/(d²+(r−γ)²)`; exceptional `s_k∈(½,1]` ⇒ negative | **`PROVED-here`** |
 | B4.4 | `A_Γ` bounded, `q`-independent | `\|A_Γ(t₀)\| ≤ 0.25` for `t₀ ≥ 2` | **`GAP`** — obligation N-B4b |

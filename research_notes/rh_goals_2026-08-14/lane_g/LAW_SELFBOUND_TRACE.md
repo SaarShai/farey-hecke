@@ -102,7 +102,7 @@ Garbin–Jorgenson, arXiv:1603.01494 §5 (proof of Thm 5.4), quoting Huntley–J
    −φ'/φ(1/2+ir) − Σ (1−s_{k,q}) / ((s_{k,q}−1/2)² + r²)  ≥  2 log q_{M_q}  >  0
 ```
 
-attributed as "*Quoting Lemma 5.3 of [HJL 97]*" which "*comes from pp. 160 of [He 83]*". This is a
+attributed as "*Quoting Lemma 5.3 of [HJL 97]*" which "*comes from Chapter 11 notes 7-8-77-86 of Hejhal LNM 1001 Vol.2*". This is a
 **second independent read of the same secondary channel** (ar5iv), so obligation **N-B4** —
 verification against the journal PDF or the arXiv source — is **not** discharged, but the
 transcription in the parent (`1 − s_k` in the numerator, not `2(s_k − ½)`) is **confirmed as what

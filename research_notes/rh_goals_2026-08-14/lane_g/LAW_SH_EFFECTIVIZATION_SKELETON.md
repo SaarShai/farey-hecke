@@ -53,7 +53,7 @@ has written them. `UNKNOWN` = the source gives no constant and the proof is not 
 | S1 | Garbin–Jorgenson, *Spectral asymptotics on sequences of elliptically degenerating Riemann surfaces*, arXiv:1603.01494 = **L'Enseign. Math. 64 (2018) 161–206** | **open, full text read** | **The verbatim statement of Hejhal Thm 7.11 / Cor 7.12** (intro, = p.162 of the journal version); the identification of the limit object (`φ_N`, the 1×1 scattering determinant of the cusp at ∞); Thm 5.7 = the **quantitative accumulation rate** `N_{M_q,0}(T) = c₀(T)·log Q + O((log Q)^{3/4})`; Prop 5.2 giving `G_{M_q,0}(T) = (2C√(T−¼)/π)·log Q + O(1)`, `0 < C < 1` **unspecified**; Example 5.8 applying it to `G_N`. **Does not reproduce Hejhal's proof of 7.11.** |
 | S2 | Garbin–Jorgenson, *Heat kernel asymptotics on sequences of elliptically degenerating Riemann surfaces*, arXiv:1603.01495 (Kodai Math. J. 43 (2020) 84–128) | open, not read in full | Companion paper; supplies the regularized heat-trace bounds that S1's Thm 5.1 consumes. This is where any effectivization of S1's `O(f(q))` would have to start. |
 | S3 | Hejhal, *Regular b-groups, degenerating Riemann surfaces, and spectral theory*, Memoirs AMS 88 (1990) no. 437 | not accessed (paywalled) | Per S1, the degeneration machinery for Eisenstein series / scattering determinants. **Most likely home of a reusable convergence proof** — and it is *not* the blocked Vol. 2. Worth an access attempt. |
-| S4 | Jorgenson–Lundelius / Huntley–Jorgenson–Lundelius (HJL 97) | open | S1 quotes their Lemma 5.3 (itself from He 83 p.160): the **positivity/lower bound** `−(φ′/φ)(½+ir) − Σ_k (1−s_k)/((s_k−½)²+r²) ≥ 2 log q_M > 0`. This is the load-bearing inequality of route B and it *is* explicit. |
+| S4 | Jorgenson–Lundelius / Huntley–Jorgenson–Lundelius (HJL 97) | open | S1 quotes their Lemma 5.3 (itself from Hejhal LNM 1001 Vol.2 Ch.11 notes 7-8-77-86): the **positivity/lower bound** `−(φ′/φ)(½+ir) − Σ_k (1−s_k)/((s_k−½)²+r²) ≥ 2 log q_M > 0`. This is the load-bearing inequality of route B and it *is* explicit. |
 | S5 | Fedosova, *Spectral and dynamical invariants of Hecke triangle groups via transfer operators*, arXiv:2509.17936 (2025) | open, abstract-level only | Current transfer-operator treatment of Hecke-triangle resonances / off-line zeros of `Z_w(s)`. Relevant as prior-art and possibly as a source of `q`-uniform operator bounds; **not** a source for Hejhal's mechanism. Flagged for a prior-art read. |
 | S6 | Phillips–Sarnak; *Dissolving cusp forms: higher-order Fermi golden rules* (arXiv:1003.2820) | open | The *deformation* mechanism (embedded eigenvalue → resonance under a Teichmüller deformation, Fermi golden rule). **Different mechanism** from Thm 7.11: it needs a moving cusp form and a non-vanishing first-order term; `G_q` is a discrete family, not a deformation with a fixed cusp form. Do not conflate. |
 | S7 | Hejhal, *Eigenvalues of the Laplacian for Hecke Triangle Groups*, Memoirs AMS 97 (1992) no. 469 | not accessed | Numerical; would supply data, not the mechanism. |
@@ -116,7 +116,7 @@ needs U1.
   So **the winding mass in a fixed window grows like `log q`.** Leading order `EXPLICIT up to C`;
   `C` `UNKNOWN` (it is a mean-value-theorem point), `O(1)` and `O((log Q)^{3/4})` `UNKNOWN`
   (S1 credits "calculations pointed out by Dennis Hejhal").
-- **B4. Positivity** (S4 = HJL 97 Lemma 5.3, from He 83 p.160, `EXPLICIT`):
+- **B4. Positivity** (S4 = HJL 97 Lemma 5.3, from Hejhal LNM 1001 Vol.2 Ch.11 notes 7-8-77-86, `EXPLICIT`):
   `−(φ′/φ)(½+ir) − Σ_{k=1}^{N}(1−s_k)/((s_k−½)²+r²) ≥ 2 log q_M > 0.`
   Structurally, `−(φ′/φ)(½+ir)` is a sum of **Poisson kernels of the poles**:
   each pole `s_k = β_k + it_k`, `β_k < ½`, contributes `2(½−β_k)/((½−β_k)² + (r−t_k)²) ≥ 0`.
@@ -152,7 +152,7 @@ easier than a growth theorem.
 | B1 | trace-formula counting identity | `EXPLICIT` | S1 (5.2) |
 | B3 | `c₀(T) = 2C√(T−¼)/π`, `0 < C < 1` | leading order `EXPLICIT`, **`C` `UNKNOWN`** | S1 Prop 5.2(c) |
 | B3 | `O(1)` in `G_{M_q,0}`, `O((log Q)^{3/4})` in Thm 5.7 | **`UNKNOWN`** | S1 Thm 5.7 (unpublished Hejhal calculations) |
-| B4 | `−(φ′/φ)(½+ir) − Σ_k ⋯ ≥ 2 log q_{M_q} > 0` | `EXPLICIT` | S4 Lemma 5.3 / He 83 p.160 |
+| B4 | `−(φ′/φ)(½+ir) − Σ_k ⋯ ≥ 2 log q_{M_q} > 0` | `EXPLICIT` | S4 Lemma 5.3 / Hejhal LNM 1001 Vol.2 Ch.11 notes 7-8-77-86 |
 | B5 | `#{poles: Re s ≤ ½−δ, |Im s − t₀| ≤ 1}`, `q`-uniform upper bound | **`UNKNOWN`** — route-B blocker | nothing in repo or sources |
 | B5 | shallow-pole height-density (Weyl upper bound, `q`-uniform) | `EFFECTIVIZABLE` | area `≤ π` gives `N_q(T)+M_q(T) ~ (|F_q|/4π)T²`, `PROVED` shape (T2 U1 row) |
 
