@@ -1,11 +1,13 @@
 # M2 — explicit tail majorant for the coset Dirichlet series (DRAFT)
 
-Status: DRAFT 2026-08-17. Closes the "no closed-form majorant" blocker on
-gap M2 of LAW_R2_RATE_LEMMA_DRAFT.md using the printed source received
-today (Hejhal LNM 1001 Vol.2: Ch.6 §12 pp.149–166 + Ch.11 §3 pp.524–532;
-extraction: LAW_HEJHAL_CH6S12_CH11S3_EXTRACT.md). LEDGER: this is a drafted
-majorant with one structural lemma at proof-sketch level (M2.L below), not a
-finished proof; constants are explicit and rounded UP.
+Status: DRAFT 2026-08-17; corrected 2026-08-18 (audit findings 3/5/6 — see
+dated blocks below). Supplies a CANDIDATE closed-form majorant for gap M2 of
+LAW_R2_RATE_LEMMA_DRAFT.md, conditional on M2.L (corrected form) + G1 + G2,
+using the printed source received 2026-08-17 (Hejhal LNM 1001 Vol.2: Ch.6
+§12 pp.149–166 + Ch.11 §3 pp.524–532; extraction:
+LAW_HEJHAL_CH6S12_CH11S3_EXTRACT.md). LEDGER: M2 and N3 remain OPEN; this
+note's formula (M2.T) is their candidate closed form, not their closure;
+constants are explicit and rounded UP.
 
 ## 1. Target
 
@@ -19,19 +21,34 @@ the N3 tail allowance.
 
 ## 2. Multiplicity lemma (M2.L — the one structural input)
 
-**Claim (M2.L).** In the conjugated model 𝒢_N (cusp at ∞, width λ = λ_N ≤ 2),
-a double coset [S]\𝒢_N/[S] with lower-left entry c ≠ 0 is determined by the
-pair (|c|, d mod λ|c|), d the lower-right entry; hence the number of double
-cosets with |c_w| = c is at most
+> **[CORRECTION 2026-08-18 audit-3]** The original M2.L below mixed two
+> normalizations (width-λ translations `d ↦ d + kλc` against the width-1
+> conjugated model that R1 and the v26/v27 Lean files actually use, where
+> `S : z ↦ z+1` and the invariant is `(c, d mod c)`). Statement of record
+> is now in the WIDTH-1 CONJUGATED MODEL throughout; the original text is
+> preserved struck-through in spirit by this block. The printed λ=2
+> Lemma 3.1 count (d mod 2c, φ(2c)) lives in the UNCONJUGATED width-2 theta
+> model; the conjugation dictionary between the two models is one more
+> bookkeeping obligation, folded into gap M2.G1.
 
-    m_N(c) ≤ λ_N · c ≤ 2c.
+**Claim (M2.L, corrected — width-1 conjugated model).** In 𝒢_N (cusp at ∞,
+width 1, S : z ↦ z+1), a double coset [S]\𝒢_N/[S] with lower-left entry
+c ≠ 0 is determined by the pair (|c|, d mod |c|), d the lower-right entry;
+under the discreteness hypothesis G1 (admissible d-residues spaced ≥ 1 in
+the relevant algebraic grading) the number of double cosets with |c_w| = c
+is at most
+
+    m_N(c) ≤ c ≤ 2c        (the 2c ceiling is kept as the working constant
+                            so (M2.T) below is unchanged as an UP-rounded
+                            ceiling under either normalization).
 
 *Proof sketch.* Left multiplication by S^k fixes (c,d); right multiplication
-sends d ↦ d + kλc. So (c, d mod λc) is a double-coset invariant, and d runs
-over a discrete subset of an interval of length λc. Injectivity of the
-invariant on cosets = the standard bottom-row classification (printed
-analogue at λ=2: Vol.2 Ch.11 §3 Lemmas 3.1–3.3, where the count for fixed c
-is EXACTLY φ(2c) ≤ 2c — the trivial bound is attained-order, not wasteful).
+sends d ↦ d + kc (width 1). So (c, d mod c) is a double-coset invariant —
+exactly R1's canonical invariant — and d runs over a discrete subset of an
+interval of length c. Injectivity of the invariant on cosets = the standard
+bottom-row classification. Printed λ=2 cross-check (after the conjugation
+dictionary): Vol.2 Ch.11 §3 Lemmas 3.1–3.3 count φ(2c) ≤ c for fixed c in
+the width-2 model — consistent with, and sharper than, the ceiling.
 [GAP M2.G1: the sketch's discreteness step needs the ring Z[λ_N] lattice
 spacing ≥ some explicit δ(N) — at λ=2 spacing is 1 (integers); for general N
 the c-values are algebraic integers and the R1 enumerator's canonical
@@ -79,11 +96,18 @@ slowly, X^{-0.2} — R5 should prefer σ nearer 1.25 for the tail term).
   machine-verified in v24 HeckeSystole A3; TODO connect).
 - **N3 (tail allowance): numeric instances replaced by formula** (M2.T);
   promotion to proved awaits G1+G2.
-- The Hejhal-side C(ε) is now redundant for our σ ≥ 1.1 domain: (M2.T) at
-  X = 1 gives the full-series bound Σ|c|^{-2σ} ≤ 1/(σ-1) + 2 = 12 at
-  σ = 1.1 (receipt: direct evaluation 12.0000) — crude but explicit and
-  N-uniform; Lemma 7.2's role in the effectivization is fully replaceable
-  by this chain.
+- [CORRECTION 2026-08-18 audit-5/6] Previous text here said Lemma 7.2's
+  C(ε) is "fully replaceable" and called the X = 1 instance a "full-series
+  bound ... 12". Both overstated. (a) (M2.T) at X = 1 bounds only the
+  STRICT tail |c| > 1; the |c| = 1 mass (attainable: c = λ_3 = 1 at q = 3)
+  adds ≤ m(1) ≤ 2, so the full-series ceiling is ≤ 14 at σ = 1.1, not 12.
+  (b) The whole chain is CONDITIONAL on M2.L (corrected form) + G1 + G2;
+  until those close, (M2.T) is a candidate formula and Lemma 7.2's C(ε)
+  is "replaceable-if"; N3 stays OPEN with (M2.T) as its candidate closed
+  form, not its replacement. (c) The stated target covers finite N ≥ 3;
+  the N = ∞ theta side needs the same count separately — at λ=2 that IS
+  the printed φ(2c) lemma (v27 `theta_coset_count`, certification in
+  flight), so the θ-side is the better-grounded half.
 
 ## 5. Honest limits
 

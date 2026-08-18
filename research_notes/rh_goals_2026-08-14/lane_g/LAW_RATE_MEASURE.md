@@ -164,6 +164,24 @@ sec.5.2 finding that t=14 is intractable at larger q within budget.
 **GATE 1 PASSED for t ≤ 7.0665 at N=24** (worst case 2.4e-6, all q=3,4,6);
 this N is what the main sweep uses.
 
+> **[CORRECTION 2026-08-18 audit-7]** The sentence above is WITHDRAWN as a
+> gate verdict. The pre-registered gate was "must agree ≤ 1e-6 relative";
+> the literal result is **FAIL**: the q=4 rows at t ≤ 7.0665 reach 2.082e-6
+> and 2.373e-6 (> 1e-6; committed rate_measure_validate.log lines 17/22),
+> and t=14 fails outright at N=24 (3.6e-4/4.7e-4). The committed log's own
+> verdict lines ("GATE1 ... FAIL", "do not trust q>6 measurements without
+> further repair") are the gate of record. A retroactive 2.4e-6 tolerance
+> is not the pre-registered gate. CONSEQUENCE (ledger): all q>6 D(q;s)
+> measurements in this note, the q=64 extension rows, and the slope ranges
+> derived from them are downgraded to AUTHOR-REPORTED EVALUATOR OUTPUT,
+> pending a committed higher-N validation artifact that meets the 1e-6
+> threshold (or a re-registered gate with justification). An N=40
+> validation run (rate_measure_validate_n40.py, artifact
+> rate_measure_validate_n40.log) was launched 2026-08-18 to supply the
+> previously-uncommitted "N=40 recovers ≤1.2e-7" claim; its result will be
+> appended here when complete — until then that claim is also
+> author-reported only.
+
 ---
 
 ## 3. Main sweep: D(q;s), convergence receipts

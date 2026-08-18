@@ -3,7 +3,8 @@
 **Status: DRAFT LEMMA + proof skeleton. Not a proved theorem.** Every constant
 is either derived here or tagged [NUMERIC-CONJECTURED]. Per
 `LAW_HEJHAL_S7_EXTRACT.md` §4 (R2). Inputs: `LAW_R1_COSET_STRUCTURE.md`
-(matched-class dominance, tail majorant ≤0.26), `LAW_RATE_MEASURE.md`
+(matched-class dominance; empirical partial-window mass
+`Σ_{10≤|c|≤50}|c|^{−2.2} ≤ 0.26`), `LAW_RATE_MEASURE.md`
 (measured D(q;s)), `LAW_R4_THETA_DEFECT.md` (target: ε must beat ~0.66 after
 transport).
 
@@ -339,6 +340,28 @@ word is **MAYBE via interval arithmetic**), P5 (cos inequality —
   > (the general M1 bijection, not the depth-1 special case, is what §3's
   > proof skeleton needs — still open). Lean:
   > `projects/aristotle_dispatch_v26/result/.../RateCore.lean`.
+
+  > **[CORRECTION v27, 2026-08-18]** The v26 formulation of the general M1
+  > hypothesis (`wordLimitMap_injective_on_matched`: injectivity of the
+  > c-ONLY word map `w ↦ c_2(w)` on matched words of bounded depth) is
+  > FALSE already at depth 3: the closed form is
+  > `c_λ([n,m]) = λ(n·m·λ² − 1)` (hand-derived, numerically verified at
+  > 3 λ values; Aristotle certification of the disproof in flight, v27
+  > project 0103cfab), so `[1,2]` and `[2,1]` collide at every λ. The
+  > collision refutes only the c-only WORD-level proxy: the lower-right
+  > entries differ (`d = −nλ` vs `−mλ`), so R1's canonical coset invariant
+  > `(c, d mod c)` may still separate them. CORRECTED TARGET (statement of
+  > record, replacing the c-only axiom): M1 is a canonical-normal-form
+  > theorem at the COSET level — the λ→2 specialization is well-defined on
+  > double cosets `[S]\𝒢_q/[S]` via the invariant `(c, d mod c)`, injective
+  > on matched cosets into θ-cosets with `c ≤ c*(q)`, surjective onto the
+  > sub-`c*(q)` range, with the complement localized to the near-relation
+  > region — each of well-definedness / injectivity / surjectivity /
+  > localization a separate obligation. The v26 axiom is
+  > deleted-as-hypothesis (it was referenced by nothing proved); until the
+  > coset-level statement is proved, §3(i)'s matched/escaping split remains
+  > DATA, NOT PROOF, and the ε(q) exponent q^{1−2σ} remains a calibrated
+  > conjecture. Strategy lane: M1_COSET_STRATEGY_SOL.md (in progress).
 - **M2**: rigorous N-independent beyond-window majorant = making Hejhal
   Lemma 7.2's C(ε) explicit (route: ch.6 prop 5.1 tiny-disk argument, per
   the extraction note). **Aristotle: NO** (analytic, infinite sum) until a
