@@ -38,3 +38,24 @@ Nothing here claims the (RATE) lemma. M1-general remains OPEN — this
 dispatch is expected to REFUTE its v26 word-level formulation and pin the
 correct invariant; the coset-level M1 (the real gap) still needs a
 normal-form/geodesic argument. Harvest on completion; watcher armed.
+
+## HARVEST 2026-08-18 — ALL SIX PROVED, REFUTATION CERTIFIED
+
+Aristotle run b495c784 COMPLETE. Independent local rebuild (v26 .lake cache,
+`lake env lean RateCoreII.lean`): **exit 0, 0 sorrys, 0 axiom declarations**
+(sole diagnostic: unused-variable lint at line 173). Standard axioms only per
+ARISTOTLE_SUMMARY.md. No statement needed correction this time.
+
+- `c_depth_three` PROVED (direct 2×2 computation).
+- `wordLimitMap_not_injective_depth_three` PROVED — **the v26 M1 word-level
+  axiom is now MACHINE-CERTIFIED FALSE at K=3** (witness [1,2]/[2,1], c=14;
+  matchedness via new lemma `one_lt_two_cos_pi_div_seven`).
+- `c_depth_three_injective_in_product` PROVED (repaired invariant n·m).
+- `two_smul_wordMatrix_two_integral` + `c_two_even` PROVED via sharper
+  structural lemma `wordMatrix_two_form`: every λ=2 word matrix is
+  !![a, b/2; 2c, d] with a,b,c,d ∈ ℤ — lower-left EVEN, stronger than the
+  hint, and exactly the integrality backbone M1-coset needs.
+- `theta_coset_count` PROVED (parity split; odd c via d ↦ d/2 bijection,
+  φ(2c) = φ(c)) — N4's multiplicity constant is now a theorem.
+
+Result: `result/aristotle_dispatch_v27_aristotle/RateCoreII.lean`.
