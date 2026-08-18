@@ -553,6 +553,20 @@ Assume \(|r_{j-1}|\ge p_{j-1}\).  If the two terms on the right side of
  \ge\lambda_N-{1\over p_{j-1}}=p_j.
 \]
 
+> **[CORRECTION 2026-08-18 triple-referee]** The "subtract" branch above
+> (old text: "If they subtract, then \(|r_j|\ge\lambda_N-{1\over|r_{j-1}|}
+> \ge\lambda_N-{1\over p_{j-1}}=p_j\)") omits the magnitude-ordering line
+> needed before the final inequality can be written. Per
+> `M1_LOCALIZATION_TRIPLE_REFEREE.md` §2.1, insert
+> \[
+>  \lambda_N|n_j|\ge\lambda_N>{1\over p_{j-1}}\ge{1\over|r_{j-1}|},
+> \]
+> whose strict middle inequality follows immediately from the already
+> stated \(p_j=\lambda_N-1/p_{j-1}>0\); this justifies which magnitude is
+> larger before writing \(|r_j|\ge\lambda_N-{1\over|r_{j-1}|}\ge p_j\). With
+> this line inserted the induction closes as stated; no counterexample was
+> found.
+
 Therefore
 
 \[
@@ -562,6 +576,15 @@ Therefore
 
 which proves (3.2).  The constant-sign unit-digit words satisfy the same
 recurrence as \(u_j\), so equality holds.  \(\square\)
+
+> **[CORRECTION 2026-08-18 triple-referee]** The preceding sentence (old
+> text: "The constant-sign unit-digit words satisfy the same recurrence as
+> \(u_j\), so equality holds") suppresses an alternating sign. Per
+> `M1_LOCALIZATION_TRIPLE_REFEREE.md` §2.1: the all-\(+1\) word satisfies
+> \(K_j=u_j\), whereas the all-\(-1\) word satisfies
+> \(K_j=(-1)^ju_j\). Their absolute values are equal, so the claimed
+> equality case in Theorem 3.1 (attained by \(|c_w(\lambda_N)|\), not
+> \(c_w(\lambda_N)\) itself for the \(-1\) word) remains correct.
 
 ### Corollary 3.2 (linear pre-wrap law) -- PROVED
 

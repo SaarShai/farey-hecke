@@ -15,9 +15,31 @@ to \(PSL\).
 |---|---|---|
 | GAP (i), \(G_q\cong C_2*C_q\) | **CLOSED / PROVED** | Möller--Pohl's full presentation maps to the Route-B letters by an explicit Tietze transformation; \(Q^2=R^q=-I\) in \(SL\), while \(\bar Q,\bar R\) have exact orders \(2,q\) in \(PSL\). |
 | GAP (ii), \(\operatorname{Stab}_{G_q}(\infty)=\langle S\rangle\) | **CLOSED / PROVED** | Pohl's fundamental polygon and primitive cusp-width statement are imported and an independent discreteness/fundamental-domain proof is given.  This completes the bridge between abstract nontrivial double cosets, \(c_q>0\) matrix classes, and the full key \((c,d\bmod c)\). |
+
+> **[CORRECTION 2026-08-18 triple-referee]** "Independent" in the row above
+> (old text: "an independent discreteness/fundamental-domain proof is
+> given") must not be read as source-independent. Per
+> `M1_LOCALIZATION_TRIPLE_REFEREE.md` §0 item 2: the proof is independent
+> of Pohl's stabilizer *conclusion*, but it still imports discreteness and
+> the fundamental-polygon property from the same source (Pohl §2.2). See
+> the referee's qualification at its `M1_ROUTE_B_REPAIR_SOL.md:132-134`
+> discussion.
 | Referee's boundary-cancellation concern | **CLOSED / PROVED** | A complete four-sign free-product cancellation lemma is included; no cancellation can traverse the middle word. |
 | GAP (iii), structural first-wrap support | **CLOSED / PROVED** | The Route-B complement is supported on conjugated theta height \(y=2c_H\ge q\); its raw mass is \(O(q^{2-2\sigma})\). |
 | GAP (iii), RATE-strength \(O(q^{1-2\sigma})\) | **NOT CLOSED; CONJECTURAL** | The requested drift factor is real, but it requires a new two-parameter depth--height count and a first-wrap weighted count.  Neither follows from Route B, Ford, or the conditional \(A=11/20\) envelope.  No choice of a single cutoff \(X(q)\) repairs this. |
+
+> **[CORRECTION 2026-08-18 triple-referee]** "First wrap" in this note
+> (e.g. old text at the row above: "GAP (iii), structural first-wrap
+> support") does **not** name the `firstWrap_q` predicate refuted by
+> `M1_COSET_EXECUTION_SOL.md` §5. Per
+> `M1_LOCALIZATION_TRIPLE_REFEREE.md` §0 item 1: this note's event is
+> overflow of a boundary-reduced Route-B canonical \(R\)-exponent outside
+> the balanced alphabet. Rename it **balanced-section overflow
+> (double-coset boundary wrap)**. The wrap can occur only after the outer
+> parabolic factors \(S^u,S^v\) used in double-coset reduction are
+> attached, whereas the refuted isolated-code predicate is evaluated on
+> the isolated Rosen code alone; see the referee's §4.1 cross-examination
+> for the full distinction.
 
 Thus the false target is explicitly negated:
 
