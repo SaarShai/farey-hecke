@@ -75,8 +75,15 @@ theorem c_depth_three (lam : ℝ) (hlam : lam ≠ 0) (n m : ℤ) :
 v26's axiom `wordLimitMap_injective_on_matched` asserts, for every `q ≥ 3`
 and `K`, that `w ↦ c 2 w` is injective on
 `{w | depth w ≤ K ∧ c (2cos(π/q)) w ≠ 0}`. The depth-3 closed form makes
-`[1,2]` and `[2,1]` a collision (both matched: `c_λ ≠ 0` for `λ > 0`),
-so the `K = 3` instance is false. Certify this. -/
+`[1,2]` and `[2,1]` a collision (both matched: `c_λ = λ(2λ² − 1) ≠ 0` for
+`λ` in the Hecke range `√2 < λ ≤ 2`; note the formula VANISHES at
+`λ = 1/√2`, so the nonvanishing is range-dependent, not universal in `λ`),
+so the `K = 3` instance is false. Certify this.
+
+[CORRECTION 2026-08-18 audit-17] This comment previously asserted
+`c_λ ≠ 0` "for `λ > 0`", which is false at `λ = 1/√2`. Comment only:
+no theorem statement in this file is changed, and every `λ` actually used
+(`2cos(π/q)`, `q ≥ 3`, and `λ = 2`) lies in the safe Hecke range. -/
 
 /-- **Disproof of the v26 axiom's `K = 3` instance** (stated here as the
 negation of the corresponding `Set.InjOn`, for `q = 7` as a concrete

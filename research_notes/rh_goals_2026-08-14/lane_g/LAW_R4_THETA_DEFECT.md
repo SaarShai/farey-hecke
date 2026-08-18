@@ -39,13 +39,25 @@ passes nearest (in the vertical-t sense) to that pole.
   (already established in `LAW_RATE_MEASURE.md` sec.1.3, reconfirmed here to
   50 digits) — no special vanishing occurs at real offset zero, so the
   on-line route is directly usable and is the one reported as the anchor.
-- **Anchor lower bound (ON-LINE, rounded DOWN)**:
-  - δ = 0.1 window (`|t−t₀| ≤ 0.005`): **min d(t) ≥ 0.661265** (attained near
-    the window's right edge, `t ≈ 7.072363`).
-  - δ = 0.5 window (`|t−t₀| ≤ 0.025`): **min d(t) ≥ 0.660435** (attained near
-    the window's right edge, `t ≈ 7.092363`).
-  - Both windows: **d(t) ≥ 0.660435 uniformly** is the safe combined anchor if
-    a single number covering both δ values is wanted.
+- **Anchor SAMPLED-GRID MINIMUM (ON-LINE, rounded DOWN; 41 grid points per
+  window — a witness, NOT a proven interval infimum)**:
+  - δ = 0.1 window (`|t−t₀| ≤ 0.005`): **sampled-grid min d(t) = 0.661265**
+    (attained near the window's right edge, `t ≈ 7.072363`).
+  - δ = 0.5 window (`|t−t₀| ≤ 0.025`): **sampled-grid min d(t) = 0.660435**
+    (attained near the window's right edge, `t ≈ 7.092363`).
+  - Both windows: **sampled-grid witness d(t) ≥ 0.660435 at the 41 grid
+    points** is the safe combined anchor if a single number covering both δ
+    values is wanted.
+
+  > **[CORRECTION 2026-08-18 audit-11]** The three bullets above originally
+  > read "**min d(t) ≥ 0.661265**", "**min d(t) ≥ 0.660435**" and "**d(t) ≥
+  > 0.660435 uniformly**", i.e. as lower bounds over the continuous windows.
+  > They are minima over 41 SAMPLED grid points only, exactly as this note's
+  > own §4 caveat says ("a safe, rounded-down witness at the sampled grid
+  > points, not a proven global minimum"). A continuous interval lower bound
+  > needs interval arithmetic or a derivative/Lipschitz enclosure between
+  > grid points; neither was computed. Wording is "sampled-grid
+  > minimum/witness" throughout from now on.
 - **Off-line reflection-identity defect** `D(h,t) = |φ_∞(1/2−h+it)·conj(φ_∞(1/2+h+it)) − 1|`
   was also measured (task step 1 fallback) for completeness: it is **larger**
   (~0.884–0.886) across the same windows and h ∈ {0.005,…,0.05} — consistent
@@ -152,11 +164,22 @@ Two windows, `|t−t₀| ≤ δ/20`, per the task's request (both δ=0.1 and δ=
 | 0.1 | 0.005 | 0.661265077749669 | 7.072363 | 0.661656756040835 | 7.062363 |
 | 0.5 | 0.025 | 0.660435776980381 | 7.092363 | 0.662394554564935 | 7.042363 |
 
-**Anchor lower bound, rounded DOWN**:
+**Anchor sampled-grid minimum / witness, rounded DOWN** (41 grid points per
+window; not a proven interval infimum — see [CORRECTION 2026-08-18 audit-11]
+in §0):
 
-- δ = 0.1: **d(t) ≥ 0.6612** for `|t−t₀| ≤ 0.005`.
-- δ = 0.5: **d(t) ≥ 0.6604** for `|t−t₀| ≤ 0.025`.
-- Combined (safe for either δ): **d(t) ≥ 0.6604**.
+- δ = 0.1: **d(t) ≥ 0.6612 at the 41 sampled grid points** of
+  `|t−t₀| ≤ 0.005`.
+- δ = 0.5: **d(t) ≥ 0.6604 at the 41 sampled grid points** of
+  `|t−t₀| ≤ 0.025`.
+- Combined (safe for either δ, sampled-grid witness): **d(t) ≥ 0.6604**.
+
+> **[CORRECTION 2026-08-18 audit-11]** This block originally read "**Anchor
+> lower bound, rounded DOWN**: … **d(t) ≥ 0.6612** for `|t−t₀| ≤ 0.005` …
+> **d(t) ≥ 0.6604** for `|t−t₀| ≤ 0.025` … Combined … **d(t) ≥ 0.6604**",
+> stating sampled minima as bounds over whole windows. Downgraded to
+> sampled-grid minimum/witness; a continuous lower bound requires interval
+> arithmetic or a Lipschitz/derivative enclosure between the grid points.
 
 The weakest point in each window is at the window's edge nearest `t₀+δ/20`
 (the side away from the pole's own `t`-coordinate `γ₁/2`, since `d(t)` is

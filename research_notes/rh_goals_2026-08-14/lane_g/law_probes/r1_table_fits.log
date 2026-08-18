@@ -1,0 +1,17 @@
+[sec.3.2] aggregate total vs q, unweighted log-log least squares
+  s=1.1  slope = -1.7592
+  s=1.5  slope = -1.9687
+[sec.4] partial-window mass vs X', slope per group
+  q=8      slope = -1.5628
+  q=12     slope = -1.2923
+  q=16     slope = -1.3452
+  q=24     slope = -1.4310
+  q=32     slope = -1.4173
+  q=48     slope = -1.4303
+  q=theta  slope = -1.4427
+  slope range: -1.5628 .. -1.2923
+[sec.4] per-column range and argmax
+  X'=10  range 0.15618 .. 0.25532   argmax q=8
+  X'=20  range 0.07867 .. 0.11922   argmax q=8
+  X'=30  range 0.04590 .. 0.06709   argmax q=12
+  X'=40  range 0.01896 .. 0.02951   argmax q=12

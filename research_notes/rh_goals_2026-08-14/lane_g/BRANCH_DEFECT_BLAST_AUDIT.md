@@ -6,6 +6,18 @@ for the branch defect; the MAP-queued suspect-audit item is DISCHARGED.
 Independent spot-verification by the orchestrator: none beyond reading —
 classifications cite file:line evidence throughout.
 
+> **[CORRECTION 2026-08-18 audit-14]** Scope note on this report's own
+> numbers. The "Independent checks" section below reports an 850-file scan,
+> a `q=12, s=1.1+1.5i` raw-vs-path-integrated comparison, and a fresh
+> 50-point `agp_massbalance` re-check with max difference `3.91e-10`. Those
+> are **auditor-reported, not independently receipted**: no command, script
+> path, interpreter, precision setting, output file or hash is recorded, and
+> the header above states the orchestrator did no verification beyond
+> reading. The audit's SCOPED CONCLUSION (0 re-runs needed; the MAP-queued
+> suspect-audit item discharged; the future-use warning about raw
+> `K_q_corrected`) may stand on its cited file:line evidence, but the
+> numerical census is not reproducible from this report alone.
+
 ## Consumer table
 
 “Rerun” means rerun specifically because of this branch-phase defect.

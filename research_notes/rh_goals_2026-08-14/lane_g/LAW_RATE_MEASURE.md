@@ -3,14 +3,26 @@
 **Status: MEASUREMENT ONLY, no proof attempted.** Per `LAW_HEJHAL_S7_EXTRACT.md`
 sec.4 (R2): "Numerical sanity check against our even/odd builders at q=5..21
 before proving anything (we can MEASURE φ_N − φ_∞)." This note is that check,
-extended to q up to 48 (q=64 did not finish in the session budget — see
-sec.5) and with an honest report of where the evaluator's convergence broke
+extended to q up to 48 (q=64 did not finish in THIS session's budget — see
+sec.5; **superseded 2026-08-18, see the audit-17 block below: the detached
+sweep later finished 48/48**) and with an honest report of where the evaluator's convergence broke
 down (t=7.0665 and above), rather than a fitted/fudged number.
 
 **Date:** 2026-08-17. **Lane:** G. **Interpreter:** `/Users/za/.venvs/farey-rh/bin/python`.
 **Probe scripts:** `law_probes/rate_measure.py` (evaluator), `law_probes/rate_measure_validate.py`
 (pre-registered gate), `law_probes/rate_measure_run.py` (the sweep driver),
-`law_probes/rate_measure_data.json` (raw output, still being appended — see sec.5).
+`law_probes/rate_measure_data.json` (raw output; **at the time of writing**
+still being appended — see sec.5 and the supersession block below).
+
+> **[SUPERSESSION 2026-08-18 audit-17]** Every "still running / not finished /
+> still being appended" statement in this note (§0 header, §3's PID-71438
+> parenthetical, §5.1) describes the state ON 2026-08-17 WHEN THE NOTE WAS
+> WRITTEN. The detached sweep later completed: `rate_measure_data.json` now
+> holds **48/48 rows**, including all eight q=64 rows. See
+> `LAW_HEJHAL_CH6S12_CH11S3_EXTRACT.md` §3 (as corrected under audit-8: 5/8
+> q=64 rows meet reldiff ≤ 1e-05, the σ=1.1 t=3.5 row is borderline at
+> 1.0225e-05, and both t=7.0665 rows are unconverged). The historical
+> in-flight prose below is retained deliberately, not silently rewritten.
 
 ---
 
@@ -26,8 +38,18 @@ down (t=7.0665 and above), rather than a fitted/fudged number.
   as-is — no new derivation. **Confirmed: |φ_∞(1/2+it)| is NOT 1** (it ranges
   0.34–0.74 at the sample points tested) — the task's naive expectation was
   wrong, and the extraction note itself already said so (sec.2). φ_∞ **does**
-  have a pole exactly at s = ρ₁/2 as expected (|φ_∞| grows like r⁻² there, sec.
-  2.3), confirming the normalization is the right one.
+  have a pole exactly at s = ρ₁/2 as expected (|φ_∞| grows like r⁻¹ there — a
+  SIMPLE pole; r⁻² belongs to `det Φ`, not to the scalar entry — sec. 2.3),
+  confirming the normalization is the right one.
+
+> **[CORRECTION 2026-08-18 audit-16]** This headline originally read "|φ_∞|
+> grows like r⁻² there". Wrong order: GATE 3 in §1.3 measures
+> `21.0, 216, 2167, 21678` for `r = 1e-2 … 1e-5`, i.e. one decade of growth
+> per decade of `r` — clean **r⁻¹** simple-pole growth, as
+> `LAW_R4_THETA_DEFECT.md` §1b independently reports. Order two belongs to
+> the 2×2 determinant `det Φ`, which carries `g(s)²`; the scalar entry
+> `A(s) = g(s)/(4^s−1)` carries `g(s)` once. `r⁻²` is reserved for
+> `det Φ` from now on.
 - **D(q;s) measured and CONVERGED (≤6e-6 relative, N-doubling receipt) for
   t = 0.5, 1.5 at q = 12, 16, 24, 32, 48** (partial q=48/64, see sec.5): clean
   power-law decay, slope of `log D` vs `log q` **≈ −0.7 to −1.7** depending on
@@ -320,8 +342,15 @@ The sweep (48 combos: 6 q × 2 σ × 4 t) costs roughly `O(N³ · kappa(q)³)` p
 wall times per `phi_q(s,N=24)` pair (base+doubled, both directions of the
 mirror identity): q=12 ≈13–38s, q=16 ≈21–44s, q=24 ≈42–65s, q=32 ≈81–102s,
 q=48 ≈234s (first row). Extrapolating (and confirmed by a direct calibration
-call: `selberg_Z(64, s, N=24)` alone took **216.7s**, vs 21.3s at N=12 — an
-~8× ratio matching (24/12)³), **q=64 at N=24 needs roughly 15 min per
+call: `selberg_Z(64, s, N=24)` alone took **216.7s**, vs 21.3s at N=12 — a
+**10.17× ratio**, somewhat above the (24/12)³ = 8× the cubic model predicts)
+
+> **[CORRECTION 2026-08-18 audit-17]** The original read "an ~8× ratio
+> matching (24/12)³". 216.7/21.3 = **10.17**, not ~8; the measurement
+> EXCEEDS the cubic-cost model rather than matching it, so the wall-clock
+> extrapolations built on it are optimistic, not conservative. Corrected
+> in place; the qualitative conclusion (q=64 at N=24 is hours-class) is
+> unchanged and if anything strengthened., **q=64 at N=24 needs roughly 15 min per
 `phi_q` pair-call and ~2.5 hours for its 8-row block**; q=48's remaining 7
 rows need roughly another 25 min. The sweep was left running in a detached
 background process (PID 71438, `nohup`, writing incrementally to
@@ -360,6 +389,17 @@ readiness of the tool for that specific height, not a workaround.)
   20 of 30 target cells fully converged, giving the slope table in sec.4.
 
 ---
+
+> **[CORRECTION 2026-08-18 audit-14]** Receipt status of §2's N=40 recovery
+> claim ("N=40 … recovers reldiff ≤1.2e-7 at t=14 for q=4,6"). At the time
+> of the audit no N=40 output existed in the committed validation log, so the
+> number was author-reported. A reproducible artifact now exists on disk:
+> `law_probes/rate_measure_validate_n40.py` → `rate_measure_validate_n40.log`
+> (full GATE 1 grid at N=40, worst reldiff **1.154e-07**, t=14 rows
+> 1.083e-07 / 1.154e-07 at q=4 and 1.492e-13 / 3.551e-13 at q=6). That
+> receipt substantiates the ≤1.2e-7 figure. It does NOT change the
+> pre-registered GATE 1 verdict at N=24, which is handled separately under
+> audit-7.
 
 ## 6. Files
 

@@ -72,7 +72,24 @@ Q ... S^{n_{k-1}} Q` is encoded as `List ℤ` of the exponents
 `[n_1, ..., n_{k-1}]`; `depth w = w.length + 1 = k`; `c lam w` is the
 lower-left entry (`(1,0)`) of the recursively-defined word matrix.
 
-## Obligations sent (8 statements, all `sorry`, no `sorry` in any signature)
+## Obligations sent (8 obligation rows = 9 named theorem declarations, all
+## `sorry`, no `sorry` in any signature)
+
+> **[CORRECTION 2026-08-18 audit-17]** This heading originally read
+> "Obligations sent (8 statements, …)". The table has eight ROWS, but row 8
+> names TWO declarations (`wordLimitMap_matched_depth_one` and
+> `c_depth_two`), so nine theorem declarations were sent. The count is
+> corrected here; nothing else about the dispatch changes.
+
+> **[SUPERSESSION 2026-08-18 audit-17]** `projects/aristotle_dispatch_v26/RateCore.lean`
+> (the file at the ROOT of this project directory) is the **superseded
+> dispatch INPUT** — the sorry'd obligation statements as sent, including the
+> two statements Aristotle later disproved (unconditional P4; the depth-1
+> value `c_{[]}(λ) = -1/λ`). The authoritative, corrected artifact is the
+> HARVESTED result
+> `projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle/RateCore.lean`.
+> Do not cite the root file for what was proved.
+
 
 | # | Lean name | Draft correspondence |
 |---|---|---|

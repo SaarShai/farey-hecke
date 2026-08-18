@@ -40,15 +40,32 @@ matched/escaping classification, and the tail-majorant measurement.
   of, and only qualitatively (not quantitatively) consistent with,
   `LAW_RATE_MEASURE.md`'s off-axis (`t=0.5,1.5`) slopes of `-0.65` to `-1.68`
   — see sec.3.4 for the honest gap between the two measurements.
-- **Tail majorant (item 3)**: `Sum_{|c|>=X'} |c|^-2.2` (sigma=1.1) measured
+- **Empirical partial-window mass (item 3)**: `Sum_{X' <= |c| <= 50} |c|^-2.2`
+  (sigma=1.1) measured
   for X' in {10,20,30,40} within the X<=50 window, for all tested q and the
   theta group: **values cluster tightly across q (0.156–0.255 at X'=10,
-  falling to 0.019–0.027 at X'=40), with NO systematic growth in q** — this
+  falling to 0.019–0.030 at X'=40), with NO systematic growth in q** — this
   is consistent with (does not contradict) Hejhal's Lemma 7.2 claim that the
   majorant constant is N-independent. **Empirical uniform constant, rounded
-  UP: `Sum_{|c|>=10} |c|^-2.2 <= 0.26`** across all tested q (8..48) and the
-  theta group, within the X<=50 data window (sec.4) — NOT a proof, and not
+  UP: `Sum_{10 <= |c| <= 50} |c|^-2.2 <= 0.26`** across all tested q (8..48)
+  and the theta group, within the X<=50 data window (sec.4) — an empirical
+  PARTIAL-WINDOW mass, NOT a proof and NOT a tail majorant, and not
   extended past X=50 (honest gap, sec.5).
+
+> **[CORRECTION 2026-08-18 audit-9]** The original headline read
+> "**Tail majorant (item 3)**: `Sum_{|c|>=X'} |c|^-2.2` … **Empirical uniform
+> constant, rounded UP: `Sum_{|c|>=10} |c|^-2.2 <= 0.26`**". That is wrong:
+> the measured sum runs only over `X' <= |c| <= 50` (sec.4), so it is an
+> empirical partial-window mass and an UNDER-estimate of the true tail (this
+> note's own sec.5 says so). The correct written form, used everywhere from
+> now on, is `Sum_{10 <= |c| <= 50} |c|^-2.2 <= 0.26`. It must never be used
+> as a full-tail bound or majorant.
+
+> **[CORRECTION 2026-08-18 audit-15]** The original said the X'=40 values fall
+> to "0.019–0.027". Recomputed from this note's own sec.4 table the range is
+> `0.01896–0.02951`, i.e. **0.019–0.030** (the q=12 entry 0.02951 exceeds the
+> stated ceiling). Receipt: `law_probes/r1_table_fits.py` →
+> `law_probes/r1_table_fits.log`.
 
 ---
 
@@ -214,15 +231,28 @@ adjusted to fit the expectation.
 
 ### 3.3 Aggregate decay rate (own measurement, real axis)
 
-Least-squares log-log slope of the "total" column above vs `q` (q=8..48):
-`s=1.1`: slope ≈ **-1.72**; `s=1.5`: slope ≈ **-1.85**. Both meaningfully
-STEEPER than `q^-1`. The single smallest matched pair alone decays exactly
-as `2-lambda_q ~ q^-2` (sec.3.1); the aggregate is close to but not exactly
-that because the matched-pair COUNT within the fixed `X<=50` window also
-grows mildly with `q` (n_q falls from 330 at q=8 to 237 at q=48, i.e. MORE
-matched terms survive the cutoff as `lambda_q -> 2`, partially offsetting
-per-term decay) — net effect keeps the aggregate close to, slightly steeper
-than, `q^-2`* rather than washing it out to `q^-1`.
+Least-squares log-log slope of the "total" column above vs `q` (q=8..48;
+unweighted least squares of `log(total)` on `log q`, all six q values):
+`s=1.1`: slope ≈ **-1.759**; `s=1.5`: slope ≈ **-1.969**. Both meaningfully
+steeper than `q^-1` and both SHALLOWER than `q^-2`. The single smallest
+matched pair alone decays exactly as `2-lambda_q ~ q^-2` (sec.3.1); the
+aggregate is close to but not exactly that. The total coset count inside the
+fixed `X<=50` window FALLS with `q` (n_q: 330 at q=8 down to 237 at q=48),
+so the aggregate is not explained by a growing term count.*
+
+> **[CORRECTION 2026-08-18 audit-14/15]** The original paragraph read:
+> "`s=1.1`: slope ≈ **-1.72**; `s=1.5`: slope ≈ **-1.85** … n_q falls from
+> 330 at q=8 to 237 at q=48, i.e. MORE matched terms survive the cutoff as
+> `lambda_q -> 2` … net effect keeps the aggregate close to, slightly steeper
+> than, `q^-2`". Three defects, all corrected above:
+> (a) the quoted slopes had no committed receipt and did not reproduce. A
+> fresh unweighted least-squares fit directly on this note's own sec.3.2
+> "total" column gives **-1.7592** (s=1.1) and **-1.9687** (s=1.5);
+> (b) FALLING `n_q` means FEWER cosets inside the window, not "MORE matched
+> terms" — the causal explanation offered was backwards and is withdrawn;
+> (c) `-1.76` and `-1.97` are SHALLOWER than `q^-2`, not "slightly steeper".
+> Receipt (fresh, this correction): `law_probes/r1_table_fits.py` →
+> `law_probes/r1_table_fits.log`.
 
 *[* caveat: only two `s` values and 6 `q` values tested; not a fit with
 error bars, see sec.5.]
@@ -232,8 +262,11 @@ error bars, see sec.5.]
 `LAW_RATE_MEASURE.md` measured `D(q;s) = |phi_q(s) - phi_infty(s)|` at
 **off-axis** `s = 1.1+0.5i, 1.1+1.5i, 1.25+0.5i, 1.25+1.5i` via the
 DETERMINANT-route evaluator, and found slopes `-0.65` to `-1.68` (roughly
-`q^-1`). This note's slopes (`-1.72`, `-1.85`) are measured at **real axis**
-`s = 1.1, 1.5` (`t=0`) via the INDEPENDENT coset-counting route, using a
+`q^-1`). This note's slopes (`-1.759`, `-1.969`; originally misquoted as `-1.72`,
+`-1.85`) are measured at **real axis**
+`s = 1.1, 1.5` (`t=0`) — corrected values `-1.759`, `-1.969`, see the
+[CORRECTION 2026-08-18 audit-14/15] block in sec.3.3 — via the INDEPENDENT
+coset-counting route, using a
 RANK-MATCHING proxy rather than the exact algebraic `phi_q - phi_infty`
 difference. **These are not directly comparable measurements** — different
 `t`, different method, and the rank-matching decomposition is itself only a
@@ -244,7 +277,13 @@ or reconciled the two numbers — flagged as an open item for R2.
 
 ---
 
-## 4. Tail majorant (item 3)
+## 4. Empirical partial-window mass (item 3)
+
+> **[CORRECTION 2026-08-18 audit-9]** This section was headed "Tail majorant
+> (item 3)". Nothing here is a majorant: every number below is the mass of
+> the ALREADY-ENUMERATED spectrum between `X'` and the hard cutoff 50. Write
+> it as `Sum_{X' <= |c| <= 50} |c|^-2.2` and read it as empirical
+> partial-window mass only.
 
 `Sum_{c in spectrum, X' <= |c| <= 50} |c|^-2.2` (sigma=1.1), i.e. the mass
 still remaining above a partial cutoff `X'`, WITHIN the already-enumerated
@@ -261,18 +300,27 @@ still remaining above a partial cutoff `X'`, WITHIN the already-enumerated
 | theta | 0.17524 | 0.08671 | 0.04704 | 0.02172 |
 
 No systematic growth in `q` — values at each `X'` cluster within roughly a
-factor of 1.6 across all of `q=8..48` and the theta group, and if anything
-the LARGEST value at each `X'` column is `q=8` (the smallest `q` tested), not
-a large `q` — consistent with (not proof of) Hejhal's Lemma 7.2 claim of an
-`N`-independent majorant constant.
+factor of 1.6 across all of `q=8..48` and the theta group, and the LARGEST
+value in each `X'` column belongs to a SMALL `q`, never a large one
+(`q=8` at `X'=10, 20`; `q=12` at `X'=30, 40`) — consistent with (not proof
+of) Hejhal's Lemma 7.2 claim of an `N`-independent majorant constant.
 
-Fitted power-law decay in `X'` (log-log slope, `Sum vs X'`): **-1.29 to
--1.56** across `q` and theta (all within a narrow band, no `q`-trend in the
-slope either).
+> **[CORRECTION 2026-08-18 audit-15]** The original said "the LARGEST value at
+> each `X'` column is `q=8` (the smallest `q` tested)". False at `X'=30` and
+> `X'=40`, where `q=12` (0.06709, 0.02951) exceeds `q=8` (0.06086, 0.02673).
+> The `q`-independence reading survives; the specific argmax claim did not.
+> Receipt: `law_probes/r1_table_fits.py` → `law_probes/r1_table_fits.log`.
 
-**Empirical uniform constant, rounded UP: `Sum_{|c|>=10} |c|^-2.2 <= 0.26`**
-for every `q` in `{8,12,16,24,32,48}` and the theta group, over the data
-window tested (`|c| <= 50`).
+Fitted power-law decay in `X'` (log-log slope, `Sum vs X'`, unweighted least
+squares over the four `X'` values): **-1.29 to -1.56** across `q` and theta
+(all within a narrow band, no `q`-trend in the slope either; recomputed
+2026-08-18, receipt as above — this range reproduces).
+
+**Empirical uniform constant, rounded UP:
+`Sum_{10 <= |c| <= 50} |c|^-2.2 <= 0.26`** for every `q` in
+`{8,12,16,24,32,48}` and the theta group, over the data window tested
+(`|c| <= 50`). This is an empirical PARTIAL-WINDOW mass, not a tail majorant
+(see [CORRECTION 2026-08-18 audit-9] above and sec.5).
 
 ---
 
@@ -337,7 +385,8 @@ window tested (`|c| <= 50`).
   sec.3's proxy classification to the literal per-coset limit the task
   specifies, and is the most direct way to close the sec.3.4 gap against
   `LAW_RATE_MEASURE.md`'s off-axis slopes.
-- The tail-majorant table (sec.4) is consistent with Lemma 7.2's claimed
+- The partial-window-mass table (sec.4; "tail majorant" per
+  [CORRECTION 2026-08-18 audit-9]) is consistent with Lemma 7.2's claimed
   `N`-independent constant `C(epsilon)`; an R2/R3 proof would need this made
   RIGOROUS (the Lemma 7.2 proof route via chapter 6 prop 5.1's tiny-disk
   argument, per the extraction note) rather than resting on the numerical
@@ -350,5 +399,10 @@ window tested (`|c| <= 50`).
 - `law_probes/r1_coset_enum.py` — the enumerator (`enumerate_c_spectrum`,
   `dirichlet_partial_sum`, canonicalization with the depth-9 precision fix
   documented inline).
+- `law_probes/r1_table_fits.py` + `law_probes/r1_table_fits.log` — fit/range
+  receipt added 2026-08-18 for the audit-14/15 corrections (recomputes every
+  fitted slope and column range in sec.3.3 and sec.4 from the tables printed
+  in this note; stated convention = unweighted least squares of `log y` on
+  `log x`).
 - `law_probes/r1_coset_cvalues_X50.json` — raw c-value lists (with
   multiplicity) for q in {8,12,16,24,32,48} and the theta group, X<=50.

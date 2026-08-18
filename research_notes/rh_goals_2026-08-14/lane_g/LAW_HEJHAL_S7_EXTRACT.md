@@ -141,6 +141,17 @@ R5. Assemble N₀(δ, t₀) at t₀ = γ₁/2; compare against certified base ra
 Status: extraction complete; R1–R5 not started. LEDGER RULE applies: nothing
 above claims a proved rate — §2's (RATE) sketch is a plan, not a lemma.
 
+> **[SUPERSESSION 2026-08-18 audit-17]** "R1–R5 not started" was true on
+> 2026-08-17 when this extraction was written. It is now stale: R1
+> (`LAW_R1_COSET_STRUCTURE.md`), R2 (`LAW_R2_RATE_LEMMA_DRAFT.md`), R4
+> (`LAW_R4_THETA_DEFECT.md`) and the M2 sub-gap
+> (`LAW_M2_TAIL_MAJORANT_DRAFT.md`) all have work banked; see
+> `plans/wayfinder/rh-goals/MAP.md`. R3 (transport) and R5 (assembly) remain
+> not started. The LEDGER RULE above still binds — none of that work claims a
+> proved rate, and all of it carries the 2026-08-18 referee corrections
+> (`RATE_NOTEGRAPH_REFEREE_AUDIT.md`). Historical line retained, not
+> rewritten.
+
 ## 5. Addendum 2026-08-17: Vol. 2 table of contents (second Koyama mail)
 
 Koyama also sent the Vol. 2 ToC. Precise locations of the remaining literature

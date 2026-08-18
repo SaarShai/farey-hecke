@@ -8,6 +8,12 @@ is either derived here or tagged [NUMERIC-CONJECTURED]. Per
 (measured D(q;s)), `LAW_R4_THETA_DEFECT.md` (target: ε must beat ~0.66 after
 transport).
 
+> **[CORRECTION 2026-08-18 audit-9]** The header originally imported from R1
+> a "tail majorant ≤0.26". R1 measures no tail majorant: the quantity is the
+> empirical partial-window mass `Σ_{10≤|c|≤50}|c|^{−2.2} ≤ 0.26`, an
+> UNDER-estimate of the true tail (R1 §5 says so explicitly). It is never a
+> full-tail bound and is not used as one in this draft.
+
 ## [MACHINE-VERIFIED 2026-08-17]
 
 Aristotle dispatch v26 (`projects/aristotle_dispatch_v26/`, project
@@ -18,7 +24,20 @@ v25 `.lake`/Mathlib cache) confirms this independently of Aristotle's cloud
 report: `Build completed successfully (8027 jobs)`, 0 errors, 0 live
 `sorry`. Result file: `projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle/RateCore.lean`.
 
-- **P1, P2, P3, P5, P6 (+ P6's λ=2 corollary): PROVED as stated.**
+- **P1, P2, P3, P5 proved as stated. P6: proved in PART only** — the
+  Chebyshev `c`-identity `c_w(λ) = λ·U_{m−1}(λ/2)` and its λ=2 corollary
+  `c_w(2) = 2m` are machine-verified; the derivative formula and the
+  sharpness conclusion in §1(P6) are NOT (see `[CORRECTION 2026-08-18
+  audit-13]` at §1(P6)).
+
+  > **[CORRECTION 2026-08-18 audit-13]** This bullet originally read
+  > "**P1, P2, P3, P5, P6 (+ P6's λ=2 corollary): PROVED as stated.**". The
+  > harvested Lean file
+  > (`projects/aristotle_dispatch_v26/result/.../RateCore.lean`, theorems
+  > `c_chebyshevWord` and `c_chebyshevWord_two`) contains no derivative
+  > theorem at all: `c'_w(2) = m + (m³−m)/3` and the "k² is attained"
+  > sharpness step are paper algebra, not machine-verified. Machine
+  > verification of P6 is scoped to the `c` identity and the λ=2 value.
 - **P4: proved in CORRECTED form only** — see `[CORRECTION v26]` at §1(P4)
   below; the unconditional statement is false, the version with `Re s ≥
   -1/2` is proved.
@@ -51,13 +70,24 @@ report: `Build completed successfully (8027 jobs)`, 0 errors, 0 live
 
 - **The KEY quantitative question is answered (measured): sup_{λ∈[λ_q,2]}
   |c_w′(λ)| ≤ A·k_w²·|c_w(λ_q)|, k_w = word depth (number of Q letters),
-  with A = 0.518 measured max over ALL enumerated cosets, all q ∈
-  {12,16,24,32,48} (per-q maxima 0.501–0.518, strikingly stable).** So the
+  with A = 0.518 measured max over all **1,138 MATCHED** cosets tested, all
+  q ∈ {12,16,24,32,48} (per-q maxima 0.501–0.518, strikingly stable); the
+  246 escaping cosets in the same enumeration were NOT tested.** So the
   growth is neither |c|^α alone (fitted α ≈ 1.06–1.19, i.e. barely above 1)
   nor O(ℓ·|c|): the correct law is **O(k²·|c|)** — and the Chebyshev
   subfamily (§2.3) shows k² is EXACT (not improvable to k^{2−δ}).
-- **The q⁻² vs q⁻¹ reconciliation asked for in the task CHECKS OUT
-  quantitatively** (§2.4): per-pair drift carries (2−λ_q) ≈ π²/q², but the
+
+  > **[CORRECTION 2026-08-18 audit-10]** The original bullet said A = 0.518 is
+  > the "measured max over ALL enumerated cosets". It is not. `r2_drift.py`
+  > (`law_probes/r2_drift.py:173-196`) collects matched cosets in `rows` and
+  > escaping cosets in `esc_q`, and computes `Amax` from `rows` ONLY. §2.1's
+  > table totals 1,384 enumerated q-cosets, of which 1,138 are matched and
+  > 246 escape. So the honest statement is: **maximum over all 1,138 matched
+  > cosets tested; 246 escaping cosets were not tested**, at X = 50 and word
+  > depth ≤ 12. The universal claim (C1)/N1 stays OPEN, and is now open on a
+  > strictly larger population than the measurement covered.
+- **The q⁻² vs q⁻¹ reconciliation asked for in the task is CONSISTENT with
+  the finite-window data** (§2.4): per-pair drift carries (2−λ_q) ≈ π²/q², but the
   matched class contains words of depth k up to ~q (the elliptic relation
   (Q_qS)^q = 1 is what terminates the family), and Σ_matched k²|c|^{−2σ}
   grows like q^{3−2σ}; net ε(q) ~ q^{1−2σ} = q^{−1.2} at σ = 1.1 —
@@ -67,10 +97,27 @@ report: `Build completed successfully (8027 jobs)`, 0 errors, 0 live
   MAJORIZES the measured D(q; 1.1+1.5i) at every tested q.** At q = 32:
   **ε(32) = 0.0973 vs measured D = 0.02506** (overshoot 3.9×). Overshoot
   range 2.7×–12.5× across q = 48…12 (lossy but one-sided, never under).
-- **Matching upgraded from R1's rank proxy to the EXACT word-level λ→2
-  limit** (each q-coset's word re-evaluated at λ=2 and canonicalized): at
-  q = 32, 48 this matches **every** theta coset in the |c| ≤ 50 window
-  (0 unmatched), closing R1's §5 proxy caveat within the window.
+- **Matching changed from R1's rank proxy to a word-level λ→2 limit with
+  GREEDY canonicalized claiming** (each q-coset's word re-evaluated at λ=2
+  and canonicalized, smallest-|c| first): at q = 32, 48 this matches every
+  theta coset in the |c| ≤ 50 window (0 unmatched) — finite-window,
+  depth-≤12, Chebyshev-family EVIDENCE, not a proof, and not a closure of
+  R1's §5 proxy caveat.
+
+  > **[CORRECTION 2026-08-18 audit-4]** Two claims in this §0 are downgraded.
+  > (a) The original read "**The q⁻² vs q⁻¹ reconciliation asked for in the
+  > task CHECKS OUT quantitatively**". (b) The original read "**Matching
+  > upgraded from R1's rank proxy to the EXACT word-level λ→2 limit** …
+  > closing R1's §5 proxy caveat within the window", and MAP recorded "THE
+  > POWER MYSTERY RESOLVED". Neither is earned. R1 states at its §3.4 that
+  > the two slope measurements "are not directly comparable" and that R1
+  > "does NOT claim to have resolved or reconciled" them, and at §5 that the
+  > matching is a rank-matching PROXY. What this note adds is finite-window
+  > (X = 50), depth-≤12, Chebyshev-family evidence under a greedy
+  > canonicalized matching — the map is not proved well-defined, injective,
+  > or surjective at coset level. "Resolved" and "exact" must wait for the
+  > corrected coset-level M1 (§5(M1)); until then the reconciliation is a
+  > consistent numerical account, not a resolution.
 - **Gap count: 4 numerically-supported-only items, 3 missing items** (§5),
   each tagged for Aristotle-readiness.
 
@@ -125,11 +172,20 @@ c_w′(λ) = U_{m−1}(λ/2) + (λ/2)U′_{m−1}(λ/2), and at λ = 2:
 c_w′(2) = m + (m³−m)/3, i.e. **|c_w′| ~ (k²/3)·|c_w| for this family** —
 the k² in the growth law is attained, up to constant.
 
+> **[CORRECTION 2026-08-18 audit-13]** Scope of machine verification for P6:
+> the v26 harvest proves ONLY `c_w(λ) = λ·U_{m−1}(λ/2)` (`c_chebyshevWord`)
+> and `c_w(2) = 2m` (`c_chebyshevWord_two`). The derivative formula
+> `c'_w(2) = m + (m³−m)/3` and the sharpness ("k² attained") conclusion above
+> are PAPER ALGEBRA, verified only by the GATE A numeric identity checks in
+> `law_probes/r2_drift.py`. They are a separate, not-yet-dispatched
+> formalization item. §2.3's sharpness statement inherits the same status.
+
 ---
 
 ## 2. The measured structure (probe r2_drift.py, X = 50, depth ≤ 12)
 
-### 2.1 Exact word-level matching (upgrade of R1 §3's rank proxy)
+### 2.1 Word-level matching, greedy canonicalized (finite-window evidence;
+not an exact correspondence — see [CORRECTION 2026-08-18 audit-4] in §0)
 
 For each enumerated q-coset (word kept), the SAME word is re-evaluated at
 λ = 2 and canonicalized: if it lands on a theta coset in the window (and that
@@ -162,7 +218,8 @@ Per-q fits and the uniform-constant check of sup|c′| ≤ A·k²·|c_q|:
 
 **Answer to the task's KEY question**: |c_w′| is O(k²·|c_w|), NOT a pure
 power |c_w|^α with α substantially above 1, and NOT O(ℓ·|c|). The uniform
-constant A ≤ 0.518 over 1138 measured cosets, with per-q max DECREASING
+constant A ≤ 0.518 over the 1138 MATCHED cosets measured (246 escaping
+cosets untested — [CORRECTION 2026-08-18 audit-10], §0), with per-q max DECREASING
 toward ~1/2 as q grows, motivates the conjectured clean form
 
     (C1) sup_{λ∈[λ_q,2]} |c_w′(λ)| ≤ (11/20)·k_w²·|c_w(λ_q)|   [NUMERIC-CONJECTURED]
@@ -177,7 +234,9 @@ The β fits (1.6–1.75 < 2) reflect that TYPICAL words are below the k²
 envelope; the envelope itself is set by the near-Chebyshev words (P6), so k²
 cannot be lowered in (C1) without losing the extremal family.
 
-### 2.4 Reconciliation of q⁻² per-term vs measured ~q⁻¹ aggregate — CHECKED
+### 2.4 Reconciliation of q⁻² per-term vs measured ~q⁻¹ aggregate — CONSISTENT
+with the finite-window data (downgraded from "CHECKED",
+[CORRECTION 2026-08-18 audit-4])
 
 For the Chebyshev family: drift of the m-th pair ≈ (2−λ_q)·(m³/3), Dirichlet
 contribution ≈ 2|s|(2m)^{−2σ−1}·(2−λ_q)·m³/3 ~ |s|(2−λ_q)·m^{2−2σ}. The
@@ -295,7 +354,9 @@ word is **MAYBE via interval arithmetic**), P5 (cos inequality —
 
 **Numerically supported only (ii):**
 - **N1 = (C1)**: sup|c′_w| ≤ (11/20)k²|c_w(λ_q)| uniformly over words.
-  Measured max 0.518 over 1138 cosets, 5 values of q. **Aristotle: MAYBE**
+  Measured max 0.518 over 1138 MATCHED cosets (X = 50, depth ≤ 12; 246
+  escaping cosets untested — [CORRECTION 2026-08-18 audit-10]), 5 values of
+  q. **Aristotle: MAYBE**
   — per-word instances are finite algebra + interval sup (yes); the
   UNIVERSAL claim needs an induction over words with a loop invariant
   (candidate: positivized-continuant comparison |c′| ≤ (k²/2)ĉ, ĉ the
