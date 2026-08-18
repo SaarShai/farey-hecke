@@ -133,3 +133,17 @@ v26 cache: exit 0, sorry-only warnings). Submitted without .lake (CLI warning
 noted; v26/v27 also ran mathlib-side without our cache). FALSE-statement
 escape hatch + WidthOneJorgensenAssumption-as-given instruction included in
 the prompt. Harvest on completion.
+
+## HARVEST 2026-08-18 — ALL SEVEN PROVED
+
+Task cd0a201a COMPLETE (~30 min). Independent local rebuild (v26 .lake cache,
+`lake env lean result/v28sub_aristotle/RateCoreIII.lean`): **exit 0, 0
+sorrys, 0 axiom declarations**; standard axioms only per ARISTOTLE_SUMMARY.md.
+No statement was false. Proved: trace_unitTranslationCommutator (tr = 2+c²),
+shimizu_lower_left_of_explicit_jorgensen (|c| ≥ 1, hypothesis used as given),
+ford_count_le_floor_sq_of_circle_arcs (card ≤ ⌊X²⌋ from disjoint arcs),
+doubleTranslation_bottomRow ((c, d+vc)), red_mem_Ico, and the two remaining
+key-algebra lemmas. The Ford/Shimizu core of M2's tail bound is now
+machine-verified MODULO the packaged discreteness hypothesis
+(WidthOneJorgensenAssumption) and the geometric horoball-disjointness step,
+which remain paper-level (Series Thm 2.21).
