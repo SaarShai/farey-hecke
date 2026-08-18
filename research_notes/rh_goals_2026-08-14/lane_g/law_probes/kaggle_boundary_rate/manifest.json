@@ -1,0 +1,71 @@
+{
+  "schema": "farey-hecke.boundary-rate-campaign/1",
+  "created": "2026-08-18",
+  "purpose": "R3 target-height right-boundary campaign; no Kaggle push performed",
+  "kernel": "boundary_rate_kernel.py",
+  "python": ">=3.11",
+  "dependencies": {
+    "python-flint": "0.9.0",
+    "mpmath": "1.4.1"
+  },
+  "contours": {
+    "route_A": {
+      "sigma": "11/10",
+      "t0": "gamma_1/2",
+      "half_height": "1/2",
+      "closed": true
+    },
+    "route_B": {
+      "sigma": "11/10",
+      "t0": "gamma_1/2",
+      "half_height": "1/4",
+      "closed_for_certification": true,
+      "source_uses_open_vertical_side": true
+    }
+  },
+  "files": [
+    {
+      "path": "boundary_rate_kernel.py",
+      "sha256": "d51f062142382cffa434d7a2aa144e6d3e1d210be6cd15fe785a77579bd3d8d9",
+      "role": "self-contained campaign driver"
+    },
+    {
+      "path": "zeta_cert_rosen.py",
+      "sha256": "965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac",
+      "role": "vendored odd-q finite transfer-matrix engine"
+    },
+    {
+      "path": "zeta_cert_rosen_even.py",
+      "sha256": "693d2a88fd525e94c8ab6a63486e82fe0670d9dce142effbd5be5e324597212a",
+      "role": "vendored even-q finite transfer-matrix engine"
+    },
+    {
+      "path": "zeta_cert_rosen_q5.py",
+      "sha256": "c84c5c3f6d9f7a320bca7f1dbfd96a4859c3eea9b3de5420eb4eb223ad0d597b",
+      "role": "vendored shared Arb/Hurwitz primitives"
+    }
+  ],
+  "commands": {
+    "rigorous_all_q": "python boundary_rate_kernel.py --q-start 12 --q-end 48 --envelope-cells 16384 --out boundary_rate_rigorous.json",
+    "scout_one_q_template": "python boundary_rate_kernel.py --q-start Q --q-end Q --envelope-cells 16384 --scout --grid 129 --n-values 16,24 --out boundary_rate_qQ.json",
+    "hard_q_escalation_template": "python boundary_rate_kernel.py --q-start Q --q-end Q --envelope-cells 16384 --scout --grid 257 --n-values 24,32,40 --out boundary_rate_qQ_escalated.json"
+  },
+  "sharding": {
+    "unit": "one q per Kaggle job",
+    "q_values": "12..48 inclusive",
+    "merge_key": "scout.rows[].q",
+    "reason": "matrix dimension and N cost grow rapidly with q; incremental JSON preserves partial jobs"
+  },
+  "status_contract": {
+    "RIGOROUS_ARB_FORD_ENCLOSURE": "proved continuous-segment interval [0,U] for E_R(q)",
+    "FLOAT_GRID_ESTIMATE_NOT_SUP": "midpoint scout only; never promote to a verified E_R(q)",
+    "minimum_prec_bits": 128,
+    "structural_blocker": "the vendored selberg_Z finite determinant omits a proved Fredholm dimension-tail enclosure"
+  },
+  "expected_local_receipt": {
+    "envelope_cells": 16384,
+    "q_count": 37,
+    "route_A_E_upper": 8.408224199432881,
+    "route_B_E_upper": 8.228313336614521
+  }
+}
