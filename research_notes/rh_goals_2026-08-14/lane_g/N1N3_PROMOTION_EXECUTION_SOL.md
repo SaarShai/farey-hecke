@@ -259,6 +259,12 @@ to $\lambda=2$ cannot increase its reduced depth.  Hence this target has no
 preimage in the proposed depth-$\le12$ source, for either $q=32$ or
 $q=48$.  N2-finite is therefore **REFUTED**.
 
+> **[CONFIRMATION 2026-08-18 window-repair]** This 237/263 finding is
+> CONFIRMED by the independent enumeration-completeness repair: the exact
+> theta target has 263 keys, saturated and cross-checked (depths 26=28=30,
+> receipt `law_probes/r1_coset_enum_complete_X50.json`); see
+> `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §2.3, §4.3.
+
 ### 2.2 Fresh enumeration/count receipt
 
 The following exact integer target construction was compared with the current

@@ -61,6 +61,33 @@ matched/escaping classification, and the tail-majorant measurement.
 > now on, is `Sum_{10 <= |c| <= 50} |c|^-2.2 <= 0.26`. It must never be used
 > as a full-tail bound or majorant.
 
+> **[CORRECTION 2026-08-18 window-repair]** The headline (item 3) read
+> "**Empirical uniform constant, rounded UP: `Sum_{10 <= |c| <= 50} |c|^-2.2
+> <= 0.26`** across all tested q (8..48) and the theta group, within the
+> X<=50 data window". After the enumeration-completeness repair adds the
+> saturated `q=5` row (26 keys had been missing from the theta target;
+> `q=5` was newly enumerated complete), the `q=5` partial-window mass
+> exceeds this ceiling in every `X'` column (e.g. `0.31375877745171454351`
+> at `X'=10` vs the old `0.26`). The `0.26` reading as an upper empirical
+> ceiling is DEAD; the least UP-rounded replacement demonstrated on the
+> repaired `q=5,8,12,theta` set is `<=0.32`, and even that is not a
+> certified uniform ceiling because `q=16,24,32,48` were not re-saturated.
+> See `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §5 ("R1 positive real-axis
+> partial mass").
+
+> Also headline item 2 read: "the MATCHED (convergent) class dominates the
+> `D(q;s)` difference at both `s=1.1` and `s=1.5`, by roughly **10x–90x**
+> over the escaping-tail mass". This blanket statement is RETIRED: R1 rank
+> matching is not a one-sided quantity under target enlargement (new theta
+> entries change pairings and can raise or lower totals in either
+> direction), so the old 10x-90x range and the old slopes (`-1.759`,
+> `-1.969` in sec.3.3) are not safe to headline as before. Use only the
+> repaired conditional recomputation in `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md`
+> §4.1 ("X=50 rank proxy": corrected conditional range about `3x-214x`,
+> too unstable to headline; new slopes `-1.4440` at s=1.1, `-1.8683` at
+> s=1.5) as measurement. See `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §5
+> ("R1 rank-matching proxy").
+
 > **[CORRECTION 2026-08-18 audit-15]** The original said the X'=40 values fall
 > to "0.019–0.027". Recomputed from this note's own sec.4 table the range is
 > `0.01896–0.02951`, i.e. **0.019–0.030** (the q=12 entry 0.02951 exceeds the
@@ -229,6 +256,21 @@ contradicts the task's a priori suggestion that class-(b) escaping tail mass
 would be the driver; the data says otherwise, and is reported as found, not
 adjusted to fit the expectation.
 
+> **[CORRECTION 2026-08-18 window-repair]** The "roughly 10x the escaping
+> mass at s=1.1, growing to ~80x at s=1.5" headline used the incomplete
+> depth-12 theta target (237 of 263 keys). It is RETIRED, not merely
+> re-scaled: R1 rank matching is not a one-sided quantity under target
+> enlargement, so no single corrected multiplier replaces it safely. The
+> repaired conditional recomputation over the complete 263-key theta set
+> (q=8,12 saturated; q=16,24,32,48 conditional on their old depth-12
+> sources) gives a per-q, per-s matched/extra range of about `3x-214x`
+> (e.g. q=8,s=1.1: 9.95x -> 14.92x; q=48,s=1.1: 12.85x -> 2.97x;
+> q=24,s=1.5: 51.52x -> 214.19x) — too unstable to headline as a single
+> range. The qualitative matched-dominance observation survives in every
+> row, but it is not a proof and not monotone. Use only this conditional
+> recomputation as measurement, per `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md`
+> §4.1 and §5.
+
 ### 3.3 Aggregate decay rate (own measurement, real axis)
 
 Least-squares log-log slope of the "total" column above vs `q` (q=8..48;
@@ -321,6 +363,21 @@ squares over the four `X'` values): **-1.29 to -1.56** across `q` and theta
 `{8,12,16,24,32,48}` and the theta group, over the data window tested
 (`|c| <= 50`). This is an empirical PARTIAL-WINDOW mass, not a tail majorant
 (see [CORRECTION 2026-08-18 audit-9] above and sec.5).
+
+> **[CORRECTION 2026-08-18 window-repair]** The above read "**Empirical
+> uniform constant, rounded UP: `Sum_{10 <= |c| <= 50} |c|^-2.2 <= 0.26`**
+> for every q in `{8,12,16,24,32,48}` and the theta group". This FAILS as
+> an upper empirical ceiling after the enumeration-completeness repair adds
+> the newly saturated `q=5` row: at `X'=10,20,30,40` the `q=5` masses are
+> `0.31375877745171454351, 0.15356171150262869179, 0.08616147068484235758,
+> 0.03501575555806839256`, each exceeding the old `0.26` reading, and the
+> theta row itself changes upward too (e.g. `X'=10: 0.1752381195 ->
+> 0.1893603248`). The `0.26` ceiling reading is DEAD entirely, not merely
+> loosened. The least UP-rounded replacement demonstrated on the repaired
+> `q=5,8,12,theta` set is `<=0.32`; no uniform `q<=48` ceiling is certified
+> because `q=16,24,32,48` were not re-saturated in the repair. See
+> `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §4.1 ("Positive partial-window
+> masses") and §5.
 
 ---
 

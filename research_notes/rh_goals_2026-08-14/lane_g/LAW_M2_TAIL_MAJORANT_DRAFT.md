@@ -87,6 +87,25 @@ overcounts the cosets actually present in the R1 X≤50 window; (M2.T) is a
 worst-case ceiling, not a fit. PASSES unadjusted (and the σ=1.1 tail decays
 slowly, X^{-0.2} — R5 should prefer σ nearer 1.25 for the tail term).
 
+> **[CORRECTION 2026-08-18 window-repair]** The above read "the R1 measured
+> tail Σ_{|c|≥10}|c|^{-2.2} ≤ 0.26 (UP, uniform in q ≤ 48) vs (M2.T) at
+> σ=1.1, X=10: 6.44 — majorizes measured by ~25×, one-sided." After the
+> enumeration-completeness repair (newly saturated `q=5` row, complete
+> 263-key theta target), the R1 `0.26` denominator is dead; the least
+> UP-rounded replacement over the repaired `q=5,8,12,theta` set is `0.32`,
+> and the exact measured mass at the saturated `q=5` row is
+> `0.3137587774517145...`. Recomputed against `T(10,1.1)=6.4357649136979711442`:
+> the slack against the exact measured mass is `~20.51×` (was `24.75×`), and
+> the slack against the displayed `0.32` ceiling is `~20.11×`. **The "about
+> 25×" numeric is false; use "about 20× against this repaired measured
+> partial mass" instead.** This is NOT a lower bound on slack against the
+> unknown full tail, because the finite-window mass remains an undercount of
+> that tail — the same caveat applied before the repair. The analytic (M2.T)
+> majorant and the σ=1.25 Ford/Stieltjes route are unaffected: this
+> comparison is not consumed by `M2_FORD_PACKING_REFEREE.md:128-148`. See
+> `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §4.2 and §5 ("M2 `T/measured`
+> finite-window comparison").
+
 ## 4. What this discharges
 
 - **M2 (R2 gap list): DRAFTED** — closed-form majorant (M2.T) with explicit

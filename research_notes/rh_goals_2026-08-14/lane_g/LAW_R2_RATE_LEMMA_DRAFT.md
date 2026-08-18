@@ -14,6 +14,18 @@ transport).
 > UNDER-estimate of the true tail (R1 §5 says so explicitly). It is never a
 > full-tail bound and is not used as one in this draft.
 
+> **[CORRECTION 2026-08-18 window-repair]** The header's imported empirical
+> partial-window mass `Σ_{10≤|c|≤50}|c|^{−2.2} ≤ 0.26` is stale: after the
+> enumeration-completeness repair (newly saturated `q=5` row, complete
+> 263-key theta target) this ceiling FAILS — the `q=5` mass alone reaches
+> `0.31375877745171454351` at `X'=10`. Read `0.26` only as the value at the
+> time this draft was written; the least UP-rounded replacement over
+> `q=5,8,12,theta` is `0.32`, and it is not certified uniform over
+> `q≤48` (see `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §4.1, §4.2). This
+> draft's own §4 assembly is separately corrected below for the
+> unmatched-theta omission; see `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md`
+> §4.4 and §5.
+
 ## [MACHINE-VERIFIED 2026-08-17]
 
 Aristotle dispatch v26 (`projects/aristotle_dispatch_v26/`, project
@@ -204,6 +216,19 @@ theta-side unmatched class.
 (θ window has 237 cosets; at q = 32, 48 the matching is ONTO the window —
 the exact-limit map covers the theta spectrum completely there.)
 
+> **[CORRECTION 2026-08-18 window-repair]** The table above used a depth-12
+> theta target that was missing 26 distinct canonical keys (237 of the exact
+> 263). Replacing the target by all 263 exact theta keys changes only the
+> `unmatched_θ` column — no depth-12 q word maps to any of the 26 newly
+> admitted theta keys, so `cosets`, `matched`, and `esc_q` are unchanged —
+> but the "ONTO the window" claim for q=32,48 is FALSE against the complete
+> target: `unmatched_θ` goes `33 -> 59` (q=12), `13 -> 39` (q=16),
+> `1 -> 27` (q=24), `0 -> 26` (q=32), `0 -> 26` (q=48). The `q=12` row has a
+> saturated q-side source in the repair; the `q=16,24,32,48` rows are
+> corrected-target audits conditional on their old depth-12 q sources (not
+> re-saturated on the q side). See `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md`
+> §4.4 ("R2 matched/escaping split").
+
 ### 2.2 Growth of sup|c_w′|
 
 Per-q fits and the uniform-constant check of sup|c′| ≤ A·k²·|c_q|:
@@ -324,6 +349,21 @@ measured per-word sup|c′| (in-window, conjecture-free) + the T_X allowance:
 | 24 | 0.1455 | 0.0144 | 0.0443 | **0.2042** | 0.03617 | 5.6× | YES |
 | 32 | 0.0690 | 0.0046 | 0.0237 | **0.0973** | 0.02506 | **3.9×** | YES |
 | 48 | 0.0269 | 0.0011 | 0.0096 | **0.0376** | 0.01378 | 2.7× | YES |
+
+> **[CORRECTION 2026-08-18 window-repair]** This assembly used the
+> incomplete depth-12 theta target, which omitted positive unmatched-theta
+> mass (`E_θ` undercounted). At `σ=1.1` the missing theta keys contribute
+> `Δ_E_θ = 0.0100563782113606042...`. Holding every other component fixed,
+> the corrected UP-rounded `ε(q) bound` values are: q=12: `0.6900 -> 0.7046`;
+> q=16: `0.4645 -> 0.4791`; q=24: `0.2042 -> 0.2187`; q=32: `0.0973 ->
+> 0.1118`; q=48: `0.0376 -> 0.0521`. Against the unchanged measured `D`
+> (0.05521, 0.05062, 0.03617, 0.02506, 0.01378 respectively), the bound
+> **still majorizes in every audited row** (still "YES"). Mark the OLD
+> fixed-window epsilon values in this table as SUPERSEDED measurements —
+> they used a target the old q=32/48 "0 unmatched" input made falsely easy
+> to satisfy. These remain numerical draft assemblies, not proved RATE
+> bounds. See `R1_WINDOW_COMPLETENESS_REPAIR_SOL.md` §4.4 ("R2 matched/
+> escaping split") and §5.
 
 - **Never undershoots** — the lemma survives its falsification test as
   drafted.
