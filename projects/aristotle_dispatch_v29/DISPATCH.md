@@ -129,3 +129,15 @@ Project `59877996-ccc8-4a0d-ae21-94baf065ea94`. Orchestrator re-ran the
 syntax pre-check pre-submission (exit 0, 10 sorry-only warnings). Prompt
 includes the FALSE-statement escape hatch, the magnitude-ordering lemma
 emphasis, and the (−1)^j equality-case sign. Harvest on completion.
+
+## HARVEST 2026-08-18 — ALL TEN PROVED
+
+Task fea4e9d6 COMPLETE (~58 min). Independent local rebuild: **exit 0, 0
+sorrys, 0 axiom declarations** (4 unused-variable lints only); standard
+axioms per summary. None false. Headline: `sharp_no_wrap` — the sine-envelope
+law |c_w(λ_N)| ≥ λ_N·sin(kπ/N)/sin(π/N) for every syntactically reduced word,
+k ≤ N−1, N ≥ 3 — MACHINE-VERIFIED, including the referee's
+magnitude-ordering lemma as an explicit proved step and the (−1)^{m−1}
+equality-case sign. Also proved: continuant bridge, Chebyshev identities,
+Q²=−I, R^N=−I (SL lift, sign visible), four-sign boundary cancellation at
+List-syllable level (middle untouched in all four displays).
