@@ -120,3 +120,21 @@ slowly, X^{-0.2} — R5 should prefer σ nearer 1.25 for the tail term).
 - Nothing here is on the critical line: σ ≥ 1.1 throughout; strip transport
   stays R3 (printed-explicit 7.9/7.10 + now Thm 12.9's explicit φ_m bound
   as an alternative route — noted for R3, not developed).
+
+> **[STATUS CHANGE 2026-08-18 — G1/G2 RETIRED, FORD REPLACEMENT CONFIRMED]**
+> M2.G1 and M2.G2 as stated are REFUTED (exact witnesses at N=5 and N=8;
+> `M2_G1G2_CLOSURE_SOL.md`, witnesses independently re-verified numerically).
+> The tail formula no longer routes through them: an adversarial referee pass
+> (`M2_FORD_PACKING_REFEREE.md`) CONFIRMED at paper level the Ford-horoball
+> packing bound A_Γ(X) ≤ ⌊X²⌋ (constant 1, PSL double-coset count, uniform in
+> N after width-one conjugation; hypotheses = discrete + non-elementary +
+> exact ⟨S⟩ cusp stabilizer, sourced to Series Thm 2.21/Lemma 2.22 and Pohl
+> arXiv:1503.00525 §2.2), giving via Stieltjes summation
+>   Σ_{|c|>X} |c|^{−2σ} ≤ (σ/(σ−1))·X^{2−2σ}   (σ>1, X≥1),
+> full-series ceilings 12 (σ=1.1) and 6 (σ=1.25) — coefficient arithmetic and
+> the q=5/q=8 enumerator consistency packet re-run fresh this session.
+> (M2.T)'s m(c) ≤ 2c multiplicity route is superseded; this bound needs no
+> multiplicity ceiling at all. REMAINING for full M2 closure: this covers the
+> TAIL SUM shape; Lean formalization of Shimizu + the packing injection is
+> OPEN; the Hejhal-7.7/C₆ per-term majorant transcription (Ch.6 §12 constants)
+> is a separate, still-open bookkeeping task.
