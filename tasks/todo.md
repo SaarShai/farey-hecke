@@ -542,6 +542,12 @@ theorem-valid construction passes a cold referee.
   implementation provenance, theorem-level finite algebra, and the infinite
   Fredholm gate remain open.
 
+- [ ] Cold-scan primary resonance-counting theorems for a general escape:
+  require a theorem that actually forces a **nonreal** scattering pole off
+  `Re(s)=1/2` for every cofinite one-cusp orbifold, not merely a combined
+  eigenvalue/resonance Weyl law or real trivial poles.  Verify elliptic-point
+  and Hecke-orbifold hypotheses before treating it as a LAW consumer.
+
 - [x] Test the generalized-Dirichlet right-half-plane-zero bypass against
   Saias--Weingartner, Booker--Thorne, and Ramachandra.  None applies to the
   generalized algebraic Hecke-modulus spectrum; positive spacing already

@@ -769,3 +769,12 @@ directive 2026-08-15
   one-component even-`q` Schur evaluator should be used to make this corrected
   test tractable.  Q8's TB/R2/E1/`K_s` diagnostics are not numerically refuted
   by this checker defect, but remain unpromoted and await cold review.
+
+- **GENERAL COFINITE-RESONANCE ESCAPE SCOUT OPENED — 2026-08-19.**  A fresh
+  primary-source lane is testing whether an existing theorem for every
+  finite-area noncompact hyperbolic orbifold already forces a **nonreal**
+  scattering pole strictly off `Re(s)=1/2`.  Total resonance Weyl laws,
+  combined eigenvalue-plus-resonance counts, and real/trivial poles are not
+  sufficient.  Applicability to one-cusp Hecke orbifolds with elliptic points
+  and the Selberg-zeta divisor convention must be explicit.  Status is
+  **OPEN / CONJECTURAL** pending the source report; no LAW case is promoted.
