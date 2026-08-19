@@ -485,3 +485,51 @@ load-bearing full-LAW work is a theorem-valid q=8 replacement chain (continuous
 contour enclosure, rigorous tail, E1, operator binding, and `K_s` gate) or an
 effective tail onset small enough to reduce the finite base.  q8–12's current
 ported contour claims remain refuted, not pending promotion.
+
+## Full unconditional LAW closure campaign — 2026-08-19
+
+Goal: prove at paper level, without conjectural hypotheses, that every
+non-arithmetic Hecke group `G_q` has a Selberg-zeta zero/scattering resonance
+strictly off the critical line.  Pursue both admissible closure routes in
+parallel and preserve the existing q8–12 refutation until a genuinely different
+theorem-valid construction passes a cold referee.
+
+- [x] Set the persistent goal and snapshot branch `441fca6`, current ledger,
+  preserved untracked inventory, and existing worktrees.
+- [x] Dispatch isolated Route-A, Route-B, and `(SCAT-EVAL_q)` construction lanes
+  with one primary deliverable each and explicit no-push/referee gates.
+- [ ] Harvest and cold-judge `(SCAT-EVAL_q)`: require an exact determinant
+  quotient, compatible continuation/normalization, and explicit determinant
+  plus derivative tails; otherwise retain the first missing theorem verbatim.
+- [ ] Harvest and cold-judge q=8: require exact even-q operator binding, proven
+  R2 tail, continuous (not endpoint-only) contour enclosure, E1, `K_s`, and
+  factorization before any Selberg-zero status.
+- [ ] Harvest and cold-judge the effective-tail/covering route: require either
+  an explicit manageable all-gates onset or a theorem that covers the finite
+  block without per-q enumeration; constant-only sensitivity is not closure.
+- [ ] Launch Kaggle only after a theorem-valid local evaluator/checker exists;
+  launch Aristotle only after a non-false load-bearing statement passes local
+  syntax/falsification gates.  Harvest and independently verify every launch.
+- [ ] For every proof claim, create a separate cold `*_REFEREE.md`; repair and
+  re-referee gaps, and stop downstream consumers on any confirmed refutation.
+- [ ] Append dated MAP status blocks, run exact receipts and whole-tree gates,
+  commit scoped paths in recent-log style, and continue until the LAW is proved
+  or the active-goal blocker threshold is genuinely met.
+
+| lane | isolated branch/worktree | status | required output |
+|---|---|---|---|
+| q8 q-generic chain | `codex/law-q8-generic-20260819` / `.worktrees/law-q8-generic-20260819` | running | `lane_f/Q8_GENERIC_CERTIFICATION_SOL.md` + exact receipts |
+| effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | running | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + exact receipts |
+| scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | running | `lane_g/SCAT_EVAL_Q_SOL.md` + exact receipts |
+
+Verification gate:
+
+```text
+python3 skills/loop-engineering/tools/loop_lint.py tasks/todo.md
+git diff --check
+./te doctor
+rg -n 'PROOF|CONJECTURAL|GAP|OPEN|REFUT|CONFIRMED' \
+  research_notes/rh_goals_2026-08-14/lane_f \
+  research_notes/rh_goals_2026-08-14/lane_g \
+  plans/wayfinder/rh-goals/MAP.md
+```
