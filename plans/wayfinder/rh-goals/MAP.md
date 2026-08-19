@@ -579,3 +579,70 @@ directive 2026-08-15
   Kaggle's q7 bytes were already harvested and locally hash-matched, while the
   proposed v31 Aristotle source decoder was referee-confirmed false before
   submission.
+
+- **SESSION CLOSE — UNCONDITIONAL LAW PUSH, 2026-08-19.**  This session added
+  one referee-confirmed finite case to the LAW base: q=7 now has an
+  unconditional paper-level off-critical Selberg-zeta zero and the standard
+  scattering-resonance interpretation at the exact scope recorded above.  It
+  also preserved two negative results rather than forcing them: q8–12's
+  continuous-contour claims remain referee-confirmed refuted, and the naive
+  v31 source-decoder targets remain referee-confirmed false.  The full LAW is
+  still **OPEN** because neither a theorem-valid q≥8 finite replacement chain
+  nor a sufficiently small effective tail onset is banked.
+
+  Final verification receipts:
+
+  ```text
+  $ ./te doctor
+  "core_skills_ok": true
+  "runtime_syntax_ok": true
+  "ok": true
+
+  $ python3 skills/loop-engineering/tools/loop_lint.py tasks/todo.md
+  OK — gate + stop + budget + separate verifier, every spec
+  summary: 0 fail · 0 warn
+
+  $ /Users/za/.elan/bin/lake env lean \
+      /Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v31/RateCoreVI.lean
+  exit 0; no diagnostics
+
+  $ rg -n '\bsorry\b|^\s*axiom\b' \
+      projects/aristotle_dispatch_v31/RateCoreVI.lean
+  forbidden_exit=1
+
+  $ jq ... F7_R3B_ASSEMBLY_RECEIPT.json
+  verdict="THEOREM-GRADE closed-contour YES at N=256"
+  precision_bits=384; N_primary=256; base_closed_arc_count=192; chunk_count=16
+
+  $ jq ... F7_TB_BLOCK_CERTIFICATES_RECEIPT.json
+  K_start=12; max_K=64; blocks=19; tails=10; tail_inputs=[5]
+  rho_star=[0.763212029206899202166157 +/- 1.41e-25]
+  verdict=PASS_RHO_LT_0.80
+
+  $ jq ... F7_E1_ENLARGED_CONTRACTION_V2_RECEIPT.json
+  precision_bits=384; rho_hat_less_than_one=true
+  verdict=PASS_RHO_HAT_LT_1
+
+  $ jq ... F7LINKS_KS_GATE_RECEIPT.json
+  all_gates_pass=true; |det(1-K_s)|>=0.936818983390 (DOWN)
+  verdict=PASS_KS_BOX_CLEAR_AND_DETK_NONVANISHING
+
+  $ git diff --name-only
+  [no output]
+  ```
+
+  Two verification command corrections are retained explicitly: `./te loop
+  lint` is not a valid subcommand and was replaced by the repository's
+  `loop_lint.py`; the first Lean preflight tested for `lakefile.lean`, while
+  the v26 cache uses `lakefile.toml`, after which the exact rebuild exited 0.
+
+  **Handoff.**  No worker, Kaggle kernel, Aristotle submission, or shell
+  process is running.  The next load-bearing choice is between rebuilding q=8
+  from a valid continuous-contour/R2/E1/operator-binding/`K_s` stack and
+  reducing the effective-tail onset enough to shrink the required finite
+  base.  q7's missing Lean `K_s` specialization, parity/automorphic labels,
+  priority language, independent E1 reimplementation, and release review
+  depth remain open non-paper gates.  All tracked work is committed locally;
+  no push is authorized because the preserved `.worktrees/`, `graphify-out/`,
+  v26 tarball, and prime-step cache inventories keep the literal working tree
+  non-clean.
