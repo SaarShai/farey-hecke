@@ -2,6 +2,9 @@
 
 **Date:** 2026-08-18
 
+**Referee verdict 2026-08-18:** GAPS not REFUTED — both cores (\(K_F<109\)
+conditional, \(K_+<117\)) CONFIRMED; see `KF_WALL_REFEREE.md`.
+
 **Lane:** G / R3--R5
 
 **Interpreter:** `/Users/za/.venvs/farey-rh/bin/python` (`python-flint`/Arb)
@@ -17,6 +20,17 @@ constant**.  A new boundary-Harnack/Poisson argument gives
 The unconditional pincer onset is nevertheless still **`UNDEFINED`** because
 the full-side positive RATE, finite-family holomorphy/divisor, and certified
 finite-evaluator gates remain open.
+
+> **[CORRECTION 2026-08-18 kf-referee]** The headline comparison implying a
+> roughly \(10^5\)-fold collapse in the transport threshold is not
+> like-for-like. Quoting `KF_WALL_REFEREE.md`: "The advertised roughly
+> \(10^5\)-fold collapse is also not like-for-like. The old \(4.711\times10^6\)
+> threshold is Route B at the sixth-zero geometry; the new \(38.386\)
+> threshold is A0 at the first-zero contour. Like-for-like: A0 improves
+> \(86.640\to38.386\), a factor about \(2.26\) in \(\log q\); rebuilt Route B
+> improves \(4{,}711{,}753.120\to5599.981\), a factor about \(841\). This
+> cross-route headline is rhetorically misleading, but it does not falsify
+> either conditional implication."
 
 ## 0. Verdict
 
@@ -285,6 +299,20 @@ Assume the contradiction hypothesis \(H_0\), closed-rectangle holomorphy,
 and no poles.  Lemma 7.7 with \(\varepsilon=17\) gives
 \(0<|\phi_q|<C=107\) on the right rectangle.  Put
 
+> **[CORRECTION 2026-08-18 kf-referee]** Old text did not define which
+> inherited \(H_0\) is meant. Quoting `KF_WALL_REFEREE.md`: "the note does
+> not define which inherited \(H_0\) is meant. The proof needs the **full**
+> width \(1/2\le\sigma\le1/2+\delta=1.4999\), whereas the old Route-B note
+> literally defines a narrower \(H_0\) at `R3_ROUTE_B_TRANSPORT_SOL.md:91-120`.
+> The assembly plan and Hejhal's theorem do use the full \(R_\delta\)
+> (`R3_R5_ASSEMBLY_PLAN_SOL.md:60-69`; `LAW_HEJHAL_S7_EXTRACT.md:43-47,67-76`),
+> so this is a repairable statement gap, not a failure of the rebuilt
+> argument. Importing the old narrow \(H_0\) literally would invalidate the
+> harmonicity step." \(H_0\) here must therefore be read as: \(\phi_q\)
+> nonvanishing and holomorphic on the **full** closed Hejhal rectangle
+> \(1/2\le\sigma\le1/2+\delta=1.4999\), \(|t-t_c|\le\delta\) — not the
+> narrower Route-B \(H_0\).
+
 \[
 u=\log\frac{C}{|\phi_q|}\ge0,qquad c=\log C.
 \]
@@ -441,6 +469,17 @@ hence \(|\phi_q|<16.719\) there.  On the right half Lemma 7.7 gives
 \boxed{\sup_{D_0}|F_q|<109=:K_F,qquad \log K_F<4.692.}       \tag{KF}
 \]
 
+> **[CORRECTION 2026-08-18 kf-referee]** Old text alternated between a raw
+> strict bound and a chosen ledger constant. Quoting `KF_WALL_REFEREE.md`:
+> "The note alternates between a raw strict bound and a chosen ledger
+> constant: `KF_WALL_ATTACK_SOL.md:440-442` writes both
+> \(\sup|F_q|<109\) and \(109=:K_F\), while the headline says \(K_F<109\).
+> The correct formulation is either 'the raw supremum is \(<109\)' or 'take
+> the safe constant \(K_F=109\).'" Read the boxed line above as: the raw
+> supremum satisfies \(\sup_{D_0}|F_q|<109\); take the safe constant
+> \(K_F=109\), so \(\log K_F=\log109<4.692\) (not the strict inequality
+> \(K_F<109\)).
+
 This is a maximum-principle replacement of Lemmas 7.9/7.10.  It uses neither
 \(C_7\), their area integral, nor a Cauchy/submean coefficient.
 
@@ -587,6 +626,28 @@ new Route-B contribution is
 \[
 \log q_{\rm transport}>5599.981+\frac56\log C_R.
 \]
+
+> **[CORRECTION 2026-08-18 kf-referee]** The displayed three-decimal
+> thresholds and integers above do not chain consistently to the rounded
+> displays. Quoting `KF_WALL_REFEREE.md`: "The displayed three-decimal
+> thresholds are safe when derived from the full-precision receipts, but
+> they do not chain consistently to every subsequently printed rounded
+> number. In particular, the listed A0 integer does **not** satisfy the
+> boxed condition \(\log q>38.386\); it satisfies the unrounded condition
+> \(\log q>38.38555358\ldots\). The Route-B threshold \(5599.981\) likewise
+> uses the unrounded base, not the displayed \(4.687278\)." Concretely:
+> \(\lfloor e^{38.38555358\ldots}\rfloor+1=46{,}841{,}857{,}142{,}466{,}894\)
+> is valid for the exact (unrounded) A0 threshold \(\log q>38.38555358\ldots\)
+> but does **not** satisfy the rounded boxed condition \(\log q>38.386\)
+> (the correct integer for that rounded condition is
+> \(46{,}862{,}772{,}882{,}410{,}612\)). Likewise \(5599.981\) is safe only
+> from the full-precision base \(4.68727707957322768732\ldots\), not from
+> the rounded displayed base \(4.687278\) (chaining from \(4.687278\) alone
+> requires \(5599.982\)). The safe statement is: the unrounded thresholds
+> \(\log q>38.38555358\ldots\) and \(\log q>5599.98072458\ldots\) hold; the
+> rounded three-decimal displays \(38.386\) and \(5599.981\) hold only when
+> derived from full-precision receipts, not by chaining previously rounded
+> displayed numbers.
 
 The complete onset would still be
 
