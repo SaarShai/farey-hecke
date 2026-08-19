@@ -392,3 +392,47 @@ The parent lane must therefore either:
   CONJECTURAL until proved and refereed.
 
 No MAP entry, plan edit, or status promotion was made in this isolated lane.
+
+## 9. Dated referee correction and final status — 2026-08-19
+
+This block is append-only and supersedes the provisional phrase "pending a
+cold referee pass" in Section 8.  The separate read-only artifact
+`LAW_SYMMETRIC_TAIL_REFEREE.md` returns **REFUTATION CONFIRMED**, narrowly for
+the proposed scalar two-wall estimate
+
+    sup_{s in Gamma_L} |phi_q(s)-phi_infty(s)| = O(E_R(q)).
+
+The refutation no longer depends on promoting the explicit endpoint candidate.
+Hejhal Proposition 7.6 supplies qualitative convergence of the finite scalar
+coefficient to the theta diagonal entry at the fixed right point.  The finite
+one-cusp scalar functional equation then forces the reflected left value to
+the reciprocal-reflected target, whose mismatch with the theta diagonal entry
+has strictly positive Arb lower bound.  The root replay was:
+
+```text
+$ PYTHONDONTWRITEBYTECODE=1 /Users/za/.venvs/farey-rh/bin/python \
+    research_notes/rh_goals_2026-08-14/lane_g/law_probes/symmetric_tail_obstruction.py
+phiR_abs_lower= [0.06004175466921327920807165927480263705... +/- 1.96e-122]
+D_theta_reflection_abs_lower= [15.42301489004162277658964802761607563243... +/- 1.41e-119]
+```
+
+Thus the scalar left error does not tend to zero even though the right error
+does.  This proves the negation of the proposed scalar symmetric transport.
+It does **not** refute the LAW, does **not** affect one-wall RATE-A, and does
+**not** prove a matrix/eigenchannel repair.  Every matrix/eigenchannel repair
+remains **CONJECTURAL / OPEN**.
+
+Receipt correction: the transcript in the original Section 5 omitted the
+central-value exponents on its final two lines and corrupted/elided digits in
+the displayed `reciprocal_correction_upper`.  The fresh byte-authoritative
+output is:
+
+```text
+reciprocal_correction_upper= [7.82610403910254290440205315576271477158189446632097289860329432826275026521585220987338172084774883651692697665475217894e-14 +/- 4.24e-134]
+symmetric_harmonic_tail_upper_right= [1.25451154695431157332274246499903290700054512773077556689756003615350062245615012265039557533901504174565205302393115537e-89 +/- 4.92e-209]
+symmetric_harmonic_tail_upper_left= [1.70865400785922096134273720626753165948377855753970099044790373310873850410605214955188803467319637232265844067614093401e-147 +/- 2.67e-267]
+```
+
+The omitted central exponents are `e-89` and `e-147`; `e-209` and `e-267`
+are interval radii.  This transcription defect is non-load-bearing for the
+confirmed refutation.

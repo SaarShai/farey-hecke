@@ -840,3 +840,26 @@ directive 2026-08-15
   655:**DIRECT ABSTRACT BANACH WORDING AS SUBMITTED: GAPS / NOT REFUTED ...
   658:**q-GENERIC ANALYTIC LINKAGE AND DOWNSTREAM LAW: GAP / CONJECTURAL / OPEN ...
   ```
+
+- **SCALAR SYMMETRIC TWO-WALL ROUTE — REFUTATION CONFIRMED, NARROW SCOPE —
+  2026-08-19.**  The separate cold referee
+  `LAW_SYMMETRIC_TAIL_REFEREE.md` confirms that the proposed scalar estimate
+  `sup_{Gamma_L}|phi_q-phi_infty|=O(E_R(q))` is false.  Hejhal Proposition 7.6
+  gives actual compact convergence on the fixed right point, while the finite
+  one-cusp scalar functional equation forces the paired left value toward the
+  reciprocal-reflected target.  A fresh root Arb replay printed:
+
+  ```text
+  $ PYTHONDONTWRITEBYTECODE=1 /Users/za/.venvs/farey-rh/bin/python \
+      research_notes/rh_goals_2026-08-14/lane_g/law_probes/symmetric_tail_obstruction.py
+  phiR_abs_lower= [0.06004175466921327920807165927480263705... +/- 1.96e-122]
+  D_theta_reflection_abs_lower= [15.42301489004162277658964802761607563243... +/- 1.41e-119]
+  symmetric_harmonic_tail_upper_right= [1.25451154695431157332274246499903290700e-89 +/- 4.92e-209]
+  symmetric_harmonic_tail_upper_left= [1.70865400785922096134273720626753165948e-147 +/- 2.67e-267]
+  ```
+
+  The prior solution transcript omitted the central exponents `e-89` and
+  `e-147`; its appended correction preserves the original text and records
+  the byte-authoritative values.  Blast radius: only this scalar symmetric
+  shortcut is refuted.  The LAW, one-wall RATE-A, and Route B are not refuted;
+  a full-matrix/eigenchannel repair remains **CONJECTURAL / OPEN**.
