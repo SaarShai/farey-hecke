@@ -210,7 +210,7 @@ orchestrator to materialize. No worker may change git state. Untracked caches,
   base-block obligation, and the explicit constants. Return either an explicit
   `q0 = max{...}` or `UNDEFINED` with the exact missing premise. Referee every
   proof claim in a separate file before banking.
-- [ ] Constant reduction: derive `CR_REDUCTION_SOL.md` by reconstructing every
+- [x] Constant reduction: derive `CR_REDUCTION_SOL.md` by reconstructing every
   factor in `C_R`, ranking losses by log contribution, and distinguishing
   proved substitutions from counterfactual opportunities. Referee any claimed
   improved constant before changing a theorem ledger.
@@ -250,7 +250,9 @@ verifier_blind: true
 | blind checker + fresh final verifier | AM referee cold check | done | decoder reconstruction `CONFIRMED`; report replay PASS | MAP banked | no open repair |
 | activation writer | A0 closure note | done | exact side/A0 thresholds; mixed-domain prompt corrected | MAP banked | separate referee required |
 | activation cold referee | activation proof/status audit | done | `CONFIRMED` paper-level analytic tail | MAP banked | finite block remains open |
-| C_R constant autopsy | evidence complete | done | dominant `C_4` loss and Arb candidates isolated | deliverable pending | no status change yet |
+| C_R constant autopsy | done | done | primary/fallback ceilings and strict A0 candidates isolated | MAP banked | first referee required repair |
+| C_R cold referee | done | done | arithmetic `CONFIRMED`; ranked-loss documentation `GAPS` | repair appended | re-referee required |
+| C_R repair re-referee | done | done | ranked autopsy `CONFIRMED`; primary `C_R'` banked | MAP banked | machine/full-program gates remain open |
 | v30 writer | typed FW/AM dispatch | running externally | syntax exit 0; Aristotle project `97b16c1b-653d-42b9-a5da-4ed765a8eb88` | harvest pending | task at 3% |
 
 ### Review/results
@@ -268,3 +270,12 @@ referee. The analytic A0 tail now has a sourced strict max and a monotone fixed
 envelope. The older full all-q R5 objective remains `OPEN / UNDEFINED` because
 the true scalar finite-block evaluator/certificates do not exist in the current
 artifact set; no determinant surrogate or timing run was promoted.
+
+The constant-reduction lane required two referee passes. The first confirmed
+the direct `2^62+1` substitution and exact Arb ceilings but rejected the
+solution's missing ranked autopsy. An append-only repair identified `C_4` as
+the only banked reduction, kept `F`/`S` diagnostic, showed wrap negligible at
+the new scale, and declined speculative `M_0` headroom. The second cold report
+confirmed that repair; the sharper alternative RATE-A ceiling and selected
+conditional A0 cutoff are now banked, while finite/machine/full-program gates
+remain open.

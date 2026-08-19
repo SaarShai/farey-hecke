@@ -738,3 +738,70 @@ paper-level Route-B/Ford inputs.  It is not a machine formalization or a
 certified full-operator enclosure.  Standalone N1-RATE remains
 **CONJECTURAL** and bypassed, not proved.  No whole-tail monotonicity, finite
 base block, all-gates activation, or final \(q_0\) status is promoted here.
+
+## 8. Dated reduced-constant promotion — 2026-08-19
+
+This append-only block adds a sharper alternative constant; it does not erase
+or invalidate the published ceiling in Sections 4 and 7.  The direct atom
+bridge permits the paper-level coefficient
+
+\[
+C_4'=2^{62}+1=4611686018427387905.
+\]
+
+Keeping the same balanced/matched boundary, \(p=11/5\), \(\alpha=6/5\),
+\(q_{\rm RATE}=12\), \(S=7.648\), \(M_0=2.775\), wrap term, and already
+accepted Route-B/Ford premises, the positive source-invariant assembly gives
+the sharper outward ceiling
+
+\[
+\boxed{C_R'=38160259896392973127946053}.
+\]
+
+The first cold referee confirmed the coefficient substitution, the combined
+ceiling, its one-less failure, and the strict A0 arithmetic.  It found one
+documentation gap: `CR_REDUCTION_SOL.md` had not ranked the losses.  Section 8
+of that note appended the missing autopsy; the separate
+`CR_REDUCTION_REREFEREE.md` then confirmed the repair.  Immutable hashes are:
+
+```text
+89fc61e9bc33db55c95856f5412e87c45da72d3623616435575fb494321b3417  CR_REDUCTION_SOL.md
+f0f71f09c1c4547805c44f4c649c12a26568fa0f2e8843a90d574ea856dcfa5a  CR_REDUCTION_REFEREE.md
+00cebb30a7370e5487575c181be1878d37ea1a99a9ff8fdacbbdeb05f1898de6  CR_REDUCTION_REREFEREE.md
+```
+
+Banking command:
+
+```bash
+sed -n '273,322p' \
+  research_notes/rh_goals_2026-08-14/lane_g/CR_REDUCTION_SOL.md \
+  | bash \
+  | rg 'primary_2|C_R=|q_transport=|minimality=|A0_strict_pass|delta_T_current_minus_primary'
+```
+
+Relevant output:
+
+```text
+primary_2^62_plus_1
+C_R= 38160259896392973127946053 strict_upper= True
+q_transport= 97418971860452658435229799565334786148
+minimality= True True
+A0_strict_pass= True
+delta_T_current_minus_primary_2^62_plus_1= [21.9496607177316014646974500060214427529785413073316637407932482061698093994468646835003356177914108 +/- 5.50e-98]
+```
+
+Thus the already paper-level-confirmed `(RATE-A)` statement may use
+\(C_R'\) on exactly its prior scope.  Under the selected A0 envelope, the
+corresponding strict conditional analytic transport cutoff is
+
+\[
+q_{\rm transport}'=97418971860452658435229799565334786148.
+\]
+
+This is not a final program \(q_0\).  The old published \(C_R\) remains a
+valid ceiling; the \(2^{63}\) fallback remains valid but weaker.  The
+counterfactual \(F(q)\), contour-\(S\), and unavailable \(M_0\) tightenings in
+the autopsy are not promoted.  Machine formalization, a certified
+full-operator enclosure, standalone N1-RATE, the true finite base block, and
+the remaining all-gates closure remain **OPEN** or **CONJECTURAL** exactly as
+in the prior ledgers.

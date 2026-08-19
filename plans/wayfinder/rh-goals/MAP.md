@@ -252,3 +252,49 @@ directive 2026-08-15
   341:| conditional analytic-tail `q_analytic` | CONFIRMED at paper-level input scope | sourced max plus strict receipts; not all-q closure |
   342:| full all-q R5 closure | OPEN / UNDEFINED | finite block remains missing |
   ```
+- **RATE-A CONSTANT REDUCTION REFEREE-CONFIRMED 2026-08-19**
+  (`CR_REDUCTION_SOL.md`, `CR_REDUCTION_REFEREE.md`, and repaired-candidate
+  `CR_REDUCTION_REREFEREE.md`): the direct marked-atom coefficient
+  \(C_4'=2^{62}+1\) gives the sharper alternative outward ceiling
+  \(C_R'=38160259896392973127946053\) on the unchanged balanced/matched
+  paper-level RATE-A scope.  The initial cold referee confirmed the arithmetic
+  but marked the missing ranked-loss autopsy `GAPS`; an append-only Section 8
+  repair ranked the dominant \(C_4\) loss and the retained diagnostic terms,
+  and a second cold report `CONFIRMED` that repair.  The selected conditional
+  A0 analytic cutoff becomes
+  \(q_{\rm transport}'=97418971860452658435229799565334786148\), with strict
+  minimality for that fixed envelope.  The published old \(C_R\) remains
+  valid.  The finite base block, machine/full-operator certificate, standalone
+  N1-RATE, and final all-gates \(q_0\) remain OPEN or CONJECTURAL.
+
+  Binding replay command:
+
+  ```bash
+  sed -n '273,322p' research_notes/rh_goals_2026-08-14/lane_g/CR_REDUCTION_SOL.md | bash | rg 'primary_2|C_R=|q_transport=|minimality=|A0_strict_pass|delta_T_current_minus_primary'
+  ```
+
+  Relevant binding output:
+
+  ```text
+  primary_2^62_plus_1
+  C_R= 38160259896392973127946053 strict_upper= True
+  q_transport= 97418971860452658435229799565334786148
+  minimality= True True
+  A0_strict_pass= True
+  delta_T_current_minus_primary_2^62_plus_1= [21.9496607177316014646974500060214427529785413073316637407932482061698093994468646835003356177914108 +/- 5.50e-98]
+  ```
+
+  Re-referee command:
+
+  ```bash
+  rg -n '^assembly confirms that the only banked reduction|^## Final verdict|^CONFIRMED for|^full-program/all-gates' research_notes/rh_goals_2026-08-14/lane_g/CR_REDUCTION_REREFEREE.md
+  ```
+
+  Re-referee output:
+
+  ```text
+  16:assembly confirms that the only banked reduction is C4: 2^100 -> 2^62+1; the
+  358:## Final verdict
+  360:CONFIRMED for the repaired candidate's exact prior gap: Section 8 closes the
+  368:full-program/all-gates claims listed above. No numeric refutation was found.
+  ```
