@@ -529,7 +529,7 @@ theorem-valid construction passes a cold referee.
 | q8 q-generic chain | `codex/law-q8-generic-20260819` / `.worktrees/law-q8-generic-20260819` | running | `lane_f/Q8_GENERIC_CERTIFICATION_SOL.md` + exact receipts |
 | effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | conditional endpoint candidate at `1059d6a`; cold referee running | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + exact receipts |
 | scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | **GAPS / NOT REFUTED; cold-refereed** | `lane_g/SCAT_EVAL_Q_SOL.md` + `SCAT_EVAL_Q_REFEREE.md` |
-| symmetric effective tail | `codex/law-symmetric-tail-20260819` / `.worktrees/law-symmetric-tail-20260819` | running | prove/refute two-small-vertical-side functional-equation pincer |
+| symmetric effective tail | `codex/law-symmetric-tail-20260819` / `.worktrees/law-symmetric-tail-20260819` | refutation candidate; cold referee pending | scalar two-wall FE pincer fails; two-channel replacement remains conjectural |
 
 - [ ] Test the exact block-Schur reduction suggested by the MMS sparsity:
   even `q` should reduce the growing `kappa x kappa` block companion to one
@@ -547,6 +547,12 @@ theorem-valid construction passes a cold referee.
   `Re(s)=1/2` for every cofinite one-cusp orbifold, not merely a combined
   eigenvalue/resonance Weyl law or real trivial poles.  Verify elliptic-point
   and Hecke-orbifold hypotheses before treating it as a LAW consumer.
+
+- [ ] Cold-referee the scalar symmetric-tail refutation.  The theta limit is
+  a two-cusp scattering matrix; its `(infinity,infinity)` entry has a nonzero
+  reciprocal defect, so the finite one-cusp functional equation makes the
+  reflected left error order one rather than `O(E_3(q))`.  Only a genuinely
+  new two-channel/full-matrix degeneration theorem could correct this route.
 
 - [x] Test the generalized-Dirichlet right-half-plane-zero bypass against
   Saias--Weingartner, Booker--Thorne, and Ramachandra.  None applies to the

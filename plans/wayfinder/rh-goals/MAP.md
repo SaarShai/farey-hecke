@@ -778,3 +778,26 @@ directive 2026-08-15
   sufficient.  Applicability to one-cusp Hecke orbifolds with elliptic points
   and the Selberg-zeta divisor convention must be explicit.  Status is
   **OPEN / CONJECTURAL** pending the source report; no LAW case is promoted.
+
+- **SCALAR SYMMETRIC TWO-WALL ROUTE — REFUTATION CANDIDATE, AWAITING COLD
+  REFEREE — 2026-08-19.**  The proposed reflection treated the theta
+  `(infinity,infinity)` scattering entry as if it obeyed a scalar reciprocal
+  functional equation.  It does not: the theta limit has two cusps and the
+  full matrix, not one entry, is the functional-equation object.  A fresh Arb
+  replay at the endpoint candidate printed:
+
+  ```text
+  theta_product_minus_1_abs_lower=0.926024876287502534352463729814300606...
+  D_theta_reflection_abs_lower=15.423014890041622776589648027616075632...
+  E_endpoint_upper=2.8213201351454672397783402934403767946e-16
+  F_left_floor_lower=15.423014890041544515549257002187031611...
+  F_left_over_E_lower=54665951225865880.023859285487343844...
+  symmetric_union_harmonic_measure_lower=0.944067026571504309702707553893741360...
+  ```
+
+  Thus the high symmetric harmonic weight cannot make the left wall small;
+  multiplying by `zeta(2s)` can remove the reflected theta pole but only
+  scales this nonzero reciprocal defect.  The corrected possible target is a
+  new two-channel/full-scattering-matrix degeneration theorem, currently
+  **CONJECTURAL / OPEN**.  The scalar refutation awaits its own read-only
+  referee before final banking and does not affect one-wall RATE-A.
