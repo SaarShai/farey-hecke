@@ -65,8 +65,9 @@ PINNED_SOURCE_SHA256 = {
     "f8_source_builder.py": "e7a27aaa23074eb5722c1d392a5a93f73f787c02ebc6f5faeb2af1d0802f747a",
     "f8_certify_tb_blocks.py": "30fd9b15a9425b1a356753f667909a8d58d826d4ac1e30f1a2e7667fcc73871c",
 }
-CHECKPOINT_SCHEMA = "q8-schur-contour-checkpoint/v2"
-CERTIFICATE_IMPLEMENTATION = "q8-schur-contour-repair/v2"
+CHECKPOINT_SCHEMA = "q8-schur-contour-checkpoint/v3"
+CERTIFICATE_IMPLEMENTATION = "q8-schur-contour-repair/v3"
+PRECISION_BITS = 384
 
 BLOCK_TO_NAME = {
     (2, 1, 1, False, False): "A2",
@@ -562,6 +563,76 @@ def certify_adaptive(segment: dict[str, Any], N: int, bounds: dict[str, Any], de
     return left_records + right_records, left_boxes + right_boxes, left_ok and right_ok
 
 
+def checkpoint_parameters(
+    N: int, K: int, max_depth: int, arc_start: int, arc_end: int
+) -> dict[str, Any]:
+    """Bind a checkpoint to the exact checker, dependency, and receipt bytes."""
+
+    return {
+        "implementation": CERTIFICATE_IMPLEMENTATION,
+        "checker_sha256": sha256(Path(__file__).resolve()),
+        "N": N,
+        "K": K,
+        "max_depth": max_depth,
+        "arc_start": arc_start,
+        "arc_end": arc_end,
+        "precision_bits": PRECISION_BITS,
+        "pin": {"re": PIN_RE, "im": PIN_IM, "half_width": HALF_WIDTH},
+        "factor_strings": list(RECEIPT_FACTORS),
+        "receipt_sha256": PINNED_RECEIPT_SHA256,
+        "source_sha256": PINNED_SOURCE_SHA256,
+    }
+
+
+def segment_from_initial_path(
+    initial_segments: list[dict[str, Any]], initial_arc: int, path: list[int]
+) -> dict[str, Any]:
+    """Reconstruct one adaptive leaf without trusting saved endpoints or boxes."""
+
+    if not (0 <= initial_arc < len(initial_segments)):
+        raise ValueError("checkpoint PASS record has an invalid initial arc")
+    segment = dict(initial_segments[initial_arc])
+    segment["initial_arc"] = initial_arc
+    segment["path"] = []
+    for bit in path:
+        left, right = split_segment(segment)
+        segment = left if bit == 0 else right
+    return segment
+
+
+def recompute_saved_pass_records(
+    records: list[dict[str, Any]],
+    initial_segments: list[dict[str, Any]],
+    N: int,
+    bounds: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Replace every saved PASS record with a fresh current-checker result."""
+
+    if ctx.prec != PRECISION_BITS:
+        raise ValueError(
+            f"checkpoint PASS recomputation requires precision {PRECISION_BITS}"
+        )
+    if bounds.get("N") != N:
+        raise ValueError("checkpoint PASS recomputation bounds have the wrong dimension")
+    refreshed: list[dict[str, Any]] = []
+    for saved in records:
+        if saved.get("status") != "PASS":
+            refreshed.append(saved)
+            continue
+        initial_arc = int(saved["initial_arc"])
+        path = list(saved["path"])
+        segment = segment_from_initial_path(initial_segments, initial_arc, path)
+        fresh, _fresh_box = arc_certificate(N, segment, bounds)
+        if fresh.get("status") != "PASS":
+            raise ValueError(
+                f"checkpoint PASS leaf {initial_arc}:{path} did not recompute to PASS"
+            )
+        fresh["subdivision_depth"] = len(path)
+        fresh["checkpoint_pass_recomputed"] = True
+        refreshed.append(fresh)
+    return refreshed
+
+
 def validate_checkpoint_records(
     params: dict[str, Any], completed: set[int], records: list[dict[str, Any]]
 ) -> None:
@@ -688,7 +759,7 @@ def main() -> int:
     args = parser.parse_args()
     if args.N < 2 or args.K < 1 or args.max_depth < 0:
         raise SystemExit("N>=2, K>=1 and max-depth>=0 required")
-    ctx.prec = 384
+    ctx.prec = PRECISION_BITS
     started = time.perf_counter()
     bounds = load_operator_bounds(args.r2, args.tb, args.w, args.N)
     segments = helper.closed_boundary_segments(arb(PIN_RE), arb(PIN_IM), arb(HALF_WIDTH), arb(HALF_WIDTH), args.K)
@@ -698,22 +769,18 @@ def main() -> int:
     arc_end = len(segments) if args.arc_end is None else args.arc_end
     if not (0 <= args.arc_start <= arc_end <= len(segments)):
         raise SystemExit("arc range must satisfy 0 <= start <= end <= 4*K")
-    params = {
-        "implementation": CERTIFICATE_IMPLEMENTATION,
-        "N": args.N,
-        "K": args.K,
-        "max_depth": args.max_depth,
-        "arc_start": args.arc_start,
-        "arc_end": arc_end,
-        "pin": {"re": PIN_RE, "im": PIN_IM, "half_width": HALF_WIDTH},
-        "factor_strings": list(RECEIPT_FACTORS),
-        "receipt_sha256": PINNED_RECEIPT_SHA256,
-        "source_sha256": PINNED_SOURCE_SHA256,
-    }
+    params = checkpoint_parameters(
+        args.N, args.K, args.max_depth, args.arc_start, arc_end
+    )
     completed: set[int] = set()
     records: list[dict[str, Any]] = []
+    recomputed_checkpoint_passes = 0
     if args.resume is not None:
         completed, records = load_checkpoint(args.resume, params)
+        recomputed_checkpoint_passes = sum(
+            record.get("status") == "PASS" for record in records
+        )
+        records = recompute_saved_pass_records(records, segments, args.N, bounds)
     unresolved = (
         any(record.get("status") != "PASS" for record in records)
         or not bounds["recorded_tail_checks_pass"]
@@ -754,7 +821,7 @@ def main() -> int:
         "K_per_edge": args.K,
         "max_depth": args.max_depth,
         "arc_range": [args.arc_start, arc_end],
-        "precision_bits": 384,
+        "precision_bits": PRECISION_BITS,
         "operator_bounds": {
             "hs": {name: arb_text(value) for name, value in bounds["hs"].items()},
             "Xop": arb_text(bounds["Xop"]),
@@ -771,9 +838,14 @@ def main() -> int:
         "tail_formula_checks": bounds["recorded_tail_checks"],
         "tail_formula_checks_pass": bounds["recorded_tail_checks_pass"],
         "bindings": {
+            "checker_sha256": params["checker_sha256"],
             "geometry_verified": bounds["geometry_verified"],
             "receipt_hashes_verified": bounds["receipt_hashes_verified"],
             "source_hashes_verified": bounds["source_hashes_verified"],
+        },
+        "checkpoint_resume": {
+            "used": args.resume is not None,
+            "saved_pass_records_recomputed": recomputed_checkpoint_passes,
         },
         "finite_arc_count": len(ordered),
         "all_strict_gates_pass": all_pass,

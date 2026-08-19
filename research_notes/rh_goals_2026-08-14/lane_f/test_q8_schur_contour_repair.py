@@ -18,7 +18,7 @@ import q8_schur_contour as contour
 class Q8SchurContourRepairTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        ctx.prec = 192
+        ctx.prec = contour.PRECISION_BITS
 
     def test_complex_modulus_enclosure_contains_referee_endpoint_counterexample(self) -> None:
         segment = helper.closed_boundary_segments(
@@ -142,6 +142,66 @@ class Q8SchurContourRepairTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "exact partition"):
                 contour.load_checkpoint(path, params)
+
+    def test_checkpoint_parameters_bind_actual_checker_bytes(self) -> None:
+        params = contour.checkpoint_parameters(2, 1, 0, 0, 4)
+        actual = contour.sha256(Path(contour.__file__).resolve())
+        self.assertEqual(params["checker_sha256"], actual)
+        self.assertEqual(len(params["checker_sha256"]), 64)
+
+        forged_params = dict(params)
+        forged_params["checker_sha256"] = "0" * 64
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "wrong-checker.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "schema": contour.CHECKPOINT_SCHEMA,
+                        "params": forged_params,
+                        "completed_initial_arcs": [],
+                        "records": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "checkpoint schema/parameters"):
+                contour.load_checkpoint(path, params)
+
+    def test_forged_pass_boxes_that_wind_are_recomputed_and_rejected(self) -> None:
+        segments = helper.closed_boundary_segments(
+            arb(contour.PIN_RE),
+            arb(contour.PIN_IM),
+            arb(contour.HALF_WIDTH),
+            arb(contour.HALF_WIDTH),
+            1,
+        )
+        for segment in segments:
+            segment["initial_arc"] = segment["arc_index"]
+            segment["path"] = []
+
+        radius = arb("0.6")
+        forged_boxes = [
+            acb(arb(1, radius), arb(0, radius)),
+            acb(arb(0, radius), arb(1, radius)),
+            acb(arb(-1, radius), arb(0, radius)),
+            acb(arb(0, radius), arb(-1, radius)),
+        ]
+        forged_winding, _ = helper.certified_winding_from_arc_boxes(forged_boxes)
+        self.assertEqual(forged_winding, 1)
+        forged_records = [
+            {
+                "initial_arc": initial,
+                "path": [],
+                "status": "PASS",
+                "finite_taylor_box": contour.acb_text(box),
+            }
+            for initial, box in enumerate(forged_boxes)
+        ]
+        bounds = contour.load_operator_bounds(
+            contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 2
+        )
+        with self.assertRaisesRegex(ValueError, "did not recompute to PASS"):
+            contour.recompute_saved_pass_records(forged_records, segments, 2, bounds)
 
     def test_v1_checkpoint_is_conservatively_refused(self) -> None:
         params = {"N": 2}

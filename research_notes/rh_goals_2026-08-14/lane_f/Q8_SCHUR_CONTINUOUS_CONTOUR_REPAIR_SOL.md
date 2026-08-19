@@ -113,3 +113,53 @@ separately OPEN:
 
 The projected N=104 behavior is therefore fail-closed `OPEN`; no N=104 runtime
 or contour result is claimed.
+
+---
+
+## Dated checkpoint-provenance correction — 2026-08-19
+
+This append-only correction answers the stacked cold-referee commit
+`e0a9b30b893a13193e7567e61e6d3961a718f92a`. All claims remain
+**CONJECTURAL PENDING A NEW COLD REFEREE**; the full output-projection tail is
+still hard OPEN and N=104 was not run.
+
+### Corrected checkpoint contract
+
+Checkpoint schema v3 binds `params.checker_sha256` to the actual bytes of
+`q8_schur_contour.py`, not merely an implementation label. The repaired
+checker SHA-256 at this correction is:
+
+```text
+ef088d357da72ea44079bccfa643a4a76fc86fb87db3305566cff5e2b9233c76
+```
+
+The parameter object also retains the pinned precision, contour coordinates,
+F1024 factors, dependency hashes, and receipt hashes. Any checker-byte change
+therefore makes an old checkpoint parameter-incompatible.
+
+After structural loading, every saved `PASS` leaf is treated as untrusted.
+The checker reconstructs its segment solely from the trusted initial contour
+arc and binary subdivision path, reruns `arc_certificate` at 384-bit precision
+with the current verified receipts/bounds, and replaces the saved record and
+box with that fresh result. If the fresh result is not `PASS`, resume raises
+and fails closed before winding. Saved `OPEN_MAX_DEPTH` leaves remain
+diagnostic, but their presence prevents winding as before.
+
+### Adversarial receipts and blast radius
+
+The added tests cover both load-bearing referee cases:
+
+1. A v3 checkpoint carrying a different checker hash is rejected by exact
+   parameter comparison.
+2. Four forged nonzero overlapping PASS boxes have certified winding 1 when
+   sent directly to the winding helper, but checkpoint resume reconstructs the
+   real leaves and rejects them because the current full-tail gates cannot
+   freshly produce PASS.
+
+Blast radius is restricted to checkpoint creation/resume and its diagnostics:
+old v1/v2 checkpoints are conservatively incompatible; v3 OPEN-only resumes
+remain diagnostic; newly computed non-resume arcs use the same finite checker.
+The F1024 geometry/hash gates, complex displacement enclosure, adverse tail
+comparison, and hard-open `full_tau=None` behavior are unchanged. E1,
+MMS/Hilbert binding, `K_s`, common continuation/Selberg factorization, and a
+new independent referee remain OPEN.
