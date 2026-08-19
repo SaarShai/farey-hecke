@@ -289,6 +289,117 @@ and finite algebra are machine-verified, while the paper source-table map,
 coverage, canonical/Ford inputs, analytic `(FW)`/`(AM)`, and RATE-A machine
 certificate remain `GAPS / CONJECTURAL` at Lean level.
 
+## Unconditional RATE proof push — 2026-08-19
+
+Goal: make a new, referee-audited advance on the smallest load-bearing gate
+between the paper-level balanced/matched RATE-A theorem and an unconditional
+all-`q` law.  Kaggle and Aristotle are permitted only where they can return a
+durable exact certificate or a rebuildable formal artifact; exploratory output
+is never promoted to proof.
+
+Routing receipt (before mutation): the task-defining artifacts are `start.md`,
+`tasks/lessons.md`, the 2026-08-19 RATE closure section above,
+`plans/wayfinder/rh-goals/MAP.md`, `R5_ACTIVATION_CLOSURE_SOL.md`,
+`R5_ASSEMBLY_EXECUTION_SOL.md`, `DH2_RENEWAL_PROOF_SOL.md`, and
+`HOLOMORPHY_GATE_SOL.md`.  Authority is the owner's new request plus the prior
+RATE house rules.  Diagnosis is not yet SPEC'D, so the frontier orchestrator
+owns the dependency judgment.  Three bounded read-only scouts gather exact
+file/command evidence: finite-certificate inventory, determinant/continuation
+theory inventory, and Aristotle-ready formal targets.  No scout may mutate the
+tree or git state.  Once a target is selected, any expected 30+ line
+construction is delegated with an exact gate; every proof claim gets a separate
+cold referee before a MAP status change.  Preserved `.worktrees/`, caches,
+tarballs, and `graphify-out/` remain out of scope.
+
+- [ ] Reconstruct the current dependency graph and state the exact first open
+  implication needed for an unconditional full law.
+- [ ] Audit whether any existing scalar-`phi_q` evaluator plus Arb/interval
+  machinery can produce a finite zero-minus-pole certificate; quantify the
+  feasible `q` range and the exact missing input.
+- [ ] Audit the current Fredholm/scattering determinant identification and
+  continuation notes, including all dated errata, and isolate the smallest
+  theorem-strength repair that would bypass the astronomical finite block.
+- [ ] Select one proof-producing construction lane; if it emits a proof claim,
+  run a fresh adversarial referee in a separate `*_REFEREE.md`.
+- [ ] Dispatch Aristotle only for a load-bearing formal statement with an exact
+  source-to-type map, then harvest and independently rebuild before banking.
+- [ ] Dispatch Kaggle only for a bounded exact computation with a local replay
+  checker and a harvestable manifest; label all search-only output
+  `CONJECTURAL` / `NOT PROOF`.
+- [ ] Append dated MAP entries for every status change, run whole-lane receipts,
+  commit explicit scoped paths, and leave a one-paragraph running/open handoff.
+
+```loop
+name: unconditional-rate-proof-push
+topology: closed inner fleet
+generator: selected proof or exact-certificate builder after three read-only evidence scouts
+verifier: separate cold adversarial referee plus orchestrator command replay
+gate: python3 skills/loop-engineering/tools/loop_lint.py tasks/todo.md && git diff --check && rg -n 'PROOF|CONJECTURAL|GAP|OPEN|REFUT' research_notes/rh_goals_2026-08-14/lane_g plans/wayfinder/rh-goals/MAP.md
+stop: one load-bearing implication is referee-confirmed or honestly refuted, every attempted computational/formal task is harvested or explicitly open, and MAP matches the evidence
+budget: max_iterations=2 per construction/referee pair
+quorum: independent referee verdict plus exact local replay or independent Lean rebuild
+anchor_files: tasks/todo.md, plans/wayfinder/rh-goals/MAP.md, research_notes/rh_goals_2026-08-14/lane_g/R5_ACTIVATION_CLOSURE_SOL.md
+state_store: tasks/todo.md worker ledger and append-only MAP entries
+recall: reread this section and the MAP tail before every status change
+writeback: record scout evidence, builder artifact, referee verdict, commands, failures, and next action
+state_concurrency: single_writer
+output_actions: commit scoped proof artifacts and ledgers; default deny push and every other external action except explicitly proof-producing Kaggle/Aristotle tasks
+on_error: retry one transient transport failure; preserve mathematical counterexamples; stop consumers on a refutation; surface auth or missing-authority blockers
+verifier_blind: true
+```
+
+| worker | task | status | result captured | wiki/log | close reason |
+|---|---|---|---|---|---|
+| finite-certificate scout | scalar evaluator and Kaggle feasibility | complete-with-concerns | true-scalar certified range is empty; current conditional cutoff forces 97418971860452658435229799565334786142 non-arithmetic targets | no wiki write | read-only audit harvested; lane guard PASS |
+| determinant-theory scout | continuation/determinant repair inventory | complete-with-concerns | q=5 v3.1 chain is banked; general-q cancellation-safe scalar evaluator is OPEN | no wiki write | cold read-only report harvested; q=8 follow-up requested |
+| formalization scout | v31 load-bearing Aristotle target | pending | — | — | — |
+
+### Review/results
+
+- Concurrency-integrity note: the pre-scout lane-guard snapshot recorded
+  `wiki/L1_index.md` at blob
+  `fba29a36011143dd671c200bbfe78a3d160d19eb`; a later read-path re-index left
+  the file equal to `HEAD`.  `git cat-file -p` recovered the exact snapshot
+  blob and `git log --all --find-object=...` showed it is historical generated
+  index content, not unique user work.  No restoration is warranted; resnapshot
+  before any writer lane.
+- Determinant scout verdict: the `q=5` v3.1
+  winding-to-resonance chain remains banked at its local stated scope.  The
+  first general-`q` scalar-computation theorem, `(SCAT-EVAL_q)`, is
+  **CONJECTURAL / OPEN**: it must give a cancellation-safe determinant quotient
+  for `phi_q`, compatible continuation/normalization, and explicit determinant
+  plus derivative tails.  This is neither Aristotle-ready nor Kaggle-ready;
+  downstream finite contour jobs become computationally meaningful only after
+  that paper theorem.
+- Finite-certificate scout verdict: the largest certified full-`H_0`
+  true-scalar `phi_q` range is empty.  Replaying the reduced conditional onset
+  gave `q_transport=97418971860452658435229799565334786148`, hence
+  `97418971860452658435229799565334786142` non-arithmetic law targets below it
+  (the final full-program range remains **UNDEFINED**).  Existing Kaggle
+  architecture exactly replays transfer-determinant certificates, but no
+  theorem-valid scalar evaluator exists, so a new run would remain **NOT
+  EVIDENCE** for the finite scalar gate.  A covering theorem or much smaller
+  onset is necessary in addition to `(SCAT-EVAL_q)`.
+
+### Scope correction — 2026-08-19
+
+The live MAP defines **LAW** as: every non-arithmetic Hecke group `G_q` has a
+Selberg-zeta zero/scattering resonance strictly off the critical line.
+Accordingly, the section title's initial RATE-only reading was too narrow.
+`(RATE)` remains a load-bearing effective-tail input, but the destination is
+the full LAW: an effective uniform tail plus a certified finite base.  The
+three already-dispatched RATE scouts are retained as evidence lanes; their
+results will be judged against this broader dependency graph.
+
+Fresh artifact inventory also changes the finite-base premise: Kaggle work is
+already harvested for `q = 8, 9, 10, 11, 12`.  `F8_CERT_PLAN.md` and
+`F9_F12_BASE_EXTENSION.md` certify closed-contour determinant boxes, but their
+own scope banners explicitly refuse assembled off-line theorems.  The next
+construction candidate is therefore not another Kaggle run: close and referee
+the missing determinant-identification / `K_s` / source-factorization links,
+starting with `q = 8`, while preserving explicit gaps for `q = 9..12` where
+the TB/enlarged-disc layer is absent.
+
 Final verification reran `./te doctor`, the loop linter, all three arithmetic
 receipt families, the exact v30 Lean rebuild, forbidden-declaration and axiom
 audits, nine signature comparisons, Aristotle completion status, diff/secret/
