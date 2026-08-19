@@ -350,3 +350,32 @@ bytes produced the same finite-section outputs.  Reproduction does not repair
 the missing analytic enclosure.  No q=9..12 downstream assembly may resume
 until theorem-valid evaluator, exact-box, R2/Fredholm-tail, continuous-R3b,
 E1, `K_s`, and source-applicability gates are independently discharged.
+
+---
+
+## DATED REFEREE BANKING — 2026-08-19
+
+The per-driver question left OPEN above is now closed negatively by the cold
+`F8_R3B_REFUTATION_REFEREE.md`: q=9,10,11,12 all call the same endpoint-only
+`certify_segment` rule and the same unproved q=5-backend dimension-tail
+extrapolation (through the parity-selected wrapper).  Thus the former
+continuous-Fredholm `CLOSED_CONTOUR_CERTIFIED` interpretation is **REFUTED for
+all four q**, not merely at risk.  The local/Kaggle artifacts remain supported
+same-byte sampled finite-section polygon winding evidence only.
+
+Binding driver receipt:
+
+```text
+93  """Verbatim from f8_certify_r3b_flagship.py except that the engine module
+94  is selected by parity instead of being the hard-wired even one."""
+117 det, tail, info, kappa = self.M.cert_det(...)
+145 def certify_segment(...)
+146 A = ev.det_ball(*p0)
+147 B = ev.det_ball(*p1)
+149 if w.real.lower() > 0:
+160 mid = (...)
+161 return certify_segment(ev, p0, mid, ...) + certify_segment(...)
+```
+
+No q=9..12 Selberg-zero/resonance theorem follows from these receipts.  Those
+conclusions remain **CONJECTURAL**.

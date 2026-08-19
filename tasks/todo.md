@@ -426,3 +426,34 @@ exceeded by the deliberately granular proof/referee/ledger commits; this is a
 recorded orchestration-budget deviation, not a mathematical or artifact gate.
 History was not rewritten. No push occurred because the preserved pre-existing
 untracked inventory keeps the literal tree non-clean.
+
+## Unconditional LAW proof push — referee harvest 2026-08-19
+
+- [x] Reconstructed the actual LAW dependency and separated RATE-A, the
+  true-scalar finite gate, per-q determinant instances, and the qualitative
+  Selberg–Hejhal tail.
+- [x] Completed the finite-evaluator, determinant-theory, and Aristotle-target
+  audits with read-only lane-guard PASS receipts.
+- [x] Stopped and corrected a banked false target: the q=8 continuous-contour
+  certificate interpretation is referee-confirmed false, and exact driver
+  comparison extends the same refutation to q=9..12.  Same-byte Kaggle outputs
+  are retained only as sampled finite-section evidence.
+- [x] Ran q=7 adversarial round 2.  Numerical Hilbert-side gates replay, but
+  the q=7 Hilbert-to-MMS Clause-1 operator binding is OPEN; verdict **GAPS / NOT
+  REFUTED**, so no declaration.
+- [ ] Finish the v31 FALSE-AS-STATED Lean repair and cold-referee its explicit
+  counterexamples.  Do not submit Aristotle unless a non-false paper-source
+  target survives.
+- [ ] Prove the q=7/q-generic 19-block operator-binding/common-continuation
+  theorem, bank MMS primary source text, and re-referee before any q=7 upgrade.
+- [ ] Rebuild q=8 from a theorem-valid evaluator/exact box/R2 tail/continuous
+  R3b/E1/`K_s` chain before any new Kaggle replay.
+
+| worker | task | status | result captured | wiki/log | close reason |
+|---|---|---|---|---|---|
+| q=8 refutation referee | endpoint/tail countermodels + q=9..12 blast radius | complete-with-concerns | `REFUTATION CONFIRMED`; local q=8 Kaggle log absent, embedded hashes/receipts checked | MAP + lane correction blocks | banked in `F8_R3B_REFUTATION_REFEREE.md` |
+| q=7 referee round 2 | cold full-chain review | complete-with-concerns | `GAPS / NOT REFUTED`; first gap Link 4b operator binding | MAP + assembly correction block | banked in `THEOREM_G7_OFFLINE_REFEREE2.md` |
+| v31 builder repair | prove false-target negations, remove impossible submission | running | initial dispatch rejected before Aristotle | pending | FALSE-AS-STATED repair in isolated worktree |
+
+Session handoff remains open until the v31 repair is harvested.  No q=8..12
+Kaggle job and no v31 Aristotle job is authorized from the current artifacts.

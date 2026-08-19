@@ -645,3 +645,27 @@ the eq.-(32) evaluator, exact Arb box, theorem-valid R2/Fredholm and derivative
 tails, continuous R3b subarcs, E1, `K_s`, and primary-source factorization;
 Kaggle becomes relevant only after those local proof gates are frozen.  Final
 banking of this correction awaits a separate cold referee file.
+
+---
+
+## DATED REFEREE BANKING — 2026-08-19
+
+`F8_R3B_REFUTATION_REFEREE.md` returns **REFUTATION CONFIRMED** after a cold
+source reconstruction, an actual `certify_segment` countermodel, a separate
+finite-tail countermodel, receipt/hash comparison, and parity-by-parity audit
+of the q=9..12 driver.  The correction immediately above is therefore fully
+banked: q=8 has sampled finite-section polygon winding evidence only; the old
+continuous-Fredholm-certificate interpretation is false.
+
+Decisive referee receipt:
+
+```text
+ACTUAL_CERTIFY_SEGMENT_COUNTERMODEL seen= [(0.0, 0.0), (1.0, 0.0)]
+ACTUAL_CERTIFY_SEGMENT_COUNTERMODEL stats= {'segments': 1, 'bisections': 0, 'max_depth_used': 0} delta_arg= 0
+ACTUAL_CERTIFY_SEGMENT_COUNTERMODEL interior_zero= 0.0 endpoint_nonzero= True accepted_without_interior_sample= True
+TAIL_COUNTERMODEL observed_ratios= [0.5, 0.5, 0.5] q_obs= 0.5 estimated_tail= 0.125 next_increment= 100.0 bound_violated= True
+```
+
+This refutes the certificate implication, not the existence of an actual q=8
+zero.  A genuine q=8 Selberg-zero/resonance theorem remains **CONJECTURAL** and
+requires the repair list above.

@@ -576,3 +576,39 @@ Both are read-only apart from their own receipts under `f7_receipts/`
 Wall time: < 2 s each.
 
 READY FOR JUDGING
+
+---
+
+## DATED ROUND-2 REFEREE CORRECTION — 2026-08-19
+
+`THEOREM_G7_OFFLINE_REFEREE2.md` returns **GAPS / NOT REFUTED**.  The numerical
+q=7 Hilbert-side chain replays at its stated scope (winding 1, theorem-valid
+Fredholm comparison, E1 contraction, and `K_s` clearance), but Link 4b is not
+proved by the cited q=5 v3.1 note.  That note's Clause 1 binds the reduced q=5
+system (`h=1`, `kappa=3`, eleven blocks, q=5 radii); this assembly supplies
+q=7 numerical data (`h=2`, `kappa=5`, nineteen blocks) but no explicit theorem
+identifying its exact branches, weights, source geometry, and `+` sector with
+the MMS Banach operator.
+
+Binding scope receipt:
+
+```text
+$ nl -ba lane_g/TB_R5_DETERMINANT_IDENTIFICATION.md | sed -n '14,28p'
+14  ## Clause 1 — exact operator binding (unique formulas, wrapper-bound)
+16  The object is the reduced q=5 P-symmetric-sector block system of MMS
+17  eq. (34) with h_q = 1, kappa_q = 3 ...
+25  Eleven blocks ...
+
+$ nl -ba lane_f/THEOREM_G7_OFFLINE_ASSEMBLY.md | sed -n '138,148p'
+138 4b. HILBERT → BANACH TRANSPORT [PAPER-PROOF q-INDEPENDENT + MACHINE at q=7].
+140 `TB_R5_DETERMINANT_IDENTIFICATION.md` v3.1 with its machine constants
+141 re-pointed at the q=7 receipts.
+144 all 19 blocks ...
+```
+
+Corrected status: the q=7 Hilbert Fredholm-zero certificate is supported, but
+the implication to an MMS determinant zero, Selberg-zeta zero, and resonance
+remains **CONJECTURAL / OPEN**.  q=7 is not declared.  The first positive repair
+target is an explicit q-generic or q=7 Clause-1 operator-binding/common-
+continuation theorem, followed by a new cold referee; the unbanked MMS primary
+source text is a second independent gap.

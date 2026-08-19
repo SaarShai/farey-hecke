@@ -479,3 +479,23 @@ directive 2026-08-15
   not touch the declared q=5 theorem, the independently built q=7 chain,
   qualitative Selberg–Hejhal tail, or paper-level RATE-A.  A separate cold
   q=8 refutation referee is required before the correction is fully banked.
+
+- **F8–F12 CONTOUR REFUTATION REFEREE-CONFIRMED; G7 ROUND 2 RETURNS GAPS —
+  2026-08-19** (`F8_R3B_REFUTATION_REFEREE.md` and
+  `THEOREM_G7_OFFLINE_REFEREE2.md`, both cold): the q=8 endpoint rule accepts
+  the entire countermodel `f(t)=(t-1/2)^2` without sampling its interior zero,
+  and a finite sequence with three observed ratios `0.5` followed by increment
+  `100` violates the extrapolated tail `0.125`.  Source comparison shows the
+  q=9..12 driver is verbatim at those two gates, selecting parity engines that
+  reuse the same q=5-backend tail.  Therefore the old continuous-Fredholm
+  `CLOSED_CONTOUR_CERTIFIED` interpretation is **REFUTED for every q=8..12**;
+  the exact local/Kaggle runs survive only as same-byte sampled finite-section
+  polygon winding evidence, and every zero/resonance conclusion stays
+  **CONJECTURAL**.  Separately, q=7 round 2 replayed its numerical Hilbert-side
+  gates but found the first paper gap at Link 4b: the cited v3.1 Clause 1 binds
+  q=5's 11-block operator, not q=7's 19-block engine.  q=7 therefore remains
+  **GAPS / NOT REFUTED, not declared** until an explicit q=7/q-generic
+  Hilbert-to-MMS operator-binding/common-continuation theorem is proved and
+  re-refereed.  Blast radius: q=5, RATE-A, and the qualitative
+  Selberg–Hejhal large-q theorem are unchanged; the finite LAW base currently
+  has no newly declared q=7..12 member from these artifacts.
