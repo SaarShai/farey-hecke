@@ -948,3 +948,59 @@ directive 2026-08-15
   $ git cherry-pick 2a00b3a...
   [codex/prime-step-review-economic-validation 2ff6bf4] Referee q8 Schur continuous contour
   ```
+
+- **LAW — UNCONDITIONAL PAPER-LEVEL PROOF CONFIRMED AT THE ACCEPTED
+  SCATTERING-RESONANCE SCOPE — 2026-08-19.**  Candidate
+  `LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md` and independent adverse report
+  `LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_REFEREE.md` are banked.  The referee
+  confirms, for every finite integer `q>=3`, the weighted strict-right zero
+  law
+
+  ```text
+  sum_{|Im rho|<T, Re rho>1/2} (Re rho-1/2)
+    = (1/(2*pi)) T log T + A_q T + O_q(log T),
+  ```
+
+  and the shorter sufficient triangular law
+
+  ```text
+  F_q(1/2,T) = (1/(4*pi)) T^2 log T + O_q(T^2).
+  ```
+
+  Hejhal supplies the positive generalized Dirichlet series and vertical
+  bound for the actual elliptic Hecke groups; FJS/Venkov supply orbifold
+  meromorphy, finite real right exceptions, functional equation, and divisor
+  conventions; MMS supplies cofinite one-cusp scope and identifies the
+  nonarithmetic finite family as `q not in {3,4,6}`; Kelmer's printed
+  Selberg/Titchmarsh argument applies at the same gamma-induced boundary zero.
+  The triangular main term cannot be supplied by finitely many right zeros,
+  so infinitely many are nonreal.  The functional equation reflects each,
+  with multiplicity, to a scalar scattering pole strictly left of
+  `Re(s)=1/2`.  Because the scattering matrix is `1x1`, these are standard
+  scattering resonances.  Therefore **every nonarithmetic finite Hecke group
+  has a resonance strictly off the critical line: LAW CONFIRMED,
+  unconditional at paper level.**
+
+  Exact banking/source receipts:
+
+  ```text
+  $ git cherry-pick eefc21481094766fea3cc73a7d74e361a35dea6e
+  [codex/prime-step-review-economic-validation 6b31d18] Document direct orbifold scattering source bridge
+  $ git cherry-pick 9701fac0bdde591b9c7e01af77330e7ed0de91b0
+  [codex/prime-step-review-economic-validation 431b66c] Referee direct orbifold scattering source bridge
+  $ shasum -a 256 LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md Hejhal_LNM1001_Vol2_s7_pp568-600.pdf
+  05f4cfbce51a8fbcec7766c9e301039312474b29ac08dcb7f0df4b300c942076  LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md
+  b0f9a7001b10f5e0eae5e5aca85124c0a233256aa0e08b5c0f04720185a2b1e9  Hejhal_LNM1001_Vol2_s7_pp568-600.pdf
+  $ fresh-source byte comparisons in the cold referee
+  kelmer_cmp=0
+  fjs_cmp=0
+  mms_cmp=0
+  $ git diff --check HEAD^ HEAD  # referee worktree
+  <exit 0; no output>
+  ```
+
+  Scope boundary: no effective first height, `q`-uniform error, machine
+  certificate, or project-specific Selberg-zeta normalization is promoted.
+  Route A's corrected q8 localization and Route B's effective onset remain
+  stronger **OPEN** follow-ups, not dependencies of the now-proved qualitative
+  scattering-resonance LAW.

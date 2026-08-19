@@ -669,3 +669,24 @@ CONFIRMED; abstract Banach wording GAPS / NOT REFUTED; downstream LAW OPEN.
 - [ ] Obtain a new independent cold referee before treating any corrected
   contour output as proof.  E1, MMS/Hilbert binding, `K_s`, continuation, and
   Selberg factorization remain **CONJECTURAL / OPEN** independently.
+
+### Full LAW closure — direct Hecke-orbifold source bridge — 2026-08-19
+
+- [x] Bank `LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md` and the independent
+  `LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_REFEREE.md`.
+- [x] Verify directly on primary pages: finite Hecke convention and one cusp;
+  positive generalized Dirichlet normalization; meromorphy and finite real
+  exceptions; functional equation and unitarity; Hejhal vertical bound;
+  Kelmer/Selberg boundary-zero Jensen identity; gamma coefficient; nonreal
+  infinitude; multiplicity-preserving pole reflection; and scattering-resonance
+  terminology.
+- [x] Append the referee's three wording repairs without silently changing the
+  candidate: central zero belongs to `L_q^*`, the horizontal bound uses the
+  Selberg--Titchmarsh argument, and no explicit formula for `A_q` is consumed.
+- [x] Promote the exact theorem: every finite `q>=3`, hence every
+  nonarithmetic finite `q not in {3,4,6}`, has infinitely many nonreal scalar
+  scattering poles strictly left of `Re(s)=1/2`.  The qualitative
+  scattering-resonance **LAW is unconditional and CONFIRMED at paper level**.
+- [ ] Retain q8 localization, effective first height/onset, q-uniform errors,
+  machine formalization, and project-specific Selberg-zeta normalization as
+  stronger **OPEN** follow-ups; none is a dependency of the confirmed LAW.

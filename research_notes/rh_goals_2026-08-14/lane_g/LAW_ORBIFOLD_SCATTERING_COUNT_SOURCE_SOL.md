@@ -395,3 +395,45 @@ Primary URLs:
 - [Mayer--Muhlenbruch--Stromberg, The transfer operator for the Hecke triangle groups](https://doi.org/10.3934/dcds.2012.32.2453), group presentation and one-cusp statement.
 
 **Final lane label: PROOF CANDIDATE / CONJECTURAL pending cold referee; READY FOR COLD REFEREE.**
+
+## Cold-referee promotion and wording corrections — 2026-08-19
+
+The separate adverse report
+`LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_REFEREE.md` returns **CONFIRMED** for
+the accepted scattering-resonance LAW scope. Thus the earlier
+`PROOF CANDIDATE / CONJECTURAL` label is superseded as follows:
+
+> **THEOREM (paper-level, unconditional).** For every finite integer
+> \(q\ge3\), the scalar trivial-character scattering determinant of the
+> one-cusp Hecke triangle orbifold has infinitely many nonreal zeros
+> \(\rho\) with \(\Re\rho>1/2\), and therefore infinitely many
+> multiplicity-matched scattering poles \(1-\rho\) with
+> \(\Re(1-\rho)<1/2\). In particular, every nonarithmetic finite Hecke
+> group \(G_q\), \(q\notin\{3,4,6\}\), has a scattering resonance strictly
+> off \(\Re s=1/2\).
+
+The referee also confirms the stronger weighted asymptotic (C). For the LAW
+existence conclusion, the shorter triangular argument is sufficient:
+
+\[
+F_q(\tfrac12,T)=\frac{1}{4\pi}T^2\log T+O_q(T^2),
+\]
+
+where finitely many total right zeros would make the defining sum only
+\(O_q(T)\).
+
+Three wording repairs are appended without changing the theorem:
+
+1. \(\phi_q\) has no central divisor; the normalization \(L_q^*\) has the
+   exactly simple zero at \(s=1/2\).
+2. The horizontal \(O_q(\log T)\) term uses the right-edge normalization and
+   the Selberg--Titchmarsh argument reproduced by Kelmer, not the modulus
+   bound alone.
+3. No explicit formula for the group-dependent linear coefficient \(A_q\) is
+   consumed; its existence is all that is asserted.
+
+This promotion certifies no effective first height, no \(q\)-uniform error,
+no machine formalization, and no project-specific Selberg-zeta normalization.
+Those stronger statements remain **OPEN** and are not needed for the stated
+scattering-resonance LAW. This dated block preserves rather than silently
+rewrites the original candidate status.

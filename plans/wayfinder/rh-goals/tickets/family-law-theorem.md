@@ -51,3 +51,22 @@ anything in the literature.
 ## Receipts
 lane_f/ (q=7 chain), lane_g/ (flagship chain + mechanism M1d–M1g),
 tickets/family-offline-theorem.md (subsumed instance-level ticket).
+
+## Closure correction — 2026-08-19
+
+The `status: open` line above is superseded, without being silently rewritten,
+at the accepted scattering-resonance scope.  The direct fixed-`q` Hejhal
+normalization plus the Selberg/Kelmer weighted zero argument is proved in
+`lane_g/LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md` and **CONFIRMED** by the
+separate cold `LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_REFEREE.md`.
+
+For every finite `q>=3` there are infinitely many nonreal zeros of the scalar
+scattering determinant in `Re(s)>1/2`; functional reflection gives
+multiplicity-matched scalar scattering poles in `Re(s)<1/2`.  Hence every
+nonarithmetic finite Hecke group, exactly `q not in {3,4,6}`, has a scattering
+resonance strictly off `Re(s)=1/2`.  **Ticket status: CONFIRMED at unconditional
+paper level for the disjunctive scattering-resonance LAW.**
+
+This correction does not claim an effective first height, a q-uniform error,
+a machine certificate, or the project-specific Selberg-zeta normalization.
+Those stronger localization/effectivization goals remain open follow-ups.
