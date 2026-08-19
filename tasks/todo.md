@@ -214,11 +214,11 @@ orchestrator to materialize. No worker may change git state. Untracked caches,
   factor in `C_R`, ranking losses by log contribution, and distinguishing
   proved substitutions from counterfactual opportunities. Referee any claimed
   improved constant before changing a theorem ledger.
-- [ ] Formalization: draft v30 `(FW)` and AM marked-coding/decoder targets using
+- [x] Formalization: draft v30 `(FW)` and AM marked-coding/decoder targets using
   v29's dispatch pattern, include the escape hatch, syntax-precheck in the v26
   cache, submit only if the dispatch contract is complete, then harvest and
   independently rebuild if a result lands.
-- [ ] After each returned worker: run the lane git guard, compare against the
+- [x] After each returned worker: run the lane git guard, compare against the
   dispatch criteria, record the result in the worker ledger, and quarantine any
   unsupported claim.
 - [ ] End with fresh tests/receipts, explicit-path commits using recent message
@@ -253,7 +253,8 @@ verifier_blind: true
 | C_R constant autopsy | done | done | primary/fallback ceilings and strict A0 candidates isolated | MAP banked | first referee required repair |
 | C_R cold referee | done | done | arithmetic `CONFIRMED`; ranked-loss documentation `GAPS` | repair appended | re-referee required |
 | C_R repair re-referee | done | done | ranked autopsy `CONFIRMED`; primary `C_R'` banked | MAP banked | machine/full-program gates remain open |
-| v30 writer | typed FW/AM dispatch | running externally | syntax exit 0; Aristotle project `97b16c1b-653d-42b9-a5da-4ed765a8eb88` | harvest pending | task at 3% |
+| v30 writer + Aristotle | typed FW/AM dispatch | done | project/task completed; exact result harvested | result committed | cold referee required |
+| v30 cold referee | returned Lean scope/build audit | done | finite wire-format targets `CONFIRMED`; paper/analytic scope `GAPS` | MAP banked | exact v26 rebuild and signatures pass |
 
 ### Review/results
 
@@ -279,3 +280,11 @@ the new scale, and declined speculative `M_0` headroom. The second cold report
 confirmed that repair; the sharper alternative RATE-A ceiling and selected
 conditional A0 cutoff are now banked, while finite/machine/full-program gates
 remain open.
+
+V30 was submitted and harvested rather than left as a draft. The exact
+returned `RateCoreV.lean` rebuilds against the v26 cache with no `sorry` or
+declared `axiom`, and a cold referee matched all requested signatures. The
+promotion is intentionally narrow: executable local `MarkedCode` serialization
+and finite algebra are machine-verified, while the paper source-table map,
+coverage, canonical/Ford inputs, analytic `(FW)`/`(AM)`, and RATE-A machine
+certificate remain `GAPS / CONJECTURAL` at Lean level.

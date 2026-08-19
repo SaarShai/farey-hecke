@@ -269,3 +269,64 @@ scope. In particular, the full analytic `(FW)` estimate, Ford counting,
 canonical normal form, source-table coverage, the `(AM)` atom-moment theorem,
 and machine certification of `(RATE-A)` remain **CONJECTURAL at the Lean
 level**.
+
+## COLD REFEREE PROMOTION 2026-08-19 — FINITE SCOPE ONLY
+
+The separate `V30_REFEREE.md` reviewed the exact returned source with SHA-256
+
+```text
+a7bbee7e18a51ce9271222cc5f0e7b4553a77d9ecc3c2b09fdfbd9db3ad629dc  result/aristotle_dispatch_v30_aristotle/RateCoreV.lean
+```
+
+Fresh main-worktree receipt:
+
+```bash
+returned=/Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v30/result/aristotle_dispatch_v30_aristotle/RateCoreV.lean
+( cd /Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle && \
+  /Users/za/.elan/bin/lake env lean "$returned" )
+echo lean_rebuild_exit=$?
+rg -n '^\s*(sorry|axiom)\b' "$returned"
+echo forbidden_decl_rg_exit=$?
+```
+
+Output:
+
+```text
+lean_rebuild_exit=0
+forbidden_decl_rg_exit=1
+```
+
+The referee independently compared all nine requested signatures, rebuilt the
+source, streamed `#print axioms` for every target, and attacked the decoder.
+Its binding disposition is:
+
+```bash
+rg -n '^## Overall referee disposition|FINITE SERIALIZATION|PAPER-SCOPE|^STATUS:' \
+  projects/aristotle_dispatch_v30/V30_REFEREE.md
+```
+
+Output:
+
+```text
+282:## Overall referee disposition
+284:**FINITE SERIALIZATION/ALGEBRA: CONFIRMED**, conditioned on the exact returned
+285:source hash and the independent v26-cache rebuild above.  **PAPER-SCOPE
+333:STATUS: COMPLETE_WITH_CONCERNS (paper/source-table scope remains GAPS; noncanonical raw zero spelling)
+393:STATUS: COMPLETE_WITH_CONCERNS (paper/source-table scope remains GAPS; noncanonical raw zero spelling)
+```
+
+Accordingly, the exact finite ordered-ring implications, constructor/tag
+round trips, signed-integer parser, explicit `MarkedCode` encode/decode round
+trip, local-wire injectivity, and list-bound projection are now
+**MACHINE-VERIFIED** at their Lean types.  The returned source has zero
+`sorry`s and zero declared `axiom`s; its audit records only the standard Lean
+dependencies `propext`, `Classical.choice`, and `Quot.sound` where applicable.
+
+This is deliberately not a promotion of the paper marked-source lemma.  The
+local type contains no paper source-object type, source-table encoder,
+branch-coverage theorem, or canonical-word map.  The raw parser also accepts a
+noncanonical sign-one/zero spelling, though this does not affect the proved
+`decode (encode c) = some c` direction.  Full source-table coverage, canonical
+normal form, Ford counting, analytic `(FW)`, the `(AM)` atom moment, and
+machine certification of `(RATE-A)` remain **GAPS / CONJECTURAL at the Lean
+level**.

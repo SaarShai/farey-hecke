@@ -298,3 +298,51 @@ directive 2026-08-15
   360:CONFIRMED for the repaired candidate's exact prior gap: Section 8 closes the
   368:full-program/all-gates claims listed above. No numeric refutation was found.
   ```
+- **V30 FINITE FORMALIZATION REFEREE-CONFIRMED 2026-08-19**
+  (`projects/aristotle_dispatch_v30/`): Aristotle project
+  `97b16c1b-653d-42b9-a5da-4ed765a8eb88`, task
+  `768f5d6f-6b5c-4516-981b-6d8f967b6a6b`, returned source SHA-256
+  `a7bbee7e18a51ce9271222cc5f0e7b4553a77d9ecc3c2b09fdfbd9db3ad629dc`.
+  The exact file independently rebuilds against the v26 cache with zero
+  `sorry`s and zero declared `axiom`s; the axiom audit records only standard
+  Lean dependencies.  A separate cold `V30_REFEREE.md` confirms the finite
+  ordered-ring implications, tags, signed parser, local `MarkedCode`
+  encode/decode round trip, local-wire injectivity, and list-bound projection
+  at their exact Lean types.  It explicitly returns `GAPS` for the full paper
+  source-table decoder/coverage, canonical normal form, Ford counting,
+  analytic `(FW)`/`(AM)`, and RATE-A machine certification.  The accepted raw
+  sign-one/zero spelling is noncanonical but does not invalidate the proved
+  encode-to-decode direction.
+
+  Main-worktree rebuild command:
+
+  ```bash
+  returned=/Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v30/result/aristotle_dispatch_v30_aristotle/RateCoreV.lean
+  ( cd /Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle && /Users/za/.elan/bin/lake env lean "$returned" )
+  echo lean_rebuild_exit=$?
+  rg -n '^\s*(sorry|axiom)\b' "$returned"
+  echo forbidden_decl_rg_exit=$?
+  ```
+
+  Output:
+
+  ```text
+  lean_rebuild_exit=0
+  forbidden_decl_rg_exit=1
+  ```
+
+  Referee command:
+
+  ```bash
+  rg -n '^## Overall referee disposition|FINITE SERIALIZATION|PAPER-SCOPE|^STATUS:' projects/aristotle_dispatch_v30/V30_REFEREE.md
+  ```
+
+  Output:
+
+  ```text
+  282:## Overall referee disposition
+  284:**FINITE SERIALIZATION/ALGEBRA: CONFIRMED**, conditioned on the exact returned
+  285:source hash and the independent v26-cache rebuild above.  **PAPER-SCOPE
+  333:STATUS: COMPLETE_WITH_CONCERNS (paper/source-table scope remains GAPS; noncanonical raw zero spelling)
+  393:STATUS: COMPLETE_WITH_CONCERNS (paper/source-table scope remains GAPS; noncanonical raw zero spelling)
+  ```
