@@ -646,3 +646,35 @@ directive 2026-08-15
   no push is authorized because the preserved `.worktrees/`, `graphify-out/`,
   v26 tarball, and prime-step cache inventories keep the literal working tree
   non-clean.
+
+- **SCALAR EVALUATOR ROUTE DELIMITED; COLD REFEREE RETURNS GAPS / NOT
+  REFUTED — 2026-08-19** (`SCAT_EVAL_Q_SOL.md` and
+  `SCAT_EVAL_Q_REFEREE.md`): the formal Teo identity
+  \(\phi_q=Z_{G_q}(1-s)/(Z_{G_q}(s)K_q^*)\), the MMS quotient, and the
+  MMS \(K_s\) zero lattice are source-consistent at their stated scopes, but
+  they do not yet form a certified scalar evaluator.  The first direct-scalar
+  gap is the explicit Teo specialization/Hejhal width-one cusp-normalization
+  and contour-divisor bridge.  For q>=8's zeta-only bypass, the earlier gap is
+  exact code-to-MMS operator/sector identification and common continuation;
+  only then do theorem-level determinant and derivative tails become the first
+  numerical gate.  The cold referee also restricts T2-A to the bounded-disc
+  compact-containment use actually proved, confirms that the proposed reduced
+  finite-dimensional lambda slab is not a source-valid Hecke homotopy, and
+  corrects the tail ledger to `U1 OPEN`, `U2b CLOSED` with threshold caveat,
+  `U3 CLOSED` for the LAW route.  The later q=7 binding and assembly remain
+  **CONFIRMED** and are not downgraded by the historical first q7 review.
+  Blast radius: no new q>=8 Selberg zero, scalar winding, or LAW case is
+  promoted; the q8 construction and effective-tail lanes continue independently.
+
+  Receipt:
+
+  ```text
+  SCAT_EVAL_Q_REFEREE.md: GAPS/NOT-REFUTED
+  q=8..18 parity receipt: even kappa=(q-2)/2; odd kappa=q-2
+  midpoint trace defects q=8->12: 2.870919e-02, 2.339424e-02,
+                                  1.942983e-02, 1.639402e-02
+  endpoint tr(R(lambda_q)^q): -2 to floating replay precision
+  git diff --check: no output
+  source commit: 6c30401
+  referee commit: 82504c6
+  ```

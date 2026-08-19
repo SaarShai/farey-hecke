@@ -498,9 +498,12 @@ theorem-valid construction passes a cold referee.
   preserved untracked inventory, and existing worktrees.
 - [x] Dispatch isolated Route-A, Route-B, and `(SCAT-EVAL_q)` construction lanes
   with one primary deliverable each and explicit no-push/referee gates.
-- [ ] Harvest and cold-judge `(SCAT-EVAL_q)`: require an exact determinant
+- [x] Harvest and cold-judge `(SCAT-EVAL_q)`: require an exact determinant
   quotient, compatible continuation/normalization, and explicit determinant
-  plus derivative tails; otherwise retain the first missing theorem verbatim.
+  plus derivative tails; referee verdict **GAPS / NOT REFUTED**.  The first
+  direct-scalar gap is the Teo--Hejhal normalization/divisor bridge; for the
+  q>=8 zeta bypass it is code-to-MMS operator/sector identification, followed
+  by the determinant and derivative tails.
 - [ ] Harvest and cold-judge q=8: require exact even-q operator binding, proven
   R2 tail, continuous (not endpoint-only) contour enclosure, E1, `K_s`, and
   factorization before any Selberg-zero status.
@@ -520,7 +523,7 @@ theorem-valid construction passes a cold referee.
 |---|---|---|---|
 | q8 q-generic chain | `codex/law-q8-generic-20260819` / `.worktrees/law-q8-generic-20260819` | running | `lane_f/Q8_GENERIC_CERTIFICATION_SOL.md` + exact receipts |
 | effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | running | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + exact receipts |
-| scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | running | `lane_g/SCAT_EVAL_Q_SOL.md` + exact receipts |
+| scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | **GAPS / NOT REFUTED; cold-refereed** | `lane_g/SCAT_EVAL_Q_SOL.md` + `SCAT_EVAL_Q_REFEREE.md` |
 
 Verification gate:
 

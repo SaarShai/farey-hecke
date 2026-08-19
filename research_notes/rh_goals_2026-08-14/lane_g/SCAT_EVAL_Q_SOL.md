@@ -379,3 +379,40 @@ Primary-source receipts used:
 
 No Kaggle or Aristotle dispatch was launched: the local type/source gate fails before either
 external run could close (4.1), so an external numerical result would not be load-bearing.
+
+## 8. Dated correction after cold referee — 2026-08-19
+
+The independent cold report `SCAT_EVAL_Q_REFEREE.md` returns
+**GAPS / NOT REFUTED**.  This block supersedes the sequencing and route-status
+language above without deleting the original audit.
+
+1.  The Teo rearrangement
+    \(\phi_q(s)=Z_{G_q}(1-s)/(Z_{G_q}(s)K_q^*(s))\) remains a formal target,
+    not a certified evaluator.  Before it may be consumed, one statement must
+    specialize Teo to signature \((0;1;(2,q))\), bind Hejhal's width-one cusp
+    scaling and scalar convention to Teo's scattering determinant, spell out
+    every branch in \(K_q^*\), and clear the contour divisors.  Hejhal
+    Proposition 7.8/Theorem 7.11 do not supply that finite-contour clearance.
+2.  The MMS quotient and the right-half-plane zero-freeness of
+    \(\det(1-K_{q,s})\) are source-correct at their stated operator scope.
+    They do not identify the live generic Python/Hilbert determinant with the
+    MMS Banach determinant and do not clear Teo's distinct factor \(K_q^*\).
+    The later pinned q=7 binding and assembly are a separately confirmed exact-q
+    exception; q=7 must not be downgraded by the older first referee.
+3.  A q-specific Selberg determinant can bypass a direct scalar evaluator only
+    after operator/sector identification, common continuation, theorem-level
+    determinant and derivative tails, and divisor clearance.  This bypass is
+    confirmed at q=7, but remains **OPEN / CONJECTURAL** for q>=8 and general q.
+4.  The reduced MMS dimensions and the midpoint trace receipts block the
+    proposed finite-dimensional lambda slab.  Lemma T2-A blocks the stated
+    bounded-disc compact-containment carrier; it does not rule out every
+    unbounded domain or regularized operator family.
+5.  The current tail-route ledger is `U1 OPEN`, `U2b CLOSED` with its threshold
+    caveat, and `U3 CLOSED` for the LAW route.  The older `U1/U2b/U3 OPEN`
+    rows above are stale.
+
+Thus the first q>=8 zeta-route gap is the exact code-to-MMS operator/sector
+binding and continuation; only after that bridge is equation (4.1) the first
+numerical certificate gate.  For a direct scalar route, the Teo--Hejhal
+normalization/divisor bridge is earlier still.  No scalar winding, q>=8
+Selberg zero, or new LAW case is promoted by this note.
