@@ -1,8 +1,8 @@
 # R5 activation closure: selected A0 whole-tail envelope
 
-**Date:** 2026-08-19  
-**Program:** `(RATE)` / R5, lane G  
-**Interpreter:** `/Users/za/.venvs/farey-rh/bin/python` (`python-flint` / Arb)  
+**Date:** 2026-08-19
+**Program:** `(RATE)` / R5, lane G
+**Interpreter:** `/Users/za/.venvs/farey-rh/bin/python` (`python-flint` / Arb)
 **Scope:** paper-level activation arithmetic for the selected first-zero A0
 route; no finite-base computation is promoted.
 
