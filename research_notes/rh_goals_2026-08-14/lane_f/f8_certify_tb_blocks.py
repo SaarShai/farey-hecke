@@ -49,14 +49,13 @@ import time
 from pathlib import Path
 from typing import Any
 
-CODE_DIR = Path("/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code")
-sys.path.insert(0, str(CODE_DIR / "tb_certify"))
-sys.path.insert(0, str(CODE_DIR))
+LANE_F = Path(__file__).resolve().parent
+sys.path.insert(0, str(LANE_F))
 
 from flint import arb, ctx  # noqa: E402
 
-import certify_tb_blocks as v1  # noqa: E402
-import certify_tb_blocks_v2 as v2  # noqa: E402
+import q8_tb_support as v1  # noqa: E402
+import q8_tb_support as v2  # noqa: E402
 
 
 PREC_BITS = 384
@@ -83,7 +82,6 @@ THRESHOLD_TEXT = "0.99"  # GATE 2 target (F8_CERT_PLAN.md sec "gates")
 # under the 0.99 gate and in the SAME range as q=7's own adopted rho*
 # (0.7623 float / 0.762251293807 certified).
 EXACT_FACTORS = ("3.4", "2.2", "1.4")
-LANE_F = Path("/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f")
 DEFAULT_OUT_DIR = LANE_F / "f8_receipts"
 REPORT_NAME = "F8_TB_BLOCK_CERTIFICATES.md"
 RECEIPT_NAME = "F8_TB_BLOCK_CERTIFICATES_RECEIPT.json"

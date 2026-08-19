@@ -1,0 +1,35 @@
+{
+  "schema": "q8-endpoint-column-2norm/v1",
+  "status": "FINITE_ENDPOINT_BOUND",
+  "q": 8,
+  "sign": 1,
+  "n_head": 4,
+  "precision_bits": 384,
+  "pin": {
+    "re": "0.4252310423737965",
+    "im": "4.345760788321986",
+    "half_width": "1e-6"
+  },
+  "factors": [
+    "10",
+    "4",
+    "2"
+  ],
+  "runs": [
+    {
+      "N": 256,
+      "dimension": 768,
+      "B_finite_upper": "[39.162333736337258832479088678160583659224562058665365906221102957934537903919244 +/- 4.57e-79]",
+      "runtime_seconds": 36.338966499999515
+    },
+    {
+      "N": 320,
+      "dimension": 960,
+      "B_finite_upper": "[39.162333736337258832479088815439151314881324723709958679095589296591001634134888 +/- 2.68e-79]",
+      "runtime_seconds": 58.76887687499402
+    }
+  ],
+  "source_builder": "/Users/za/Documents/farey-hecke/.worktrees/law-q8-generic-20260819/research_notes/rh_goals_2026-08-14/lane_f/f8_source_builder.py",
+  "definition": "sum of Arb upper endpoints of retained column Euclidean 2-norms over the closed pin box",
+  "fredholm_tail": "OPEN: this is finite-section B only"
+}

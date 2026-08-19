@@ -24,10 +24,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-WORKTREE_ROOT = Path("/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore")
-sys.path.insert(0, str(WORKTREE_ROOT / "code"))
 LANE_F = Path(__file__).resolve().parent
 sys.path.insert(0, str(LANE_F))
+TRACKED_ENGINE_DIR = LANE_F.parent / "lane_g" / "law_probes" / "kaggle_boundary_rate"
+sys.path.insert(0, str(TRACKED_ENGINE_DIR))
 
 import zeta_cert_rosen_q5 as CERT  # noqa: E402  (q-agnostic primitives, reused verbatim)
 import zeta_cert_rosen_even as EVEN  # noqa: E402  (trusted generic even-q engine, for cross-check)

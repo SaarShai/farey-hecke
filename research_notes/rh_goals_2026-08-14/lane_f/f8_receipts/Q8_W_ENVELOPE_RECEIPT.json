@@ -1,0 +1,3353 @@
+{
+  "schema": "tb-weight-envelope-cert/v2",
+  "status": "WEIGHT_ENVELOPE_CERTIFIED_R2_PENDING",
+  "q": 8,
+  "kappa": 3,
+  "precision_bits": 384,
+  "M": 512,
+  "N_evaluation": 32,
+  "pin": {
+    "re": "0.4252310423737965",
+    "im": "4.345760788321986",
+    "half_width": "1e-6"
+  },
+  "lambda": "[1.84775906502257351225637 +/- 3.64e-24]",
+  "centers": [
+    "[-0.844623198620733149792552 +/- 4.23e-25]",
+    "[-0.653281482438188263928322 +/- 4.15e-25]",
+    "[-0.270598050073098492199862 +/- 3.99e-25]"
+  ],
+  "source_radii": [
+    "[0.269471535227882261541147 +/- 4.78e-25]",
+    "[0.246587841042380814962916 +/- 4.40e-25]",
+    "[0.378837270102337889079806 +/- 2.45e-25]"
+  ],
+  "rho_star": "[0.907412733398576057385920 +/- 4.70e-25]",
+  "W_ge1_upper_bound": "[9.87365265081310277462644 +/- 1.17e-23]",
+  "W0_upper_bound": "[9.78540174691645069446512 +/- 4.02e-24]",
+  "F_upper_bound": "[3.39352377090755906788005e+140 +/- 6.54e+119]",
+  "row_sums": {
+    "1": "[2.07824016623181245612612 +/- 9.99e-24]",
+    "2": "[7.58294507762563524120105 +/- 6.89e-24]",
+    "3": "[9.87365265081310277462644 +/- 1.17e-23]"
+  },
+  "W0_row_sums": {
+    "1": "[1.91803766852765962532486 +/- 2.09e-24]",
+    "2": "[7.39413006612850880184094 +/- 2.21e-24]",
+    "3": "[9.78540174691645069446512 +/- 4.02e-24]"
+  },
+  "blocks": [
+    {
+      "block": [
+        1,
+        3,
+        2,
+        false,
+        true
+      ],
+      "label": "1\u21923, +2, tail",
+      "source_disc": 1,
+      "target_disc": 3,
+      "n0": 2,
+      "negative_branch": false,
+      "tail": true,
+      "head_terms": [
+        {
+          "n": 2,
+          "weight_sup_upper_bound": "[0.949961936750775741855076 +/- 8.04e-26]",
+          "weight_worst_arc_index": 145,
+          "v2_image_ratio_upper_bound": "[0.308276164197806168257616 +/- 4.87e-25]",
+          "weighted_head_product_upper_bound": "[0.292850621995448100422592 +/- 6.49e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.116786500482316960669499 +/- 3.11e-25]",
+            "kind": "individual_arc",
+            "n": 2,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.308276164197806168257616 +/- 4.86e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 3,
+          "weight_sup_upper_bound": "[0.445782513235035143404769 +/- 4.96e-25]",
+          "weight_worst_arc_index": 141,
+          "v2_image_ratio_upper_bound": "[0.182968032635144148999864 +/- 1.29e-25]",
+          "weighted_head_product_upper_bound": "[0.0815639494297644886472955 +/- 9.64e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0693151099994934776925475 +/- 7.41e-27]",
+            "kind": "individual_arc",
+            "n": 3,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.182968032635144148999864 +/- 1.28e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 4,
+          "weight_sup_upper_bound": "[0.291058741352698923826142 +/- 4.33e-25]",
+          "weight_worst_arc_index": 139,
+          "v2_image_ratio_upper_bound": "[0.327005856414402701973937 +/- 2.73e-25]",
+          "weighted_head_product_upper_bound": "[0.0951779129829374383457382 +/- 8.57e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.123882005951509397358614 +/- 7.85e-27]",
+            "kind": "individual_arc",
+            "n": 4,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.327005856414402701973937 +/- 2.72e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 5,
+          "weight_sup_upper_bound": "[0.217283562588908643771846 +/- 6.07e-26]",
+          "weight_worst_arc_index": 139,
+          "v2_image_ratio_upper_bound": "[0.409603829546294787098582 +/- 4.25e-26]",
+          "weighted_head_product_upper_bound": "[0.0890001793338790109846744 +/- 4.58e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.155173196608781647034431 +/- 3.79e-25]",
+            "kind": "individual_arc",
+            "n": 5,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.409603829546294787098582 +/- 4.24e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 6,
+          "weight_sup_upper_bound": "[0.174237594051729120250758 +/- 3.25e-25]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.463162667845958339481265 +/- 1.58e-25]",
+          "weighted_head_product_upper_bound": "[0.0807003489000599410361164 +/- 6.41e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.175463280700078727590742 +/- 4.16e-25]",
+            "kind": "individual_arc",
+            "n": 6,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.463162667845958339481265 +/- 1.57e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 7,
+          "weight_sup_upper_bound": "[0.146087280182517191849786 +/- 1.04e-25]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.500706863036056689883102 +/- 1.82e-25]",
+          "weighted_head_product_upper_bound": "[0.0731469037896576743320823 +/- 4.48e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.189686421114084911371433 +/- 3.82e-25]",
+            "kind": "individual_arc",
+            "n": 7,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.500706863036056689883102 +/- 1.81e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 8,
+          "weight_sup_upper_bound": "[0.126162759665226128484317 +/- 1.56e-27]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.528485028434993893172342 +/- 1.07e-25]",
+          "weighted_head_product_upper_bound": "[0.0666751296291143311385091 +/- 1.42e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.200209825462269501176400 +/- 2.97e-25]",
+            "kind": "individual_arc",
+            "n": 8,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.528485028434993893172342 +/- 1.06e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[0.779115046060860984907008 +/- 1.11e-24]",
+      "deep_tail": {
+        "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+        "first_n": 9,
+        "range": "n\u22659",
+        "denominator_lower_bound": "[15.5157368513545461989736 +/- 6.46e-23]",
+        "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+        "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+        "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+        "angle_bound": "[0.0347317628215770959193977 +/- 1.69e-25]",
+        "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+        "angle_factor": "[1.16292219112795795566187 +/- 3.04e-24]",
+        "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+        "image_ratio_bound": "1/(R_j*d_n)",
+        "first_product_upper_bound": "[0.0192141489657392856996755 +/- 1.37e-25]",
+        "integral_upper_bound": "[0.189711772524287370424814 +/- 1.10e-24]",
+        "deep_sum_upper_bound": "[0.208925921490026656124490 +/- 1.39e-24]",
+        "integral_converges": true,
+        "phi0_closed_tail_sup_upper_bound": "[0.890279039489179358984580 +/- 8.15e-26]",
+        "phi0_closed_tail_worst_arc_index": 152
+      },
+      "plain_weight_sup_upper_bound": null,
+      "plain_weight_worst_arc_index": null,
+      "W_ge1_block_upper_bound": "[0.988040967550887641031498 +/- 2.37e-24]",
+      "W0_block_upper_bound": "[0.890279039489179358984580 +/- 8.15e-26]",
+      "W0_worst_arc_index": 152
+    },
+    {
+      "block": [
+        1,
+        3,
+        1,
+        true,
+        true
+      ],
+      "label": "1\u21923, \u22121, tail",
+      "source_disc": 1,
+      "target_disc": 3,
+      "n0": 1,
+      "negative_branch": true,
+      "tail": true,
+      "head_terms": [
+        {
+          "n": 1,
+          "weight_sup_upper_bound": "[1.05087140041095490629424 +/- 3.96e-25]",
+          "weight_worst_arc_index": 400,
+          "v2_image_ratio_upper_bound": "[0.375174732561423133402931 +/- 9.48e-26]",
+          "weighted_head_product_upper_bound": "[0.394260396605628211255271 +/- 1.88e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.142130171494944237339629 +/- 4.67e-26]",
+            "kind": "individual_arc",
+            "n": 1,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.375174732561423133402931 +/- 9.47e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 2,
+          "weight_sup_upper_bound": "[0.467121111841061808291767 +/- 3.60e-25]",
+          "weight_worst_arc_index": 397,
+          "v2_image_ratio_upper_bound": "[0.165457240055274991399626 +/- 3.56e-25]",
+          "weighted_head_product_upper_bound": "[0.0772885699367735209089632 +/- 2.16e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0626813691412075715213353 +/- 3.49e-26]",
+            "kind": "individual_arc",
+            "n": 2,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.165457240055274991399626 +/- 3.55e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 3,
+          "weight_sup_upper_bound": "[0.299734006967000244095355 +/- 4.76e-26]",
+          "weight_worst_arc_index": 395,
+          "v2_image_ratio_upper_bound": "[0.317784695903488653814798 +/- 4.67e-25]",
+          "weighted_head_product_upper_bound": "[0.0952508802559423220918983 +/- 1.50e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.120388686676379240047805 +/- 4.85e-25]",
+            "kind": "individual_arc",
+            "n": 3,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.317784695903488653814798 +/- 4.66e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 4,
+          "weight_sup_upper_bound": "[0.222130865859309554163324 +/- 3.09e-25]",
+          "weight_worst_arc_index": 395,
+          "v2_image_ratio_upper_bound": "[0.403925385126336202777247 +/- 1.11e-25]",
+          "weighted_head_product_upper_bound": "[0.0897242955406681376118861 +/- 6.51e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.153021990226296683421876 +/- 3.58e-25]",
+            "kind": "individual_arc",
+            "n": 4,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.403925385126336202777247 +/- 1.10e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 5,
+          "weight_sup_upper_bound": "[0.177271063649324641247352 +/- 1.45e-25]",
+          "weight_worst_arc_index": 394,
+          "v2_image_ratio_upper_bound": "[0.459317734516170516163998 +/- 4.51e-25]",
+          "weighted_head_product_upper_bound": "[0.0814237433506796612729094 +/- 1.11e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.174006676653696416565363 +/- 4.55e-25]",
+            "kind": "individual_arc",
+            "n": 5,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.459317734516170516163998 +/- 4.50e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 6,
+          "weight_sup_upper_bound": "[0.148153129717783865551307 +/- 1.55e-26]",
+          "weight_worst_arc_index": 394,
+          "v2_image_ratio_upper_bound": "[0.497932015043793103426078 +/- 3.89e-25]",
+          "weighted_head_product_upper_bound": "[0.0737701864154205868410794 +/- 8.92e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.188635205275746821071599 +/- 2.96e-25]",
+            "kind": "individual_arc",
+            "n": 6,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.497932015043793103426078 +/- 3.88e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 7,
+          "weight_sup_upper_bound": "[0.127650405411479098915757 +/- 4.42e-26]",
+          "weight_worst_arc_index": 394,
+          "v2_image_ratio_upper_bound": "[0.526388580368870126210769 +/- 1.11e-26]",
+          "weighted_head_product_upper_bound": "[0.0671937156880592197329330 +/- 1.69e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.199415612799987847748909 +/- 2.83e-25]",
+            "kind": "individual_arc",
+            "n": 7,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.526388580368870126210769 +/- 1.10e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[0.878911787793171659714940 +/- 1.24e-24]",
+      "deep_tail": {
+        "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+        "first_n": 8,
+        "range": "n\u22658",
+        "denominator_lower_bound": "[15.3572241835734389863024 +/- 6.50e-23]",
+        "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+        "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+        "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+        "angle_bound": "[0.0350901804842032698601748 +/- 1.59e-25]",
+        "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+        "angle_factor": "[1.16473496757586751035443 +/- 2.18e-24]",
+        "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+        "image_ratio_bound": "1/(R_j*d_n)",
+        "first_product_upper_bound": "[0.0196132729189957925244372 +/- 1.10e-25]",
+        "integral_upper_bound": "[0.191674137968757362855238 +/- 1.31e-24]",
+        "deep_sum_upper_bound": "[0.211287410887753155379676 +/- 1.43e-24]",
+        "integral_converges": true,
+        "phi0_closed_tail_sup_upper_bound": "[1.02775862903848026634028 +/- 2.00e-24]",
+        "phi0_closed_tail_worst_arc_index": 408
+      },
+      "plain_weight_sup_upper_bound": null,
+      "plain_weight_worst_arc_index": null,
+      "W_ge1_block_upper_bound": "[1.09019919868092481509462 +/- 5.61e-24]",
+      "W0_block_upper_bound": "[1.02775862903848026634028 +/- 2.00e-24]",
+      "W0_worst_arc_index": 408
+    },
+    {
+      "block": [
+        2,
+        1,
+        1,
+        false,
+        false
+      ],
+      "label": "2\u21921, +1, head",
+      "source_disc": 2,
+      "target_disc": 1,
+      "n0": 1,
+      "negative_branch": false,
+      "tail": false,
+      "head_terms": [
+        {
+          "n": 1,
+          "weight_sup_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+          "weight_worst_arc_index": 156,
+          "v2_image_ratio_upper_bound": "[0.781324224626880949779667 +/- 4.30e-25]",
+          "weighted_head_product_upper_bound": "[4.33250406080623014760771 +/- 3.31e-24]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.210544638320940343104242 +/- 1.93e-25]",
+            "kind": "individual_arc",
+            "n": 1,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.781324224626880949779667 +/- 4.29e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[4.33250406080623014760771 +/- 3.32e-24]",
+      "deep_tail": null,
+      "plain_weight_sup_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+      "plain_weight_worst_arc_index": 156,
+      "W_ge1_block_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+      "W0_block_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+      "W0_worst_arc_index": 156
+    },
+    {
+      "block": [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      "label": "2\u21923, +2, tail",
+      "source_disc": 2,
+      "target_disc": 3,
+      "n0": 2,
+      "negative_branch": false,
+      "tail": true,
+      "head_terms": [
+        {
+          "n": 2,
+          "weight_sup_upper_bound": "[0.795400601646359326776031 +/- 6.09e-26]",
+          "weight_worst_arc_index": 142,
+          "v2_image_ratio_upper_bound": "[0.229918614065685587186836 +/- 2.69e-25]",
+          "weighted_head_product_upper_bound": "[0.182877403957543410126222 +/- 3.18e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0871017400983573141518449 +/- 4.30e-26]",
+            "kind": "individual_arc",
+            "n": 2,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.229918614065685587186836 +/- 2.68e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 3,
+          "weight_sup_upper_bound": "[0.404699756813070741723967 +/- 1.63e-25]",
+          "weight_worst_arc_index": 140,
+          "v2_image_ratio_upper_bound": "[0.200392834161857567363131 +/- 1.69e-25]",
+          "weighted_head_product_upper_bound": "[0.0810989312523857723267622 +/- 1.12e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0759162742419486385835339 +/- 2.76e-27]",
+            "kind": "individual_arc",
+            "n": 3,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.200392834161857567363131 +/- 1.68e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 4,
+          "weight_sup_upper_bound": "[0.272762232532124325536128 +/- 3.57e-25]",
+          "weight_worst_arc_index": 139,
+          "v2_image_ratio_upper_bound": "[0.336346776094223133904159 +/- 2.12e-25]",
+          "weighted_head_product_upper_bound": "[0.0917426975524428456851227 +/- 6.66e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.127420694463257773883377 +/- 1.51e-25]",
+            "kind": "individual_arc",
+            "n": 4,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.336346776094223133904159 +/- 2.11e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 5,
+          "weight_sup_upper_bound": "[0.206767775441095403031401 +/- 3.78e-25]",
+          "weight_worst_arc_index": 139,
+          "v2_image_ratio_upper_bound": "[0.415415130548221804974860 +/- 3.02e-25]",
+          "weighted_head_product_upper_bound": "[0.0858944624280280572556458 +/- 1.11e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.157374734016094659503265 +/- 4.21e-25]",
+            "kind": "individual_arc",
+            "n": 5,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.415415130548221804974860 +/- 3.01e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 6,
+          "weight_sup_upper_bound": "[0.167450000606489503035274 +/- 3.95e-25]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.467123733311257604942857 +/- 2.18e-25]",
+          "weighted_head_product_upper_bound": "[0.0782198694262757268196081 +/- 5.56e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.176963879927649348129443 +/- 7.57e-27]",
+            "kind": "individual_arc",
+            "n": 6,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.467123733311257604942857 +/- 2.17e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 7,
+          "weight_sup_upper_bound": "[0.141329309666752003408305 +/- 4.64e-25]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.503578839382205646711660 +/- 2.44e-25]",
+          "weighted_head_product_upper_bound": "[0.0711704497326713109777715 +/- 8.23e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.190774432792858469186464 +/- 4.31e-25]",
+            "kind": "individual_arc",
+            "n": 7,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.503578839382205646711660 +/- 2.43e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 8,
+          "weight_sup_upper_bound": "[0.122643101869593567505687 +/- 5.89e-26]",
+          "weight_worst_arc_index": 137,
+          "v2_image_ratio_upper_bound": "[0.530662333487995577864644 +/- 3.42e-25]",
+          "weighted_head_product_upper_bound": "[0.0650820746243244756623256 +/- 4.26e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.201034669764728685513640 +/- 3.25e-25]",
+            "kind": "individual_arc",
+            "n": 8,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.530662333487995577864644 +/- 3.41e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[0.656085888973671598853458 +/- 8.89e-25]",
+      "deep_tail": {
+        "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+        "first_n": 9,
+        "range": "n\u22659",
+        "denominator_lower_bound": "[15.7299622617225925314161 +/- 4.16e-23]",
+        "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+        "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+        "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+        "angle_bound": "[0.0313500618148810919118667 +/- 1.38e-25]",
+        "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+        "angle_factor": "[1.14595677645024193605982 +/- 1.73e-24]",
+        "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+        "image_ratio_bound": "1/(R_j*d_n)",
+        "first_product_upper_bound": "[0.0184594489866422314713124 +/- 1.21e-25]",
+        "integral_upper_bound": "[0.184776670367111378378801 +/- 9.58e-25]",
+        "deep_sum_upper_bound": "[0.203236119353753609850113 +/- 1.40e-24]",
+        "integral_converges": true,
+        "phi0_closed_tail_sup_upper_bound": "[0.699812540812134610678811 +/- 3.72e-25]",
+        "phi0_closed_tail_worst_arc_index": 152
+      },
+      "plain_weight_sup_upper_bound": null,
+      "plain_weight_worst_arc_index": null,
+      "W_ge1_block_upper_bound": "[0.859322008327425208703571 +/- 2.18e-24]",
+      "W0_block_upper_bound": "[0.699812540812134610678811 +/- 3.72e-25]",
+      "W0_worst_arc_index": 152
+    },
+    {
+      "block": [
+        2,
+        3,
+        1,
+        true,
+        true
+      ],
+      "label": "2\u21923, \u22121, tail",
+      "source_disc": 2,
+      "target_disc": 3,
+      "n0": 1,
+      "negative_branch": true,
+      "tail": true,
+      "head_terms": [
+        {
+          "n": 1,
+          "weight_sup_upper_bound": "[1.09760515485802530600770 +/- 1.83e-24]",
+          "weight_worst_arc_index": 399,
+          "v2_image_ratio_upper_bound": "[0.456581288265549968472218 +/- 2.60e-25]",
+          "weighted_head_product_upper_bound": "[0.501145975611985665621082 +/- 7.38e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.172970008826329550339036 +/- 6.71e-26]",
+            "kind": "individual_arc",
+            "n": 1,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.456581288265549968472218 +/- 2.59e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 2,
+          "weight_sup_upper_bound": "[0.472368259578815871091450 +/- 3.49e-25]",
+          "weight_worst_arc_index": 396,
+          "v2_image_ratio_upper_bound": "[0.139872274943866188576388 +/- 5.05e-26]",
+          "weighted_head_product_upper_bound": "[0.0660712230785636868899707 +/- 6.68e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0529888308027379034841296 +/- 2.45e-26]",
+            "kind": "individual_arc",
+            "n": 2,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.139872274943866188576388 +/- 5.04e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 3,
+          "weight_sup_upper_bound": "[0.300826234413897529603206 +/- 4.44e-26]",
+          "weight_worst_arc_index": 395,
+          "v2_image_ratio_upper_bound": "[0.304601590888021978989939 +/- 1.16e-25]",
+          "weighted_head_product_upper_bound": "[0.0916321495833262136305292 +/- 4.15e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.115394435160847406042377 +/- 2.82e-25]",
+            "kind": "individual_arc",
+            "n": 3,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.304601590888021978989939 +/- 1.15e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 4,
+          "weight_sup_upper_bound": "[0.222553660386967504927883 +/- 6.77e-26]",
+          "weight_worst_arc_index": 395,
+          "v2_image_ratio_upper_bound": "[0.395906100920673480798661 +/- 4.82e-25]",
+          "weighted_head_product_upper_bound": "[0.0881103519294280488756814 +/- 1.46e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.149983986489648622669201 +/- 2.06e-25]",
+            "kind": "individual_arc",
+            "n": 4,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.395906100920673480798661 +/- 4.81e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 5,
+          "weight_sup_upper_bound": "[0.177402866577477746749932 +/- 4.13e-25]",
+          "weight_worst_arc_index": 394,
+          "v2_image_ratio_upper_bound": "[0.453930372030919264990495 +/- 2.20e-25]",
+          "weighted_head_product_upper_bound": "[0.0805285492248660066457007 +/- 3.91e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.171965742956732086002261 +/- 1.73e-26]",
+            "kind": "individual_arc",
+            "n": 5,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.453930372030919264990495 +/- 2.19e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 6,
+          "weight_sup_upper_bound": "[0.148146831352932837584777 +/- 5.92e-26]",
+          "weight_worst_arc_index": 394,
+          "v2_image_ratio_upper_bound": "[0.494065266176253121779876 +/- 7.3e-28]",
+          "weighted_head_product_upper_bound": "[0.0731942036655552437892088 +/- 4.04e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.187170336690596667892196 +/- 1.05e-25]",
+            "kind": "individual_arc",
+            "n": 6,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.494065266176253121779876 +/- 7.0e-28]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 7,
+          "weight_sup_upper_bound": "[0.127577288765283661231540 +/- 4.54e-25]",
+          "weight_worst_arc_index": 393,
+          "v2_image_ratio_upper_bound": "[0.523478949614716242720059 +/- 8.96e-26]",
+          "weighted_head_product_upper_bound": "[0.0667840251175440302745660 +/- 2.11e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.198313336228078383898009 +/- 1.96e-25]",
+            "kind": "individual_arc",
+            "n": 7,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.523478949614716242720059 +/- 8.95e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[0.967466478211268895726739 +/- 1.30e-24]",
+      "deep_tail": {
+        "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+        "first_n": 8,
+        "range": "n\u22658",
+        "denominator_lower_bound": "[15.1887661615763955470164 +/- 6.39e-23]",
+        "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+        "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+        "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+        "angle_bound": "[0.0324669136837054059142827 +/- 1.50e-25]",
+        "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+        "angle_factor": "[1.15153227998304423237164 +/- 3.33e-24]",
+        "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+        "image_ratio_bound": "1/(R_j*d_n)",
+        "first_product_upper_bound": "[0.0197907931759833157932087 +/- 1.43e-25]",
+        "integral_upper_bound": "[0.191287424236822062816041 +/- 1.28e-24]",
+        "deep_sum_upper_bound": "[0.211078217412805378609250 +/- 1.12e-24]",
+        "integral_converges": true,
+        "phi0_closed_tail_sup_upper_bound": "[1.14923915164223843300064 +/- 3.44e-25]",
+        "phi0_closed_tail_worst_arc_index": 409
+      },
+      "plain_weight_sup_upper_bound": null,
+      "plain_weight_worst_arc_index": null,
+      "W_ge1_block_upper_bound": "[1.17854469562407427433599 +/- 3.22e-24]",
+      "W0_block_upper_bound": "[1.14923915164223843300064 +/- 3.44e-25]",
+      "W0_worst_arc_index": 409
+    },
+    {
+      "block": [
+        3,
+        2,
+        1,
+        false,
+        false
+      ],
+      "label": "3\u21922, +1, head",
+      "source_disc": 3,
+      "target_disc": 2,
+      "n0": 1,
+      "negative_branch": false,
+      "tail": false,
+      "head_terms": [
+        {
+          "n": 1,
+          "weight_sup_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+          "weight_worst_arc_index": 155,
+          "v2_image_ratio_upper_bound": "[0.735980304555347295788241 +/- 3.97e-25]",
+          "weighted_head_product_upper_bound": "[4.46804928893777361589704 +/- 7.02e-24]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.181483794350016999777322 +/- 2.96e-25]",
+            "kind": "individual_arc",
+            "n": 1,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.735980304555347295788241 +/- 3.96e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[4.46804928893777361589704 +/- 7.03e-24]",
+      "deep_tail": null,
+      "plain_weight_sup_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+      "plain_weight_worst_arc_index": 155,
+      "W_ge1_block_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+      "W0_block_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+      "W0_worst_arc_index": 155
+    },
+    {
+      "block": [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      "label": "3\u21923, +2, tail",
+      "source_disc": 3,
+      "target_disc": 3,
+      "n0": 2,
+      "negative_branch": false,
+      "tail": true,
+      "head_terms": [
+        {
+          "n": 2,
+          "weight_sup_upper_bound": "[0.939742474838211552600766 +/- 1.12e-25]",
+          "weight_worst_arc_index": 146,
+          "v2_image_ratio_upper_bound": "[0.152302010874941699676683 +/- 4.40e-25]",
+          "weighted_head_product_upper_bound": "[0.143124668622453922459635 +/- 6.84e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0576976780309594912102259 +/- 3.58e-26]",
+            "kind": "individual_arc",
+            "n": 2,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.152302010874941699676683 +/- 4.39e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 3,
+          "weight_sup_upper_bound": "[0.459198071440944040769260 +/- 3.88e-25]",
+          "weight_worst_arc_index": 141,
+          "v2_image_ratio_upper_bound": "[0.247215968805591209874268 +/- 4.59e-25]",
+          "weighted_head_product_upper_bound": "[0.113521096104932065816645 +/- 3.78e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0936546227480148950791483 +/- 3.94e-26]",
+            "kind": "individual_arc",
+            "n": 3,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.247215968805591209874268 +/- 4.58e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 4,
+          "weight_sup_upper_bound": "[0.301148868796326893698693 +/- 4.77e-25]",
+          "weight_worst_arc_index": 141,
+          "v2_image_ratio_upper_bound": "[0.362297804661373802466793 +/- 2.35e-25]",
+          "weighted_head_product_upper_bound": "[0.109105574041165329317578 +/- 2.20e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.137251911281984918323332 +/- 1.91e-26]",
+            "kind": "individual_arc",
+            "n": 4,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.362297804661373802466793 +/- 2.34e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 5,
+          "weight_sup_upper_bound": "[0.224548230008693549611602 +/- 4.35e-25]",
+          "weight_worst_arc_index": 139,
+          "v2_image_ratio_upper_bound": "[0.431880109821787633301416 +/- 4.52e-25]",
+          "weighted_head_product_upper_bound": "[0.0969779142364425996547220 +/- 1.40e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.163612281816383912294386 +/- 3.38e-25]",
+            "kind": "individual_arc",
+            "n": 5,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.431880109821787633301416 +/- 4.51e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 6,
+          "weight_sup_upper_bound": "[0.179678703422374044769065 +/- 1.93e-27]",
+          "weight_worst_arc_index": 139,
+          "v2_image_ratio_upper_bound": "[0.478492600835299798978987 +/- 4.13e-25]",
+          "weighted_head_product_upper_bound": "[0.0859749301152862397035804 +/- 1.01e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.181270830664612618186539 +/- 2.94e-25]",
+            "kind": "individual_arc",
+            "n": 6,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.478492600835299798978987 +/- 4.12e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 7,
+          "weight_sup_upper_bound": "[0.150093461928800808050992 +/- 1.90e-25]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.511897771432043457183580 +/- 6.02e-26]",
+          "weighted_head_product_upper_bound": "[0.0768325086678733925366729 +/- 1.17e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.193925954300785871193802 +/- 1.69e-25]",
+            "kind": "individual_arc",
+            "n": 7,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.511897771432043457183580 +/- 6.01e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 8,
+          "weight_sup_upper_bound": "[0.129355250266712855600121 +/- 4.82e-25]",
+          "weight_worst_arc_index": 138,
+          "v2_image_ratio_upper_bound": "[0.537012360077498808810139 +/- 4.73e-25]",
+          "weighted_head_product_upper_bound": "[0.0694653682341429778371681 +/- 7.55e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.203440296502973348497981 +/- 1.28e-25]",
+            "kind": "individual_arc",
+            "n": 8,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.537012360077498808810139 +/- 4.72e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[0.695002060022296527326001 +/- 2.02e-24]",
+      "deep_tail": {
+        "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+        "first_n": 9,
+        "range": "n\u22659",
+        "denominator_lower_bound": "[15.9803962650277252290277 +/- 7.14e-23]",
+        "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+        "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+        "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+        "angle_bound": "[0.0474038715779202668608081 +/- 1.32e-25]",
+        "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+        "angle_factor": "[1.22876049509667694843512 +/- 2.75e-24]",
+        "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+        "image_ratio_bound": "1/(R_j*d_n)",
+        "first_product_upper_bound": "[0.0192231180344117044208430 +/- 1.15e-25]",
+        "integral_upper_bound": "[0.195484397435269445751673 +/- 1.44e-24]",
+        "deep_sum_upper_bound": "[0.214707515469681150172516 +/- 1.52e-24]",
+        "integral_converges": true,
+        "phi0_closed_tail_sup_upper_bound": "[0.761397927455911102509442 +/- 4.30e-25]",
+        "phi0_closed_tail_worst_arc_index": 152
+      },
+      "plain_weight_sup_upper_bound": null,
+      "plain_weight_worst_arc_index": null,
+      "W_ge1_block_upper_bound": "[0.909709575491977677498517 +/- 2.60e-24]",
+      "W0_block_upper_bound": "[0.761397927455911102509442 +/- 4.30e-25]",
+      "W0_worst_arc_index": 152
+    },
+    {
+      "block": [
+        3,
+        3,
+        1,
+        true,
+        true
+      ],
+      "label": "3\u21923, \u22121, tail",
+      "source_disc": 3,
+      "target_disc": 3,
+      "n0": 1,
+      "negative_branch": true,
+      "tail": true,
+      "head_terms": [
+        {
+          "n": 1,
+          "weight_sup_upper_bound": "[2.62288063923712805825297 +/- 4.40e-24]",
+          "weight_worst_arc_index": 404,
+          "v2_image_ratio_upper_bound": "[0.803192256291914167547065 +/- 3.68e-26]",
+          "weighted_head_product_upper_bound": "[2.10667741861324702244732 +/- 1.29e-24]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.304279161740966086342014 +/- 9.22e-26]",
+            "kind": "individual_arc",
+            "n": 1,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.803192256291914167547065 +/- 3.67e-26]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 2,
+          "weight_sup_upper_bound": "[0.725209208021063233770119 +/- 3.29e-25]",
+          "weight_worst_arc_index": 400,
+          "v2_image_ratio_upper_bound": "[0.106771595337906773551671 +/- 1.32e-25]",
+          "weighted_head_product_upper_bound": "[0.0774317440941488186978535 +/- 1.12e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.0404490597022841092873880 +/- 4.41e-26]",
+            "kind": "individual_arc",
+            "n": 2,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.106771595337906773551671 +/- 1.31e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 3,
+          "weight_sup_upper_bound": "[0.398452123143362348274731 +/- 1.93e-25]",
+          "weight_worst_arc_index": 398,
+          "v2_image_ratio_upper_bound": "[0.288034178751598218651892 +/- 2.32e-25]",
+          "weighted_head_product_upper_bound": "[0.114767830061429056114077 +/- 4.61e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.109118081974424287127220 +/- 7.60e-26]",
+            "kind": "individual_arc",
+            "n": 3,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.288034178751598218651892 +/- 2.31e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 4,
+          "weight_sup_upper_bound": "[0.273898604929752021895011 +/- 1.07e-25]",
+          "weight_worst_arc_index": 396,
+          "v2_image_ratio_upper_bound": "[0.385989727780386458935887 +/- 3.58e-25]",
+          "weighted_head_product_upper_bound": "[0.105722047956262599517562 +/- 1.58e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.146227294759866139595772 +/- 1.98e-25]",
+            "kind": "individual_arc",
+            "n": 4,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.385989727780386458935887 +/- 3.57e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 5,
+          "weight_sup_upper_bound": "[0.209420478472252412654507 +/- 1.13e-25]",
+          "weight_worst_arc_index": 395,
+          "v2_image_ratio_upper_bound": "[0.447336535582006645183833 +/- 4.66e-25]",
+          "weighted_head_product_upper_bound": "[0.0936814313197035980306860 +/- 1.08e-25]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.169467751956924735343038 +/- 3.91e-26]",
+            "kind": "individual_arc",
+            "n": 5,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.447336535582006645183833 +/- 4.65e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 6,
+          "weight_sup_upper_bound": "[0.169999906077032057967226 +/- 4.86e-25]",
+          "weight_worst_arc_index": 395,
+          "v2_image_ratio_upper_bound": "[0.489366013184604941797753 +/- 2.25e-25]",
+          "weighted_head_product_upper_bound": "[0.0831921762786744718475800 +/- 5.25e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.185390084515720426955883 +/- 1.77e-25]",
+            "kind": "individual_arc",
+            "n": 6,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.489366013184604941797753 +/- 2.24e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        },
+        {
+          "n": 7,
+          "weight_sup_upper_bound": "[0.143435486770200277211029 +/- 1.52e-25]",
+          "weight_worst_arc_index": 394,
+          "v2_image_ratio_upper_bound": "[0.519961195784601911126123 +/- 1.31e-25]",
+          "weighted_head_product_upper_bound": "[0.0745808872189797835711829 +/- 6.47e-26]",
+          "source_v2_term": {
+            "arc_cover": {
+              "M": 512,
+              "arc_enclosure": "Acb rectangular ball"
+            },
+            "certified_sup_upper_bound": "[0.196980679970185827227811 +/- 2.21e-26]",
+            "kind": "individual_arc",
+            "n": 7,
+            "pass": true,
+            "ratio_less_than_0_70": true,
+            "ratio_upper_bound": "[0.519961195784601911126123 +/- 1.30e-25]"
+          },
+          "s_ball": {
+            "center": {
+              "re": "0.4252310423737965",
+              "im": "4.345760788321986"
+            },
+            "half_width": {
+              "re": "1e-6",
+              "im": "1e-6"
+            },
+            "principal_branch": true
+          }
+        }
+      ],
+      "head_weighted_sum_upper_bound": "[2.65605353554244535022626 +/- 3.65e-24]",
+      "deep_tail": {
+        "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+        "first_n": 8,
+        "range": "n\u22658",
+        "denominator_lower_bound": "[14.6738333001513487011710 +/- 4.57e-23]",
+        "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+        "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+        "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+        "angle_bound": "[0.0516229300799226583315831 +/- 1.81e-25]",
+        "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+        "angle_factor": "[1.25149765350584645641390 +/- 5.11e-24]",
+        "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+        "image_ratio_bound": "1/(R_j*d_n)",
+        "first_product_upper_bound": "[0.0229263547108637538468830 +/- 1.26e-25]",
+        "integral_upper_bound": "[0.214081584999445228273443 +/- 1.42e-24]",
+        "deep_sum_upper_bound": "[0.237007939710308982120326 +/- 1.55e-24]",
+        "integral_converges": true,
+        "phi0_closed_tail_sup_upper_bound": "[2.95312221939216882717435 +/- 1.12e-24]",
+        "phi0_closed_tail_worst_arc_index": 412
+      },
+      "plain_weight_sup_upper_bound": null,
+      "plain_weight_worst_arc_index": null,
+      "W_ge1_block_upper_bound": "[2.89306147525275433234659 +/- 5.57e-24]",
+      "W0_block_upper_bound": "[2.95312221939216882717435 +/- 1.12e-24]",
+      "W0_worst_arc_index": 412
+    }
+  ],
+  "boxes": [
+    {
+      "name": "g8_pin_1",
+      "pin_source_center": {
+        "re": "0.4252310423737965",
+        "im": "4.345760788321986"
+      },
+      "s_ball": {
+        "center": {
+          "re": "0.4252310423737965",
+          "im": "4.345760788321986"
+        },
+        "half_width": {
+          "re": "1e-6",
+          "im": "1e-6"
+        },
+        "principal_branch": true
+      },
+      "blocks": [
+        {
+          "block": [
+            1,
+            3,
+            2,
+            false,
+            true
+          ],
+          "label": "1\u21923, +2, tail",
+          "source_disc": 1,
+          "target_disc": 3,
+          "n0": 2,
+          "negative_branch": false,
+          "tail": true,
+          "head_terms": [
+            {
+              "n": 2,
+              "weight_sup_upper_bound": "[0.949961936750775741855076 +/- 8.04e-26]",
+              "weight_worst_arc_index": 145,
+              "v2_image_ratio_upper_bound": "[0.308276164197806168257616 +/- 4.87e-25]",
+              "weighted_head_product_upper_bound": "[0.292850621995448100422592 +/- 6.49e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.116786500482316960669499 +/- 3.11e-25]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.308276164197806168257616 +/- 4.86e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 3,
+              "weight_sup_upper_bound": "[0.445782513235035143404769 +/- 4.96e-25]",
+              "weight_worst_arc_index": 141,
+              "v2_image_ratio_upper_bound": "[0.182968032635144148999864 +/- 1.29e-25]",
+              "weighted_head_product_upper_bound": "[0.0815639494297644886472955 +/- 9.64e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0693151099994934776925475 +/- 7.41e-27]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.182968032635144148999864 +/- 1.28e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 4,
+              "weight_sup_upper_bound": "[0.291058741352698923826142 +/- 4.33e-25]",
+              "weight_worst_arc_index": 139,
+              "v2_image_ratio_upper_bound": "[0.327005856414402701973937 +/- 2.73e-25]",
+              "weighted_head_product_upper_bound": "[0.0951779129829374383457382 +/- 8.57e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.123882005951509397358614 +/- 7.85e-27]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.327005856414402701973937 +/- 2.72e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 5,
+              "weight_sup_upper_bound": "[0.217283562588908643771846 +/- 6.07e-26]",
+              "weight_worst_arc_index": 139,
+              "v2_image_ratio_upper_bound": "[0.409603829546294787098582 +/- 4.25e-26]",
+              "weighted_head_product_upper_bound": "[0.0890001793338790109846744 +/- 4.58e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.155173196608781647034431 +/- 3.79e-25]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.409603829546294787098582 +/- 4.24e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 6,
+              "weight_sup_upper_bound": "[0.174237594051729120250758 +/- 3.25e-25]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.463162667845958339481265 +/- 1.58e-25]",
+              "weighted_head_product_upper_bound": "[0.0807003489000599410361164 +/- 6.41e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.175463280700078727590742 +/- 4.16e-25]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.463162667845958339481265 +/- 1.57e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 7,
+              "weight_sup_upper_bound": "[0.146087280182517191849786 +/- 1.04e-25]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.500706863036056689883102 +/- 1.82e-25]",
+              "weighted_head_product_upper_bound": "[0.0731469037896576743320823 +/- 4.48e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.189686421114084911371433 +/- 3.82e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.500706863036056689883102 +/- 1.81e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 8,
+              "weight_sup_upper_bound": "[0.126162759665226128484317 +/- 1.56e-27]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.528485028434993893172342 +/- 1.07e-25]",
+              "weighted_head_product_upper_bound": "[0.0666751296291143311385091 +/- 1.42e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.200209825462269501176400 +/- 2.97e-25]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.528485028434993893172342 +/- 1.06e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[0.779115046060860984907008 +/- 1.11e-24]",
+          "deep_tail": {
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "first_n": 9,
+            "range": "n\u22659",
+            "denominator_lower_bound": "[15.5157368513545461989736 +/- 6.46e-23]",
+            "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+            "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+            "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+            "angle_bound": "[0.0347317628215770959193977 +/- 1.69e-25]",
+            "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+            "angle_factor": "[1.16292219112795795566187 +/- 3.04e-24]",
+            "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "first_product_upper_bound": "[0.0192141489657392856996755 +/- 1.37e-25]",
+            "integral_upper_bound": "[0.189711772524287370424814 +/- 1.10e-24]",
+            "deep_sum_upper_bound": "[0.208925921490026656124490 +/- 1.39e-24]",
+            "integral_converges": true,
+            "phi0_closed_tail_sup_upper_bound": "[0.890279039489179358984580 +/- 8.15e-26]",
+            "phi0_closed_tail_worst_arc_index": 152
+          },
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "W_ge1_block_upper_bound": "[0.988040967550887641031498 +/- 2.37e-24]",
+          "W0_block_upper_bound": "[0.890279039489179358984580 +/- 8.15e-26]",
+          "W0_worst_arc_index": 152
+        },
+        {
+          "block": [
+            1,
+            3,
+            1,
+            true,
+            true
+          ],
+          "label": "1\u21923, \u22121, tail",
+          "source_disc": 1,
+          "target_disc": 3,
+          "n0": 1,
+          "negative_branch": true,
+          "tail": true,
+          "head_terms": [
+            {
+              "n": 1,
+              "weight_sup_upper_bound": "[1.05087140041095490629424 +/- 3.96e-25]",
+              "weight_worst_arc_index": 400,
+              "v2_image_ratio_upper_bound": "[0.375174732561423133402931 +/- 9.48e-26]",
+              "weighted_head_product_upper_bound": "[0.394260396605628211255271 +/- 1.88e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.142130171494944237339629 +/- 4.67e-26]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.375174732561423133402931 +/- 9.47e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 2,
+              "weight_sup_upper_bound": "[0.467121111841061808291767 +/- 3.60e-25]",
+              "weight_worst_arc_index": 397,
+              "v2_image_ratio_upper_bound": "[0.165457240055274991399626 +/- 3.56e-25]",
+              "weighted_head_product_upper_bound": "[0.0772885699367735209089632 +/- 2.16e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0626813691412075715213353 +/- 3.49e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.165457240055274991399626 +/- 3.55e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 3,
+              "weight_sup_upper_bound": "[0.299734006967000244095355 +/- 4.76e-26]",
+              "weight_worst_arc_index": 395,
+              "v2_image_ratio_upper_bound": "[0.317784695903488653814798 +/- 4.67e-25]",
+              "weighted_head_product_upper_bound": "[0.0952508802559423220918983 +/- 1.50e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.120388686676379240047805 +/- 4.85e-25]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.317784695903488653814798 +/- 4.66e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 4,
+              "weight_sup_upper_bound": "[0.222130865859309554163324 +/- 3.09e-25]",
+              "weight_worst_arc_index": 395,
+              "v2_image_ratio_upper_bound": "[0.403925385126336202777247 +/- 1.11e-25]",
+              "weighted_head_product_upper_bound": "[0.0897242955406681376118861 +/- 6.51e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.153021990226296683421876 +/- 3.58e-25]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.403925385126336202777247 +/- 1.10e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 5,
+              "weight_sup_upper_bound": "[0.177271063649324641247352 +/- 1.45e-25]",
+              "weight_worst_arc_index": 394,
+              "v2_image_ratio_upper_bound": "[0.459317734516170516163998 +/- 4.51e-25]",
+              "weighted_head_product_upper_bound": "[0.0814237433506796612729094 +/- 1.11e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.174006676653696416565363 +/- 4.55e-25]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.459317734516170516163998 +/- 4.50e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 6,
+              "weight_sup_upper_bound": "[0.148153129717783865551307 +/- 1.55e-26]",
+              "weight_worst_arc_index": 394,
+              "v2_image_ratio_upper_bound": "[0.497932015043793103426078 +/- 3.89e-25]",
+              "weighted_head_product_upper_bound": "[0.0737701864154205868410794 +/- 8.92e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.188635205275746821071599 +/- 2.96e-25]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.497932015043793103426078 +/- 3.88e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 7,
+              "weight_sup_upper_bound": "[0.127650405411479098915757 +/- 4.42e-26]",
+              "weight_worst_arc_index": 394,
+              "v2_image_ratio_upper_bound": "[0.526388580368870126210769 +/- 1.11e-26]",
+              "weighted_head_product_upper_bound": "[0.0671937156880592197329330 +/- 1.69e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.199415612799987847748909 +/- 2.83e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.526388580368870126210769 +/- 1.10e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[0.878911787793171659714940 +/- 1.24e-24]",
+          "deep_tail": {
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "first_n": 8,
+            "range": "n\u22658",
+            "denominator_lower_bound": "[15.3572241835734389863024 +/- 6.50e-23]",
+            "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+            "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+            "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+            "angle_bound": "[0.0350901804842032698601748 +/- 1.59e-25]",
+            "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+            "angle_factor": "[1.16473496757586751035443 +/- 2.18e-24]",
+            "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "first_product_upper_bound": "[0.0196132729189957925244372 +/- 1.10e-25]",
+            "integral_upper_bound": "[0.191674137968757362855238 +/- 1.31e-24]",
+            "deep_sum_upper_bound": "[0.211287410887753155379676 +/- 1.43e-24]",
+            "integral_converges": true,
+            "phi0_closed_tail_sup_upper_bound": "[1.02775862903848026634028 +/- 2.00e-24]",
+            "phi0_closed_tail_worst_arc_index": 408
+          },
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "W_ge1_block_upper_bound": "[1.09019919868092481509462 +/- 5.61e-24]",
+          "W0_block_upper_bound": "[1.02775862903848026634028 +/- 2.00e-24]",
+          "W0_worst_arc_index": 408
+        },
+        {
+          "block": [
+            2,
+            1,
+            1,
+            false,
+            false
+          ],
+          "label": "2\u21921, +1, head",
+          "source_disc": 2,
+          "target_disc": 1,
+          "n0": 1,
+          "negative_branch": false,
+          "tail": false,
+          "head_terms": [
+            {
+              "n": 1,
+              "weight_sup_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+              "weight_worst_arc_index": 156,
+              "v2_image_ratio_upper_bound": "[0.781324224626880949779667 +/- 4.30e-25]",
+              "weighted_head_product_upper_bound": "[4.33250406080623014760771 +/- 3.31e-24]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.210544638320940343104242 +/- 1.93e-25]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.781324224626880949779667 +/- 4.29e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[4.33250406080623014760771 +/- 3.32e-24]",
+          "deep_tail": null,
+          "plain_weight_sup_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+          "plain_weight_worst_arc_index": 156,
+          "W_ge1_block_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+          "W0_block_upper_bound": "[5.54507837367413575816149 +/- 4.86e-25]",
+          "W0_worst_arc_index": 156
+        },
+        {
+          "block": [
+            2,
+            3,
+            2,
+            false,
+            true
+          ],
+          "label": "2\u21923, +2, tail",
+          "source_disc": 2,
+          "target_disc": 3,
+          "n0": 2,
+          "negative_branch": false,
+          "tail": true,
+          "head_terms": [
+            {
+              "n": 2,
+              "weight_sup_upper_bound": "[0.795400601646359326776031 +/- 6.09e-26]",
+              "weight_worst_arc_index": 142,
+              "v2_image_ratio_upper_bound": "[0.229918614065685587186836 +/- 2.69e-25]",
+              "weighted_head_product_upper_bound": "[0.182877403957543410126222 +/- 3.18e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0871017400983573141518449 +/- 4.30e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.229918614065685587186836 +/- 2.68e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 3,
+              "weight_sup_upper_bound": "[0.404699756813070741723967 +/- 1.63e-25]",
+              "weight_worst_arc_index": 140,
+              "v2_image_ratio_upper_bound": "[0.200392834161857567363131 +/- 1.69e-25]",
+              "weighted_head_product_upper_bound": "[0.0810989312523857723267622 +/- 1.12e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0759162742419486385835339 +/- 2.76e-27]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.200392834161857567363131 +/- 1.68e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 4,
+              "weight_sup_upper_bound": "[0.272762232532124325536128 +/- 3.57e-25]",
+              "weight_worst_arc_index": 139,
+              "v2_image_ratio_upper_bound": "[0.336346776094223133904159 +/- 2.12e-25]",
+              "weighted_head_product_upper_bound": "[0.0917426975524428456851227 +/- 6.66e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.127420694463257773883377 +/- 1.51e-25]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.336346776094223133904159 +/- 2.11e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 5,
+              "weight_sup_upper_bound": "[0.206767775441095403031401 +/- 3.78e-25]",
+              "weight_worst_arc_index": 139,
+              "v2_image_ratio_upper_bound": "[0.415415130548221804974860 +/- 3.02e-25]",
+              "weighted_head_product_upper_bound": "[0.0858944624280280572556458 +/- 1.11e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.157374734016094659503265 +/- 4.21e-25]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.415415130548221804974860 +/- 3.01e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 6,
+              "weight_sup_upper_bound": "[0.167450000606489503035274 +/- 3.95e-25]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.467123733311257604942857 +/- 2.18e-25]",
+              "weighted_head_product_upper_bound": "[0.0782198694262757268196081 +/- 5.56e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.176963879927649348129443 +/- 7.57e-27]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.467123733311257604942857 +/- 2.17e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 7,
+              "weight_sup_upper_bound": "[0.141329309666752003408305 +/- 4.64e-25]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.503578839382205646711660 +/- 2.44e-25]",
+              "weighted_head_product_upper_bound": "[0.0711704497326713109777715 +/- 8.23e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.190774432792858469186464 +/- 4.31e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.503578839382205646711660 +/- 2.43e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 8,
+              "weight_sup_upper_bound": "[0.122643101869593567505687 +/- 5.89e-26]",
+              "weight_worst_arc_index": 137,
+              "v2_image_ratio_upper_bound": "[0.530662333487995577864644 +/- 3.42e-25]",
+              "weighted_head_product_upper_bound": "[0.0650820746243244756623256 +/- 4.26e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.201034669764728685513640 +/- 3.25e-25]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.530662333487995577864644 +/- 3.41e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[0.656085888973671598853458 +/- 8.89e-25]",
+          "deep_tail": {
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "first_n": 9,
+            "range": "n\u22659",
+            "denominator_lower_bound": "[15.7299622617225925314161 +/- 4.16e-23]",
+            "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+            "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+            "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+            "angle_bound": "[0.0313500618148810919118667 +/- 1.38e-25]",
+            "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+            "angle_factor": "[1.14595677645024193605982 +/- 1.73e-24]",
+            "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "first_product_upper_bound": "[0.0184594489866422314713124 +/- 1.21e-25]",
+            "integral_upper_bound": "[0.184776670367111378378801 +/- 9.58e-25]",
+            "deep_sum_upper_bound": "[0.203236119353753609850113 +/- 1.40e-24]",
+            "integral_converges": true,
+            "phi0_closed_tail_sup_upper_bound": "[0.699812540812134610678811 +/- 3.72e-25]",
+            "phi0_closed_tail_worst_arc_index": 152
+          },
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "W_ge1_block_upper_bound": "[0.859322008327425208703571 +/- 2.18e-24]",
+          "W0_block_upper_bound": "[0.699812540812134610678811 +/- 3.72e-25]",
+          "W0_worst_arc_index": 152
+        },
+        {
+          "block": [
+            2,
+            3,
+            1,
+            true,
+            true
+          ],
+          "label": "2\u21923, \u22121, tail",
+          "source_disc": 2,
+          "target_disc": 3,
+          "n0": 1,
+          "negative_branch": true,
+          "tail": true,
+          "head_terms": [
+            {
+              "n": 1,
+              "weight_sup_upper_bound": "[1.09760515485802530600770 +/- 1.83e-24]",
+              "weight_worst_arc_index": 399,
+              "v2_image_ratio_upper_bound": "[0.456581288265549968472218 +/- 2.60e-25]",
+              "weighted_head_product_upper_bound": "[0.501145975611985665621082 +/- 7.38e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.172970008826329550339036 +/- 6.71e-26]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.456581288265549968472218 +/- 2.59e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 2,
+              "weight_sup_upper_bound": "[0.472368259578815871091450 +/- 3.49e-25]",
+              "weight_worst_arc_index": 396,
+              "v2_image_ratio_upper_bound": "[0.139872274943866188576388 +/- 5.05e-26]",
+              "weighted_head_product_upper_bound": "[0.0660712230785636868899707 +/- 6.68e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0529888308027379034841296 +/- 2.45e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.139872274943866188576388 +/- 5.04e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 3,
+              "weight_sup_upper_bound": "[0.300826234413897529603206 +/- 4.44e-26]",
+              "weight_worst_arc_index": 395,
+              "v2_image_ratio_upper_bound": "[0.304601590888021978989939 +/- 1.16e-25]",
+              "weighted_head_product_upper_bound": "[0.0916321495833262136305292 +/- 4.15e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.115394435160847406042377 +/- 2.82e-25]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.304601590888021978989939 +/- 1.15e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 4,
+              "weight_sup_upper_bound": "[0.222553660386967504927883 +/- 6.77e-26]",
+              "weight_worst_arc_index": 395,
+              "v2_image_ratio_upper_bound": "[0.395906100920673480798661 +/- 4.82e-25]",
+              "weighted_head_product_upper_bound": "[0.0881103519294280488756814 +/- 1.46e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.149983986489648622669201 +/- 2.06e-25]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.395906100920673480798661 +/- 4.81e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 5,
+              "weight_sup_upper_bound": "[0.177402866577477746749932 +/- 4.13e-25]",
+              "weight_worst_arc_index": 394,
+              "v2_image_ratio_upper_bound": "[0.453930372030919264990495 +/- 2.20e-25]",
+              "weighted_head_product_upper_bound": "[0.0805285492248660066457007 +/- 3.91e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.171965742956732086002261 +/- 1.73e-26]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.453930372030919264990495 +/- 2.19e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 6,
+              "weight_sup_upper_bound": "[0.148146831352932837584777 +/- 5.92e-26]",
+              "weight_worst_arc_index": 394,
+              "v2_image_ratio_upper_bound": "[0.494065266176253121779876 +/- 7.3e-28]",
+              "weighted_head_product_upper_bound": "[0.0731942036655552437892088 +/- 4.04e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.187170336690596667892196 +/- 1.05e-25]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.494065266176253121779876 +/- 7.0e-28]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 7,
+              "weight_sup_upper_bound": "[0.127577288765283661231540 +/- 4.54e-25]",
+              "weight_worst_arc_index": 393,
+              "v2_image_ratio_upper_bound": "[0.523478949614716242720059 +/- 8.96e-26]",
+              "weighted_head_product_upper_bound": "[0.0667840251175440302745660 +/- 2.11e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.198313336228078383898009 +/- 1.96e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.523478949614716242720059 +/- 8.95e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[0.967466478211268895726739 +/- 1.30e-24]",
+          "deep_tail": {
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "first_n": 8,
+            "range": "n\u22658",
+            "denominator_lower_bound": "[15.1887661615763955470164 +/- 6.39e-23]",
+            "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+            "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+            "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+            "angle_bound": "[0.0324669136837054059142827 +/- 1.50e-25]",
+            "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+            "angle_factor": "[1.15153227998304423237164 +/- 3.33e-24]",
+            "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "first_product_upper_bound": "[0.0197907931759833157932087 +/- 1.43e-25]",
+            "integral_upper_bound": "[0.191287424236822062816041 +/- 1.28e-24]",
+            "deep_sum_upper_bound": "[0.211078217412805378609250 +/- 1.12e-24]",
+            "integral_converges": true,
+            "phi0_closed_tail_sup_upper_bound": "[1.14923915164223843300064 +/- 3.44e-25]",
+            "phi0_closed_tail_worst_arc_index": 409
+          },
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "W_ge1_block_upper_bound": "[1.17854469562407427433599 +/- 3.22e-24]",
+          "W0_block_upper_bound": "[1.14923915164223843300064 +/- 3.44e-25]",
+          "W0_worst_arc_index": 409
+        },
+        {
+          "block": [
+            3,
+            2,
+            1,
+            false,
+            false
+          ],
+          "label": "3\u21922, +1, head",
+          "source_disc": 3,
+          "target_disc": 2,
+          "n0": 1,
+          "negative_branch": false,
+          "tail": false,
+          "head_terms": [
+            {
+              "n": 1,
+              "weight_sup_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+              "weight_worst_arc_index": 155,
+              "v2_image_ratio_upper_bound": "[0.735980304555347295788241 +/- 3.97e-25]",
+              "weighted_head_product_upper_bound": "[4.46804928893777361589704 +/- 7.02e-24]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.181483794350016999777322 +/- 2.96e-25]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.735980304555347295788241 +/- 3.96e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[4.46804928893777361589704 +/- 7.03e-24]",
+          "deep_tail": null,
+          "plain_weight_sup_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+          "plain_weight_worst_arc_index": 155,
+          "W_ge1_block_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+          "W0_block_upper_bound": "[6.07088160006837076478133 +/- 4.66e-25]",
+          "W0_worst_arc_index": 155
+        },
+        {
+          "block": [
+            3,
+            3,
+            2,
+            false,
+            true
+          ],
+          "label": "3\u21923, +2, tail",
+          "source_disc": 3,
+          "target_disc": 3,
+          "n0": 2,
+          "negative_branch": false,
+          "tail": true,
+          "head_terms": [
+            {
+              "n": 2,
+              "weight_sup_upper_bound": "[0.939742474838211552600766 +/- 1.12e-25]",
+              "weight_worst_arc_index": 146,
+              "v2_image_ratio_upper_bound": "[0.152302010874941699676683 +/- 4.40e-25]",
+              "weighted_head_product_upper_bound": "[0.143124668622453922459635 +/- 6.84e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0576976780309594912102259 +/- 3.58e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.152302010874941699676683 +/- 4.39e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 3,
+              "weight_sup_upper_bound": "[0.459198071440944040769260 +/- 3.88e-25]",
+              "weight_worst_arc_index": 141,
+              "v2_image_ratio_upper_bound": "[0.247215968805591209874268 +/- 4.59e-25]",
+              "weighted_head_product_upper_bound": "[0.113521096104932065816645 +/- 3.78e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0936546227480148950791483 +/- 3.94e-26]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.247215968805591209874268 +/- 4.58e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 4,
+              "weight_sup_upper_bound": "[0.301148868796326893698693 +/- 4.77e-25]",
+              "weight_worst_arc_index": 141,
+              "v2_image_ratio_upper_bound": "[0.362297804661373802466793 +/- 2.35e-25]",
+              "weighted_head_product_upper_bound": "[0.109105574041165329317578 +/- 2.20e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.137251911281984918323332 +/- 1.91e-26]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.362297804661373802466793 +/- 2.34e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 5,
+              "weight_sup_upper_bound": "[0.224548230008693549611602 +/- 4.35e-25]",
+              "weight_worst_arc_index": 139,
+              "v2_image_ratio_upper_bound": "[0.431880109821787633301416 +/- 4.52e-25]",
+              "weighted_head_product_upper_bound": "[0.0969779142364425996547220 +/- 1.40e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.163612281816383912294386 +/- 3.38e-25]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.431880109821787633301416 +/- 4.51e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 6,
+              "weight_sup_upper_bound": "[0.179678703422374044769065 +/- 1.93e-27]",
+              "weight_worst_arc_index": 139,
+              "v2_image_ratio_upper_bound": "[0.478492600835299798978987 +/- 4.13e-25]",
+              "weighted_head_product_upper_bound": "[0.0859749301152862397035804 +/- 1.01e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.181270830664612618186539 +/- 2.94e-25]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.478492600835299798978987 +/- 4.12e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 7,
+              "weight_sup_upper_bound": "[0.150093461928800808050992 +/- 1.90e-25]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.511897771432043457183580 +/- 6.02e-26]",
+              "weighted_head_product_upper_bound": "[0.0768325086678733925366729 +/- 1.17e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.193925954300785871193802 +/- 1.69e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.511897771432043457183580 +/- 6.01e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 8,
+              "weight_sup_upper_bound": "[0.129355250266712855600121 +/- 4.82e-25]",
+              "weight_worst_arc_index": 138,
+              "v2_image_ratio_upper_bound": "[0.537012360077498808810139 +/- 4.73e-25]",
+              "weighted_head_product_upper_bound": "[0.0694653682341429778371681 +/- 7.55e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.203440296502973348497981 +/- 1.28e-25]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.537012360077498808810139 +/- 4.72e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[0.695002060022296527326001 +/- 2.02e-24]",
+          "deep_tail": {
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "first_n": 9,
+            "range": "n\u22659",
+            "denominator_lower_bound": "[15.9803962650277252290277 +/- 7.14e-23]",
+            "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+            "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+            "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+            "angle_bound": "[0.0474038715779202668608081 +/- 1.32e-25]",
+            "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+            "angle_factor": "[1.22876049509667694843512 +/- 2.75e-24]",
+            "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "first_product_upper_bound": "[0.0192231180344117044208430 +/- 1.15e-25]",
+            "integral_upper_bound": "[0.195484397435269445751673 +/- 1.44e-24]",
+            "deep_sum_upper_bound": "[0.214707515469681150172516 +/- 1.52e-24]",
+            "integral_converges": true,
+            "phi0_closed_tail_sup_upper_bound": "[0.761397927455911102509442 +/- 4.30e-25]",
+            "phi0_closed_tail_worst_arc_index": 152
+          },
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "W_ge1_block_upper_bound": "[0.909709575491977677498517 +/- 2.60e-24]",
+          "W0_block_upper_bound": "[0.761397927455911102509442 +/- 4.30e-25]",
+          "W0_worst_arc_index": 152
+        },
+        {
+          "block": [
+            3,
+            3,
+            1,
+            true,
+            true
+          ],
+          "label": "3\u21923, \u22121, tail",
+          "source_disc": 3,
+          "target_disc": 3,
+          "n0": 1,
+          "negative_branch": true,
+          "tail": true,
+          "head_terms": [
+            {
+              "n": 1,
+              "weight_sup_upper_bound": "[2.62288063923712805825297 +/- 4.40e-24]",
+              "weight_worst_arc_index": 404,
+              "v2_image_ratio_upper_bound": "[0.803192256291914167547065 +/- 3.68e-26]",
+              "weighted_head_product_upper_bound": "[2.10667741861324702244732 +/- 1.29e-24]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.304279161740966086342014 +/- 9.22e-26]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.803192256291914167547065 +/- 3.67e-26]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 2,
+              "weight_sup_upper_bound": "[0.725209208021063233770119 +/- 3.29e-25]",
+              "weight_worst_arc_index": 400,
+              "v2_image_ratio_upper_bound": "[0.106771595337906773551671 +/- 1.32e-25]",
+              "weighted_head_product_upper_bound": "[0.0774317440941488186978535 +/- 1.12e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0404490597022841092873880 +/- 4.41e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.106771595337906773551671 +/- 1.31e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 3,
+              "weight_sup_upper_bound": "[0.398452123143362348274731 +/- 1.93e-25]",
+              "weight_worst_arc_index": 398,
+              "v2_image_ratio_upper_bound": "[0.288034178751598218651892 +/- 2.32e-25]",
+              "weighted_head_product_upper_bound": "[0.114767830061429056114077 +/- 4.61e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.109118081974424287127220 +/- 7.60e-26]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.288034178751598218651892 +/- 2.31e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 4,
+              "weight_sup_upper_bound": "[0.273898604929752021895011 +/- 1.07e-25]",
+              "weight_worst_arc_index": 396,
+              "v2_image_ratio_upper_bound": "[0.385989727780386458935887 +/- 3.58e-25]",
+              "weighted_head_product_upper_bound": "[0.105722047956262599517562 +/- 1.58e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.146227294759866139595772 +/- 1.98e-25]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.385989727780386458935887 +/- 3.57e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 5,
+              "weight_sup_upper_bound": "[0.209420478472252412654507 +/- 1.13e-25]",
+              "weight_worst_arc_index": 395,
+              "v2_image_ratio_upper_bound": "[0.447336535582006645183833 +/- 4.66e-25]",
+              "weighted_head_product_upper_bound": "[0.0936814313197035980306860 +/- 1.08e-25]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.169467751956924735343038 +/- 3.91e-26]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.447336535582006645183833 +/- 4.65e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 6,
+              "weight_sup_upper_bound": "[0.169999906077032057967226 +/- 4.86e-25]",
+              "weight_worst_arc_index": 395,
+              "v2_image_ratio_upper_bound": "[0.489366013184604941797753 +/- 2.25e-25]",
+              "weighted_head_product_upper_bound": "[0.0831921762786744718475800 +/- 5.25e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.185390084515720426955883 +/- 1.77e-25]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.489366013184604941797753 +/- 2.24e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            },
+            {
+              "n": 7,
+              "weight_sup_upper_bound": "[0.143435486770200277211029 +/- 1.52e-25]",
+              "weight_worst_arc_index": 394,
+              "v2_image_ratio_upper_bound": "[0.519961195784601911126123 +/- 1.31e-25]",
+              "weighted_head_product_upper_bound": "[0.0745808872189797835711829 +/- 6.47e-26]",
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.196980679970185827227811 +/- 2.21e-26]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.519961195784601911126123 +/- 1.30e-25]"
+              },
+              "s_ball": {
+                "center": {
+                  "re": "0.4252310423737965",
+                  "im": "4.345760788321986"
+                },
+                "half_width": {
+                  "re": "1e-6",
+                  "im": "1e-6"
+                },
+                "principal_branch": true
+              }
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[2.65605353554244535022626 +/- 3.65e-24]",
+          "deep_tail": {
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "first_n": 8,
+            "range": "n\u22658",
+            "denominator_lower_bound": "[14.6738333001513487011710 +/- 4.57e-23]",
+            "sigma_lower": "[0.425230042373791919329935 +/- 4.80e-25]",
+            "weight_exponent_p": "[0.850460084747583838659869 +/- 4.14e-26]",
+            "integral_exponent_1_plus_p": "[1.85046008474758383865987 +/- 9.59e-25]",
+            "angle_bound": "[0.0516229300799226583315831 +/- 1.81e-25]",
+            "im_s_abs_upper_bound": "[4.34576178832199058067007 +/- 4.53e-24]",
+            "angle_factor": "[1.25149765350584645641390 +/- 5.11e-24]",
+            "target_radius": "[0.378837270102337889079806 +/- 2.45e-25]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "first_product_upper_bound": "[0.0229263547108637538468830 +/- 1.26e-25]",
+            "integral_upper_bound": "[0.214081584999445228273443 +/- 1.42e-24]",
+            "deep_sum_upper_bound": "[0.237007939710308982120326 +/- 1.55e-24]",
+            "integral_converges": true,
+            "phi0_closed_tail_sup_upper_bound": "[2.95312221939216882717435 +/- 1.12e-24]",
+            "phi0_closed_tail_worst_arc_index": 412
+          },
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "W_ge1_block_upper_bound": "[2.89306147525275433234659 +/- 5.57e-24]",
+          "W0_block_upper_bound": "[2.95312221939216882717435 +/- 1.12e-24]",
+          "W0_worst_arc_index": 412
+        }
+      ],
+      "W_ge1_row_sums_by_source_disc": {
+        "1": "[2.07824016623181245612612 +/- 9.99e-24]",
+        "2": "[7.58294507762563524120105 +/- 6.89e-24]",
+        "3": "[9.87365265081310277462644 +/- 1.17e-23]"
+      },
+      "W0_row_sums_by_source_disc": {
+        "1": "[1.91803766852765962532486 +/- 2.09e-24]",
+        "2": "[7.39413006612850880184094 +/- 2.21e-24]",
+        "3": "[9.78540174691645069446512 +/- 4.02e-24]"
+      },
+      "W_ge1_upper_bound": "[9.87365265081310277462644 +/- 1.17e-23]",
+      "W0_upper_bound": "[9.78540174691645069446512 +/- 4.02e-24]"
+    }
+  ],
+  "geometry": {
+    "lambda": "[1.84775906502257351225637 +/- 3.64e-24]",
+    "centers": [
+      "[-0.844623198620733149792552 +/- 4.23e-25]",
+      "[-0.653281482438188263928322 +/- 4.15e-25]",
+      "[-0.270598050073098492199862 +/- 3.99e-25]"
+    ],
+    "source_radii": [
+      "[0.269471535227882261541147 +/- 4.78e-25]",
+      "[0.246587841042380814962916 +/- 4.40e-25]",
+      "[0.378837270102337889079806 +/- 2.45e-25]"
+    ],
+    "radius_multipliers": [
+      "[3.40000000000000000000000 +/- 2e-28]",
+      "[2.20000000000000000000000 +/- 2e-28]",
+      "[1.40000000000000000000000 +/- 6e-28]"
+    ]
+  },
+  "v2_receipt_source": {
+    "path": "/Users/za/Documents/farey-hecke/.worktrees/law-q8-generic-20260819/research_notes/rh_goals_2026-08-14/lane_f/f8_receipts/F8_TB_BLOCK_CERTIFICATES_RECEIPT.json",
+    "sha256": "d810b8164a7133f237fec6a015f593e47fa7ffe1dec62b266dedc56f710d619f",
+    "schema": "tb-block-certificates/v2-q8"
+  },
+  "source_tb_receipt": "/Users/za/Documents/farey-hecke/.worktrees/law-q8-generic-20260819/research_notes/rh_goals_2026-08-14/lane_f/f8_receipts/F8_TB_BLOCK_CERTIFICATES_RECEIPT.json",
+  "fredholm_tail": "OPEN: this W envelope does not prove the finite-section-to-Fredholm dimension tail",
+  "runtime_seconds": 0.4340242920006858
+}
