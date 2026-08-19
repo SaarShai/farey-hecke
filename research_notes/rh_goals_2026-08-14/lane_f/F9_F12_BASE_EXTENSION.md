@@ -316,3 +316,37 @@ are now closed — **evidence capture only, no logic changed, no result moved.**
 
 Certificates, margins, winding numbers and N-freeze decisions are unchanged
 by either fix.
+
+---
+
+## DATED CORRECTION — 2026-08-19 — q=9..12 R3B STATUS SUSPENDED / AT RISK
+
+This note explicitly ports the F8 R3b architecture.  The 2026-08-19 F8 audit
+refutes that architecture's theorem-grade continuous-contour interpretation:
+the accepted arcs use endpoint determinant balls without a segment-interior
+Taylor/derivative enclosure, and the finite-to-Fredholm dimension tail is an
+explicitly heuristic geometric extrapolation rather than a proved uniform
+tail.
+
+Binding port receipt (fresh 2026-08-19):
+
+```text
+$ rg -n 'Extends the certified base|porting the F8|All four q: closed-contour' F9_F12_BASE_EXTENSION.md
+3:Lane F, 2026-08-18. Extends the certified base from `q = 8`
+4:(`F8_CERT_PLAN.md`) to `q = 9, 10, 11, 12` by porting the F8 R3b pipeline.
+7:> **All four q: closed-contour winding = 1, certified at two N values each,
+```
+
+Accordingly, the earlier `CLOSED_CONTOUR_CERTIFIED` and “certified base” labels
+for q=9,10,11,12 are **SUSPENDED / AT RISK** and must not be consumed by a LAW
+proof.  Pending a per-driver cold audit, the strongest safe common statement is
+that the local and Kaggle runs give byte-matched **SAMPLED FINITE-SECTION
+POLYGON WINDING EVIDENCE** at the listed two N values.  Whether every F8 defect
+binds identically at each q remains **OPEN** until checked; no q=9..12
+Selberg-zero or resonance theorem is claimed here.
+
+The Kaggle reproduction and hash receipts remain valid evidence that the same
+bytes produced the same finite-section outputs.  Reproduction does not repair
+the missing analytic enclosure.  No q=9..12 downstream assembly may resume
+until theorem-valid evaluator, exact-box, R2/Fredholm-tail, continuous-R3b,
+E1, `K_s`, and source-applicability gates are independently discharged.

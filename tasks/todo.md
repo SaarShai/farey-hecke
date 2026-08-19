@@ -352,7 +352,7 @@ verifier_blind: true
 |---|---|---|---|---|---|
 | finite-certificate scout | scalar evaluator and Kaggle feasibility | complete-with-concerns | true-scalar certified range is empty; current conditional cutoff forces 97418971860452658435229799565334786142 non-arithmetic targets | no wiki write | read-only audit harvested; lane guard PASS |
 | determinant-theory scout | continuation/determinant repair inventory | complete-with-concerns | q=5 v3.1 chain is banked; general-q cancellation-safe scalar evaluator is OPEN | no wiki write | cold read-only report harvested; q=8 follow-up requested |
-| formalization scout | v31 load-bearing Aristotle target | pending | — | — | — |
+| formalization scout | v31 load-bearing Aristotle target | complete-with-concerns | selected full paper one/two-mark source encoder and inverse decoder; v30 local wire format rejected as insufficient | no wiki write | isolated v31 builder running; no submission yet |
 
 ### Review/results
 
@@ -380,6 +380,23 @@ verifier_blind: true
   theorem-valid scalar evaluator exists, so a new run would remain **NOT
   EVIDENCE** for the finite scalar gate.  A covering theorem or much smaller
   onset is necessary in addition to `(SCAT-EVAL_q)`.
+- Formalization scout verdict: the first non-duplicate Aristotle candidate is
+  the actual TWOMARK paper-source encoder/decoder, not v30's local three-status
+  `MarkedCode` and not the already-formalized generic `K_s` lattice.  A v31
+  source must define the paper atomization and every one/two-mark branch
+  executably, use four cut actions, and encode only the bounded paper record.
+  The proposed targets remain **CONJECTURAL** until a local syntax gate,
+  Aristotle return, independent rebuild, and cold branch-coverage referee all
+  succeed.  A builder is running in the isolated
+  `codex/law-v31-source-decoder-20260819` worktree; no submission has occurred.
+- q=8 follow-up verdict: **REFUTATION CLAIM, PENDING COLD REFEREE**.  The banked
+  `CLOSED_CONTOUR_CERTIFIED` interpretation is invalid because the routine
+  encloses segment endpoints only and inflates by a dimension-tail routine
+  explicitly documented as heuristic/not uniform.  Append-only correction
+  blocks now stop q=8 promotion and suspend q=9..12's ported R3B labels as **AT
+  RISK**.  The exact same-byte Kaggle outputs remain evidence only for sampled
+  finite-section polygon winding.  q=5, the independent q=7 chain, RATE-A, and
+  the qualitative Selberg–Hejhal tail are outside the blast radius.
 
 ### Scope correction — 2026-08-19
 

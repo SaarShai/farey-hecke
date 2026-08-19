@@ -583,3 +583,65 @@ is deferred to the next pass.
   `f8_receipts/F8_R3B_CERT_N{28,30,32}.md` — local closed-contour receipts.
 
 No commits, no further Kaggle pushes this pass.
+
+---
+
+## DATED CORRECTION — 2026-08-19 — CONTINUOUS-CONTOUR CLAIM REFUTED PENDING COLD REFEREE
+
+This block is append-only and does not rewrite the historical receipts above.
+The prior `CLOSED_CONTOUR_CERTIFIED` interpretation is **REFUTED as a
+theorem-grade continuous Fredholm-contour certificate**, subject to the
+separate cold referee now required by the program's proof-claim rule.
+
+The exact defects are structural, not rounding issues:
+
+1. `f8_certify_r3b_flagship.py::certify_segment` evaluates determinant balls
+   only at the two endpoints.  It accepts a segment when the endpoint
+   half-turn test passes and bisects only when that endpoint test fails.  It
+   supplies no Taylor/derivative or other interval enclosure over the segment
+   interior.
+2. Its determinant inflation comes from the even engine's
+   `dim_tail_from_matrix`; that implementation describes the geometric
+   increment extrapolation as a heuristic and explicitly says it is **not a
+   proven uniform tail bound**.
+3. The determinant engine uses uniform geometry factor `2.5`, whereas this
+   note's TB proof rejects that geometry for the two finite head blocks and
+   adopts `(3.4, 2.2, 1.4)`.  The current winding receipts do not bind a
+   theorem-valid Fredholm tail to the adopted geometry.
+
+Binding source receipt (fresh 2026-08-19):
+
+```text
+$ nl -ba lane_f/f8_certify_r3b_flagship.py | sed -n '97,150p'
+105  det, tail, info, _kappa = EVEN.cert_det(...)
+116  r = tail * TAIL_SAFETY
+132  def certify_segment(...)
+133      A = ev.det_ball(*p0)
+134      B = ev.det_ball(*p1)
+136      if w.real.lower() > 0:
+147      mid = ...
+148      return certify_segment(ev, p0, mid, ...) + ...
+
+$ rg -n 'dim_tail_from_matrix' lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_even.py
+107:dim_tail_from_matrix = Q5.dim_tail_from_matrix
+280:    """Same det-increment geometric-ratio tail heuristic as
+282:    applies to the chi sector too.  Disclosed as heuristic identically to the
+284:    -- this is NOT a proven uniform tail bound.
+
+$ rg -n 'EXACT_FACTORS|uniform, the two' lane_f/f8_certify_tb_blocks.py
+74:# for this ratio bound) does NOT certify: at factor 2.5 uniform, the two
+85:EXACT_FACTORS = ("3.4", "2.2", "1.4")
+```
+
+Corrected strongest statement: the N=30 and N=32 runs, including their
+byte-matched Kaggle copies, are **SUPPORTED SAMPLED FINITE-SECTION POLYGON
+WINDING EVIDENCE**.  They do not prove nonvanishing on every continuous
+subarc, a Fredholm winding, a Selberg-zeta zero, or a q=8 resonance.  Every
+such q=8 conclusion is therefore **CONJECTURAL**.  The JSON status strings are
+retained as historical program output, not as theorem status.
+
+All q=8 assembly/promotion work is stopped.  A repair must independently bind
+the eq.-(32) evaluator, exact Arb box, theorem-valid R2/Fredholm and derivative
+tails, continuous R3b subarcs, E1, `K_s`, and primary-source factorization;
+Kaggle becomes relevant only after those local proof gates are frozen.  Final
+banking of this correction awaits a separate cold referee file.

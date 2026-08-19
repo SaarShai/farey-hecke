@@ -460,3 +460,22 @@ directive 2026-08-15
 
   Because that inventory makes the literal working tree non-clean, the
   owner's no-push gate was not satisfied and no push was attempted.
+
+- **F8 R3B REFUTATION CLAIM + q=9..12 BLAST-RADIUS STOP 2026-08-19**
+  (`F8_CERT_PLAN.md` and `F9_F12_BASE_EXTENSION.md`, append-only correction
+  blocks): a cold scout proved that the q=8 routine's historical
+  `CLOSED_CONTOUR_CERTIFIED` field does **not** certify the continuous Fredholm
+  contour.  `certify_segment` encloses endpoints only and its acceptance rule
+  has no segment-interior Taylor/derivative enclosure; the determinant
+  inflation consumes an engine routine explicitly documented as **not a
+  proven uniform tail bound**.  The winding engine's uniform `2.5` geometry is
+  also not the TB geometry `(3.4,2.2,1.4)` certified in the same q=8 note.
+  Corrected q=8 status: **SUPPORTED sampled finite-section polygon winding
+  evidence; every Selberg-zero/resonance conclusion CONJECTURAL**.  Because
+  q=9..12 explicitly port the F8 architecture, their R3B “certified base”
+  labels are **SUSPENDED / AT RISK** pending per-driver audit; their exact
+  Kaggle reproduction receipts remain valid only for same-byte finite-section
+  output.  Downstream q=8..12 theorem assembly is stopped.  Blast radius does
+  not touch the declared q=5 theorem, the independently built q=7 chain,
+  qualitative Selberg–Hejhal tail, or paper-level RATE-A.  A separate cold
+  q=8 refutation referee is required before the correction is fully banked.
