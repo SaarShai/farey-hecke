@@ -526,6 +526,14 @@ theorem-valid construction passes a cold referee.
 | scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | **GAPS / NOT REFUTED; cold-refereed** | `lane_g/SCAT_EVAL_Q_SOL.md` + `SCAT_EVAL_Q_REFEREE.md` |
 | symmetric effective tail | `codex/law-symmetric-tail-20260819` / `.worktrees/law-symmetric-tail-20260819` | running | prove/refute two-small-vertical-side functional-equation pincer |
 
+- [ ] Test the exact block-Schur reduction suggested by the MMS sparsity:
+  even `q` should reduce the growing `kappa x kappa` block companion to one
+  Hardy-space component, and odd `q` to two terminal components.  First gate
+  is exact finite-matrix determinant equality at `q=7,8,9,10`; second gate is
+  a source-valid Fredholm-determinant factorization by triangular nuclear
+  elimination; only then may it support a `q`-uniform contour/tail theorem.
+  The route is **CONJECTURAL** until both gates and a cold referee pass.
+
 - [x] Test the generalized-Dirichlet right-half-plane-zero bypass against
   Saias--Weingartner, Booker--Thorne, and Ramachandra.  None applies to the
   generalized algebraic Hecke-modulus spectrum; positive spacing already

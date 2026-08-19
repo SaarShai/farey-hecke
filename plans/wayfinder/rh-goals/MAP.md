@@ -716,3 +716,16 @@ directive 2026-08-15
   orphan process recovery: rollout command identified; kill -TERM 30348;
     subsequent ps header contained no process row
   ```
+
+- **Q-GENERIC BLOCK-SCHUR ROUTE OPENED — CONJECTURAL — 2026-08-19.**
+  The printed MMS even-`q` block graph has only a subdiagonal chain plus a
+  final column; formal block elimination therefore suggests
+  `det(I-L_q)=det(I-C_q)` on one terminal Hardy component, with
+  `C_q=B_h+A_hB_{h-1}+...+A_h...A_2B_1`.  The odd graph has two step-2
+  chains and suggests an exact `2 x 2` terminal block reduction.  This is
+  algebraic elimination, not the already-refuted second-inducing/fixed-branch
+  proposal.  It may remove the growing matrix dimension while retaining a
+  `q`-dependent finite operator sum.  Status is **CONJECTURAL**: exact finite
+  determinant checks, bounded/nuclear operator typing, the infinite Fredholm
+  identity, uniform tail bounds, and a cold referee are all still required;
+  no `q>=8` zero or LAW case is promoted by this entry.
