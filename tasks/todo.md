@@ -197,11 +197,11 @@ commits. Writers use isolated worktrees or return a read-only packet for the
 orchestrator to materialize. No worker may change git state. Untracked caches,
 `.worktrees/`, `.lake`, tarballs, and `graphify-out/` are out of scope.
 
-- [ ] AM: relaunch a cold adversarial referee because `AM_REFEREE.md` is absent;
+- [x] AM: relaunch a cold adversarial referee because `AM_REFEREE.md` is absent;
   attack convention match, marked-code injectivity/decoder, constants, and a
   fresh exact numerical replay. A second cold context checks the referee before
   any RATE-A promotion.
-- [ ] If and only if AM is confirmed, append (never rewrite) the RATE-A promotion
+- [x] If and only if AM is confirmed, append (never rewrite) the RATE-A promotion
   block and same-turn MAP entry; verify the balanced/matched boundary scope,
   exponent `6/5`, onset `q_RATE = 12`, unchanged advertised constant, and open
   machine-certification caveat.
@@ -246,12 +246,18 @@ verifier_blind: true
 
 | worker | task | status | result captured | wiki/log | close reason |
 |---|---|---|---|---|---|
-| pending | AM adversarial referee | queued | no | MAP pending | — |
-| pending | AM referee cold check | queued | no | MAP pending | — |
-| pending | activation evidence extraction | blocked on AM | no | MAP pending | — |
-| pending | C_R factor extraction | blocked on AM | no | MAP pending | — |
+| luna writer, quarantined then repaired | AM adversarial referee | done | `CONFIRMED`, orphaned diagnostics removed | MAP banked | exact-file verifier PASS |
+| blind checker + fresh final verifier | AM referee cold check | done | decoder reconstruction `CONFIRMED`; report replay PASS | MAP banked | no open repair |
+| activation inventory | evidence complete | done | selected A0 domain and strict threshold isolated | deliverable pending | no status change yet |
+| C_R constant autopsy | evidence complete | done | dominant `C_4` loss and Arb candidates isolated | deliverable pending | no status change yet |
 | pending | v30 draft | background after AM | no | MAP pending | — |
 
 ### Review/results
 
-Open. Populate only from fresh commands and cold judgments.
+AM lane closed from fresh commands and two cold judgments. `AM_REFEREE.md` was
+quarantined after its writer used the main tree and omitted commands for several
+draft-only diagnostics. Those claims were removed; the scalar and `y<=100`
+commands replayed exactly, the orphaned-count search was empty, and the final
+verifier returned `PASS`. The append-only theorem and MAP promotion now limits
+RATE-A to the balanced/matched paper-level boundary result; all machine and
+non-RATE activation gates remain open.

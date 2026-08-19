@@ -182,3 +182,36 @@ directive 2026-08-15
 - **BOUNDARY RATE THEOREM (RATE-A) CLAIMED PROVED 2026-08-19 ~00:50** (BOUNDARY_ALPHA_THEOREM_SOL.md, judged; REFEREE LAUNCHING): **sup_{Γ_R^A} |φ_q − φ_∞| ≤ C_R·q^{−6/5} for ALL q ≥ 12, C_R = 1.0489412368759562746433608215977724802×10³⁷ explicit** (log C_R = 85.243) — α = 1.2 exactly as calibrated, N1-RATE NOT proved but BYPASSED on the boundary via a theta-endpoint derivative estimate + the (DH_{2,4}) atom moment (shallow/deep split); activation q_RATE = 12 with NO numerical fit used for α and no q ≤ 48 computation consumed by the tail. Implied conditional transport requirement (A0, repaired unrounded formula): log q_transport > 38.38555 + (5/6)·85.243 = **109.42** — the first FINITE explicit transport threshold in program history (q_transport ~ e^109.4; astronomically beyond base-certification reach, but the pincer statement becomes a genuine effective theorem once the remaining gates close). Final all-gates q₀ explicitly NOT CLAIMED (divisor/holomorphy + remaining activation gates separate — holomorphy-gate agent still running). LEDGER: nothing upgraded until the (RATE-A) referee reports.
 - **RATE-A REFEREE: GAPS (NOT REFUTED) + HOLOMORPHY GATE REMOVED 2026-08-19 ~01:30** (both banked verbatim): (1) **RATE_A_REFEREE.md** — "no counterexample, wrong exponent, failed activation inequality, domain mismatch, or constant-arithmetic error"; RATE-A is a **coherent paper-level proof CONDITIONAL on the two-mark direct marked-atom coding**: the Σ_{x≤Y}(1+A²) atom moment it consumes is a COROLLARY of TWOMARK's internal A²-coding, not the literal displayed (DH_{2,4}) bound — a bridging lemma must be stated and proved explicitly before unconditional CONFIRMED; the fresh φ_q checks are stress diagnostics, not Arb certificates (acknowledged). (2) **HOLOMORPHY_GATE_SOL.md — the holomorphy/no-pole gate is REMOVED BY PRINTED THEORY, uniformly for all q ≥ 3**: no finite-q poles on full H₀ (Prop 12.5/Claim 9.6 + note 86; only s = 1 on the closed right half-plane at these heights, 17.7 away from H₀); φ_∞ pole-free there; the "ρ/2 right-half-plane pole" worry is FALSE (Re(ρ/2) < 1/2 — the reflected point is a ZERO); **"universal nonvanishing" was never a legitimate gate — Thm 7.11 proves eventual zeros; correct use is the contradiction case-split (exactly how the pincer argues)**; K_F < 109 conditional implication PROVED under the nonzero branch + full-width H₀; q_divisor = q_pole = 3. Computational fallback honestly graded: existing R3B/certify machinery is the WRONG FUNCTION for a full-H₀ φ_q zero count (named build required, cost unknown; the 329s q=12 surrogate run is labeled NOT EVIDENCE). REMAINING OPEN (gate note's ledger, written concurrently with RATE-A so not yet crediting it): positive boundary RATE (→ RATE-A pending its bridging lemma), whole-tail monotonicity, activation arithmetic, certified finite base block. NEXT: bridging-lemma extraction from TWOMARK's coding.
 - **ATOM-MOMENT BRIDGE (AM) CLAIMED PROVED 2026-08-19 ~02:30** (ATOM_MOMENT_BRIDGE_SOL.md, judged; source hashes pinned in-file): the Σ(1+A_X²) moment PROVED directly from TWOMARK's Lemma-4.1 marked-object machinery + Ford — NOT inferred from the displayed k² bound (the referee's exact objection); safe constant **2^63**, comfortably inside RATE-A's declared C₄ = 2^100 ⇒ **C_R unchanged** (1.0489...×10³⁷). Falsification window y ≤ 100 passes with max required constant ~1.0 (vs proved 2^63); window honestly labeled falsification-only (x ≤ Y ⇏ y ≤ Y — no theta-cutoff substitution). §6 states the promotion path verbatim: once (AM) is refereed, RATE_A_REFEREE reason 1 closes and **RATE-A promotes to CONFIRMED at paper level** (exponent 6/5, activation q = 12, explicit C_R), N1-RATE bypassed and no conjectural analytic hypothesis remaining INSIDE RATE-A; machine certification + certified full-operator numerics + the separate program-onset gates (monotonicity, activation arithmetic, finite base block) stay outside. (AM) REFEREE LAUNCHING.
+- **AM REFEREE-CONFIRMED; (RATE-A) PROMOTED AT PAPER LEVEL 2026-08-19** (`AM_REFEREE.md`, cold exact-file replay PASS): the direct marked-atom argument proves the missing \(\sum(1+A_X^2)\) bridge with coefficient \(2^{63}\), which fits inside the theorem's retained \(C_4=2^{100}\). Therefore the balanced/matched-boundary theorem `(RATE-A)` is now **CONFIRMED at paper level** with exponent \(6/5\), onset \(q_{\rm RATE}=12\), and unchanged advertised ceiling \(C_R=10489412368759562746433608215977724802\). This promotion is no stronger than the referees: machine formalization, certified full-operator enclosure, whole-tail monotonicity, activation closure, and the finite base block remain OPEN; standalone N1-RATE remains **CONJECTURAL** and bypassed. The prior Section-6 status wording in `BOUNDARY_ALPHA_THEOREM_SOL.md` is superseded only by its dated appended promotion block.
+
+  Receipt command:
+
+  ```bash
+  rg -n "^\*\*Verdict|^\*\*Final verdict|RATE-A analytic inequality|machine formalization|standalone N1-RATE" research_notes/rh_goals_2026-08-14/lane_g/AM_REFEREE.md
+  ```
+
+  Receipt output:
+
+  ```text
+  7:**Verdict:** **CONFIRMED — paper-level, conditional on the already accepted Route-B/Ford inputs; not machine-verified.**
+  375:retains both qualifications, keeps standalone N1-RATE conjectural, and says
+  381:- **RATE-A analytic inequality:** `CONFIRMED` at paper level on the stated
+  383:- **machine formalization and certified full-operator numerical enclosure:**
+  385:- **standalone N1-RATE and non-RATE full-program gates:** not promoted.
+  405:**Final verdict: CONFIRMED.**  The atom-moment bridge closes reason 1 of
+  ```
+
+  Constant receipt command:
+
+  ```bash
+  sed -n '187,206p' research_notes/rh_goals_2026-08-14/lane_g/AM_REFEREE.md | bash
+  ```
+
+  Constant receipt output:
+
+  ```text
+  direct_A2_ceiling=2^62 4611686018427387904
+  direct_1_plus_A2_ceiling=2^63 9223372036854775808
+  RATE_A_C4=2^100 1267650600228229401496703205376
+  slack_factor= 137438953472 proved_constant_fits= True
+  ```

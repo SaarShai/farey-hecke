@@ -685,3 +685,56 @@ still-conditional non-RATE gate remains conditional.
 | Boundary RATE with \(\alpha=6/5\), \(C_R\) above, \(q_{\rm RATE}=12\) | **PROVED here, paper-level** | Sections 3--4 and fresh Arb ceilings |
 | A0 \(q_{\rm transport}\) in (T) | **PROVED conditional transport cutoff** | unrounded strict formula; floor agreement and direct Arb check |
 | Final all-gates \(q_0=q_{\rm transport}\) | **NOT CLAIMED** | divisor/holomorphy and other declared activation gates remain separate |
+
+## 7. Dated promotion block — 2026-08-19
+
+This append-only block supersedes only the **status** wording in Section 6; it
+does not rewrite the proof or enlarge its domain.  The separate adversarial
+report `AM_REFEREE.md` confirms the direct atom-moment bridge at paper level
+and closes the sole mathematical gap identified by `RATE_A_REFEREE.md`.
+
+Banking receipts, run from the repository root:
+
+```bash
+rg -n "^\*\*Verdict|^\*\*Final verdict|RATE-A analytic inequality|machine formalization|standalone N1-RATE" \
+  research_notes/rh_goals_2026-08-14/lane_g/AM_REFEREE.md
+```
+
+```text
+7:**Verdict:** **CONFIRMED — paper-level, conditional on the already accepted Route-B/Ford inputs; not machine-verified.**
+375:retains both qualifications, keeps standalone N1-RATE conjectural, and says
+381:- **RATE-A analytic inequality:** `CONFIRMED` at paper level on the stated
+383:- **machine formalization and certified full-operator numerical enclosure:**
+385:- **standalone N1-RATE and non-RATE full-program gates:** not promoted.
+405:**Final verdict: CONFIRMED.**  The atom-moment bridge closes reason 1 of
+```
+
+```bash
+sed -n '187,206p' research_notes/rh_goals_2026-08-14/lane_g/AM_REFEREE.md | bash
+```
+
+```text
+tag_count= 82944 lt_2^17= True
+4pi^2= 39.4784176043574344753379639995 lt_40= True
+low_log= 483.366191181994915204489782827 lt_2^10= True
+high_diag_R1= 22.3141365929329787571952985959 lt_2^5= True
+base_exp= 47 low_with_order_exp= 12 high_with_order_exp= 15
+direct_A2_ceiling=2^62 4611686018427387904
+direct_1_plus_A2_ceiling=2^63 9223372036854775808
+RATE_A_C4=2^100 1267650600228229401496703205376
+slack_factor= 137438953472 proved_constant_fits= True
+```
+
+Therefore `(RATE-A)` is now **CONFIRMED at paper level** on the stated
+balanced/matched boundary \(\Gamma_R^A\), with exponent \(6/5\), activation
+\(q_{\rm RATE}=12\), and the unchanged advertised upward ceiling
+
+\[
+C_R=10489412368759562746433608215977724802.
+\]
+
+The confirmation remains conditional only on the already referee-confirmed
+paper-level Route-B/Ford inputs.  It is not a machine formalization or a
+certified full-operator enclosure.  Standalone N1-RATE remains
+**CONJECTURAL** and bypassed, not proved.  No whole-tail monotonicity, finite
+base block, all-gates activation, or final \(q_0\) status is promoted here.
