@@ -917,3 +917,34 @@ directive 2026-08-15
   $ security-oversight commit scan (referee worktree)
   mode=lexical-triage risk=NONE findings=0 review=0
   ```
+
+- **Q8 SCHUR CONTINUOUS CONTOUR — IMPLEMENTATION REFUTED — 2026-08-19.**
+  Candidate `Q8_SCHUR_CONTINUOUS_CONTOUR_SOL.md` and independent cold report
+  `Q8_SCHUR_CONTINUOUS_CONTOUR_REFEREE.md` are banked.  The referee gives an
+  explicit endpoint counterexample to the claimed line-integral enclosure:
+  `acb(0,B)` fixes the real interval at zero and does not contain the actual
+  nonzero real displacement.  It also proves that the production geometry
+  `('3.4','2.2','1.4')` is not the F1024 receipt geometry `('10','4','2')`.
+  Therefore all `qF`, `rH`, Taylor-box, winding, and homotopy statuses from
+  this implementation are diagnostic only.  The incomplete N=104 run was
+  stopped with exit 130 after checkpoint arcs `[0,1,2]`; no full contour JSON
+  or winding was produced.  Additional implementation gaps are the omitted
+  output-row tail, wrong upper-bound comparison, and resume-box reconstruction.
+  Blast radius: this contour implementation is **REFUTED**; the finite Schur
+  algebra remains confirmed; the q=8 determinant and LAW are **NOT REFUTED**;
+  E1, MMS/Hilbert binding, `K_s`, continuation, and Selberg remain
+  **CONJECTURAL / OPEN**.  A separately owned repair and new referee are now
+  required before any rerun can be proof evidence.
+
+  Root stop/banking receipts:
+
+  ```text
+  $ checkpoint query before stop
+  completed_initial_arcs=[0,1,2]; records_count=12
+  $ Ctrl-C invalid N=104 run
+  KeyboardInterrupt ... exit_code=130
+  $ git cherry-pick 78a8e81... && resolve modify/delete by retaining candidate engine
+  [codex/prime-step-review-economic-validation eb8ad73] Add q8 Schur continuous contour checker
+  $ git cherry-pick 2a00b3a...
+  [codex/prime-step-review-economic-validation 2ff6bf4] Referee q8 Schur continuous contour
+  ```

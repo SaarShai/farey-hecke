@@ -649,3 +649,23 @@ CONFIRMED; abstract Banach wording GAPS / NOT REFUTED; downstream LAW OPEN.
   right-half-plane pole set, critical-line modulus, vertical growth, Jensen
   identities, nonreal-zero inference, functional-equation reflection, and
   the full finite-Hecke scope before any LAW promotion.
+
+### Q8 Schur-contour refutation and repair — 2026-08-19
+
+- [x] Stop the invalid N=104 run after the cold referee produced a direct
+  endpoint counterexample; preserve checkpoint arcs `[0,1,2]` as diagnostics
+  only and do not claim a winding result.
+- [x] Bank the candidate and separate
+  `Q8_SCHUR_CONTINUOUS_CONTOUR_REFEREE.md` with an append-only correction and
+  exact blast radius.
+- [x] Record the negation: `acb(0,B)` is not a full complex displacement box,
+  and F1024 factors `('10','4','2')` do not match engine factors
+  `('3.4','2.2','1.4')`; this implementation is **REFUTED** as a proof
+  certificate, while the q=8 law is **NOT REFUTED**.
+- [ ] Repair every implementation defect in a fresh isolated lane: full
+  complex enclosure, receipt-matched geometry, output-row tail, upper-bound
+  comparison, and conservative resume reconstruction.  Rerun the referee's
+  endpoint regression before any expensive contour computation.
+- [ ] Obtain a new independent cold referee before treating any corrected
+  contour output as proof.  E1, MMS/Hilbert binding, `K_s`, continuation, and
+  Selberg factorization remain **CONJECTURAL / OPEN** independently.

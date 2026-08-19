@@ -190,3 +190,29 @@ lane. No generated checkpoint or cache is part of this commit.
    nonvanishing `K_s`, common continuation, and Selberg factorization. These
    are independent **OPEN** gates and are not implied by the finite contour or
    the trace-norm homotopy computation.
+
+## Referee correction — 2026-08-19
+
+The separate cold report `Q8_SCHUR_CONTINUOUS_CONTOUR_REFEREE.md` returns a
+**REFUTATION** of this implementation as a theorem-valid continuous-contour
+certificate.  The underlying q=8 determinant and LAW are **NOT REFUTED**.
+
+The first decisive defect is concrete: `acb(0, B)` has zero real width, so the
+purported complex displacement box at `q8_schur_contour.py:337` excludes an
+actual endpoint displacement with nonzero real part.  Hence the printed
+`qF`, `rH`, finite Taylor boxes, winding, and homotopy statuses from this
+version are diagnostics, not proof receipts.  Independently, the production
+engine uses radius factors `('3.4','2.2','1.4')`, whereas its attached F1024
+TB/R2/W receipts use `('10','4','2')`; the tail constants therefore do not bind
+to the enclosed matrices.  The referee also identifies an omitted output-row
+tail, an incorrect upper-bound comparison, and unsound resume-box
+reconstruction.
+
+The invalid full run was stopped after its checkpoint recorded arcs `0,1,2`
+with twelve nominal `PASS` leaves; no fourth arc or winding result exists.
+The corrected target is a fresh implementation that encloses both real and
+imaginary displacement, uses one receipt-matched geometry, includes every
+projection/tail term, and reruns under a new cold referee.  Until that happens
+the continuous contour, E1, MMS/Hilbert binding, `K_s`, continuation, Selberg
+factorization, and q=8 LAW remain **CONJECTURAL / OPEN**.  This dated block
+preserves the original transcript rather than silently rewriting it.
