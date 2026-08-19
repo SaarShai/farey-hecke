@@ -177,3 +177,81 @@ no delegation because the ordered gate and shared runner edits are coupled.
 Stage 1 returned BLOCKED at provisional `N=224`: the finite-column endpoint
 bound alone is approximately `1.145e9`, so the full endpoint bound cannot meet
 the plan's `B approximately 30` gate. Later stages were intentionally not run.
+
+## RATE effectivization closure — 2026-08-19
+
+Goal: close, refute, or precisely delimit the four ordered RATE lanes in the
+owner's `plans/wayfinder/rh-goals/CODEX_ORCHESTRATOR_PROMPT.md`, with every
+status change appended to the source ledger and `plans/wayfinder/rh-goals/MAP.md`.
+
+Routing receipt (before mutation): task-defining artifacts read are `start.md`,
+`token-economy.yaml`, `plans/wayfinder/rh-goals/CODEX_ORCHESTRATOR_PROMPT.md`,
+`plans/wayfinder/rh-goals/MAP.md`, `ATOM_MOMENT_BRIDGE_SOL.md`, and
+`RATE_A_REFEREE.md`. Governing authority is the owner prompt plus root/project
+`AGENTS.md`. The AM referee, activation closure, constant-chain autopsy, and v30
+formalization drafts are each SPEC'D by named targets and GATED by source-hash,
+exact-arithmetic, replay, syntax/build, and cold-review checks. Each expected
+deliverable exceeds 30 lines, so execution is delegated; the frontier
+orchestrator owns ordering, hard mathematical judgment, ledger synthesis, and
+commits. Writers use isolated worktrees or return a read-only packet for the
+orchestrator to materialize. No worker may change git state. Untracked caches,
+`.worktrees/`, `.lake`, tarballs, and `graphify-out/` are out of scope.
+
+- [ ] AM: relaunch a cold adversarial referee because `AM_REFEREE.md` is absent;
+  attack convention match, marked-code injectivity/decoder, constants, and a
+  fresh exact numerical replay. A second cold context checks the referee before
+  any RATE-A promotion.
+- [ ] If and only if AM is confirmed, append (never rewrite) the RATE-A promotion
+  block and same-turn MAP entry; verify the balanced/matched boundary scope,
+  exponent `6/5`, onset `q_RATE = 12`, unchanged advertised constant, and open
+  machine-certification caveat.
+- [ ] Activation: derive `R5_ACTIVATION_CLOSURE_SOL.md` from the unrounded
+  corrected bases, strict-upward thresholds, whole-tail monotonicity, finite
+  base-block obligation, and the explicit constants. Return either an explicit
+  `q0 = max{...}` or `UNDEFINED` with the exact missing premise. Referee every
+  proof claim in a separate file before banking.
+- [ ] Constant reduction: derive `CR_REDUCTION_SOL.md` by reconstructing every
+  factor in `C_R`, ranking losses by log contribution, and distinguishing
+  proved substitutions from counterfactual opportunities. Referee any claimed
+  improved constant before changing a theorem ledger.
+- [ ] Formalization: draft v30 `(FW)` and AM marked-coding/decoder targets using
+  v29's dispatch pattern, include the escape hatch, syntax-precheck in the v26
+  cache, submit only if the dispatch contract is complete, then harvest and
+  independently rebuild if a result lands.
+- [ ] After each returned worker: run the lane git guard, compare against the
+  dispatch criteria, record the result in the worker ledger, and quarantine any
+  unsupported claim.
+- [ ] End with fresh tests/receipts, explicit-path commits using recent message
+  style, one dated MAP session summary, and a handoff naming every running/open
+  item. Do not push unless the tree is clean and the quoted gates pass.
+
+```loop
+name: rate-effectivization-closure
+topology: closed inner fleet
+generator: isolated writer per AM, activation, constant-reduction, and formalization deliverable
+verifier: fresh blind cold reviewer plus orchestrator exact-command gate
+gate: python3 skills/loop-engineering/tools/loop_lint.py tasks/todo.md && git diff --check && rg -n 'VERDICT|CONJECTURAL|CONFIRMED|REFUTED|UNDEFINED' research_notes/rh_goals_2026-08-14/lane_g plans/wayfinder/rh-goals/MAP.md
+stop: each ordered lane is verified, explicitly blocked, or not started because an upstream refutation halted consumers; MAP and commits match the verdicts
+budget: max_iterations=2 per lane
+quorum: independent referee verdict plus orchestrator receipt audit
+anchor_files: plans/wayfinder/rh-goals/CODEX_ORCHESTRATOR_PROMPT.md, tasks/todo.md, plans/wayfinder/rh-goals/MAP.md
+state_store: tasks/todo.md worker ledger and append-only MAP entries
+recall: read the current task section and MAP tail before each lane
+writeback: record worker outcome, verifier verdict, commands, failures, and next action after each lane
+state_concurrency: worktree_isolated
+output_actions: commit max 8; default deny every other external action
+on_error: transient tool failure retries once; malformed proof output returns as evidence; auth or configuration causes interrupt; unexpected failure causes halt and surface
+verifier_blind: true
+```
+
+| worker | task | status | result captured | wiki/log | close reason |
+|---|---|---|---|---|---|
+| pending | AM adversarial referee | queued | no | MAP pending | — |
+| pending | AM referee cold check | queued | no | MAP pending | — |
+| pending | activation evidence extraction | blocked on AM | no | MAP pending | — |
+| pending | C_R factor extraction | blocked on AM | no | MAP pending | — |
+| pending | v30 draft | background after AM | no | MAP pending | — |
+
+### Review/results
+
+Open. Populate only from fresh commands and cold judgments.
