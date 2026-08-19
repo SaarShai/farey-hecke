@@ -889,3 +889,31 @@ directive 2026-08-15
   the finite block below the displayed onset, enlarged-domain analytic gates,
   seed isolation, machine formalization, and the full LAW remain
   **OPEN / CONJECTURAL**.  No earlier result is refuted or silently upgraded.
+
+- **GENERAL RESONANCE ESCAPE SCOUT — GAPS / NOT REFUTED — 2026-08-19.**
+  Candidate `LAW_GENERAL_RESONANCE_ESCAPE_SCOUT.md` and separate cold report
+  `LAW_GENERAL_RESONANCE_ESCAPE_REFEREE.md` are banked, but the candidate's
+  advertised all-Hecke applicability is withdrawn by its appended correction.
+  The referee found that the Selberg preview omits the counted object,
+  Bonthonneau equation (8) has an unusable literal sign, and Kelmer's exact
+  weighted-zero theorem assumes torsion-free lattices.  Thus `q=3` is
+  independently **CONFIRMED** from the modular scattering determinant, while
+  all elliptic Hecke cases `q>=4` remain **CONJECTURAL / OPEN** at this source
+  scope.  The conclusion was not refuted.  The exact repair is a written,
+  cold-refereed fixed-`q` bridge from Hejhal's Hecke scattering Dirichlet
+  series and functional equation to the analytic Selberg/Kelmer zero-counting
+  lemmas.  No quantitative q8, Route-B, or LAW status is promoted by this
+  entry.
+
+  Banking receipts:
+
+  ```text
+  $ git cherry-pick 9ed72df6316ed4adb6ab3de0042970e8015af1d1
+  [codex/prime-step-review-economic-validation ddc49cd] Add general resonance escape scout
+  $ git cherry-pick 3a2a096ec2f91089c427c95a15594c4b6d53e7ff
+  [codex/prime-step-review-economic-validation b18d6d3] Referee general resonance escape
+  $ git diff HEAD^ HEAD --check
+  <exit 0; no output>
+  $ security-oversight commit scan (referee worktree)
+  mode=lexical-triage risk=NONE findings=0 review=0
+  ```

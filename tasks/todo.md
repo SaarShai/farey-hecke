@@ -632,3 +632,20 @@ CONFIRMED; abstract Banach wording GAPS / NOT REFUTED; downstream LAW OPEN.
 - [ ] Cover the finite block below `31951437654668744792` or replace it by a
   genuinely effective all-`q` theorem.  Until then the full LAW remains
   **OPEN / CONJECTURAL** on Route B.
+
+### General resonance escape referee review — 2026-08-19
+
+- [x] Bank `LAW_GENERAL_RESONANCE_ESCAPE_SCOUT.md` and its separate cold
+  `LAW_GENERAL_RESONANCE_ESCAPE_REFEREE.md` without consuming the candidate's
+  claimed all-orbifold applicability.
+- [x] Append the correction: Selberg's OCR preview does not identify the
+  counted object, Bonthonneau equation (8) is unusable with its printed sign,
+  and Kelmer's theorem is stated under a torsion-free hypothesis.
+- [x] Preserve the exact scope: `q=3` is independently **CONFIRMED**; every
+  elliptic Hecke case `q>=4` remains **CONJECTURAL / OPEN** in this lane; the
+  desired conclusion is **NOT REFUTED**.
+- [ ] Complete and cold-referee the direct fixed-`q` Hejhal-to-Selberg/Kelmer
+  bridge.  It must verify the positive generalized Dirichlet normalization,
+  right-half-plane pole set, critical-line modulus, vertical growth, Jensen
+  identities, nonreal-zero inference, functional-equation reflection, and
+  the full finite-Hecke scope before any LAW promotion.

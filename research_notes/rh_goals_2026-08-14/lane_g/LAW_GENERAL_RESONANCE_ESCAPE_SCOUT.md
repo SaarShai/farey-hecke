@@ -295,3 +295,21 @@ $ git diff --check
 ~~~
 
 READY FOR JUDGING.
+
+## Referee correction — 2026-08-19
+
+The separate cold report `LAW_GENERAL_RESONANCE_ESCAPE_REFEREE.md` returns
+**GAPS / NOT REFUTED**.  The `CONFIRMED-APPLICABLE` label at the head of this
+scout is therefore withdrawn and must not be consumed downstream.
+
+The exact source gap is threefold: the Selberg preview does not expose the
+counted subscript or complete theorem; Bonthonneau's printed equation (8) has
+a sign incompatible with that paper's own definition of its resonance set;
+and Kelmer's clean weighted-zero theorem globally assumes a torsion-free
+lattice.  Consequently only the modular case `q=3` is independently
+**CONFIRMED** at this scout's source level.  Every elliptic Hecke case `q>=4`
+remains **CONJECTURAL / OPEN** here.  This is not a refutation of the desired
+scattering-pole conclusion: a direct fixed-`q` Hejhal-to-Selberg/Kelmer
+analytic bridge is the identified repair, but it requires its own written
+proof and cold referee.  This dated block appends the correction without
+silently rewriting the original candidate.
