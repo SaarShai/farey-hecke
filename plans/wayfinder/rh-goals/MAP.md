@@ -537,3 +537,45 @@ directive 2026-08-15
   `product 82944`, `max_tag 82943`, `tag_range True`, the wrong current action
   digits `[1,0,1,0]`, and the correctly sliced digits `[0,0,0,0]`; its scoped
   `git diff --check` exited `0`.
+
+- **Q7 OPERATOR BINDING REPAIRED AND FULL Q7 PAPER CHAIN REFEREE-CONFIRMED —
+  2026-08-19** (`Q7_R5_OPERATOR_BINDING_SOL.md`, two dedicated binding
+  referees, `Q7_MMS_PRIMARY_SOURCE_RECEIPT.md`, and
+  `THEOREM_G7_OFFLINE_REFEREE3.md`): the first cold binding referee returned
+  **GAPS / NOT REFUTED** because the centered tail-column envelope and exact
+  determinant citations were missing.  The append-only repair proves the
+  \(b^k-a^k\) decomposition, its uniform \(O(1/\ell)\) centered difference,
+  the \(\sum\ell^{-(2\sigma_K+1)}\) first moment, trace-norm holomorphy on
+  \(\Omega^*\), and the Simon/Grothendieck/MMS complemented-sector determinant
+  identification.  The second binding referee returned **CONFIRMED**.  A
+  fresh arXiv v2 fetch banked MMS SHA-256
+  `a10020bd084534dc60fc3e887958f1583f2fc115d567961b461df1a59b32e072`,
+  Theorem 4.10, Lemma 5.1, equation (34)'s literal `q=2h_q+3>5` scope, and
+  Theorem 6.4.  The third assembly referee then returned
+  **CONFIRMED_AT_EXACT_Q7_SELBURG_ZERO_AND_STANDARD_RESONANCE_SCOPE**.
+
+  Status receipts:
+
+  ```text
+  Q7_R5_OPERATOR_BINDING_REFEREE.md: **GAPS / NOT REFUTED**
+  Q7_R5_OPERATOR_BINDING_REFEREE2.md: **CONFIRMED — REPAIRED PROOF CLAIM**
+  THEOREM_G7_OFFLINE_REFEREE3.md:
+    STATUS: CONFIRMED_AT_EXACT_Q7_SELBURG_ZERO_AND_STANDARD_RESONANCE_SCOPE;
+            NON-PAPER_GATES_REMAIN
+  exact TB rerun: K_start=12, rho_star=[0.763212029206899202166157 +/- 1.41e-25], PASS_RHO_LT_0.80
+  E1 receipt: rho_hat<=0.9152411837446922 (UP), PASS_RHO_HAT_LT_1
+  K_s receipt: |det(1-K_s)|>=0.936818983390 (DOWN), PASS_KS_BOX_CLEAR_AND_DETK_NONVANISHING
+  ```
+
+  Promoted theorem scope: there is a q=7 Selberg-zeta zero in the box centered
+  at `0.4751647621098225 + 4.668743786424289 i` with coordinate half-width
+  `1e-6`, hence critical-line gap at least `0.0248342` (rounded DOWN), with
+  the standard scattering-resonance interpretation.  Blast radius: this adds
+  one unconditional paper-level finite LAW case, q=7.  It does **not** prove
+  the full LAW or alter q8–12's referee-confirmed contour refutation.  q7 Lean
+  `K_s` specialization, parity/automorphic labels, priority, independent E1
+  reimplementation, live-engine rerun provenance, and dissemination depth
+  remain open/non-paper gates.  No new Kaggle or Aristotle job was launched:
+  Kaggle's q7 bytes were already harvested and locally hash-matched, while the
+  proposed v31 Aristotle source decoder was referee-confirmed false before
+  submission.

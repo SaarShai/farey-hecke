@@ -612,3 +612,49 @@ remains **CONJECTURAL / OPEN**.  q=7 is not declared.  The first positive repair
 target is an explicit q-generic or q=7 Clause-1 operator-binding/common-
 continuation theorem, followed by a new cold referee; the unbanked MMS primary
 source text is a second independent gap.
+
+---
+
+## DATED ROUND-3 PROMOTION — 2026-08-19
+
+The two gaps in the round-2 correction have now been discharged by
+`Q7_R5_OPERATOR_BINDING_SOL.md`, its two cold referees, and
+`Q7_MMS_PRIMARY_SOURCE_RECEIPT.md`.  The independent assembly referee reports:
+
+```text
+$ rg -n '^\*\*CONFIRMED|^STATUS:|^READY FOR JUDGING' \
+    THEOREM_G7_OFFLINE_REFEREE3.md
+9:**CONFIRMED.** The q7 paper-level chain is now closed at the following exact
+301:STATUS: CONFIRMED_AT_EXACT_Q7_SELBURG_ZERO_AND_STANDARD_RESONANCE_SCOPE; NON-PAPER_GATES_REMAIN
+303:READY FOR JUDGING
+```
+
+The round-2 **CONJECTURAL / OPEN** status is therefore superseded at exactly
+this scope:
+
+> **REFEREE-CONFIRMED q=7 THEOREM (paper level).**  There exists a zero
+> \(s_*\) of the Selberg zeta function of \(G_7\) in
+> \[
+> |\Re s_*-0.4751647621098225|\le10^{-6},\qquad
+> |\Im s_*-4.668743786424289|\le10^{-6}.
+> \]
+> Hence \(\Re s_*\le0.4751657621098225<1/2\), with the conservative
+> lower-rounded critical-line gap
+> \(1/2-\Re s_*\ge0.0248342\).  The standard finite-area
+> Selberg/scattering correspondence identifies this nonreal off-line zero as
+> a scattering resonance.
+
+Receipt-backed load-bearing gates remain the 384-bit closed-contour Hilbert
+zero, the now-referee-confirmed q=7 Hilbert/Banach common continuation, the
+MMS v2 factorization, and the closed-box lower bound
+\(|\det(1-K_s)|\ge0.936818983390\), rounded **DOWN**.  The latter is quoted
+directly by the third referee from
+`F7LINKS_KS_GATE_RECEIPT.json`; its verdict is
+`PASS_KS_BOX_CLEAR_AND_DETK_NONVANISHING`.
+
+The following are still **OPEN** and are not promoted: the full LAW, q≥8
+finite cases, q7 Lean `KsZeroLattice` coverage, geometric parity,
+automorphic/eigenfunction correspondence, a complete resonance list, the
+`h_q=2` literature-priority sentence, and owner release/review depth.  The
+live generic-engine drift remains a rerun-provenance caveat; the theorem uses
+the pinned transitive hashes recorded in the q=7 binding proof.

@@ -719,3 +719,29 @@ AWAITING SECOND COLD REFEREE**.  No q=7 Selberg-zero, resonance, parity,
 scattering, automorphic, or LAW promotion is made here.
 
 **READY FOR SECOND COLD REFEREE**
+
+---
+
+## DATED SECOND-COLD-REFEREE PROMOTION — 2026-08-19
+
+The independent repair referee returned:
+
+```text
+$ rg -n '^Verdict:|^\*\*CONFIRMED|^READY FOR JUDGING' \
+    Q7_R5_OPERATOR_BINDING_REFEREE2.md
+5:Verdict: **CONFIRMED — REPAIRED PROOF CLAIM**
+223:READY FOR JUDGING
+```
+
+Accordingly, the exact q=7 equation-(34) operator binding and
+
+\[
+ \det_H(1-L^H_{s,+})=\det_B(1-L^{MMS}_{s,+})
+ \qquad(s\in\Omega^*)
+\]
+
+are **REFEREE-CONFIRMED AT PAPER LEVEL**, conditional only on the immutable
+TB/E1 numeric receipts at their stated machine-certified scopes.  This
+promotion closes Link 4b.  It does not add a parity label, an automorphic
+correspondence, or a q-generic theorem, and it does not by itself promote the
+downstream q=7 assembly or the full LAW.

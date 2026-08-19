@@ -445,7 +445,7 @@ untracked inventory keeps the literal tree non-clean.
   counterexamples.  `V31_REFEREE.md` returned **REFUTATION CONFIRMED**; no
   non-false load-bearing paper-source target survived, so Aristotle submission
   was correctly withheld.
-- [ ] Prove the q=7/q-generic 19-block operator-binding/common-continuation
+- [x] Prove the q=7/q-generic 19-block operator-binding/common-continuation
   theorem, bank MMS primary source text, and re-referee before any q=7 upgrade.
 - [ ] Rebuild q=8 from a theorem-valid evaluator/exact box/R2 tail/continuous
   R3b/E1/`K_s` chain before any new Kaggle replay.
@@ -459,3 +459,29 @@ untracked inventory keeps the literal tree non-clean.
 Session handoff remains open for the q7 Clause-1 operator-binding proof/referee
 pair.  No q=8..12 Kaggle job and no v31 Aristotle job is authorized from the
 current artifacts.
+
+### Q7 closure review/results — 2026-08-19
+
+- The q=7-specific 19-block MMS operator binding was written, cold-refereed
+  `GAPS / NOT REFUTED`, repaired append-only with the full centered-tail
+  estimate and determinant citations, and independently re-refereed
+  **CONFIRMED**.
+- The exact MMS v2 source/version/theorem numbering was fetched, hash-matched,
+  and banked without adding the third-party PDF to git.
+- A third cold assembly referee returned
+  **CONFIRMED_AT_EXACT_Q7_SELBURG_ZERO_AND_STANDARD_RESONANCE_SCOPE**.  The
+  q=7 paper theorem is now banked; the full LAW remains open.
+- Fresh exact TB replay used the receipt's `K_start=12` and reproduced
+  `rho_star=[0.763212029206899202166157 +/- 1.41e-25]` and
+  `PASS_RHO_LT_0.80`.  A diagnostic with `K_start=8` was explicitly rejected
+  as a parameter mismatch.
+- Kaggle was not relaunched because the certified q=7 chunks already matched
+  the pinned local bytes.  Aristotle was not submitted because the candidate
+  v31 decoder targets were machine-refuted before submission; neither action
+  would have closed the analytic Link 4b gap.
+
+Updated handoff: q=7 is referee-confirmed at paper level.  The next
+load-bearing full-LAW work is a theorem-valid q=8 replacement chain (continuous
+contour enclosure, rigorous tail, E1, operator binding, and `K_s` gate) or an
+effective tail onset small enough to reduce the finite base.  q8–12's current
+ported contour claims remain refuted, not pending promotion.
