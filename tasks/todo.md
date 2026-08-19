@@ -533,6 +533,9 @@ theorem-valid construction passes a cold referee.
   a source-valid Fredholm-determinant factorization by triangular nuclear
   elimination; only then may it support a `q`-uniform contour/tail theorem.
   The route is **CONJECTURAL** until both gates and a cold referee pass.
+  The first Arb diagnostic now passes at even `q=8,10` and odd `q=7,9`;
+  implementation provenance, theorem-level finite algebra, and the infinite
+  Fredholm gate remain open.
 
 - [x] Test the generalized-Dirichlet right-half-plane-zero bypass against
   Saias--Weingartner, Booker--Thorne, and Ramachandra.  None applies to the

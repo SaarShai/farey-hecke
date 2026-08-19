@@ -729,3 +729,21 @@ directive 2026-08-15
   determinant checks, bounded/nuclear operator typing, the infinite Fredholm
   identity, uniform tail bounds, and a cold referee are all still required;
   no `q>=8` zero or LAW case is promoted by this entry.
+
+- **Q-GENERIC BLOCK-SCHUR DIAGNOSTIC PASSES FOUR PARITY CASES — STILL
+  CONJECTURAL — 2026-08-19.**  A fresh in-memory Arb implementation extracted
+  the actual MMS blocks and compared the growing determinant with the proposed
+  terminal recurrence.  The exact command returned:
+
+  ```text
+  even 8 h 3 contains0 True diff [+/- 2.79e-70] + [+/- 2.79e-70]j
+  even 10 h 4 contains0 True diff [+/- 5.48e-72] + [+/- 5.48e-72]j
+  odd 7 k 5 contains0 True diff [+/- 3.88e-72] + [+/- 3.88e-72]j
+  odd 9 k 7 contains0 True diff [+/- 6.16e-72] + [+/- 6.16e-72]j
+  ```
+
+  This is a finite-matrix falsification pass, not a proof receipt.  It does
+  not yet establish the triangular Fredholm factorization on the MMS Hardy
+  spaces, a uniform truncation/tail theorem, continuous winding, or any new
+  Selberg zero.  Those remain **CONJECTURAL / OPEN** pending a scoped builder
+  and an independent referee.
