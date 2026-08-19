@@ -271,3 +271,37 @@ geometric parity label is claimed for the resonance.
   essential gap δ ≥ 0.0248342 (1e−6 box)
   disc inflations (float, to be Arb-certified): (2.79, 2.39, 1.90, 1.56, 1.35)
   float ρ* = 0.782263813618
+
+## 2026-08-19 — certified-disc correction block
+
+The exploratory disc factors printed in §3, structural-difference item 9, and
+the load-bearing summary are **SUPERSEDED for every certified q=7 claim**.
+They must not be restated as the adopted geometry.  The immutable certified
+receipt
+`f7_receipts/F7_TB_BLOCK_CERTIFICATES_RECEIPT.json` has SHA-256
+`93baddf565b2dca6e94da441a9d7e906ab81576c4acf3506ab334bcf1251f4f6`
+and records the adopted exact-string factors
+
+```text
+(3.522, 2.622, 2.372, 1.79, 1.6).
+```
+
+At 384-bit Arb/Acb precision it gives
+
+```text
+q=7, h_q=2, kappa=5
+blocks_source.count=19
+blocks_source.expected_count=19
+blocks_source.exact_count_check=true
+rho_star=[0.763212029206899202166157 +/- 1.41e-25]
+certification_verdict=PASS_RHO_LT_0.80
+```
+
+Thus the safe rounded-up contraction bound is `rho_star <= 0.763213`, not
+the non-rigorous float `0.782263813618`.  The later enlarged-disc receipt
+`F7_E1_ENLARGED_CONTRACTION_V2_RECEIPT.json` has SHA-256
+`fba02e88ad4e1caa890af874c7aaea520f0ec59f9c48cd76a74d70da24e04efb`
+and records `rho_hat <= 0.9152411837446922` (rounded UP), with remaining
+pole/cut clearance at least `0.9915` (rounded DOWN), over all 19 occurrences.
+The q7 block list, `h_7=2`, `kappa_7=5`, and the other exact algebra above are
+unchanged by this correction.
