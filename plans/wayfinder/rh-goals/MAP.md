@@ -215,3 +215,40 @@ directive 2026-08-15
   RATE_A_C4=2^100 1267650600228229401496703205376
   slack_factor= 137438953472 proved_constant_fits= True
   ```
+- **A0 ACTIVATION + WHOLE-TAIL ENVELOPE REFEREE-CONFIRMED 2026-08-19** (`R5_ACTIVATION_CLOSURE_SOL.md` + separate `R5_ACTIVATION_CLOSURE_REFEREE.md`): the selected first-zero A0 route has a **CONFIRMED paper-level conditional analytic-tail onset**. The fixed upper envelope, not the unknown actual error function, has exact exponent \(-(6/5)(0.1552)=-582/3125\) and is strictly decreasing for real \(q>0\). Its independently minimal strict side onset is \(q_{\rm side}=134010166814705707171424895246\); the strict A0 onset is \(q_{\rm transport}=332093267419812025416641789732742045430624465595\), which dominates \(q_{\rm RATE}=12\) and \(q_{\rm divisor}=3\). Fixed A0 geometry and envelope monotonicity are analytic `PASS` gates, not invented integer thresholds, so \(q_{0,\rm analytic}^{A0}=q_{\rm transport}\). **DOMAIN CORRECTION:** the prompt-level pairing \(K_F=109\) with \(d_*>0.6603\) is REFUTED as a single ledger: A0 consumes neither; the rebuilt sixth-zero Route B pairs \(K_F=109\) with \(d_*>0.3186\), while \(d_*>0.6603\) belongs to the old first-zero Route-B window. The full all-q/finite-block R5 closure remains **OPEN / UNDEFINED** because no true scalar-\(\phi_q\) interval continuation plus zero-minus-pole certificate covers the finite block below the analytic onset. Machine verification remains open.
+
+  Binding arithmetic command:
+
+  ```bash
+  sed -n '215,274p' research_notes/rh_goals_2026-08-14/lane_g/R5_ACTIVATION_CLOSURE_SOL.md | bash | rg 'q_RATE|q_divisor|q_side=|side_minimality|q_transport=|minimality_log|A0_strict|q_side_lt'
+  ```
+
+  Binding arithmetic output:
+
+  ```text
+  q_RATE= 12
+  q_divisor= 3
+  q_side= 134010166814705707171424895246
+  side_minimality_log_q_gt_T_side= True
+  side_minimality_log_q_minus_1_le_T_side= True
+  q_transport= 332093267419812025416641789732742045430624465595
+  minimality_log_q_gt_T= True
+  minimality_log_q_minus_1_le_T= True
+  A0_strict_lt_m= True
+  q_side_lt_q_transport= True
+  ```
+
+  Referee-status command:
+
+  ```bash
+  rg -n '^# CONFIRMED|^\*\*Verdict|conditional analytic-tail|full all-q R5 closure|OPEN / UNDEFINED' research_notes/rh_goals_2026-08-14/lane_g/R5_ACTIVATION_CLOSURE_REFEREE.md
+  ```
+
+  Referee-status output:
+
+  ```text
+  1:# CONFIRMED
+  5:**Verdict:** **CONFIRMED at paper level, conditional on the explicitly cited
+  341:| conditional analytic-tail `q_analytic` | CONFIRMED at paper-level input scope | sourced max plus strict receipts; not all-q closure |
+  342:| full all-q R5 closure | OPEN / UNDEFINED | finite block remains missing |
+  ```

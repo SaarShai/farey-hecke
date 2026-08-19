@@ -205,7 +205,7 @@ orchestrator to materialize. No worker may change git state. Untracked caches,
   block and same-turn MAP entry; verify the balanced/matched boundary scope,
   exponent `6/5`, onset `q_RATE = 12`, unchanged advertised constant, and open
   machine-certification caveat.
-- [ ] Activation: derive `R5_ACTIVATION_CLOSURE_SOL.md` from the unrounded
+- [x] Activation: derive `R5_ACTIVATION_CLOSURE_SOL.md` from the unrounded
   corrected bases, strict-upward thresholds, whole-tail monotonicity, finite
   base-block obligation, and the explicit constants. Return either an explicit
   `q0 = max{...}` or `UNDEFINED` with the exact missing premise. Referee every
@@ -248,9 +248,10 @@ verifier_blind: true
 |---|---|---|---|---|---|
 | luna writer, quarantined then repaired | AM adversarial referee | done | `CONFIRMED`, orphaned diagnostics removed | MAP banked | exact-file verifier PASS |
 | blind checker + fresh final verifier | AM referee cold check | done | decoder reconstruction `CONFIRMED`; report replay PASS | MAP banked | no open repair |
-| activation inventory | evidence complete | done | selected A0 domain and strict threshold isolated | deliverable pending | no status change yet |
+| activation writer | A0 closure note | done | exact side/A0 thresholds; mixed-domain prompt corrected | MAP banked | separate referee required |
+| activation cold referee | activation proof/status audit | done | `CONFIRMED` paper-level analytic tail | MAP banked | finite block remains open |
 | C_R constant autopsy | evidence complete | done | dominant `C_4` loss and Arb candidates isolated | deliverable pending | no status change yet |
-| pending | v30 draft | background after AM | no | MAP pending | — |
+| v30 writer | typed FW/AM dispatch | running externally | syntax exit 0; Aristotle project `97b16c1b-653d-42b9-a5da-4ed765a8eb88` | harvest pending | task at 3% |
 
 ### Review/results
 
@@ -261,3 +262,9 @@ commands replayed exactly, the orphaned-count search was empty, and the final
 verifier returned `PASS`. The append-only theorem and MAP promotion now limits
 RATE-A to the balanced/matched paper-level boundary result; all machine and
 non-RATE activation gates remain open.
+
+Activation lane closed after an exact-domain repair and a separate cold
+referee. The analytic A0 tail now has a sourced strict max and a monotone fixed
+envelope. The older full all-q R5 objective remains `OPEN / UNDEFINED` because
+the true scalar finite-block evaluator/certificates do not exist in the current
+artifact set; no determinant surrogate or timing run was promoted.
