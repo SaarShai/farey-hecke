@@ -575,3 +575,33 @@ rg -n 'PROOF|CONJECTURAL|GAP|OPEN|REFUT|CONFIRMED' \
   research_notes/rh_goals_2026-08-14/lane_g \
   plans/wayfinder/rh-goals/MAP.md
 ```
+
+### Schur referee harvest and next exact gate — 2026-08-19
+
+- [x] Bank the finite even/odd Schur identities only after a separate cold
+  referee reruns both parity families and checks the source orientation.
+- [x] Replace the conditional Hilbert Fredholm claim's undefined similarity by
+  exact trace-class left/right unitriangular factors; use Simon Theorem 3.8 for
+  multiplication and retain common MMS continuation as an explicit gap.
+- [ ] Complete the q=8 Schur-contour construction with a strict finite Taylor
+  zero-exclusion test, a transformed trace-norm tail in compatible Hilbert
+  norms, and a Woodbury resolvent homotopy; then cold-referee it before Kaggle.
+- [ ] If q=8 succeeds, derive the direct terminal induced operator
+  `C_h=sum_j A_h...A_{j+1}B_j` on one non-collapsing terminal Hardy disc.  The
+  required theorem is an exact composite-branch evaluator plus q-uniform disc
+  containment and a proven tail in both Taylor degree and eliminated-chain
+  length.  This is the preferred q-generic continuation of Route A; it is
+  **CONJECTURAL** until constructed and cold-refereed.
+- [ ] Continue Route B independently: cold-referee the endpoint p=3 theorem,
+  quantify whether a contradiction-branch Phragmen--Lindelof bound can replace
+  the coarse `K_+<125`, and reject it if it still leaves a non-certifiable
+  finite onset.
+
+Root replay status receipt:
+
+```text
+q=7,8,9,10 full checker: OVERALL_STATUS=PASS failures=0
+q=5,6,11,12 opposite-sector edge checker: OVERALL_STATUS=PASS failures=0
+cold ledger: FINITE ALGEBRA CONFIRMED; conditional Hilbert proposition
+CONFIRMED; abstract Banach wording GAPS / NOT REFUTED; downstream LAW OPEN.
+```

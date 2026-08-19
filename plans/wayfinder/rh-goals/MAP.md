@@ -801,3 +801,42 @@ directive 2026-08-15
   new two-channel/full-scattering-matrix degeneration theorem, currently
   **CONJECTURAL / OPEN**.  The scalar refutation awaits its own read-only
   referee before final banking and does not affect one-wall RATE-A.
+
+- **Q-GENERIC SCHUR ALGEBRA PARTIALLY BANKED — 2026-08-19.**  Candidate
+  `Q_GENERIC_SCHUR_REDUCTION_SOL.md` and independent
+  `Q_GENERIC_SCHUR_REDUCTION_REFEREE.md` are now in the main branch.  The cold
+  verdict confirms the exact finite even/odd eliminations, the even sine law,
+  derivative recurrences conditional on supplied blocks, and the conditional
+  Hilbert trace-class Fredholm identity after an append-only correction gives
+  the explicit left/right unitriangular factorization and cites Simon Theorem
+  3.8 for multiplicativity.  The submitted abstract Banach wording remains
+  **GAPS / NOT REFUTED**; q-generic common-spectrum/common-continuation, tails,
+  contour, `K_s`, Selberg, and LAW remain **GAP / OPEN**.  No q>=8 zero is
+  promoted.
+
+  Fresh root receipts:
+
+  ```text
+  $ PYTHONDONTWRITEBYTECODE=1 /Users/za/.venvs/farey-rh/bin/python \
+      research_notes/rh_goals_2026-08-14/lane_f/q_generic_schur_check.py \
+      --q 7 8 9 10 --N 4 8 --s 0.55+2.1i 0.63+4.3i --q8-speed | tail -n 3
+  SCHUR q=10 ... full_dim=32 reduced_dim=8 ... contains_zero=True ... status=PASS
+  Q8_SPEED N=16 ... full_dim=48 reduced_dim=16 wall_s=0.228872 contains_zero=True status=PASS
+  OVERALL_STATUS=PASS failures=0
+
+  $ PYTHONDONTWRITEBYTECODE=1 /Users/za/.venvs/farey-rh/bin/python \
+      research_notes/rh_goals_2026-08-14/lane_f/q_generic_schur_check.py \
+      --q 5 6 11 12 --N 3 --s 0.71+1.9i --sign-odd -1 --sign-even -1 | tail -n 5
+  SCHUR q=5 ... status=PASS
+  SCHUR q=6 ... status=PASS
+  SCHUR q=11 ... status=PASS
+  SCHUR q=12 ... status=PASS
+  OVERALL_STATUS=PASS failures=0
+
+  $ rg -n '^\*\*(FINITE ALGEBRA|CONDITIONAL HILBERT|DIRECT ABSTRACT|q-GENERIC)' \
+      research_notes/rh_goals_2026-08-14/lane_f/Q_GENERIC_SCHUR_REDUCTION_REFEREE.md
+  650:**FINITE ALGEBRA: CONFIRMED.**
+  652:**CONDITIONAL HILBERT SCHUR-FREDHOLM PROPOSITION, WITH §§6-7.1 REFEREE ...
+  655:**DIRECT ABSTRACT BANACH WORDING AS SUBMITTED: GAPS / NOT REFUTED ...
+  658:**q-GENERIC ANALYTIC LINKAGE AND DOWNSTREAM LAW: GAP / CONJECTURAL / OPEN ...
+  ```

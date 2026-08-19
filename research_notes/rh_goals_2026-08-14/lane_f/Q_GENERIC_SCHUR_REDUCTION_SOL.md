@@ -531,3 +531,77 @@ Even partition, q=2h+2, theta=pi/q:
 ~~~
 
 The receipt and status ledger in §§7–8 are unchanged.
+
+## 10. Dated cold-referee promotion and scope correction — 2026-08-19
+
+`Q_GENERIC_SCHUR_REDUCTION_REFEREE.md` reviewed immutable candidate commit
+`95dd8736f25bc71538d555eaacd7e5a01aa6c4c3`, reran the documented checker and
+an opposite-sector parity-edge suite, and returned the following bounded
+verdict:
+
+* the finite even/odd block eliminations, even sine law, and derivative
+  recurrences conditional on supplied derivative blocks are **CONFIRMED**;
+* the conditional **Hilbert trace-class** Schur--Fredholm proposition is
+  **CONFIRMED with the exact factorization below**;
+* the original abstract Banach phrase “every block is nuclear” is
+  **GAPS / NOT REFUTED** as written; and
+* q-generic common continuation, MMS/Hardy determinant identification,
+  transformed tails, continuous contour, `K_s`, Selberg, and LAW remain
+  **GAP / CONJECTURAL / OPEN**.
+
+The exact Hilbert correction superseding the undefined `~` in §5 is as
+follows.  For even q, let `G_i=I+N_i`, where the only nonzero block of `N_i`
+is `(N_i)_{i,i-1}=A_i`, and put
+
+~~~text
+E_e = G_h G_{h-1} ... G_2.
+~~~
+
+Let `F_e` be the identity with terminal-column blocks
+`(F_e)_{i,h}=C_i` for `i<h`.  Exact block multiplication gives
+
+~~~text
+E_e (I-L_s) F_e = diag(I,...,I,I-C_h).
+~~~
+
+For odd q, let `G_i=I+N_i`, now with
+`(N_i)_{i,i-2}=A_i`, put `E_o=G_k...G_3`, and let `F_o` be the identity with
+
+~~~text
+(F_o)_{i,p}=P_i,  (F_o)_{i,k}=Q_i  for i<p.
+~~~
+
+Then exact block multiplication gives
+
+~~~text
+E_o (I-L_s) F_o = diag(I,...,I,R).
+~~~
+
+Under the stated Hilbert hypothesis, all perturbations in these products are
+trace class; `E-I` and `F-I` are finite strictly triangular/nilpotent block
+operators and have determinant one.  Simon (1977) Theorem 3.8, equation
+(3.9), is the required multiplicativity result.  Simon Theorem 3.3 remains
+the analyticity input, and Theorem 4.2, equation (4.2), remains the canonical
+spectral-product input.  Thus, at exactly this conditional Hilbert scope,
+
+~~~text
+det_H(I-L_s) = det_H(I-C_h)  (even q),
+det_H(I-L_s) = det_H(R)      (odd q).
+~~~
+
+No Banach determinant multiplication is consumed by this Hilbert-first proof.
+To compare it with the MMS determinant on a connected continuation domain, a
+future fixed-q or q-generic binding must still prove: a bounded identification
+of the selected MMS sector with a Banach space `B` continuously embedded in
+`H`; equality
+of the actions on `B`; smoothing `L_H(H) subset B` so that all nonzero Jordan
+chains transfer; Hilbert trace class; MMS order-`<=2/3` nuclearity; the same
+sector/branch convention; and holomorphy of both normalized determinant
+families on one common connected domain.  Those hypotheses are not supplied
+by the finite checker and remain **GAP / CONJECTURAL** here.
+
+Finally, the phrase in §4.1 calling Arb balls a ring is withdrawn.  The exact
+complex matrices obey the determinant identity by row elimination; the Arb
+runs independently enclose both evaluations and report that their difference
+ball contains zero.  `contains_zero=True` is receipt evidence consistent with
+the exact proof, not an equality proof by ball arithmetic.
