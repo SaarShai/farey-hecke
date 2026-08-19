@@ -163,3 +163,50 @@ The F1024 geometry/hash gates, complex displacement enclosure, adverse tail
 comparison, and hard-open `full_tau=None` behavior are unchanged. E1,
 MMS/Hilbert binding, `K_s`, common continuation/Selberg factorization, and a
 new independent referee remain OPEN.
+
+---
+
+## Main-branch dependency integration correction — 2026-08-19
+
+The first replay after cherry-picking the candidate/referee chain into the
+main research branch failed before executing a test because that branch did
+not yet contain `q8_contour_helpers.py` or the pinned F1024 receipt files.  This
+was an integration/provenance defect, not a numerical failure, and it was not
+masked with an altered `PYTHONPATH`:
+
+```text
+$ .../python -m unittest -q test_q8_schur_contour_repair.py
+ModuleNotFoundError: No module named 'q8_contour_helpers'
+Ran 1 test in 0.000s
+FAILED (errors=1)
+compile_exit=0 unit_exit=1 n2_exit=1 n4_exit=1
+```
+
+The exact ancestral q=8 artifact commit `6d6d54d` was then banked as main
+commit `286f1ff`.  Its add/add conflict in `q8_r3b_engine.py` was resolved by
+retaining the later contour-engine side, whose SHA-256 is the value required
+by this checker.  The complete main-branch byte receipt is:
+
+```text
+8b63dfbfc6bad21b01a951cbbf9f25e5a218f0353f9dd1c3493674b311aca2fc  q8_r3b_engine.py
+54ff4dcf39b6f1521cdf25ad769e37a1b4858fc8e07dc711e015fb7cd13da2f0  q8_contour_helpers.py
+e7a27aaa23074eb5722c1d392a5a93f73f787c02ebc6f5faeb2af1d0802f747a  f8_source_builder.py
+30fd9b15a9425b1a356753f667909a8d58d826d4ac1e30f1a2e7667fcc73871c  f8_certify_tb_blocks.py
+80daa5de82c4e47d43c3b4aaa84a5955be5281f2cb147e7730766a1bba946043  Q8_R2_F1024_LOCAL_RECEIPT.json
+5f9cd3f9179c5b15539b3666bd3a2a3144995408648369dc1db6eda36f51d35c  Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json
+7d7b33966e48c3fe5f45fcf9618943f17a65ca4ef91caa7e3b2067904d03011e  Q8_W_ENVELOPE_F1024_RECEIPT.json
+```
+
+Fresh main-branch replay then produced:
+
+```text
+Ran 9 tests in 0.048s
+OK
+compile_exit=0 unit_exit=0 n2_exit=2 n4_exit=2
+N=2 status=OPEN factors=['10', '4', '2'] geometry=True tail_checks=False full_tail=False full_tau=None winding=None checker=ef088d357da72ea44079bccfa643a4a76fc86fb87db3305566cff5e2b9233c76
+N=4 status=OPEN factors=['10', '4', '2'] geometry=True tail_checks=False full_tail=False full_tau=None winding=None checker=ef088d357da72ea44079bccfa643a4a76fc86fb87db3305566cff5e2b9233c76
+```
+
+This correction changes no mathematical status.  The bounded implementation
+repair remains referee-CONFIRMED; the full trace-class tail and every listed
+downstream q=8 theorem gate remain **OPEN / CONJECTURAL**.

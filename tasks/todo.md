@@ -690,3 +690,37 @@ CONFIRMED; abstract Banach wording GAPS / NOT REFUTED; downstream LAW OPEN.
 - [ ] Retain q8 localization, effective first height/onset, q-uniform errors,
   machine formalization, and project-specific Selberg-zeta normalization as
   stronger **OPEN** follow-ups; none is a dependency of the confirmed LAW.
+
+### Full-LAW session review and handoff — 2026-08-19
+
+- [x] Close the accepted qualitative LAW with the direct fixed-`q`
+  Hecke-orbifold scattering-count bridge and a separate cold referee.
+- [x] Run the requested alternative routes far enough to decide them honestly:
+  Route B is scoped-CONFIRMED only at its recorded sufficient onset; the first
+  q=8 continuous checker is REFUTED; its bounded fail-closed replacement is
+  rereferee-CONFIRMED at implementation/checkpoint scope only.
+- [x] Preserve the q=8 referee sequence rather than flattening it:
+  `GAPS NOT REFUTED` at `8c1f401`, append-only correction at `788a486`, then
+  bounded CONFIRMED rereferee at `d9d9fce`.
+- [x] Bank the missing q=8 ancestral sources/receipts and rerun from the main
+  branch.  Exact receipt:
+
+  ```text
+  Ran 9 tests in 0.048s
+  OK
+  compile_exit=0 unit_exit=0 n2_exit=2 n4_exit=2
+  N=2 status=OPEN ... full_tail=False full_tau=None winding=None
+  N=4 status=OPEN ... full_tail=False full_tau=None winding=None
+  ```
+
+- [x] Keep the exact stronger open frontier explicit: q=8 omitted-output
+  projection tail first, then E1, MMS/Hilbert binding, `K_s`, full winding,
+  continuation/Selberg; effective first height/onset, q-uniform errors, and
+  machine formalization are not promoted by the qualitative proof.
+- [ ] Pursue those stronger outputs only as follow-up theorems.  They are not
+  dependencies of the now unconditional, referee-CONFIRMED qualitative LAW.
+
+Final handoff: no Kaggle, Aristotle, or local long-running certificate job is
+active.  All session-owned work is committed locally; no push is authorized
+while the preserved untracked worktrees, graph outputs, caches, and Aristotle
+archive keep the literal tree non-clean.

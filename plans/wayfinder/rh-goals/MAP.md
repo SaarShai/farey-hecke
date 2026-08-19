@@ -1004,3 +1004,49 @@ directive 2026-08-15
   Route A's corrected q8 localization and Route B's effective onset remain
   stronger **OPEN** follow-ups, not dependencies of the now-proved qualitative
   scattering-resonance LAW.
+
+- **FULL-LAW SESSION CLOSEOUT; Q8 REPAIR BANKED FAIL-CLOSED — 2026-08-19.**
+  The accepted qualitative LAW status is unchanged and final: the direct
+  Hecke-orbifold source bridge and separate adverse report remain
+  **CONFIRMED, unconditional at paper level**.  The cold report's status line
+  was replayed directly:
+
+  ```text
+  $ rg -n '^\*\*(CONFIRMED|GAPS|REFUTED)' \
+      research_notes/rh_goals_2026-08-14/lane_g/LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_REFEREE.md
+  18:**CONFIRMED for the accepted LAW scope.** For every finite integer
+  550:**CONFIRMED.** The direct orbifold bridge is theorem-grade for every finite
+  ```
+
+  Route A was also pursued to its honest boundary.  The initial q=8 contour
+  implementation was referee-REFUTED; the bounded repair then received
+  `GAPS NOT REFUTED`, was corrected append-only, and passed its independent
+  rereferee at the implementation/checkpoint scope.  The main-branch replay,
+  after banking the exact ancestral F1024 artifacts, printed:
+
+  ```text
+  $ .../python -m unittest -q test_q8_schur_contour_repair.py
+  Ran 9 tests in 0.048s
+  OK
+  compile_exit=0 unit_exit=0 n2_exit=2 n4_exit=2
+  N=2 status=OPEN factors=['10', '4', '2'] geometry=True tail_checks=False full_tail=False full_tau=None winding=None
+  N=4 status=OPEN factors=['10', '4', '2'] geometry=True tail_checks=False full_tail=False full_tau=None winding=None
+  $ rg -n '^\*\*(CONFIRMED|GAPS)' Q8_SCHUR_CONTINUOUS_CONTOUR_REPAIR_{REFEREE,REREFEREE}.md
+  Q8_SCHUR_CONTINUOUS_CONTOUR_REPAIR_REFEREE.md:10:**GAPS NOT REFUTED.**
+  Q8_SCHUR_CONTINUOUS_CONTOUR_REPAIR_REREFEREE.md:11:**CONFIRMED at bounded implementation scope.**
+  ```
+
+  The exact remaining q=8 mathematical gate is a certified omitted-output
+  row/projection coefficient tail in the same bound Hardy/Hilbert norm as the
+  input-column tail.  E1, MMS/Hilbert binding, `K_s`, full winding, common
+  continuation, and Selberg factorization remain **OPEN / CONJECTURAL**.
+  Route B remains scoped-CONFIRMED only at its recorded sufficient enormous
+  onset and leaves its finite block OPEN.  Neither stronger route is consumed
+  by the qualitative LAW proof.
+
+  Session handoff: no Kaggle, Aristotle, or local long-running certificate job
+  is still running.  The unconditional qualitative scattering-resonance LAW
+  is closed; open work is strictly stronger localization/effectivity or machine
+  formalization.  All session-owned artifacts are committed locally.  No push
+  was made because the literal tree still contains the preserved untracked
+  `.worktrees/`, graph outputs, cache directories, and Aristotle archive.
