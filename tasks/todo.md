@@ -507,6 +507,11 @@ theorem-valid construction passes a cold referee.
 - [ ] Harvest and cold-judge q=8: require exact even-q operator binding, proven
   R2 tail, continuous (not endpoint-only) contour enclosure, E1, `K_s`, and
   factorization before any Selberg-zero status.
+  The first adaptive `N=32` Taylor run was terminated after its own trace
+  showed accepted subarcs with `lower=0`; its subdivision predicate checked
+  Neumann/Jacobi bounds but did not require zero exclusion.  Repair must reject
+  `lower <=` the full determinant-tail allowance, preferably in the exact
+  one-component Schur reduction, before a rerun or Kaggle dispatch.
 - [ ] Harvest and cold-judge the effective-tail/covering route: require either
   an explicit manageable all-gates onset or a theorem that covers the finite
   block without per-q enumeration; constant-only sensitivity is not closure.

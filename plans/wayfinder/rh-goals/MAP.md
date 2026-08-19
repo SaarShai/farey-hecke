@@ -747,3 +747,25 @@ directive 2026-08-15
   spaces, a uniform truncation/tail theorem, continuous winding, or any new
   Selberg zero.  Those remain **CONJECTURAL / OPEN** pending a scoped builder
   and an independent referee.
+
+- **Q8 FIRST ADAPTIVE CONTINUOUS CHECKER REFUTED; RUN TERMINATED —
+  2026-08-19.**  The serial `N=32`, `K=1`, factors `(10,4,2)` run reached
+  depth-7/8 bottom subarcs with `rH<1` but printed `lower=0`.  Its current
+  adaptive predicate subdivides only on the Neumann/Jacobi gate and therefore
+  accepts Taylor image boxes that still contain zero.  The proposed run is
+  **NOT a continuous-contour certificate**, irrespective of a later winding
+  accumulator.  The exact termination receipt was:
+
+  ```text
+  $ kill -TERM 39096; ps -p 39096 -o pid=,stat=,etime=,command=
+  39096 ?E   11:45 (python3.13)
+  $ ps -ww -p 39096 -o pid=,ppid=,stat=,etime=,%cpu=,command=
+  [no output]
+  ```
+
+  Corrected target: every accepted subarc must have a strict finite Taylor
+  lower bound exceeding the upward full Fredholm determinant-tail allowance;
+  otherwise it must subdivide or fail at maximum depth.  The proposed
+  one-component even-`q` Schur evaluator should be used to make this corrected
+  test tractable.  Q8's TB/R2/E1/`K_s` diagnostics are not numerically refuted
+  by this checker defect, but remain unpromoted and await cold review.
