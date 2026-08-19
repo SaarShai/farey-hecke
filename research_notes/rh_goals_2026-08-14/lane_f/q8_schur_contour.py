@@ -12,8 +12,10 @@ For finite coefficient truncation, exact block elimination gives
 
 This runner evaluates the five direct N-by-N blocks exposed by
 ``q8_r3b_engine``.  It never assembles the legacy 3N-by-3N matrix.  The
-continuous arc gates use Acb closed rectangles, Frobenius/Hilbert bounds, a
-finite Taylor/Jacobi determinant box, and the R2 trace-tail homotopy bound.
+continuous arc gates use Acb closed rectangles, Frobenius/Hilbert bounds, and a
+finite Taylor/Jacobi determinant box.  The available q=8 R2 receipt bounds
+omitted input columns only, so the full determinant homotopy remains disabled
+until an immutable omitted-output receipt is supplied.
 
 The result is deliberately conservative: E1, q=8 MMS/Hilbert identification,
 K_s, and common-continuation/Selberg factorization remain OPEN and are never
@@ -51,6 +53,20 @@ DEFAULT_MAX_DEPTH = 8
 DEFAULT_R2 = LANE_F / "f8_receipts" / "Q8_R2_F1024_LOCAL_RECEIPT.json"
 DEFAULT_TB = LANE_F / "f8_receipts" / "Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json"
 DEFAULT_W = LANE_F / "f8_receipts" / "Q8_W_ENVELOPE_F1024_RECEIPT.json"
+RECEIPT_FACTORS = ("10", "4", "2")
+PINNED_RECEIPT_SHA256 = {
+    "R2": "80daa5de82c4e47d43c3b4aaa84a5955be5281f2cb147e7730766a1bba946043",
+    "TB": "5f9cd3f9179c5b15539b3666bd3a2a3144995408648369dc1db6eda36f51d35c",
+    "W": "7d7b33966e48c3fe5f45fcf9618943f17a65ca4ef91caa7e3b2067904d03011e",
+}
+PINNED_SOURCE_SHA256 = {
+    "q8_r3b_engine.py": "8b63dfbfc6bad21b01a951cbbf9f25e5a218f0353f9dd1c3493674b311aca2fc",
+    "q8_contour_helpers.py": "54ff4dcf39b6f1521cdf25ad769e37a1b4858fc8e07dc711e015fb7cd13da2f0",
+    "f8_source_builder.py": "e7a27aaa23074eb5722c1d392a5a93f73f787c02ebc6f5faeb2af1d0802f747a",
+    "f8_certify_tb_blocks.py": "30fd9b15a9425b1a356753f667909a8d58d826d4ac1e30f1a2e7667fcc73871c",
+}
+CHECKPOINT_SCHEMA = "q8-schur-contour-checkpoint/v2"
+CERTIFICATE_IMPLEMENTATION = "q8-schur-contour-repair/v2"
 
 BLOCK_TO_NAME = {
     (2, 1, 1, False, False): "A2",
@@ -92,6 +108,28 @@ def definitely_less(left: arb, right: arb) -> bool:
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def verify_immutable_hash(path: Path, expected: str, label: str) -> bool:
+    actual = sha256(path)
+    if actual != expected:
+        raise ValueError(
+            f"immutable {label} hash mismatch: expected {expected}, got {actual}"
+        )
+    return True
+
+
+def arb_overlaps(left: arb, right: arb) -> bool:
+    return (left - right).contains(0)
+
+
+def complex_modulus_enclosure(radius: arb) -> acb:
+    """Return a rectangle containing the closed complex disk ``|z| <= radius``."""
+
+    radius = radius.upper()
+    if radius.lower() < arb(0):
+        raise ValueError("complex enclosure radius must be nonnegative")
+    return acb(arb(0, radius), arb(0, radius))
 
 
 def identity(dimension: int) -> acb_mat:
@@ -201,25 +239,83 @@ def block_hilbert_tail_bound(row: dict[str, Any]) -> arb:
 
 
 def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> dict[str, Any]:
-    """Load and hash-check the pinned q=8 R2/TB/W receipts.
+    """Load immutable F1024 inputs and keep input-only tails distinct."""
 
-    The R2 receipt is the anchor.  Its source hashes bind the two auxiliary
-    receipts needed only for the two single (+1) blocks, whose HS formula is
-    ``w/sqrt(1-rho^2)``.
-    """
-
+    receipt_paths = {"R2": r2_path, "TB": tb_path, "W": w_path}
+    receipt_hashes_verified = {
+        label: verify_immutable_hash(path, PINNED_RECEIPT_SHA256[label], f"{label} receipt")
+        for label, path in receipt_paths.items()
+    }
+    source_paths = {
+        "q8_r3b_engine.py": Path(engine.__file__).resolve(),
+        "q8_contour_helpers.py": Path(helper.__file__).resolve(),
+        "f8_source_builder.py": Path(engine.source_builder.__file__).resolve(),
+        "f8_certify_tb_blocks.py": Path(engine.source_builder.f8tb.__file__).resolve(),
+    }
+    source_hashes_verified = {
+        name: verify_immutable_hash(path, PINNED_SOURCE_SHA256[name], f"source {name}")
+        for name, path in source_paths.items()
+    }
     r2 = json.loads(r2_path.read_text(encoding="utf-8"))
     tb = json.loads(tb_path.read_text(encoding="utf-8"))
     w = json.loads(w_path.read_text(encoding="utf-8"))
     if r2.get("schema") != "q8-r2-local/v1" or r2.get("q") != 8:
         raise ValueError("unexpected pinned q8 R2 receipt")
-    if tb.get("q") != 8 or w.get("schema") != "tb-weight-envelope-cert/v2":
+    if (
+        tb.get("schema") != "tb-block-certificates/v2-q8"
+        or tb.get("q") != 8
+        or w.get("schema") != "tb-weight-envelope-cert/v2"
+        or w.get("q") != 8
+    ):
         raise ValueError("unexpected pinned q8 TB/W receipts")
     bindings = r2.get("source_bindings", {})
-    if bindings.get("TB_sha256") != sha256(tb_path):
+    if bindings.get("TB_sha256") != PINNED_RECEIPT_SHA256["TB"]:
         raise ValueError("TB receipt hash does not match pinned R2 source binding")
-    if bindings.get("W_sha256") != sha256(w_path):
+    if bindings.get("W_sha256") != PINNED_RECEIPT_SHA256["W"]:
         raise ValueError("W receipt hash does not match pinned R2 source binding")
+    factor_strings = tb.get("radius_multipliers_exact_strings")
+    if factor_strings != list(RECEIPT_FACTORS):
+        raise ValueError(
+            f"F1024 factor mismatch: expected {list(RECEIPT_FACTORS)}, got {factor_strings}"
+        )
+
+    lam, centers, radii = engine.source_builder.geometry_for_factors(RECEIPT_FACTORS)
+    if any(value.imag != 0 for value in [lam, *centers, *radii]):
+        raise ArithmeticError("F1024 engine geometry is not real-valued")
+    geometry_payloads = {
+        "R2": r2.get("geometry", {}),
+        "TB": {
+            "lambda": tb.get("lambda"),
+            "centers": tb.get("centers"),
+            "source_radii": tb.get("source_radii"),
+        },
+        "W": w.get("geometry", {}),
+    }
+    for label, geometry in geometry_payloads.items():
+        if not isinstance(geometry, dict):
+            raise ValueError(f"{label} receipt has no geometry object")
+        recorded_centers = geometry.get("centers")
+        recorded_radii = geometry.get("source_radii")
+        if (
+            geometry.get("lambda") is None
+            or not isinstance(recorded_centers, list)
+            or not isinstance(recorded_radii, list)
+            or len(recorded_centers) != len(centers)
+            or len(recorded_radii) != len(radii)
+        ):
+            raise ValueError(f"{label} receipt geometry has the wrong shape")
+        comparisons = [arb_overlaps(lam.real, arb(geometry["lambda"]))]
+        comparisons.extend(
+            arb_overlaps(actual.real, arb(recorded))
+            for actual, recorded in zip(centers, recorded_centers, strict=True)
+        )
+        comparisons.extend(
+            arb_overlaps(actual.real, arb(recorded))
+            for actual, recorded in zip(radii, recorded_radii, strict=True)
+        )
+        if not all(comparisons):
+            raise ValueError(f"F1024 engine geometry does not overlap {label} receipt geometry")
+
     r2_rows = {tuple(row["block"]): row for row in r2["blocks"]}
     tb_rows = {tuple(row["block"]): row for row in tb["blocks"]}
     w_rows = {tuple(row["block"]): row for row in w["boxes"][0]["blocks"]}
@@ -251,7 +347,7 @@ def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> 
     a2, a3 = hs["A2"], hs["A3"]
     b1, b2, b3 = hs["B1"], hs["B2"], hs["B3"]
     xop = (b3 + a3 * b2 + a3 * a2 * b1).upper()
-    tau = (
+    input_tail_only = (
         trace["B3"]
         + a3 * trace["B2"]
         + a3 * a2 * trace["B1"]
@@ -270,11 +366,21 @@ def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> 
             for block in blocks:
                 r2_row = r2_rows[block]
                 total += tail_trace_tail(arb(r2_row["A_upper_bound"]), arb(r2_row["C_upper_bound"]), arb(r2_row["q_upper_bound"]), arb(r2_row["rho_upper_bound"]), int(key))
+        source_covers_recomputed = total.upper() <= source.upper()
         recorded_checks[key] = {
             "source": arb_text(source),
             "recomputed": arb_text(total.upper()),
-            "source_lower_le_recomputed_upper": str(source.lower() <= total.upper()),
+            "source_upper_covers_recomputed_upper": str(source_covers_recomputed),
+            "comparison": "recomputed.upper() <= source.upper()",
         }
+    recorded_tail_checks_pass = all(
+        row["source_upper_covers_recomputed_upper"] == "True"
+        for row in recorded_checks.values()
+    )
+    full_tail_open_reason = (
+        "The immutable q8 F1024 receipts bound omitted input columns only; "
+        "no compatible omitted-output-row/projection coefficient tail is present."
+    )
     return {
         "r2": r2,
         "tb": tb,
@@ -282,9 +388,22 @@ def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> 
         "hs": hs,
         "trace": trace,
         "Xop": xop,
-        "tau": tau,
+        "input_tail_only": input_tail_only,
+        "output_projection_tail": None,
+        "full_tau": None,
+        "full_tail_certified": False,
+        "full_tail_open_reason": full_tail_open_reason,
+        "full_tail_formula": (
+            "tau_full requires full block tails ||T-P_i T P_j||_1, combining "
+            "omitted input columns and omitted output rows before Schur telescoping"
+        ),
         "formulas": formulas,
         "recorded_tail_checks": recorded_checks,
+        "recorded_tail_checks_pass": recorded_tail_checks_pass,
+        "factor_strings": factor_strings,
+        "geometry_verified": True,
+        "receipt_hashes_verified": receipt_hashes_verified,
+        "source_hashes_verified": source_hashes_verified,
         "N": N,
     }
 
@@ -316,10 +435,10 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
     radius = ((end - start).abs_upper() / arb(2)).upper()
     s_arc = segment_box(start, end)
     midpoint_values, midpoint_derivatives = engine.build_q8_block_matrices_and_s_derivative(
-        midpoint, N, SIGN, N_HEAD, engine.EXACT_FACTORS
+        midpoint, N, SIGN, N_HEAD, RECEIPT_FACTORS
     )
     _arc_values, arc_derivatives = engine.build_q8_block_matrices_and_s_derivative(
-        s_arc, N, SIGN, N_HEAD, engine.EXACT_FACTORS
+        s_arc, N, SIGN, N_HEAD, RECEIPT_FACTORS
     )
     c_mid, cprime_mid = schur_value_and_derivative(midpoint_values, midpoint_derivatives)
     _unused_c_arc, cprime_arc = schur_value_and_derivative(_arc_values, arc_derivatives)
@@ -328,16 +447,22 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
     A0_inverse = A0.inv()
     # A direct Acb evaluation of C(s_arc)-C(midpoint) has severe dependency
     # inflation for the Hurwitz jets.  The closed-segment integral gives the
-    # theorem-valid entrywise rectangle below: |C(s)-C(mid)| is bounded by
-    # radius * sup_arc |C'(s)|.  This is the continuous Taylor enclosure used
-    # by both the Frobenius Neumann gate and the Jacobi determinant box.
+    # entrywise rectangle below: |C(s)-C(mid)| is bounded by radius times the
+    # arc supremum of |C'(s)|.  Both real and imaginary radii must be inflated;
+    # acb(0, B) would enclose only the imaginary segment [-iB,iB].
     delta = acb_mat(dimension, dimension)
     for row in range(dimension):
         for col in range(dimension):
-            delta[row, col] = acb(0, radius * cprime_arc[row, col].abs_upper())
+            delta[row, col] = complex_modulus_enclosure(
+                radius * cprime_arc[row, col].abs_upper()
+            )
     normalized_delta = A0_inverse * delta
     qf = frobenius_upper(normalized_delta, dimension)
-    gates: dict[str, bool] = {"qF_lt_1": definitely_less(qf, arb(1))}
+    gates: dict[str, bool] = {
+        "qF_lt_1": definitely_less(qf, arb(1)),
+        "recorded_tail_receipt_checks_pass": bounds["recorded_tail_checks_pass"],
+        "full_output_projection_tail_available": bounds["full_tail_certified"],
+    }
     record: dict[str, Any] = {
         "arc_index": int(segment["arc_index"]),
         "initial_arc": int(segment.get("initial_arc", segment["arc_index"])),
@@ -350,19 +475,28 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
         "qF_upper": arb_text(qf),
         "qF_lt_1": gates["qF_lt_1"],
         "Xop_upper": arb_text(bounds["Xop"]),
-        "tau_upper": arb_text(bounds["tau"]),
+        "input_tail_only_upper": arb_text(bounds["input_tail_only"]),
+        "output_projection_tail_upper": None,
+        "full_tau_upper": None,
+        "full_tail_open_reason": bounds["full_tail_open_reason"],
     }
     if not gates["qF_lt_1"]:
         record["status"] = "FAIL_QF"
         return record, acb(0)
     inv_arc = (frobenius_upper(A0_inverse, dimension) / (arb(1) - qf)).upper()
     inv_tilde = (arb(1) + bounds["Xop"] * inv_arc).upper()
-    tail_homotopy = (bounds["tau"] * inv_tilde).upper()
-    gates["tail_homotopy_lt_1"] = definitely_less(tail_homotopy, arb(1))
+    tail_homotopy = None
+    if bounds["full_tail_certified"] and bounds["full_tau"] is not None:
+        tail_homotopy = (bounds["full_tau"] * inv_tilde).upper()
+    gates["tail_homotopy_lt_1"] = (
+        tail_homotopy is not None and definitely_less(tail_homotopy, arb(1))
+    )
     record.update({
         "inv_arc_upper": arb_text(inv_arc),
         "inv_tilde_upper": arb_text(inv_tilde),
-        "tail_homotopy_upper": arb_text(tail_homotopy),
+        "tail_homotopy_upper": (
+            arb_text(tail_homotopy) if tail_homotopy is not None else None
+        ),
         "tail_homotopy_lt_1": gates["tail_homotopy_lt_1"],
     })
 
@@ -428,17 +562,114 @@ def certify_adaptive(segment: dict[str, Any], N: int, bounds: dict[str, Any], de
     return left_records + right_records, left_boxes + right_boxes, left_ok and right_ok
 
 
+def validate_checkpoint_records(
+    params: dict[str, Any], completed: set[int], records: list[dict[str, Any]]
+) -> None:
+    """Verify that saved adaptive leaves exactly cover every completed arc."""
+
+    arc_start = int(params["arc_start"])
+    arc_end = int(params["arc_end"])
+    allowed = set(range(arc_start, arc_end))
+    if not completed <= allowed:
+        raise ValueError("checkpoint completed arcs are outside the requested shard")
+    grouped: dict[int, list[list[int]]] = {initial: [] for initial in completed}
+    seen: set[tuple[int, tuple[int, ...]]] = set()
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError("checkpoint record is not an object")
+        initial = record.get("initial_arc")
+        path = record.get("path")
+        status = record.get("status")
+        if type(initial) is not int or initial not in completed:
+            raise ValueError("checkpoint record is not attached to a completed arc")
+        if (
+            not isinstance(path, list)
+            or any(type(bit) is not int or bit not in (0, 1) for bit in path)
+        ):
+            raise ValueError("checkpoint record has an invalid adaptive path")
+        if status not in ("PASS", "OPEN_MAX_DEPTH"):
+            raise ValueError("checkpoint record has an invalid terminal status")
+        key = (initial, tuple(path))
+        if key in seen:
+            raise ValueError("checkpoint contains a duplicate adaptive leaf")
+        seen.add(key)
+        grouped[initial].append(path)
+        if status == "PASS":
+            try:
+                parse_acb_text(record["finite_taylor_box"])
+            except (KeyError, TypeError, ValueError) as error:
+                raise ValueError("checkpoint PASS record has an invalid determinant box") from error
+
+    for initial, paths in grouped.items():
+        if not paths:
+            raise ValueError(f"checkpoint completed arc {initial} has no terminal records")
+        max_depth = max(len(path) for path in paths)
+        scale = 1 << max_depth
+        intervals: list[tuple[int, int]] = []
+        for path in paths:
+            index = 0
+            for bit in path:
+                index = 2 * index + bit
+            width = 1 << (max_depth - len(path))
+            intervals.append((index * width, (index + 1) * width))
+        cursor = 0
+        for left, right in sorted(intervals):
+            if left != cursor or right <= left:
+                raise ValueError(
+                    f"checkpoint leaves do not form an exact partition of arc {initial}"
+                )
+            cursor = right
+        if cursor != scale:
+            raise ValueError(
+                f"checkpoint leaves do not form an exact partition of arc {initial}"
+            )
+
+
+def ordered_records_and_boxes(
+    records: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[acb]]:
+    """Sort final records and reconstruct every saved PASS box unconditionally."""
+
+    ordered = sorted(
+        records, key=lambda record: (record.get("initial_arc", -1), record.get("path", []))
+    )
+    boxes: list[acb] = []
+    for record in ordered:
+        if record.get("status") == "PASS":
+            try:
+                boxes.append(parse_acb_text(record["finite_taylor_box"]))
+            except (KeyError, TypeError, ValueError) as error:
+                raise ValueError("PASS record has an invalid determinant box") from error
+    return ordered, boxes
+
+
 def write_checkpoint(path: Path, params: dict[str, Any], completed: list[int], records: list[dict[str, Any]]) -> None:
-    payload = {"schema": "q8-schur-contour-checkpoint/v1", "params": params, "completed_initial_arcs": sorted(completed), "records": records}
+    completed_set = set(completed)
+    validate_checkpoint_records(params, completed_set, records)
+    payload = {"schema": CHECKPOINT_SCHEMA, "params": params, "completed_initial_arcs": sorted(completed_set), "records": records}
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(path)
 
 
 def load_checkpoint(path: Path, params: dict[str, Any]) -> tuple[set[int], list[dict[str, Any]]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema") != "q8-schur-contour-checkpoint/v1" or payload.get("params") != params:
+    if payload.get("schema") != CHECKPOINT_SCHEMA or payload.get("params") != params:
         raise ValueError("checkpoint schema/parameters do not match this run")
-    return set(int(item) for item in payload.get("completed_initial_arcs", [])), list(payload.get("records", []))
+    completed_items = payload.get("completed_initial_arcs", [])
+    records = payload.get("records", [])
+    if (
+        not isinstance(completed_items, list)
+        or any(type(item) is not int for item in completed_items)
+        or not isinstance(records, list)
+    ):
+        raise ValueError("checkpoint completed arcs/records have invalid types")
+    completed = set(completed_items)
+    if len(completed) != len(completed_items):
+        raise ValueError("checkpoint completed arcs contain duplicates")
+    validate_checkpoint_records(params, completed, records)
+    return completed, records
 
 
 def main() -> int:
@@ -467,55 +698,83 @@ def main() -> int:
     arc_end = len(segments) if args.arc_end is None else args.arc_end
     if not (0 <= args.arc_start <= arc_end <= len(segments)):
         raise SystemExit("arc range must satisfy 0 <= start <= end <= 4*K")
-    params = {"N": args.N, "K": args.K, "max_depth": args.max_depth, "arc_start": args.arc_start, "arc_end": arc_end, "pin": {"re": PIN_RE, "im": PIN_IM, "half_width": HALF_WIDTH}}
+    params = {
+        "implementation": CERTIFICATE_IMPLEMENTATION,
+        "N": args.N,
+        "K": args.K,
+        "max_depth": args.max_depth,
+        "arc_start": args.arc_start,
+        "arc_end": arc_end,
+        "pin": {"re": PIN_RE, "im": PIN_IM, "half_width": HALF_WIDTH},
+        "factor_strings": list(RECEIPT_FACTORS),
+        "receipt_sha256": PINNED_RECEIPT_SHA256,
+        "source_sha256": PINNED_SOURCE_SHA256,
+    }
     completed: set[int] = set()
     records: list[dict[str, Any]] = []
     if args.resume is not None:
         completed, records = load_checkpoint(args.resume, params)
-    all_boxes: list[acb] = []
-    unresolved = any(record.get("status") != "PASS" for record in records)
+    unresolved = (
+        any(record.get("status") != "PASS" for record in records)
+        or not bounds["recorded_tail_checks_pass"]
+        or not bounds["full_tail_certified"]
+    )
     for initial in range(args.arc_start, arc_end):
         if initial in completed:
             continue
         segment = dict(segments[initial])
-        records_i, boxes_i, ok_i = certify_adaptive(segment, args.N, bounds, 0, args.max_depth)
+        records_i, _boxes_i, ok_i = certify_adaptive(
+            segment, args.N, bounds, 0, args.max_depth
+        )
         records.extend(records_i)
-        all_boxes.extend(boxes_i)
         completed.add(initial)
         unresolved = unresolved or not ok_i
         print(f"Q8_SCHUR arc={initial} leaves={len(records_i)} status={'PASS' if ok_i else 'OPEN'}", flush=True)
         if args.checkpoint is not None:
             write_checkpoint(args.checkpoint, params, sorted(completed), records)
-    # If this is a resumed run, reconstruct successful boxes from saved records.
-    if args.resume is not None and not all_boxes:
-        for record in records:
-            if record.get("status") == "PASS":
-                all_boxes.append(parse_acb_text(record["finite_taylor_box"]))
-    ordered = sorted(records, key=lambda record: (record.get("initial_arc", -1), record.get("path", [])))
+    ordered, ordered_boxes = ordered_records_and_boxes(records)
     winding = None
     winding_info: dict[str, Any] = {"reason": "incomplete shard or open arc"}
     full_shard = args.arc_start == 0 and arc_end == len(segments)
     all_pass = bool(ordered) and all(record.get("status") == "PASS" for record in ordered)
-    if full_shard and all_pass and len(all_boxes) == len(ordered):
-        ordered_boxes = [parse_acb_text(record["finite_taylor_box"]) for record in ordered]
+    if full_shard and all_pass and len(ordered_boxes) == len(ordered):
         winding, winding_info = helper.certified_winding_from_arc_boxes(ordered_boxes)
         if winding is None:
             unresolved = True
     else:
         unresolved = True
     result = {
-        "schema": "q8-schur-contour/v1",
-        "status": "OPEN" if unresolved else "FINITE_SECTION_AND_TRACE_HOMOTOPY_CERTIFIED_AWAITING_COLD_REFEREE",
+        "schema": "q8-schur-contour/v2",
+        "status": "OPEN" if unresolved else "FULL_FINITE_SECTION_HOMOTOPY_CERTIFIED_AWAITING_NEW_COLD_REFEREE",
+        "claim_status": "CONJECTURAL_PENDING_NEW_COLD_REFEREE",
         "theorem_grade": "NO: E1, q8 MMS/Hilbert binding, K_s, and common continuation/Selberg factorization remain OPEN",
-        "operator": {"q": 8, "sign": SIGN, "equation": "MMS-(32)", "schur": "C=B3+A3*B2+A3*A2*B1", "derivative": "product rule", "production_matrix_dimension": args.N},
+        "operator": {"q": 8, "sign": SIGN, "equation": "MMS-(32)", "schur": "C=B3+A3*B2+A3*A2*B1", "derivative": "product rule", "production_matrix_dimension": args.N, "factor_strings": list(RECEIPT_FACTORS)},
         "pin": {"re": PIN_RE, "im": PIN_IM, "half_width": HALF_WIDTH},
         "N": args.N,
         "K_per_edge": args.K,
         "max_depth": args.max_depth,
         "arc_range": [args.arc_start, arc_end],
         "precision_bits": 384,
-        "operator_bounds": {"hs": {name: arb_text(value) for name, value in bounds["hs"].items()}, "Xop": arb_text(bounds["Xop"]), "trace_tails": {name: arb_text(value) for name, value in bounds["trace"].items()}, "tau": arb_text(bounds["tau"])},
+        "operator_bounds": {
+            "hs": {name: arb_text(value) for name, value in bounds["hs"].items()},
+            "Xop": arb_text(bounds["Xop"]),
+            "input_column_trace_tails": {
+                name: arb_text(value) for name, value in bounds["trace"].items()
+            },
+            "input_tail_only": arb_text(bounds["input_tail_only"]),
+            "output_projection_tail": None,
+            "full_tau": None,
+            "full_tail_certified": bounds["full_tail_certified"],
+            "full_tail_open_reason": bounds["full_tail_open_reason"],
+            "full_tail_formula": bounds["full_tail_formula"],
+        },
         "tail_formula_checks": bounds["recorded_tail_checks"],
+        "tail_formula_checks_pass": bounds["recorded_tail_checks_pass"],
+        "bindings": {
+            "geometry_verified": bounds["geometry_verified"],
+            "receipt_hashes_verified": bounds["receipt_hashes_verified"],
+            "source_hashes_verified": bounds["source_hashes_verified"],
+        },
         "finite_arc_count": len(ordered),
         "all_strict_gates_pass": all_pass,
         "finite_section_winding": winding,
@@ -527,7 +786,7 @@ def main() -> int:
     if args.out is not None:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(output, encoding="utf-8")
-    print(json.dumps({"status": result["status"], "N": args.N, "arcs": len(ordered), "winding": winding, "Xop": result["operator_bounds"]["Xop"], "tau": result["operator_bounds"]["tau"], "runtime_seconds": result["runtime_seconds"]}, indent=2))
+    print(json.dumps({"status": result["status"], "N": args.N, "arcs": len(ordered), "winding": winding, "Xop": result["operator_bounds"]["Xop"], "full_tau": result["operator_bounds"]["full_tau"], "runtime_seconds": result["runtime_seconds"]}, indent=2))
     return 0 if not unresolved else 2
 
 
