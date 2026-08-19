@@ -501,3 +501,86 @@ and finite-base gates (`BOUNDARY_ALPHA_THEOREM_SOL.md:663-671`).  No final
 
 No refutation was found.  The only proposed change is a separately gated,
 strictly smaller upward constant obtained from a proved direct coefficient.
+
+## 8. Autopsy completion after cold-review gap — 2026-08-19
+
+The first cold referee found that Sections 2--5 reconstructed the constant and
+printed the transport improvement but did not explicitly rank where the
+orders of magnitude are lost.  This appended block closes that documentation
+gap without changing either candidate constant.
+
+Command:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 /Users/za/.venvs/farey-rh/bin/python - <<'PY'
+from flint import arb, acb, ctx
+ctx.dps=80
+alpha=arb(6)/5
+pub=arb(10489412368759562746433608215977724802)
+primary=arb(38160259896392973127946053)
+qpub=arb(332093267419812025416641789732742045430624465595)
+qprimary=arb(97418971860452658435229799565334786148)
+ratio=pub/primary
+print('C4_ratio_2^100_over_2^62_plus_1=',arb(2)**100/(arb(2)**62+1))
+print('CR_ratio_pub_over_primary=',ratio)
+print('CR_log_gain=',ratio.log())
+print('CR_decimal_orders_gain=',ratio.log()/arb(10).log())
+print('predicted_A0_log_q_gain_5_over_6=',ratio.log()/alpha)
+print('actual_transport_integer_ratio=',qpub/qprimary)
+F12=arb(7940); Finf=arb(1225)/4
+print('retained_F12_over_F_infinity=',F12/Finf)
+print('counterfactual_F_log_q_headroom=',(F12/Finf).log()/alpha)
+S=arb('7.648'); t0=(acb.zeta_zero(1)/2).imag
+Strue=(arb('1.1')**2+(t0+arb('.5'))**2).sqrt()
+print('retained_Splus1_over_exact_first_zero_Splus1=',(S+1)/(Strue+1))
+p=arb(11)/5; pair_pref=2*arb.pi()**2*(S+1)*p
+wrap=p*128*(1+arb(2).log())*30
+inside=pair_pref*(arb(2)**62+1)*F12+wrap
+print('retained_wrap_fraction_primary_raw=',wrap/inside)
+PY
+```
+
+Output:
+
+```text
+C4_ratio_2^100_over_2^62_plus_1= [274877906943.99999994039535522460937501292469707114105741706316388494353544572607 +/- 1.41e-69]
+CR_ratio_pub_over_primary= [274877906943.99999994010943445842741471236781422942372676070069066732083830942528 +/- 2.41e-69]
+CR_log_gain= [26.339592861277921757636940007225731303574249568797996488951897847403771279336238 +/- 4.46e-79]
+CR_decimal_orders_gain= [11.439139835231285418027453653682274464098627516442177144935850736695230219344481 +/- 2.31e-79]
+predicted_A0_log_q_gain_5_over_6= [21.949660717731601464697450006021442752978541307331663740793248206169809399446865 +/- 4.44e-79]
+actual_transport_integer_ratio= [3408917801.9197065874125291505009477738856775886079565124869054118074214408356601 +/- 1.63e-71]
+retained_F12_over_F_infinity= [25.926530612244897959183673469387755102040816326530612244897959183673469387755102 +/- 7.23e-80]
+counterfactual_F_log_q_headroom= [2.7127223269852038882840797465808487141537645626118542167461593807005333006743130 +/- 5.75e-80]
+retained_Splus1_over_exact_first_zero_Splus1= [1.0001279946880542040326816790184759533388408736293087248331550148855713052518603 +/- 8.51e-81]
+retained_wrap_fraction_primary_raw= [1.0401603157596627398211006085231419011537089926537046290030360458673782087083230e-21 +/- 6.97e-101]
+```
+
+Ranked loss ledger:
+
+1. **Dominant, confirmed substitution:** the convenience ceiling
+   (C_4=2^{100}) rather than the direct (2^{62}+1) costs the displayed
+   (2.74877906944\times10^{11})-scale factor.  The assembled constant loses
+   the same 11.439... decimal orders because the paired term dominates.  The
+   exact RATE-A replacement is the primary result of this note.
+2. **Secondary, diagnostic only:** the uniform absorption
+   (F(q)\le F(12)=7940) retains a factor 25.926... relative to the limiting
+   (1225/4).  It cannot simply be replaced in the all-(q\ge12) theorem;
+   exploiting it for activation would require a new (q)-dependent fixed-point
+   proof and referee.  The printed 2.712... log-cutoff headroom is therefore
+   counterfactual, not a banked reduction.
+3. **Negligible, diagnostic only:** replacing the safe (S=7.648) by the
+   exact first-zero contour norm changes the (S+1) factor only by the printed
+   1.000127... ratio.  No tighter rational ceiling is combined here.
+4. **Not a useful target at the new scale:** the retained wrap contribution is
+   only the printed (1.0402\times10^{-21})-scale fraction of the primary raw
+   assembly.  Reducing it cannot remove an order of magnitude.
+5. **Unranked for lack of a proved alternative:** (M_0=2.775) remains the
+   accepted uniform safe bound.  No smaller full-contour bound is claimed, so
+   assigning it speculative headroom would violate the ledger rule.
+
+Finally, the exact (C_R) ratio has log 26.339..., and multiplication by
+(1/\alpha=5/6) gives the independently printed 21.949... decrease in the A0
+log cutoff.  The actual strict-integer transport cutoffs differ by the printed
+3.4089-billion-scale ratio.  These are consequences of the selected A0
+envelope only and still do not supply the missing finite block or a
+full-program (q_0).
