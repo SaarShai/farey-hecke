@@ -221,7 +221,7 @@ orchestrator to materialize. No worker may change git state. Untracked caches,
 - [x] After each returned worker: run the lane git guard, compare against the
   dispatch criteria, record the result in the worker ledger, and quarantine any
   unsupported claim.
-- [ ] End with fresh tests/receipts, explicit-path commits using recent message
+- [x] End with fresh tests/receipts, explicit-path commits using recent message
   style, one dated MAP session summary, and a handoff naming every running/open
   item. Do not push unless the tree is clean and the quoted gates pass.
 
@@ -288,3 +288,13 @@ promotion is intentionally narrow: executable local `MarkedCode` serialization
 and finite algebra are machine-verified, while the paper source-table map,
 coverage, canonical/Ford inputs, analytic `(FW)`/`(AM)`, and RATE-A machine
 certificate remain `GAPS / CONJECTURAL` at Lean level.
+
+Final verification reran `./te doctor`, the loop linter, all three arithmetic
+receipt families, the exact v30 Lean rebuild, forbidden-declaration and axiom
+audits, nine signature comparisons, Aristotle completion status, diff/secret/
+artifact checks, and tracked-tree status. All functional/status gates passed at
+their stated scopes. The local loop's `commit max 8` planning budget was
+exceeded by the deliberately granular proof/referee/ledger commits; this is a
+recorded orchestration-budget deviation, not a mathematical or artifact gate.
+History was not rewritten. No push occurred because the preserved pre-existing
+untracked inventory keeps the literal tree non-clean.

@@ -369,3 +369,94 @@ directive 2026-08-15
   retains pre-existing out-of-scope untracked worktrees, graph outputs,
   caches, and the v26 archive, which were neither staged nor modified by this
   lane.
+
+- **FINAL VERIFICATION RECEIPT 2026-08-19**: a fresh whole-session pass was
+  run after every lane and referee commit had landed.
+
+  ```bash
+  ./te doctor
+  python3 skills/loop-engineering/tools/loop_lint.py tasks/todo.md
+  git diff --check
+  ```
+
+  Relevant output:
+
+  ```text
+  "ok": true
+  "runtime_syntax_ok": true
+  loop-lint: tasks/todo.md  (1 spec)
+    OK — gate + stop + budget + separate verifier, every spec
+  summary: 0 fail · 0 warn
+  ```
+
+  `git diff --check` emitted no diagnostic.  The exact AM, activation, and
+  reduced-constant Arb replays are quoted in their dated entries above and
+  were rerun again in this final pass with the same booleans and strict
+  integers.
+
+  Returned-v30 command:
+
+  ```bash
+  returned=/Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v30/result/aristotle_dispatch_v30_aristotle/RateCoreV.lean
+  ( cd /Users/za/Documents/farey-hecke/projects/aristotle_dispatch_v26/result/aristotle_dispatch_v26_aristotle && /Users/za/.elan/bin/lake env lean "$returned" )
+  echo lean_rebuild_exit=$?
+  rg -n '^\s*(sorry|axiom)\b' "$returned"
+  echo forbidden_decl_rg_exit=$?
+  ```
+
+  Output:
+
+  ```text
+  lean_rebuild_exit=0
+  forbidden_decl_rg_exit=1
+  ```
+
+  A fresh streamed axiom audit ended `axiom_audit_exit=0` and again printed
+  only `propext`, `Classical.choice`, and `Quot.sound` dependencies; the exact
+  nine-target computed signature comparison ended
+  `requested_signature_diff_exit=0` with every
+  `<target>_signature_same=True`.
+
+  External-status command (credential loaded without printing it; output
+  sanitized through `grep -iv key`):
+
+  ```bash
+  aristotle show 97b16c1b-653d-42b9-a5da-4ed765a8eb88 --task 768f5d6f-6b5c-4516-981b-6d8f967b6a6b --limit 0
+  ```
+
+  Relevant output:
+
+  ```text
+  COMPLETE
+  Task: 768f5d6f-6b5c-4516-981b-6d8f967b6a6b
+  Project: 97b16c1b-653d-42b9-a5da-4ed765a8eb88
+  aristotle_show_exit=0
+  ```
+
+  `impact-of-change` was degraded for the Lean/Markdown-only diff, so a
+  tracked-reference search was also run: outside v30, the new Lean module and
+  target names occur only in this MAP and `tasks/todo.md`, not in an imported
+  code path.  `security-oversight` reported `0 finding(s) — risk = NONE`, with
+  its stated lexical-scan caveat; the explicit v30 secret-value and forbidden
+  artifact scans were empty.
+
+  Final tracked-tree command:
+
+  ```bash
+  git diff --name-only
+  git status --short
+  ```
+
+  `git diff --name-only` emitted no path.  The only status output is the
+  preserved out-of-scope untracked inventory:
+
+  ```text
+  ?? .worktrees/
+  ?? graphify-out/
+  ?? projects/aristotle_dispatch_v26/result/4730142e-cc15-417a-bccf-ca30b25f2bcf-aristotle.tar.gz
+  ?? projects/prime-step-breakthrough/.cache/
+  ?? projects/prime-step-breakthrough/graphify-out/
+  ```
+
+  Because that inventory makes the literal working tree non-clean, the
+  owner's no-push gate was not satisfied and no push was attempted.
