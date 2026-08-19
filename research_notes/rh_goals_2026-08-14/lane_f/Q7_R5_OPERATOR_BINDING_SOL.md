@@ -484,3 +484,238 @@ The only downstream corollary asserted here is: **Link 4b is closed
 conditional on cold confirmation of this proof claim and the cited receipts.**
 
 **READY FOR COLD REFEREE**
+
+---
+
+## DATED REFEREE REPAIR — 2026-08-19
+
+`Q7_R5_OPERATOR_BINDING_REFEREE.md` returns **GAPS / NOT REFUTED** for
+commit `7cb4c49`.  That ruling is accepted.  The first submitted version
+asserted, but did not derive, the centered tail-column estimate used for
+trace-class holomorphy on \(\Omega^*\); it also omitted the exact determinant
+citations required by the accepted q=5 precedent.  Until this repair receives
+a second cold referee pass, Link 4b and every downstream q=7 Selberg-zeta,
+resonance, or LAW statement remain **CONJECTURAL / OPEN**.
+
+The numerical inputs used below are unchanged.  The exact banked-parameter
+rerun and the enlarged-disc receipt report:
+
+```text
+$ /Users/za/.venvs/farey-rh/bin/python f7_certify_tb_blocks.py \
+    --sweep-source f7_tb_disc_sweep.py --out-dir /tmp/q7-tb-rerun-exact-20260819 \
+    --precision-bits 384 --M 512 --K-start 12 --max-K 64
+rho_star = [0.763212029206899202166157 +/- 1.41e-25]
+worst_block = 5→3, +1, head
+verdict = PASS_RHO_LT_0.80
+
+$ jq '{radius_multipliers_exact_strings,rho_hat_upper_bound,
+       rho_hat_less_than_one,verdict}' \
+    f7_receipts/F7_E1_ENLARGED_CONTRACTION_V2_RECEIPT.json
+radius_multipliers_exact_strings = ["3.522","2.622","2.372","1.79","1.6"]
+rho_hat_upper_bound =
+  [0.9152411837446921486199057183790500874132201822167121491776750120826392648965487186604668777644585600 +/- 3.97e-101]
+rho_hat_less_than_one = true
+verdict = PASS_RHO_HAT_LT_1
+```
+
+Thus the conservative outward bounds remain
+\(\rho_*\le0.763213\) and
+\(\widehat\rho\le0.9152411837446922<1\), both rounded **UP**.  The earlier
+hostile run with `K_start=8` did not reproduce the banked parameters and is
+not used.
+
+### Repair R1–R9: the centered tail-column estimate
+
+Every tail occurrence in the 19-row table has input component 5.  Fix one
+such occurrence \(B=(i,5,n_0,\varepsilon)\), with
+\(\varepsilon\in\{+,-\}\), and put on its enlarged output disc
+
+\[
+ a=-\frac{c_5}{R_5},\qquad
+ b_{\ell,B}(z)=\frac{\theta_{\varepsilon\ell}(z)-c_5}{R_5}.
+\]
+
+Since \(\phi_5=0\), the definitions in §1 give \(c_5=-h_5\).  The exact
+fifth radius multiplier quoted above gives \(R_5=1.6h_5\), and hence
+\(|a|=1/1.6=5/8=0.625\).  In particular
+\(|a|<\widehat\rho\), while E1 gives
+\(|b_{\ell,B}(z)|\le\widehat\rho\).  For \(k\ge1\),
+
+\[
+ b_{\ell,B}(z)^k-a^k
+ =(b_{\ell,B}(z)-a)
+   \sum_{r=0}^{k-1}b_{\ell,B}(z)^{k-1-r}a^r.                 \tag{R1}
+\]
+
+Write \(p_{\ell,B}(z)=z+\ell\lambda_7\) on a positive branch and
+\(p_{\ell,B}(z)=\ell\lambda_7-z\) on a reflected-negative branch.  In
+both cases \(\theta_{\varepsilon\ell}(z)=-1/p_{\ell,B}(z)\), and the
+squared weight is \(p_{\ell,B}(z)^{-2s}\).  Let \(\Delta_B>0\) be the E1
+lower bound for \(\Re p_{n_0,B}\) on the enlarged disc and define
+
+\[
+ \mu_B=\min\{\lambda_7,\Delta_B/n_0\}>0.
+\]
+
+For \(\ell\ge n_0\),
+
+\[
+ \Re p_{\ell,B}(z)
+ \ge\Delta_B+(\ell-n_0)\lambda_7
+ \ge\mu_B\ell.                                               \tag{R2}
+\]
+
+Therefore
+
+\[
+ |b_{\ell,B}(z)-a|
+ =\frac{|\theta_{\varepsilon\ell}(z)|}{R_5}
+ \le\frac1{R_5\mu_B\ell},                                    \tag{R3}
+\]
+
+and (R1) gives
+
+\[
+ |b_{\ell,B}(z)^k-a^k|
+ \le\frac{k\widehat\rho^{k-1}}{R_5\mu_B\ell}.               \tag{R4}
+\]
+
+Now fix a compact \(K\Subset\Omega^*\), and set
+
+\[
+ \sigma_K=\inf_{s\in K}\Re s>0,
+ \qquad T_K=\sup_{s\in K}|\Im s|<\infty.
+\]
+
+The certified right-half-plane branch has
+\(|\arg p_{\ell,B}|<\pi/2\).  After absorbing the finitely many indices
+for which \(\mu_B\ell<1\), there is an explicit finite constant
+
+\[
+ W_{B,K}=\max\!\left\{
+ e^{\pi T_K}\mu_B^{-2\sigma_K},
+ \max_{n_0\le\ell<\lceil1/\mu_B\rceil+1}
+ \sup_{s\in K,\,z\in\overline{D_i^{e_i}}}
+ \ell^{2\sigma_K}|p_{\ell,B}(z)^{-2s}|
+ \right\}
+\]
+
+such that
+
+\[
+ |w_{\varepsilon\ell,s}(z)|
+ \le W_{B,K}\ell^{-2\sigma_K}.                              \tag{R5}
+\]
+
+Split the full tail column exactly into its center and centered remainder:
+
+\[
+\begin{aligned}
+ F_{B,k}(s,z)
+ &=\sum_{\ell\ge n_0}w_{\varepsilon\ell,s}(z)b_{\ell,B}(z)^k\\
+ &=a^kZ_{B,0}(s,z)
+   +\sum_{\ell\ge n_0}w_{\varepsilon\ell,s}(z)
+      \bigl(b_{\ell,B}(z)^k-a^k\bigr),                       \tag{R6}
+\end{aligned}
+\]
+
+where the center term is kept as the exact \(m=0\) Hurwitz closure
+
+\[
+ Z_{B,0}(s,z)
+  =(\lambda_7^2)^{-s}\zeta(2s,n_0\pm z/\lambda_7).
+\]
+
+The E1 pole/cut clearance keeps the Hurwitz parameter away from its singular
+set on the enlarged disc.  Since \(K\) also avoids the real pole lattice,
+\(Z_{B,0}\) is holomorphic on a neighborhood of
+\(K\times\overline{D_i^{e_i}}\), so
+
+\[
+ A_{B,K}=\sup_{s\in K,\,z\in\overline{D_i^{e_i}}}
+ |Z_{B,0}(s,z)|<\infty.                                      \tag{R7}
+\]
+
+Equations (R4)–(R5) make the centered remainder locally uniformly
+convergent throughout \(\Re s>0\), and give
+
+\[
+\begin{aligned}
+ \sup_z|F_{B,k}(s,z)|
+ &\le A_{B,K}\widehat\rho^k
+      +C_{B,K}k\widehat\rho^{k-1},\\
+ C_{B,K}
+ &=\frac{W_{B,K}}{R_5\mu_B}
+   \sum_{\ell\ge n_0}\ell^{-(2\sigma_K+1)}<\infty.          \tag{R8}
+\end{aligned}
+\]
+
+Identity (R6) first holds as an absolutely convergent branch sum on
+\(\Re s>1/2\); its right side is the same Hurwitz continuation on
+\(\Omega^*\).  Because the column is holomorphic on an enlarged output
+disc, its \(H^2(D_i)\) norm is bounded by the displayed sup norm.  Every
+finite head occurrence has a bound \(H_{B,K}\widehat\rho^k\).
+
+For the normalized Hardy bases define
+
+\[
+ b_k(s)=\sum_{j=1}^{5}\|L^H_{s,+}e_{j,k}\|_H.
+\]
+
+Summing the finitely many occurrence constants into \(A_K,C_K\) gives
+
+\[
+ b_k(s)\le A_K\widehat\rho^k+C_Kk\widehat\rho^{k-1},
+\]
+
+and hence
+
+\[
+ \sup_{s\in K}\sum_{k\ge0}b_k(s)
+ \le\frac{A_K}{1-\widehat\rho}
+     +\frac{C_K}{(1-\widehat\rho)^2}<\infty.                 \tag{R9}
+\]
+
+Consequently the rank-one expansion
+
+\[
+ L^H_{s,+}=\sum_{j=1}^{5}\sum_{k\ge0}
+ (L^H_{s,+}e_{j,k})\otimes e_{j,k}^*
+\]
+
+converges locally uniformly in trace norm.  Each column is holomorphic by
+(R6), so the Banach-valued Weierstrass theorem proves that
+\(s\mapsto L^H_{s,+}\) is trace-class holomorphic on \(\Omega^*\).
+
+### Repair of the spectral-determinant citations
+
+The Hilbert-space determinant step uses Barry Simon, *Notes on infinite
+determinants of Hilbert space operators*, Advances in Mathematics 24 (1977),
+Theorem 4.2, equation (4.2), p. 258: for a trace-class operator the Fredholm
+determinant is the canonical product over the eigenvalues with algebraic
+multiplicity.  Simon's Theorem 3.3 gives determinant analyticity for a
+trace-class-holomorphic family.  Lidskii's trace identity is not used.
+
+On the Banach side, MMS Theorem 4.10 gives nuclearity of order zero for the
+full operator.  MMS Lemma 5.1 makes the two \(P\)-eigenspaces complemented
+and invariant; bounded restriction and conjugacy to the reduced five-disc
+operator preserve nuclearity of order zero.  Thus the reduced
+\(L^{MMS}_{s,+}\) is \(p\)-nuclear for \(p=2/3\).  Alexandre Grothendieck,
+*Résumé des résultats essentiels dans la théorie des produits tensoriels
+topologiques et des espaces nucléaires*, Annales de l'Institut Fourier 4
+(1952), Théorème 8, pp. 108–109, identifies its Fredholm determinant with the
+genus-zero spectral product with algebraic multiplicity.  Both auxiliary
+products \(\det(1-tL)\) are normalized to 1 at \(t=0\), so the common
+nonzero spectrum proved in §5.1 leaves no exponential normalization factor.
+Setting \(t=1\) proves the determinant equality on \(\Omega_0\); Simon's
+Theorem 3.3, MMS Theorem 4.10, and the identity theorem extend it to
+\(\Omega^*\) exactly as in §5.2.
+
+### Repaired status
+
+This block supplies the only analytic derivation and citations requested by
+the first cold referee.  The resulting status is **REPAIRED PROOF CLAIM —
+AWAITING SECOND COLD REFEREE**.  No q=7 Selberg-zero, resonance, parity,
+scattering, automorphic, or LAW promotion is made here.
+
+**READY FOR SECOND COLD REFEREE**
