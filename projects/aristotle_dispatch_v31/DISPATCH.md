@@ -205,3 +205,37 @@ The exact paper encoder/decoder, including recovery of arbitrary mark indices,
 is **OPEN / CONJECTURAL pending source-table extraction**.  No forced theorem,
 opaque assumption, or analytic `(4.1)`, Ford, `(AM)`, RATE-A, or LAW claim is
 introduced by this correction.
+
+## 2026-08-19 — cold-referee confirmation and decoder-slice correction
+
+`V31_REFEREE.md` independently rebuilt this exact source against the v26
+cache (`EXIT_CODE=0`), re-proved the collision and decode negation without
+using the file's proof terms, and returned **REFUTATION CONFIRMED**.  The two
+locally valid, distinct sources `collisionLeft` and `collisionRight` encode to
+the identical payload
+
+```text
+tag=41492, cores=[none,none,none], auxiliaries=[0,0,0,0],
+heavyMagnitudes=[none,none].
+```
+
+The referee also found a second, independent decoder defect.  The packing is
+
+```text
+mode + 2 * (kindCode + 16 * (cutCode + 81 * (emptyCode + 8 * coupledCode))),
+```
+
+but `sourceDecode` takes base-3 cut digits immediately from `tag / 2` instead
+of first removing the 16-way `kindCode` slice.  For the witness, the current
+decoder reads action digits `[1,0,1,0]` where the packed cut code has digits
+`[0,0,0,0]`.  Correct slicing would begin with
+`kindCode = payload % 16` and `cutCode = (payload / 16) % 81`; even that would
+not recover arbitrary mark indices or reconstruct the source word.
+
+The strongest banked result is therefore the **referee-confirmed negation** of
+the three naive targets for this executable model.  The exact paper
+encoder/decoder, branch coverage, and any repaired conditional validity or
+round-trip theorem remain **OPEN / CONJECTURAL**.  No Aristotle submission was
+made because no load-bearing positive paper-source target survived the local
+falsification gate.  This confirmation changes no status for `(FW)`, `(AM)`,
+RATE-A, q7, any finite LAW case, or the LAW.

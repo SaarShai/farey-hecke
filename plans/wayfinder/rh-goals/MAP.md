@@ -499,3 +499,41 @@ directive 2026-08-15
   re-refereed.  Blast radius: q=5, RATE-A, and the qualitative
   Selberg–Hejhal large-q theorem are unchanged; the finite LAW base currently
   has no newly declared q=7..12 member from these artifacts.
+
+- **V31 NAIVE PAPER-SOURCE ENCODER TARGETS REFEREE-CONFIRMED FALSE —
+  2026-08-19** (`projects/aristotle_dispatch_v31/RateCoreVI.lean`,
+  `DISPATCH.md`, and cold `V31_REFEREE.md`): the exact v26-cache rebuild exited
+  `0`; the independent referee re-proved that two distinct, locally valid
+  sources with marks at indices `0` and `2` have the identical code payload
+  with tag `41492`.  Hence source injectivity and source round-trip are
+  **FALSE AS STATED** for this executable model.  Raw-source validity
+  preservation is also false via the encoded core `H_{+1}` at `q=3`.
+  Additionally, the decoder reads cut digits before removing the 16-way atom-
+  kind slice, so its cut/empty/coupled reconstruction is wrong even apart from
+  the missing mark indices.  Referee verdict: **REFUTATION CONFIRMED**.  The
+  corrected banked result is only this finite negation plus the harmless tag-
+  cardinality facts; the exact paper source-table encoder/decoder and coverage
+  remain **OPEN / CONJECTURAL**.  No Aristotle submission occurred because
+  the local falsification gate left no load-bearing positive target.  Blast
+  radius: no change to `(FW)`, `(AM)`, RATE-A, q7, any finite LAW case, or the
+  LAW.
+
+  Fresh root replay:
+
+  ```text
+  lean_exit=0
+  forbidden_exit=1
+  removed_positive_exit=1
+  362:theorem source_decode_mark_counterexample :
+  371:theorem source_encode_injective_false :
+  389:theorem source_encode_valid_false :
+  409:theorem paperTag_card :
+  413:theorem paperTag_card_lt :
+  witness_search_exit=0
+  diff_check_exit=0
+  ```
+
+  Cold-referee replay additionally printed
+  `product 82944`, `max_tag 82943`, `tag_range True`, the wrong current action
+  digits `[1,0,1,0]`, and the correctly sliced digits `[0,0,0,0]`; its scoped
+  `git diff --check` exited `0`.

@@ -441,9 +441,10 @@ untracked inventory keeps the literal tree non-clean.
 - [x] Ran q=7 adversarial round 2.  Numerical Hilbert-side gates replay, but
   the q=7 Hilbert-to-MMS Clause-1 operator binding is OPEN; verdict **GAPS / NOT
   REFUTED**, so no declaration.
-- [ ] Finish the v31 FALSE-AS-STATED Lean repair and cold-referee its explicit
-  counterexamples.  Do not submit Aristotle unless a non-false paper-source
-  target survives.
+- [x] Finish the v31 FALSE-AS-STATED Lean repair and cold-referee its explicit
+  counterexamples.  `V31_REFEREE.md` returned **REFUTATION CONFIRMED**; no
+  non-false load-bearing paper-source target survived, so Aristotle submission
+  was correctly withheld.
 - [ ] Prove the q=7/q-generic 19-block operator-binding/common-continuation
   theorem, bank MMS primary source text, and re-referee before any q=7 upgrade.
 - [ ] Rebuild q=8 from a theorem-valid evaluator/exact box/R2 tail/continuous
@@ -453,7 +454,8 @@ untracked inventory keeps the literal tree non-clean.
 |---|---|---|---|---|---|
 | q=8 refutation referee | endpoint/tail countermodels + q=9..12 blast radius | complete-with-concerns | `REFUTATION CONFIRMED`; local q=8 Kaggle log absent, embedded hashes/receipts checked | MAP + lane correction blocks | banked in `F8_R3B_REFUTATION_REFEREE.md` |
 | q=7 referee round 2 | cold full-chain review | complete-with-concerns | `GAPS / NOT REFUTED`; first gap Link 4b operator binding | MAP + assembly correction block | banked in `THEOREM_G7_OFFLINE_REFEREE2.md` |
-| v31 builder repair | prove false-target negations, remove impossible submission | running | initial dispatch rejected before Aristotle | pending | FALSE-AS-STATED repair in isolated worktree |
+| v31 builder + cold referee | prove false-target negations, remove impossible submission, independently replay | complete-with-concerns | `REFUTATION CONFIRMED`; valid equal-kind mark collision plus decoder-slice defect | MAP + dispatch correction block | exact paper encoder/decoder remains OPEN / CONJECTURAL; no Aristotle submission |
 
-Session handoff remains open until the v31 repair is harvested.  No q=8..12
-Kaggle job and no v31 Aristotle job is authorized from the current artifacts.
+Session handoff remains open for the q7 Clause-1 operator-binding proof/referee
+pair.  No q=8..12 Kaggle job and no v31 Aristotle job is authorized from the
+current artifacts.
