@@ -863,3 +863,29 @@ directive 2026-08-15
   the byte-authoritative values.  Blast radius: only this scalar symmetric
   shortcut is refuted.  The LAW, one-wall RATE-A, and Route B are not refuted;
   a full-matrix/eigenchannel repair remains **CONJECTURAL / OPEN**.
+
+- **ROUTE-B ENDPOINT EFFECTIVE TAIL — SCOPED CONFIRMED — 2026-08-19.**
+  Candidate `LAW_EFFECTIVE_TAIL_COVER_SOL.md` and independent cold report
+  `LAW_EFFECTIVE_TAIL_COVER_REFEREE.md` are banked.  The referee confirms,
+  conditional only on the explicitly inherited matched Route-B, `(AM)`, and
+  `(FW)` paper-level inputs, the endpoint `p=3` estimate and the sufficient
+  whole tail
+
+  ```text
+  q >= 31951437654668744792.
+  ```
+
+  The original 70-digit, 8192-cell cover was reproduced but is numerically
+  brittle.  The independent 120-digit refinement printed
+
+  ```text
+  Kraw_upper=124.672598420546087...
+  max_ratio_q_upper=0.987240474675788093...
+  PASS_all_cells_q=True
+  ```
+
+  This onset is sufficient, not least; the refined replay also passes at
+  `q-1`.  Blast radius: the artificial `1/(3-p)` endpoint loss is closed, but
+  the finite block below the displayed onset, enlarged-domain analytic gates,
+  seed isolation, machine formalization, and the full LAW remain
+  **OPEN / CONJECTURAL**.  No earlier result is refuted or silently upgraded.

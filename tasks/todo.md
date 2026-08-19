@@ -512,9 +512,12 @@ theorem-valid construction passes a cold referee.
   Neumann/Jacobi bounds but did not require zero exclusion.  Repair must reject
   `lower <=` the full determinant-tail allowance, preferably in the exact
   one-component Schur reduction, before a rerun or Kaggle dispatch.
-- [ ] Harvest and cold-judge the effective-tail/covering route: require either
+- [x] Harvest and cold-judge the effective-tail/covering route: require either
   an explicit manageable all-gates onset or a theorem that covers the finite
   block without per-q enumeration; constant-only sensitivity is not closure.
+  The endpoint theorem is cold-CONFIRMED at the sufficient onset
+  `31951437654668744792`, but that leaves a non-certifiable finite block and
+  therefore does not close the LAW.
 - [ ] Launch Kaggle only after a theorem-valid local evaluator/checker exists;
   launch Aristotle only after a non-false load-bearing statement passes local
   syntax/falsification gates.  Harvest and independently verify every launch.
@@ -527,7 +530,7 @@ theorem-valid construction passes a cold referee.
 | lane | isolated branch/worktree | status | required output |
 |---|---|---|---|
 | q8 q-generic chain | `codex/law-q8-generic-20260819` / `.worktrees/law-q8-generic-20260819` | running | `lane_f/Q8_GENERIC_CERTIFICATION_SOL.md` + exact receipts |
-| effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | conditional endpoint candidate at `1059d6a`; cold referee running | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + exact receipts |
+| effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | **scoped CONFIRMED** endpoint theorem; sufficient `q>=31951437654668744792`; finite block OPEN | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + `LAW_EFFECTIVE_TAIL_COVER_REFEREE.md` |
 | scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | **GAPS / NOT REFUTED; cold-refereed** | `lane_g/SCAT_EVAL_Q_SOL.md` + `SCAT_EVAL_Q_REFEREE.md` |
 | symmetric effective tail | `codex/law-symmetric-tail-20260819` / `.worktrees/law-symmetric-tail-20260819` | **REFUTATION CONFIRMED** at scalar two-wall scope | scalar two-wall FE pincer is false; two-channel replacement remains **CONJECTURAL** |
 
@@ -618,3 +621,14 @@ CONFIRMED; abstract Banach wording GAPS / NOT REFUTED; downstream LAW OPEN.
   exponents `e-89` and `e-147` in the candidate transcript.
 - [x] Record the narrow blast radius: scalar symmetric transport refuted; LAW
   unchanged; matrix/eigenchannel repair **CONJECTURAL / OPEN**.
+
+### Route-B endpoint referee review — 2026-08-19
+
+- [x] Bank the endpoint candidate and its independent cold referee.
+- [x] Replace reliance on the brittle 70-digit cover by the referee's robust
+  120-digit, 32768-cell/16384-edge Arb replay.
+- [x] Preserve the exact scope: conditional paper-level endpoint estimate and
+  sufficient tail onset only; no least-onset claim.
+- [ ] Cover the finite block below `31951437654668744792` or replace it by a
+  genuinely effective all-`q` theorem.  Until then the full LAW remains
+  **OPEN / CONJECTURAL** on Route B.
