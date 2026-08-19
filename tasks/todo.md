@@ -522,8 +522,19 @@ theorem-valid construction passes a cold referee.
 | lane | isolated branch/worktree | status | required output |
 |---|---|---|---|
 | q8 q-generic chain | `codex/law-q8-generic-20260819` / `.worktrees/law-q8-generic-20260819` | running | `lane_f/Q8_GENERIC_CERTIFICATION_SOL.md` + exact receipts |
-| effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | running | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + exact receipts |
+| effective tail/cover | `codex/law-effective-tail-20260819` / `.worktrees/law-effective-tail-20260819` | conditional endpoint candidate at `1059d6a`; cold referee running | `lane_g/LAW_EFFECTIVE_TAIL_COVER_SOL.md` + exact receipts |
 | scalar evaluator | `codex/law-scat-eval-20260819` / `.worktrees/law-scat-eval-20260819` | **GAPS / NOT REFUTED; cold-refereed** | `lane_g/SCAT_EVAL_Q_SOL.md` + `SCAT_EVAL_Q_REFEREE.md` |
+| symmetric effective tail | `codex/law-symmetric-tail-20260819` / `.worktrees/law-symmetric-tail-20260819` | running | prove/refute two-small-vertical-side functional-equation pincer |
+
+- [x] Test the generalized-Dirichlet right-half-plane-zero bypass against
+  Saias--Weingartner, Booker--Thorne, and Ramachandra.  None applies to the
+  generalized algebraic Hecke-modulus spectrum; positive spacing already
+  fails for explicit q=5 word families.  The bypass remains abstractly open,
+  with the exact missing theorem recorded as a Hecke-scattering
+  right-half-plane zero lemma.
+- [x] Recover and terminate the orphaned 100%-CPU Python process after its
+  immutable rollout receipt identified it as the completed Route-B geometry
+  scan (not a q8 certification run); no output artifact was lost.
 
 Verification gate:
 

@@ -678,3 +678,41 @@ directive 2026-08-15
   source commit: 6c30401
   referee commit: 82504c6
   ```
+
+- **LAW DUAL-ROUTE INTERIM — ENDPOINT CANDIDATE LANDED; GENERALIZED
+  DIRICHLET BYPASS DELIMITED — 2026-08-19.**  Isolated commit `1059d6a`
+  derives the direct endpoint candidate
+  \[
+  E_3(q)\le 12q^{-2}\{\pi^2(S_R+1)(2^{62}+1)
+  (\log q+5+65/q)+128(1+\log2)\}
+  \]
+  and its Arb cover reports the strict conditional integer
+  `q=31951437654668744792`, `PASS_all_cells_q=True`, and
+  `MONOTONE_FOR_q_ge_12=True`.  This is **CONDITIONAL / AWAITING COLD
+  REFEREE**, not a LAW promotion and not a genuinely certifiable finite
+  onset.  A fresh referee is running from immutable commit `1059d6a`.
+
+  The independent generalized-Dirichlet scout found no applicable theorem:
+  Hejhal's exact series has algebraic generalized exponents `log(c')`, not an
+  ordinary integer Dirichlet-series or automorphic-L-function polynomial;
+  explicit q=5 word families also make the positive-spacing hypothesis fail.
+  The route is **OPEN AS AN ABSTRACT POSSIBILITY**, with its exact missing
+  input a right-half-plane zero theorem for the Hecke scattering series.  No
+  zero or negation was banked.  A separate symmetric functional-equation
+  transport construction is now testing whether both vertical sides can be
+  made `O(E_3(q))`; every result from that lane remains **CONJECTURAL** until
+  its own cold referee.
+
+  Receipts:
+
+  ```text
+  C4=4611686018427387905
+  Kraw_upper=124.739294413380953176068772792381086355862186939799...
+  q=31951437654668744792
+  PASS_all_cells_q=True
+  MONOTONE_FOR_q_ge_12=True
+  generalized-series q=5 spacing witness:
+    s=46371 r=75029 abs(A-B)=4.0856306441128254e-05
+  orphan process recovery: rollout command identified; kill -TERM 30348;
+    subsequent ps header contained no process row
+  ```
