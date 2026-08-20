@@ -1050,3 +1050,44 @@ directive 2026-08-15
   formalization.  All session-owned artifacts are committed locally.  No push
   was made because the literal tree still contains the preserved untracked
   `.worktrees/`, graph outputs, cache directories, and Aristotle archive.
+
+- **CODEX THREAD 01a01976 HARVEST JUDGED; POST-LAW GOAL SET ARMED — 2026-08-20.**
+  The orchestrating codex session ("Coordinate RATE effectivization",
+  thread 01a01976-e360-7ec0-968a-730f807ac2df) was replayed against the
+  repository: its closeout message names final commit `f4722a5`, which is
+  the current HEAD, already judged, banked, and pushed from this session
+  (branch even with origin, `git status -sb` shows no ahead marker).
+  Nothing in the thread transcript post-dates the last commit; the session
+  self-reported `status=complete`, 3,348,116 tokens, 3h39m.  Verdict:
+  fully harvested, no salvage needed.
+
+  Standing status (unchanged, per the session's own scope boundary): the
+  qualitative LAW is CONFIRMED unconditional at paper level; open work is
+  strictly stronger effectivity/localization or machine formalization.
+
+  New goal set (owners assigned this turn):
+  - G1 (Aristotle v30 prep, opus lane): draft the (FW) renewal-count and
+    (AM) marked-coding decoder Lean formalizations per the v29 DISPATCH
+    pattern; syntax pre-check against the v26 cache; submit to Aristotle
+    after judging.
+  - G2 (R5 activation arithmetic, luna lane): mechanical end-to-end
+    replay of the activation arithmetic with the banked explicit
+    constants (C_R, alpha = 6/5, q_RATE = 12, K_+ < 117, K_F < 109,
+    d* > 0.6603), unrounded bases, strict thresholds rounded UP; draft
+    input for R5_ACTIVATION_CLOSURE_SOL.md.  Arithmetic only, no proof
+    claims.
+  - G3 (C_R reduction autopsy, luna lane): locate the lossy-by-convenience
+    steps in BOUNDARY_ALPHA's constant chain (the K_F autopsy method);
+    quantified loss table, no proof claims; draft CR_REDUCTION_SOL.md.
+  - G4 (whole-tail monotonicity gate, opus lane): prove or refute the
+    monotonicity gate named in DH2_RENEWAL_PROOF_SOL §9 /
+    HOLOMORPHY_GATE_SOL §6; deliverable R5_MONOTONICITY_GATE_SOL.md;
+    adversarial referee before any status upgrade.
+  - G5 (q8 omitted-output projection tail, opus lane): attack the exact
+    remaining q=8 gate (certified omitted-output row/projection
+    coefficient tail in the same bound Hardy/Hilbert norm as the input
+    column tail); deliverable Q8_OUTPUT_TAIL_SOL.md; CONJECTURAL until
+    refereed.
+  All lanes: receipts before claims, margins DOWN / upper bounds UP,
+  append-only corrections, no pushes from lanes; this session judges and
+  banks.
