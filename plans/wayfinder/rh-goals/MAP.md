@@ -1493,3 +1493,29 @@ directive 2026-08-15
   q7/default-q8 receipts and must never be cited as gate evidence;
   one lane_f re-emission left explicitly OPEN (needs tracked-code
   edits, authority-gated).
+
+- **CLOSURE REFEREE: CONFIRMED AT SCOPE; FLIP DECISION = NO FLIP;
+  DEFINITIVE 12-ITEM LEDGER ADOPTED — 2026-08-20.**
+  BINDING_RESIDUAL_CLOSURE_REFEREE.md (installed verbatim): R-B8-2's
+  reframing SOUND after a full independent MMS §4-5.1 + trace-formula
+  read (no silently-consumed third condition survives; the four
+  actually-consumed properties each satisfied/certified, incl. the
+  branch convention via pole clearance); every quantitative claim
+  reproduced (zero-repo-code mpmath re-derivation; tail sweep to
+  n = 10^6; boundary sampling at 3 densities converging onto the
+  certified margin; from-geometry regrade of all 86 terms; live tamper
+  test — hash guard fires both legs).  Nine defects
+  (wording/hygiene/scope, none refuting) applied append-only to the
+  SOL note (49 insertions, 0 deletions).  AUTHORITY DECISION
+  (orchestrator): full_tail_certified is NOT flipped.  The referee's
+  12-item still-standing list is the authoritative q8 ledger; operative
+  blockers: (1) wire the certified omitted-output tail into the
+  checker, (2) repair recorded_tail_checks, (3) compute the four-edge
+  winding integral, (4) resolve the N = 104 vs N >= 262 pin, (5) the
+  continuous-contour gate, (6) K_s/word-lattice/continuation/Selberg
+  factorization.  Condition 8 (contour outside Re s > 1/2 — B7/B8 must
+  route through continuation) is LIVE and must be discharged by any
+  assembly.  Next: lane_f integration lane (authority-approved tracked
+  edits: output-tail wiring, TB re-emission at 0.70 with truthful field
+  names, N-pin per re-pin evidence), followed by the honest checker
+  run and a fresh cold referee.

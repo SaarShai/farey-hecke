@@ -528,3 +528,52 @@ reconfirmed in §3.4.
 ---
 
 **READY FOR JUDGING**
+
+---
+
+## Dated correction block (2026-08-20, closure referee DEF-1..DEF-9, append-only)
+
+Applied per BINDING_RESIDUAL_CLOSURE_REFEREE.md (verdict CONFIRMED at
+stated scope; nine defects, none refuting a claim):
+
+- **DEF-1 (material wording)**: the headline sentence "MMS §4-5 consume
+  only its two defining conditions" is WITHDRAWN and replaced by the
+  enumerated consumed-properties list: (a) open real-centred discs with
+  holomorphy on D_i + continuity on the boundary; (b) D_{-i} = -D_i;
+  (c) relatively compact containment (needed by Thm 4.10 nuclearity AND
+  the trace fixed points); (d) the power convention
+  (n+z)^{2s} := ((n+z)^2)^s, requiring (z+n*lambda)^2 off (-inf,0] on
+  D_i.  All four are satisfied: (a)-(c) as certified in this note; (d)
+  is implied by the certified pole clearance >= 0.746 (referee-derived)
+  and matched by q8_weight_support.theta_prime's squared convention.
+- **DEF-2**: "No existing file was modified" was true pre-commit; the
+  banking commit ccba1e2 also appended +33/-0 to MAP.md per the
+  standing wayfinder rule.
+- **DEF-3**: "min pole clearance over all 50 checks" — over the 47 map
+  checks; the 3 C0 point-in-disc checks carry no pole.
+- **DEF-4**: "certify_block raises when no K passes" holds for tail
+  blocks only; non-tail blocks return pass: False without raising and
+  certification_verdict never consumes block pass — the split's other
+  failure mode is a self-contradictory receipt, not a hard FAIL
+  (conservativeness direction unaffected).
+- **DEF-5**: the two *_has_no_pin_field entries in the containment
+  receipt are hardcoded literals, not computed audits (referee verified
+  both true by hand); flagged as the lane's own defect class.
+- **DEF-6**: arc_endpoints_recertified has a latent fail-open path
+  (non-dict segments -> vacuous pass); currently genuine (4 segments,
+  8 endpoints verified).
+- **DEF-7 (scope)**: R-B8-3 closes only the geometric-containment half
+  of the residual as the prior referee worded it; the continuous-
+  contour gate remains the open half and is item 5 of the
+  still-standing list.
+- **DEF-8**: q7's max_N has no q8 counterpart (q8 substitutes
+  M_enlarged_contour_arcs/K_start/K_max) — omitted from §3.1's gap
+  list.
+- **DEF-9**: §4.3's F7 triple mixes head and deep-tail terms; F8's
+  "~0.907" is the deep-tail maximum (heads top out at 0.8032).
+
+The referee's 12-item still-standing list (its §3) is adopted verbatim
+as the authoritative q8 flip ledger; items 1-6 are the operative
+blockers; items 8 (continuation routing on the off-half-plane contour)
+and 9 (correction-block supersession of the prior D1 lines) are
+required reading before ANY citation of this chain.
