@@ -340,13 +340,18 @@ def main() -> int:
             "W": str(args.w.resolve()), "W_sha256": sha256(args.w),
             "R2": str(args.r2.resolve()), "R2_sha256": sha256(args.r2),
         },
-        "runtime_seconds": time.perf_counter() - started,
+        # Adjudication residual R4: no wall-clock field may live in the hashed
+        # payload, or the receipt sha256 changes on every run and cannot be
+        # pinned.  Runtime is reported on stdout only.
+        "hashed_payload_excludes_wall_clock": True,
     }
+    runtime_seconds = time.perf_counter() - started
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"receipt": str(args.out.resolve()),
                       "theta": theta_strings,
-                      "runtime_seconds": receipt["runtime_seconds"]}, indent=2))
+                      "sha256": sha256(args.out),
+                      "runtime_seconds_not_in_payload": runtime_seconds}, indent=2))
     return 0
 
 

@@ -1,0 +1,316 @@
+{
+  "schema": "q8-lout-adverse/v1",
+  "lout_receipt": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/l_out/Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json",
+  "engine": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_f/q8_r3b_engine.py",
+  "engine_unmodified": true,
+  "s_pin": {
+    "re": "0.4252310423737965",
+    "im": "4.345760788321986"
+  },
+  "row_truncation": 120,
+  "row_truncation_note": "rows m in [N, 120) only; the true tail sum is larger, so this is a necessary condition, not a proof of the bound",
+  "checks_passed": 30,
+  "checks_total": 30,
+  "rows": [
+    {
+      "N": 6,
+      "block": "A2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[26.814118332992257538 +/- 1.17e-20]",
+      "rhs_truncated_brute_tail": "[4.1012154285304468493 +/- 3.40e-21]",
+      "ratio_lhs_over_rhs": "[6.53809067099 +/- 7.11e-13]",
+      "holds": true
+    },
+    {
+      "N": 6,
+      "block": "A3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[15.859123709017519821 +/- 1.18e-19]",
+      "rhs_truncated_brute_tail": "[2.4134113292089702190 +/- 3.07e-20]",
+      "ratio_lhs_over_rhs": "[6.57124772602 +/- 8.99e-13]",
+      "holds": true
+    },
+    {
+      "N": 6,
+      "block": "B1",
+      "output_disc": 1,
+      "theta": "1.230",
+      "lhs_certified_bound": "[7.4026790221045236525 +/- 3.26e-20]",
+      "rhs_truncated_brute_tail": "[0.53116841035667650121 +/- 1.46e-21]",
+      "ratio_lhs_over_rhs": "[13.9365950191 +/- 4.60e-11]",
+      "holds": true
+    },
+    {
+      "N": 6,
+      "block": "B2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[1.6404849905604704305 +/- 3.32e-20]",
+      "rhs_truncated_brute_tail": "[0.018959273505967873414 +/- 4.97e-22]",
+      "ratio_lhs_over_rhs": "[86.5267854300 +/- 4.78e-11]",
+      "holds": true
+    },
+    {
+      "N": 6,
+      "block": "B3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[4.5702222056178062970 +/- 1.54e-20]",
+      "rhs_truncated_brute_tail": "[0.23392026688453152824 +/- 9.47e-22]",
+      "ratio_lhs_over_rhs": "[19.5375213379 +/- 2.57e-11]",
+      "holds": true
+    },
+    {
+      "N": 8,
+      "block": "A2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[17.847258026525281829 +/- 2.01e-19]",
+      "rhs_truncated_brute_tail": "[1.6901788200380314245 +/- 3.26e-20]",
+      "ratio_lhs_over_rhs": "[10.5593904118 +/- 6.96e-12]",
+      "holds": true
+    },
+    {
+      "N": 8,
+      "block": "A3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[10.798605852381477311 +/- 4.53e-19]",
+      "rhs_truncated_brute_tail": "[1.0791937360853202035 +/- 4.89e-20]",
+      "ratio_lhs_over_rhs": "[10.0061791422 +/- 2.63e-11]",
+      "holds": true
+    },
+    {
+      "N": 8,
+      "block": "B1",
+      "output_disc": 1,
+      "theta": "1.230",
+      "lhs_certified_bound": "[5.7380945573522025373 +/- 5.01e-21]",
+      "rhs_truncated_brute_tail": "[0.11368642122802525759 +/- 1.10e-21]",
+      "ratio_lhs_over_rhs": "[50.4729984054 +/- 4.89e-11]",
+      "holds": true
+    },
+    {
+      "N": 8,
+      "block": "B2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[1.1281273699042115748 +/- 3.15e-20]",
+      "rhs_truncated_brute_tail": "[0.0016191333332766160141 +/- 4.09e-23]",
+      "ratio_lhs_over_rhs": "[696.747665383 +/- 4.07e-11]",
+      "holds": true
+    },
+    {
+      "N": 8,
+      "block": "B3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[4.4518127356973916163 +/- 1.67e-20]",
+      "rhs_truncated_brute_tail": "[0.048535434627647717645 +/- 3.57e-22]",
+      "ratio_lhs_over_rhs": "[91.7229395358 +/- 3.89e-11]",
+      "holds": true
+    },
+    {
+      "N": 10,
+      "block": "A2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[11.829885371860787263 +/- 2.93e-20]",
+      "rhs_truncated_brute_tail": "[0.65187694029489493050 +/- 3.64e-21]",
+      "ratio_lhs_over_rhs": "[18.1474211475 +/- 2.21e-11]",
+      "holds": true
+    },
+    {
+      "N": 10,
+      "block": "A3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[7.2693548872619885354 +/- 3.36e-20]",
+      "rhs_truncated_brute_tail": "[0.48945274423339872636 +/- 4.61e-21]",
+      "ratio_lhs_over_rhs": "[14.8520055775 +/- 3.10e-11]",
+      "holds": true
+    },
+    {
+      "N": 10,
+      "block": "B1",
+      "output_disc": 1,
+      "theta": "1.230",
+      "lhs_certified_bound": "[5.6274290940466344823 +/- 4.29e-20]",
+      "rhs_truncated_brute_tail": "[0.020389705206593126154 +/- 3.28e-22]",
+      "ratio_lhs_over_rhs": "[275.993646648 +/- 6.31e-11]",
+      "holds": true
+    },
+    {
+      "N": 10,
+      "block": "B2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[0.84392875544303453497 +/- 4.96e-21]",
+      "rhs_truncated_brute_tail": "[0.00012073373847830777236 +/- 3.92e-24]",
+      "ratio_lhs_over_rhs": "[6989.99936621 +/- 4.15e-9]",
+      "holds": true
+    },
+    {
+      "N": 10,
+      "block": "B3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[6.7493225863154242688 +/- 4.22e-20]",
+      "rhs_truncated_brute_tail": "[0.010217348701912320245 +/- 4.03e-22]",
+      "ratio_lhs_over_rhs": "[660.574752142 +/- 1.29e-10]",
+      "holds": true
+    },
+    {
+      "N": 12,
+      "block": "A2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[7.8319881421939815952 +/- 3.89e-20]",
+      "rhs_truncated_brute_tail": "[0.25874041943697566523 +/- 2.05e-21]",
+      "ratio_lhs_over_rhs": "[30.2696739815 +/- 6.29e-13]",
+      "holds": true
+    },
+    {
+      "N": 12,
+      "block": "A3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[4.8760386544080583993 +/- 2.32e-20]",
+      "rhs_truncated_brute_tail": "[0.23590265805932775328 +/- 3.29e-21]",
+      "ratio_lhs_over_rhs": "[20.6697062870 +/- 3.57e-12]",
+      "holds": true
+    },
+    {
+      "N": 12,
+      "block": "B1",
+      "output_disc": 1,
+      "theta": "1.230",
+      "lhs_certified_bound": "[7.0587742832169870634 +/- 2.82e-20]",
+      "rhs_truncated_brute_tail": "[0.0034417228242436403248 +/- 2.78e-23]",
+      "ratio_lhs_over_rhs": "[2050.94211349 +/- 4.64e-9]",
+      "holds": true
+    },
+    {
+      "N": 12,
+      "block": "B2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[0.75888747849551441179 +/- 3.37e-21]",
+      "rhs_truncated_brute_tail": "[8.9146611719148739884e-6 +/- 3.23e-26]",
+      "ratio_lhs_over_rhs": "[85128.0226877 +/- 4.64e-8]",
+      "holds": true
+    },
+    {
+      "N": 12,
+      "block": "B3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[12.519225696566522805 +/- 3.67e-19]",
+      "rhs_truncated_brute_tail": "[0.0024776354218463224781 +/- 1.40e-23]",
+      "ratio_lhs_over_rhs": "[5052.89260324 +/- 2.50e-9]",
+      "holds": true
+    },
+    {
+      "N": 14,
+      "block": "A2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[5.1813415715853121552 +/- 4.28e-20]",
+      "rhs_truncated_brute_tail": "[0.10945012183718048909 +/- 1.98e-21]",
+      "ratio_lhs_over_rhs": "[47.3397515198 +/- 1.24e-11]",
+      "holds": true
+    },
+    {
+      "N": 14,
+      "block": "A3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[3.2581611228910070863 +/- 2.03e-21]",
+      "rhs_truncated_brute_tail": "[0.12037620635947702634 +/- 3.93e-21]",
+      "ratio_lhs_over_rhs": "[27.0664878170 +/- 4.61e-11]",
+      "holds": true
+    },
+    {
+      "N": 14,
+      "block": "B1",
+      "output_disc": 1,
+      "theta": "1.230",
+      "lhs_certified_bound": "[10.019958145870939103 +/- 3.34e-19]",
+      "rhs_truncated_brute_tail": "[0.00059629038837554579180 +/- 3.27e-24]",
+      "ratio_lhs_over_rhs": "[16803.8230050 +/- 4.29e-8]",
+      "holds": true
+    },
+    {
+      "N": 14,
+      "block": "B2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[0.84631002892722043616 +/- 2.06e-21]",
+      "rhs_truncated_brute_tail": "[7.0911287619604204311e-7 +/- 6.01e-28]",
+      "ratio_lhs_over_rhs": "[1193477.17033 +/- 2.83e-7]",
+      "holds": true
+    },
+    {
+      "N": 14,
+      "block": "B3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[24.460384561776804017 +/- 2.43e-19]",
+      "rhs_truncated_brute_tail": "[0.00068666093772496445454 +/- 3.51e-24]",
+      "ratio_lhs_over_rhs": "[35622.2164651 +/- 1.40e-8]",
+      "holds": true
+    },
+    {
+      "N": 16,
+      "block": "A2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[3.4264644546124818989 +/- 6.87e-21]",
+      "rhs_truncated_brute_tail": "[0.049224463869907789457 +/- 3.12e-22]",
+      "ratio_lhs_over_rhs": "[69.6089745877 +/- 2.21e-11]",
+      "holds": true
+    },
+    {
+      "N": 16,
+      "block": "A3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[2.1763208748609952840 +/- 9.06e-21]",
+      "rhs_truncated_brute_tail": "[0.064191012962817114852 +/- 4.37e-22]",
+      "ratio_lhs_over_rhs": "[33.9038250747 +/- 2.88e-11]",
+      "holds": true
+    },
+    {
+      "N": 16,
+      "block": "B1",
+      "output_disc": 1,
+      "theta": "1.230",
+      "lhs_certified_bound": "[14.917043267151563701 +/- 1.17e-19]",
+      "rhs_truncated_brute_tail": "[0.00011194418672563498430 +/- 8.45e-25]",
+      "ratio_lhs_over_rhs": "[133254.291299 +/- 1.42e-7]",
+      "holds": true
+    },
+    {
+      "N": 16,
+      "block": "B2",
+      "output_disc": 2,
+      "theta": "1.230",
+      "lhs_certified_bound": "[1.0724471546616507020 +/- 3.62e-20]",
+      "rhs_truncated_brute_tail": "[6.2390508747186079393e-8 +/- 1.17e-28]",
+      "ratio_lhs_over_rhs": "[17189267.6658 +/- 1.34e-5]",
+      "holds": true
+    },
+    {
+      "N": 16,
+      "block": "B3",
+      "output_disc": 3,
+      "theta": "1.230",
+      "lhs_certified_bound": "[48.719354956012291877 +/- 4.74e-19]",
+      "rhs_truncated_brute_tail": "[0.00020712712177931239670 +/- 4.78e-24]",
+      "ratio_lhs_over_rhs": "[235214.753807 +/- 2.96e-7]",
+      "holds": true
+    }
+  ]
+}

@@ -1361,3 +1361,21 @@ directive 2026-08-15
   Latent flag: Xop's bare b3 term is HS-only — unsound if ever reused
   as a trace bound.  Cold referee launched (attack focus: whether the
   code's object is resolvent-shaped rather than a plain product).
+
+- **Q8 L-OUT RE-PINNED AT N = 262: CONDITION 7 HOLDS, GATE NOT YET
+  FLIPPED — 2026-08-20.**  L_OUT_REPIN_SOL.md + 4 JSONs +
+  q8_lout_witness.py (lane_g/l_out/): theta = 1.230 uniform, N = 262
+  (+24 above the 238 minimum), receipt hash-reproducible after the R4
+  fix (two runs byte-identical, sha256 15f1603a...).  Corrected
+  conditions: 4a' PASS (136 comparisons, min ratio 1.0323), 4b' PASS
+  (8/8, min 1.3798), conditions 1-6 all true, originals kept and still
+  honestly reported FAIL.  Condition 7: full_tau(262) upper endpoint
+  5.995113802537387050573e-18 — 167x below the 1e-15 target, tested
+  conservatively (upper < lower); N = 237/238 crossing reproduced
+  exactly; mpmath cross-check 1e-12 relative; adverse regression 30/30
+  at 120 rows (margins 6.538x to 1.719e7x); negative control at
+  theta_max still fails (gate not vacuous).  Declared weak point:
+  rho_theta(A3) = 0.99092, margin 0.0091; envelope preconditions
+  sampled, not proved (R3 inherited).  FLIP STILL REQUIRES: referee
+  pass on this receipt + the Schur-substitution referee (running) +
+  the separately-OPEN Hardy/Hilbert binding + lane_f re-pin authority.

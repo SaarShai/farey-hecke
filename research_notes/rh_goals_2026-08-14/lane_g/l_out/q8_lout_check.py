@@ -23,6 +23,8 @@ sys.path.insert(0, str(LANE_F))
 
 import q8_schur_contour as sc  # noqa: E402
 
+import q8_lout_witness as witness  # noqa: E402
+
 TAIL_NAME_TO_BLOCKS = sc.TAIL_NAME_TO_BLOCKS
 SINGLE_NAME_TO_BLOCK = sc.SINGLE_NAME_TO_BLOCK
 DEFAULT_R2 = LANE_F / "f8_receipts" / "Q8_R2_F1024_LOCAL_RECEIPT.json"
@@ -109,6 +111,14 @@ def main() -> int:
     parser.add_argument("--w", type=Path, default=DEFAULT_W)
     parser.add_argument("--N-targets", type=int, nargs="+", default=[104, 181, 200, 214])
     parser.add_argument("--n-sweep", type=int, default=400)
+    parser.add_argument("--witness-points", type=int, default=witness.DEFAULT_WITNESS_POINTS,
+                        help="boundary points for corrected condition 4a' (spec floor: 256)")
+    parser.add_argument("--precondition-points", type=int,
+                        default=witness.DEFAULT_PRECONDITION_POINTS)
+    parser.add_argument("--precondition-nmax", type=int,
+                        default=witness.DEFAULT_PRECONDITION_NMAX)
+    parser.add_argument("--skip-primed", action="store_true",
+                        help="skip the corrected 4a'/4b' evaluation (originals still run)")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     ctx.prec = 384
@@ -274,6 +284,111 @@ def main() -> int:
         "rows": mono_rows,
     }
 
+    # --- Corrected condition 4a' / 4b' -------------------------------------
+    # ADDED, NOT SUBSTITUTED: the original 4a/4b above are untouched and still
+    # reported.  Text transcribed from L_OUT_CONDITION4_ADJUDICATION.md,
+    # section "The corrected condition 4, and its evaluation".
+    if args.skip_primed:
+        report["condition_4a_prime_witness"] = {"pass": None, "reason": "--skip-primed"}
+        report["condition_4b_prime_max_modulus"] = {"pass": None, "reason": "--skip-primed"}
+        c4a_prime = c4b_prime = c4_prime = None
+    else:
+        prime_rows = []
+        for block, row in rows.items():
+            i, j, n0, neg, tail = block
+            W, worst_points = witness.witness_columns(
+                block, centers, radii, radii_theta[i - 1], lam, len(
+                    row["selected_column_bounds_theta"]) - 1, args.witness_points)
+            selected = [arb(v).upper() for v in row["selected_column_bounds_theta"]]
+            ge_witness = [bool(selected[k].upper() >= W[k].lower()) for k in range(len(W))]
+            ratios = [(selected[k] / W[k]).lower() for k in range(len(W)) if W[k].lower() > arb(0)]
+            head = (arb(row["A_theta_upper_bound"]).upper() if tail
+                    else arb(row["weight_theta_sup_upper_bound"]).upper())
+            rho = arb(row["rho_theta_upper_bound"]).upper()
+            q_rec = arb(row["q_upper_bound"]).upper()
+            c_sum, u_sup = witness.envelope_preconditions(
+                block, centers, radii, radii_theta[i - 1], lam,
+                args.precondition_points, args.precondition_nmax)
+            pre_A = bool(head.upper() >= W[0].lower())
+            pre_C = (bool(arb(row["C_theta_upper_bound"]).upper() >= c_sum.lower())
+                     if tail else None)
+            pre_rho = bool(rho.upper() >= u_sup.lower())
+            # rho >= q is required only where the envelope carries a q^k head,
+            # i.e. on the tail families; the single-branch form has no q term.
+            pre_rho_ge_q = bool(rho.upper() >= q_rec.upper()) if tail else None
+            prime_rows.append({
+                "block": list(block), "label": row["label"], "kind": row["kind"],
+                "witness_points": args.witness_points,
+                "witness_W_k": [text(v, 18) for v in W],
+                "witness_worst_point_index": worst_points,
+                "selected_ge_witness_all_k": all(ge_witness),
+                "violations_k": [k for k, ok in enumerate(ge_witness) if not ok],
+                "min_ratio_selected_over_witness": text(min(ratios), 12),
+                "max_ratio_direct_over_witness": text(
+                    max((arb(v).upper() / W[k]).upper()
+                        for k, v in enumerate(row["direct_column_sups_theta"])
+                        if W[k].lower() > arb(0)), 12),
+                "precondition_A_ge_W0": pre_A,
+                "precondition_C_ge_sampled_sum": pre_C,
+                "precondition_sampled_C_sum_lower": text(c_sum, 18) if tail else None,
+                "precondition_rho_ge_sampled_sup_u": pre_rho,
+                "precondition_sampled_sup_u_lower": text(u_sup, 18),
+                "precondition_rho_ge_q": pre_rho_ge_q,
+                "precondition_note": ("the C and sup|u| figures are maxima over SAMPLED boundary "
+                                      "points with the branch sum truncated at n_max, hence LOWER "
+                                      "estimates of the true sups; the precondition checks against "
+                                      "them are NECESSARY, not proofs of the preconditions"),
+            })
+        c4a_prime = all(
+            r["selected_ge_witness_all_k"] and r["precondition_A_ge_W0"]
+            and r["precondition_rho_ge_sampled_sup_u"]
+            and (r["precondition_C_ge_sampled_sum"] is not False)
+            and (r["precondition_rho_ge_q"] is not False)
+            for r in prime_rows)
+        report["condition_4a_prime_witness"] = {
+            "pass": c4a_prime,
+            "statement": ("selected_column_bounds_theta[k] >= W_k, W_k a point-evaluated rigorous "
+                          "lower-bound witness of the true boundary sup at >= 256 boundary points, "
+                          "plus the three recorded envelope preconditions"),
+            "source": "L_OUT_CONDITION4_ADJUDICATION.md, Corrected 4a",
+            "rows": prime_rows,
+        }
+
+        # 4b': the DIRECT arc-cover sups must be monotone in theta (max modulus).
+        maxmod_rows = []
+        for block, row in rows.items():
+            direct = [arb(v).upper() for v in row["direct_column_sups_theta"]]
+            r2row = r2_rows[block]
+            if row["kind"] == "single_branch":
+                weight0 = arb(r2row["weight_sup_upper_bound"]).upper()
+                rho0 = arb(r2row["center_included_image_ratio_upper_bound"]).upper()
+                base = [(weight0 * rho0**k).upper() for k in range(len(direct))]
+                base_source = ("pinned R2 records no direct sups on single-branch blocks; the "
+                               "pinned envelope weight*rho^k is used as the theta=1 baseline")
+            else:
+                base = [arb(v).upper() for v in r2row["direct_column_sups"]]
+                base_source = "pinned R2 direct_column_sups"
+            ok = [bool(direct[k].upper() >= base[k].upper()) for k in range(len(direct))]
+            maxmod_rows.append({
+                "block": list(block), "label": row["label"], "base_source": base_source,
+                "direct_theta_ge_direct_R2_all_k": all(ok),
+                "violations_k": [k for k, good in enumerate(ok) if not good],
+                "min_ratio_direct_theta_over_direct_R2": text(
+                    min((direct[k] / base[k]).lower() for k in range(len(direct))), 12),
+            })
+        c4b_prime = all(r["direct_theta_ge_direct_R2_all_k"] for r in maxmod_rows)
+        report["condition_4b_prime_max_modulus"] = {
+            "pass": c4b_prime,
+            "statement": ("direct_column_sups_theta[k] >= direct_column_sups[k] (pinned R2) for "
+                          "every block and k -- the maximum-modulus statement; a violation means "
+                          "the contour was not actually enlarged"),
+            "source": "L_OUT_CONDITION4_ADJUDICATION.md, Corrected 4b",
+            "rows": maxmod_rows,
+        }
+        c4_prime = c4a_prime and c4b_prime
+        report["condition_4_prime_overall"] = {"pass": c4_prime}
+        print(f"L_OUT_CHECK 4a'={c4a_prime} 4b'={c4b_prime} 4'={c4_prime}", flush=True)
+
     # --- Condition 5: output_projection_tail and full_tau ------------------
     tau_rows = {}
     for N in args.N_targets:
@@ -319,7 +434,12 @@ def main() -> int:
             "output_projection_tail": text(output_projection_tail, 12),
             "output_projection_tail_selected_variant": text(output_projection_tail_selected, 12),
             "full_tau": text(full_tau, 12),
+            "full_tau_upper_endpoint": text(full_tau.upper(), 24),
             "full_tau_finite": bool(full_tau.is_finite()),
+            # Conservative: the certified UPPER endpoint of full_tau must sit
+            # strictly below the LOWER endpoint of the arb representation of
+            # 1e-15 (1e-15 is not a binary dyadic, so it is itself a ball).
+            "full_tau_upper_le_1e_minus_15": bool(full_tau.upper() < arb("1e-15").lower()),
             "per_block_tau_out": per_block,
             "hs_factors": {k: text(v, 12) for k, v in hs.items()},
         }
@@ -354,9 +474,30 @@ def main() -> int:
         "conditions_1_to_6": [None if v is None else bool(v) for v in conditions],
         "note": "lane_f q8_schur_contour.py:395 full_tail_certified remains False; no lane_f file was modified",
     }
+
+    # Corrected condition 7: same gate, but on the CORRECTED sub-conditions
+    # 4a'/4b', and with the certified output-tail TARGET full_tau <= 1e-15
+    # evaluated per N rather than assumed.  This checker never writes to
+    # lane_f; a flip remains a referee decision.
+    conditions_prime = [c1, c2, c3, c4_prime, c5, c6]
+    c7_prime = all(value is True for value in conditions_prime)
+    target_by_n = {key: row["full_tau_upper_le_1e_minus_15"] for key, row in tau_rows.items()}
+    report["condition_7_full_tail_certified_corrected"] = {
+        "conditions_1_to_6_corrected": [None if v is None else bool(v) for v in conditions_prime],
+        "conditions_1_to_6_all_true": bool(c7_prime),
+        "full_tau_upper_le_1e_minus_15_by_N": target_by_n,
+        "N_meeting_target": sorted(int(k) for k, v in target_by_n.items() if v),
+        "gate_would_pass_at_N": sorted(int(k) for k, v in target_by_n.items() if v) if c7_prime else [],
+        "note": ("EVALUATION ONLY.  lane_f is untouched; q8_schur_contour.py full_tail_certified "
+                 "stays False.  A flip additionally requires a referee pass on this receipt, the "
+                 "R1 Schur-substitution derivation, and the separately-OPEN Hardy/Hilbert binding."),
+    }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"conditions_1_to_7": [None if v is None else bool(v) for v in conditions] + [bool(c7)],
+                      "conditions_1_to_7_corrected": [None if v is None else bool(v)
+                                                      for v in conditions_prime] + [bool(c7_prime)],
+                      "full_tau_upper_le_1e-15_by_N": target_by_n,
                       "report": str(args.out.resolve())}, indent=2))
     return 0
 

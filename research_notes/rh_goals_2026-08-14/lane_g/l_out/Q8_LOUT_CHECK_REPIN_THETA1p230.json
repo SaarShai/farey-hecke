@@ -1,0 +1,1685 @@
+{
+  "schema": "q8-lout-check/v1",
+  "lout_receipt": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/l_out/Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json",
+  "theta_exact_strings": [
+    "1.230",
+    "1.230",
+    "1.230"
+  ],
+  "N_targets": [
+    104,
+    214,
+    237,
+    238,
+    245,
+    256,
+    260,
+    262,
+    263,
+    300
+  ],
+  "n_sweep": 400,
+  "condition_1_theta_gt_1": {
+    "pass": true,
+    "rows": [
+      {
+        "disc": 1,
+        "theta": "1.230",
+        "strictly_greater_than_one": true
+      },
+      {
+        "disc": 2,
+        "theta": "1.230",
+        "strictly_greater_than_one": true
+      },
+      {
+        "disc": 3,
+        "theta": "1.230",
+        "strictly_greater_than_one": true
+      }
+    ]
+  },
+  "condition_2_holomorphy_gate": {
+    "pass": true,
+    "rows": [
+      {
+        "block": [
+          1,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "1\u21923, +2, tail",
+        "recomputed_pole_margin_lower": "[1.87604202457060451679191150639 +/- 8.43e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[1.87604202457060451679191150639 +/- 9.66e-32]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[25.8969098698640601761246743164 +/- 1.07e-29]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.527586591405465449869614348850 +/- 4.02e-32]",
+        "a0_floor": 6,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          1,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "1\u21923, \u22121, tail",
+        "recomputed_pole_margin_lower": "[1.71752935678949730412064913639 +/- 4.66e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[1.71752935678949730412064913639 +/- 5.28e-32]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[25.7383972020829529634534119464 +/- 1.05e-29]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.527586591405465449869614348850 +/- 4.02e-32]",
+        "a0_floor": 5,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          2,
+          1,
+          1,
+          false,
+          false
+        ],
+        "label": "2\u21921, +1, head",
+        "recomputed_pole_margin_lower": "[0.643017501707788153047338751750 +/- 4.56e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[0.643017501707788153047338751750 +/- 4.56e-32]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[0.643017501707788153047338751750 +/- 4.56e-32]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.298448045156720730078232025892 +/- 1.13e-31]",
+        "a0_floor": 5,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          2,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "2\u21923, +2, tail",
+        "recomputed_pole_margin_lower": "[2.49077656673036166530370512175 +/- 8.96e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[2.49077656673036166530370512175 +/- 1.02e-31]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[26.5116444120238173246364679317 +/- 4.95e-29]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.298448045156720730078232025892 +/- 1.13e-31]",
+        "a0_floor": 6,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          2,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "2\u21923, \u22121, tail",
+        "recomputed_pole_margin_lower": "[1.94958046658416468090398275175 +/- 4.58e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[1.94958046658416468090398275175 +/- 5.20e-32]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[25.9704483118776203402367455617 +/- 4.96e-29]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.298448045156720730078232025892 +/- 1.13e-31]",
+        "a0_floor": 5,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          3,
+          2,
+          1,
+          false,
+          false
+        ],
+        "label": "3\u21922, +1, head",
+        "recomputed_pole_margin_lower": "[0.911489811769652729244844428620 +/- 4.47e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[0.911489811769652729244844428620 +/- 4.47e-32]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[0.911489811769652729244844428620 +/- 4.47e-32]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.360258659140546544986961436758 +/- 1.06e-31]",
+        "a0_floor": 5,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          3,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "3\u21923, +2, tail",
+        "recomputed_pole_margin_lower": "[2.75924887679222624150121079862 +/- 8.87e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[2.75924887679222624150121079862 +/- 1.01e-31]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[26.7801167220856819008339736086 +/- 1.95e-29]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.360258659140546544986961436758 +/- 1.06e-31]",
+        "a0_floor": 6,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      },
+      {
+        "block": [
+          3,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "3\u21923, \u22121, tail",
+        "recomputed_pole_margin_lower": "[1.45268591191584971364456842862 +/- 4.49e-32]",
+        "pole_clearance_pass": true,
+        "recomputed_branch_cut_margin_lower": "[1.45268591191584971364456842862 +/- 5.11e-32]",
+        "branch_cut_clearance_pass": true,
+        "recomputed_deep_tail_d_lower": "[25.4735537572093053729773312386 +/- 1.96e-29]",
+        "deep_tail_d_positive": true,
+        "hurwitz_slope_upper": "[0.360258659140546544986961436758 +/- 1.06e-31]",
+        "a0_floor": 5,
+        "hurwitz_slope_less_than_a0": true,
+        "receipt_agrees": true,
+        "pass": true
+      }
+    ]
+  },
+  "condition_3_rho_theta_independent": {
+    "pass": true,
+    "geometry_echo_overlaps_pinned_TB": true,
+    "coverage_tolerance": "1e-20 relative (80-digit decimal round trip of an Arb ball)",
+    "rows": [
+      {
+        "block": [
+          1,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "1\u21923, +2, tail",
+        "receipt_rho_theta": "[0.502499904337239385664949 +/- 2.52e-25]",
+        "checker_mobius_rho_theta": "[0.502499904337239385664949 +/- 2.52e-25]",
+        "checker_worst_n": 401,
+        "receipt_worst_n": 401,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00000000000 +/- 1e-16]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          1,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "1\u21923, \u22121, tail",
+        "receipt_rho_theta": "[0.575946706851592554745824 +/- 1.14e-25]",
+        "checker_mobius_rho_theta": "[0.575823861594138291875072 +/- 1.33e-25]",
+        "checker_worst_n": 1,
+        "receipt_worst_n": 1,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00021333825 +/- 4.37e-12]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          2,
+          1,
+          1,
+          false,
+          false
+        ],
+        "label": "2\u21921, +1, head",
+        "receipt_rho_theta": "[0.897382967700570456381881 +/- 4.10e-25]",
+        "checker_mobius_rho_theta": "[0.896514373047796971150639 +/- 4.39e-25]",
+        "checker_worst_n": 1,
+        "receipt_worst_n": 1,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00096885748 +/- 3.89e-12]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          2,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "2\u21923, +2, tail",
+        "receipt_rho_theta": "[0.502497826899563017567943 +/- 4.13e-25]",
+        "checker_mobius_rho_theta": "[0.502497826899563017567943 +/- 4.13e-25]",
+        "checker_worst_n": 401,
+        "receipt_worst_n": 401,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00000000000 +/- 1e-16]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          2,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "2\u21923, \u22121, tail",
+        "receipt_rho_theta": "[0.502497826899563017567943 +/- 4.13e-25]",
+        "checker_mobius_rho_theta": "[0.502497826899563017567943 +/- 4.13e-25]",
+        "checker_worst_n": 401,
+        "receipt_worst_n": 401,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00000000000 +/- 1e-16]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          3,
+          2,
+          1,
+          false,
+          false
+        ],
+        "label": "3\u21922, +1, head",
+        "receipt_rho_theta": "[0.990918149483029537781303 +/- 4.96e-25]",
+        "checker_mobius_rho_theta": "[0.989922761642099978499220 +/- 3.07e-25]",
+        "checker_worst_n": 1,
+        "receipt_worst_n": 1,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00100552071 +/- 2.83e-12]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          3,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "3\u21923, +2, tail",
+        "receipt_rho_theta": "[0.502496920705427892983323 +/- 3.37e-25]",
+        "checker_mobius_rho_theta": "[0.502496920705427892983323 +/- 3.37e-25]",
+        "checker_worst_n": 401,
+        "receipt_worst_n": 401,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00000000000 +/- 1e-16]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      },
+      {
+        "block": [
+          3,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "3\u21923, \u22121, tail",
+        "receipt_rho_theta": "[0.772028970455838059118248 +/- 1.69e-25]",
+        "checker_mobius_rho_theta": "[0.771960476704622541010681 +/- 4.93e-25]",
+        "checker_worst_n": 1,
+        "receipt_worst_n": 1,
+        "receipt_covers_checker": true,
+        "ratio_receipt_over_checker": "[1.00008872702 +/- 1.87e-12]",
+        "agreement_within_1pct": true,
+        "rho_theta_below_one": true
+      }
+    ]
+  },
+  "condition_4_self_consistency": {
+    "pass": false,
+    "sub_4a_selected_ge_direct": false,
+    "sub_4b_monotonicity_vs_pinned_R2": false,
+    "sub_4b_like_for_like_tb_cutoff": true,
+    "baseline_control_pinned_R2_satisfies_4a": false,
+    "baseline_control_rows": [
+      {
+        "block": [
+          1,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "1\u21923, +2, tail",
+        "pinned_R2_selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 7
+      },
+      {
+        "block": [
+          1,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "1\u21923, \u22121, tail",
+        "pinned_R2_selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 7
+      },
+      {
+        "block": [
+          2,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "2\u21923, +2, tail",
+        "pinned_R2_selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 9
+      },
+      {
+        "block": [
+          2,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "2\u21923, \u22121, tail",
+        "pinned_R2_selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 8
+      },
+      {
+        "block": [
+          3,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "3\u21923, +2, tail",
+        "pinned_R2_selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 10
+      },
+      {
+        "block": [
+          3,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "3\u21923, \u22121, tail",
+        "pinned_R2_selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 7
+      }
+    ],
+    "note": "4a as written is failed by the PINNED R2 receipt itself (see baseline_control): q8_r2_local.py:206 deliberately takes min(direct_sup, envelope), and the direct arc-cover sup is inflated by interval wrapping under the r_j^-k binomial sum at large k.  4b's production arm is confounded because the mandated n-sweep to 400 gives a TIGHTER rho than the pinned R2 (TB cut its deep tail at first_n=14/15); the like-for-like arm repeats it with the TB cutoff so theta is the only change.",
+    "rows": [
+      {
+        "block": [
+          1,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "1\u21923, +2, tail",
+        "base_source": "pinned R2 selected_column_bounds",
+        "selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 6,
+        "envelope_ge_direct_all_k": false,
+        "selected_ge_pinned_R2_all_k": false,
+        "first_k_selected_below_R2": 7,
+        "min_ratio_selected_over_R2": "[0.272115495483 +/- 2.89e-13]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[1.80595121044 +/- 2.55e-12]"
+      },
+      {
+        "block": [
+          1,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "1\u21923, \u22121, tail",
+        "base_source": "pinned R2 selected_column_bounds",
+        "selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 6,
+        "envelope_ge_direct_all_k": false,
+        "selected_ge_pinned_R2_all_k": true,
+        "first_k_selected_below_R2": null,
+        "min_ratio_selected_over_R2": "[1.87191673880 +/- 8.28e-13]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[1.89986621184 +/- 2.03e-13]"
+      },
+      {
+        "block": [
+          2,
+          1,
+          1,
+          false,
+          false
+        ],
+        "label": "2\u21921, +1, head",
+        "base_source": "recomputed from pinned R2 single-branch weight*rho^k",
+        "selected_ge_direct_all_k": true,
+        "first_k_selected_below_direct": null,
+        "envelope_ge_direct_all_k": true,
+        "selected_ge_pinned_R2_all_k": true,
+        "first_k_selected_below_R2": null,
+        "min_ratio_selected_over_R2": "[2.43729862103 +/- 2.93e-13]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[2.43729862103 +/- 2.93e-13]"
+      },
+      {
+        "block": [
+          2,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "2\u21923, +2, tail",
+        "base_source": "pinned R2 selected_column_bounds",
+        "selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 8,
+        "envelope_ge_direct_all_k": false,
+        "selected_ge_pinned_R2_all_k": false,
+        "first_k_selected_below_R2": 9,
+        "min_ratio_selected_over_R2": "[0.201080125182 +/- 4.96e-13]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[1.28874064492 +/- 4.39e-12]"
+      },
+      {
+        "block": [
+          2,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "2\u21923, \u22121, tail",
+        "base_source": "pinned R2 selected_column_bounds",
+        "selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 6,
+        "envelope_ge_direct_all_k": false,
+        "selected_ge_pinned_R2_all_k": false,
+        "first_k_selected_below_R2": 7,
+        "min_ratio_selected_over_R2": "[0.191468407929 +/- 2.95e-13]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[1.40250955232 +/- 2.63e-12]"
+      },
+      {
+        "block": [
+          3,
+          2,
+          1,
+          false,
+          false
+        ],
+        "label": "3\u21922, +1, head",
+        "base_source": "recomputed from pinned R2 single-branch weight*rho^k",
+        "selected_ge_direct_all_k": true,
+        "first_k_selected_below_direct": null,
+        "envelope_ge_direct_all_k": true,
+        "selected_ge_pinned_R2_all_k": true,
+        "first_k_selected_below_R2": null,
+        "min_ratio_selected_over_R2": "[2.22412303273 +/- 3.85e-12]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[2.22412303273 +/- 3.85e-12]"
+      },
+      {
+        "block": [
+          3,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "3\u21923, +2, tail",
+        "base_source": "pinned R2 selected_column_bounds",
+        "selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 8,
+        "envelope_ge_direct_all_k": false,
+        "selected_ge_pinned_R2_all_k": false,
+        "first_k_selected_below_R2": 9,
+        "min_ratio_selected_over_R2": "[0.209125762111 +/- 3.84e-13]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[1.31564490699 +/- 2.97e-12]"
+      },
+      {
+        "block": [
+          3,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "3\u21923, \u22121, tail",
+        "base_source": "pinned R2 selected_column_bounds",
+        "selected_ge_direct_all_k": false,
+        "first_k_selected_below_direct": 8,
+        "envelope_ge_direct_all_k": false,
+        "selected_ge_pinned_R2_all_k": true,
+        "first_k_selected_below_R2": null,
+        "min_ratio_selected_over_R2": "[1.72617569424 +/- 4.09e-12]",
+        "like_for_like_tb_cutoff_selected_ge_pinned_R2_all_k": true,
+        "min_ratio_tb_cutoff_selected_over_R2": "[1.72617569424 +/- 4.09e-12]"
+      }
+    ]
+  },
+  "condition_4a_prime_witness": {
+    "pass": true,
+    "statement": "selected_column_bounds_theta[k] >= W_k, W_k a point-evaluated rigorous lower-bound witness of the true boundary sup at >= 256 boundary points, plus the three recorded envelope preconditions",
+    "source": "L_OUT_CONDITION4_ADJUDICATION.md, Corrected 4a",
+    "rows": [
+      {
+        "block": [
+          1,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "1\u21923, +2, tail",
+        "kind": "hurwitz_closed_tail_family",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[8.85916479332442480 +/- 1.68e-18]",
+          "[2.99067496364166701 +/- 1.52e-19]",
+          "[1.01651587284734505 +/- 2.76e-18]",
+          "[0.373894623935265443 +/- 2.80e-19]",
+          "[0.147593033196196456 +/- 2.85e-19]",
+          "[0.0604156279178484060 +/- 4.94e-21]",
+          "[0.0254550241531858749 +/- 4.56e-20]",
+          "[0.0109903981869917532 +/- 1.63e-20]",
+          "[0.00483321772172198437 +/- 8.47e-23]",
+          "[0.00215695004393791888 +/- 2.05e-21]",
+          "[0.000974137340054228949 +/- 1.02e-22]",
+          "[0.000444177389653893325 +/- 2.84e-22]",
+          "[0.000204180794988180620 +/- 4.02e-22]",
+          "[9.44742281859457510e-5 +/- 1.62e-24]",
+          "[4.39425349084566705e-5 +/- 9.43e-24]",
+          "[2.05359519542201375e-5 +/- 2.99e-24]",
+          "[9.63595717029108052e-6 +/- 3.27e-24]"
+        ],
+        "witness_worst_point_index": [
+          168,
+          178,
+          188,
+          197,
+          204,
+          209,
+          214,
+          218,
+          221,
+          224,
+          226,
+          228,
+          230,
+          232,
+          233,
+          235,
+          236
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.04841217049 +/- 1.52e-12]",
+        "max_ratio_direct_over_witness": "[11296762.4210 +/- 3.83e-6]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": true,
+        "precondition_sampled_C_sum_lower": "[7.92907426060304347 +/- 3.37e-18]",
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.499500017619331651 +/- 1.55e-19]",
+        "precondition_rho_ge_q": true,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          1,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "1\u21923, \u22121, tail",
+        "kind": "hurwitz_closed_tail_family",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[11.5880321223832985 +/- 4.39e-17]",
+          "[4.43490149242053072 +/- 1.71e-18]",
+          "[1.76715988043825413 +/- 6.78e-19]",
+          "[0.766703761786102323 +/- 1.14e-19]",
+          "[0.354501681198009287 +/- 2.07e-19]",
+          "[0.170477889514641234 +/- 3.47e-19]",
+          "[0.0845647072853093173 +/- 1.03e-20]",
+          "[0.0430147658144684131 +/- 3.05e-20]",
+          "[0.0223070535165894871 +/- 2.48e-20]",
+          "[0.0117528775402153661 +/- 3.24e-20]",
+          "[0.00626896448740942019 +/- 1.03e-21]",
+          "[0.00337923391560863028 +/- 3.54e-21]",
+          "[0.00183670129573658540 +/- 3.72e-21]",
+          "[0.00100564055229768723 +/- 9.96e-22]",
+          "[0.000553529243474404982 +/- 2.65e-22]",
+          "[0.000306366037096485960 +/- 5.03e-23]",
+          "[0.000170244345671947033 +/- 9.95e-23]"
+        ],
+        "witness_worst_point_index": [
+          425,
+          435,
+          445,
+          454,
+          460,
+          466,
+          470,
+          474,
+          477,
+          480,
+          483,
+          485,
+          486,
+          488,
+          489,
+          491,
+          492
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.05711350063 +/- 7.64e-13]",
+        "max_ratio_direct_over_witness": "[2092230.05474 +/- 3.36e-6]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": true,
+        "precondition_sampled_C_sum_lower": "[10.4892867398176793 +/- 1.40e-17]",
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.575823861594138292 +/- 1.25e-19]",
+        "precondition_rho_ge_q": true,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          2,
+          1,
+          1,
+          false,
+          false
+        ],
+        "label": "2\u21921, +1, head",
+        "kind": "single_branch",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[63.0100927511628505 +/- 2.47e-17]",
+          "[37.3996618582330796 +/- 1.44e-17]",
+          "[23.4007445157867768 +/- 1.89e-18]",
+          "[15.3756187685661714 +/- 1.19e-17]",
+          "[10.5498463402637260 +/- 8.79e-18]",
+          "[7.51773225780020557 +/- 7.71e-19]",
+          "[5.53308452528102224 +/- 1.99e-18]",
+          "[4.18549510365138300 +/- 2.69e-18]",
+          "[3.23955122716847295 +/- 1.86e-18]",
+          "[2.55637085898726892 +/- 4.17e-18]",
+          "[2.04949308742636194 +/- 1.04e-18]",
+          "[1.66624069579960737 +/- 1.20e-18]",
+          "[1.36997597298966537 +/- 4.17e-18]",
+          "[1.13779062095610948 +/- 2.35e-18]",
+          "[0.952585225500812315 +/- 1.55e-19]",
+          "[0.803291908269805856 +/- 3.19e-19]",
+          "[0.681358010365399749 +/- 1.09e-19]"
+        ],
+        "witness_worst_point_index": [
+          175,
+          183,
+          190,
+          197,
+          203,
+          208,
+          212,
+          216,
+          219,
+          222,
+          224,
+          227,
+          229,
+          230,
+          232,
+          233,
+          234
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.13184294980 +/- 3.85e-12]",
+        "max_ratio_direct_over_witness": "[2.50269914224 +/- 9.52e-13]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": null,
+        "precondition_sampled_C_sum_lower": null,
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.896514373047796971 +/- 1.51e-19]",
+        "precondition_rho_ge_q": null,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          2,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "2\u21923, +2, tail",
+        "kind": "hurwitz_closed_tail_family",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[1.74511168310719356 +/- 3.74e-18]",
+          "[0.377402255423232110 +/- 4.30e-19]",
+          "[0.0677905939288535699 +/- 1.71e-20]",
+          "[0.0132961506921489739 +/- 1.94e-21]",
+          "[0.00305798652429983705 +/- 2.33e-21]",
+          "[0.000664863885328463351 +/- 6.87e-23]",
+          "[0.000147961904137103465 +/- 4.25e-22]",
+          "[3.48686183779199335e-5 +/- 3.95e-23]",
+          "[7.94866086811203884e-6 +/- 2.55e-24]",
+          "[1.82246063259637045e-6 +/- 1.33e-24]",
+          "[4.50873017772509152e-7 +/- 1.40e-25]",
+          "[1.03230945751346493e-7 +/- 4.07e-25]",
+          "[2.55088321455538797e-8 +/- 7.51e-27]",
+          "[6.85426745198622742e-9 +/- 4.76e-27]",
+          "[1.52942614972605357e-9 +/- 3.05e-29]",
+          "[5.49856257507340749e-10 +/- 2.11e-28]",
+          "[1.67513516851352297e-10 +/- 3.97e-28]"
+        ],
+        "witness_worst_point_index": [
+          157,
+          170,
+          184,
+          199,
+          205,
+          210,
+          218,
+          219,
+          225,
+          227,
+          227,
+          238,
+          224,
+          239,
+          217,
+          235,
+          253
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.03229230424 +/- 1.54e-12]",
+        "max_ratio_direct_over_witness": "[7997703633.72 +/- 2.73e-3]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": true,
+        "precondition_sampled_C_sum_lower": "[1.89264384946505118 +/- 1.48e-18]",
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.499499986223284056 +/- 4.84e-19]",
+        "precondition_rho_ge_q": true,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          2,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "2\u21923, \u22121, tail",
+        "kind": "hurwitz_closed_tail_family",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[3.35642999126569326 +/- 1.04e-18]",
+          "[1.10772731414933937 +/- 2.29e-18]",
+          "[0.374392562873193482 +/- 2.65e-19]",
+          "[0.139794830355790227 +/- 4.98e-19]",
+          "[0.0547884192983715186 +/- 4.15e-20]",
+          "[0.0219724528996922500 +/- 3.27e-20]",
+          "[0.00902197676517543616 +/- 4.06e-21]",
+          "[0.00376349051097622785 +/- 2.98e-22]",
+          "[0.00158928189668148848 +/- 4.49e-21]",
+          "[0.000677738584587251768 +/- 4.33e-22]",
+          "[0.000291165211989136700 +/- 4.40e-22]",
+          "[0.000125850434647170466 +/- 3.04e-22]",
+          "[5.46520435127385230e-5 +/- 2.81e-23]",
+          "[2.38303760095798963e-5 +/- 1.10e-25]",
+          "[1.04228025269761764e-5 +/- 3.66e-23]",
+          "[4.57161333391873798e-6 +/- 2.74e-24]",
+          "[2.00997399215969857e-6 +/- 1.76e-24]"
+        ],
+        "witness_worst_point_index": [
+          415,
+          427,
+          439,
+          450,
+          457,
+          464,
+          469,
+          473,
+          477,
+          480,
+          482,
+          484,
+          486,
+          488,
+          489,
+          491,
+          492
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.03460687942 +/- 3.43e-12]",
+        "max_ratio_direct_over_witness": "[13992321.1291 +/- 3.45e-5]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": true,
+        "precondition_sampled_C_sum_lower": "[3.38639610944534358 +/- 3.53e-18]",
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.499500162947238021 +/- 7.20e-20]",
+        "precondition_rho_ge_q": true,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          3,
+          2,
+          1,
+          false,
+          false
+        ],
+        "label": "3\u21922, +1, head",
+        "kind": "single_branch",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[33.1936008871272801 +/- 2.18e-17]",
+          "[23.2298593592769787 +/- 4.44e-17]",
+          "[16.9042574291253930 +/- 7.68e-18]",
+          "[12.7674834482539139 +/- 2.39e-17]",
+          "[9.97978087217447256 +/- 3.20e-18]",
+          "[8.04434672713080296 +/- 1.90e-18]",
+          "[6.66117379392449856 +/- 2.68e-18]",
+          "[5.64645974810629866 +/- 2.65e-18]",
+          "[4.88374585635795852 +/- 3.04e-18]",
+          "[4.29587319250399010 +/- 1.04e-18]",
+          "[3.83352490955377113 +/- 4.58e-18]",
+          "[3.46343734965222418 +/- 3.82e-18]",
+          "[3.16162826040951107 +/- 1.60e-18]",
+          "[2.91216684543598277 +/- 1.05e-18]",
+          "[2.70260814859920605 +/- 2.87e-18]",
+          "[2.52477180222284746 +/- 2.58e-18]",
+          "[2.37175126690838840 +/- 1.28e-18]"
+        ],
+        "witness_worst_point_index": [
+          171,
+          179,
+          186,
+          192,
+          198,
+          203,
+          208,
+          212,
+          215,
+          218,
+          221,
+          223,
+          225,
+          227,
+          229,
+          230,
+          232
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.09337322036 +/- 1.11e-13]",
+        "max_ratio_direct_over_witness": "[2.36079123030 +/- 9.56e-13]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": null,
+        "precondition_sampled_C_sum_lower": null,
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.989922761642099978 +/- 5.00e-19]",
+        "precondition_rho_ge_q": null,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          3,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "3\u21923, +2, tail",
+        "kind": "hurwitz_closed_tail_family",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[1.64450832027009364 +/- 8.67e-19]",
+          "[0.287595947428136745 +/- 3.02e-19]",
+          "[0.0376937313290424608 +/- 3.79e-20]",
+          "[0.00418580650162899357 +/- 1.68e-21]",
+          "[0.000797040845999497620 +/- 1.90e-22]",
+          "[0.000127216178061642426 +/- 2.54e-22]",
+          "[1.67814474143251560e-5 +/- 4.88e-23]",
+          "[3.72794462137276137e-6 +/- 1.18e-24]",
+          "[6.59869187830569971e-7 +/- 3.94e-25]",
+          "[1.44836112900686701e-7 +/- 2.12e-25]",
+          "[3.31436663992383471e-8 +/- 3.42e-26]",
+          "[9.84521990164527682e-9 +/- 1.36e-27]",
+          "[3.81642874569064994e-9 +/- 1.32e-27]",
+          "[1.57192009145097153e-9 +/- 1.44e-28]",
+          "[6.29888148857153488e-10 +/- 4.02e-28]",
+          "[2.52663873815743511e-10 +/- 3.26e-28]",
+          "[1.05101729587746563e-10 +/- 3.34e-29]"
+        ],
+        "witness_worst_point_index": [
+          157,
+          170,
+          174,
+          194,
+          207,
+          197,
+          181,
+          221,
+          197,
+          117,
+          91,
+          212,
+          189,
+          150,
+          127,
+          103,
+          78
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.04298578693 +/- 1.23e-12]",
+        "max_ratio_direct_over_witness": "[5129139026.27 +/- 1.64e-3]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": true,
+        "precondition_sampled_C_sum_lower": "[1.77854617108543084 +/- 5.00e-19]",
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.499500053447298595 +/- 2.23e-19]",
+        "precondition_rho_ge_q": true,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      },
+      {
+        "block": [
+          3,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "3\u21923, \u22121, tail",
+        "kind": "hurwitz_closed_tail_family",
+        "witness_points": 512,
+        "witness_W_k": [
+          "[9.69696933901574339 +/- 2.06e-18]",
+          "[4.84734636903367243 +/- 4.22e-18]",
+          "[2.70280419988784496 +/- 4.62e-18]",
+          "[1.64097771884085997 +/- 3.43e-18]",
+          "[1.04549441201082379 +/- 2.79e-18]",
+          "[0.690024959797633019 +/- 4.39e-19]",
+          "[0.468313019838550258 +/- 1.60e-19]",
+          "[0.324779515907406092 +/- 3.61e-19]",
+          "[0.229088381569918847 +/- 1.29e-19]",
+          "[0.163824570125756498 +/- 1.45e-19]",
+          "[0.118464068430700108 +/- 3.87e-19]",
+          "[0.0864113666622208208 +/- 9.75e-21]",
+          "[0.0634959063250340990 +/- 4.10e-20]",
+          "[0.0469384397781132617 +/- 1.34e-20]",
+          "[0.0348710768500799306 +/- 1.93e-20]",
+          "[0.0260190788383106889 +/- 2.17e-21]",
+          "[0.0194857055681665207 +/- 1.52e-20]"
+        ],
+        "witness_worst_point_index": [
+          420,
+          431,
+          442,
+          451,
+          458,
+          463,
+          468,
+          472,
+          476,
+          478,
+          481,
+          483,
+          485,
+          487,
+          488,
+          490,
+          491
+        ],
+        "selected_ge_witness_all_k": true,
+        "violations_k": [],
+        "min_ratio_selected_over_witness": "[1.04498573657 +/- 3.76e-12]",
+        "max_ratio_direct_over_witness": "[98052.9488521 +/- 3.51e-8]",
+        "precondition_A_ge_W0": true,
+        "precondition_C_ge_sampled_sum": true,
+        "precondition_sampled_C_sum_lower": "[9.90326436417204827 +/- 7.32e-19]",
+        "precondition_rho_ge_sampled_sup_u": true,
+        "precondition_sampled_sup_u_lower": "[0.771960476704622541 +/- 1.07e-20]",
+        "precondition_rho_ge_q": true,
+        "precondition_note": "the C and sup|u| figures are maxima over SAMPLED boundary points with the branch sum truncated at n_max, hence LOWER estimates of the true sups; the precondition checks against them are NECESSARY, not proofs of the preconditions"
+      }
+    ]
+  },
+  "condition_4b_prime_max_modulus": {
+    "pass": true,
+    "statement": "direct_column_sups_theta[k] >= direct_column_sups[k] (pinned R2) for every block and k -- the maximum-modulus statement; a violation means the contour was not actually enlarged",
+    "source": "L_OUT_CONDITION4_ADJUDICATION.md, Corrected 4b",
+    "rows": [
+      {
+        "block": [
+          1,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "1\u21923, +2, tail",
+        "base_source": "pinned R2 direct_column_sups",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[1.86499900459 +/- 9.38e-13]"
+      },
+      {
+        "block": [
+          1,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "1\u21923, \u22121, tail",
+        "base_source": "pinned R2 direct_column_sups",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[1.95660901790 +/- 7.93e-13]"
+      },
+      {
+        "block": [
+          2,
+          1,
+          1,
+          false,
+          false
+        ],
+        "label": "2\u21921, +1, head",
+        "base_source": "pinned R2 records no direct sups on single-branch blocks; the pinned envelope weight*rho^k is used as the theta=1 baseline",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[2.43729862103 +/- 2.93e-13]"
+      },
+      {
+        "block": [
+          2,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "2\u21923, +2, tail",
+        "base_source": "pinned R2 direct_column_sups",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[1.37982127999 +/- 4.52e-12]"
+      },
+      {
+        "block": [
+          2,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "2\u21923, \u22121, tail",
+        "base_source": "pinned R2 direct_column_sups",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[1.46105382218 +/- 4.71e-12]"
+      },
+      {
+        "block": [
+          3,
+          2,
+          1,
+          false,
+          false
+        ],
+        "label": "3\u21922, +1, head",
+        "base_source": "pinned R2 records no direct sups on single-branch blocks; the pinned envelope weight*rho^k is used as the theta=1 baseline",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[2.22412303273 +/- 3.85e-12]"
+      },
+      {
+        "block": [
+          3,
+          3,
+          2,
+          false,
+          true
+        ],
+        "label": "3\u21923, +2, tail",
+        "base_source": "pinned R2 direct_column_sups",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[1.42360407899 +/- 4.74e-12]"
+      },
+      {
+        "block": [
+          3,
+          3,
+          1,
+          true,
+          true
+        ],
+        "label": "3\u21923, \u22121, tail",
+        "base_source": "pinned R2 direct_column_sups",
+        "direct_theta_ge_direct_R2_all_k": true,
+        "violations_k": [],
+        "min_ratio_direct_theta_over_direct_R2": "[1.72617569424 +/- 4.09e-12]"
+      }
+    ]
+  },
+  "condition_4_prime_overall": {
+    "pass": true
+  },
+  "condition_5_full_tau": {
+    "pass": true,
+    "substitution_note": "output tail substituted into EACH trace[.] slot of the q8_schur_contour.py:351-358 telescoping; hs[.] factors unchanged",
+    "rows": {
+      "104": {
+        "N": 104,
+        "input_tail_only": "[1.26474668906e-12 +/- 2.13e-24]",
+        "input_tail_only_recomputed_by_same_telescoping": "[1.26474668906e-12 +/- 2.13e-24]",
+        "output_projection_tail": "[0.000696410380328 +/- 3.89e-16]",
+        "output_projection_tail_selected_variant": "[0.000538277955313 +/- 2.90e-16]",
+        "full_tau": "[0.000696410381592 +/- 3.58e-16]",
+        "full_tau_upper_endpoint": "[0.000696410381592357710922854 +/- 6.21e-29]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": false,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[3.10341359053e-7 +/- 2.59e-19]",
+            "HS": "[7.21734515380e-8 +/- 8.09e-21]"
+          },
+          "A3": {
+            "trace": "[1.09355180069e-6 +/- 2.98e-18]",
+            "HS": "[1.11123854231e-7 +/- 1.28e-19]"
+          },
+          "B1": {
+            "trace": "[6.21698227842e-8 +/- 5.18e-21]",
+            "HS": "[2.39655906512e-8 +/- 5.98e-21]"
+          },
+          "B2": {
+            "trace": "[1.44733582139e-8 +/- 2.73e-20]",
+            "HS": "[5.92120196755e-9 +/- 2.48e-21]"
+          },
+          "B3": {
+            "trace": "[1.03984167820e-7 +/- 2.55e-19]",
+            "HS": "[2.67618745354e-8 +/- 4.60e-20]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "214": {
+        "N": 214,
+        "input_tail_only": "[6.73772969788e-30 +/- 4.96e-42]",
+        "input_tail_only_recomputed_by_same_telescoping": "[6.73772969788e-30 +/- 4.96e-42]",
+        "output_projection_tail": "[1.18135107078e-13 +/- 2.07e-25]",
+        "output_projection_tail_selected_variant": "[9.77431610641e-14 +/- 2.22e-26]",
+        "full_tau": "[1.18135107078e-13 +/- 2.07e-25]",
+        "full_tau_upper_endpoint": "[1.18135107078206414092848e-13 +/- 3.79e-37]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": false,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[4.00205442279e-17 +/- 4.09e-29]",
+            "HS": "[9.30711792600e-18 +/- 1.95e-30]"
+          },
+          "A3": {
+            "trace": "[1.97458323096e-16 +/- 5.55e-29]",
+            "HS": "[1.53849447904e-17 +/- 1.89e-29]"
+          },
+          "B1": {
+            "trace": "[8.01710129851e-18 +/- 2.64e-31]",
+            "HS": "[3.09047958197e-18 +/- 6.26e-31]"
+          },
+          "B2": {
+            "trace": "[1.86640999981e-18 +/- 2.95e-30]",
+            "HS": "[7.63567818868e-19 +/- 2.90e-31]"
+          },
+          "B3": {
+            "trace": "[1.34092646491e-17 +/- 3.78e-29]",
+            "HS": "[3.45107400150e-18 +/- 3.96e-30]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "237": {
+        "N": 237,
+        "input_tail_only": "[1.64807151524e-33 +/- 9.55e-46]",
+        "input_tail_only_recomputed_by_same_telescoping": "[1.64807151524e-33 +/- 9.55e-46]",
+        "output_projection_tail": "[1.03710385983e-15 +/- 3.68e-27]",
+        "output_projection_tail_selected_variant": "[8.62665855437e-16 +/- 4.83e-28]",
+        "full_tau": "[1.03710385983e-15 +/- 3.68e-27]",
+        "full_tau_upper_endpoint": "[1.03710385982632845711029e-15 +/- 4.42e-39]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": false,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[3.42346133389e-19 +/- 1.62e-31]",
+            "HS": "[7.96155048909e-20 +/- 3.05e-32]"
+          },
+          "A3": {
+            "trace": "[1.74199514689e-18 +/- 3.05e-30]",
+            "HS": "[1.32069683843e-19 +/- 1.23e-31]"
+          },
+          "B1": {
+            "trace": "[6.85803674905e-20 +/- 5.04e-33]",
+            "HS": "[2.64367653048e-20 +/- 2.23e-32]"
+          },
+          "B2": {
+            "trace": "[1.59657560643e-20 +/- 1.09e-32]",
+            "HS": "[6.53175751086e-21 +/- 4.57e-33]"
+          },
+          "B3": {
+            "trace": "[1.14706333770e-19 +/- 5.11e-32]",
+            "HS": "[2.95213836582e-20 +/- 9.37e-33]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "238": {
+        "N": 238,
+        "input_tail_only": "[1.14802929669e-33 +/- 4.65e-45]",
+        "input_tail_only_recomputed_by_same_telescoping": "[1.14802929669e-33 +/- 4.65e-45]",
+        "output_projection_tail": "[8.44013360170e-16 +/- 3.51e-28]",
+        "output_projection_tail_selected_variant": "[7.02193844406e-16 +/- 3.61e-28]",
+        "full_tau": "[8.44013360170e-16 +/- 3.51e-28]",
+        "full_tau_upper_endpoint": "[8.44013360169649816169916e-16 +/- 1.47e-40]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[2.78330189747e-19 +/- 4.91e-31]",
+            "HS": "[6.47280527569e-20 +/- 4.60e-32]"
+          },
+          "A3": {
+            "trace": "[1.41792869661e-18 +/- 2.58e-30]",
+            "HS": "[1.07386751389e-19 +/- 4.17e-32]"
+          },
+          "B1": {
+            "trace": "[5.57563963337e-20 +/- 3.58e-32]",
+            "HS": "[2.14933051258e-20 +/- 3.56e-32]"
+          },
+          "B2": {
+            "trace": "[1.29802894832e-20 +/- 3.81e-32]",
+            "HS": "[5.31037196005e-21 +/- 2.50e-33]"
+          },
+          "B3": {
+            "trace": "[9.32571819269e-20 +/- 2.93e-32]",
+            "HS": "[2.40011249254e-20 +/- 2.66e-32]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "245": {
+        "N": 245,
+        "input_tail_only": "[9.13675286237e-35 +/- 1.17e-47]",
+        "input_tail_only_recomputed_by_same_telescoping": "[9.13675286237e-35 +/- 1.17e-47]",
+        "output_projection_tail": "[1.99489339788e-16 +/- 1.89e-28]",
+        "output_projection_tail_selected_variant": "[1.66192714547e-16 +/- 9.74e-29]",
+        "full_tau": "[1.99489339788e-16 +/- 1.89e-28]",
+        "full_tau_upper_endpoint": "[1.99489339787811731234151e-16 +/- 1.46e-40]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[6.53468316501e-20 +/- 1.84e-32]",
+            "HS": "[1.51969614592e-20 +/- 1.16e-32]"
+          },
+          "A3": {
+            "trace": "[3.35554306454e-19 +/- 4.22e-31]",
+            "HS": "[2.52323459296e-20 +/- 3.69e-32]"
+          },
+          "B1": {
+            "trace": "[1.30905808239e-20 +/- 1.62e-32]",
+            "HS": "[5.04623444885e-21 +/- 3.40e-33]"
+          },
+          "B2": {
+            "trace": "[3.04753426997e-21 +/- 1.27e-33]",
+            "HS": "[1.24677809039e-21 +/- 2.19e-33]"
+          },
+          "B3": {
+            "trace": "[2.18950785506e-20 +/- 2.12e-32]",
+            "HS": "[5.63502461350e-21 +/- 2.74e-33]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "256": {
+        "N": 256,
+        "input_tail_only": "[1.71214340816e-36 +/- 8.89e-50]",
+        "input_tail_only_recomputed_by_same_telescoping": "[1.71214340816e-36 +/- 8.89e-50]",
+        "output_projection_tail": "[2.06603255985e-17 +/- 2.12e-29]",
+        "output_projection_tail_selected_variant": "[1.72449065814e-17 +/- 4.19e-29]",
+        "full_tau": "[2.06603255985e-17 +/- 2.12e-29]",
+        "full_tau_upper_endpoint": "[2.06603255984788587098137e-17 +/- 6.69e-42]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[6.70298596065e-21 +/- 9.31e-34]",
+            "HS": "[1.55883639242e-21 +/- 1.74e-33]"
+          },
+          "A3": {
+            "trace": "[3.48133321876e-20 +/- 3.82e-32]",
+            "HS": "[2.59094383282e-21 +/- 1.03e-33]"
+          },
+          "B1": {
+            "trace": "[1.34277328010e-21 +/- 4.90e-33]",
+            "HS": "[5.17620178524e-22 +/- 1.72e-34]"
+          },
+          "B2": {
+            "trace": "[3.12602446214e-22 +/- 2.39e-34]",
+            "HS": "[1.27888924756e-22 +/- 2.53e-34]"
+          },
+          "B3": {
+            "trace": "[2.24589931027e-21 +/- 3.69e-33]",
+            "HS": "[5.78015642355e-22 +/- 1.24e-34]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "260": {
+        "N": 260,
+        "input_tail_only": "[4.03133541887e-37 +/- 1.30e-49]",
+        "input_tail_only_recomputed_by_same_telescoping": "[4.03133541887e-37 +/- 1.30e-49]",
+        "output_projection_tail": "[9.05575075254e-18 +/- 2.74e-30]",
+        "output_projection_tail_selected_variant": "[7.56356274096e-18 +/- 1.88e-30]",
+        "full_tau": "[9.05575075254e-18 +/- 2.74e-30]",
+        "full_tau_upper_endpoint": "[9.05575075254273542234789e-18 +/- 2.52e-42]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[2.92851777254e-21 +/- 7.59e-34]",
+            "HS": "[6.81051714337e-22 +/- 2.67e-34]"
+          },
+          "A3": {
+            "trace": "[1.52682431806e-20 +/- 8.23e-34]",
+            "HS": "[1.13235327515e-21 +/- 4.42e-33]"
+          },
+          "B1": {
+            "trace": "[5.86654281892e-22 +/- 1.64e-34]",
+            "HS": "[2.26146959151e-22 +/- 2.36e-34]"
+          },
+          "B2": {
+            "trace": "[1.36575225556e-22 +/- 4.10e-34]",
+            "HS": "[5.58743508127e-23 +/- 8.6e-37]"
+          },
+          "B3": {
+            "trace": "[9.81227781779e-22 +/- 4.03e-34]",
+            "HS": "[2.52533585984e-22 +/- 2.20e-34]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "262": {
+        "N": 262,
+        "input_tail_only": "[1.95615556072e-37 +/- 4.02e-49]",
+        "input_tail_only_recomputed_by_same_telescoping": "[1.95615556072e-37 +/- 4.02e-49]",
+        "output_projection_tail": "[5.99511380254e-18 +/- 2.62e-30]",
+        "output_projection_tail_selected_variant": "[5.00880405861e-18 +/- 2.07e-30]",
+        "full_tau": "[5.99511380254e-18 +/- 2.62e-30]",
+        "full_tau_upper_endpoint": "[5.99511380253738705057330e-18 +/- 2.18e-42]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[1.93569817737e-21 +/- 2.31e-33]",
+            "HS": "[4.50163073790e-22 +/- 1.04e-34]"
+          },
+          "A3": {
+            "trace": "[1.01108114292e-20 +/- 2.74e-32]",
+            "HS": "[7.48583104973e-22 +/- 4.78e-34]"
+          },
+          "B1": {
+            "trace": "[3.87768049370e-22 +/- 2.42e-35]",
+            "HS": "[1.49479119010e-22 +/- 3.55e-34]"
+          },
+          "B2": {
+            "trace": "[9.02737957277e-23 +/- 1.86e-35]",
+            "HS": "[3.69319524177e-23 +/- 2.48e-35]"
+          },
+          "B3": {
+            "trace": "[6.48574117112e-22 +/- 4.35e-34]",
+            "HS": "[1.66920210182e-22 +/- 3.75e-34]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "263": {
+        "N": 263,
+        "input_tail_only": "[1.36263841652e-37 +/- 2.25e-49]",
+        "input_tail_only_recomputed_by_same_telescoping": "[1.36263841652e-37 +/- 2.25e-49]",
+        "output_projection_tail": "[4.87785487612e-18 +/- 4.23e-30]",
+        "output_projection_tail_selected_variant": "[4.07597703553e-18 +/- 4.54e-30]",
+        "full_tau": "[4.87785487612e-18 +/- 4.23e-30]",
+        "full_tau_upper_endpoint": "[4.87785487612422738371024e-18 +/- 4.01e-42]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[1.57373835558e-21 +/- 3.57e-33]",
+            "HS": "[3.65986238854e-22 +/- 4.26e-34]"
+          },
+          "A3": {
+            "trace": "[8.22769985920e-21 +/- 2.37e-33]",
+            "HS": "[6.08650706177e-22 +/- 4.62e-34]"
+          },
+          "B1": {
+            "trace": "[3.15258576724e-22 +/- 4.43e-34]",
+            "HS": "[1.21527739033e-22 +/- 1.92e-34]"
+          },
+          "B2": {
+            "trace": "[7.33933298599e-23 +/- 3.66e-36]",
+            "HS": "[3.00259775753e-23 +/- 4.58e-35]"
+          },
+          "B3": {
+            "trace": "[5.27296030173e-22 +/- 2.89e-34]",
+            "HS": "[1.35707487953e-22 +/- 4.60e-34]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      },
+      "300": {
+        "N": 300,
+        "input_tail_only": "[2.11126459713e-43 +/- 4.46e-55]",
+        "input_tail_only_recomputed_by_same_telescoping": "[2.11126459713e-43 +/- 4.46e-55]",
+        "output_projection_tail": "[2.35575878746e-21 +/- 2.43e-33]",
+        "output_projection_tail_selected_variant": "[1.97764798172e-21 +/- 4.60e-33]",
+        "full_tau": "[2.35575878746e-21 +/- 2.43e-33]",
+        "full_tau_upper_endpoint": "[2.35575878746242377095610e-21 +/- 3.70e-45]",
+        "full_tau_finite": true,
+        "full_tau_upper_le_1e_minus_15": true,
+        "per_block_tau_out": {
+          "A2": {
+            "trace": "[7.42067491511e-25 +/- 3.59e-37]",
+            "HS": "[1.72574106255e-25 +/- 2.63e-37]"
+          },
+          "A3": {
+            "trace": "[3.99058118527e-24 +/- 7.27e-37]",
+            "HS": "[2.87582710993e-25 +/- 5.03e-38]"
+          },
+          "B1": {
+            "trace": "[1.48654406482e-25 +/- 4.08e-37]",
+            "HS": "[5.73041790162e-26 +/- 4.08e-38]"
+          },
+          "B2": {
+            "trace": "[3.46072801680e-26 +/- 1.70e-38]",
+            "HS": "[1.41581996654e-26 +/- 3.39e-38]"
+          },
+          "B3": {
+            "trace": "[2.48636783240e-25 +/- 1.86e-37]",
+            "HS": "[6.39903798537e-26 +/- 4.95e-38]"
+          }
+        },
+        "hs_factors": {
+          "A2": "[37.1900706769 +/- 3.53e-11]",
+          "A3": "[22.7436858371 +/- 3.77e-12]",
+          "B1": "[13.3870991026 +/- 8.83e-12]",
+          "B2": "[4.07640688778 +/- 4.46e-12]",
+          "B3": "[11.3345795885 +/- 4.38e-11]"
+        }
+      }
+    }
+  },
+  "condition_6_regression_N104": {
+    "pass": true,
+    "full_tau_at_104": "[0.000696410381592 +/- 3.58e-16]",
+    "red_flag_full_tau_le_1e-14": false,
+    "input_tail_only_at_104": "[1.26474668906e-12 +/- 2.13e-24]"
+  },
+  "condition_7_full_tail_certified": {
+    "full_tail_certified": false,
+    "conditions_1_to_6": [
+      true,
+      true,
+      true,
+      false,
+      true,
+      true
+    ],
+    "note": "lane_f q8_schur_contour.py:395 full_tail_certified remains False; no lane_f file was modified"
+  },
+  "condition_7_full_tail_certified_corrected": {
+    "conditions_1_to_6_corrected": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "conditions_1_to_6_all_true": true,
+    "full_tau_upper_le_1e_minus_15_by_N": {
+      "104": false,
+      "214": false,
+      "237": false,
+      "238": true,
+      "245": true,
+      "256": true,
+      "260": true,
+      "262": true,
+      "263": true,
+      "300": true
+    },
+    "N_meeting_target": [
+      238,
+      245,
+      256,
+      260,
+      262,
+      263,
+      300
+    ],
+    "gate_would_pass_at_N": [
+      238,
+      245,
+      256,
+      260,
+      262,
+      263,
+      300
+    ],
+    "note": "EVALUATION ONLY.  lane_f is untouched; q8_schur_contour.py full_tail_certified stays False.  A flip additionally requires a referee pass on this receipt, the R1 Schur-substitution derivation, and the separately-OPEN Hardy/Hilbert binding."
+  }
+}
