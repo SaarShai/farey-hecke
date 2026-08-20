@@ -1127,3 +1127,45 @@ directive 2026-08-15
   file modified.  LEDGER RULE observed (upper bound only, domain Y >= q,
   fixed p > 2, C1 symbolic).  Submission to Aristotle proceeds now;
   harvest with independent rebuild on return.
+
+- **LAW SECOND AUDIT: CONFIRMED (INDEPENDENT LINEAGE); 4 PAPER-LEVEL
+  REPAIRS BANKED — 2026-08-20.**  A second cold adversarial audit
+  (LAW_SECOND_AUDIT_REFEREE.md), lineage-independent of both the proof
+  author and the first referee, re-obtained all sources itself
+  (byte-identical SHA-256 to the note's receipts), re-extracted the
+  Hejhal PDF, and ran every attack including: exact Z[lambda]
+  enumeration refuting the c-value density attack; full numeric
+  instantiation of the chain at q=3 against Odlyzko-grade zeta data
+  (1e-31 agreement on the gamma-modulus identity); pole-sign
+  convention refuted-numerically in the opposite direction.  Verdict:
+  **CONFIRMED — every mathematical attack failed**; strictness doubly
+  forced; arithmetic cases consistent (Kelmer Remark 0.2: q=3 off-line
+  poles are classical).  Four mandatory pre-paper repairs (attribution
+  to Selberg 1990; Hejhal Thm 7.11/Cor 7.12 printed partial antecedent;
+  Venkov Trudy-vs-Uspekhi citation fix; receipt blocks relabeled as
+  transcriptions + conjugated-group convention) appended to the SOL
+  note same turn (commit f2a46ba).  Residual declared dependency:
+  Selberg 1990 and Venkov Steklov originals unread by anyone in the
+  chain — consumed through Kelmer/FJS transcriptions, numerically
+  corroborated.  New consume-side warnings banked: Kelmer printed
+  A_Gamma AND B_Gamma both erroneous (second error newly found); LAW is
+  non-discriminating for arithmeticity — never use as a signature.
+
+- **MONOTONICITY NOTE REFEREE: MAJOR REVISION REQUIRED — 2026-08-20.**
+  R5_MONOTONICITY_GATE_REFEREE.md verdicts on R5_MONOTONICITY_GATE_SOL.md:
+  CONFIRMED — (a) two-stage whole-tail promotion lemma (re-derived
+  independently), (b) the (2.5) refutation (counter-instance reproduced
+  and STRENGTHENED with two in-model replacement witnesses after the
+  original witness was shown out-of-model), (d) (UP) sufficiency,
+  (e) B > 74 to 73 digits.  REFUTED — (f) "q_monotone removable":
+  a C_R scope error; at the banked C_R = 1.0489...e37 the threshold is
+  N_monotone ~ 1.96e29, not 1 (referee reproduced the banked side
+  threshold 134010166814705707171424895246 exactly).  Further defects:
+  D4 (the claimed missing pi_0 already exists banked:
+  floor_product = 1.827324e-5 in C0_TRANSPORT_CAMPAIGN_SOL.md:118-141);
+  D7 (q_monotone covers ALL envelopes, not only (1.11));
+  D3 (K_F = 109 is the Route-B sixth-zero wall — pairing it with
+  route-H quantities is exactly the mis-pairing the note's own §7.7
+  warns against; route-H banked two-stage K_F is e^57984).
+  Status: note stays claimed/unpromoted; repair lane launched
+  (append-only dated correction blocks, then re-referee).
