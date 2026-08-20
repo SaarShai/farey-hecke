@@ -1091,3 +1091,23 @@ directive 2026-08-15
   All lanes: receipts before claims, margins DOWN / upper bounds UP,
   append-only corrections, no pushes from lanes; this session judges and
   banks.
+
+- **G1 CORRECTION: v30 ALREADY COMPLETE; LANE RETARGETED TO v32 — 2026-08-20.**
+  The G1 lane found projects/aristotle_dispatch_v30/ already authored,
+  dispatched, harvested, and cold-refereed on 2026-08-19 by the codex
+  session (commits f148e5b -> 82576ea -> 9cebf15 -> 5315da5, all verified
+  ancestors of HEAD).  The 2026-08-20 goal-set entry above understated
+  this — dated correction, not a rewrite.  Lane receipts re-derived
+  fresh: draft pre-check exit 0 (2 sorry warnings at the targets);
+  returned source rebuild exit 0; zero sorry/axiom declarations
+  (forbidden_grep_exit=1); SHA-256 a7bbee7e...29dc matches the referee
+  record; no .lake cache created.  Machine-verified content: fw_product
+  finite ordered-ring implication + the AtomKind/MarkMode/Core/MarkedCode
+  typed serialization with decode(encode c)=some c and injectivity.
+  Explicitly-recorded gap (per DISPATCH.md "Deliberate exclusions"): the
+  full (FW) constant chain A_wrap,q(Y) <= 128(1+log 2) Y^2/q (1+log_+(Y/q)),
+  Ford counting, canonical normal form, and the (AM) 2^63/2^100 atom
+  moment remain CONJECTURAL at the Lean level.  v31 slot is a local
+  refutation marked DO NOT SUBMIT.  G1 retargeted: draft v32 = the full
+  (FW) constant-chain statement layer (Real.log arithmetic), same
+  pre-check discipline; submission still orchestrator-gated.
