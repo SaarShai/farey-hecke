@@ -8,7 +8,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from flint import acb, arb, ctx
+import random
+
+from flint import acb, acb_mat, arb, ctx
 
 import q8_contour_helpers as helper
 import q8_r3b_engine as engine
@@ -311,6 +313,121 @@ class Q8SchurContourRepairTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "checkpoint schema"):
                 contour.load_checkpoint(path, params)
+
+
+class Q8OperatorNormGateTests(unittest.TestCase):
+    """The tightened arc gate must bound the same object and fail closed."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        ctx.prec = contour.PRECISION_BITS
+
+    @staticmethod
+    def _random_matrix(size: int, rng: random.Random, radius: float = 0.0) -> acb_mat:
+        matrix = acb_mat(size, size)
+        for row in range(size):
+            for col in range(size):
+                matrix[row, col] = acb(
+                    arb(rng.uniform(-1.0, 1.0), radius),
+                    arb(rng.uniform(-1.0, 1.0), radius),
+                )
+        return matrix
+
+    def test_operator_bound_never_exceeds_frobenius_on_random_instances(self) -> None:
+        rng = random.Random(20260820)
+        for size in (1, 2, 3, 5, 9, 17):
+            for trial in range(4):
+                matrix = self._random_matrix(size, rng, radius=0.0 if trial % 2 else 0.05)
+                bound, components = contour.operator_norm_upper(matrix, size)
+                frobenius = components["frobenius"]
+                self.assertIsNotNone(frobenius)
+                self.assertLessEqual(
+                    bound.upper(),
+                    frobenius.upper(),
+                    f"tightened bound exceeded Frobenius at size {size}",
+                )
+                self.assertTrue(contour.definitely_positive(bound) or size == 0)
+
+    def test_operator_bound_dominates_every_realised_vector_gain(self) -> None:
+        """Soundness: ||A x||_2 <= bound * ||x||_2 for every sampled point/vector."""
+
+        rng = random.Random(31415)
+        for size in (2, 4, 8):
+            matrix = self._random_matrix(size, rng, radius=0.01)
+            bound, _components = contour.operator_norm_upper(matrix, size)
+            point = acb_mat(size, size)
+            for row in range(size):
+                for col in range(size):
+                    entry = matrix[row, col]
+                    point[row, col] = acb(entry.real.upper(), entry.imag.lower())
+            for _ in range(20):
+                vector = [
+                    acb(arb(rng.uniform(-1.0, 1.0)), arb(rng.uniform(-1.0, 1.0)))
+                    for _ in range(size)
+                ]
+                norm_in = arb(0)
+                for value in vector:
+                    norm_in += value.abs_upper() ** 2
+                norm_out = arb(0)
+                for row in range(size):
+                    image = acb(0)
+                    for col in range(size):
+                        image += point[row, col] * vector[col]
+                    norm_out += image.abs_lower() ** 2
+                self.assertLessEqual(
+                    norm_out.sqrt().lower(),
+                    (bound * norm_in.sqrt().upper()).upper(),
+                    "operator bound under-shot a realised vector gain",
+                )
+
+    def test_weighted_schur_beats_frobenius_on_a_diagonal_matrix(self) -> None:
+        """The tightening is real where Frobenius is genuinely lossy."""
+
+        size = 12
+        matrix = acb_mat(size, size)
+        for index in range(size):
+            matrix[index, index] = acb(1)
+        bound, components = contour.operator_norm_upper(matrix, size)
+        self.assertGreater(float(components["frobenius"].upper()), 3.4)
+        self.assertLess(float(bound), 1.0001)
+        self.assertGreaterEqual(float(bound), 1.0)
+
+    def test_schur_test_refuses_non_positive_weights(self) -> None:
+        absolute = [[arb(1), arb(1)], [arb(1), arb(1)]]
+        self.assertIsNone(
+            contour.schur_test_upper(absolute, [arb(1), arb(0)], [arb(1), arb(1)])
+        )
+        with self.assertRaisesRegex(ValueError, "weights must match"):
+            contour.schur_test_upper(absolute, [arb(1)], [arb(1), arb(1)])
+
+    def test_arc_gate_fails_closed_when_the_tightened_bound_exceeds_one(self) -> None:
+        """qOp >= 1 must abort the arc before any determinant box is emitted."""
+
+        segment = helper.closed_boundary_segments(
+            arb(contour.PIN_RE),
+            arb(contour.PIN_IM),
+            arb(contour.HALF_WIDTH),
+            arb(contour.HALF_WIDTH),
+            1,
+        )[0]
+        segment = dict(segment, initial_arc=segment["arc_index"], path=[])
+        bounds = contour.load_operator_bounds(
+            contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 32, contour.DEFAULT_LOUT
+        )
+        record, box = contour.arc_certificate(32, segment, bounds)
+        self.assertGreater(float(arb(record["qOp_upper"])), 1.0)
+        self.assertFalse(record["qOp_lt_1"])
+        self.assertEqual(record["status"], "FAIL_QOP")
+        self.assertEqual(box, acb(0))
+        self.assertNotIn("finite_taylor_box", record)
+        # both numbers are published; the old one stays for audit
+        self.assertLessEqual(
+            arb(record["qOp_upper"]).upper(), arb(record["qF_upper"]).upper()
+        )
+        self.assertEqual(
+            set(record["qOp_components"]),
+            {"frobenius", "schur_unweighted", "schur_weighted"},
+        )
 
 
 if __name__ == "__main__":

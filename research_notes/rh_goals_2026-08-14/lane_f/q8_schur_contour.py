@@ -12,7 +12,8 @@ For finite coefficient truncation, exact block elimination gives
 
 This runner evaluates the five direct N-by-N blocks exposed by
 ``q8_r3b_engine``.  It never assembles the legacy 3N-by-3N matrix.  The
-continuous arc gates use Acb closed rectangles, Frobenius/Hilbert bounds, and a
+continuous arc gates use Acb closed rectangles, a certified operator-2-norm
+contraction gate (weighted Schur test, minimised against Frobenius), and a
 finite Taylor/Jacobi determinant box.  The pinned q=8 R2 receipt bounds omitted
 input columns only; the omitted-output row/projection tail comes from the
 separate pinned L-OUT enlarged-contour receipt, and the two are combined by the
@@ -82,7 +83,7 @@ PINNED_SOURCE_SHA256 = {
     "f8_certify_tb_blocks.py": "30fd9b15a9425b1a356753f667909a8d58d826d4ac1e30f1a2e7667fcc73871c",
 }
 CHECKPOINT_SCHEMA = "q8-schur-contour-checkpoint/v3"
-CERTIFICATE_IMPLEMENTATION = "q8-schur-contour-repair/v3"
+CERTIFICATE_IMPLEMENTATION = "q8-schur-contour-repair/v4-operator-norm-gate"
 PRECISION_BITS = 384
 
 BLOCK_TO_NAME = {
@@ -164,6 +165,130 @@ def frobenius_upper(matrix: acb_mat, dimension: int | None = None) -> arb:
         for col in range(cols):
             square_sum += matrix[row, col].abs_upper() ** 2
     return square_sum.sqrt().upper()
+
+
+def entrywise_abs_upper(matrix: acb_mat, dimension: int | None = None) -> list[list[arb]]:
+    """Return the nonnegative entrywise modulus upper bounds ``M_ij >= |a_ij|``.
+
+    Every matrix in the interval matrix ``matrix`` is dominated entrywise by the
+    returned nonnegative real matrix, so any bound on ``||M||_2`` derived from
+    ``M`` alone is a bound on ``||A||_2`` for every such ``A`` (Schur/Perron
+    domination: ``||A||_2 <= || |A| ||_2 <= ||M||_2`` when ``|A| <= M``).
+    """
+
+    rows = matrix.nrows() if dimension is None else dimension
+    cols = matrix.ncols() if dimension is None else dimension
+    return [
+        [matrix[row, col].abs_upper() for col in range(cols)] for row in range(rows)
+    ]
+
+
+def schur_test_upper(
+    absolute: list[list[arb]], p: list[arb], q: list[arb]
+) -> arb | None:
+    """Weighted Schur test upper bound on ``||M||_2`` for nonnegative ``M``.
+
+    With strictly positive weights ``p_j`` and ``q_i``, if
+
+        sum_j M_ij p_j <= alpha * q_i   for every row i,
+        sum_i M_ij q_i <= beta  * p_j   for every column j,
+
+    then ``||M||_2 <= sqrt(alpha*beta)``.  (Cauchy-Schwarz on the splitting
+    ``M_ij |x_j| = (M_ij p_j)^{1/2} (M_ij |x_j|^2 / p_j)^{1/2}``, then Fubini.)
+    ``alpha`` and ``beta`` are computed here as certified Arb upper bounds of
+    the two ratios, so the conclusion holds for the true weights used.
+    ``p = q = 1`` recovers the classical ``sqrt(||M||_inf * ||M||_1)``.
+    """
+
+    size = len(absolute)
+    if len(p) != size or len(q) != size:
+        raise ValueError("Schur test weights must match the matrix dimension")
+    for weight in (*p, *q):
+        if not definitely_positive(weight):
+            return None
+    alpha = arb(0)
+    for row in range(size):
+        row_sum = arb(0)
+        for col in range(size):
+            row_sum += absolute[row][col] * p[col]
+        alpha = arb.max(alpha, (row_sum / q[row]).upper())
+    beta = arb(0)
+    for col in range(size):
+        col_sum = arb(0)
+        for row in range(size):
+            col_sum += absolute[row][col] * q[row]
+        beta = arb.max(beta, (col_sum / p[col]).upper())
+    return (alpha * beta).upper().sqrt().upper()
+
+
+def _power_iteration_weights(
+    absolute: list[list[arb]], iterations: int = 24
+) -> tuple[list[arb], list[arb]] | None:
+    """Float Perron/singular-vector weights for the weighted Schur test.
+
+    The weights are heuristic (plain floats, no rigour claimed).  Rigour comes
+    entirely from ``schur_test_upper``, which recomputes alpha and beta in Arb
+    for whatever positive weights it is handed; a bad guess only weakens the
+    bound, it can never make it unsound.
+    """
+
+    size = len(absolute)
+    grid = [[float(absolute[row][col].upper()) for col in range(size)] for row in range(size)]
+    if any(not math.isfinite(value) for row in grid for value in row):
+        return None
+    vector = [1.0] * size
+    for _ in range(iterations):
+        image = [sum(grid[row][col] * vector[col] for col in range(size)) for row in range(size)]
+        back = [sum(grid[row][col] * image[row] for row in range(size)) for col in range(size)]
+        scale = max(back)
+        if not math.isfinite(scale) or scale <= 0.0:
+            return None
+        vector = [value / scale for value in back]
+    floor = max(vector) * 1e-9
+    p_float = [max(value, floor) for value in vector]
+    image = [sum(grid[row][col] * p_float[col] for col in range(size)) for row in range(size)]
+    scale = max(image)
+    if not math.isfinite(scale) or scale <= 0.0:
+        return None
+    q_float = [max(value / scale, 1e-9) for value in image]
+    return ([arb(value) for value in p_float], [arb(value) for value in q_float])
+
+
+def operator_norm_upper(
+    matrix: acb_mat, dimension: int | None = None
+) -> tuple[arb, dict[str, arb | None]]:
+    """Certified upper bound on the operator 2-norm of an interval matrix.
+
+    Returns ``(bound, components)`` where ``bound`` is the minimum of several
+    independently certified upper bounds -- the minimum of certified upper
+    bounds is a certified upper bound -- and ``components`` records each one
+    for the receipt.  Every candidate bounds the same quantity,
+    ``sup{ ||A||_2 : A in matrix }``:
+
+        ||A||_2 <= ||A||_F                        (Frobenius)
+        ||A||_2 <= sqrt(alpha*beta)               (weighted Schur test)
+
+    both evaluated on the entrywise modulus upper bounds, which dominate every
+    member of the interval matrix.
+    """
+
+    size = matrix.nrows() if dimension is None else dimension
+    absolute = entrywise_abs_upper(matrix, size)
+    frobenius = frobenius_upper(matrix, size)
+    ones = [arb(1)] * size
+    components: dict[str, arb | None] = {
+        "frobenius": frobenius,
+        "schur_unweighted": schur_test_upper(absolute, ones, ones),
+        "schur_weighted": None,
+    }
+    weights = _power_iteration_weights(absolute)
+    if weights is not None:
+        components["schur_weighted"] = schur_test_upper(absolute, weights[0], weights[1])
+    best = frobenius
+    for value in components.values():
+        if value is not None and value.upper() < best.upper():
+            best = value.upper()
+    return best.upper(), components
 
 
 def matrix_sub(left: acb_mat, right: acb_mat) -> acb_mat:
@@ -788,8 +913,9 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
             )
     normalized_delta = A0_inverse * delta
     qf = frobenius_upper(normalized_delta, dimension)
+    qop, qop_components = operator_norm_upper(normalized_delta, dimension)
     gates: dict[str, bool] = {
-        "qF_lt_1": definitely_less(qf, arb(1)),
+        "qOp_lt_1": definitely_less(qop, arb(1)),
         "recorded_tail_receipt_checks_pass": bounds["recorded_tail_checks_pass"],
         "full_output_projection_tail_available": bounds["full_tail_certified"],
     }
@@ -803,7 +929,12 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
         "radius_upper": arb_text(radius),
         "dimension": dimension,
         "qF_upper": arb_text(qf),
-        "qF_lt_1": gates["qF_lt_1"],
+        "qOp_upper": arb_text(qop),
+        "qOp_components": {
+            name: (arb_text(value) if value is not None else None)
+            for name, value in qop_components.items()
+        },
+        "qOp_lt_1": gates["qOp_lt_1"],
         "Xop_upper": arb_text(bounds["Xop"]),
         "input_tail_only_upper": arb_text(bounds["input_tail_only"]),
         "output_projection_tail_upper": (
@@ -816,10 +947,13 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
         ),
         "full_tail_open_reason": bounds["full_tail_open_reason"],
     }
-    if not gates["qF_lt_1"]:
-        record["status"] = "FAIL_QF"
+    if not gates["qOp_lt_1"]:
+        record["status"] = "FAIL_QOP"
         return record, acb(0)
-    inv_arc = (frobenius_upper(A0_inverse, dimension) / (arb(1) - qf)).upper()
+    # ||A(s)^-1|| <= ||(I-M)^-1|| * ||A0^-1|| <= ||A0^-1||_F / (1 - ||M||_2)
+    # with M = A0^-1 (C(s)-C(s0)); the numerator stays Frobenius (which
+    # dominates the operator norm), only the contraction factor is tightened.
+    inv_arc = (frobenius_upper(A0_inverse, dimension) / (arb(1) - qop)).upper()
     inv_tilde = (arb(1) + bounds["Xop"] * inv_arc).upper()
     tail_homotopy = None
     if bounds["full_tail_certified"] and bounds["full_tau"] is not None:

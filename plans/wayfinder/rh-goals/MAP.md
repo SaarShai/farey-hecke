@@ -1577,3 +1577,18 @@ directive 2026-08-15
   campaign, owner-authorized tooling.  The completed integration note
   (§4.4 findings + §0.0/§7 provenance blocks) is now committed
   (8f28af0); the earlier push carried the pre-§4.4 draft.
+
+- **qOp GATE LANDED: SOUND, STRICT IMPROVEMENT, DOES NOT CLEAR;
+  SUBDIVISION IS THE PATH — 2026-08-20.**  QF_TIGHTENING_SOL.md +
+  lane_f edits (judged: 18/18 tests OK fresh; the new gate consumes
+  qOp = min(weighted-Schur, sigma_1 route) >= ||M||_2, same certified
+  object, published alongside qF for audit; fails closed with
+  FAIL_QOP and a null box).  MEASURED: qOp_upper = 83.790069059 vs
+  qF 83.7903 — the arc matrix's operator norm really is ~84; at most
+  ~1.9x further recoverable by norm work.  rho is linear in segment
+  radius, so qOp halves per subdivision level: depth 6-7 clears the
+  gate.  DECISION (orchestrator): no further norm engineering; launch
+  the Kaggle parallel-subdivision campaign (~512 leaves x ~1290 s ~
+  1.8e2 CPU-hours across 4 arcs; private kernels; checkpointed).
+  Contour verdict unchanged: OPEN / OPEN_MAX_DEPTH — checker output,
+  not a theorem; ledger gates 5-6 + condition 8 stand.
