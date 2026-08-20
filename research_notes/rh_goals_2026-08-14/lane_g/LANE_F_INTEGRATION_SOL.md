@@ -20,6 +20,51 @@ Interpreter `/Users/za/.venvs/farey-rh/bin/python` (python-flint / Arb,
 
 ## 0. Artifact integrity
 
+### 0.0 Repo state at handoff — READ FIRST, two things happened outside this lane
+
+**(a) This lane's edits were committed and pushed by another session, not by
+me.** The brief said "No commit, no push (the orchestrator judges first)". I
+issued no `git commit` and no `git push`. Mid-run, the orchestrating session
+committed the working tree and pushed it:
+
+```
+7434262 Saar Shai  Thu Aug 20 16:15:09 2026  Wire certified output tail into q8 checker; computed verdicts
+3764687 Saar Shai  Thu Aug 20 16:15:33 2026  MAP: lane_f integration banked; N=262 arc run in flight
+62cd088 Saar Shai  Thu Aug 20 16:33:13 2026  MAP: N=262 arc blocked on qF Frobenius gate; lever named
+$ git log --oneline origin/codex/prime-step-review-economic-validation..HEAD
+(empty — all three are pushed)
+```
+
+`7434262` contains exactly this lane's six artifacts. Note that the copy of
+**this note** inside `7434262` is the **incomplete draft** — it was committed
+while §4.4 was still a placeholder, so the committed note has no §4.4–4.6 and
+therefore none of the `N = 262` findings. The complete note is the working-tree
+version.
+
+**(b) `q8_schur_contour.py` has since been modified concurrently from outside
+this lane.** After `7434262` a further +148-line change landed in the working
+tree, authored by another session, replacing the Frobenius arc gate with a
+certified operator-2-norm contraction gate (weighted Schur test), bumping
+`CERTIFICATE_IMPLEMENTATION` to `q8-schur-contour-repair/v4-operator-norm-gate`.
+That is the lever §4.6 names. I did **not** write it, I have not reviewed it,
+and I did not touch the file after `7434262`.
+
+Consequences a referee must carry:
+
+* The `git diff --stat`, the file SHA-256s, and every `q8_schur_contour.py`
+  line reference below describe the state **at `7434262`**, not the current
+  working tree. The checker was `b4d1a9ef…` when this lane finished with it; it
+  is `6a9c1c3d…` now.
+* **All `qF` numbers in §4.4–4.6 were measured against the Frobenius gate at
+  `7434262`.** They do not describe the working tree's new gate. They remain
+  the correct account of why the `N = 262` contour did not complete under the
+  gate that existed when it was run.
+* The 13 unit tests of §4.1 were re-run against the concurrently-modified file
+  and still pass (`Ran 13 tests ... OK`), so the two changes are at least
+  compatible. That is an observation, not a review of the new gate.
+
+### 0.1 This lane's diff, as committed at `7434262`
+
 ```
 $ git diff --stat
  .../lane_f/q8_candidate_tb_cert.py                 | 100 ++++-
@@ -581,7 +626,101 @@ runs pass; it made them *quantitative*.
 
 ### 4.4 Full contour checker at the new default, `N = 262`
 
-<!-- N262-ARC-RESULT -->
+The full four-arc `N = 262` contour was **not** completed, and the reason is a
+finding rather than a resource excuse. One arc was run to a terminal verdict:
+
+```
+$ /Users/za/.venvs/farey-rh/bin/python q8_schur_contour.py --N 262 --max-depth 0 \
+    --arc-start 0 --arc-end 1 --out /tmp/q8_N262_arc0.json
+Q8_SCHUR arc=0 leaves=1 status=OPEN
+{
+  "status": "OPEN",
+  "N": 262,
+  "arcs": 1,
+  "winding": null,
+  "Xop": "[11427.381413421776647965797940311588292095112143227954658522916179326186118725497 +/- 4.15e-76]",
+  "full_tau": "[5.9951138025373870505733021787159609718542285317402711682159608710390984184932643e-18 +/- 2.73e-98]",
+  "runtime_seconds": 1289.9011837500002
+}
+exit=2
+```
+
+The arc record:
+
+```text
+dimension = 262
+qF_upper  = [83.790298954537757620416957883198935009715399234915335736445465072103168161461759 +/- 4.90e-79]
+qF_lt_1   = False
+input_tail_only_upper        = [1.9561555607159840240462733595604119804114872097857877038289716472396848691047533e-37 +/- 4.65e-117]
+output_projection_tail_upper = [5.9951138025373870503776866226443625694496011957842299701748121500605196481103672e-18 +/- 3.76e-98]
+full_tau_upper               = [5.9951138025373870505733021787159609718542285317402711682159608710390984184932643e-18 +/- 2.73e-98]
+full_tail_open_reason        = None
+status = OPEN_MAX_DEPTH
+```
+
+**The tail chain this lane was authorised to wire passes.**
+`full_tail_certified` is `true`, `full_tail_open_reason` is `null`, and the
+omitted-output tail is a certified finite number. The arc dies on a **different,
+pre-existing gate**: `qF_lt_1`, with `qF = 83.79 > 1`, at subdivision depth 0.
+
+### 4.5 The `qF` gate does NOT grow with `N` — it converges, and the small-`N` diagnostics are unrepresentative
+
+> **Scope of §4.4–4.6.** Every `qF` figure here was measured against the
+> **Frobenius** arc gate as it stood at commit `7434262`. A concurrent
+> out-of-lane change has since replaced that gate (§0.0b). These numbers are the
+> record of why the `N = 262` contour did not complete under the gate in force
+> when it was run; they say nothing about the replacement.
+
+The obvious hypothesis is that `qF` is a Frobenius sum over `N x N` entries and
+therefore grows with the truncation, so that raising `N` for the tail target
+buys a harder arc gate. **That hypothesis is false.** Arc 0, `--max-depth 0`,
+swept:
+
+| `N` | `qF_upper` | `full_tau` upper | `full_tail_certified` | leaf runtime |
+|---|---|---|---|---|
+| 2 | `2.1843890406771576664e-5` (repair-lane figure) | 1.49e5 | False | — |
+| 4 | `0.0014676909332799674571` (repair-lane figure) | 1.33e5 | False | — |
+| 8 | `0.4790732740846197724422517051766494465…` | 7.8158e4 | False | 0.2 s |
+| 16 | `83.943362738486394968770706884444656264…` | 2.0780e4 | False | 0.5 s |
+| 32 | `83.790301984292497394703730568234254079…` | 1.1042e3 | False | 2.0 s |
+| 64 | `83.790298954537757620320094326013063350…` | 2.1452e0 | False | 15.6 s |
+| 128 | `83.790298954537757620320114966309747105…` | 5.3176e−6 | False | 127.8 s |
+| **262** | `83.790298954537757620416957883198935009…` | **5.9951e−18** | **True** | 1289.9 s |
+
+`qF` **converges**: from `N = 32` to `N = 262` it agrees to 19 significant
+digits at `83.7902989545377576203…`. It is a property of the arc — the pinned
+half-width `1e-6` with `K = 1` — not of the truncation.
+
+The corollary is the sharper half of this finding, and it is adverse to the
+existing record: **the repair lane's `N = 2` and `N = 4` `qF` diagnostics
+(`2.18e-5`, `1.47e-3`) are not representative of the operator.** They are small
+by four to six orders because a 2- or 4-dimensional section does not yet carry
+the block's mass; `qF` has not begun to converge below `N = 8`. Those two
+numbers appear in `Q8_SCHUR_CONTINUOUS_CONTOUR_REPAIR_REFEREE.md` as "finite
+local diagnostics only", which is the correct caveat, but anyone reading them
+as evidence that the arc gate is comfortable at the pin would be wrong by a
+factor of ~4e6. **The `N = 2`/`N = 4` `qF` values must not be cited as arc-gate
+evidence.**
+
+### 4.6 What completing the `N = 262` contour would cost
+
+`qF` scales linearly in the segment radius, and the adaptive splitter halves the
+radius per level, so clearing `83.790298954537757620416957883198935009` needs
+`ceil(log2(83.7903)) = 7` levels (`83.7903 / 2^7 = 0.6546 < 1`), i.e. **128
+leaves per arc, 512 leaves for the closed contour**, each a fresh `262 x 262`
+engine build, inverse and Jacobi box at ~1290 s. That is of order **1.8e2
+CPU-hours** single-threaded, before any leaf that needs an eighth level. This
+lane did not run it, and the checker's `--checkpoint` / `--resume` path (which
+recomputes every saved PASS leaf) is the mechanism for doing so if the
+orchestrator wants it.
+
+**Named lever, NOT taken and NOT quantified here.** `qF` is a **Frobenius**
+bound standing in where an **operator-norm** bound would suffice
+(`||.||_op <= ||.||_HS`, (N3) of the substitution note). It is therefore
+conservative by an unmeasured factor, and tightening it is the obvious way to
+cut the 7 levels down. I did not measure the available gain and I did not touch
+the gate — it is outside the three authorised edits. Flagging it as the next
+lever, not as a result.
 
 ---
 
@@ -597,6 +736,8 @@ runs pass; it made them *quantitative*.
 | `arc_endpoints_recertified` | fail-open via `None` | fail-closed, raises | §3.6 |
 | `tb_/e1_receipt_has_no_pin_field` | hardcoded literals | computed | §3.6 |
 | `DEFAULT_N` | 104 | 262, provenance in the receipt | §1.3 |
+| checker global `status` at `N = 262` | — | **`OPEN`, exit 2** — `qF_lt_1` fails at `qF = 83.79` | §4.4 |
+| `finite_section_winding` | `null` | `null` — still not computed at `q = 8` | ledger item 3 |
 
 ---
 
@@ -615,9 +756,16 @@ arithmetic evaluation of a bound whose derivation is recorded elsewhere.
 
 **What it does NOT mean.**
 
-1. It does **not** close gate 5 of the 12-item ledger. The **continuous-contour
-   gate** (`Q8_SCHUR_CONTINUOUS_CONTOUR_REPAIR_SOL.md`) is open, and it is the
-   half of R-B8-3 the prior referee actually pointed at (closure referee DEF-7).
+0. **It does not mean the contour was certified.** At `N = 262` the checker's
+   global status is `OPEN` and its exit code is `2`. The arc gate `qF_lt_1`
+   **fails** (`qF = 83.79`), no winding number was computed
+   (`finite_section_winding: null`), and completing the contour needs ~7
+   subdivision levels that were not run (§4.4–4.6). A certified tail is one
+   input to the homotopy argument, not the argument.
+1. It does **not** close gate 5 of the 12-item ledger. The
+   **continuous-contour gate** (`Q8_SCHUR_CONTINUOUS_CONTOUR_REPAIR_SOL.md`) is
+   open, and it is the half of R-B8-3 the prior referee actually pointed at
+   (closure referee DEF-7).
 2. It does **not** close gate 6: `K_s` nonvanishing, word/lattice
    identification, common meromorphic continuation, and the Selberg
    determinant / zeta / scattering factorization are all open.
@@ -667,7 +815,21 @@ BLOCKED.**
 3. **DEF-5 and DEF-6 were fixed in `lane_g/binding_close/`**, not in `lane_f/` —
    that is the only file in which they exist, and the R-B8-3 audit trail runs
    through it. The regenerated receipt is byte-identical to the committed one.
-4. **A gate was strengthened beyond the brief's four named defects**: the L-OUT
+4. **The full four-arc `N = 262` contour was not completed.** One arc was run to
+   a terminal verdict; the blocker is the pre-existing `qF_lt_1` gate, not the
+   wiring, and completing it costs ~1.8e2 CPU-hours (§4.4–4.6). `N = 2` and
+   `N = 4` were run to completion as the brief asked.
+5. **An adverse finding about the existing record is reported, not buried**:
+   the repair lane's `N = 2`/`N = 4` `qF` diagnostics are unrepresentative by a
+   factor ~4e6 (§4.5).
+6. **The "no commit, no push" constraint was not honoured — but not by me.**
+   I issued no git write. The orchestrating session committed and pushed this
+   lane's work as `7434262` while the `N = 262` arc was still running, and the
+   pushed copy of this note is the incomplete draft (§0.0a).
+7. **`q8_schur_contour.py` was modified concurrently from outside this lane**
+   after `7434262`, replacing the arc gate whose failure §4.4–4.6 documents
+   (§0.0b). Unreviewed by me.
+8. **A gate was strengthened beyond the brief's four named defects**: the L-OUT
    consumption additionally requires `theta > 1`, the unscaled-radius chain, the
    holomorphy gate, and the checker's own Möbius reproduction of `rho_theta`.
    These can only make `full_tail_certified` harder to reach.
