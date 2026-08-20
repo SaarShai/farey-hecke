@@ -1332,3 +1332,17 @@ directive 2026-08-15
   assigned to the next referee), R2-R4 hygiene, R6 (the original
   referee's 4a/0.87 known-wrong only per this adjudication).  The
   Hardy/Hilbert binding remains separately OPEN.
+
+- **C_R'' PROMOTED AT PAPER LEVEL — 2026-08-20.**  Re-referee returned
+  "RE-REFEREE: CONFIRMED — promotion unblocked" (all repairs faithful,
+  append-only verified by hash: pre-repair body 3dd8caaa... byte-
+  identical, 47/0 numstat).  §9 appended to
+  BOUNDARY_ALPHA_THEOREM_SOL.md (53 insertions, 0 deletions, verified)
+  banking C_4'' = 2^52*81+1, C_R'' = 3018536183210772296097745
+  (log 56.367), q_A0'' = 11761546420922598622910053339543258496
+  (log 85.358), q_side'' = 4746157036282968395, with immutable hashes.
+  Ledger discipline retained: Sections 4 and 8 constants stand;
+  everything conditional; q_monotone KEPT.  Effective-route arithmetic
+  now: log C_R 85.24 -> 58.90 -> 56.37 across three refereed steps.
+  Next reduction rung: the unexamined powers of two in atom-bridge
+  (3.19)/(3.24)/(3.25) (CONJECTURAL, per V2 §5.1).

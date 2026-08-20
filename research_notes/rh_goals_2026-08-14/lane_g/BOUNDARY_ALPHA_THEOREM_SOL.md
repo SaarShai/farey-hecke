@@ -805,3 +805,56 @@ the autopsy are not promoted.  Machine formalization, a certified
 full-operator enclosure, standalone N1-RATE, the true finite base block, and
 the remaining all-gates closure remain **OPEN** or **CONJECTURAL** exactly as
 in the prior ledgers.
+
+## 9. Dated reduced-constant promotion (V2) — 2026-08-20
+
+This append-only block adds a further sharpened alternative constant; it
+does not erase or invalidate the published ceiling in Sections 4 and 7,
+nor the Section 8 constant.  Substituting the smaller explicit tag bound
+\(82944 = 2^{10}\,3^4\) from the atom bridge's (3.9) for its own
+\(2^{20}\) ceiling — proved non-double-counting: the ceiling enters the
+\(2^{62}\) subtotal exactly once, multiplicatively, at (3.25) — permits
+the paper-level coefficient
+
+\[
+C_4''=2^{52}\cdot 81+1=364791569817010177.
+\]
+
+Keeping the same balanced/matched boundary, \(p=11/5\), \(\alpha=6/5\),
+\(q_{\rm RATE}=12\), \(S=7.648\), \(M_0=2.775\), wrap term, and already
+accepted Route-B/Ford premises, the positive source-invariant assembly
+gives the sharper outward ceiling
+
+\[
+\boxed{C_R''=3018536183210772296097745},
+\]
+
+\(\log C_R'' = 56.3668\ldots\), a further \(\ln(1024/81)=2.537\ldots\)
+e-folds below the Section 8 constant (cumulative \(28.877\) below the
+published Section 4 ceiling).  The propagated selected conditional A0
+analytic-tail transport cutoff (one term of the full max; \(q_{\rm
+monotone}\) and all other gates KEPT) is
+
+\[
+q_{A0}''=11761546420922598622910053339543258496,\qquad
+\log q_{A0}'' = 85.3579\ldots
+\]
+
+with \(q_{\rm side}''=4746157036282968395\).
+
+The cold referee (`CR_REDUCTION_V2_REFEREE.md`) confirmed the
+non-double-counting core, recomputed the ceiling digit-for-digit with
+minimality both directions plus an exact-rational robustness check,
+reproduced the full A0 replay, and refuted the post-hash concern about
+this file (the Section 8 append).  Three documentation repairs (D1: 82944
+is itself a bound, not an exact cardinality; D2: replay-program receipt
+restated; D3: q_side propagation stated) were applied as the dated
+correction block in `CR_REDUCTION_V2_SOL.md`; the narrow re-referee then
+confirmed the repairs faithful and append-only ("RE-REFEREE: CONFIRMED —
+promotion unblocked", orchestrating session, 2026-08-20).  Immutable
+hashes at promotion:
+
+```text
+e9e5b023ea911a5d196254a134393815a57b4f6cf00fec09150d83a0d7d4b7b6  CR_REDUCTION_V2_SOL.md
+04f7f5ed2aa2065e9822be856e17e27f928c300ced81f418a3380772aff236b6  CR_REDUCTION_V2_REFEREE.md
+```
