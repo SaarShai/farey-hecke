@@ -1413,3 +1413,28 @@ directive 2026-08-15
   (1) receipt referee CONFIRMED; (2) Schur substitution CONFIRMED;
   (3) Hardy/Hilbert binding lane RUNNING; (4) lane_f re-pin authority
   decision now pending ONLY on (3).
+
+- **HARDY/HILBERT BINDING: REDUCED, 6/8 SUB-LEMMAS PROVED; B2 SOURCE
+  BANKED — 2026-08-20.**  HARDY_HILBERT_BINDING_SOL.md (commit 9b46c72
+  + B2 addendum): the last open q8 analytic gate stated against its
+  most-caveated phrasing and decomposed into 8 sub-lemmas.  PROVED (6):
+  including H0 orthonormality/Parseval — previously inherited
+  CONJECTURAL by the whole L-OUT norm chain — and the enlarged-disc
+  weight holomorphy the E1 probe listed as missing (probe rule
+  e = min(clearance/4, 0.15r) forces every enlarged margin
+  >= (3/4)*margin > 0, certified per row, worst 0.678884; even-q
+  Hurwitz corollary Re(a) >= 0.809619 > 0 at n0 = 1).  q7->q8
+  trace-class transplant: structural not parametric (even q, MMS
+  eq. (32) not (34), 3 discs not 5, 8 occurrences not 19, one CF
+  family, negative tails from n0 = 1); centering constant |c3|/r3 = 1/2
+  EXACT; rho_H <= 0.879829 < 1 (better than q7's 0.915242).  Binding
+  shown load-bearing (envelope q-parameter is 1.066/1.457 on discs 1-2,
+  divergent regime — only disc-3 landing at q = 1/2 saves it; a
+  misidentified row would fail SILENTLY).  REDUCED (2): B2 to MMS
+  eq. (32) — NOW DISCHARGED to a banked hash-pinned source
+  (MMS_arxiv_0912.2236.pdf, sha a10020bd... byte-identical to the
+  LAW-note and second-audit receipts; verbatim transcription + 4
+  consistency checks in the dated addendum); B8 to
+  Simon/Grothendieck/MMS with 3 named residuals.  Cold referee
+  launched.  Flip ledger: (1) receipt CONFIRMED, (2) Schur CONFIRMED,
+  (3) binding UNDER REFEREE, (4) authority pending on (3).

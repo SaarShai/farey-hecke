@@ -728,3 +728,42 @@ Ordered by expected yield.
 ---
 
 **READY FOR JUDGING**
+
+---
+
+## Dated addendum (2026-08-20, orchestrator): B2 source text banked
+
+The missing verbatim MMS eq. (32) is now banked in-repo.  The PDF
+(arXiv 0912.2236) was fetched and stored as
+`lane_g/MMS_arxiv_0912.2236.pdf`; its SHA-256
+
+```text
+a10020bd084534dc60fc3e887958f1583f2fc115d567961b461df1a59b32e072
+```
+
+is byte-identical to the receipt recorded at
+LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md:382 and independently
+re-fetched and re-hashed by the second LAW audit
+(LAW_SECOND_AUDIT_REFEREE.md, "Sources I obtained myself").
+`pdftotext -layout` pages 20–22, transcription (layout-cleaned; the
+PDF's own column breaks distort subscript placement):
+
+> Let g = (g_i)_{1<=i<=kappa_q} in B_{kappa_q}.  For q = 2h_q + 2 we
+> get
+>
+> (L_{s,±} g)_1(z) = L^inf_{2,s} g_{h_q}(z) ± L^inf_{−1,s} g_{h_q}(z),
+>
+> (32)  (L_{s,±} g)_i(z) = L_{1,s} g_{i−1}(z) + L^inf_{2,s} g_{h_q}(z)
+>        ± L^inf_{−1,s} g_{h_q}(z),   2 <= i <= h_q.
+
+Consistency with the claims of §B2 of this note, checked against the
+transcription: (i) even-q form q = 2h_q + 2 (q = 8 gives h_q = 3, three
+discs); (ii) operator-occurrence count = 2 + 3(h_q − 1) = 8 for q = 8;
+(iii) the negative-index tail family L^inf_{−1,s} is present (source of
+the "negative tails from n0 = 1" structural difference vs odd q); (iv)
+one continued-fraction family L_{1,s}, not two.  The surrounding
+symmetry lemma (Lemma 5.1, P-commutation, same pages) matches the
+even-q restriction convention this note uses.  B2's reduction is
+therefore discharged to a banked, hash-pinned printed source; the cold
+referee should re-derive the checker's row consumption directly against
+this transcription (attack item 1 of §"what a referee should attack").
