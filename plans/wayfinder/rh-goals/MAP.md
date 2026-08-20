@@ -1185,3 +1185,26 @@ directive 2026-08-15
   the smallness of pi_0 against e^56155, i.e. log q > 2.560914e9 +
   (5/6) log C_R on route H — C_R and c_0 reduction remain the only
   levers.
+
+- **Q8 OUTPUT-TAIL REFEREE: GAPS NOT REFUTED; L-OUT SPEC DELIVERED —
+  2026-08-20.**  Q8_OUTPUT_TAIL_REFEREE.md on Q8_OUTPUT_TAIL_SOL.md:
+  the mathematics survives an independent-oracle attack (referee built
+  its own mpmath Hurwitz-closure oracle, no repo engine; cross-validated
+  to 1e-14; 60/60 adverse checks with TRUE M_k sups including
+  theta = 2.4/2.60 near the 2.664 pole ceiling — regimes the note never
+  tested).  Confirmed: b_k boundary-sup reinterpretation (all 8 blocks x
+  17 k, zero violations); the (2.1)-(2.5) chain with no HS->trace factor
+  loss; theta_max = 1.23690740087 and binding block (3,2,1,False,False);
+  N >~ 200 diagnosis direction.  Six non-fatal defects: the §4.2 "rate
+  check" is a tautology of the bound (true per-step decay 0.28-0.70 by
+  family, not 0.81); 45->40 comparison miscount; tau_out(104)
+  ~1e-8/1.6e-7 not 1e-6 (conservative direction); §5.1 L-OUT schema
+  written for the wrong envelope family — the binding single-branch
+  head-block family (weight_sup+ratio) is not covered by (2.7),
+  corrected form supplied in referee §3.3; theta_max mislabelled
+  admissibility (true G1 ceiling 2.664); §5.2 level slip.  Referee ends
+  with an executable L-OUT spec (theta choice, per-family schema,
+  n-sweep to 400, no-rebuild rule, 7 pass/fail conditions + red-flag
+  regression).  Next: append-only defect repairs + L-OUT execution
+  lane; the Hardy/Hilbert binding remains the separately-OPEN analytic
+  gate.
