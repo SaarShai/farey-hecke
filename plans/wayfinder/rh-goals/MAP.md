@@ -1541,3 +1541,20 @@ directive 2026-08-15
   (--N 262) is now executing in background (pid 31201); §4.4 of
   LANE_F_INTEGRATION_SOL.md will be filled with its verbatim output,
   then the whole integration goes to a cold referee.
+
+- **N=262 ARC RUN: TAIL GATES PASS, BLOCKED ON PRE-EXISTING qF
+  FROBENIUS GATE — 2026-08-20.**  The first-ever full q8 contour
+  attempt at certified truncation: full_tail_certified computes TRUE
+  (full_tau = 5.995113802537387050573302...e-18) but the arc gate
+  fails — qF_upper = 83.79 >= 1, status OPEN_MAX_DEPTH.  Diagnosis
+  (integration lane): qF is a Frobenius bound over the N x N block
+  (2.18e-5 at N=2, 1.47e-3 at N=4) — DIMENSION-DRIVEN; the tail
+  target and the arc gate pull against each other in N.  Brute-force
+  fix = ~7 extra halvings = order 1e2 CPU-hours (Kaggle-scale).
+  NAMED LEVER: Frobenius overestimates the operator norm by roughly a
+  factor N for flat matrices; 83.79 / 262 = 0.32 < 1 suggests a true
+  certified operator-norm bound clears the gate without subdivision.
+  qF-tightening lane launched (authorized lane_f edit #4); Kaggle
+  subdivision campaign is the fallback.  N=2/N=4 runs completed
+  honestly OPEN (exit 2); operator bounds at 262 cross-check against
+  L_OUT_REPIN_SOL.md §5 to the error radius.
