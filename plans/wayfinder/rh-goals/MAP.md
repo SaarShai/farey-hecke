@@ -1558,3 +1558,22 @@ directive 2026-08-15
   subdivision campaign is the fallback.  N=2/N=4 runs completed
   honestly OPEN (exit 2); operator bounds at 262 cross-check against
   L_OUT_REPIN_SOL.md §5 to the error radius.
+
+- **qF DIAGNOSIS CORRECTED: CONVERGED ARC PROPERTY, NOT
+  DIMENSION-DRIVEN — 2026-08-20 (dated correction to the previous
+  entry).**  The integration lane's growth-curve measurement refutes
+  its own earlier "dimension-driven" diagnosis: qF converges —
+  0.479 (N=8), 83.9434 (N=16), 83.7903 (N=32), then stable to 19
+  significant digits (83.7902989545377576203...) through N=262.  It is
+  a property of the arc at the pinned 1e-6 half-width.  ADVERSE
+  COROLLARY, do-not-cite rule: the repair-era N=2/N=4 qF diagnostics
+  (2.18e-5, 1.47e-3) are unrepresentative by ~4e6 (low-dimensional
+  sections do not carry the block's mass) and must never be cited as
+  arc-gate evidence.  The factor-N Frobenius-slack lever named in the
+  previous entry is therefore VOID as reasoned; the running
+  qF-tightening lane's measured operator-norm bound will determine
+  whether any slack exists at all.  If qOp stays >> 1 the honest path
+  is 7 subdivision levels (~512 leaves, ~1.8e2 CPU-hours) — Kaggle
+  campaign, owner-authorized tooling.  The completed integration note
+  (§4.4 findings + §0.0/§7 provenance blocks) is now committed
+  (8f28af0); the earlier push carried the pre-§4.4 draft.
