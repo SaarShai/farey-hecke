@@ -1,0 +1,1593 @@
+{
+  "schema": "tb-block-certificates/v2-q8",
+  "backend": "python-flint Arb/Acb ball arithmetic",
+  "precision_bits": 384,
+  "M": 512,
+  "q": 8,
+  "kappa": 3,
+  "h_q": 3,
+  "even_q": true,
+  "lambda": "[1.84775906502257351225637 +/- 3.63e-24]",
+  "lambda_exact_form": "sqrt(2 + sqrt(2))",
+  "partition_points": [
+    "[-0.923879532511286756128183 +/- 1.90e-25]",
+    "[-0.765366864730179543456920 +/- 3.20e-26]",
+    "[-0.541196100146196984399723 +/- 2.06e-25]",
+    "0"
+  ],
+  "centers": [
+    "[-0.844623198620733149792552 +/- 4.22e-25]",
+    "[-0.653281482438188263928322 +/- 4.14e-25]",
+    "[-0.270598050073098492199862 +/- 3.98e-25]"
+  ],
+  "half_widths": [
+    "[0.0792563338905536063356316 +/- 1.07e-26]",
+    "[0.112085382291991279528598 +/- 3.82e-25]",
+    "[0.270598050073098492199862 +/- 3.98e-25]"
+  ],
+  "radius_multipliers": [
+    "10.0000000000000000000000",
+    "4.00000000000000000000000",
+    "2.00000000000000000000000"
+  ],
+  "radius_multipliers_exact_strings": [
+    "10",
+    "4",
+    "2"
+  ],
+  "source_radii": [
+    "[0.792563338905536063356316 +/- 1.07e-25]",
+    "[0.448341529167965118114394 +/- 4.75e-25]",
+    "[0.541196100146196984399723 +/- 2.06e-25]"
+  ],
+  "blocks_source": {
+    "path": "research_notes/rh_goals_2026-08-14/lane_f/f8_certify_tb_blocks.py",
+    "count": 8,
+    "expected_count": 8,
+    "exact_count_check": true,
+    "blocks": [
+      [
+        1,
+        3,
+        2,
+        false,
+        true
+      ],
+      [
+        1,
+        3,
+        1,
+        true,
+        true
+      ],
+      [
+        2,
+        1,
+        1,
+        false,
+        false
+      ],
+      [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      [
+        2,
+        3,
+        1,
+        true,
+        true
+      ],
+      [
+        3,
+        2,
+        1,
+        false,
+        false
+      ],
+      [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      [
+        3,
+        3,
+        1,
+        true,
+        true
+      ]
+    ],
+    "derivation": "MMS eq.(32) explicit q=8 list"
+  },
+  "blocks": [
+    {
+      "block": [
+        1,
+        3,
+        2,
+        false,
+        true
+      ],
+      "label": "1\u21923, +2, tail",
+      "tail": true,
+      "n0": 2,
+      "K_used": 12,
+      "head_terms": [
+        {
+          "n": 2,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.215261762886896487897876 +/- 1.11e-25]",
+          "ratio_upper_bound": "[0.397751873727002769272818 +/- 2.31e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 3,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0884917252941797385654858 +/- 6.49e-27]",
+          "ratio_upper_bound": "[0.163511387591807972719222 +/- 3.32e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 4,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.134339626779686736674325 +/- 2.68e-25]",
+          "ratio_upper_bound": "[0.248227263173915442761879 +/- 4.09e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 5,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.161745617595363238728313 +/- 1.43e-25]",
+          "ratio_upper_bound": "[0.298866931139507093009202 +/- 1.63e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 6,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.179973234889473153421196 +/- 3.28e-25]",
+          "ratio_upper_bound": "[0.332547176228460920331747 +/- 2.96e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 7,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.192971933811353145629599 +/- 2.43e-25]",
+          "ratio_upper_bound": "[0.356565639994863829066382 +/- 4.35e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 8,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.202709480385411648740091 +/- 4.69e-25]",
+          "ratio_upper_bound": "[0.374558279948159932656060 +/- 1.42e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 9,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.210276335974845366384850 +/- 4.84e-26]",
+          "ratio_upper_bound": "[0.388540005957252813158205 +/- 2.37e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 10,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.216325546459705908507078 +/- 1.16e-25]",
+          "ratio_upper_bound": "[0.399717489466883477052388 +/- 4.71e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 11,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.221272077263102899867356 +/- 4.83e-26]",
+          "ratio_upper_bound": "[0.408857486599273661205785 +/- 2.63e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 12,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.225392246727742167137475 +/- 1.93e-25]",
+          "ratio_upper_bound": "[0.416470567076990070955014 +/- 4.69e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 13,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.228877167627332990127427 +/- 1.48e-25]",
+          "ratio_upper_bound": "[0.422909861260095635830147 +/- 4.04e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 14,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.231863239040697346966984 +/- 3.34e-26]",
+          "ratio_upper_bound": "[0.428427401782944394447981 +/- 1.31e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": {
+        "first_n": 15,
+        "range": "n\u226515",
+        "kind": "crude_deep_tail",
+        "image_ball_center": "0",
+        "denominator_lower_bound": "[26.0791994378123334706966 +/- 2.80e-23]",
+        "image_ball_radius": "[0.0383447353276533512353592 +/- 3.25e-26]",
+        "target_distance_upper": "[0.308942785400751843435221 +/- 1.65e-25]",
+        "target_disc_margin": "[0.232253314745445140964502 +/- 3.71e-25]",
+        "inside_with_margin": true,
+        "ratio_upper_bound": "[0.570851832297562800275650 +/- 1.22e-25]",
+        "ratio_less_than_0_70": true,
+        "pass": true
+      },
+      "certified_sup_upper_bound": "[0.308942785400751843435221 +/- 1.65e-25]",
+      "ratio_upper_bound": "[0.570851832297562800275650 +/- 1.22e-25]",
+      "pass": true,
+      "K_search_trials": [
+        {
+          "K": 12,
+          "head_terms_pass": true,
+          "deep_first_n": 15,
+          "deep_ratio_upper_bound": "[0.570851832297562800275650 +/- 1.22e-25]",
+          "deep_inside_with_margin": true,
+          "deep_ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "block": [
+        1,
+        3,
+        1,
+        true,
+        true
+      ],
+      "label": "1\u21923, \u22121, tail",
+      "tail": true,
+      "n0": 1,
+      "K_used": 12,
+      "head_terms": [
+        {
+          "n": 1,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.255801230730152926870262 +/- 1.53e-25]",
+          "ratio_upper_bound": "[0.472659042925570971677890 +/- 3.17e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 2,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0830795005165848512676982 +/- 4.36e-26]",
+          "ratio_upper_bound": "[0.153510900197067237894730 +/- 6.48e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 3,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.131331685267217204549776 +/- 3.18e-25]",
+          "ratio_upper_bound": "[0.242669311977192154437837 +/- 2.15e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 4,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.159834452443756744177853 +/- 2.38e-25]",
+          "ratio_upper_bound": "[0.295335558405870951680743 +/- 4.44e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 5,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.178652420970957738398118 +/- 2.55e-25]",
+          "ratio_upper_bound": "[0.330106630337316075471438 +/- 8.38e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 6,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.192004867315846620517918 +/- 2.15e-25]",
+          "ratio_upper_bound": "[0.354778734111312035437234 +/- 1.53e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 7,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.201970971235579182593302 +/- 2.62e-25]",
+          "ratio_upper_bound": "[0.373193692971954879356680 +/- 6.45e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 8,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.209693986458947300877223 +/- 4.01e-26]",
+          "ratio_upper_bound": "[0.387463964360240655326589 +/- 3.04e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 9,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.215854595293828857893629 +/- 5.35e-26]",
+          "ratio_upper_bound": "[0.398847285180951207084008 +/- 5.81e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 10,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.220883368645121754144951 +/- 4.68e-26]",
+          "ratio_upper_bound": "[0.408139246726746602679373 +/- 2.31e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 11,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.225065977978409570136606 +/- 3.10e-25]",
+          "ratio_upper_bound": "[0.415867701037777187115053 +/- 1.67e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 12,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.228599418621268266112852 +/- 4.49e-25]",
+          "ratio_upper_bound": "[0.422396648016338532284899 +/- 1.95e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 13,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.231623939671055387415524 +/- 2.19e-25]",
+          "ratio_upper_bound": "[0.427985234203434276055153 +/- 4.26e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": {
+        "first_n": 14,
+        "range": "n\u226514",
+        "kind": "crude_deep_tail",
+        "image_ball_center": "0",
+        "denominator_lower_bound": "[24.2314403727897599584403 +/- 3.84e-23]",
+        "image_ball_radius": "[0.0412686982125474961268132 +/- 8.91e-27]",
+        "target_distance_upper": "[0.311866748285645988326675 +/- 2.07e-25]",
+        "target_disc_margin": "[0.229329351860550996073048 +/- 4.12e-25]",
+        "inside_with_margin": true,
+        "ratio_upper_bound": "[0.576254611223915512176277 +/- 3.11e-25]",
+        "ratio_less_than_0_70": true,
+        "pass": true
+      },
+      "certified_sup_upper_bound": "[0.311866748285645988326675 +/- 2.07e-25]",
+      "ratio_upper_bound": "[0.576254611223915512176277 +/- 3.11e-25]",
+      "pass": true,
+      "K_search_trials": [
+        {
+          "K": 12,
+          "head_terms_pass": true,
+          "deep_first_n": 14,
+          "deep_ratio_upper_bound": "[0.576254611223915512176277 +/- 3.11e-25]",
+          "deep_inside_with_margin": true,
+          "deep_ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "block": [
+        2,
+        1,
+        1,
+        false,
+        false
+      ],
+      "label": "2\u21921, +1, head",
+      "tail": false,
+      "n0": 1,
+      "K_used": null,
+      "head_terms": [
+        {
+          "n": 1,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.496023172299208292360621 +/- 3.60e-25]",
+          "ratio_upper_bound": "[0.625846727889502138595173 +/- 4.58e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": null,
+      "certified_sup_upper_bound": "[0.496023172299208292360621 +/- 3.60e-25]",
+      "ratio_upper_bound": "[0.625846727889502138595173 +/- 4.58e-25]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      "label": "2\u21923, +2, tail",
+      "tail": true,
+      "n0": 2,
+      "K_used": 12,
+      "head_terms": [
+        {
+          "n": 2,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.114928298596355680350209 +/- 1.53e-25]",
+          "ratio_upper_bound": "[0.212359805559037319688310 +/- 4.94e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 3,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0832743102181586352644626 +/- 2.40e-26]",
+          "ratio_upper_bound": "[0.153870861589104539580289 +/- 4.58e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 4,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.131440563060046764232314 +/- 1.82e-25]",
+          "ratio_upper_bound": "[0.242870491905872623095396 +/- 4.23e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 5,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.159903395407313096996720 +/- 4.79e-25]",
+          "ratio_upper_bound": "[0.295462948391751723524974 +/- 3.52e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 6,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.178699951273805397146273 +/- 1.16e-25]",
+          "ratio_upper_bound": "[0.330194454885266105163242 +/- 1.74e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 7,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.192039606107048460874098 +/- 2.68e-25]",
+          "ratio_upper_bound": "[0.354842923027663162376578 +/- 1.29e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 8,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.201997464274676001650441 +/- 7.34e-26]",
+          "ratio_upper_bound": "[0.373242645725106024223117 +/- 4.89e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 9,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.209714855595336174673088 +/- 3.41e-25]",
+          "ratio_upper_bound": "[0.387502525496182389337745 +/- 4.39e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 10,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.215871458160980028523405 +/- 2.04e-25]",
+          "ratio_upper_bound": "[0.398878443696592053994676 +/- 3.43e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 11,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.220897277144395141225401 +/- 3.87e-25]",
+          "ratio_upper_bound": "[0.408164946282359863534206 +/- 1.56e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 12,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.225077645582105310073826 +/- 1.64e-25]",
+          "ratio_upper_bound": "[0.415889259958273081464729 +/- 2.51e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 13,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.228609346283662904924110 +/- 3.01e-25]",
+          "ratio_upper_bound": "[0.422414991944522709858012 +/- 1.16e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 14,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.231632489440818566850480 +/- 4.96e-25]",
+          "ratio_upper_bound": "[0.428001032118018046757649 +/- 1.92e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": {
+        "first_n": 15,
+        "range": "n\u226515",
+        "kind": "crude_deep_tail",
+        "image_ball_center": "0",
+        "denominator_lower_bound": "[26.6147629637324493018028 +/- 1.95e-23]",
+        "image_ball_radius": "[0.0375731319254161860090614 +/- 3.69e-26]",
+        "target_distance_upper": "[0.308171181998514678208923 +/- 3.42e-26]",
+        "target_disc_margin": "[0.233024918147682306190800 +/- 2.40e-25]",
+        "inside_with_margin": true,
+        "ratio_upper_bound": "[0.569426095116476819149998 +/- 2.41e-25]",
+        "ratio_less_than_0_70": true,
+        "pass": true
+      },
+      "certified_sup_upper_bound": "[0.308171181998514678208923 +/- 3.42e-26]",
+      "ratio_upper_bound": "[0.569426095116476819149998 +/- 2.41e-25]",
+      "pass": true,
+      "K_search_trials": [
+        {
+          "K": 12,
+          "head_terms_pass": true,
+          "deep_first_n": 15,
+          "deep_ratio_upper_bound": "[0.569426095116476819149998 +/- 2.41e-25]",
+          "deep_inside_with_margin": true,
+          "deep_ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "block": [
+        2,
+        3,
+        1,
+        true,
+        true
+      ],
+      "label": "2\u21923, \u22121, tail",
+      "tail": true,
+      "n0": 1,
+      "K_used": 12,
+      "head_terms": [
+        {
+          "n": 1,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.216571411497586104484174 +/- 3.65e-26]",
+          "ratio_upper_bound": "[0.400171788819398727590489 +/- 5.14e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 2,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0621420297562812340268361 +/- 4.41e-26]",
+          "ratio_upper_bound": "[0.114823498801071154732812 +/- 1.63e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 3,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.120106868292191176778737 +/- 2.24e-25]",
+          "ratio_upper_bound": "[0.221928554658368549469396 +/- 6.21e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 4,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.152849370108383674799478 +/- 2.14e-25]",
+          "ratio_upper_bound": "[0.282428809200756314738267 +/- 3.83e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 5,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.173890198843006900892743 +/- 3.80e-25]",
+          "ratio_upper_bound": "[0.321307191230743825516968 +/- 2.25e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 6,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.188551348673408692517998 +/- 9.04e-26]",
+          "ratio_upper_bound": "[0.348397463733522902230162 +/- 2.49e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 7,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.199352371435649730779174 +/- 4.53e-25]",
+          "ratio_upper_bound": "[0.368355151453968937411966 +/- 2.23e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 8,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.207640417838018638981559 +/- 1.58e-25]",
+          "ratio_upper_bound": "[0.383669464325273815334122 +/- 1.49e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 9,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.214201103867497349588746 +/- 4.01e-25]",
+          "ratio_upper_bound": "[0.395792031409010057809560 +/- 3.43e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 10,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.219523480423915419325976 +/- 1.23e-25]",
+          "ratio_upper_bound": "[0.405626500938595174828758 +/- 4.24e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 11,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.223927904927414329976773 +/- 1.80e-26]",
+          "ratio_upper_bound": "[0.413764816241142834531905 +/- 1.60e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 12,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.227633003352583244120206 +/- 3.18e-26]",
+          "ratio_upper_bound": "[0.420610945443049556881352 +/- 3.29e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 13,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.230793081943269497702285 +/- 2.94e-25]",
+          "ratio_upper_bound": "[0.426450009305173840581324 +/- 2.02e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": {
+        "first_n": 14,
+        "range": "n\u226514",
+        "kind": "crude_deep_tail",
+        "image_ball_center": "0",
+        "denominator_lower_bound": "[24.7670038987098757895464 +/- 1.42e-23]",
+        "image_ball_radius": "[0.0403763008270891596712505 +/- 4.10e-26]",
+        "target_distance_upper": "[0.310974350900187651871112 +/- 1.44e-25]",
+        "target_disc_margin": "[0.230221749246009332528611 +/- 6.18e-26]",
+        "inside_with_margin": true,
+        "ratio_upper_bound": "[0.574605675865332427267373 +/- 3.60e-25]",
+        "ratio_less_than_0_70": true,
+        "pass": true
+      },
+      "certified_sup_upper_bound": "[0.310974350900187651871112 +/- 1.44e-25]",
+      "ratio_upper_bound": "[0.574605675865332427267373 +/- 3.60e-25]",
+      "pass": true,
+      "K_search_trials": [
+        {
+          "K": 12,
+          "head_terms_pass": true,
+          "deep_first_n": 14,
+          "deep_ratio_upper_bound": "[0.574605675865332427267373 +/- 3.60e-25]",
+          "deep_inside_with_margin": true,
+          "deep_ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "block": [
+        3,
+        2,
+        1,
+        false,
+        false
+      ],
+      "label": "3\u21922, +1, head",
+      "tail": false,
+      "n0": 1,
+      "K_used": null,
+      "head_terms": [
+        {
+          "n": 1,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.312310417702539969913112 +/- 2.89e-25]",
+          "ratio_upper_bound": "[0.696590428020637535884545 +/- 2.54e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": null,
+      "certified_sup_upper_bound": "[0.312310417702539969913112 +/- 2.89e-25]",
+      "ratio_upper_bound": "[0.696590428020637535884545 +/- 2.54e-25]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      "label": "3\u21923, +2, tail",
+      "tail": true,
+      "n0": 2,
+      "K_used": 12,
+      "head_terms": [
+        {
+          "n": 2,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0761873975249070631178792 +/- 3.94e-26]",
+          "ratio_upper_bound": "[0.140775954417125406310398 +/- 3.25e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 3,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0985962105026817155063758 +/- 4.47e-27]",
+          "ratio_upper_bound": "[0.182182041733204009402871 +/- 4.77e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 4,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.140077738345387510082419 +/- 2.21e-25]",
+          "ratio_upper_bound": "[0.258829910835549919235952 +/- 1.16e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 5,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.165438938682110585777452 +/- 1.60e-25]",
+          "ratio_upper_bound": "[0.305691298657583526112768 +/- 4.20e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 6,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.182547847275866066479726 +/- 2.05e-25]",
+          "ratio_upper_bound": "[0.337304439604337826131661 +/- 3.74e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 7,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.194868674871267862875140 +/- 2.87e-25]",
+          "ratio_upper_bound": "[0.360070360482321772091305 +/- 1.92e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 8,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.204164670760647243293066 +/- 1.36e-27]",
+          "ratio_upper_bound": "[0.377247121155335102759756 +/- 3.73e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 9,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.211427967090441818929215 +/- 4.87e-25]",
+          "ratio_upper_bound": "[0.390667942790658217587999 +/- 4.27e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 10,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.217259571615659449392211 +/- 2.30e-25]",
+          "ratio_upper_bound": "[0.401443342915755755170046 +/- 3.78e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 11,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.222044815425040775932202 +/- 1.95e-25]",
+          "ratio_upper_bound": "[0.410285320542883253085820 +/- 1.99e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 12,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.226042134628154897430041 +/- 1.06e-25]",
+          "ratio_upper_bound": "[0.417671403336226180846987 +/- 1.41e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 13,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.229431332393308610617430 +/- 4.46e-26]",
+          "ratio_upper_bound": "[0.423933824229943201604686 +/- 2.68e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 14,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.232341371397879924469108 +/- 4.22e-26]",
+          "ratio_upper_bound": "[0.429310875180209113014221 +/- 2.88e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": {
+        "first_n": 15,
+        "range": "n\u226515",
+        "kind": "crude_deep_tail",
+        "image_ball_center": "0",
+        "denominator_lower_bound": "[26.9045918251193072072459 +/- 1.09e-23]",
+        "image_ball_radius": "[0.0371683765544570027980874 +/- 3.89e-26]",
+        "target_distance_upper": "[0.307766426627555494997949 +/- 3.62e-26]",
+        "target_disc_margin": "[0.233429673518641489401774 +/- 2.42e-25]",
+        "inside_with_margin": true,
+        "ratio_upper_bound": "[0.568678204710670413876598 +/- 4.38e-25]",
+        "ratio_less_than_0_70": true,
+        "pass": true
+      },
+      "certified_sup_upper_bound": "[0.307766426627555494997949 +/- 3.62e-26]",
+      "ratio_upper_bound": "[0.568678204710670413876598 +/- 4.38e-25]",
+      "pass": true,
+      "K_search_trials": [
+        {
+          "K": 12,
+          "head_terms_pass": true,
+          "deep_first_n": 15,
+          "deep_ratio_upper_bound": "[0.568678204710670413876598 +/- 4.38e-25]",
+          "deep_inside_with_margin": true,
+          "deep_ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "block": [
+        3,
+        3,
+        1,
+        true,
+        true
+      ],
+      "label": "3\u21923, \u22121, tail",
+      "tail": true,
+      "n0": 1,
+      "K_used": 12,
+      "head_terms": [
+        {
+          "n": 1,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.363469832652968241982268 +/- 6.22e-26]",
+          "ratio_upper_bound": "[0.671604678146759859002060 +/- 3.67e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 2,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.0487436859026561538047588 +/- 3.46e-26]",
+          "ratio_upper_bound": "[0.0900665874892459319619213 +/- 3.09e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 3,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.113243695617243389275740 +/- 9.18e-26]",
+          "ratio_upper_bound": "[0.209247065133418550796545 +/- 3.94e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 4,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.148689022858424508698628 +/- 3.51e-25]",
+          "ratio_upper_bound": "[0.274741489856002531045942 +/- 3.79e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 5,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.171101454491657289193336 +/- 4.14e-25]",
+          "ratio_upper_bound": "[0.316154263575507083760362 +/- 9.30e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 6,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.186552805066314882298001 +/- 2.58e-25]",
+          "ratio_upper_bound": "[0.344704636666672401942163 +/- 1.10e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 7,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.197850203747605584464524 +/- 1.82e-25]",
+          "ratio_upper_bound": "[0.365579507491201364738169 +/- 1.13e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 8,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.206470286794374516328081 +/- 4.09e-25]",
+          "ratio_upper_bound": "[0.381507344082116063099731 +/- 2.32e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 9,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.213263954577354674809495 +/- 1.66e-25]",
+          "ratio_upper_bound": "[0.394060405312869460591864 +/- 3.08e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 10,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.218756071816542709125498 +/- 3.00e-25]",
+          "ratio_upper_bound": "[0.404208514727745900614602 +/- 1.12e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 11,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.223287973689091939869343 +/- 4.83e-26]",
+          "ratio_upper_bound": "[0.412582377494541517322783 +/- 4.64e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 12,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.227091235555081779603412 +/- 1.68e-25]",
+          "ratio_upper_bound": "[0.419609889084078911867653 +/- 3.89e-26]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        },
+        {
+          "n": 13,
+          "kind": "individual_arc",
+          "arc_cover": {
+            "M": 512,
+            "arc_enclosure": "Acb rectangular ball"
+          },
+          "certified_sup_upper_bound": "[0.230328508193149248893937 +/- 3.95e-25]",
+          "ratio_upper_bound": "[0.425591588947017618944401 +/- 2.26e-25]",
+          "ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ],
+      "deep_tail": {
+        "first_n": 14,
+        "range": "n\u226514",
+        "kind": "crude_deep_tail",
+        "image_ball_center": "0",
+        "denominator_lower_bound": "[25.0568327600967336949895 +/- 4.45e-23]",
+        "image_ball_radius": "[0.0399092738325855126343520 +/- 2.53e-26]",
+        "target_distance_upper": "[0.310507323905684004834214 +/- 4.23e-25]",
+        "target_disc_margin": "[0.230688776240512979565510 +/- 3.73e-25]",
+        "inside_with_margin": true,
+        "ratio_upper_bound": "[0.573742722502628065839798 +/- 4.43e-25]",
+        "ratio_less_than_0_70": true,
+        "pass": true
+      },
+      "certified_sup_upper_bound": "[0.363469832652968241982268 +/- 6.22e-26]",
+      "ratio_upper_bound": "[0.671604678146759859002060 +/- 3.67e-25]",
+      "pass": true,
+      "K_search_trials": [
+        {
+          "K": 12,
+          "head_terms_pass": true,
+          "deep_first_n": 14,
+          "deep_ratio_upper_bound": "[0.573742722502628065839798 +/- 4.43e-25]",
+          "deep_inside_with_margin": true,
+          "deep_ratio_less_than_0_70": true,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "rho_star": "[0.696590428020637535884545 +/- 2.55e-25]",
+  "rho_star_upper_bound": "[0.696590428020637535884545 +/- 2.55e-25]",
+  "threshold_text": "0.70",
+  "threshold": "0.70",
+  "threshold_source": "q8_tb_support.THRESHOLD_TEXT, the value certify_block actually grades against",
+  "rho_less_than_threshold": true,
+  "pole_clearance": [
+    {
+      "block": [
+        1,
+        3,
+        2,
+        false,
+        true
+      ],
+      "branch": "theta_2 (n\u22652)",
+      "pole_location": "[-3.69551813004514702451273 +/- 2.76e-24]",
+      "margin": "[2.05833159251887781136387 +/- 4.93e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        1,
+        3,
+        1,
+        true,
+        true
+      ],
+      "branch": "theta_-1 (n\u22651)",
+      "pole_location": "[1.84775906502257351225637 +/- 3.63e-24]",
+      "margin": "[1.89981892473777059869260 +/- 1.86e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        1,
+        1,
+        false,
+        false
+      ],
+      "branch": "theta_1",
+      "pole_location": "[-1.84775906502257351225637 +/- 3.63e-24]",
+      "margin": "[0.746136053416420130213651 +/- 2.67e-25]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      "branch": "theta_2 (n\u22652)",
+      "pole_location": "[-3.69551813004514702451273 +/- 2.76e-24]",
+      "margin": "[2.59389511843899364247002 +/- 2.36e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        3,
+        1,
+        true,
+        true
+      ],
+      "branch": "theta_-1 (n\u22651)",
+      "pole_location": "[1.84775906502257351225637 +/- 3.63e-24]",
+      "margin": "[2.05269901829279665807029 +/- 4.45e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        2,
+        1,
+        false,
+        false
+      ],
+      "branch": "theta_1",
+      "pole_location": "[-1.84775906502257351225637 +/- 3.63e-24]",
+      "margin": "[1.03596491480327803565678 +/- 1.58e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      "branch": "theta_2 (n\u22652)",
+      "pole_location": "[-3.69551813004514702451273 +/- 2.76e-24]",
+      "margin": "[2.88372397982585154791315 +/- 2.06e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        3,
+        1,
+        true,
+        true
+      ],
+      "branch": "theta_-1 (n\u22651)",
+      "pole_location": "[1.84775906502257351225637 +/- 3.63e-24]",
+      "margin": "[1.57716101494947502005650 +/- 4.78e-24]",
+      "pass": true
+    }
+  ],
+  "branch_cut_clearance": [
+    {
+      "block": [
+        1,
+        3,
+        2,
+        false,
+        true
+      ],
+      "expression": "Re(z+n\u03bb), n\u22652",
+      "margin": "[2.05833159251887781136387 +/- 4.93e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        1,
+        3,
+        1,
+        true,
+        true
+      ],
+      "expression": "Re(n\u03bb\u2212z), n\u22651",
+      "margin": "[1.89981892473777059869260 +/- 1.86e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        1,
+        1,
+        false,
+        false
+      ],
+      "expression": "Re(z+n\u03bb), n\u22651",
+      "margin": "[0.746136053416420130213651 +/- 2.67e-25]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      "expression": "Re(z+n\u03bb), n\u22652",
+      "margin": "[2.59389511843899364247002 +/- 2.36e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        2,
+        3,
+        1,
+        true,
+        true
+      ],
+      "expression": "Re(n\u03bb\u2212z), n\u22651",
+      "margin": "[2.05269901829279665807029 +/- 4.45e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        2,
+        1,
+        false,
+        false
+      ],
+      "expression": "Re(z+n\u03bb), n\u22651",
+      "margin": "[1.03596491480327803565678 +/- 1.58e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      "expression": "Re(z+n\u03bb), n\u22652",
+      "margin": "[2.88372397982585154791315 +/- 2.06e-24]",
+      "pass": true
+    },
+    {
+      "block": [
+        3,
+        3,
+        1,
+        true,
+        true
+      ],
+      "expression": "Re(n\u03bb\u2212z), n\u22651",
+      "margin": "[1.57716101494947502005650 +/- 4.78e-24]",
+      "pass": true
+    }
+  ],
+  "all_head_and_deep_tail_terms_pass": true,
+  "all_pole_clearances_pass": true,
+  "all_branch_cut_clearances_pass": true,
+  "block_kinds_covered_by_verdict": [
+    "head",
+    "tail"
+  ],
+  "certification_verdict": "PASS_RHO_LT_0.70",
+  "certification_verdict_conjuncts": {
+    "rho_star_lt_threshold": true,
+    "all_head_and_deep_tail_terms_pass": true,
+    "all_pole_clearances_pass": true,
+    "all_branch_cut_clearances_pass": true
+  },
+  "hashed_payload_excludes_wall_clock": true,
+  "pinned_receipt_not_overwritten": "research_notes/rh_goals_2026-08-14/lane_f/f8_receipts/Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json",
+  "scope_caveat": "Large radii are tested by the same pole/branch-cut and block-containment bounds; E1/Fredholm linkage remains OPEN."
+}

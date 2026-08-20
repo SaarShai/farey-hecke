@@ -54,6 +54,7 @@ DIGITS = 40
 OUT_DEFAULT = HERE / "Q8_CONTOUR_CONTAINMENT_RECEIPT.json"
 R3B_RECEIPT = LANE_F / "f8_receipts" / "F8_R3B_RECEIPT.json"
 W_RECEIPT = LANE_F / "f8_receipts" / "Q8_W_ENVELOPE_F1024_RECEIPT.json"
+E1_RECEIPT = HERE / "Q8_E1_ENLARGED_CONTRACTION_GATED_RECEIPT.json"
 
 
 def txt(value: arb) -> str:
@@ -108,19 +109,26 @@ def main() -> int:
     endpoints = []
     worst_re = None
     worst_im = None
+    # DEF-6: this enumeration must fail CLOSED.  A defensive isinstance/None
+    # skip used to leave ``endpoints`` empty and ``endpoints_ok`` None, which
+    # the overall verdict then accepted as "not False".
     for seg in segments:
+        if not isinstance(seg, dict):
+            raise TypeError(
+                "closed_boundary_segments no longer returns dicts; the arc "
+                "endpoint re-certification cannot be evaluated"
+            )
         for key in ("start", "end"):
-            z = seg[key] if isinstance(seg, dict) else None
-            if z is None:
-                continue
-            endpoints.append(z)
-    if endpoints:
-        worst_re = min((acb(z).real for z in endpoints), key=lambda v: v.lower())
-        worst_im = min((acb(z).imag for z in endpoints), key=lambda v: v.lower())
-        endpoints_ok = bool(tb.definitely_positive(worst_re)
-                            and tb.definitely_positive(worst_im - arb(1)))
-    else:
-        endpoints_ok = None
+            if key not in seg:
+                raise KeyError(f"contour segment has no {key!r} endpoint")
+            endpoints.append(seg[key])
+    expected_endpoints = 2 * len(segments)
+    if not segments or len(endpoints) != expected_endpoints:
+        raise ValueError("contour segment endpoints are missing or incomplete")
+    worst_re = min((acb(z).real for z in endpoints), key=lambda v: v.lower())
+    worst_im = min((acb(z).imag for z in endpoints), key=lambda v: v.lower())
+    endpoints_ok = bool(tb.definitely_positive(worst_re)
+                        and tb.definitely_positive(worst_im - arb(1)))
 
     # s-independence audit of the geometry certificates.
     audited = {
@@ -132,13 +140,21 @@ def main() -> int:
     }
     geometry_s_independent = all(audited.values())
 
+    # DEF-5: both flags below were hardcoded True inside an audit block.  They
+    # are now computed from the receipts themselves; a receipt may not assert
+    # an unaudited fact.
+    tb_receipt = json.loads(sc.DEFAULT_TB.read_text(encoding="utf-8"))
+    e1_receipt = json.loads(E1_RECEIPT.read_text(encoding="utf-8"))
+    tb_has_no_pin = "pin" not in tb_receipt
+    e1_has_no_pin = "pin" not in e1_receipt
+
     w = json.loads(W_RECEIPT.read_text(encoding="utf-8"))
     w_pin = w.get("pin", {})
     w_on_full_box = (w_pin.get("re") == sc.PIN_RE and w_pin.get("im") == sc.PIN_IM
                      and w_pin.get("half_width") == sc.HALF_WIDTH)
 
     ok = in_omega and pin_matches and geometry_s_independent and w_on_full_box \
-        and (endpoints_ok is not False)
+        and endpoints_ok and tb_has_no_pin and e1_has_no_pin
 
     receipt = {
         "schema": "q8-contour-containment/v1",
@@ -191,8 +207,8 @@ def main() -> int:
             ),
             "functions_without_s_parameter": audited,
             "all_s_independent": geometry_s_independent,
-            "tb_receipt_has_no_pin_field": True,
-            "e1_receipt_has_no_pin_field": True,
+            "tb_receipt_has_no_pin_field": tb_has_no_pin,
+            "e1_receipt_has_no_pin_field": e1_has_no_pin,
         },
         "s_dependent_object": {
             "object": "W weight envelope (lane_f/q8_weight_envelope.py)",

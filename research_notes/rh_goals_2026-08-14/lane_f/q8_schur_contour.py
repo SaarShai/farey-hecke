@@ -13,9 +13,10 @@ For finite coefficient truncation, exact block elimination gives
 This runner evaluates the five direct N-by-N blocks exposed by
 ``q8_r3b_engine``.  It never assembles the legacy 3N-by-3N matrix.  The
 continuous arc gates use Acb closed rectangles, Frobenius/Hilbert bounds, and a
-finite Taylor/Jacobi determinant box.  The available q=8 R2 receipt bounds
-omitted input columns only, so the full determinant homotopy remains disabled
-until an immutable omitted-output receipt is supplied.
+finite Taylor/Jacobi determinant box.  The pinned q=8 R2 receipt bounds omitted
+input columns only; the omitted-output row/projection tail comes from the
+separate pinned L-OUT enlarged-contour receipt, and the two are combined by the
+six-slot Schur telescoping before any homotopy gate is evaluated.
 
 The result is deliberately conservative: E1, q=8 MMS/Hilbert identification,
 K_s, and common-continuation/Selberg factorization remain OPEN and are never
@@ -47,17 +48,32 @@ PIN_IM = "4.345760788321986"
 HALF_WIDTH = "1e-6"
 SIGN = 1
 N_HEAD = 4
-DEFAULT_N = 104
+DEFAULT_N = 262
 DEFAULT_K = 1
 DEFAULT_MAX_DEPTH = 8
 DEFAULT_R2 = LANE_F / "f8_receipts" / "Q8_R2_F1024_LOCAL_RECEIPT.json"
 DEFAULT_TB = LANE_F / "f8_receipts" / "Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json"
 DEFAULT_W = LANE_F / "f8_receipts" / "Q8_W_ENVELOPE_F1024_RECEIPT.json"
+DEFAULT_LOUT = (
+    LANE_F.parent / "lane_g" / "l_out" / "Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json"
+)
 RECEIPT_FACTORS = ("10", "4", "2")
 PINNED_RECEIPT_SHA256 = {
     "R2": "80daa5de82c4e47d43c3b4aaa84a5955be5281f2cb147e7730766a1bba946043",
     "TB": "5f9cd3f9179c5b15539b3666bd3a2a3144995408648369dc1db6eda36f51d35c",
     "W": "7d7b33966e48c3fe5f45fcf9618943f17a65ca4ef91caa7e3b2067904d03011e",
+}
+PINNED_LOUT_SHA256 = "15f1603af9319ccef1ae7deb942e5cd946835472ef507dbe0bd8b0d2372054d5"
+FULL_TAU_TARGET_TEXT = "1e-15"
+N_DEFAULT_PROVENANCE = {
+    "N_default": DEFAULT_N,
+    "N_default_superseded": 104,
+    "reason": (
+        "104 predates the omitted-output tail; with tau_out live the certified "
+        "target full_tau <= 1e-15 first holds at N=238 and 262 carries 24 steps "
+        "of margin"
+    ),
+    "evidence": "lane_g/L_OUT_REPIN_SOL.md section 5 (theta=1.230 uniform)",
 }
 PINNED_SOURCE_SHA256 = {
     "q8_r3b_engine.py": "8b63dfbfc6bad21b01a951cbbf9f25e5a218f0353f9dd1c3493674b311aca2fc",
@@ -239,7 +255,242 @@ def block_hilbert_tail_bound(row: dict[str, Any]) -> arb:
     return (sum((item * item for item in selected), arb(0)) + tail_square).sqrt().upper()
 
 
-def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> dict[str, Any]:
+def schur_telescope(term: dict[str, arb], hs: dict[str, arb]) -> arb:
+    """The six-slot telescoped Schur defect combination.
+
+    C = B3 + A3 B2 + A3 A2 B1, so C - C_N expands into exactly six terms; see
+    lane_g/SCHUR_SUBSTITUTION_DERIVATION_SOL.md, Theorem S.  ``term`` carries
+    the per-block trace-norm defect d_X in each slot, ``hs`` the operator-norm
+    coefficients h_X.  Hypothesis (H1)/(iv): every h_X must bound the TRUE
+    untruncated block, never a finite section; the complete k-sums in
+    ``block_hilbert_tail_bound`` and the single-block formula supply that.
+    """
+
+    a2, a3 = hs["A2"], hs["A3"]
+    b1, b2 = hs["B1"], hs["B2"]
+    return (
+        term["B3"]
+        + a3 * term["B2"]
+        + a3 * a2 * term["B1"]
+        + term["A3"] * b2
+        + term["A3"] * a2 * b1
+        + a3 * term["A2"] * b1
+    ).upper()
+
+
+def mobius_image_ratio(
+    c_i: arb, radius: arb, c_j: arb, r_j: arb, lam: arb, n: int, neg: bool
+) -> arb:
+    """Exact image of disc(c_i, radius) under theta_n, as a ratio to r_j.
+
+    neg:  theta_n(z) =  1/(z - n lam),  a = c_i - n lam
+    else: theta_n(z) = -1/(z + n lam),  a = c_i + n lam
+    Image disc: centre = (+/-) a/(a^2 - R^2), radius = R/(a^2 - R^2).
+    """
+
+    a = c_i - arb(n) * lam if neg else c_i + arb(n) * lam
+    denominator = a * a - radius * radius
+    if not definitely_positive(denominator):
+        raise ArithmeticError(f"pole inside enlarged disc for n={n}")
+    centre = a / denominator if neg else -a / denominator
+    image_radius = radius / denominator
+    return (((centre - c_j).abs_upper() + image_radius) / r_j).upper()
+
+
+def mobius_rho_upper(
+    block: tuple[int, int, int, bool, bool],
+    centers: list[arb],
+    radii: list[arb],
+    radius_theta: arb,
+    lam: arb,
+    n_sweep: int,
+) -> arb:
+    """Independent recomputation of rho_theta from the enlarged Moebius image."""
+
+    i, j, n0, neg, tail = block
+    c_i, c_j, r_j = centers[i - 1], centers[j - 1], radii[j - 1]
+    top = n_sweep if tail else n0
+    best = arb(0)
+    for n in range(n0, top + 1):
+        value = mobius_image_ratio(c_i, radius_theta, c_j, r_j, lam, n, neg)
+        if value.upper() > best.upper():
+            best = value
+    if tail:
+        denominator = arb(top + 1) * lam - c_i.abs_upper() - radius_theta
+        if not definitely_positive(denominator):
+            raise ArithmeticError("deep-tail denominator not positive")
+        deep = ((arb(1) / denominator + c_j.abs_upper()) / r_j).upper()
+        if deep.upper() > best.upper():
+            best = deep
+    return best.upper()
+
+
+def lout_envelope_terms(row: dict[str, Any], K: int) -> list[arb]:
+    """M_k(theta) majorants k = 0 .. K-1 from the L-OUT receipt's closed form.
+
+    Two per-family schemas, per Q8_OUTPUT_TAIL_SOL.md correction block 4:
+    single-branch head blocks (A2, A3 -- A3 is the binding block) carry
+    ``weight_theta_sup_upper_bound`` and give ``W_theta * rho_theta^k``; the six
+    Hurwitz-closed tail families carry A/C/q/rho and give
+    ``A_theta q^k + C_theta k rho_theta^(k-1)``.
+    """
+
+    kind = row["kind"]
+    if kind == "single_branch":
+        weight = arb(row["weight_theta_sup_upper_bound"]).upper()
+        rho = arb(row["rho_theta_upper_bound"]).upper()
+        return [(weight * rho**k).upper() for k in range(K)]
+    if kind != "hurwitz_closed_tail_family":
+        raise ValueError(f"unknown L-OUT block kind: {kind}")
+    A = arb(row["A_theta_upper_bound"]).upper()
+    C = arb(row["C_theta_upper_bound"]).upper()
+    q = arb(row["q_upper_bound"]).upper()
+    rho = arb(row["rho_theta_upper_bound"]).upper()
+    terms = [A]
+    for k in range(1, K):
+        terms.append((A * q**k + C * arb(k) * rho ** (k - 1)).upper())
+    return terms
+
+
+def lout_tau_out_block(row: dict[str, Any], theta: arb, N: int) -> tuple[arb, arb]:
+    """(trace, HS) omitted-output projection tails for one eq.(32) block.
+
+    Q8_OUTPUT_TAIL_SOL.md (2.4) and (2.5):
+        ||(I-P_N) T P_N||_1  <= theta^-N * sum_{k<N} M_k(theta)
+        ||(I-P_N) T P_N||_HS <= theta^-N * sqrt(sum_{k<N} M_k(theta)^2)
+    """
+
+    terms = lout_envelope_terms(row, N)
+    total = sum(terms, arb(0)).upper()
+    square = sum(((term * term).upper() for term in terms), arb(0)).upper()
+    scale = theta ** (-N)
+    return (scale * total).upper(), (scale * square.sqrt()).upper()
+
+
+def load_lout_receipt(
+    lout_path: Path, lam: arb, centers: list[arb], radii: list[arb]
+) -> dict[str, Any]:
+    """Verify the pinned L-OUT enlarged-contour receipt and its admissibility.
+
+    Every gate below is recomputed here; nothing is taken on the receipt's word
+    except the certified per-block envelope constants, which are what the
+    receipt exists to supply.
+    """
+
+    verify_immutable_hash(lout_path, PINNED_LOUT_SHA256, "L-OUT receipt")
+    payload = json.loads(lout_path.read_text(encoding="utf-8"))
+    if payload.get("schema") != "q8-r2out-local/v1" or payload.get("q") != 8:
+        raise ValueError("unexpected pinned q8 L-OUT receipt")
+    bindings = payload.get("source_bindings", {})
+    for label in ("TB", "W", "R2"):
+        if bindings.get(f"{label}_sha256") != PINNED_RECEIPT_SHA256[label]:
+            raise ValueError(f"L-OUT receipt does not bind the pinned {label} receipt")
+    if payload.get("sign") != SIGN:
+        raise ValueError("L-OUT receipt sign does not match the checker")
+    pin = payload.get("pin", {})
+    if (pin.get("re"), pin.get("im"), pin.get("half_width")) != (PIN_RE, PIN_IM, HALF_WIDTH):
+        raise ValueError("L-OUT receipt pin box does not match the contour pin box")
+
+    geometry = payload.get("geometry", {})
+    recorded_centers = geometry.get("centers")
+    recorded_radii = geometry.get("source_radii")
+    enlarged_radii = geometry.get("enlarged_arc_radii")
+    if (
+        not isinstance(recorded_centers, list)
+        or not isinstance(recorded_radii, list)
+        or not isinstance(enlarged_radii, list)
+        or len(recorded_centers) != len(centers)
+        or len(recorded_radii) != len(radii)
+        or len(enlarged_radii) != len(radii)
+    ):
+        raise ValueError("L-OUT receipt geometry has the wrong shape")
+    comparisons = [arb_overlaps(lam, arb(geometry["lambda"]))]
+    comparisons.extend(
+        arb_overlaps(actual, arb(recorded))
+        for actual, recorded in zip(centers, recorded_centers, strict=True)
+    )
+    comparisons.extend(
+        arb_overlaps(actual, arb(recorded))
+        for actual, recorded in zip(radii, recorded_radii, strict=True)
+    )
+    if not all(comparisons):
+        raise ValueError("L-OUT receipt geometry does not overlap the engine geometry")
+
+    theta_strings = payload.get("theta_exact_strings")
+    if not isinstance(theta_strings, list) or len(theta_strings) != len(radii):
+        raise ValueError("L-OUT receipt has no per-disc theta list")
+    theta = [arb(text) for text in theta_strings]
+    theta_gt_one = all(definitely_positive(value - arb(1)) for value in theta)
+    # The arc cover must sit on theta_i * r_i and nowhere else: rescaling the
+    # source radii would silently change the operator on the i == j block B3.
+    # The chain is enlarged_arc_radii = theta * recorded source_radii, and the
+    # recorded source_radii were just overlapped against the engine geometry.
+    unscaled_source_radii = all(
+        arb_overlaps(theta[index] * arb(recorded_radii[index]), arb(enlarged_radii[index]))
+        for index in range(len(radii))
+    )
+
+    n_sweep = int(payload.get("n_sweep", 0))
+    gate_rows = {tuple(row["block"]): row for row in payload.get("holomorphy_gate", [])}
+    rows = {tuple(row["block"]): row for row in payload.get("blocks", [])}
+    expected_blocks = set(BLOCK_TO_NAME)
+    if set(rows) != expected_blocks or set(gate_rows) != expected_blocks:
+        raise ValueError("L-OUT receipt does not cover exactly the eight eq.(32) blocks")
+
+    holomorphy_pass = all(
+        bool(row.get("pole_clearance_pass"))
+        and bool(row.get("branch_cut_clearance_pass"))
+        and bool(row.get("deep_tail_d_positive"))
+        and bool(row.get("hurwitz_slope_less_than_a0"))
+        for row in gate_rows.values()
+    )
+    rho_rows: dict[str, dict[str, Any]] = {}
+    rho_reproduced = True
+    rho_below_one = True
+    for block, row in sorted(rows.items()):
+        recorded_rho = arb(row["rho_theta_upper_bound"]).upper()
+        radius_theta = (theta[block[0] - 1] * radii[block[0] - 1]).upper()
+        recomputed = mobius_rho_upper(block, centers, radii, radius_theta, lam, n_sweep)
+        dominates = bool(recorded_rho.upper() >= recomputed.upper())
+        strictly_below_one = definitely_less(recorded_rho, arb(1))
+        rho_reproduced = rho_reproduced and dominates
+        rho_below_one = rho_below_one and strictly_below_one
+        rho_rows[row["label"]] = {
+            "block": list(block),
+            "kind": row["kind"],
+            "recorded_rho_theta_upper": arb_text(recorded_rho, 30),
+            "checker_mobius_rho_upper": arb_text(recomputed, 30),
+            "recorded_dominates_checker_mobius": dominates,
+            "recorded_rho_theta_lt_1": strictly_below_one,
+        }
+    gates = {
+        "hash_verified": True,
+        "theta_strictly_greater_than_one": theta_gt_one,
+        "arc_radii_are_theta_times_unscaled_source_radii": unscaled_source_radii,
+        "holomorphy_gate_all_pass": holomorphy_pass,
+        "rho_theta_reproduced_by_checker_mobius": rho_reproduced,
+        "rho_theta_strictly_below_one": rho_below_one,
+    }
+    return {
+        "payload": payload,
+        "rows": rows,
+        "theta": theta,
+        "theta_exact_strings": list(theta_strings),
+        "gates": gates,
+        "gates_pass": all(gates.values()),
+        "rho_audit": rho_rows,
+        "sha256": PINNED_LOUT_SHA256,
+        "path": str(lout_path),
+    }
+
+
+def load_operator_bounds(
+    r2_path: Path,
+    tb_path: Path,
+    w_path: Path,
+    N: int,
+    lout_path: Path | None = None,
+) -> dict[str, Any]:
     """Load immutable F1024 inputs and keep input-only tails distinct."""
 
     receipt_paths = {"R2": r2_path, "TB": tb_path, "W": w_path}
@@ -348,14 +599,7 @@ def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> 
     a2, a3 = hs["A2"], hs["A3"]
     b1, b2, b3 = hs["B1"], hs["B2"], hs["B3"]
     xop = (b3 + a3 * b2 + a3 * a2 * b1).upper()
-    input_tail_only = (
-        trace["B3"]
-        + a3 * trace["B2"]
-        + a3 * a2 * trace["B1"]
-        + trace["A3"] * b2
-        + trace["A3"] * a2 * b1
-        + a3 * trace["A2"] * b1
-    ).upper()
+    input_tail_only = schur_telescope(trace, hs)
     recorded_checks: dict[str, dict[str, str]] = {}
     for key, row in r2.get("tail_bounds", {}).items():
         source = arb(row["T_tail_upper_bound"])
@@ -368,20 +612,98 @@ def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> 
                 r2_row = r2_rows[block]
                 total += tail_trace_tail(arb(r2_row["A_upper_bound"]), arb(r2_row["C_upper_bound"]), arb(r2_row["q_upper_bound"]), arb(r2_row["rho_upper_bound"]), int(key))
         source_covers_recomputed = total.upper() <= source.upper()
+        recomputed_covers_source = total.upper() >= source.upper()
         recorded_checks[key] = {
             "source": arb_text(source),
             "recomputed": arb_text(total.upper()),
             "source_upper_covers_recomputed_upper": str(source_covers_recomputed),
+            "recomputed_upper_covers_source_upper": str(recomputed_covers_source),
+            "relative_gap_upper": arb_text(
+                ((total.upper() - source.upper()) / source.upper()).abs_upper()
+            ),
             "comparison": "recomputed.upper() <= source.upper()",
         }
+    # The checker never consumes ``T_tail_upper_bound``; it recomputes the
+    # input-column trace tail itself at the requested N.  The safety-relevant
+    # predicate is therefore that the consumed recomputation DOMINATES the
+    # recorded label, not the reverse.  The prior direction asked whether a
+    # value the checker never reads covers the value it does read, and both
+    # pinned rows fail it by a rounding-order difference of order 1e-18
+    # relative (published per row above), so it named an unaudited fact.
+    recorded_tail_checks_predicate = (
+        "for every recorded N row: recomputed.upper() >= source.upper(), i.e. "
+        "the independently recomputed input-column trace tail that this checker "
+        "consumes dominates the pinned R2 label it does not consume"
+    )
     recorded_tail_checks_pass = all(
-        row["source_upper_covers_recomputed_upper"] == "True"
+        row["recomputed_upper_covers_source_upper"] == "True"
         for row in recorded_checks.values()
     )
-    full_tail_open_reason = (
-        "The immutable q8 F1024 receipts bound omitted input columns only; "
-        "no compatible omitted-output-row/projection coefficient tail is present."
-    )
+
+    lout: dict[str, Any] | None = None
+    output_projection_tail: arb | None = None
+    output_projection_tail_hs: arb | None = None
+    tau_out_per_block: dict[str, dict[str, str]] | None = None
+    full_tau: arb | None = None
+    full_tail_certified = False
+    full_tail_target_met = False
+    if lout_path is not None:
+        lout = load_lout_receipt(
+            lout_path,
+            lam.real,
+            [value.real for value in centers],
+            [value.real for value in radii],
+        )
+        theta = lout["theta"]
+        rows = lout["rows"]
+        tau_out: dict[str, arb] = {}
+        tau_out_hs: dict[str, arb] = {}
+        tau_out_per_block = {}
+        for name, block in SINGLE_NAME_TO_BLOCK.items():
+            value, hs_value = lout_tau_out_block(rows[block], theta[block[0] - 1], N)
+            tau_out[name], tau_out_hs[name] = value, hs_value
+            tau_out_per_block[name] = {
+                "trace": arb_text(value, 30), "HS": arb_text(hs_value, 30)
+            }
+        for name, blocks in TAIL_NAME_TO_BLOCKS.items():
+            total, hs_total = arb(0), arb(0)
+            for block in blocks:
+                value, hs_value = lout_tau_out_block(rows[block], theta[block[0] - 1], N)
+                total += value
+                hs_total += hs_value
+            tau_out[name], tau_out_hs[name] = total.upper(), hs_total.upper()
+            tau_out_per_block[name] = {
+                "trace": arb_text(total.upper(), 30), "HS": arb_text(hs_total.upper(), 30)
+            }
+        # Theorem S: substitute the FULL per-block defect into each trace[.]
+        # slot; the hs[.] coefficients stay the untruncated-block bounds.
+        output_projection_tail = schur_telescope(tau_out, hs)
+        output_projection_tail_hs = schur_telescope(tau_out_hs, hs)
+        full_tau = (input_tail_only + output_projection_tail).upper()
+        full_tau_target_met = bool(
+            full_tau.is_finite()
+            and definitely_less(full_tau.upper(), arb(FULL_TAU_TARGET_TEXT))
+        )
+        full_tail_target_met = full_tau_target_met
+        full_tail_certified = bool(
+            full_tau_target_met
+            and lout["gates_pass"]
+            and all(receipt_hashes_verified.values())
+            and all(source_hashes_verified.values())
+        )
+    if full_tail_certified:
+        full_tail_open_reason = None
+    elif lout is None:
+        full_tail_open_reason = (
+            "The immutable q8 F1024 receipts bound omitted input columns only; "
+            "no compatible omitted-output-row/projection coefficient tail is present."
+        )
+    else:
+        full_tail_open_reason = (
+            "L-OUT omitted-output tail consumed, but the computed verdict is "
+            f"false: target_met={full_tail_target_met}, "
+            f"lout_gates_pass={lout['gates_pass']}"
+        )
     return {
         "r2": r2,
         "tb": tb,
@@ -390,16 +712,23 @@ def load_operator_bounds(r2_path: Path, tb_path: Path, w_path: Path, N: int) -> 
         "trace": trace,
         "Xop": xop,
         "input_tail_only": input_tail_only,
-        "output_projection_tail": None,
-        "full_tau": None,
-        "full_tail_certified": False,
+        "output_projection_tail": output_projection_tail,
+        "output_projection_tail_hs": output_projection_tail_hs,
+        "tau_out_per_block": tau_out_per_block,
+        "full_tau": full_tau,
+        "full_tau_target": FULL_TAU_TARGET_TEXT,
+        "full_tau_target_met": full_tail_target_met,
+        "full_tail_certified": full_tail_certified,
         "full_tail_open_reason": full_tail_open_reason,
         "full_tail_formula": (
-            "tau_full requires full block tails ||T-P_i T P_j||_1, combining "
-            "omitted input columns and omitted output rows before Schur telescoping"
+            "tau_full = input_tail_only + output_projection_tail, each the "
+            "six-slot Schur telescoping of the per-block defect "
+            "tau_in + tau_out with the hs[.] coefficients unchanged"
         ),
+        "lout": lout,
         "formulas": formulas,
         "recorded_tail_checks": recorded_checks,
+        "recorded_tail_checks_predicate": recorded_tail_checks_predicate,
         "recorded_tail_checks_pass": recorded_tail_checks_pass,
         "factor_strings": factor_strings,
         "geometry_verified": True,
@@ -477,8 +806,14 @@ def arc_certificate(N: int, segment: dict[str, Any], bounds: dict[str, Any]) -> 
         "qF_lt_1": gates["qF_lt_1"],
         "Xop_upper": arb_text(bounds["Xop"]),
         "input_tail_only_upper": arb_text(bounds["input_tail_only"]),
-        "output_projection_tail_upper": None,
-        "full_tau_upper": None,
+        "output_projection_tail_upper": (
+            arb_text(bounds["output_projection_tail"])
+            if bounds["output_projection_tail"] is not None
+            else None
+        ),
+        "full_tau_upper": (
+            arb_text(bounds["full_tau"]) if bounds["full_tau"] is not None else None
+        ),
         "full_tail_open_reason": bounds["full_tail_open_reason"],
     }
     if not gates["qF_lt_1"]:
@@ -751,6 +1086,17 @@ def main() -> int:
     parser.add_argument("--r2", type=Path, default=DEFAULT_R2)
     parser.add_argument("--tb", type=Path, default=DEFAULT_TB)
     parser.add_argument("--w", type=Path, default=DEFAULT_W)
+    parser.add_argument(
+        "--lout",
+        type=Path,
+        default=DEFAULT_LOUT,
+        help="pinned L-OUT enlarged-contour omitted-output receipt",
+    )
+    parser.add_argument(
+        "--no-lout",
+        action="store_true",
+        help="refuse the omitted-output tail and keep the pre-L-OUT fail-closed path",
+    )
     parser.add_argument("--arc-start", type=int, default=0)
     parser.add_argument("--arc-end", type=int, default=None)
     parser.add_argument("--checkpoint", type=Path, default=None)
@@ -761,7 +1107,9 @@ def main() -> int:
         raise SystemExit("N>=2, K>=1 and max-depth>=0 required")
     ctx.prec = PRECISION_BITS
     started = time.perf_counter()
-    bounds = load_operator_bounds(args.r2, args.tb, args.w, args.N)
+    bounds = load_operator_bounds(
+        args.r2, args.tb, args.w, args.N, None if args.no_lout else args.lout
+    )
     segments = helper.closed_boundary_segments(arb(PIN_RE), arb(PIN_IM), arb(HALF_WIDTH), arb(HALF_WIDTH), args.K)
     for segment in segments:
         segment["initial_arc"] = segment["arc_index"]
@@ -829,13 +1177,42 @@ def main() -> int:
                 name: arb_text(value) for name, value in bounds["trace"].items()
             },
             "input_tail_only": arb_text(bounds["input_tail_only"]),
-            "output_projection_tail": None,
-            "full_tau": None,
+            "output_projection_tail": (
+                arb_text(bounds["output_projection_tail"])
+                if bounds["output_projection_tail"] is not None
+                else None
+            ),
+            "output_projection_tail_hilbert_schmidt": (
+                arb_text(bounds["output_projection_tail_hs"])
+                if bounds["output_projection_tail_hs"] is not None
+                else None
+            ),
+            "omitted_output_tail_per_block": bounds["tau_out_per_block"],
+            "full_tau": (
+                arb_text(bounds["full_tau"]) if bounds["full_tau"] is not None else None
+            ),
+            "full_tau_target": bounds["full_tau_target"],
+            "full_tau_target_met": bounds["full_tau_target_met"],
             "full_tail_certified": bounds["full_tail_certified"],
+            "full_tail_certified_is_computed": True,
             "full_tail_open_reason": bounds["full_tail_open_reason"],
             "full_tail_formula": bounds["full_tail_formula"],
         },
+        "omitted_output_receipt": (
+            {
+                "path": bounds["lout"]["path"],
+                "sha256": bounds["lout"]["sha256"],
+                "theta_exact_strings": bounds["lout"]["theta_exact_strings"],
+                "gates": bounds["lout"]["gates"],
+                "gates_pass": bounds["lout"]["gates_pass"],
+                "rho_theta_audit": bounds["lout"]["rho_audit"],
+            }
+            if bounds["lout"] is not None
+            else None
+        ),
+        "truncation_provenance": N_DEFAULT_PROVENANCE,
         "tail_formula_checks": bounds["recorded_tail_checks"],
+        "tail_formula_checks_predicate": bounds["recorded_tail_checks_predicate"],
         "tail_formula_checks_pass": bounds["recorded_tail_checks_pass"],
         "bindings": {
             "checker_sha256": params["checker_sha256"],

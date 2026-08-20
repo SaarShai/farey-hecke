@@ -81,13 +81,25 @@ class Q8SchurContourRepairTests(unittest.TestCase):
                     tampered_r2, contour.DEFAULT_TB, contour.DEFAULT_W, 2
                 )
 
-    def test_stale_recorded_upper_bound_is_not_accepted(self) -> None:
+    def test_recorded_tail_check_publishes_both_directions_and_gates_on_the_consumed_one(self) -> None:
         bounds = contour.load_operator_bounds(
             contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 2
         )
         check = bounds["recorded_tail_checks"]["256"]
+        # The recorded R2 label does NOT cover this checker's own recomputation;
+        # that computed fact is still published verbatim.
         self.assertEqual(check["source_upper_covers_recomputed_upper"], "False")
-        self.assertFalse(bounds["recorded_tail_checks_pass"])
+        # The checker consumes its own recomputation, so the conservative
+        # direction -- and the one the gate names -- is that ours dominates.
+        self.assertEqual(check["recomputed_upper_covers_source_upper"], "True")
+        self.assertTrue(bounds["recorded_tail_checks_pass"])
+        self.assertIn("recomputed.upper() >= source.upper()",
+                      bounds["recorded_tail_checks_predicate"])
+        # The disagreement must stay a rounding-order artefact, not a blow-up.
+        self.assertTrue(
+            arb(check["relative_gap_upper"]).upper() < arb("1e-15"),
+            check["relative_gap_upper"],
+        )
 
     def test_missing_output_projection_tail_forces_open_full_homotopy(self) -> None:
         bounds = contour.load_operator_bounds(
@@ -97,6 +109,85 @@ class Q8SchurContourRepairTests(unittest.TestCase):
         self.assertFalse(bounds["full_tail_certified"])
         self.assertIn("output", bounds["full_tail_open_reason"].lower())
         self.assertGreater(bounds["input_tail_only"].upper(), arb(0))
+
+    def test_tampered_lout_receipt_is_refused_by_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            tampered = Path(directory) / contour.DEFAULT_LOUT.name
+            tampered.write_text(
+                contour.DEFAULT_LOUT.read_text(encoding="utf-8") + " ", encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "immutable L-OUT receipt hash"):
+                contour.load_operator_bounds(
+                    contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 2, tampered
+                )
+
+    def test_full_tail_certified_is_computed_at_the_target_boundary(self) -> None:
+        # N=237 misses the 1e-15 target, N=238 is the first N that meets it, and
+        # the pinned default N=262 carries margin.  Nothing here is hand-set.
+        below = contour.load_operator_bounds(
+            contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 237,
+            contour.DEFAULT_LOUT,
+        )
+        self.assertFalse(below["full_tau_target_met"])
+        self.assertFalse(below["full_tail_certified"])
+        self.assertTrue(below["lout"]["gates_pass"])
+        self.assertIn("target_met=False", below["full_tail_open_reason"])
+
+        first = contour.load_operator_bounds(
+            contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 238,
+            contour.DEFAULT_LOUT,
+        )
+        self.assertTrue(first["full_tau_target_met"])
+        self.assertTrue(first["full_tail_certified"])
+
+        default = contour.load_operator_bounds(
+            contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W,
+            contour.DEFAULT_N, contour.DEFAULT_LOUT,
+        )
+        self.assertEqual(contour.DEFAULT_N, 262)
+        self.assertTrue(default["full_tail_certified"])
+        self.assertIsNone(default["full_tail_open_reason"])
+        # full_tau = input_tail_only + output_projection_tail, both telescoped.
+        self.assertTrue(
+            default["full_tau"].upper()
+            >= (default["input_tail_only"] + default["output_projection_tail"]).lower()
+        )
+        # The output side dominates by many orders at this N.
+        self.assertTrue(
+            default["input_tail_only"].upper() < default["output_projection_tail"].lower()
+        )
+
+    def test_lout_admissibility_gate_failure_blocks_the_verdict(self) -> None:
+        payload = json.loads(contour.DEFAULT_LOUT.read_text(encoding="utf-8"))
+        payload["theta_exact_strings"] = ["1.000", "1.000", "1.000"]
+        with tempfile.TemporaryDirectory() as directory:
+            forged = Path(directory) / contour.DEFAULT_LOUT.name
+            forged.write_text(json.dumps(payload), encoding="utf-8")
+            original = contour.PINNED_LOUT_SHA256
+            try:
+                contour.PINNED_LOUT_SHA256 = contour.sha256(forged)
+                bounds = contour.load_operator_bounds(
+                    contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W,
+                    contour.DEFAULT_N, forged,
+                )
+            finally:
+                contour.PINNED_LOUT_SHA256 = original
+        gates = bounds["lout"]["gates"]
+        self.assertFalse(gates["theta_strictly_greater_than_one"])
+        self.assertFalse(bounds["lout"]["gates_pass"])
+        self.assertFalse(bounds["full_tail_certified"])
+        self.assertIn("lout_gates_pass=False", bounds["full_tail_open_reason"])
+
+    def test_lout_rho_theta_is_reproduced_by_the_checkers_own_mobius(self) -> None:
+        bounds = contour.load_operator_bounds(
+            contour.DEFAULT_R2, contour.DEFAULT_TB, contour.DEFAULT_W, 2,
+            contour.DEFAULT_LOUT,
+        )
+        audit = bounds["lout"]["rho_audit"]
+        self.assertEqual(len(audit), 8)
+        for label, row in audit.items():
+            self.assertTrue(row["recorded_dominates_checker_mobius"], label)
+            self.assertTrue(row["recorded_rho_theta_lt_1"], label)
 
     def test_checkpoint_boxes_are_reconstructed_from_final_ordered_records(self) -> None:
         records = [
