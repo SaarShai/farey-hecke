@@ -767,3 +767,44 @@ even-q restriction convention this note uses.  B2's reduction is
 therefore discharged to a banked, hash-pinned printed source; the cold
 referee should re-derive the checker's row consumption directly against
 this transcription (attack item 1 of §"what a referee should attack").
+
+---
+
+## Dated correction block (2026-08-20, referee D1–D5, append-only)
+
+Applied per HARDY_HILBERT_BINDING_REFEREE.md (verdict CONFIRMED at
+stated scope, REDUCED upheld):
+
+- **D1 (REFUTED receipt line)**: ":436-437 / §5 / V5 'the six tail
+  families all sit at <= 0.577'" is FALSE — the family (3→3, −1, tail)
+  has base-relative ratio 0.735201608898 (referee receipt).  FIVE of
+  six sit at <= 0.577.  No blast radius: rho_H is set by the head
+  (3→2) term and is unchanged.
+- **D2 (stale grading)**: the §Status line "No PDF was downloaded", the
+  §3 table row for B2, and §4/§6 carry the pre-addendum grade; per the
+  dated addendum above, B2 is DISCHARGED to the banked hash-pinned
+  MMS source.  The addendum supersedes those lines.
+- **D3**: B6a's 16 clearance rows are evaluated at n = n0 only; the
+  needed monotonicity in n is true (referee-verified) but was never
+  stated — it is hereby stated as referee-verified, not note-proved.
+- **D4**: "F1024 is the label formed by concatenating them" is wrong
+  ("10"+"4"+"2" = "1042"); the label's provenance is as in the lane_f
+  receipts, not a concatenation.
+- **D5**: MMS Lemma 5.1 states only the commutation P L_s = L_s P; the
+  eigenspace/induced-L_{s,±} content is the following unnumbered
+  paragraph.  R-B8-2 was over-graded by citing the lemma for both;
+  the reduction target is the unnumbered paragraph + Lemma 5.1
+  together.
+
+Referee-settled bonus: q7's E1 ratio_upper_bound is base-relative while
+q8's probe is enlarged-relative under the same field name; the note's
+1.15 conversion is necessary and correct (both routes agree to 24
+digits: rho_H = 0.87982851131078408771970 < 1).
+
+Remaining OPEN after the referee pass (the definitive list): R-B8-2
+disc-radius binding (MMS-disc vs checker-disc), R-B8-3 contour
+containment, the E1 artifact's receipt grade (DIAGNOSTIC_ONLY — needs
+regeneration at q7's gated-receipt standard), and the 0.70-vs-0.99
+threshold split inside Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json
+(conservative direction, rho_* <= 0.696590).  full_tail_certified
+remains False.

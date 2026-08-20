@@ -1438,3 +1438,25 @@ directive 2026-08-15
   Simon/Grothendieck/MMS with 3 named residuals.  Cold referee
   launched.  Flip ledger: (1) receipt CONFIRMED, (2) Schur CONFIRMED,
   (3) binding UNDER REFEREE, (4) authority pending on (3).
+
+- **BINDING REFEREE: CONFIRMED AT SCOPE, REDUCED UPHELD; RESIDUAL LIST
+  NOW DEFINITIVE — 2026-08-20.**  HARDY_HILBERT_BINDING_REFEREE.md:
+  all seven load-bearing claims reproduce under referee-generated
+  receipts.  Highlights: MMS PDF re-fetched live, byte-identical
+  (391565 B, sha a10020bd...); the DEEP ATTACK passed — block pattern
+  {(1,3),(2,1),(2,3),(3,2),(3,3)} derived from eq. (32) BEFORE reading
+  the code, engine matches occurrence-for-occurrence, ± sector on
+  L^inf_{-1,s} only, all tails into disc 3, Schur C = B3+A3B2+A3A2B1
+  re-derived by hand; two checks the note never ran (generic-builder
+  cross-validation diff 0.0; f8_source_builder 3N-matrix agreement
+  2.45e-91); rho_H two independent routes agree to 24 digits, < 1;
+  margin semantics confirmed 16/16.  D1 REFUTED one §5 receipt line
+  (six->five families at <= 0.577; no blast radius), D2-D5 minor —
+  all applied as a dated append-only block (41 insertions, 0
+  deletions).  DEFINITIVE remaining-OPEN list for the q8 binding:
+  R-B8-2 disc-radius binding, R-B8-3 contour containment, E1 receipt
+  regeneration at gated standard, threshold-split hygiene
+  (conservative).  Flip ledger: (1) receipt CONFIRMED, (2) Schur
+  CONFIRMED, (3) binding CONFIRMED-at-REDUCED (gate NOT closed — the
+  four named residuals stand), (4) authority: flip stays BLOCKED until
+  the residual list closes.  Residual-closure lane launched.
