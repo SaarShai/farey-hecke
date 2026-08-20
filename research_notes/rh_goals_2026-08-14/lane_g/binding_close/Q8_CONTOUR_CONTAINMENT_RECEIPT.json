@@ -1,0 +1,62 @@
+{
+  "backend": "python-flint Arb/Acb ball arithmetic",
+  "closed_box_corner_bounds": {
+    "im_max": "[4.345761788321986000000000000000000000000 +/- 3e-44]",
+    "im_min": "[4.345759788321986000000000000000000000000 +/- 3e-44]",
+    "re_max": "[0.4252320423737965000000000000000000000000 +/- 3e-45]",
+    "re_min": "[0.4252300423737965000000000000000000000000 +/- 3e-45]"
+  },
+  "containment": {
+    "also_in_first_component_Re_gt_half": false,
+    "arc_endpoints_recertified": true,
+    "closed_box_in_omega_star": true,
+    "component_used": "{Re s > 0, Im s > 1}",
+    "distance_to_real_pole_lattice_lower_bound": "[4.345759788321986000000000000000000000000 +/- 3e-44]",
+    "im_margin_lower_bound": "[3.345759788321986000000000000000000000000 +/- 3e-44]",
+    "note": "The CLOSED box is certified, hence its boundary (the contour) and every arc endpoint for every subdivision K. Re and Im are affine on each edge, so the corner values are extremal.",
+    "re_margin_lower_bound": "[0.4252300423737965000000000000000000000000 +/- 3e-45]",
+    "re_minus_one_half_margin_lower_bound": "[-0.07476995762620350000000000000000000000000 +/- 1e-45]"
+  },
+  "contour": {
+    "K_per_edge": 1,
+    "edges": 4,
+    "half_width": "1e-6",
+    "kind": "boundary of the axis-aligned pin box (hx = hy = half_width)",
+    "pin_im": "4.345760788321986",
+    "pin_re": "0.4252310423737965",
+    "segments_emitted": 4,
+    "source": "lane_f/q8_schur_contour.py:45-51, :765 via q8_contour_helpers.closed_boundary_segments"
+  },
+  "immutable_inputs": {
+    "F8_R3B_RECEIPT_sha256": "faad47279b45a40b06de95949a3398c20015dea582fdcd7bd10b36396522b122",
+    "Q8_W_ENVELOPE_F1024_RECEIPT_sha256": "7d7b33966e48c3fe5f45fcf9618943f17a65ca4ef91caa7e3b2067904d03011e"
+  },
+  "omega_star_definition": "Omega* = {Re s > 1/2} union {Re s > 0, Im s > 1}; open, connected, disjoint from the MMS real pole lattice s = (1-k)/2 (lane_g/HARDY_HILBERT_BINDING_SOL.md:474-475)",
+  "pin_box_matches_R3B_receipt": true,
+  "precision_bits": 384,
+  "q": 8,
+  "role": "R-B8-3: pinned q=8 certification contour lies in Omega*",
+  "s_dependent_object": {
+    "W_ge1_upper_bound": "[31.7359279967148742842380 +/- 6.31e-23]",
+    "evaluated_on": "the whole pin box as a single Acb ball, not the midpoint",
+    "object": "W weight envelope (lane_f/q8_weight_envelope.py)",
+    "pin_matches_contour_box": true,
+    "status": "WEIGHT_ENVELOPE_CERTIFIED_R2_PENDING"
+  },
+  "s_independence_audit": {
+    "all_s_independent": true,
+    "claim": "the disc / pole / branch-cut / enlargement certificates are pure z-plane geometry and take no s argument, so they hold uniformly for every s on the contour",
+    "e1_receipt_has_no_pin_field": true,
+    "functions_without_s_parameter": {
+      "q8_tb_support.branch_cut_margin": true,
+      "q8_tb_support.certify_block": true,
+      "q8_tb_support.clearance_rows": true,
+      "q8_tb_support.contour_sup": true,
+      "q8_tb_support.pole_margin": true
+    },
+    "tb_receipt_has_no_pin_field": true
+  },
+  "schema": "q8-contour-containment/v1",
+  "scope": "Certifies contour-in-Omega* and the s-independence of the disc/clearance certificates. Does NOT certify the winding integral, the four-edge continuous-contour gate, the N=104 run, or full_tail_certified, all of which remain separately OPEN.",
+  "verdict": "PASS_CONTOUR_IN_OMEGA_STAR"
+}

@@ -1,0 +1,1016 @@
+{
+  "all_receipt_flags_agree_with_0_70_recomputation": true,
+  "all_terms_below_0_70": true,
+  "backend": "python-flint Arb/Acb ball arithmetic",
+  "blocks": [
+    {
+      "block": [
+        1,
+        3,
+        2,
+        false,
+        true
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.570851832297562800275650 +/- 1.22e-25]",
+      "gated_at": "0.70",
+      "label": "1\u21923, +2, tail",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.302248126272997230727182000000 +/- 2.32e-25]",
+          "n": 2,
+          "ratio_upper_bound": "[0.397751873727002769272818 +/- 2.31e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.536488612408192027280778000000 +/- 3.33e-25]",
+          "n": 3,
+          "ratio_upper_bound": "[0.163511387591807972719222 +/- 3.32e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.451772736826084557238121000000 +/- 4.10e-25]",
+          "n": 4,
+          "ratio_upper_bound": "[0.248227263173915442761879 +/- 4.09e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.401133068860492906990798000000 +/- 1.64e-25]",
+          "n": 5,
+          "ratio_upper_bound": "[0.298866931139507093009202 +/- 1.63e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.367452823771539079668253000000 +/- 2.97e-25]",
+          "n": 6,
+          "ratio_upper_bound": "[0.332547176228460920331747 +/- 2.96e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.343434360005136170933618000000 +/- 4.36e-25]",
+          "n": 7,
+          "ratio_upper_bound": "[0.356565639994863829066382 +/- 4.35e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.325441720051840067343940000000 +/- 1.43e-25]",
+          "n": 8,
+          "ratio_upper_bound": "[0.374558279948159932656060 +/- 1.42e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.311459994042747186841795000000 +/- 2.38e-25]",
+          "n": 9,
+          "ratio_upper_bound": "[0.388540005957252813158205 +/- 2.37e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.300282510533116522947612000000 +/- 4.72e-25]",
+          "n": 10,
+          "ratio_upper_bound": "[0.399717489466883477052388 +/- 4.71e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.291142513400726338794215000000 +/- 2.64e-25]",
+          "n": 11,
+          "ratio_upper_bound": "[0.408857486599273661205785 +/- 2.63e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.283529432923009929044986000000 +/- 4.70e-25]",
+          "n": 12,
+          "ratio_upper_bound": "[0.416470567076990070955014 +/- 4.69e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.277090138739904364169853000000 +/- 4.05e-26]",
+          "n": 13,
+          "ratio_upper_bound": "[0.422909861260095635830147 +/- 4.04e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.271572598217055605552019000000 +/- 1.32e-25]",
+          "n": 14,
+          "ratio_upper_bound": "[0.428427401782944394447981 +/- 1.31e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "deep_tail",
+          "margin_to_0_70_lower_bound": "[0.129148167702437199724350000000 +/- 1.23e-25]",
+          "n": 15,
+          "ratio_upper_bound": "[0.570851832297562800275650 +/- 1.22e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        1,
+        3,
+        1,
+        true,
+        true
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.576254611223915512176277 +/- 3.11e-25]",
+      "gated_at": "0.70",
+      "label": "1\u21923, \u22121, tail",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.227340957074429028322110000000 +/- 3.18e-25]",
+          "n": 1,
+          "ratio_upper_bound": "[0.472659042925570971677890 +/- 3.17e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.546489099802932762105270000000 +/- 6.49e-26]",
+          "n": 2,
+          "ratio_upper_bound": "[0.153510900197067237894730 +/- 6.48e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.457330688022807845562163000000 +/- 2.16e-25]",
+          "n": 3,
+          "ratio_upper_bound": "[0.242669311977192154437837 +/- 2.15e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.404664441594129048319257000000 +/- 4.45e-26]",
+          "n": 4,
+          "ratio_upper_bound": "[0.295335558405870951680743 +/- 4.44e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.369893369662683924528562000000 +/- 8.39e-26]",
+          "n": 5,
+          "ratio_upper_bound": "[0.330106630337316075471438 +/- 8.38e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.345221265888687964562766000000 +/- 1.54e-25]",
+          "n": 6,
+          "ratio_upper_bound": "[0.354778734111312035437234 +/- 1.53e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.326806307028045120643320000000 +/- 6.46e-26]",
+          "n": 7,
+          "ratio_upper_bound": "[0.373193692971954879356680 +/- 6.45e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.312536035639759344673411000000 +/- 3.05e-25]",
+          "n": 8,
+          "ratio_upper_bound": "[0.387463964360240655326589 +/- 3.04e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.301152714819048792915992000000 +/- 5.82e-26]",
+          "n": 9,
+          "ratio_upper_bound": "[0.398847285180951207084008 +/- 5.81e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.291860753273253397320627000000 +/- 2.32e-25]",
+          "n": 10,
+          "ratio_upper_bound": "[0.408139246726746602679373 +/- 2.31e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.284132298962222812884947000000 +/- 1.68e-25]",
+          "n": 11,
+          "ratio_upper_bound": "[0.415867701037777187115053 +/- 1.67e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.277603351983661467715101000000 +/- 1.96e-25]",
+          "n": 12,
+          "ratio_upper_bound": "[0.422396648016338532284899 +/- 1.95e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.272014765796565723944847000000 +/- 4.27e-25]",
+          "n": 13,
+          "ratio_upper_bound": "[0.427985234203434276055153 +/- 4.26e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "deep_tail",
+          "margin_to_0_70_lower_bound": "[0.123745388776084487823723000000 +/- 3.12e-25]",
+          "n": 14,
+          "ratio_upper_bound": "[0.576254611223915512176277 +/- 3.11e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        2,
+        1,
+        1,
+        false,
+        false
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.625846727889502138595173 +/- 4.58e-25]",
+      "gated_at": "0.70",
+      "label": "2\u21921, +1, head",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.0741532721104978614048270000000 +/- 4.59e-25]",
+          "n": 1,
+          "ratio_upper_bound": "[0.625846727889502138595173 +/- 4.58e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.569426095116476819149998 +/- 2.41e-25]",
+      "gated_at": "0.70",
+      "label": "2\u21923, +2, tail",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.487640194440962680311690000000 +/- 4.95e-25]",
+          "n": 2,
+          "ratio_upper_bound": "[0.212359805559037319688310 +/- 4.94e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.546129138410895460419711000000 +/- 4.59e-25]",
+          "n": 3,
+          "ratio_upper_bound": "[0.153870861589104539580289 +/- 4.58e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.457129508094127376904604000000 +/- 4.24e-26]",
+          "n": 4,
+          "ratio_upper_bound": "[0.242870491905872623095396 +/- 4.23e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.404537051608248276475026000000 +/- 3.53e-25]",
+          "n": 5,
+          "ratio_upper_bound": "[0.295462948391751723524974 +/- 3.52e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.369805545114733894836758000000 +/- 1.75e-25]",
+          "n": 6,
+          "ratio_upper_bound": "[0.330194454885266105163242 +/- 1.74e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.345157076972336837623422000000 +/- 1.30e-25]",
+          "n": 7,
+          "ratio_upper_bound": "[0.354842923027663162376578 +/- 1.29e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.326757354274893975776883000000 +/- 4.90e-25]",
+          "n": 8,
+          "ratio_upper_bound": "[0.373242645725106024223117 +/- 4.89e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.312497474503817610662255000000 +/- 4.40e-25]",
+          "n": 9,
+          "ratio_upper_bound": "[0.387502525496182389337745 +/- 4.39e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.301121556303407946005324000000 +/- 3.44e-25]",
+          "n": 10,
+          "ratio_upper_bound": "[0.398878443696592053994676 +/- 3.43e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.291835053717640136465794000000 +/- 1.57e-25]",
+          "n": 11,
+          "ratio_upper_bound": "[0.408164946282359863534206 +/- 1.56e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.284110740041726918535271000000 +/- 2.52e-25]",
+          "n": 12,
+          "ratio_upper_bound": "[0.415889259958273081464729 +/- 2.51e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.277585008055477290141988000000 +/- 1.17e-25]",
+          "n": 13,
+          "ratio_upper_bound": "[0.422414991944522709858012 +/- 1.16e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.271998967881981953242351000000 +/- 1.93e-25]",
+          "n": 14,
+          "ratio_upper_bound": "[0.428001032118018046757649 +/- 1.92e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "deep_tail",
+          "margin_to_0_70_lower_bound": "[0.130573904883523180850002000000 +/- 2.42e-25]",
+          "n": 15,
+          "ratio_upper_bound": "[0.569426095116476819149998 +/- 2.41e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        2,
+        3,
+        1,
+        true,
+        true
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.574605675865332427267373 +/- 3.60e-25]",
+      "gated_at": "0.70",
+      "label": "2\u21923, \u22121, tail",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.299828211180601272409511000000 +/- 5.15e-26]",
+          "n": 1,
+          "ratio_upper_bound": "[0.400171788819398727590489 +/- 5.14e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.585176501198928845267188000000 +/- 1.64e-25]",
+          "n": 2,
+          "ratio_upper_bound": "[0.114823498801071154732812 +/- 1.63e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.478071445341631450530604000000 +/- 6.22e-26]",
+          "n": 3,
+          "ratio_upper_bound": "[0.221928554658368549469396 +/- 6.21e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.417571190799243685261733000000 +/- 3.84e-25]",
+          "n": 4,
+          "ratio_upper_bound": "[0.282428809200756314738267 +/- 3.83e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.378692808769256174483032000000 +/- 2.26e-25]",
+          "n": 5,
+          "ratio_upper_bound": "[0.321307191230743825516968 +/- 2.25e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.351602536266477097769838000000 +/- 2.50e-25]",
+          "n": 6,
+          "ratio_upper_bound": "[0.348397463733522902230162 +/- 2.49e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.331644848546031062588034000000 +/- 2.24e-25]",
+          "n": 7,
+          "ratio_upper_bound": "[0.368355151453968937411966 +/- 2.23e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.316330535674726184665878000000 +/- 1.50e-25]",
+          "n": 8,
+          "ratio_upper_bound": "[0.383669464325273815334122 +/- 1.49e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.304207968590989942190440000000 +/- 3.44e-25]",
+          "n": 9,
+          "ratio_upper_bound": "[0.395792031409010057809560 +/- 3.43e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.294373499061404825171242000000 +/- 4.25e-25]",
+          "n": 10,
+          "ratio_upper_bound": "[0.405626500938595174828758 +/- 4.24e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.286235183758857165468095000000 +/- 1.61e-26]",
+          "n": 11,
+          "ratio_upper_bound": "[0.413764816241142834531905 +/- 1.60e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.279389054556950443118648000000 +/- 3.30e-25]",
+          "n": 12,
+          "ratio_upper_bound": "[0.420610945443049556881352 +/- 3.29e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.273549990694826159418676000000 +/- 2.03e-25]",
+          "n": 13,
+          "ratio_upper_bound": "[0.426450009305173840581324 +/- 2.02e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "deep_tail",
+          "margin_to_0_70_lower_bound": "[0.125394324134667572732627000000 +/- 3.61e-25]",
+          "n": 14,
+          "ratio_upper_bound": "[0.574605675865332427267373 +/- 3.60e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        3,
+        2,
+        1,
+        false,
+        false
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.696590428020637535884545 +/- 2.54e-25]",
+      "gated_at": "0.70",
+      "label": "3\u21922, +1, head",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.00340957197936246411545500000000 +/- 2.55e-25]",
+          "n": 1,
+          "ratio_upper_bound": "[0.696590428020637535884545 +/- 2.54e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.568678204710670413876598 +/- 4.38e-25]",
+      "gated_at": "0.70",
+      "label": "3\u21923, +2, tail",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.559224045582874593689602000000 +/- 3.26e-25]",
+          "n": 2,
+          "ratio_upper_bound": "[0.140775954417125406310398 +/- 3.25e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.517817958266795990597129000000 +/- 4.78e-25]",
+          "n": 3,
+          "ratio_upper_bound": "[0.182182041733204009402871 +/- 4.77e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.441170089164450080764048000000 +/- 1.17e-25]",
+          "n": 4,
+          "ratio_upper_bound": "[0.258829910835549919235952 +/- 1.16e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.394308701342416473887232000000 +/- 4.21e-25]",
+          "n": 5,
+          "ratio_upper_bound": "[0.305691298657583526112768 +/- 4.20e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.362695560395662173868339000000 +/- 3.75e-26]",
+          "n": 6,
+          "ratio_upper_bound": "[0.337304439604337826131661 +/- 3.74e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.339929639517678227908695000000 +/- 1.93e-25]",
+          "n": 7,
+          "ratio_upper_bound": "[0.360070360482321772091305 +/- 1.92e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.322752878844664897240244000000 +/- 3.74e-25]",
+          "n": 8,
+          "ratio_upper_bound": "[0.377247121155335102759756 +/- 3.73e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.309332057209341782412001000000 +/- 4.28e-25]",
+          "n": 9,
+          "ratio_upper_bound": "[0.390667942790658217587999 +/- 4.27e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.298556657084244244829954000000 +/- 3.79e-26]",
+          "n": 10,
+          "ratio_upper_bound": "[0.401443342915755755170046 +/- 3.78e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.289714679457116746914180000000 +/- 2.00e-25]",
+          "n": 11,
+          "ratio_upper_bound": "[0.410285320542883253085820 +/- 1.99e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.282328596663773819153013000000 +/- 1.42e-25]",
+          "n": 12,
+          "ratio_upper_bound": "[0.417671403336226180846987 +/- 1.41e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.276066175770056798395314000000 +/- 2.69e-25]",
+          "n": 13,
+          "ratio_upper_bound": "[0.423933824229943201604686 +/- 2.68e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.270689124819790886985779000000 +/- 2.89e-25]",
+          "n": 14,
+          "ratio_upper_bound": "[0.429310875180209113014221 +/- 2.88e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "deep_tail",
+          "margin_to_0_70_lower_bound": "[0.131321795289329586123402000000 +/- 4.39e-25]",
+          "n": 15,
+          "ratio_upper_bound": "[0.568678204710670413876598 +/- 4.38e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    },
+    {
+      "block": [
+        3,
+        3,
+        1,
+        true,
+        true
+      ],
+      "block_pass": true,
+      "block_ratio_upper_bound": "[0.671604678146759859002060 +/- 3.67e-25]",
+      "gated_at": "0.70",
+      "label": "3\u21923, \u22121, tail",
+      "terms": [
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.0283953218532401409979400000000 +/- 3.68e-25]",
+          "n": 1,
+          "ratio_upper_bound": "[0.671604678146759859002060 +/- 3.67e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.609933412510754068038078700000 +/- 3.10e-26]",
+          "n": 2,
+          "ratio_upper_bound": "[0.0900665874892459319619213 +/- 3.09e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.490752934866581449203455000000 +/- 3.95e-25]",
+          "n": 3,
+          "ratio_upper_bound": "[0.209247065133418550796545 +/- 3.94e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.425258510143997468954058000000 +/- 3.80e-25]",
+          "n": 4,
+          "ratio_upper_bound": "[0.274741489856002531045942 +/- 3.79e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.383845736424492916239638000000 +/- 9.31e-26]",
+          "n": 5,
+          "ratio_upper_bound": "[0.316154263575507083760362 +/- 9.30e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.355295363333327598057837000000 +/- 1.11e-25]",
+          "n": 6,
+          "ratio_upper_bound": "[0.344704636666672401942163 +/- 1.10e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.334420492508798635261831000000 +/- 1.14e-25]",
+          "n": 7,
+          "ratio_upper_bound": "[0.365579507491201364738169 +/- 1.13e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.318492655917883936900269000000 +/- 2.33e-25]",
+          "n": 8,
+          "ratio_upper_bound": "[0.381507344082116063099731 +/- 2.32e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.305939594687130539408136000000 +/- 3.09e-25]",
+          "n": 9,
+          "ratio_upper_bound": "[0.394060405312869460591864 +/- 3.08e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.295791485272254099385398000000 +/- 1.13e-25]",
+          "n": 10,
+          "ratio_upper_bound": "[0.404208514727745900614602 +/- 1.12e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.287417622505458482677217000000 +/- 4.65e-25]",
+          "n": 11,
+          "ratio_upper_bound": "[0.412582377494541517322783 +/- 4.64e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.280390110915921088132347000000 +/- 3.90e-26]",
+          "n": 12,
+          "ratio_upper_bound": "[0.419609889084078911867653 +/- 3.89e-26]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "head",
+          "margin_to_0_70_lower_bound": "[0.274408411052982381055599000000 +/- 2.27e-25]",
+          "n": 13,
+          "ratio_upper_bound": "[0.425591588947017618944401 +/- 2.26e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        },
+        {
+          "kind": "deep_tail",
+          "margin_to_0_70_lower_bound": "[0.126257277497371934160202000000 +/- 4.44e-25]",
+          "n": 14,
+          "ratio_upper_bound": "[0.573742722502628065839798 +/- 4.43e-25]",
+          "receipt_flag_agrees_with_0_70_recomputation": true,
+          "receipt_flag_named_ratio_less_than_0_70": true,
+          "recomputed_lt_0_70": true,
+          "recomputed_lt_0_99": true
+        }
+      ]
+    }
+  ],
+  "conservativeness_argument": "0.70 < 0.99, and the per-term flags carry the STRICTER gate while the headline verdict carries the LOOSER one. Any term that passed at 0.70 passes at 0.99; the recorded verdict PASS_RHO_LT_0.99 is therefore implied by, and strictly weaker than, what was actually certified. The residual risk of the split runs the other way -- a run whose declared gate is 0.99 could have been REJECTED by the un-overridden 0.70 per-term gate (certify_block raises when no K passes), producing a spurious failure, never a spurious pass.",
+  "immutable_inputs": {
+    "TB_F1024_receipt_sha256": "5f9cd3f9179c5b15539b3666bd3a2a3144995408648369dc1db6eda36f51d35c",
+    "receipt_certification_verdict": "PASS_RHO_LT_0.99",
+    "receipt_threshold_text": "0.99"
+  },
+  "precision_bits": 384,
+  "q": 8,
+  "recommendation": "Re-emit the F1024 receipt from a driver that sets q8_tb_support.THRESHOLD explicitly and records the value it used, and rename the per-term key to carry the live threshold. Until then this audit, not the receipt's own field names, is the citable evidence for what was gated at what.",
+  "rho_star_lt_0_70": true,
+  "rho_star_lt_0_99": true,
+  "rho_star_margin_to_0_70_lower_bound": "[0.00340957197936246411545500000000 +/- 2.56e-25]",
+  "rho_star_upper_bound": "[0.696590428020637535884545 +/- 2.55e-25]",
+  "role": "threshold-split hygiene for Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json",
+  "schema": "q8-threshold-split-audit/v1",
+  "scope": "Audits only the threshold bookkeeping of the pinned TB receipt. Does not re-derive the ratios from geometry (they are consumed as the receipt's certified upper endpoints) and bears on no other gate.",
+  "split_description": {
+    "headline_gate_code": "q8_candidate_tb_cert.py:71-73, :79 (hardcoded literals)",
+    "headline_verdict_gated_at": "0.99",
+    "key_name_hazard": "the per-term key is literally 'ratio_less_than_0_70' at q8_tb_support.py:125,154,166,183,211 regardless of the live THRESHOLD; in this receipt the name happens to be truthful, but the same key is FALSE-BY-NAME in F7_TB_BLOCK_CERTIFICATES_RECEIPT.json (gated 0.80) and F8_TB_BLOCK_CERTIFICATES_RECEIPT.json (gated 0.99). The name must never be cited as evidence of a 0.70 gate.",
+    "per_term_flags_gated_at": "0.70",
+    "per_term_gate_code": "q8_tb_support.py:17-18 (module default), read at :118 and :142",
+    "receipt_threshold_field_is_bare_string_not_arb_ball": true,
+    "why_not_overridden": "lane_f/q8_candidate_tb_cert.py:31-33 imports f8_certify_tb_blocks for geometry only and never calls run(), so the 0.99 re-target at f8_certify_tb_blocks.py:396-397 never executes"
+  },
+  "terms_audited": 86,
+  "verdict": "PASS_MIXED_THRESHOLDS_ARE_CONSERVATIVE",
+  "worst_term_label": "3\u21922, +1, head [head n=1]",
+  "worst_term_ratio_upper_bound": "[0.696590428020637535884545000000 +/- 2.55e-25]"
+}

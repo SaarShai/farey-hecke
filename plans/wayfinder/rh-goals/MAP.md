@@ -1460,3 +1460,36 @@ directive 2026-08-15
   CONFIRMED, (3) binding CONFIRMED-at-REDUCED (gate NOT closed — the
   four named residuals stand), (4) authority: flip stays BLOCKED until
   the residual list closes.  Residual-closure lane launched.
+
+- **BINDING RESIDUALS: ALL FOUR CLOSED (UNREFEREED); FINAL CLOSURE
+  REFEREE LAUNCHED — 2026-08-20.**  BINDING_RESIDUAL_CLOSURE_SOL.md +
+  4 hash-pinned receipts under lane_g/binding_close/:
+  R-B8-2 PROVED (certified) — the residual's framing dissolved: MMS
+  Lemma 4.4 is an existence statement consumed only through two
+  admissibility conditions (Phi_i in D_i; theta_n(D_i) in D_j for
+  n in N_{i,j}); the checker's F1024 discs certified admissible in
+  384-bit Arb (50 inclusion checks + 6 uniform tail lemmas for n > 8,
+  worst margin 0.1363, min pole clearance 0.746; independent
+  4001-point boundary-sampling cross-check zero failures; the stronger
+  compact-containment form delivered, which Thm 4.10's nuclearity
+  actually needs; D_{-i} = -D_i by construction, licensing Lemma 5.1).
+  R-B8-3 DISCHARGED-BY-RECEIPT — contour = pin-box boundary certified
+  on the CLOSED box (Re >= 0.42523, Im-1 >= 3.3458); s-independence of
+  the disc/pole/clearance certificates audited.  KEY FINDING: the
+  contour lies OUTSIDE {Re s > 1/2} (Im s > 1 component only), so
+  B7/B8 there must go through CONTINUATION, never classical
+  convergence — carried as an explicit condition on the assembly.
+  E1 DISCHARGED-BY-RECEIPT — regenerated at the q7 gated standard
+  (verdict, immutable_inputs + hash guard, per-block eta, no
+  wall-clock, byte-deterministic; publishes BOTH denominator
+  conventions; eta_max = 20/23 exactly; independently reconfirms
+  referee-D1's 0.7352 family).  Threshold hygiene
+  DISCHARGED-BY-RECEIPT — root cause pinned (q8_candidate_tb_cert
+  imports geometry only, never calls run(), so the 0.99 re-target
+  never fires); all 86 terms re-audited in Arb clear the stricter
+  0.70 (rho_* margin only 0.0034 — the split's failure mode is
+  spurious FAIL, never spurious PASS); durable rule: the literal
+  field name ratio_less_than_0_70 is false-by-name in shipped
+  q7/default-q8 receipts and must never be cited as gate evidence;
+  one lane_f re-emission left explicitly OPEN (needs tracked-code
+  edits, authority-gated).
