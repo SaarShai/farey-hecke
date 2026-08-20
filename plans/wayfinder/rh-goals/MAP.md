@@ -1346,3 +1346,18 @@ directive 2026-08-15
   now: log C_R 85.24 -> 58.90 -> 56.37 across three refereed steps.
   Next reduction rung: the unexamined powers of two in atom-bridge
   (3.19)/(3.24)/(3.25) (CONJECTURAL, per V2 §5.1).
+
+- **SCHUR SUBSTITUTION (R1) CLAIMED PROVED; REFEREE RUNNING —
+  2026-08-20.**  SCHUR_SUBSTITUTION_DERIVATION_SOL.md (commit a5d9adc,
+  unrefereed): the q8 factor-by-factor substitution is the EXACT
+  six-term telescoping identity (untruncated right factors absorb all
+  higher-order remainders — no dropped cross terms exist), bijective
+  with the six code slots at q8_schur_contour.py:350-358; conservative
+  direction; 18/18 numeric configs (min slack 6.56x) + 8/8 Arb interval
+  arm; 3-term strawman fails 10/18 (test power).  Load-bearing implicit
+  invariant surfaced: hs[.] must bound the TRUE untruncated blocks
+  (randomized counterexample ratio 0.911 under truncated norms); code
+  satisfies it (complete k-sums, no N-cut) but NO document stated it.
+  Latent flag: Xop's bare b3 term is HS-only — unsound if ever reused
+  as a trace bound.  Cold referee launched (attack focus: whether the
+  code's object is resolvent-shaped rather than a plain product).
