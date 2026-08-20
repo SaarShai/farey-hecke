@@ -1111,3 +1111,19 @@ directive 2026-08-15
   refutation marked DO NOT SUBMIT.  G1 retargeted: draft v32 = the full
   (FW) constant-chain statement layer (Real.log arithmetic), same
   pre-check discipline; submission still orchestrator-gated.
+
+- **v32 DISPATCH DRAFTED AND JUDGED; SUBMITTING TO ARISTOTLE — 2026-08-20.**
+  G1b delivered projects/aristotle_dispatch_v32/ (DISPATCH.md +
+  RateCoreVI.lean): the full (FW) constant chain
+  A_wrap,q(Y) <= 128(1+log 2)(Y^2/q)(1+log_+(Y/q)) as a 15-target sorry
+  ladder over R with Real.log, 5 rungs (log_+ helpers; divisor
+  convolution (1.17); per-renewal-block sum (1.18); assembled bound both
+  branches; weighted consequence (2.1)-(2.2)).  Counting inputs (4r
+  multiplicity, Ford packing) carried as explicit hypotheses
+  hconv/hford, never asserted.  (AM) atom-moment summation recorded as an
+  explicit CONJECTURAL exclusion (v30's MarkedCode is a wire format, not
+  the marked population).  Judged this turn: pre-check independently
+  replayed — 15 sorry warnings, exit 0 against the v26 cache; no tracked
+  file modified.  LEDGER RULE observed (upper bound only, domain Y >= q,
+  fixed p > 2, C1 symbolic).  Submission to Aristotle proceeds now;
+  harvest with independent rebuild on return.
