@@ -1308,3 +1308,27 @@ directive 2026-08-15
   line was true at authoring; the orchestrator made commits
   0987c2c/c0cfd9e.  Promotion of C_R'' into BOUNDARY_ALPHA §9 is GATED
   on the re-referee of the repaired note (the CR_REDUCTION §8 pattern).
+
+- **L-OUT CONDITION 4 ADJUDICATED: MIS-SPECIFIED; CORRECTED CONDITIONS
+  PASS; RE-PIN AT N >= 262 IS THE REMAINING FLIP — 2026-08-20.**
+  L_OUT_CONDITION4_ADJUDICATION.md (410 lines): 4a ruled MIS-SPECIFIED
+  from the bound's own §2 monotonicity (soundness requires only
+  selected >= M_k(theta); min of two valid upper bounds is valid; the
+  envelope arm re-derived from scratch as a genuine mean-value bound
+  with its three preconditions verified on every receipt).  The direct
+  arm is interval-inflated up to 7.5e7x at k=16 and never enters
+  tau_out — 4a graded a non-load-bearing array.  Baseline-control
+  failure reproduced independently (first-k 7,7,9,8,10,7 — matches the
+  executor).  Corrected 4a': 680/680 comparisons pass, min ratio 1.026;
+  corrected 4b': 8/8 blocks x 4 receipts, min 1.3229.  Both executor
+  errata CONFIRMED (rho(A3; 1.2) = 0.9471 refuting the spec's <= 0.87;
+  first N with full_tau <= 1e-15 = 262 (theta 1.2) / 238 (1.230) /
+  237 (per-disc)).  Overall: conditions 1-6 PASS on the corrected
+  reading; condition 7 NOT satisfied at the current N = 104 pin (misses
+  by ~12 orders); flip requires re-pinning N >= 262 — orchestrator
+  authorizes the re-pin lane (theta = 1.230 uniform per R5).  Residuals
+  flagged: R1 (condition 5's factor-by-factor Schur substitution
+  asserted, not re-derived — largest remaining in-L-OUT soundness risk,
+  assigned to the next referee), R2-R4 hygiene, R6 (the original
+  referee's 4a/0.87 known-wrong only per this adjudication).  The
+  Hardy/Hilbert binding remains separately OPEN.
