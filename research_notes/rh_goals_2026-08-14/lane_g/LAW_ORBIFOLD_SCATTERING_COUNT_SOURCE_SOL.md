@@ -437,3 +437,53 @@ no machine formalization, and no project-specific Selberg-zeta normalization.
 Those stronger statements remain **OPEN** and are not needed for the stated
 scattering-resonance LAW. This dated block preserves rather than silently
 rewrites the original candidate status.
+
+---
+
+## Dated correction block — second cold audit repairs (2026-08-20, append-only)
+
+A second, lineage-independent cold audit (LAW_SECOND_AUDIT_REFEREE.md,
+2026-08-20) returned **CONFIRMED** on the mathematical statement — every
+attack failed, including exact-arithmetic refutation of the c-value
+density attack and full numeric instantiation of the chain at q=3 —
+while mandating four repairs before any paper-level use.  They are
+recorded here append-only; none touches the theorem:
+
+1. ATTRIBUTION: the d=2 counting theorem consumed as "(C)" is due to
+   Selberg (Remarks on the distribution of poles of Eisenstein series,
+   Piatetski-Shapiro Festschrift, Israel Math. Conf. Proc. 3, 1990), per
+   Kelmer Remark 0.2 and §4 opening; Kelmer's contribution is the d ≥ 3
+   generalization.  Selberg 1990 itself has NOT been read by the author
+   or either referee; the statement is consumed through Kelmer's
+   transcription, numerically corroborated at q=3.  Favourable note: at
+   κ=1 the Hejhal (7.5) coefficients are positive integers, inside
+   Selberg's original positive-coefficient hypothesis class.
+2. PRINTED PARTIAL ANTECEDENT: Hejhal LNM 1001, Theorem 7.11 and
+   Corollary 7.12 (pp. 577-579, in the in-repo scan) prove zeros/poles
+   of φ_N in any prescribed rectangle touching the critical line for all
+   sufficiently large N.  Weaker in q-range (large N only), stronger in
+   localization.  Must be cited wherever novelty is framed.
+3. VENKOV CITATION FIX: the continuation/divisor source is Venkov,
+   Spectral theory of automorphic functions, Trudy Mat. Inst. Steklov
+   153 (1981) / Proc. Steklov 1982 no. 4(153) — NOT the 1979 Uspekhi
+   survey (RM7178 / 10.1070/RM1979v034n03ABEH004000), whose page range
+   excludes the cited p. 59.  Not load-bearing (FJS §2.4 + Thm 2.1
+   carry the content), but the URL block above conflates two Venkov
+   items.
+4. RECEIPT RELABELING: the `~~~` source-quotation blocks in this note
+   are hand-cleaned transcriptions of pdftotext output, not verbatim
+   command output, and Hejhal (7.2)-(7.5) are stated for the conjugated
+   group with cusp width 1 and ϰ ≡ 1 (the divisor is invariant under
+   the conjugation/normalization, factor c^{1-2s} zero-free).  Treat
+   all such blocks in this note as TRANSCRIPTIONS.
+
+Ledger findings from the same audit (consume-side warnings):
+- Kelmer's printed B_Γ carries a spurious log π from a /π inside the
+  logarithm of (4.18), and his printed A_Γ assembly formula is wrong
+  (both errors confirmed independently; correct d=2 values recomputed
+  and matched to Riemann-von Mangoldt at q=3 to 12 digits).  Do NOT
+  consume A_q, B_q, or C_q numerics from Kelmer.
+- The "nonarithmetic in particular" clause is NON-DISCRIMINATING:
+  q=3 (arithmetic) has the same off-line property (positive proportion
+  at Re s = 1/4).  This LAW must never be used as an arithmeticity
+  signature.
