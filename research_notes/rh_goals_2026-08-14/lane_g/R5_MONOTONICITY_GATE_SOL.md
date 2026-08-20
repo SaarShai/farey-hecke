@@ -546,3 +546,516 @@ formulas in §3.5 and §4.2; every constant is quoted with its source in §1.2.
 ---
 
 **READY FOR JUDGING**
+
+---
+
+# Corrections after cold referee (2026-08-20)
+
+**Referee:** `R5_MONOTONICITY_GATE_REFEREE.md`, verdict **MAJOR REVISION
+REQUIRED**. Confirmed: (a) Lemma G2, (a') floor-plus-one, (b) the (2.5)
+refutation, (d1) Lemma G3 sufficiency, (e1) `B > 74`. Refuted: the two ledger
+claims. This section is **append-only**: no sentence above was edited or
+deleted. Each block quotes the defective sentence verbatim, then states the
+correction. Margins DOWN, upper bounds UP. Anything not labelled `PROVED`
+stays **`CONJECTURAL`**.
+
+**Independent re-verification performed before writing these blocks** (Arb,
+`/Users/za/.venvs/farey-rh/bin/python`, 500 bits; recoded from the banked
+sources, not copied from the referee):
+
+```text
+C_R banked B= 74  x= [196305680128007199620898947325.88701 +/- 1.22e-6] -> N_monotone= 196305680128007199620898947326
+C_R banked B= 117 x= [134010166814705707171424895245.34677 +/- 5.00e-6] -> N_monotone= 134010166814705707171424895246
+C_R' banked B= 74  x= [57585923608207602637.995006254284883 +/- 2.08e-16] -> N_monotone= 57585923608207602638
+C_R' banked B= 117 x= [39311645103099547635.023994997619048 +/- 8.62e-17] -> N_monotone= 39311645103099547636
+C_R= 1     x= [0.027688976341657508031 +/- 4.19e-22] -> 1
+C_R= 1.64  x= [0.041816091776385482599 +/- 2.19e-22] -> 1
+C_R= 2     x= [0.049336147058801711177 +/- 4.47e-22] -> 1
+C_R= 74    x= 1.0000000000000000000                  -> 2
+log10 B(c_0=1.827324e-5) = [-1681.2328491784551708 +/- 9.67e-19]
+log10 N_monotone at B(c_0), banked C_R = [1431.8780002812989922 +/- 4.50e-17]
+Bx = [74.13001442794823893527626358385043008878 +/- 4.51e-39] > 74 ? True
+gate (1.11b) at B_safe=74: [108.9703081233142216135839492959900214825 +/- 3.22e-38] <= 109 ? True
+```
+
+The `B = 117` row reproduces the already-banked
+`q_side = 134010166814705707171424895246`
+(`R5_ACTIVATION_CLOSURE_SOL.md:289,372,502`) **digit-for-digit**, which is the
+independent proof that `(C_R, alpha) = (1.0489e37, 6/5)` is the live banked
+pair. Source citations re-read at their stated lines and confirmed:
+`BOUNDARY_ALPHA_THEOREM_SOL.md:31,191,733,758,786`;
+`C0_TRANSPORT_CAMPAIGN_SOL.md:21,118-141,180`;
+`R3_R5_ASSEMBLY_PLAN_SOL.md:678`.
+
+### Correction (2026-08-20, referee D1): (1.11)/(H3) over-attributed in §3.2 Step 1
+
+Defective sentence (§3.2, verbatim):
+
+> This is exactly (1.8)–(1.10); the substitution is licensed by (H3) per the
+> source's own `PROVED` note on (1.11).
+
+**Corrected statement.** (H3) is **not consumed** by this step. Substituting
+`E_R(N) <= C_R N^(-alpha)` into `x |-> x^(om*nu)` requires only that a power
+with positive exponent is increasing on `x>0`; it requires nothing from
+(1.11). (1.11) licenses replacing *harmonic measures* by lower bounds, and
+under (H2) those lower bounds are the actual infima, so nothing is replaced.
+Lemma G2 is therefore true **with (H3) deleted from its hypotheses**, and is
+correspondingly stronger than stated. This is a presentation defect, not a
+mathematical error: the lemma as printed remains valid, since deleting an
+unused hypothesis cannot falsify it.
+
+### Correction (2026-08-20, referee D2): `N_C` is not the least `Q` above the activation
+
+Defective sentence (§3.1, Lemma G2 statement, verbatim):
+
+> so the single strict check `C_3 Q^(-p_3) < d_delta` promotes to the whole
+> integer tail, and `N_C := floor((C_3/d_delta)^(1/p_3)) + 1` is the least such
+> `Q` above the activation, with strictness preserved.
+
+**Corrected statement.** `N_C := floor((C_3/d_delta)^(1/p_3)) + 1` is the
+least integer `Q >= 1` satisfying `C_3 Q^(-p_3) < d_delta`. The least such `Q`
+**above the activation** is
+
+```text
+max(N_C, N_pre,H, N_RATE).
+```
+
+The source, `R5_ASSEMBLY_EXECUTION_SOL.md` (2.4), takes this maximum
+correctly; the paraphrase in §3.1 dropped it. All numeric consequences drawn
+in this note used the `max` form or were `N`-free, so no downstream number
+changes.
+
+### Correction (2026-08-20, referee D3, MAJOR): `K_F = 109` is not the banked route-H constant
+
+Defective sentences (§4.1 (B) and §4.2, verbatim):
+
+> - (B) family-uniform N-independent bounds `K_+(N) <= 117`, `K_F(N) <= 109`
+>   (the banked constants);
+
+> ```text
+> K_F(N) = 109,   K_+(N) = 117            (the banked constants, N-independent)
+> ```
+
+**Corrected statement.** The parenthetical "(the banked constants)" is
+**false for route H**. `109` is the **Route-B sixth-zero direct wall**
+(`KF_WALL_ATTACK_SOL.md:600`; `R5_ACTIVATION_CLOSURE_SOL.md` §6 table). The
+banked `K_F` for the **two-stage route-H chain that (2.5) actually
+describes** is `C0_TRANSPORT_CAMPAIGN_SOL.md:21,180`:
+
+> \(\log K_F<57984\), producing the base \(56155\)
+> `K_H<e^{57983},\quad K_F<e^{57984}.`
+
+i.e. `K_F < e^57984`, not `109`. This is precisely the route-H/Route-B
+mis-pairing that this note's own §3.6 and §7.7 warn against; §7.7 scoped the
+disclosure to §3 and thereby silently exempted §4.
+
+**What survives under the correct pairing.**
+
+1. The **logical refutation of (G3) is unaffected.** An implication is refuted
+   by any admissible tuple; §4.2's tuple is admissible under the declared
+   ranges. Only the *label* was wrong. In addition, in §4.2 `omega_* = 1`
+   forces the exponent `1-omega_* = 0` on `K_F`, so `K_F` is arithmetically
+   inert there: no printed number in §4.3 depends on `109`.
+2. §4.1 (B) must be reread as: "**an** admissible family-uniform pair
+   `K_+(N) <= 117`, `K_F(N) <= 109`", with no claim that this pair is the
+   banked route-H pair.
+3. Any statement in this note that pairs `K_F = 109` with a route-H quantity
+   — including the §3.5 numeric instance and the §6/§9 ledger rows that cite
+   it — is a **diagnostic at an admissible tuple only**, and is **not** a
+   route-H result. With the true `K_F < e^57984`, Lemma G2a's bound gives
+   `B = min(K_+, K_F^(1/nu)K_+^(1-1/nu)) = K_+ = 117`, since the second term
+   is astronomically larger; see the D6 block for the resulting threshold.
+
+### Correction (2026-08-20, referee D4, MAJOR): `pi_0` is already banked, so (UP) is dischargeable
+
+Defective sentences (§3.5, §6 ledger, §6 headline, §9 ledger; verbatim):
+
+> Route H's own `nu_seed` and `omega_*` are **not determined** in any source;
+> they are the separately named `N_geometry` gate.
+
+> | route-H `nu_seed`, `omega_*`, `pi_0` values | **OPEN / UNDEFINED** | separate `N_geometry` gate |
+
+> **The exact missing step**, named as the brief requires: *an explicit
+> positive constant `pi_0 <= nu_seed*omega_*` for the frozen route-H transport
+> geometry, together with `alpha>0` from `(RATE-A)`.*
+
+**Corrected statement.** All three quantities **are determined and banked**.
+`C0_TRANSPORT_CAMPAIGN_SOL.md:118-141` Arb-computes and floors them downward:
+
+```text
+nu_lower=            0.00057973351410350818959475453918595651347099957474008429...
+omega_lower=         0.031564460639675570232725004080329858158939930648996164...
+product_lower=       1.8298975687420986327319170475889146590449519196238760e-5
+floor_product=       1.8273240000000000000000000000000000000000000000000000e-5
+relative_rounding_loss_upper= 0.0014064004379588010304597836459727460974382322218138008
+```
+
+(re-run and reproduced above). The floored product `c_0 = 1.827324e-5 > 0` is
+propagated into the live two-stage inequality in three banked notes:
+`DH2_RENEWAL_PROOF_SOL.md:716-719` (9.2), `TWOMARK_RENEWAL_SOL.md:900-914`
+(7.1), `C0_TRANSPORT_CAMPAIGN_SOL.md:201`.
+
+Consequently:
+
+- The §3.5 sentence "**not determined** in any source" is **withdrawn**.
+- The §6/§9 ledger row "route-H `nu_seed`, `omega_*`, `pi_0` values | **OPEN /
+  UNDEFINED**" is **withdrawn** and replaced by: *banked* —
+  `pi_0 = 1.827324e-5` at `C0_TRANSPORT_CAMPAIGN_SOL.md:118-141`, a
+  rounded-DOWN certified lower bound on `nu_seed*omega_*`.
+- The §6 headline "the exact missing step is an explicit `pi_0`" is
+  **withdrawn**. **(UP) is dischargeable from banked material**: taking
+  `pi_0 = 1.827324e-5` and `N_geometry` from the frozen-geometry reading of
+  §5, Lemma G3 applies with an explicit constant. `(UP)` is therefore not
+  merely satisfiable but **instantiated**.
+- The genuine residue is **not the existence of `pi_0` but its smallness
+  against the `e^56155` prefactor**. `DH2_RENEWAL_PROOF_SOL.md` (9.3) /
+  `TWOMARK_RENEWAL_SOL.md` (7.2) express it as
+  `log q > 2.560914e9 + (5/6) log C_R`, which remains `CONJECTURAL` /
+  unreachable rather than undefined.
+- §0's "the two named gates blocking R5 activation closure reduce to **one**:
+  `(RATE-A)`" rested on a source (`C0_TRANSPORT_CAMPAIGN_SOL.md`) that this
+  note did not consult. The *conclusion* — that `N_geometry` is not an
+  independent blocker — in fact survives and is strengthened, because `pi_0`
+  is banked rather than open; but the *stated reason* was wrong, and the
+  smallness residue above is now the operative obstruction.
+
+### Correction (2026-08-20, referee D5): Lemma G2a asserts `=` where only `<=` is proved
+
+Defective sentence (§3.5, Lemma G2a, verbatim):
+
+> Consequently
+> `N_monotone = floor((C_R/B)^(1/alpha)) + 1`.
+
+**Corrected statement.**
+
+```text
+N_monotone <= floor((C_R/B)^(1/alpha)) + 1.
+```
+
+The proof of Lemma G2a establishes only that `E_R(N) <= B` is **sufficient**
+for (1.11); (1.11) may hold at smaller `N`, so the displayed expression is an
+upper bound on the activation, not its definition. This is harmless wherever
+the quantity is used as an upper bound (all uses in this note and in the
+onset ledgers, where `q_0` is a `max` of upper bounds), but the equality as
+printed is wrong. The §9 ledger row asserting the equality is downgraded
+accordingly.
+
+### Correction (2026-08-20, referee D6, MAJOR): the banked `C_R` is `1.0489e37`, not `< 74`
+
+Defective sentences (§3.5, verbatim):
+
+> **With `C_R < 74`, `N_monotone = 1`.** The mixing-gate activation is
+> **non-binding** — it imposes nothing beyond `N>=1`. The only `C_R` values ever
+> proposed in the sources are `1.64` (the measured R2 cell, rounded up) and the
+> already-forbidden `2`; both are two orders of magnitude below `74`. So
+> `q_monotone` contributes nothing to
+> `q_0=max(12,q_RATE,q_A,q_C,q_divisor,q_monotone)` at any plausible constant.
+
+**Corrected statement.** The claim "the only `C_R` values ever proposed in the
+sources are `1.64` ... and ... `2`" is **FALSE**.
+`BOUNDARY_ALPHA_THEOREM_SOL.md` — one of the four onset ledgers this note
+itself cites in §7.3 — banks at `:31`, `:191`, `:733` and grades in its own
+claim ledger at `:685` ("Boundary RATE with \(\alpha=6/5\), \(C_R\) above,
+\(q_{\rm RATE}=12\) | **PROVED here, paper-level**"):
+
+```text
+C_R  = 10489412368759562746433608215977724802   (= 1.0489e37)
+C_R' =             38160259896392973127946053   (= 3.8160e25)   [:758, :786]
+```
+
+At that banked `C_R`, with `alpha = 6/5` (which this note already takes from
+the same family of notes) and `B_safe = 74`, my independent Arb run above
+gives
+
+```text
+N_monotone = 196305680128007199620898947326    (~1.96e29),   not 1,
+```
+
+and at the banked `C_R'`, `N_monotone = 57585923608207602638` (~5.76e19).
+With the **correct route-H pairing** of the D3 block (`K_F < e^57984`, hence
+`B = K_+ = 117`) the same computation gives
+`N_monotone = 134010166814705707171424895246` (~1.34e29), which is
+**digit-for-digit the already-banked `q_side`** of the referee-CONFIRMED
+`R5_ACTIVATION_CLOSURE_SOL.md:289,372,502`. So the sources had already
+computed this activation, and it is `1.34e29`, not `1`.
+
+Two further consequences, both against this note:
+
+1. The `C_R < 74` regime is **disjoint** from the regime the four cited onset
+   ledgers actually run in — off by 28 orders of magnitude in `N_monotone`.
+   The error is a scope error of a specific kind: **this note used one half of
+   a banked `(alpha, C_R)` pair and substituted a hypothetical for the other
+   half.**
+2. `B` is severely sensitive to `nu`. At the banked route-H
+   `c_0 = 1.827324e-5` (D4 block) rather than the A0 `nu = 0.1552`,
+   `log10 B(c_0) = -1681.23...`, and the corresponding
+   `log10 N_monotone` at the banked `C_R` is `1431.878...`. So the
+   "`N_monotone = 1`" reading fails by ~1400 orders of magnitude once the
+   route-H exponent is used.
+
+**Restated conclusion, now CONDITIONAL.** The `N_monotone = 1` /
+"non-binding" reading holds **only for `C_R < 74`**, a hypothesis that **no
+banked source provides**. Its use here is a hypothetical, and it is graded
+**`CONJECTURAL`**, not `PROVED`. `q_monotone`-removability is therefore
+conditional on a future `C_R < 74`; at every banked `C_R` on record the
+(1.11) activation is a large binding integer.
+
+### Correction (2026-08-20, referee D7, MAJOR): `q_monotone` is broader than `N_monotone`
+
+Defective sentence (§7.3, verbatim):
+
+> — **the `q_monotone` term is removable.** By §3.5 its integer value is `1`
+> at the banked constants for every `C_R<74`, hence dominated by the `12`
+> already in the max.
+
+**Corrected statement.** Even if `N_monotone = 1` were granted, removability
+does **not** follow. `R3_R5_ASSEMBLY_PLAN_SOL.md:678-679` defines:
+
+> - `q_monotone` is the point from which all envelopes used above are proved
+>   monotone in the required direction.
+
+That is **all** envelopes, not only the (1.11) mixing pair.
+`R5_ASSEMBLY_EXECUTION_SOL.md:262` says only that "`N_monotone` *also*
+activates (1.11)" — i.e. (1.11) is a **subset** of what `q_monotone` carries.
+This note silently identified the two. Discharging (1.11) leaves the remainder
+of `q_monotone` intact.
+
+**Net: the `q_monotone`-removable claim is REFUTED on three independent
+grounds** — the wrong `C_R` (D6), the wrong `nu` (D3/D6), and the wrong
+identification of the term (this block). The §9 ledger row
+"`q_monotone` is removable from the onset ledgers | **PROVED at the banked
+constants, `C_R<74`**" is **withdrawn** and replaced by: *the (1.11) sub-gate
+has a closed form and is already banked as `q_side`
+(`R5_ACTIVATION_CLOSURE_SOL.md:373`); the rest of `q_monotone`
+(`R3_R5_ASSEMBLY_PLAN_SOL.md:678`) is untouched by this note.*
+
+### Correction (2026-08-20, referee D8): the §2.1 dating is filesystem mtime
+
+Defective sentence (§2.1, verbatim):
+
+> `HOLOMORPHY_GATE_SOL.md` is dated 2026-08-19 01:00; `R5_ACTIVATION_CLOSURE_SOL.md`
+> is dated 2026-08-19 04:01
+
+**Corrected statement.** Both files carry only `**Date:** 2026-08-19` in
+their headers; neither records a clock time. `01:00` and `04:01` are `ls -l`
+**mtimes on this checkout**. Mtimes are not document content, are not
+preserved across clone or checkout, and are not a citable provenance for a
+row graded **PROVED (documentary)**. The ordering claim survives on
+*content* grounds — the closure note cites the holomorphy note — but that,
+not the mtime, is the receipt. The mtime sentence is withdrawn as evidence.
+
+### Correction (2026-08-20, referee D9): "stale" overstates a correct conjunction
+
+Defective sentence (§9 claim ledger, verbatim):
+
+> | the §6 "whole-tail monotonicity GENUINELY OPEN" row is stale for the A0 route | **PROVED (documentary)** | §2.1; hash match to the CONFIRMED referee |
+
+**Corrected statement.** The `HOLOMORPHY_GATE_SOL.md:579` row reads
+*"Positive full-boundary RATE **and** whole-tail monotonicity | **GENUINELY
+OPEN**"*. That is a **conjunction**, and its stated reason is the first
+conjunct (`alpha=0`). A conjunction with an open conjunct is open, so the row
+is **correct as written, not stale**. What is superseded is only the
+*implicature* that the second conjunct is independently open — which §7.2 of
+this note already words correctly ("the conjunction should be split"). The
+ledger row hardened §7.2 into a stronger claim than §7.2 supports, and than
+§6's own concession ("nothing here contradicts `HOLOMORPHY_GATE_SOL.md`
+§6's judgement"). Row downgraded from **PROVED (documentary)** to: *the row's
+conjunction should be split; the row itself is not stale.*
+
+### Correction (2026-08-20, referee D10): §4.2 itself makes the pairing §3.6 forbids
+
+Defective sentence (§7.7, verbatim):
+
+> §3 is symbolic in `K_F, d_delta` for exactly this reason.
+
+**Corrected statement.** The disclosure is scoped to §3 and thereby silently
+excludes §4. §4.2 does set `K_F(N) = 109` and `d_delta = 0.6603` in the
+**same instance**, and calls them "the banked constants" — exactly the
+first-zero/sixth-zero domain mismatch that §3.6 and
+`R5_ACTIVATION_CLOSURE_SOL.md` §6 record as
+**"REFUTED as a single ledger combination"** (resting on
+`RATE_A_REFEREE.md:326-351`, which assigns `d_*>0.3186` to the sixth-zero
+`K_F=109` chain and `d_*>0.6603` to the first-zero window).
+
+Mitigation, stated so it is not mistaken for an excuse: because §4.2 sets
+`omega_* = 1`, `K_F` carries exponent `1-omega_* = 0` and is arithmetically
+inert, so no printed number in §4.3 depends on the illegal pairing. **The
+defect is disclosure, not arithmetic.** The correct disclosure is: *§3 **and**
+§4 must be read as symbolic in `K_F, d_delta`; §4.2's tuple is admissible for
+refuting an implication but is not a ledger.*
+
+For completeness: a sweep of the banked lane-G files containing `0.6603`
+finds **no banked ledger commits this error** — the live two-stage chains
+(`DH2_RENEWAL_PROOF_SOL.md` (9.2)/(9.3), `TWOMARK_RENEWAL_SOL.md`
+(7.1)/(7.2), `C0_TRANSPORT_CAMPAIGN_SOL.md:127,145,201,222`) pair
+`d = 0.6603` with the prefactor `e^56155`, derived from `K_F < e^57984`
+(`C0:21,180`), not from `109`. The anti-consumer warning is live and violated
+only by this note's own §4.2.
+
+### Correction (2026-08-20, referee D11): the fourth ledger expression is not the same expression
+
+Defective sentence (§7.3, verbatim):
+
+> plus the same expression at
+> `C0_TRANSPORT_CAMPAIGN_SOL.md:878` and `BOUNDARY_ALPHA_THEOREM_SOL.md:667`
+
+**Corrected statement.** All four ledger citations exist and are correctly
+located — `R3_ROUTE_B_TRANSPORT_SOL.md:586` (8.5);
+`KF_WALL_ATTACK_SOL.md:654-656`; `C0_TRANSPORT_CAMPAIGN_SOL.md:878`;
+`BOUNDARY_ALPHA_THEOREM_SOL.md:667` — but the last is **not the same
+expression**. It reads
+
+```text
+q_0 = max{12, q_RATE, q_transport, q_divisor, q_geometry, q_monotone, ...}
+```
+
+with an additional `q_transport`, an additional `q_geometry`, and a trailing
+ellipsis. "The same expression" is withdrawn; the four ledgers carry
+**different** `max` expressions sharing the `q_monotone` term.
+
+### Correction (2026-08-20, referee (c)): the §4.2 witness is out of model at the crossing; in-model replacements
+
+Defective sentence (§4.4, verbatim, insufficient as disclosure):
+
+> It does **not** say that the actual route-H geometry degenerates. `nu_seed(N)
+> = 1/log N` is an admissible instance, not a measured one.
+
+**Corrected statement.** The disclosure is true but incomplete: it does not
+say that a banked value exists, nor how far the witness sits from it. The
+§4.2 witness needs `nu_seed(24) = omega_*(24) = 1`. Both are harmonic
+measures of *proper* boundary subsets seen from interior points, hence
+**strictly `< 1`**; the source's declared range `0 < nu_seed <= 1` is a
+convenience box, not an attainability statement. Quantitatively, with
+`omega_* = 1` and `E_R = N^(-1.2)`, a crossing at `N = 24` requires
+
+```text
+(1-nu) log 117 - 1.2 nu log 24 < log 0.6603
+=> nu_seed * omega_* > 0.6037001417103053033534122194079850228505
+```
+
+against banked `nu_z >= 0.1552` (A0, one stage,
+`R3_TRANSPORT_EXECUTION_SOL.md:60-66`) and the route-H two-stage product
+`c_0 = 1.827324e-5` (`C0_TRANSPORT_CAMPAIGN_SOL.md:118-141`). The §4.2
+witness therefore sits **~4.5 orders of magnitude above** the banked route-H
+transport product at the very point its crossing lives. Graded **GAPS**, not
+REFUTED.
+
+**The refutation survives repair.** The referee supplies two in-model
+replacement witnesses, both keeping `d_delta = 0.6603` and `omega_* < 1`, and
+both passing (1.11a) and (1.11b) at every sampled `N` and in closed form on
+the tail. They are adopted here by citation
+(`R5_MONOTONICITY_GATE_REFEREE.md` §3.3), not re-derived:
+
+- **Witness R1** — `omega_* = 0.9`, `nu_seed <= 0.1552` (the certified A0
+  floor), so `pi <= 0.13968`; `pi(N) = pi_1` for `N <= N_1` and
+  `pi(N) = pi_1 log(N_1)/log N` for `N > N_1`. Crossing at
+  `N_1 = 471626194532` with `E_3^up(N_1) = [0.660000000000 +/- 1.78e-13]
+  < 0.6603`, then failure at every larger sampled `N`, tail limit
+  `[1.28359535466 +/- 3.78e-12] > 0.6603`.
+- **Witness R2** — fully at the banked route-H scale: `omega_* = 0.9`,
+  `nu_seed <= 2.03036e-5`, so `pi <= c_0 = 1.827324e-5`. Crossing at
+  `log10 N_1 = [102396.428371 +/- 1.72e-7]` with
+  `E_3^up(N_1) = [0.66029000000000 +/- 1e-19] < 0.6603`, tail limit
+  `[0.66034746116518 +/- 3.04e-15] > 0.6603`.
+
+Therefore the (G3) refutation is **not an endpoint artifact** of
+`omega_* = nu_seed = 1`, and is not vulnerable to an
+"`omega_* = 1` is unattainable" rebuttal. Caveat carried forward from the D10
+block: Witness R2 consumes `K_F` at a nonzero exponent and so is subject to
+the same `K_F`/`d_*` domain caveat; it is flagged, not hidden.
+
+### Correction (2026-08-20): corrected honest bottom line
+
+This block supersedes §0, §6 and §9 wherever they conflict with it.
+
+**PROVED (as scoped by the referee, independently re-derived by it).**
+
+1. **Lemma G2** (§3.1–§3.2): under (H1) `(RATE-A)` with `alpha>0` and (H2)
+   frozen geometry, a single strict crossing promotes to the whole integer
+   tail with `sup_{N>=Q} E_3^up(N) <= C_3 Q^(-p_3)`. True with (H3) deleted
+   (D1). Every quantifier checks.
+2. **Floor-plus-one strictness** (§3.3): `floor(A)+1`, not `ceil(A)`.
+3. **The gate is misnamed**: it needs a *decreasing majorant with positive
+   exponent*, not monotonicity of `E_3^up` or `E_R`. Correct name:
+   **whole-tail majorant**.
+4. **Lemma G3** (§5): `(UP)` is **sufficient** to restore the promotion; the
+   algebra `pi = om*nu >= pi_0`, prefactor `<= Kbar^(1-pi) <= Kbar`, error
+   factor `E_R^pi <= (C_R N^(-alpha))^(pi_0)` is correct.
+5. **`B > 74`** at `K_+=117, K_F=109, nu=97/625`, margins DOWN: confirmed to
+   73 digits, including the decision to round `B` **down** to `74` because the
+   exact `B` makes (1.11b) an interval-undecidable equality at `109`.
+   Re-reproduced above at 500 bits.
+6. **(G3) is REFUTED** as an implication from (A)+(B)+(C)+(D): confirmed, and
+   **strengthened** by the referee's in-model Witnesses R1/R2. `(1.11)` is
+   genuinely not the missing hypothesis.
+
+**REFUTED (this note's two ledger claims).**
+
+1. **`q_monotone` is removable** — refuted on three grounds (D6, D7, D3):
+   the banked `C_R = 1.0489e37` gives `N_monotone ~ 1.96e29` (`B=74`) or
+   exactly the banked `q_side = 1.34e29` (`B=K_+=117`, the correct route-H
+   pairing), not `1`; the route-H `nu = c_0` pushes it to `10^1431.878`; and
+   `q_monotone` is by definition broader than the (1.11) sub-gate.
+2. **"The exact missing step is an explicit `pi_0`"** — refuted (D4):
+   `pi_0 = 1.827324e-5` is banked at `C0_TRANSPORT_CAMPAIGN_SOL.md:118-141`
+   and propagated into three live notes. `(UP)` is instantiated, not open.
+
+**GAPS (right finding, overclaimed label).** (c) the §4.2 witness is out of
+model at its crossing; (D5) `N_monotone` is `<=`, not `=`; (D8) the dating
+receipt is an mtime; (D9) the §6 row is a correct conjunction, not stale;
+(D10) §4.2 itself makes the forbidden `109`/`0.6603` pairing; (D3) the
+"banked constants" label; (D11) the four ledger expressions differ.
+Additionally §4.2's "(UP) is free under frozen geometry | **PROVED**
+(Harnack)" is **CONFIRMED but near-vacuous**: under (H2) it restates a
+positivity the source already asserts by definition
+(`R5_ASSEMBLY_EXECUTION_SOL.md:88-90`, `:161-163`), and the Harnack paragraph
+is a two-sentence sketch with no named inequality and no regularity or
+non-emptiness check on `Omega_+`, `D_0 \ closure(D_+)`. Label downgraded to
+**SKETCH**.
+
+**OPEN.**
+
+- `(RATE-A)` with `alpha>0`. Unchanged by this note; the rigorous campaign
+  still proves only `alpha=0`. This remains the single standing blocker for
+  every conditional statement above.
+- The **size** residue, which replaces the withdrawn `pi_0` residue: the
+  banked `pi_0 = 1.827324e-5` against the `e^56155` prefactor yields
+  `log q > 2.560914e9 + (5/6) log C_R` (`DH2` (9.3), `TWOMARK` (7.2)).
+  **`CONJECTURAL`** and effectively unreachable, not undefined.
+- Any finite effective `N0` or `q_0`: still **UNDEFINED**. This note produces
+  no new numeric onset.
+- Machine verification / Lean promotion: **NOT CLAIMED** anywhere.
+
+**Corrected consequence for the four onset ledgers**
+(`R3_ROUTE_B_TRANSPORT_SOL.md:586`; `KF_WALL_ATTACK_SOL.md:654-656`;
+`C0_TRANSPORT_CAMPAIGN_SOL.md:878`; `BOUNDARY_ALPHA_THEOREM_SOL.md:667`, whose
+expression additionally carries `q_transport`, `q_geometry` and an ellipsis
+— D11). §7.3's instruction to remove `q_monotone` is **WITHDRAWN**. The
+corrected instruction is:
+
+1. **Keep `q_monotone` in all four `max` expressions.** It is not removable
+   (D7), and at every banked `C_R` its (1.11) sub-gate is a large binding
+   integer, not `1` (D6).
+2. **The (1.11) sub-gate of `q_monotone` has a closed form and is already
+   banked**: at `(C_R, alpha) = (1.0489e37, 6/5)` and `B = K_+ = 117` it is
+   `q_side = 134010166814705707171424895246`
+   (`R5_ACTIVATION_CLOSURE_SOL.md:289,372,502`, referee-CONFIRMED), which my
+   independent Arb run reproduces digit-for-digit. At `B_safe = 74` the
+   corresponding bound is `196305680128007199620898947326`. Both are upper
+   bounds on the activation, per D5.
+3. **The remainder of `q_monotone`** — all other envelopes, per
+   `R3_R5_ASSEMBLY_PLAN_SOL.md:678` — is **untouched** by this note and stays
+   `CONJECTURAL`.
+4. **No ledger edit is licensed by this note.** No file other than this one
+   was modified; no onset value anywhere is changed, cleared, or narrowed by
+   these corrections.
+
+Net: the **mathematics of this note stands** (whole-tail promotion, the
+misnaming, the (G3) refutation, the `B>74` receipt, `(UP)` sufficiency); the
+**ledger layer does not**. `q_monotone` is not removable, `pi_0` is not the
+missing step, and this note's `C_R < 74` regime is disjoint from the regime
+the four cited ledgers actually run in.
+
+---
+
+**READY FOR JUDGING**
