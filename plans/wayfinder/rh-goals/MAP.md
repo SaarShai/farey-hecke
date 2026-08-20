@@ -1214,3 +1214,23 @@ directive 2026-08-15
   independently verified), including the referee §3.3 corrected L-OUT
   schema for the binding single-branch head-block family.  L-OUT
   execution lane running.
+
+- **L-OUT EXECUTED: 5/7 PASS, CONDITION 4 CONTESTED, LANE STAYS OPEN —
+  2026-08-20.**  L_OUT_RECEIPT_SOL.md + 4 tracked scripts under
+  lane_g/l_out/ ran the referee's spec exactly against the unmodified
+  lane_f engine (8.6 s/receipt — every condition evaluated at every N,
+  no partial-run caveat; N sweep to 320; 4 receipts incl. a negative
+  control at theta_max, correctly refused).  Conditions 1,2,3,5,6 PASS;
+  red-flag regression clean (full_tau(104) = 3.22e-3, output term
+  2.5e9x input — nothing silently dropped); adverse regression 15/15;
+  mpmath independently confirms full_tau to 1e-12 relative.  Condition
+  4 FAILS — but the checker's baseline control shows the pinned R2
+  receipt fails the identical sub-test 4a (q8_r2_local.py:206 takes
+  min(direct_sup, envelope); the direct sup is inflated by interval
+  wrapping), so 4a appears MIS-SPECIFIED rather than violated; 4b's
+  like-for-like arm passes 8/8 (min ratio 1.246 — contour genuinely
+  enlarged).  full_tail_certified NOT flipped; fail-closed.  Spec
+  errata found: theta=1.2 gives rho(A3)=0.948 not <=0.87 (still <1);
+  certified-N requirement is 262 not ~200 (telescoped hs factors
+  a2*b1 = 497.9 cost ~3 orders).  Next: adjudication lane on condition
+  4 respecification; then re-run (cheap).
