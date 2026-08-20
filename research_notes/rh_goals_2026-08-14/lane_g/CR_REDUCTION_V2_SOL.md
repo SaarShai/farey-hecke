@@ -424,3 +424,50 @@ Cumulative reduction from published: **28.877 e-folds** in `C_R`, of which
 26.340 was banked on 2026-08-19 and **2.537 is new here**.
 
 READY FOR JUDGING
+
+---
+
+## Dated correction block (2026-08-20, referee D1–D3, append-only)
+
+Applied per CR_REDUCTION_V2_REFEREE.md (final verdict CONFIRMED,
+documentation repairs only; no number moves).
+
+### Correction (2026-08-20, referee D1): 82944 is a BOUND, not an exact cardinality
+
+Defective phrasing in §2/§2.1 and the title: "the complete tag set has
+cardinality exactly 82944", "Substituting the exact cardinality", "the
+exact finite tag count".  The source, ATOM_MOMENT_BRIDGE_SOL.md:245,
+proves only "The total tag count is bounded explicitly by
+4^2 3^4 2^3·4·2 = 82944 < 2^17 < 2^20" — an upper bound whose factors
+are themselves at-most enumerations.  Corrected statement: every
+occurrence of "exact cardinality"/"exactly 82944"/"exact finite tag
+count" in this note is to be read as "the smaller explicit tag BOUND
+82944 from (3.9)".  The substitution remains valid (a smaller proved
+upper bound replacing a larger one; inequality direction safe); only
+the exactness claim is withdrawn.  Disclosure added to the NOT-claimed
+list: 82944 is itself an upper bound, not a proved count.
+
+### Correction (2026-08-20, referee D2): "byte-identical" replay overstated
+
+Defective sentence in §4: the source program was replayed
+"byte-identically, changing only the single line CR = arb(...)".
+False as literally stated: the replay program dropped eight print
+statements (alpha=, nu=, alpha_nu=, beta_exact=, q_RATE=, q_divisor=,
+ER_at_q_side_upper=, ER_at_q_transport_upper=) and added one
+(log_q_transport=).  Corrected statement: the same program as
+R5_ACTIVATION_CLOSURE_SOL.md §4 with the CR line changed and the print
+set trimmed/extended as listed; every computed quantity was verified
+unchanged by the referee's independent run (referee Attack 3, all
+integers and gates reproduced).
+
+### Correction (2026-08-20, referee D3): q_side propagation stated in prose
+
+Omission in §4: the reduction also moves q_side.  Propagated values,
+from the same replay (referee-verified): q_side'' = 4746157036282968395
+(down from the banked 39311645103099547636 and published
+134010166814705707171424895246), and the literal ledger (0.2) of
+R5_ACTIVATION_CLOSURE_SOL.md, q_{0,analytic} = max{q_RATE, q_divisor,
+q_side, q_transport}, therefore evaluates at the V2 constant to
+q_{0,analytic}'' = 11761546420922598622910053339543258496 — still a
+CONDITIONAL analytic-tail quantity, one term of the full max; q_monotone
+and all other gates unchanged and KEPT.

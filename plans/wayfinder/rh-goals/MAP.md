@@ -1289,3 +1289,22 @@ directive 2026-08-15
   11761546420922598622910053339543258496 (log 85.358), q_monotone KEPT.
   Ten-item NOT-claimed list present.  Cold referee launched; note also
   flags BOUNDARY_ALPHA edited post-hash (referee instructed to diff).
+
+- **C_R V2 REFEREE: CONFIRMED; D1-D3 REPAIRS APPLIED; RE-REFEREE
+  PENDING BEFORE PROMOTION — 2026-08-20.**  CR_REDUCTION_V2_REFEREE.md
+  (installed verbatim from a read-only frontier-verifier, lineage
+  independent of the author): all six attacks CONFIRMED — non-double-
+  counting core verified at (3.25) (2^20 enters exactly once,
+  multiplicatively; 82944 same object; +1 rounding replayed); C_R''
+  chain recomputed digit-for-digit with ceiling minimality both
+  directions and an added exact-rational robustness check; A0 replay
+  reproduced all integers/gates; post-hash BOUNDARY_ALPHA concern
+  REFUTED (pure append §8 — which also means C_R' is banked inside the
+  theorem note itself); e-folds exact to 18 s.f.  Three documentation
+  repairs (82944 is a BOUND not an exact cardinality; "byte-identical"
+  replay overstated; q_side/q_{0,analytic} propagation stated) applied
+  as a dated append-only block (47 insertions, 0 deletions, verified).
+  Provenance anomaly resolved in the installed report: the "no commit"
+  line was true at authoring; the orchestrator made commits
+  0987c2c/c0cfd9e.  Promotion of C_R'' into BOUNDARY_ALPHA §9 is GATED
+  on the re-referee of the repaired note (the CR_REDUCTION §8 pattern).
