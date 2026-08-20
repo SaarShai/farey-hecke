@@ -1254,3 +1254,21 @@ directive 2026-08-15
   like-for-like).  Wrap branch is 3.8e-33 of pair branch — irrelevant.
   Next: CR reduction EXECUTION lane (a real theorem repair re-deriving
   C_R with C_4 = 2^63, refereed before any ledger substitution).
+
+- **v32 HARVESTED: FULL (FW) CONSTANT CHAIN MACHINE-VERIFIED — 2026-08-20.**
+  Aristotle project 540c16e1 returned RateCoreVI.lean with all 15 sorry
+  targets proved (log_+ helpers; divisor convolution (1.17) incl.
+  harmonic bound; per-renewal-block sum (1.18) with telescoping
+  inverse-square tail; assembled bound BOTH branches with exactly
+  C_1 = 32*4*(1+log 2) = 128(1+log 2); weighted consequence).
+  Independent harvest receipts this turn: rebuild against the v26 cache
+  exit 0 (two unused-variable lints only); grep for
+  sorry/admit/axiom/implemented_by exit 1 (no matches); all 15 target
+  statements verified identical to the dispatch (whitespace-normalized
+  diff, zero mismatches, zero missing); SHA-256
+  6b8d4e33963670494fcad308cf564a4f7e1355ff431bc628635204e915916bf7.
+  Scope honesty: counting inputs hconv/hford remain HYPOTHESES (the 4r
+  multiplicity and Ford packing are paper-level, per FW_REFEREE); the
+  (AM) atom-moment summation remains excluded.  The (FW) analytic
+  chain — previously CONJECTURAL at Lean level per v30's exclusions —
+  is now machine-verified conditional on those named hypotheses.
