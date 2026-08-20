@@ -1379,3 +1379,17 @@ directive 2026-08-15
   sampled, not proved (R3 inherited).  FLIP STILL REQUIRES: referee
   pass on this receipt + the Schur-substitution referee (running) +
   the separately-OPEN Hardy/Hilbert binding + lane_f re-pin authority.
+
+- **Q8 RE-PIN RECEIPT REFEREE: CONFIRMED — 2026-08-20.**  All six
+  checks pass with independent receipts: generator rerun twice ->
+  byte-identical, sha256 15f1603a... matching the committed receipt;
+  checker outputs byte-for-byte reproduced (4a' 136/0 min 1.0323,
+  4b' 8/8 min 1.3798, full_tau(262) upper endpoint digit-exact);
+  q8_lout_check.py/q8_r2out_local.py diffs pure-additive with original
+  condition logic byte-unchanged; lane_f untouched and
+  full_tail_certified still False; N=237/238 crossing reproduced by two
+  single-N invocations; §8 flip preconditions correctly stated with no
+  theorem-grade claim.  Flip precondition ledger: (1) receipt referee
+  DONE-CONFIRMED; (2) Schur-substitution referee RUNNING; (3)
+  Hardy/Hilbert binding lane RUNNING; (4) lane_f re-pin authority
+  decision PENDING on (2)+(3).
