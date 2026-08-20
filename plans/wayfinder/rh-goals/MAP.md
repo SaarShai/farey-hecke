@@ -1234,3 +1234,23 @@ directive 2026-08-15
   certified-N requirement is 262 not ~200 (telescoped hs factors
   a2*b1 = 497.9 cost ~3 orders).  Next: adjudication lane on condition
   4 respecification; then re-run (cheap).
+
+- **LUNA LANES G2/G3 JUDGED AND BANKED — 2026-08-20.**
+  G2 (R5_ACTIVATION_ARITH_LUNA.md): independent mechanical replay of the
+  activation arithmetic REPRODUCES the banked A0 cutoff digit-for-digit
+  (q_A0 = 332093267419812025416641789732742045430624465595, both direct
+  and formula-replay receipts) and honestly returns final_q0 = UNDEFINED
+  with blocker q_monotone/whole-tail — convergent with the
+  monotonicity-referee outcome (keep q_monotone).  Analysis note, no
+  proof claims; banked as an independent cross-check.
+  G3 (CR_AUTOPSY_LUNA.md): C_R chain autopsy with full receipts.  The
+  orders die in two places: C_4 = 2^100 contributes log 69.31 of
+  log C_R = 85.24 (with the proved (AM) 2^63 ceiling leaving 2^37 =
+  25.65 e-folds of declared headroom, the dominant lossy-by-convenience
+  budget), and the layer-cake F(12) = 7940 contributes log 8.98.
+  Top-3 targets (all CONJECTURAL): (1) consume 2^63 directly,
+  25.65 e-folds at 0.95 confidence; (2) 2^20 -> 82944 exact tag count,
+  2.54 e-folds; (3) p-retune sensitivity only (changes alpha, not
+  like-for-like).  Wrap branch is 3.8e-33 of pair branch — irrelevant.
+  Next: CR reduction EXECUTION lane (a real theorem repair re-deriving
+  C_R with C_4 = 2^63, refereed before any ledger substitution).
