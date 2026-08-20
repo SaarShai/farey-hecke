@@ -194,14 +194,56 @@ gate.**
 
 ## 4. The actual lever: subdivision depth
 
-`rho` is linear in the segment radius `r`, so `qOp` falls roughly by half per
-bisection. Measured (see section 6 for the full sweep) the gate needs depth
-6-7. That is `2^6` to `2^7` leaves per arc, times four arcs, at a per-leaf cost
-of `1289.9 s` at `N = 262` — i.e. **90 to 180 hours single-threaded**. The
-gate is not mathematically stuck; it is compute-bound. The leaves are
-embarrassingly parallel and the checker already exposes `--arc-start/--arc-end`
-and `--checkpoint/--resume`. **The Kaggle / parallel-fanout decision is the
-orchestrator's, not this lane's.**
+`rho` is linear in the segment radius `r`, so `qOp` falls by roughly half per
+bisection. Because `qOp` is `N`-independent from `N = 32` up (section 3, and
+lane_g §4.5), the depth question can be settled cheaply at `N = 32` and read
+across. Exhaustive sweep — **every** leaf at each depth, arc 0, `N = 32`,
+verbatim:
+
+```text
+N=32 depth=0 leaves=1   max_qOp=83.790072  max_qF=83.790302 gain=1.000002744 t=2s
+N=32 depth=1 leaves=2   max_qOp=36.196968  max_qF=36.197062 gain=1.000002614 t=4s
+N=32 depth=2 leaves=4   max_qOp=20.099722  max_qF=20.099756 gain=1.000001681 t=8s
+N=32 depth=3 leaves=8   max_qOp=10.373391  max_qF=10.37341  gain=1.000001804 t=16s
+N=32 depth=4 leaves=16  max_qOp=5.2255831  max_qF=5.2255966 gain=1.000002580 t=32s
+N=32 depth=5 leaves=32  max_qOp=2.617193   max_qF=2.6171999 gain=1.000002662 t=64s
+N=32 depth=6 leaves=64  max_qOp=1.3089082  max_qF=1.3089117 gain=1.000002703 t=130s
+N=32 depth=7 leaves=128 max_qOp=0.65443602 max_qF=0.6544378 gain=1.000002722 t=259s
+GATE CLOSES at depth 7 max_qOp = [0.654436018619157177070982269767 +/- 2.20e-31]
+```
+
+Two things to read off this table.
+
+1. **The gate closes at depth 7, not before.** Depth 6 leaves `1.3089 > 1`.
+   The margin at depth 7 is comfortable (`0.654`, a factor `1.53`).
+2. **The tightening gain is a flat `1.0000027` at every depth.** It never
+   grows. Whatever the arc geometry, the modulus matrix stays rank one, so the
+   operator-norm certificate never separates from Frobenius. Under the *old*
+   Frobenius gate the closure depth would have been **the same, 7**
+   (`max_qF = 0.6544378 < 1`). The tightening does not change the depth
+   required, and therefore does not change the compute bill.
+
+Cost at `N = 262`, from the measured `1289.9 s` per leaf: the adaptive routine
+evaluates every internal node as well as every leaf, so a full depth-7 binary
+tree is `2^8 - 1 = 255` evaluations per arc, `1020` for four arcs:
+
+```text
+1020 * 1289.9 s = 1,315,698 s = 365 hours single-threaded.
+```
+
+Far outside the `~2 h` budget in the brief, so this lane stops at the
+single-arc measurement, as instructed. The work is embarrassingly parallel per
+initial arc and the checker already exposes `--arc-start/--arc-end` and
+`--checkpoint/--resume`, so a fanout is mechanically straightforward.
+**The Kaggle / parallel-fanout decision is the orchestrator's, not this
+lane's.**
+
+A caveat this lane will not paper over: the depth-7 figure is measured at
+`N = 32` and transferred to `N = 262` on the strength of the observed
+`N`-independence of `qOp` (19 significant digits of agreement from `N = 32` to
+`N = 262` on the depth-0 value). That is strong evidence, not a proof. The
+`N = 262` run at depth 7 must still be performed; nothing here certifies its
+outcome in advance.
 
 ## 5. Implementation receipts
 
@@ -323,3 +365,15 @@ What each new test pins:
   all remain OPEN and are not upgraded by anything here.
 - Recommended next lever, for the orchestrator: parallel subdivision to depth
   6-7, not further norm engineering.
+
+---
+
+## Dated closure note (2026-08-20, orchestrator, append-only)
+
+§7's "(section filled below)" is a stub the authoring lane never filled:
+its waiter process ended with the lane.  The N=262 measurement it
+awaited is already recorded verbatim in §5 (the Arb ball
+qOp_upper = 83.790069059...) and graded in §8; a full-contour rerun at
+the pinned arcs is pointless at qOp ~ 84 and is SUPERSEDED by the
+orchestrator's subdivision decision (MAP entry "qOp GATE LANDED",
+2026-08-20): depth-7 parallel subdivision via the Kaggle campaign.
