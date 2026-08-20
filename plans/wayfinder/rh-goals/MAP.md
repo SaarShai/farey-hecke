@@ -1169,3 +1169,19 @@ directive 2026-08-15
   warns against; route-H banked two-stage K_F is e^57984).
   Status: note stays claimed/unpromoted; repair lane launched
   (append-only dated correction blocks, then re-referee).
+
+- **MONOTONICITY NOTE REPAIRED FAIL-CLOSED — 2026-08-20.**  All 13
+  referee corrections applied as dated append-only blocks (513
+  insertions, 0 deletions, independently verified; commit 80c48fc).
+  Withdrawn as refuted: q_monotone-removability (banked C_R = 1.05e37
+  gives N_monotone ~ 1.96e29; removal is CONDITIONAL on a future
+  C_R < 74 no source provides) and the "missing pi_0" headline (pi_0 =
+  1.827324e-5 is banked in C0_TRANSPORT_CAMPAIGN_SOL.md).  Standing
+  PROVED core (referee-confirmed): two-stage whole-tail promotion
+  lemma, floor-plus-one threshold, (UP) sufficiency, B > 74 to 73
+  digits, and the (2.5) refutation with in-model witnesses.  Corrected
+  instruction to the four onset ledgers: KEEP q_monotone; no edit
+  licensed.  The honest effective-route residue is now sharply named:
+  the smallness of pi_0 against e^56155, i.e. log q > 2.560914e9 +
+  (5/6) log C_R on route H — C_R and c_0 reduction remain the only
+  levers.
