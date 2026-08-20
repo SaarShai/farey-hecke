@@ -614,3 +614,157 @@ an elementary identity is **CONJECTURAL**. Nothing here is confirmed. No file
 was committed, pushed, or edited; one new file was written.
 
 **READY FOR JUDGING.**
+
+---
+
+## Corrections (2026-08-20, per cold referee `Q8_OUTPUT_TAIL_REFEREE.md`, verdict GAPS NOT REFUTED)
+
+### Correction (2026-08-20, referee defect 1):
+
+Defective sentence, quoted verbatim from §4.2:
+
+> Agreement to 2e-4 — the geometry prediction and the measured decay are the
+> same number. This is the strongest single receipt in this note.
+
+Corrected statement (referee §1(d), GAP 2): `5.31153` and `0.982935` are
+values of the *bound*, not of the operator. The bound is defined as
+`theta^{-N} * sqrt(sum_{k<N} G_k^2)` with an `N`-independent-to-first-order
+prefactor, so its per-step factor is `1/theta = 1/1.235 = 0.809717` **by
+construction**; the `2e-4` residual is merely the prefactor's drift. Nothing
+about the Möbius geometry is tested by this check. The true measured decay of
+the omitted-output tail, taken from this note's own §4.2 brute column, is
+materially different per family: `~0.6427` (A2), `~0.7027` (A3), `~0.4208`
+(B1), `~0.2807` (B2), `~0.5057` (B3) per step. The bound itself remains valid;
+only the "strongest single receipt in this note" billing is withdrawn — it is
+an overstatement of a self-check, not a corroboration of the geometry.
+
+### Correction (2026-08-20, referee defect 2):
+
+Defective sentence, quoted verbatim from §6:
+
+> The bound survives 45 adverse numerical comparisons against brute-force tail
+> sums in both regimes, and its predicted decay rate matches the measured one
+> to 2e-4.
+
+Corrected statement (referee §1(d), GAP 1): the count is **40**, not 45: §4.1
+contains `5 + 5 = 10` and §4.2 contains `15 x 2 = 30`. The remaining 5 are
+§4.3's naive-rebuild prefactor comparisons, which are not bound-vs-brute
+comparisons at all — and one of them (`i == j == 3`, block B3) disagrees with
+the direct computation *by construction*, since it exercises a rejected
+geometry-rebuild route rather than the certified one.
+
+### Correction (2026-08-20, referee defect 3):
+
+Defective sentence, quoted verbatim from §3.2:
+
+> so `tau_out(104)` is roughly `1e-6`, eight orders **worse** than
+> `tau_in(104)`.
+
+Corrected statement (referee §1(e), GAP 3): the same extrapolation at
+`theta = 1.235` gives `1.19138 * 0.809866^88 = 1.04e-8` (HS), and `~1.6e-7`
+after the note's own trace inflation. Neither figure is `1e-6`; "eight orders
+worse" should read about **6.3 orders (HS) / 7.5 orders (trace)** worse than
+`tau_in(104)`. The error is in the conservative direction and does not change
+the qualitative conclusion — the `N >~ 200` headline is unaffected, since it
+rests on the rate `0.809866`, which is correct, not on this figure.
+
+### Correction (2026-08-20, referee defect 4):
+
+Defective JSON schema, quoted verbatim from §5.1:
+
+> ```json
+> { "block": [3,2,1,false,false],
+>   "theta_exact_string": "1.2",
+>   "A_theta_upper_bound": "...",
+>   "C_theta_upper_bound": "...",
+>   "q_upper_bound": "...",
+>   "rho_theta_upper_bound": "...",
+>   "selected_column_bounds_theta": ["...", "..."],
+>   "holomorphy_gate": { "pole_clearance_pass": true,
+>                        "branch_cut_clearance_pass": true,
+>                        "deep_tail_d_lower_bound": "..." } }
+> ```
+
+Corrected statement (referee §1(f), GAP 4, corrected form transcribed from
+referee §3.3): `[3,2,1,false,false]` (`A3`) is a **single-branch head** block,
+not a Hurwitz-closed tail family — `q8_r2_local.py:181-184` emits
+`weight_sup_upper_bound` + `center_included_image_ratio_upper_bound` for
+`tail == False`, and `A`/`C`/`q`/`rho` only for `tail == True`. Since `A3` is
+precisely the **binding** block (§3.2), the schema above does not cover the
+case that drives the rate. The corrected per-family split is:
+
+* `tail == True` (the six Hurwitz families, all with `j == 3`, `q = 0.5`):
+  `A_theta_upper_bound`, `C_theta_upper_bound`, `q_upper_bound`,
+  `rho_theta_upper_bound`, `selected_column_bounds_theta` (`K_head + 1`
+  entries), each an Arb `.upper()` string.
+* `tail == False` (`A2 = (2,1,1,F,F)`, `A3 = (3,2,1,F,F)` — **including the
+  binding block**): `weight_theta_sup_upper_bound`, `rho_theta_upper_bound`,
+  `selected_column_bounds_theta`. The consumption formula for these is
+  `theta^{-N} * W_theta * G_1(N, rho_theta)` (trace) and
+  `theta^{-N} * W_theta * sqrt(G_2(N, rho_theta))` (HS) — **not** the
+  `A q^k + C k rho^{k-1}` form used by the tail families.
+
+### Correction (2026-08-20, referee defect 5):
+
+Defective sentence, quoted verbatim from §6:
+
+> An admissible `theta > 1` demonstrably exists: `theta_max = 1.2369` uniform,
+> binding block `(3,2,1,False,False)`; per-disc optima give rates 0.543 /
+> 0.769 / 0.810.
+
+Corrected statement (referee §1(c), mislabelling GAP): `theta_max = 1.2369`
+(`rho_theta < 1` uniform) is the *rate-optimal* `theta`, not the maximal
+admissible one — `rho_theta >= 1` is fine per this note's own §3.3, so
+`rho_theta < 1` is not an admissibility condition. The actual G1 admissibility
+ceiling is **2.664** (the `(2,1,1,False,False)` pole-clearance limit). The
+referee independently verified admissibility beyond `1.2369`, directly, at
+`theta = 2.4` and `theta = 2.60` (both near the `2.664` pole ceiling; bound
+still holds, though constants blow up as the pole is approached).
+
+### Correction (2026-08-20, referee defect 6):
+
+Defective sentence, quoted verbatim from §5.2:
+
+> `"full_tau": None` becomes `input_tail_only + output_projection_tail`, i.e.
+> (2.6). Both summands are trace-norm quantities in the same basis, so the sum
+> is meaningful; this is the "propagated trace norm" the referee asks for.
+
+Corrected statement (referee §1(f), GAP 5): the substitution is sound, but
+"i.e. (2.6)" is a category slip. (2.6) is a single-operator inequality;
+`input_tail_only` (`q8_schur_contour.py:351-358`) is the **telescoped** Schur
+combination `trace[B3] + a3 trace[B2] + a3 a2 trace[B1] + trace[A3] b2 +
+trace[A3] a2 b1 + a3 trace[A2] b1`. The licensing step, which must be stated
+explicitly rather than left implicit in "i.e. (2.6)", is: telescoping
+`X - X~` factor by factor requires substituting the **full** per-block defect
+`tau_in + tau_out` into **each** `trace[.]` slot of that combination, with the
+`hs[.]` factors unchanged — this is what §5.2.1 already prescribes elsewhere
+in this note but does not connect to the "i.e. (2.6)" sentence, which a later
+reader could otherwise take as licence to add the two totals in the wrong
+order.
+
+### Correction (2026-08-20, referee defect 7 — reproducibility):
+
+Defective citations, quoted verbatim: from §4.4, "Probe:
+`` `<scratchpad>/outtail_probe.py` ``."; from §3.2, "Computed (Arb, 256 bits;
+blocks with output disc `i`, `n` swept to 400 for the tail families):".
+
+Corrected statement (referee §1(g), reproducibility defect): `<scratchpad>/
+outtail_probe.py` is a literal placeholder pointing into an ephemeral,
+git-ignored session directory, and the §3.2 "Computed (Arb, 256 bits)"
+geometry sweep (and the earlier pole/branch-cut sweep of §3.1) emits no
+receipt file at all. Every §3.2/§4 number in this note is independently
+reproduced by the referee (`Q8_OUTPUT_TAIL_REFEREE.md` §1(a)–(e)), but none of
+them is repo-auditable as things stand. These numbers should be treated as
+**reproduced-by-referee** (cite `Q8_OUTPUT_TAIL_REFEREE.md` §1(a)–(e) and §2),
+not as repo-auditable receipts. Any future L-OUT lane must ship the sweep as a
+tracked script plus a JSON receipt, not a scratchpad path.
+
+### Correction (2026-08-20, referee defect 8 — stale sentence):
+
+Defective sentence, quoted verbatim:
+
+> No file was committed, pushed, or edited; one new file was written.
+
+Corrected statement (referee §1(g)): this note is now tracked, added by
+commit `b701cee`. The sentence above was accurate at the moment of writing but
+is now stale.

@@ -1208,3 +1208,9 @@ directive 2026-08-15
   regression).  Next: append-only defect repairs + L-OUT execution
   lane; the Hardy/Hilbert binding remains the separately-OPEN analytic
   gate.
+
+- **Q8 TAIL NOTE REPAIRED FAIL-CLOSED — 2026-08-20.**  All 8 referee
+  corrections applied append-only (154 insertions, 0 deletions,
+  independently verified), including the referee §3.3 corrected L-OUT
+  schema for the binding single-branch head-block family.  L-OUT
+  execution lane running.
