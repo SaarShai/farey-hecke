@@ -512,3 +512,32 @@ is conditional on all of them exactly as the rest of L-OUT is.
 ---
 
 **READY FOR JUDGING.**
+
+---
+
+## Dated correction block (2026-08-20, referee M1–M6, append-only)
+
+Applied per SCHUR_SUBSTITUTION_REFEREE.md (final verdict CONFIRMED; six
+minor defects, none soundness-affecting):
+
+- **M1**: strawman A is violated at 11 of 18 points, not 10 as stated
+  (min 0.3115 correct) — the note under-stated its own test power.
+- **M2**: reproducibility — the numeric tables used
+  factors=("10","4","2") = RECEIPT_FACTORS, NOT the engine default
+  EXACT_FACTORS=('3.4','2.2','1.4'); reruns must pass the receipt
+  factors explicitly or they will get a different (still passing)
+  table.
+- **M3**: §0 row 1 "as implemented ... PROVED" is to be read as the
+  body states three times: the live input_tail_only is tau_in only and
+  is NOT itself a bound on ||C−C_N||_1; the PROVED claim is the
+  telescoping substitution identity and its norm bookkeeping.
+- **M4**: the §4.1 citation for the full-column Parseval step should be
+  Q8_OUTPUT_TAIL_SOL.md §1.3 (direct support), not :186 (2.3) at
+  theta=1.
+- **M5**: the counterexample is stronger than reported: 200,000 random
+  rank-one quintuples give 0 violations under (H1) but 27,840 (13.9%)
+  violations with truncated coefficients, worst ratio 0.217 (referee
+  receipt) — hypothesis (iv) is load-bearing with positive measure.
+- **M6**: the closing "nothing was committed" is stale; the note is
+  committed as a5d9adc by the orchestrating session (true at authoring
+  time).

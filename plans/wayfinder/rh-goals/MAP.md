@@ -1393,3 +1393,23 @@ directive 2026-08-15
   DONE-CONFIRMED; (2) Schur-substitution referee RUNNING; (3)
   Hardy/Hilbert binding lane RUNNING; (4) lane_f re-pin authority
   decision PENDING on (2)+(3).
+
+- **SCHUR SUBSTITUTION REFEREE: CONFIRMED; M1-M6 APPLIED — 2026-08-20.**
+  SCHUR_SUBSTITUTION_REFEREE.md (459 lines): every attack failed.  The
+  anticipated resolvent hole does not exist — q8_r3b_engine returns
+  five nonzero blocks with nilpotent A-corner, so the Schur complement
+  is a POLYNOMIAL (det M = 1 elimination re-derived; swapped-order
+  control fails at 3.27e-3, so the 6-slot bijection is genuinely
+  order-sensitive); telescoping residual 1.37e-40..3.98e-38 on live
+  blocks at 40 dps; all six slots' norm bookkeeping checked
+  individually (24 checks, Delta_B3 tight = correct signature);
+  hypothesis (iv) verified against the GENERATOR (output-disc arc-cover
+  sups; hs/Xop bit-identical across N in {6,40,104,262,1000}) and shown
+  load-bearing with positive measure (13.9% violations under truncated
+  coefficients, worst 0.217); latent Xop/b3 flag confirmed LATENT (the
+  trace-flavoured consumer is gated behind full_tail_certified=False).
+  Six minor defects applied as a dated append-only block (29
+  insertions, 0 deletions, verified).  FLIP PRECONDITION LEDGER UPDATE:
+  (1) receipt referee CONFIRMED; (2) Schur substitution CONFIRMED;
+  (3) Hardy/Hilbert binding lane RUNNING; (4) lane_f re-pin authority
+  decision now pending ONLY on (3).
