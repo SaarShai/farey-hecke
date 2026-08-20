@@ -1272,3 +1272,20 @@ directive 2026-08-15
   (AM) atom-moment summation remains excluded.  The (FW) analytic
   chain — previously CONJECTURAL at Lean level per v30's exclusions —
   is now machine-verified conditional on those named hypotheses.
+
+- **C_R V2 REDUCTION DELIVERED (UNREFEREED); STALE-TARGET CORRECTION —
+  2026-08-20.**  Correction to the luna-autopsy banking above: target 1
+  (consume 2^63) was ALREADY executed and twice-refereed on 2026-08-19
+  (CR_REDUCTION_SOL.md + CR_REDUCTION_REFEREE.md + _REREFEREE.md,
+  C_4' = 2^62+1, C_R' = 38160259896392973127946053) — the autopsy and
+  the G-lane brief were stale on that point.  The execution lane
+  correctly refused to overwrite the refereed file and delivered the
+  genuinely residual target 2 in a NEW note CR_REDUCTION_V2_SOL.md
+  (commit 0987c2c, unrefereed): exact tag count 82944 = 2^10*3^4
+  replacing the 2^20 ceiling INSIDE the 2^62 subtotal (non-double-count
+  argued at (3.25)), C_4'' = 2^52*81+1, C_R'' =
+  3018536183210772296097745 (log 56.367, +2.537 e-folds = ln(1024/81)),
+  propagated conditional A0 cutoff q_A0'' =
+  11761546420922598622910053339543258496 (log 85.358), q_monotone KEPT.
+  Ten-item NOT-claimed list present.  Cold referee launched; note also
+  flags BOUNDARY_ALPHA edited post-hash (referee instructed to diff).
