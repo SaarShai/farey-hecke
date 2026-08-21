@@ -386,9 +386,13 @@ each worker on its first leaf). Its receipt will land at
 the per-leaf cost, and it is the number the compute budget depends on:
 
 ```text
-per-worker CPU time, all four workers, first leaf not yet complete:
-  24:11  (= 1451 s CPU and still climbing)
+per-worker CPU time, all four workers, first leaf STILL not complete:
+  22:19 -> 23:53 -> 24:11 -> 26:50   (= 1610 s CPU and still climbing)
 ```
+
+CPU time advances monotonically across every sample, so the workers are
+computing, not deadlocked. But the first leaf has now passed **1.25x** the
+1290 s reference without completing.
 
 So on this host a depth-7 leaf at `N = 262` costs **more** than the 1290 s that
 `QF_TIGHTENING_SOL.md` §4 quotes. Two components are being conflated and should
@@ -405,9 +409,9 @@ read this number as the marginal leaf cost, and do not use the 4-leaf shard to
 extrapolate a shard runtime.
 
 **Budget consequence, stated before the fact rather than after:** if the true
-marginal cost is nearer 1450 s than 1290 s, a 64-leaf Kaggle shard needs
-~6.4 h at 4 workers on hardware equal to this Mac, and proportionally more on
-slower cores. The 11 h deadline guard and the partial-shard merge rule (§5,
+marginal cost is nearer 1600 s than 1290 s, a 64-leaf Kaggle shard needs
+~7.1 h at 4 workers on hardware equal to this Mac, and proportionally more on
+slower cores — a Kaggle core merely 1.5x slower already exceeds the 11 h guard. The 11 h deadline guard and the partial-shard merge rule (§5,
 rule 1) are what make that survivable; see the contingency in §5.
 
 Cross-host determinism check, when both are in hand: leaves 0–3 of arc 0 appear
@@ -431,6 +435,12 @@ reported before any merged number is quoted.
 
 ### Next loop tick
 
+0. **Read the real per-leaf cost first** (from
+   `LOCAL_VALIDATION_a0_l0-4.json`'s `timing.leaf_seconds_mean`, or from the
+   first harvested kernel receipt). Everything else in this plan is sized off
+   the 1290 s reference, and §8 already shows the true figure is larger. If the
+   marginal leaf is >~1600 s, re-shard the *remaining* work at 32 leaves per
+   kernel rather than 64 — a shard that dies at the deadline wastes a slot.
 1. Poll `kaggle kernels status saarshai/q8-schur-d7-s0{0..4}`; harvest each with
    `kaggle kernels output` as it completes.
 2. Harvest partial receipts too, and re-shard only their missing leaves (§5

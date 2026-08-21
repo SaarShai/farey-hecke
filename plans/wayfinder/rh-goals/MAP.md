@@ -1654,3 +1654,16 @@ directive 2026-08-15
   a2/0-64 (Kaggle, RUNNING); local queue: s05 a2/64-128 (running,
   pid 34238), then s06 a3/0-64, s07 a3/64-128; validation a0/l0-4
   (pid 33707).
+
+- **CAMPAIGN COST RE-MEASURED: >= 1610 s CPU/LEAF; RE-SHARD RULE ARMED —
+  2026-08-20.**  Per-leaf cost at N = 262 measured above 1610 s CPU
+  (monotone progress 22:19 -> 26:50 across samples — computing, not
+  deadlocked), 1.25x the reference.  Implication: a 64-leaf shard needs
+  ~7.1 h at 4 workers on Mac-equal hardware; a Kaggle core 1.5x slower
+  blows the 11 h deadline guard.  STEP 0 OF NEXT LOOP TICK: read
+  leaf_seconds_mean from the first harvested receipt; if it confirms
+  > ~1600 s, re-shard the REMAINING work at 32 leaves/kernel (a
+  deadline-killed shard wastes a scarce slot; the partial-shard merge
+  rule makes truncation recoverable — only missing leaves re-run).
+  Launch state unchanged: s00-s04 RUNNING, local queue + validation
+  alive.
