@@ -1,0 +1,30 @@
+[{"stream_name":"stdout","time":0.909991498,"data":"mounted inputs: ['datasets']\n"}
+,{"stream_name":"stdout","time":0.919306526,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
+,{"stream_name":"stdout","time":5.311797602,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 26.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.560343374,"data":"python-flint 0.9.0\n"}
+,{"stream_name":"stdout","time":8.565794361,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-20\n"}
+,{"stream_name":"stdout","time":8.630281664,"data":"verified and staged 15 files\n"}
+,{"stream_name":"stdout","time":8.630333394,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 1 --leaf-start 64 --leaf-end 128 --depth 7 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a1_l64-128.json --checkpoint /kaggle/working/SHARD_a1_l64-128.ckpt.json\n"}
+,{"stream_name":"stdout","time":8.630368022,"data":"cpu_count 4\n"}
+,{"stream_name":"stdout","time":8.869589083,"data":"Q8_SHARD arc=1 leaves=[64,128) depth=7 N=262 workers=4 resumed=0 pending=64\n"}
+,{"stream_name":"stdout","time":7123.482791002,"data":"Q8_SHARD leaf=65 status=OPEN_MAX_DEPTH qOp=[0.654389808141381698720 leaf_seconds=7114.2 elapsed=7114.6 done=1/64\n"}
+,{"stream_name":"stdout","time":7124.067776551,"data":"Q8_SHARD leaf=67 status=OPEN_MAX_DEPTH qOp=[0.653570694479858467789 leaf_seconds=7114.7 elapsed=7115.2 done=2/64\n"}
+,{"stream_name":"stdout","time":7124.648590215,"data":"Q8_SHARD leaf=66 status=OPEN_MAX_DEPTH qOp=[0.654125267296757765946 leaf_seconds=7115.3 elapsed=7115.8 done=3/64\n"}
+,{"stream_name":"stdout","time":7130.154398059,"data":"Q8_SHARD leaf=64 status=OPEN_MAX_DEPTH qOp=[0.654433500773413916211 leaf_seconds=7120.9 elapsed=7121.3 done=4/64\n"}
+,{"stream_name":"stdout","time":14435.650444721,"data":"Q8_SHARD leaf=68 status=OPEN_MAX_DEPTH qOp=[0.652716681814709623604 leaf_seconds=7312.2 elapsed=14426.8 done=5/64\n"}
+,{"stream_name":"stdout","time":14442.925472776,"data":"Q8_SHARD leaf=70 status=OPEN_MAX_DEPTH qOp=[0.650129957019928812549 leaf_seconds=7318.3 elapsed=14434.1 done=6/64\n"}
+,{"stream_name":"stdout","time":14449.247831142,"data":"Q8_SHARD leaf=69 status=OPEN_MAX_DEPTH qOp=[0.651566183405714079601 leaf_seconds=7325.2 elapsed=14440.4 done=7/64\n"}
+,{"stream_name":"stdout","time":14456.20565866,"data":"Q8_SHARD leaf=71 status=OPEN_MAX_DEPTH qOp=[0.648407670225776640598 leaf_seconds=7326.0 elapsed=14447.3 done=8/64\n"}
+,{"stream_name":"stdout","time":21623.638538559,"data":"Q8_SHARD leaf=72 status=OPEN_MAX_DEPTH qOp=[0.646403869757066140106 leaf_seconds=7188.0 elapsed=21614.8 done=9/64\n"}
+,{"stream_name":"stdout","time":21639.491937332,"data":"Q8_SHARD leaf=73 status=OPEN_MAX_DEPTH qOp=[0.644124451790017912211 leaf_seconds=7196.6 elapsed=21630.6 done=10/64\n"}
+,{"stream_name":"stdout","time":21652.29201236,"data":"Q8_SHARD leaf=74 status=OPEN_MAX_DEPTH qOp=[0.641578774783780960949 leaf_seconds=7203.0 elapsed=21643.4 done=11/64\n"}
+,{"stream_name":"stdout","time":21654.848513559,"data":"Q8_SHARD leaf=75 status=OPEN_MAX_DEPTH qOp=[0.638813720048200766993 leaf_seconds=7198.6 elapsed=21646.0 done=12/64\n"}
+,{"stream_name":"stdout","time":28911.500273601,"data":"Q8_SHARD leaf=76 status=OPEN_MAX_DEPTH qOp=[0.635796042537559836356 leaf_seconds=7287.9 elapsed=28902.6 done=13/64\n"}
+,{"stream_name":"stdout","time":28931.860662585,"data":"Q8_SHARD leaf=77 status=OPEN_MAX_DEPTH qOp=[0.632532076576826489430 leaf_seconds=7292.4 elapsed=28923.0 done=14/64\n"}
+,{"stream_name":"stdout","time":28954.109422418,"data":"Q8_SHARD leaf=79 status=OPEN_MAX_DEPTH qOp=[0.625318527691371729450 leaf_seconds=7299.3 elapsed=28945.2 done=15/64\n"}
+,{"stream_name":"stdout","time":28955.955041921,"data":"Q8_SHARD leaf=78 status=OPEN_MAX_DEPTH qOp=[0.629033008926837161020 leaf_seconds=7303.7 elapsed=28947.1 done=16/64\n"}
+,{"stream_name":"stdout","time":36488.349004006,"data":"Q8_SHARD leaf=80 status=OPEN_MAX_DEPTH qOp=[0.621705012876196517805 leaf_seconds=7576.8 elapsed=36479.5 done=17/64\n"}
+,{"stream_name":"stdout","time":36512.718019295,"data":"Q8_SHARD leaf=81 status=OPEN_MAX_DEPTH qOp=[0.618047314130180695661 leaf_seconds=7580.8 elapsed=36503.8 done=18/64\n"}
+,{"stream_name":"stdout","time":36540.765081865,"data":"Q8_SHARD leaf=82 status=OPEN_MAX_DEPTH qOp=[0.614330023632754133803 leaf_seconds=7586.7 elapsed=36531.9 done=19/64\n"}
+,{"stream_name":"stdout","time":36541.313459083,"data":"Q8_SHARD leaf=83 status=OPEN_MAX_DEPTH qOp=[0.610674446884365305627 leaf_seconds=7585.4 elapsed=36532.4 done=20/64\n"}
+]

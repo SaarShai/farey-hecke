@@ -1918,3 +1918,25 @@ directive 2026-08-15
 - Kaggle: d7 s00..s04 all still RUNNING (poll receipts above);
   push_d8_kaggle.sh pusher alive (PID 79519), deferring on the 5-slot
   cap as designed.  No shard receipts landed yet; nothing banked.
+
+## 2026-08-21 19:15Z — HARVEST TICK: d7 wave closed, d8 kernels live, local queue relaunched
+
+- Session gap 06:35Z-19:06Z (host offline/asleep; previous Claude
+  process exited): local d8 queue and Kaggle pusher both died with it;
+  zero local depth-8 leaves completed.
+- Kaggle d7 wave CLOSED: s04 COMPLETE, s00-s03 CANCEL_ACKNOWLEDGED at
+  the 12 h cap.  Partial outputs harvested to
+  shard_receipts/d7_kaggle_harvest/ (logs + checkpoints; diagnostics
+  archive only): 133 certified depth-7 leaves, status mix
+  PASS/OPEN_MAX_DEPTH consistent with the known depth-7 mid-arc
+  insufficiency.  Per-shard: a0[0,64) 20 PASS; a0[64,128) 36 OPEN;
+  a1[0,64) 20 PASS+16 OPEN; a1[64,128) 20 OPEN; a2[0,64) 20 PASS+1 OPEN.
+- Pusher bug found + fixed: an offline-window "ConnectionError" matched
+  the bare ERROR/CANCEL status grep, so all 5 .pushed_ markers were set
+  at 02:21-03:03Z with NO kernel existing (404 at 19:07Z).  Fix:
+  status check now requires the literal "KernelWorkerStatus." enum.
+  Markers cleared, pusher rerun.
+- 19:14:19Z receipts: all 5 d8 kernels PUSHED and RUNNING
+  (KernelWorkerStatus.RUNNING x5, s00-s04).  Local d8 queue relaunched
+  19:11:10Z (shard a1_l64-128 from zero, 12 workers, ~12 cores busy).
+  Coverage clock: Kaggle d8 ~6.3 h/kernel; local 11 shards ~23 h.
