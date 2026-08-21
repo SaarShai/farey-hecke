@@ -1689,3 +1689,23 @@ directive 2026-08-15
   Caveats held: 4/512 leaves on the arc's easiest stretch; profile is
   a sample, every leaf still gets certified; contour OPEN; analytic
   gates untouched.  Cross-host determinism check pending s00 harvest.
+
+- **NEW FINDING: MID-ARC LEAVES CLEAR qOp BUT FAIL ZERO-EXCLUSION;
+  POSSIBLE SUBDIVISION-INDEPENDENT FLOOR — 2026-08-20.**  Shard
+  a2/l64-128 checkpoint (12 leaves in): status_counts PASS 0 /
+  OPEN_MAX_DEPTH 12 with qOp_lt_1_all = True.  Record autopsy (leaf
+  path [1,0,0,0,0,0,0], top edge): ALL gates true — qOp 0.654 < 1,
+  tails available, tail_homotopy 1.92e-6 < 1, rH 0.9965 < 1 — but
+  finite_taylor_excludes_zero = False: midpoint_det ~ -4.69e-7 vs
+  finite_taylor_box radius 8.44e-4.  CONCERN (CONJECTURAL until
+  diagnosed): the box radius carries a subdivision-INDEPENDENT floor
+  from the tail terms (~tail_homotopy ~ 1.9e-6); if |det| along parts
+  of arc 2 genuinely dips below that floor, those leaves can NEVER
+  certify at N = 262 regardless of depth — a contour-PLACEMENT /
+  tail-budget question, not a compute-depth question.  Arc 0's
+  validation leaves DID exclude zero (PASS), so the phenomenon is
+  arc/region-specific.  Diagnosis lane launched: float pre-scan of
+  |det| along all four arcs, box-floor decomposition vs depth and vs
+  N, and the re-pin/N-increase trade study.  Kernels left running
+  (their leaves still yield qOp + det data either way; partial-merge
+  keeps everything).
