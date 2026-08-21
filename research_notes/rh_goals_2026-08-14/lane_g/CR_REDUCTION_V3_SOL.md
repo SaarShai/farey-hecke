@@ -565,3 +565,21 @@ intact.
 | visible-but-unproved residual | `>= 1.447` e-folds | CONJECTURAL, §4 |
 
 READY FOR JUDGING
+
+---
+
+## Dated addendum (2026-08-20, referee nits N1–N3, append-only)
+
+Per CR_REDUCTION_V3_REFEREE.md (verdict CONFIRMED, no required repairs):
+- **N1**: §0's "every factor" — 2π², 128(1+log 2), and G(11/5) = 30 were
+  unlisted; referee recomputed all three as exact and slack-free.
+- **N2**: §3.1's "moves by exactly the C_4 e-folds" — false at the
+  −6.01e-20 level (wrap term + ceilings); read "to within the wrap and
+  ceiling residuals".
+- **N3**: §4.2's "(3.9)/(3.13) may be the same factor" overstates; the
+  note's own line 251 distinguishes the selector from the ordering
+  factor; the residual obligation is the narrower one (verify TWOMARK
+  Lemma 4.1 enumerates ordered pairs).  Gain untaken; conservative.
+- Referee disclosure E1: several sibling files were TCC-blocked during
+  its run; the q_monotone-KEPT attestation is indirect but
+  conservative-direction.  (The TCC outage is documented in MAP.)

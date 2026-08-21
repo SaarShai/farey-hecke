@@ -858,3 +858,45 @@ hashes at promotion:
 e9e5b023ea911a5d196254a134393815a57b4f6cf00fec09150d83a0d7d4b7b6  CR_REDUCTION_V2_SOL.md
 04f7f5ed2aa2065e9822be856e17e27f928c300ced81f418a3380772aff236b6  CR_REDUCTION_V2_REFEREE.md
 ```
+
+## 10. Dated reduced-constant promotion (V3) — 2026-08-20
+
+Append-only; Sections 4, 8, 9 constants stand.  Three further legal
+substitutions inside the atom bridge's §3 chain (2^{11} → 1600 at
+(3.25); 2^4 → (π²/6)^4 at (3.12); 2^{14} → 8224 = 2^5+2^{13} at (3.24);
+all proved exactly-once/multiplicative/same-object, all stated as
+bounds) permit the paper-level coefficient
+
+\[
+C_4'''=65459394456774532,
+\]
+
+and the identical assembly gives the sharper outward minimal ceiling
+
+\[
+\boxed{C_R'''=541656022363559883954520},\qquad
+\log C_R''' = 54.6489\ldots
+\]
+
+— a further \(1.7179\) e-folds below Section 9 (cumulative \(30.5945\)
+below Section 4).  Propagated selected conditional A0 analytic-tail
+transport cutoff (one term of the full max; \(q_{\rm monotone}\) KEPT):
+
+\[
+q_{A0}'''=2810199067910634377586449487575862960,\qquad
+\log q_{A0}''' = 83.9263\ldots,\qquad
+q_{\rm side}'''=1134004458443795841.
+\]
+
+The cold referee (`CR_REDUCTION_V3_REFEREE.md`) returned CONFIRMED with
+no required repairs: all integers reproduced digit-for-digit on an
+independent mpmath leg written from the sources plus an Arb cross-leg;
+the (3.12) equality-vs-strictness hazard probed and cleared by the
+ceiling convention; the high/low regime verified not to flip under
+joint substitution; F(12) re-derived zero-slack.  Nits N1–N3 recorded
+in the note's dated addendum.  Immutable hashes at promotion:
+
+```text
+cac347dce92f4a546c6587422241b3b27eb85296a05c120448fd86e8c4e669b3  CR_REDUCTION_V3_SOL.md
+398371511954e468785ef6bceebaf6edc8c94a64f7fbd259228c219b9213d7fa  CR_REDUCTION_V3_REFEREE.md
+```

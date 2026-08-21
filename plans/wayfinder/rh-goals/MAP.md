@@ -1709,3 +1709,41 @@ directive 2026-08-15
   N, and the re-pin/N-increase trade study.  Kernels left running
   (their leaves still yield qOp + det data either way; partial-merge
   keeps everything).
+
+- **TCC LOCKOUT RESOLVED; QUEUE DRAINED; C' EXONERATED — 2026-08-20/21.**
+  macOS revoked Documents access mid-session (all agents + orchestrator
+  EPERM); owner re-granted Full Disk Access and restarted the app.
+  Nothing lost (pending queue preserved in session scratchpad).  Banked
+  on restore, in order:
+  (1) dtest.py verdict: C' EXONERATED — engine derivative matches
+  central finite differences to ~1e-17 relative on 8 entries at N=96;
+  the 128x/90-degree discrepancy moves to the WHICH-INVERSE question
+  (A0^-1 anchor vs true (I-C)^-1) — derivative-semantics lane launched;
+  H-tightening recommendation formally withdrawn in the diagnosis
+  note's dated correction block (H is tight to 0.35% per the lane's own
+  point-trace probe).  If A0^-1 is legitimately conservative, the 12
+  banked PASS leaves stand and failing leaves may unlock.
+  (2) C_R V3 CONFIRMED banked: nit block N1-N3 appended; §10 promotion
+  into BOUNDARY_ALPHA_THEOREM_SOL.md — C_R''' = 541656022363559883954520
+  (log 54.6489, cumulative 30.5945 e-folds below published), q_A0''' =
+  2810199067910634377586449487575862960 (log 83.9263), hashes recorded.
+  (3) Assembly referee installed verbatim (GAPS NOT REFUTED; its
+  attacks 2/4 reproduced everything, defects D1-D5 found, attacks
+  1b/3/5 unexecuted due to lockout); D1-D5 applied append-only
+  including the NEW (H-TRANS) gate row (R3_TRANSPORT_EXECUTION is
+  UNREFEREED — surfaced as a first-class gap) and the corrected
+  binding-parameter scoping (alpha most elastic for full Q_0,
+  elasticity -85.4; nu_z only for the e^{T_0} floor).  Assembly stays
+  UNPROMOTED pending re-referee of attacks 1b/3/5 (incl. the RATE-A
+  grade-conflict adjudication) — re-referee lane launched.
+  (4) Zero-exclusion diagnosis note committed with its self-refutation
+  correction block; float scan (NON-CERTIFIED) banked: winding
+  0.9999999999999997, one simple zero at the exact box centre,
+  min|det| = 3.00103e-6 identical across arcs; leaves 65-78 fail
+  rH_lt_1 (excludes_zero flag spuriously true via taylor_radius = 0);
+  a2 shard completed 8 PASS.
+  (5) Local queue processes killed during lockout (checkpoint writes
+  would fail; leaves re-runnable); campaign compute HELD until the
+  derivative-semantics verdict; Kaggle kernels s00-s04 still RUNNING
+  cloud-side throughout.  Next referees due: derivative semantics,
+  assembly re-referee, then R3-transport referee (the new named gap).

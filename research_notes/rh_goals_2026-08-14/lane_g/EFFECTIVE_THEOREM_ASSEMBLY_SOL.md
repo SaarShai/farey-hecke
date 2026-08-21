@@ -686,3 +686,47 @@ conflict in §3 resolves against RATE-A — **the LAW is untouched.**
 ---
 
 **READY FOR JUDGING**
+
+---
+
+## Dated correction block (2026-08-20, referee defects 1–5, append-only)
+
+Applied per EFFECTIVE_THEOREM_ASSEMBLY_REFEREE.md (verdict GAPS NOT
+REFUTED; re-referee of attacks 1b/3/5 required before any promotion):
+
+- **D1 (refuted number)**: §5(b) ":604" — "enters as 1/(alpha nu_z) ~
+  4.47" is WRONG; the true value is 1/(alpha nu_z) = 5.36941580756...;
+  the neighbouring K_+ coefficient is (1-nu_z)/(alpha nu_z) =
+  4.5357...; no assembly quantity equals 4.47.
+- **D2 (scope of "binding")**: nu_z is the most elastic parameter of
+  the C_R-INDEPENDENT FLOOR e^{T_0} (elasticity -42.4 vs -38.4 for
+  alpha).  For the FULL Q_0 at C_R'', alpha is the most elastic
+  parameter (elasticity -85.4), because alpha also discounts
+  C_R^{1/alpha}.  A geometry change raising alpha dominates one raising
+  nu_z at current C_R; only nu_z (or m_z, K_+) moves the floor.  The
+  research-steering sentence is corrected accordingly.
+- **D3 (missing gate row)**: §3's "Nothing is omitted" was false — the
+  two-constants/Rouché transport implication itself is consumed from
+  R3_TRANSPORT_EXECUTION_SOL.md:60-93,190-231, which has NO dedicated
+  referee and self-grades "CONDITIONAL TRANSPORT THEOREM PROVED;
+  CURRENT UNCONDITIONAL R3 REMAINS A GAP".  New gate row adopted
+  verbatim from the referee:
+
+  ### (H-TRANS) — the two-constants/Rouché transport implication itself
+  Source R3_TRANSPORT_EXECUTION_SOL.md:60-93,190-231 ((R3-Z), (3.4),
+  §4).  Status: PAPER-LEVEL, UNREFEREED.  What would discharge it: a
+  cold referee on the harmonic-measure/two-constants application
+  (boundedness of F_q on the closed rectangle, the omega(s,Gamma_R;
+  Omega) interval cover, and the Rouché strictness on the disc
+  boundary).
+
+- **D4**: the Hejhal (7.22) citation lacks a page; the assembly must
+  not be cited until the page is printed and asserted to lie inside the
+  in-repo excerpt pp. 568-600 (routed via LAW_HEJHAL_S7_EXTRACT.md:
+  67-81).
+- **D5**: §4.3's "same phenomenon reproduced" — the q_side'' agreement
+  is an algebraic identity (route-H B = K_+ makes the two closed forms
+  the same function), not an empirical corroboration.
+
+STATUS: this note remains UNPROMOTED pending the re-referee (attacks
+1b, 3, 5 — the (RATE-A) grade-conflict adjudication among them).
