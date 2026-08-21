@@ -1592,3 +1592,21 @@ directive 2026-08-15
   1.8e2 CPU-hours across 4 arcs; private kernels; checkpointed).
   Contour verdict unchanged: OPEN / OPEN_MAX_DEPTH — checker output,
   not a theorem; ledger gates 5-6 + condition 8 stand.
+
+- **KAGGLE SUBDIVISION CAMPAIGN LIVE: 5 KERNELS RUNNING + LOCAL QUEUE —
+  2026-08-20.**  KAGGLE_SUBDIVISION_CAMPAIGN_SOL.md + campaign scripts
+  (commit 63b3a1f): depth-7 leaf sharding of the four q8 arcs (512
+  leaves), deterministic checkpointed shard receipts with payload
+  hashes, merge tool with measured refusal behaviour (tampered-receipt
+  test: hash mismatch refused; coverage must be 0..511 exactly once).
+  Status verified by orchestrator: private kernels
+  saarshai/q8-schur-d7-s00..s04 all KernelWorkerStatus.RUNNING; 3
+  quota-refused shards draining through the local nohup queue (12-
+  worker shard a2/l64-128 running); local validation shard a0/l0-4 in
+  flight (first real per-leaf cost measurement).  The lane's own honest
+  status adopted: no shard has produced a certified arc yet; no
+  qOp < 1 claim at N = 262 beyond the depth probe; contour verdict
+  remains OPEN; compute spent, no ledger item moved.  Harvest
+  procedure documented in the note; loop ticks poll kernel status and
+  the local queue, harvest receipts, and run the merge verification
+  when coverage completes.
