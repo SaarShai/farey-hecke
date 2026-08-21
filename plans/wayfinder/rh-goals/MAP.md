@@ -1846,3 +1846,28 @@ directive 2026-08-15
   shards x 64 leaves (6.3 h at 4 Kaggle workers, 2.1 h at 12 local
   workers), 5 Kaggle slots + local queue, partial-merge rule active,
   hash-manifested dataset rebuilt at the current lane_f commit.
+
+- **EFFECTIVE THEOREM PROMOTED: CONFIRMED-CONDITIONAL AT PAPER LEVEL,
+  EIGHT NAMED GATES — 2026-08-21.**  Third and final referee pass
+  (EFFECTIVE_THEOREM_FINAL_PASS_REFEREE.md) returned house verdict
+  CONFIRMED at conditional scope: the eight-gate table verified against
+  all current sources (incl. the fresh R3 transport referee), the proof
+  chain walked end-to-end with all 17 consumed items landing in named
+  gates, t0/gamma_1 provenance rigorous (acb.zeta_zero, no RH), the
+  E_R = 0 branch double-banked, phi_infty holomorphy unconditionally
+  proved in R3_REFEREE §4.2, and the sharpened numerics reproduced
+  digit-for-digit at dps 160 (q_A0''' = 2810199067910634377586449487575
+  862960, log10 36.4487; E_R(q_A0''') <= 9.89e-21; transport strictly
+  below m_z).  Promotion executed exactly as specified: correction
+  block 3 appended verbatim from the referee's §4.3 (89 insertions, 0
+  deletions, verified) — (H-TRANS) superseded to ANALYTIC CORE
+  REFEREED-CONFIRMED; F2 pointer, F3 hash, F4 (7.22)-vestige fixes; the
+  (H-C4) evidence base note (C_R''' has a repo referee file).
+  STANDING RESULT: for every integer q >= Q_0 >=
+  2810199067910634377586449487575862960, assuming the eight named
+  gates, G_q has an off-line scattering zero s_q with Re s_q in
+  [5/8, 7/8] at height ~ gamma_1/2 = 7.0674 and a matching resonance
+  pole left of the critical line — effective in the technical sense
+  (every constant explicit), NOT unconditional, NOT machine-verified;
+  the finite block 3 <= q < Q_0 OPEN; the LAW (unconditional,
+  qualitative) independent throughout.

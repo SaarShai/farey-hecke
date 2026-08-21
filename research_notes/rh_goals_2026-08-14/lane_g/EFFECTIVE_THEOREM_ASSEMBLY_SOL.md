@@ -795,3 +795,92 @@ STATUS: still UNPROMOTED; combined verdict across both passes is GAPS
 NOT REFUTED.  Remaining dischargers: a referee for
 R3_TRANSPORT_EXECUTION ((H-TRANS)) and a final completeness pass over
 the eight-gate table.
+---
+
+## Dated correction block 3 (2026-08-20, final completeness pass, append-only)
+
+Applied per EFFECTIVE_THEOREM_FINAL_PASS_REFEREE.md (house verdict
+CONFIRMED at conditional scope).
+
+- **(H-TRANS) status superseded (F1).**  Block 1's "Status:
+  PAPER-LEVEL, UNREFEREED" is stale.  The gate's own named discharger
+  has since reported: R3_TRANSPORT_EXECUTION_REFEREE.md (2026-08-20)
+  confirms all three asks block 1 wrote — the two-constants
+  application (subharmonic maximum principle re-derived; harmonic-
+  measure orientation cross-checked by a series-free Monte Carlo), the
+  omega(s, Gamma_R; Omega) interval cover (reproduced at a different
+  discretisation and phase offset), and the Rouché strictness on
+  \partial D_z.  Its blocking defect D1 (Hejhal (7.22) mis-scoped) and
+  D3 (unstated real reflection) are APPLIED AT SOURCE in
+  R3_TRANSPORT_EXECUTION_SOL.md's dated correction block.  (H-TRANS)
+  now reads:
+
+  ### (H-TRANS) — the two-constants/Rouché transport implication itself
+  Source R3_TRANSPORT_EXECUTION_SOL.md:60-93,190-231 ((R3-Z), (3.4),
+  §4), as repaired by its dated correction block.  Status: ANALYTIC
+  CORE REFEREED-CONFIRMED at the stated conditional scope
+  (R3_TRANSPORT_EXECUTION_REFEREE.md, attacks 1/2/4/5 CONFIRMED, every
+  numeral reproduced at dps = 60); reflection clause repaired at source
+  via Hejhal Cor. 7.12 p. 579 + real (7.5) coefficients.  NOT
+  discharged by that pass and still carried elsewhere in this table:
+  C_R, alpha, q_RATE (= (H-RATE)), q_divisor (= (H-HOL)), and a
+  family-uniform K_+ (= (H-SIDE)).  What would discharge the remainder:
+  machine formalization.
+
+- **Supersession pointer corrected (F2).**  Block 2's "superseding
+  §4.5's boxed value" is a mis-pointer: the boxed Q_0 is at §2 (the
+  THEOREM display).  Read: the §2 box Q_0 = 11761546420922598622910053
+  339543258496 is superseded BOTH in value (by q_A0''' =
+  2810199067910634377586449487575862960) AND in form (equality ->
+  the >= form of §4.5, since q_monotone's remainder is unevaluated).
+  Independently reproduced this pass: q_side''' = 1134004458443795841,
+  q_A0''' = 2810199067910634377586449487575862960, log10 = 36.4487370
+  8539722848..., ratio to the old box 4.18530721..., both minimality
+  directions and floor-endpoint agreement checked, E_R(q_A0''') <=
+  9.890974306e-21 < 117 and K_+^{1-nu} E_R^{nu} < 0.0439 <= m_z both
+  re-displayed at the new constant.
+
+- **§1.1 hash staleness, second instance (F3).**
+  R3_TRANSPORT_EXECUTION_SOL.md is now d53b0ae62e54fa34d07397807c6173
+  15a7bf4f2a964f71b2460e66bf5cb6239e, not the recorded a6b6a1297...;
+  the drift is exactly its append-only D1-D6 correction block, which
+  strengthens this assembly.  BOUNDARY_ALPHA_THEOREM_SOL.md remains
+  58ac377fc29af3daa3d869ec2d3a1dd9db630fdd3b5fa6e4864678cbbc4777d9.
+
+- **(7.22)-route vestiges removed (F4).**  Block 2's "delta = 3/8" is a
+  hypothesis of the ABANDONED printed-(7.22) route and is not consumed
+  by the Cor. 7.12 route; it is withdrawn (the source's own repair uses
+  delta = 1/2 for the same, now-unused, purpose).  (H-REFL) consumes
+  exactly: meromorphic continuation of phi_q to C, the unconditional
+  functional equation phi_q(s)phi_q(1-s) = 1 (Hejhal Cor. 7.12, p. 579,
+  "Proof. Trivial."), and reality phi_q(\bar s) = conj(phi_q(s)) from
+  the (7.5) coefficients.  Unitarity |phi_q(1/2+it)| = 1 is a
+  CONSEQUENCE of those two, not an additional hypothesis; its listing
+  in block 2 is withdrawn as over-broad.
+
+- **(H-C4) evidence base strengthened (recorded, no status change
+  claimed here).**  The operative constant is now C_R''' =
+  541656022363559883954520, which HAS a repo referee file —
+  CR_REDUCTION_V3_REFEREE.md, final verdict "CONFIRMED ... Required
+  repairs: none ... fit to be banked as candidates".  Block 2's flag
+  that the C_4'' backing quote was a session utterance stands for C_4'';
+  it no longer describes the constant actually used.
+
+- **phi_infty holomorphy on \overline{Omega} (recorded).**  Consumed
+  inside (H-HOL) and UNCONDITIONALLY PROVED in
+  R3_TRANSPORT_EXECUTION_REFEREE.md §4.2 (Gamma factors pole-free since
+  Im s in [6.56, 7.57]; zeta(2s-1)'s pole at s = 1 excluded; 4^s != 1
+  for Re s > 0; zeta(2s) != 0 by Hadamard-de la Vallee Poussin on
+  Re = 1 and the Euler product beyond).  The source bundles it into a
+  CONJECTURAL hypothesis; that is conservative, and the only genuinely
+  open holomorphy gate is the finite-q one (q_divisor = 3).
+
+STATUS: PROMOTED.  The assembled statement of §2, read with all three
+correction blocks, is **CONFIRMED-conditional at paper level on the
+EIGHT named gates** (H-RATE Scope 1), (H-HOL), (H-C4), (H-ROUTE),
+(H-GEOM), (H-SIDE), (H-TRANS), (H-REFL), at threshold
+Q_0 = max{q_RATE, q_divisor, q_side''', q_A0''', q_monotone}
+    >= 2810199067910634377586449487575862960.
+NOT machine-verified, NOT Lean-formalized, NOT unconditional; the finite
+block 3 <= q < Q_0 remains OPEN / UNDEFINED and the remainder of
+q_monotone remains CONJECTURAL, so the max is not claimed closed.
