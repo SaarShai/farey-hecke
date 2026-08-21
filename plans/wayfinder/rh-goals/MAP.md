@@ -1827,3 +1827,22 @@ directive 2026-08-15
   the note's own declared CONJECTURAL inputs (C_R, alpha, q_RATE,
   q_divisor, family-uniform K_+), i.e. the assembly's other gates.
   Next: final eight-gate completeness pass over the effective theorem.
+
+- **DEPTH-8 PRE-FLIGHT: 6/6 PASS AT N = 262; FULL GO — 2026-08-21.**
+  DEPTH8_PREFLIGHT_SOL.md + 6 PREFLIGHT receipts: all six worst-case
+  depth-8 leaves PASS every gate including finite_taylor_excludes_zero
+  — arc 0 leaf 128 rH 0.18921; arc 1 leaf 127 rH 0.18867; arc 2 leaves
+  142/143 (children of the true worst depth-7 leaf) rH 0.19445/0.19446;
+  arc 3 leaves 84/85 rH 0.14155/0.14224; qOp 0.30-0.33 throughout.
+  Worst rH = 0.1944637, 2.13x below the square-box predictor 0.4142136.
+  Independent confirmations: N = 48 proxy matches N = 262 to 6 s.f.;
+  per-level scaling 4.91-5.29x inside the referee band; cost 1428
+  s/leaf -> 1024-leaf wave ~ 407 CPU-h (under the 535 budget).  Honest
+  limit recorded: 6 of 1024 leaves; arcs 0/1 never fully certified at
+  depth 7, so the rH > 1.66 screen stays measured-on-samples.
+  DECISION (orchestrator): FULL GO.  Depth-7 Kaggle kernels s00-s04 to
+  be stopped (their receipts cannot merge into a uniform depth-8
+  certificate; diagnostics value retained on disk); depth-8 wave: 16
+  shards x 64 leaves (6.3 h at 4 Kaggle workers, 2.1 h at 12 local
+  workers), 5 Kaggle slots + local queue, partial-merge rule active,
+  hash-manifested dataset rebuilt at the current lane_f commit.
