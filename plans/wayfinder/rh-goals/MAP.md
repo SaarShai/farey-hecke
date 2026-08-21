@@ -1631,3 +1631,26 @@ directive 2026-08-15
   (runtime 1608.2 s) and §7 is now filled verbatim; the lane appended
   its reply append-only.  Fresh judge receipts: 18/18 tests OK; the
   note's only deletions are its own three placeholder lines.
+
+- **CAMPAIGN LANE CLOSED OUT; HARVEST PRECONDITIONS RECORDED —
+  2026-08-20.**  Final report judged and banked (commit 63177cf).
+  Key measurements: depth 6 is INSUFFICIENT (qOp = 0.880, 1.14x
+  margin) vs depth 7 (0.438, 2.28x) at the probe leaf — depth 7
+  confirmed as the campaign depth; per-leaf cost at N = 262 EXCEEDS
+  the 1290 s reference (workers passed 1451 s CPU before first leaf;
+  partly one-off load_operator_bounds amortising over 16 leaves/shard)
+  — budget accordingly, kernels may deadline-truncate.  Merge tool
+  fixed mid-flight to accept partial shards (coverage 0..511 exactly
+  once is the real gate; deadline-truncated kernels no longer discard
+  leaves); the dataset's in-kernel copy of merge_shards.py is the
+  pre-fix snapshot, provenance-only, never executed in-kernel.
+  HARVEST PRECONDITIONS (binding, before quoting any merged number):
+  (1) cross-host determinism check between the local validation
+  leaves (a0/l0-4) and kernel s00's same leaves; (2) every shard
+  re-hashes; (3) coverage exact; (4) per-leaf qOp < 1 AND PASS for
+  arc certification; (5) a merged all_arcs_certified is CHECKER
+  OUTPUT, not a theorem — gates 5-6 + condition 8 stand.  Shard map:
+  s00 a0/0-64, s01 a0/64-128, s02 a1/0-64, s03 a1/64-128, s04
+  a2/0-64 (Kaggle, RUNNING); local queue: s05 a2/64-128 (running,
+  pid 34238), then s06 a3/0-64, s07 a3/64-128; validation a0/l0-4
+  (pid 33707).
