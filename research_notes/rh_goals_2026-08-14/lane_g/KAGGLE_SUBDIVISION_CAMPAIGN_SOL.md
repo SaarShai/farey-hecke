@@ -378,9 +378,42 @@ running at the time of writing; its receipt lands at
 `shard_receipts/LOCAL_VALIDATION_a0_l0-4.json` and is the first real
 per-leaf-cost measurement on this hardware. Section 8 is filled on completion.
 
-## 8. `N = 262` local validation receipt
+## 8. `N = 262` local validation shard — interim measurement
 
-(filled on completion — see `shard_receipts/LOCAL_VALIDATION_a0_l0-4.log`)
+Still running at the time of writing (PID 33707, arc 0, leaves 0–4, 4 workers,
+each worker on its first leaf). Its receipt will land at
+`shard_receipts/LOCAL_VALIDATION_a0_l0-4.json`. What is **already measured** is
+the per-leaf cost, and it is the number the compute budget depends on:
+
+```text
+per-worker CPU time, all four workers, first leaf not yet complete:
+  24:11  (= 1451 s CPU and still climbing)
+```
+
+So on this host a depth-7 leaf at `N = 262` costs **more** than the 1290 s that
+`QF_TIGHTENING_SOL.md` §4 quotes. Two components are being conflated and should
+not be:
+
+- the `arc_certificate` call itself (the 1290 s figure), and
+- `load_operator_bounds` — receipt parsing, hash verification, F1024 geometry
+  and the `N = 262` bound assembly — which each worker pays **once** in its pool
+  initializer.
+
+That setup cost is why a 4-leaf validation shard looks expensive per leaf: it
+amortises over 1 leaf here, and over 16 leaves in a real 64-leaf shard. Do not
+read this number as the marginal leaf cost, and do not use the 4-leaf shard to
+extrapolate a shard runtime.
+
+**Budget consequence, stated before the fact rather than after:** if the true
+marginal cost is nearer 1450 s than 1290 s, a 64-leaf Kaggle shard needs
+~6.4 h at 4 workers on hardware equal to this Mac, and proportionally more on
+slower cores. The 11 h deadline guard and the partial-shard merge rule (§5,
+rule 1) are what make that survivable; see the contingency in §5.
+
+Cross-host determinism check, when both are in hand: leaves 0–3 of arc 0 appear
+in **both** this receipt and s00's. Their record content must match byte for
+byte. A mismatch is a finding about the Arb build across hosts and must be
+reported before any merged number is quoted.
 
 ## 9. Honest status
 
@@ -390,5 +423,21 @@ per-leaf-cost measurement on this hardware. Section 8 is filled on completion.
   quota-refused and are draining through a local nohup queue.
 - **No shard has produced a certified arc yet.** No `qOp < 1` claim is made at
   `N = 262` beyond the depth probe at `N = 32`.
+- Per-leaf cost at `N = 262` is **measured to exceed** the 1290 s reference
+  (>1451 s CPU including one-off worker setup); §8 separates the two components
+  and states the budget consequence.
 - The contour verdict remains `status OPEN`. This lane spent compute; it did not
   move a ledger item.
+
+### Next loop tick
+
+1. Poll `kaggle kernels status saarshai/q8-schur-d7-s0{0..4}`; harvest each with
+   `kaggle kernels output` as it completes.
+2. Harvest partial receipts too, and re-shard only their missing leaves (§5
+   contingency).
+3. Let the local queue (PID 34238) drain s05–s07, or push them to Kaggle as
+   slots free — whichever lands first; do not run both, the merge refuses
+   duplicate leaves.
+4. Run the cross-host determinism check of §8 before quoting any merged number.
+5. Merge with `merge_shards.py` and read the report's `all_arcs_certified`.
+   Whatever it says, it is checker output — §6 governs what may be claimed.
