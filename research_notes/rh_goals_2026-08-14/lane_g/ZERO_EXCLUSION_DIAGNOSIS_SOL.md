@@ -522,3 +522,37 @@ quantity; if the Taylor bound REQUIRES the true log-derivative, the
 gate derivation must be re-audited.  DERIVATIVE-SEMANTICS LANE assigned;
 everything in §2.4/§5.4 that consumed the refuted diagnosis is
 superseded by this block.
+
+## Dated correction block (2026-08-21 #2, supersedes correction block #1 — append-only)
+
+**The "128x / 90-degree" inconsistency DOES NOT EXIST.**  Independently
+re-measured (referee lane, N = 64, arc 3 leaf path 0101010, and N = 48,
+arc 2 leaf 64): `-tr(A0^-1 C'_mid)` equals an end-to-end central finite
+difference of `det(I - C(s))` to 1.9e-22 (h = 1e-11) and 1.9e-24
+(h = 1e-12) relative, with magnitude ~1.0e6 — matching the finite
+differences of the certified `midpoint_det` values.  The
+`1.28000000605e8` of correction block #1 came from a probe
+(`trace_test.py`, not present in the repo) whose value agrees with
+`1/radius = 1/7.8125e-9 = 1.28e8` to 8 significant figures.  It was not a
+trace.  **The which-inverse question is CLOSED:** lines 973-979 of
+`q8_schur_contour.py` carry the true arc inverse via the exact anchored
+factorization `A(s)^-1 = (I - A0^-1 dC)^-1 A0^-1`; `tr(A0^-1 C')` is
+never used as the gate quantity.  The directional convention is also
+correct on all four edges.
+
+**Correction to correction block #1's stated reason for withdrawing
+H-tightening.**  The claim "box overhead 0.35%, not 73-133x" is FALSE.
+Measured at the leaf-64 midpoint, N = 48: `|tr(A0^-1 C'_mid)| = 9.99970e5`,
+arc-box `|tr(A0^-1 C'_arcbox)| = 1.000008e6` (1.0000381x), production
+`H = 1.2754593e8` (**127.55x**).  100% of the slack is the
+`correction_inverse` factor.  The withdrawal of §2.4/§5.4 STANDS, but for
+the correct reason: the slack is a structural limit of norm-type bounds on
+a near-cancelling trace, and closing it needs a rigorous nuclear-norm
+bound on `A0^-1 C'` that the codebase does not have.
+
+**§5.2's threshold `rH < mu/(1+mu)`, `mu in [1/sqrt(2), 1]`, is CONFIRMED
+and takes priority** over any later "rH < 1/2" statement: `inflate()`
+builds a square box, and six leaves of `SHARD_a2_l64-128` with
+`rH` in (0.4375, 0.4982) — all below 1/2 — have
+`finite_taylor_excludes_zero = false`.  The safe per-leaf predictor is
+`rH < 1/(1+sqrt(2)) = 0.41421`.

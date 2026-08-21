@@ -312,3 +312,45 @@ measured 2.6x margin. **Ship A; leave B parked.**
 - No file under `lane_f` was edited. Nothing was committed or pushed.
 
 READY FOR JUDGING
+
+---
+
+## Dated correction block (2026-08-21, referee defects 1–6, append-only)
+
+Applied per DERIVATIVE_SEMANTICS_REFEREE.md (verdict GAPS NOT REFUTED;
+CONDITIONAL GO; the load-bearing mathematics (a1-a3), (b), (c), (e) and
+the depth-8 measurements reproduced exactly, (d2) strengthened to the
+true worst leaf):
+
+- **D1 (threshold REFUTED)**: eqn (4)'s / §4 / §5A's "real pass
+  threshold rH < 1/2" is WRONG — inflate() builds a SQUARE box, so
+  zero-exclusion is guaranteed only for rH < 1/(1+sqrt(2)) =
+  0.41421...; six OPEN leaves of SHARD_a2_l64-128 with rH in
+  (0.4375, 0.4982) — all below 1/2 — have excludes_zero = False
+  (referee's square-box predictor matched the receipt 10/10 on
+  straddling leaves).  ZERO_EXCLUSION_DIAGNOSIS_SOL.md:56's
+  mu/(1+mu) ∈ [0.4142, 0.5] was right and takes priority.
+- **D2 (worst leaf)**: §3's "worst failing leaf rH = 0.9965" audited
+  record 0 = the LOWEST-rH failing leaf; the shard maximum is
+  rH = 1.0290323 at path [1,0,0,0,1,1,1] (record 7).  Harmless in
+  outcome: the referee verified the true worst also clears depth 8
+  (children rH = 0.194449 / 0.194463, EXCLUDES_ZERO = True).
+- **D3 (margin)**: the depth-8 margin against the CORRECT threshold is
+  2.13x (0.41421 / 0.19446), not 2.6x.
+- **D4 (cost mechanism REFUTED)**: the production driver
+  q8_leaf_shard.py is uniform-depth by construction and params-bound to
+  --depth — no depth-7 checkpoint resume, no per-open-leaf splitting.
+  Correct restart scope: 1024 fresh uniform depth-8 leaves ≈ 535 CPU-h
+  ≈ 45-50 wall-h at 12 workers; all banked depth-7 PASS receipts
+  unusable for resume.
+- **D5 (headline)**: line 19 / §3.3's flat "depth 8 sufficient" is
+  demoted to §6's correct hedge: MEASURED-ON-SAMPLES (2 of 512 depth-7
+  leaves' children measured by the author, +2 by the referee incl. the
+  true worst; arcs 0/1 largely unmeasured; a further failing leaf found
+  at a3 path [0,1,0,1,0,1,0], rH = 0.695).  Screen rule: depth-7
+  rH > 4 x 0.41421 ≈ 1.66 predicts failure to clear depth 8 (none
+  observed; max 1.029).
+- **D6 (minor)**: §1's "disc |u| <= r" — only the real interval is
+  enclosed (sound as used); §3.1's "1/radius exactly" is 8 s.f. with an
+  unexplained residue and the probe source absent from the repo; "12
+  banked PASS" was stale (36 exist: a0 4/4, a2 8/64, a3 12/12-partial).

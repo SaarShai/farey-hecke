@@ -1772,3 +1772,30 @@ directive 2026-08-15
   Assembly remains UNPROMOTED; named dischargers: an
   R3_TRANSPORT_EXECUTION referee ((H-TRANS)) and a final
   eight-gate completeness pass.  R3-transport referee lane launched.
+
+- **DERIVATIVE-SEMANTICS REFEREE: GAPS NOT REFUTED; CONDITIONAL GO FOR
+  DEPTH-8; PRE-FLIGHT ARMED — 2026-08-21.**
+  DERIVATIVE_SEMANTICS_REFEREE.md installed verbatim.  CONFIRMED under
+  independent probes: the anchored-factorization soundness of the
+  Taylor gate (all four edge conventions checked, not sampled); the
+  128x/90-degree "conflict" does not exist (trace = FD of det(I-C(s))
+  to 1.9e-24 relative at a DIFFERENT N and leaf; the old probe value
+  was 1/radius); the 127.55x conservatism attribution (reproduced
+  exactly); the depth-8 clearance STRENGTHENED to the true worst leaf
+  (rH 1.0290 -> 0.1945, EXCLUDES_ZERO = True); super-quadratic scaling
+  on 7 measurements/4 leaves/both orientations.  REFUTED: the rH < 1/2
+  threshold (inflate() is a SQUARE box; correct predictor rH <
+  1/(1+sqrt 2) = 0.41421 — six sub-0.5 OPEN leaves prove it, 10/10
+  predictor match); the "worst leaf" sampling (record 0 was the BEST
+  failing leaf; true max rH = 1.0290 at [1,0,0,0,1,1,1]); the restart
+  mechanism (production driver is uniform-depth, params-bound: 1024
+  fresh depth-8 leaves ≈ 535 CPU-h ≈ 45-50 wall-h, no depth-7 resume).
+  Both correction blocks applied (semantics note D1-D6; zero-exclusion
+  note block #2 superseding block #1's false 0.35% reason — the
+  H-tightening withdrawal STANDS for the corrected structural reason).
+  GO CONDITIONS adopted: (1) rH < 0.41421 predictor everywhere; (2)
+  budget 1024 x ~1900 s; (3) PRE-FLIGHT first — ~4 leaf evaluations at
+  N = 262 on the true worst leaves (a2 [1,0,0,0,1,1,1]; a3
+  [0,1,0,1,0,1,0] rH 0.695; one each arcs 0/1), ~2 CPU-h, BEFORE the
+  50 h; (4) screen rule depth-7 rH > 1.66 (none observed).  Pre-flight
+  lane launched; full depth-8 wave gated on its result.
