@@ -1799,3 +1799,31 @@ directive 2026-08-15
   [0,1,0,1,0,1,0] rH 0.695; one each arcs 0/1), ~2 CPU-h, BEFORE the
   50 h; (4) screen rule depth-7 rH > 1.66 (none observed).  Pre-flight
   lane launched; full depth-8 wave gated on its result.
+
+- **R3 TRANSPORT FIRST COLD REFEREE: GAPS NOT REFUTED; (H-TRANS) CORE
+  DISCHARGED; SOURCE-LEVEL HEJHAL REPAIR APPLIED — 2026-08-21.**
+  R3_TRANSPORT_EXECUTION_REFEREE.md (sha 4a3042dc...): the conditional
+  transport theorem's core is CONFIRMED under independent attack —
+  two-constants re-derived from the subharmonic maximum principle with
+  the corner polar set handled; harmonic-measure orientation verified
+  by an independent series-free walk-on-spheres Monte Carlo (0.1553 vs
+  series 0.155214 — no side swap); the likeliest hidden sign error
+  (negative sine terms majorised in absolute value) probed and ABSENT;
+  Rouché comparison zero exact algebra (2z_0 − 1 = rho_1, Arb residual
+  2.5e-60), vacuous-Rouché failure mode absent; every numeral
+  reproduced at dps 60 with adverse roundings.  Defects: D1 HIGH — the
+  same (7.22)-inside-a-contradiction-proof citation caught downstream
+  was never pushed back to this source; REPAIRED here via the
+  unconditional phi(s)phi(1-s) ≡ 1 / Cor. 7.12 with delta = 1/2 window
+  arithmetic; D3 NEW — the 1 − conj(s_q) form additionally needs
+  phi(s̄) = conj(phi(s)) (real (7.5) coefficients), now stated; D2
+  (phi_infty holomorphy over-bundled as CONJECTURAL though
+  unconditionally provable); D4 (grid-critical certificates: infima
+  clear by 0.02%/0.009%, coarser covers FAIL — re-runners must use the
+  stated box counts).  All applied append-only (54 insertions, 0
+  deletions, verified).  (H-TRANS) status: the three gated items
+  (boundedness, omega cover, Rouché strictness) DISCHARGED; the
+  reflection clause now repaired at source; remaining conditionality =
+  the note's own declared CONJECTURAL inputs (C_R, alpha, q_RATE,
+  q_divisor, family-uniform K_+), i.e. the assembly's other gates.
+  Next: final eight-gate completeness pass over the effective theorem.

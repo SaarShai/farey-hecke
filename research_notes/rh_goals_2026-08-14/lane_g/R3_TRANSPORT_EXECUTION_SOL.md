@@ -686,3 +686,57 @@ Output:
 - `M3_N1N4_PROMOTION_PLAN_SOL.md:9-50,52-121`.
 - `LAW_R4_THETA_DEFECT.md:32-76,126-182,280-313`.
 - `LAW_ANCHOR_T1_THETA.md:14-40`.
+
+---
+
+## Dated correction block (2026-08-21, first cold referee D1–D6, append-only)
+
+Applied per R3_TRANSPORT_EXECUTION_REFEREE.md (verdict GAPS NOT REFUTED;
+attacks 1, 2, 4, 5 CONFIRMED — two-constants re-derived with the
+subharmonic maximum-principle argument and a series-free Monte Carlo
+orientation cross-check; Rouché exact-algebra comparison zero verified;
+every numeral reproduced at dps = 60).
+
+### D1 (HIGH, citation/hypothesis repair — supersedes §4's :220-232)
+
+phi_q continues to a meromorphic function on C satisfying the
+unconditional functional equation phi_q(s) phi_q(1-s) ≡ 1 (Selberg;
+Hejhal LNM 1001 Vol. 2, Cor. 7.12, p. 579).  Since phi_q(s_q) = 0 with
+Re s_q ∈ [5/8, 7/8], the identity forces a pole of phi_q of the same
+order at 1 − s_q, whose real part lies in [1/8, 3/8], strictly left of
+the critical line.  Since phi_q has real Dirichlet coefficients in
+(7.5), it also satisfies phi_q(s̄) = conj(phi_q(s)), so 1 − conj(s_q)
+is a pole of the same order as well.  Hejhal's printed (7.22) (p. 577)
+is NOT invoked: as printed it holds only along the subsequence J on
+which phi_N is assumed zero-free on [1/2, 1/2+delta] x [t_0 ± delta],
+a hypothesis negated at s_q.  With delta = 1/2 the reflection window of
+§1 contains the closure of D_z and its mirror image (h <= 3/8 < delta,
+|t − t_0| <= 1/8 < delta).
+
+### D3 (unstated input, now stated)
+
+The conclusion 1 − conj(s_q) requires phi_q(s̄) = conj(phi_q(s)) IN
+ADDITION to the functional equation (which alone gives 1 − s_q); the
+reality of the (7.5) Dirichlet coefficients supplies it, as stated in
+the D1 block above.  Either form gives an off-line pole; the theorem's
+substance is unaffected.
+
+### D2 (over-assumption, recorded)
+
+phi_infty's holomorphy on the closed rectangle is bundled into the
+CONJECTURAL gate although it is unconditionally provable (left edge
+Re(2s) = 1 needs only zeta non-vanishing on Re = 1; the rest is the
+Euler product).  Conservative as stated; the only genuinely open
+holomorphy gate is the finite-q one.
+
+### D4 (certificate hygiene, recorded)
+
+Both certificates are grid-critical: true infima m_z* ≈ 0.0444414 and
+nu_z* ≈ 0.1552145 clear the asserted 0.0439 / 0.1552 by only 0.02% /
+0.009%, and coarser covers (N = 3000, 5000) FAIL the assertion.  Valid
+as printed (interval arithmetic sound; roundings adverse), but
+re-runners must use the note's stated box counts or finer.
+
+### D5/D6 (cosmetic)
+
+:71 and :144 missing backslash in \qquad; :225 i t̄ for printed i t.
