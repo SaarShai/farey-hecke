@@ -1871,3 +1871,19 @@ directive 2026-08-15
   (every constant explicit), NOT unconditional, NOT machine-verified;
   the finite block 3 <= q < Q_0 OPEN; the LAW (unconditional,
   qualitative) independent throughout.
+
+- **DEPTH-8 WAVE: LOCAL RUNNING; KAGGLE QUEUED BEHIND UNDYING D7
+  KERNELS — 2026-08-21.**  Campaign doc §10 appended (shard table, 16 x
+  64 leaves).  Reality check by orchestrator: the d7 kernels s00-s04
+  CANNOT be stopped via CLI (no kill endpoint) — they hold all 5 slots
+  until their ~12 h deadlines (started ~2026-08-20 23:59 UTC-7, expiry
+  ~12:00 2026-08-21); their deadline-truncated receipts are diagnostics
+  only (uniform depth-8 certificate cannot consume them).  The d8
+  kernels q8-schur-d8-s00..s04 are prepared and QUEUED (slot busy).
+  Local queue IS running depth-8 (arc 1 shard l64-128 in flight,
+  sequential 12-worker, ~2.1 h/shard, 11 shards assigned).  STANDING
+  LOOP INSTRUCTION: each tick, poll d7 kernel statuses; as slots free,
+  push/start the queued d8 kernels (harvest any d7 partial output first
+  for the diagnostics archive); on full d8 coverage (0..255 x 4 arcs)
+  run merge_shards with the depth-8 procedure incl. the cross-host
+  determinism check against the PREFLIGHT receipts.

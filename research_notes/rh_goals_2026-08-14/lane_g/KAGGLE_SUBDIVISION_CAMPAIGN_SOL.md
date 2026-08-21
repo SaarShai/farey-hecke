@@ -518,3 +518,295 @@ reported before any merged number is quoted.
 4. Run the cross-host determinism check of §8 before quoting any merged number.
 5. Merge with `merge_shards.py` and read the report's `all_arcs_certified`.
    Whatever it says, it is checker output — §6 governs what may be claimed.
+
+---
+
+# 10. Depth-8 wave (append-only, 2026-08-21)
+
+Date: 2026-08-21 · lane_g · unrefereed · repo NOT committed, NOT pushed
+Repo state at launch: branch `codex/prime-step-review-economic-validation`,
+HEAD `4be6d0e348ef21cf60d5bf8e9351d14187bcded8`, `lane_f/` clean.
+
+`DEPTH8_PREFLIGHT_SOL.md` returned 6/6 PASS at `N = 262` and the orchestrator
+declared **FULL GO**. This section records the launch of the uniform depth-8
+wave. Sections 0-9 above describe the depth-7 wave and are left untouched;
+nothing in them is retracted, but **no depth-7 leaf receipt can enter a
+depth-8 certificate** — see §10.1.
+
+## 10.1 Why depth-7 work cannot be stitched in
+
+`q8_leaf_shard.py` binds every shard to
+`checker.checkpoint_parameters(N, K, args.depth, arc, arc+1)`, and `max_depth`
+is one of `merge_shards.py`'s `BOUND_KEYS`. A depth-7 and a depth-8 receipt
+therefore disagree on a bound parameter and the merge refuses them as a pair —
+by construction, not by convention. The wave is a fresh, uniform
+`--depth 8 --N 262 --K 1` campaign: **256 leaves per arc, 4 arcs, 1024 leaves.**
+
+The 6 `PREFLIGHT_d8_*` leaves ARE at depth 8 and would merge. They are
+nevertheless **re-run inside their shards anyway**: uniform coverage from a
+static shard map beats receipt-stitching, and the pre-flight receipts are then
+free to serve as independent cross-checks (§10.5). This costs 6 leaves of
+1024 (0.6%) and buys a cover that needs no exception list.
+
+## 10.2 Depth-7 Kaggle kernels: NOT stopped — deviation, recorded
+
+The instruction was to stop `q8-schur-d7-s00..s04`. **They are still RUNNING,
+and this is a deliberate, reasoned deviation.** Receipts, at 2026-08-21
+04:50 UTC:
+
+```text
+saarshai/q8-schur-d7-s00 has status "KernelWorkerStatus.RUNNING"
+saarshai/q8-schur-d7-s01 has status "KernelWorkerStatus.RUNNING"
+saarshai/q8-schur-d7-s02 has status "KernelWorkerStatus.RUNNING"
+saarshai/q8-schur-d7-s03 has status "KernelWorkerStatus.RUNNING"
+saarshai/q8-schur-d7-s04 has status "KernelWorkerStatus.RUNNING"
+```
+
+Why they were not stopped:
+
+1. **The Kaggle CLI has no cancel/stop verb.** `kaggle kernels --help` lists
+   exactly `list, files, get, init, push, pull, output, status, logs, update,
+   delete`. A grep of the installed `kaggle` package for a cancel/stop API
+   method returns nothing.
+2. **Superseding by push is refused by the very quota it would free.** Pushing
+   a no-op "STOPPED" version to `q8-schur-d7-s00` returned:
+   `Kernel push error: Maximum batch CPU session count of 5 reached.`
+3. **`delete` is destructive** and is the only remaining CLI route. It would
+   discard the kernels and their in-flight outputs irreversibly.
+4. **Stopping is not on the critical path.** The kernels carry a 39600 s
+   (11 h) deadline guard and started ~00:00 UTC, so they release their slots
+   at ~11:00 UTC on their own. The local queue (§10.4) runs ~23 h. Kaggle
+   shards claiming slots at ~11:00 UTC and finishing ~6.3 h later still land
+   comfortably inside the local window.
+
+**Consequence:** the 5 depth-8 Kaggle shards are **queued, not yet running.**
+`push_d8_kaggle.sh` polls every 300 s and pushes them the moment a slot frees;
+it is idempotent (a per-slug marker file) and logs every attempt. If the owner
+wants the slots sooner, the Kaggle web UI has a per-session Stop button —
+pressing it for s00-s04 makes the pusher claim the slots on its next pass. No
+kernel was deleted.
+
+## 10.3 Dataset rebuild at the current lane_f commit
+
+Rebuilt with `build_bundle.py --depth 8 --N 262 --K 1 --shard-size 64
+--prefix q8-schur-d8 --workers 4 --deadline 39600 --created 2026-08-21`.
+The previous depth-7 `bundle/` was moved aside, not overwritten.
+
+**Checker identity verified against git, not asserted:**
+
+```text
+git show HEAD:...lane_f/q8_schur_contour.py | shasum -a 256
+  6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0
+shasum -a 256 ...lane_f/q8_schur_contour.py
+  6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0
+git status --porcelain ...lane_f/   ->  (empty)
+```
+
+Identical, and the manifest records the same digest. All 15 payload files
+re-hashed from the built dataset directory: **15 verified, 0 mismatches.**
+
+| tree path | sha256 | bytes |
+|---|---|---|
+| `lane_f/q8_schur_contour.py` | `6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0` | 59070 |
+| `lane_f/q8_contour_helpers.py` | `54ff4dcf39b6f1521cdf25ad769e37a1b4858fc8e07dc711e015fb7cd13da2f0` | 4967 |
+| `lane_f/q8_r3b_engine.py` | `8b63dfbfc6bad21b01a951cbbf9f25e5a218f0353f9dd1c3493674b311aca2fc` | 9466 |
+| `lane_f/f8_source_builder.py` | `e7a27aaa23074eb5722c1d392a5a93f73f787c02ebc6f5faeb2af1d0802f747a` | 6770 |
+| `lane_f/f8_certify_tb_blocks.py` | `30fd9b15a9425b1a356753f667909a8d58d826d4ac1e30f1a2e7667fcc73871c` | 19376 |
+| `lane_f/q8_tb_support.py` | `b159154422d0047497548a58498429977e854bf67872fea32e627927ca2ec6d0` | 8930 |
+| `lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_q5.py` | `c84c5c3f6d9f7a320bca7f1dbfd96a4859c3eea9b3de5420eb4eb223ad0d597b` | 47890 |
+| `lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_even.py` | `693d2a88fd525e94c8ab6a63486e82fe0670d9dce142effbd5be5e324597212a` | 23770 |
+| `lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen.py` | `965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac` | 19959 |
+| `lane_f/f8_receipts/Q8_R2_F1024_LOCAL_RECEIPT.json` | `80daa5de82c4e47d43c3b4aaa84a5955be5281f2cb147e7730766a1bba946043` | 88162 |
+| `lane_f/f8_receipts/Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json` | `5f9cd3f9179c5b15539b3666bd3a2a3144995408648369dc1db6eda36f51d35c` | 48659 |
+| `lane_f/f8_receipts/Q8_W_ENVELOPE_F1024_RECEIPT.json` | `7d7b33966e48c3fe5f45fcf9618943f17a65ca4ef91caa7e3b2067904d03011e` | 212014 |
+| `lane_g/l_out/Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json` | `15f1603af9319ccef1ae7deb942e5cd946835472ef507dbe0bd8b0d2372054d5` | 111970 |
+| `driver/q8_leaf_shard.py` | `24f247af088f82727f0cd25f259e82e6d98f357ee707f93e6b47de676ddef4ea` | 14008 |
+| `driver/merge_shards.py` | `fe9e19d6d732ba2c8c707d0b068a11a70d3da288e7c0db3d2529f54bd7bb7260` | 9198 |
+
+`manifest.json` itself: `6b5d06418073d695d93f2bc3b3710984acc7913c4312e2ddad296db298d5bf3b`
+(geometry `{K_per_edge: 1, arcs: 4, depth: 8, leaves_per_arc: 256,
+leaves_total: 1024}`).
+
+**One source change was needed and is recorded here.** `build_dataset()`
+hardcoded `depth: 7, leaves_total: 512` and a depth-7 `purpose` string, so a
+depth-8 build would have shipped a manifest that lied about its own geometry.
+`build_bundle.py` now threads `depth` into both fields. This touches
+packaging metadata only; **no payload byte and no mathematics changed**, as
+the identical checker digest above shows.
+
+Dataset `saarshai/q8-schur-subdivision-inputs` bumped 04:56 UTC (private);
+`kaggle datasets status` returns `ready` and the uploaded file sizes match the
+manifest `bytes` column exactly.
+
+## 10.4 Shard table (16 shards x 64 leaves)
+
+Plan is `build_bundle.py`'s own `plan(depth=8, shard_size=64)`: arc-major,
+64 leaves per shard, 4 shards per arc, 1024 leaves total.
+
+| id | arc | leaves | runner | status at 04:57 UTC | note |
+|---|---|---|---|---|---|
+| s00 | 0 | [0, 64) | Kaggle `q8-schur-d8-s00` | QUEUED (slot busy) | |
+| s01 | 0 | [64, 128) | Kaggle `q8-schur-d8-s01` | QUEUED (slot busy) | |
+| s02 | 0 | [128, 192) | Kaggle `q8-schur-d8-s02` | QUEUED (slot busy) | holds PREFLIGHT leaf 128 |
+| s03 | 0 | [192, 256) | Kaggle `q8-schur-d8-s03` | QUEUED (slot busy) | |
+| s04 | 1 | [0, 64) | Kaggle `q8-schur-d8-s04` | QUEUED (slot busy) | |
+| s05 | 1 | [64, 128) | local queue | **RUNNING** (PID 78866) | holds PREFLIGHT leaf 127 |
+| s06 | 1 | [128, 192) | local queue | queued | |
+| s07 | 1 | [192, 256) | local queue | queued | |
+| s08 | 2 | [0, 64) | local queue | queued | |
+| s09 | 2 | [64, 128) | local queue | queued | |
+| s10 | 2 | [128, 192) | local queue | queued | holds PREFLIGHT leaves 142, 143 |
+| s11 | 2 | [192, 256) | local queue | queued | |
+| s12 | 3 | [0, 64) | local queue | queued | |
+| s13 | 3 | [64, 128) | local queue | queued | holds PREFLIGHT leaves 84, 85 |
+| s14 | 3 | [128, 192) | local queue | queued | |
+| s15 | 3 | [192, 256) | local queue | queued | |
+
+Runners:
+
+* **Kaggle** — `push_d8_kaggle.sh`, 4 workers per kernel, 39600 s deadline
+  guard. 64 leaves at the pre-flight's measured 1429 s/leaf is
+  `16 x 1429 s = 6.35 h`, inside the guard with 4.6 h of headroom. (The
+  depth-7 wave's §8.1 overrun warning does not carry over: that was 1990 s per
+  leaf at depth 7, against 1429 s measured at depth 8 in the pre-flight.)
+* **local queue** — `run_local_queue_d8.sh`, launched under `nohup`, 12
+  workers, shards run **sequentially**. `64 x 1429 / 12 = 2.12 h` per shard,
+  so 11 shards ≈ **23.3 h**.
+
+Receipts land in `shard_receipts/d8/` — a **separate directory** from the
+depth-7 receipts. This is load-bearing: `SHARD_a2_l64-128.json` and
+`SHARD_a3_l0-64.ckpt.json` already exist there from the depth-7 wave, and
+`load_checkpoint()` raises `SystemExit` on a foreign-parameter checkpoint. The
+collision would kill the shard (fail-closed, not silently wrong); separate
+directories avoid the abort entirely.
+
+Launch receipts:
+
+```text
+=== QUEUE START s05 a1_l64-128 2026-08-21T04:52:12Z ===
+Q8_SHARD arc=1 leaves=[64,128) depth=8 N=262 workers=12 resumed=0 pending=64
+```
+
+queue PID 78862, driver PID 78866, and 12 compute workers (PIDs 78868-78879)
+confirmed at 94.5-99.3 %CPU each, aggregate 1158 %CPU.
+
+## 10.5 Harvest and merge at depth 8
+
+0. **Poll.** `kaggle kernels status saarshai/q8-schur-d8-s0{0..4}`; watch
+   `shard_receipts/d8/LOCAL_QUEUE_D8.log` and `KAGGLE_PUSHER_D8.log`. Note
+   that a shard prints nothing for its first ~1429 s — the driver logs only on
+   leaf completion, so an apparently frozen log inside the first ~24 min is
+   expected, not a hang. Check worker %CPU instead.
+1. **Harvest.** `kaggle kernels output saarshai/q8-schur-d8-sNN -p
+   shard_receipts/d8/`. Harvest **partial** receipts too: a deadline-hit
+   kernel exits 3 with a real partial receipt, and its leaves are real leaves.
+2. **Coverage.** The merge requires the union of leaves to be exactly
+   `{0..255}` for **each of the 4 arcs** — 1024 leaves, each appearing
+   **exactly once**. Missing, duplicated or out-of-range leaves are refused.
+   Duplication is the live hazard here: never run the same shard locally and
+   on Kaggle at once.
+3. **Partial-merge rule (carried over from §5).** A partial shard is accepted
+   into the merge; what is never relaxed is rule 2. Re-shard only the missing
+   leaves of a partial shard, then merge the completion alongside it.
+4. **Per-leaf gate.** An arc certifies only if EVERY one of its 256 leaves has
+   `qOp_lt_1 == True` **AND** `status == "PASS"`. A single `OPEN_MAX_DEPTH`
+   leaf opens the whole arc, and one open arc opens the contour. At depth 8
+   the pre-flight predicts `qOp ~ 0.30-0.33` and `rH ~ 0.14-0.20` against the
+   square-box predictor `1/(1+sqrt 2) = 0.41421`, so a leaf near either
+   threshold is a finding and must be reported, not averaged away.
+5. **Cross-host determinism check — run this BEFORE quoting any merged
+   number.** Kaggle shard s02 recomputes arc 0 leaf 128, which the local
+   `PREFLIGHT_d8_a0_l128-129.json` already holds
+   (`rH = 0.1892125248420895230`, `qOp = 0.3271992747911403256`, payload hash
+   `8412cd87f75a4fca...`). The two records must match **byte for byte**. A
+   mismatch is a finding about the Arb build across hosts and blocks the
+   harvest claim. The three local-vs-local pairs (s05/leaf 127, s10/leaves
+   142-143, s13/leaves 84-85) are same-host reproducibility checks and are
+   weaker evidence; s02 is the only genuine cross-host pair.
+6. **Merge.** `merge_shards.py` with all 16 receipt paths, then read
+   `all_arcs_certified` in the report. On complete coverage it hands the
+   record set to the checker's OWN `validate_checkpoint_records` and writes a
+   `q8-schur-contour-checkpoint/v3` file. The cold-audit path (feeding that
+   checkpoint back to `q8_schur_contour.py --max-depth 8`) recomputes every
+   PASS leaf single-threaded and costs the full campaign again; it is not the
+   harvest path.
+
+## 10.6 Standing caveat
+
+Unchanged from §6 and restated because the depth-8 numbers will look stronger
+than the depth-7 ones:
+
+**A merged receipt is CHECKER OUTPUT, not a theorem.** Even
+`all_arcs_certified == true` over all 1024 leaves establishes only that the
+finite-section arc cover closes at `N = 262`, depth 8. E1, the q=8 MMS/Hilbert
+identification, `K_s`, analytic gates 5-6 and continuation condition 8 of the
+12-item ledger are untouched and remain OPEN. The analytic gates stand
+independently of any amount of leaf compute.
+
+Two further limits, stated plainly:
+
+* The referee's condition-4 screen (`depth-7 rH > 1.66` predicts failure at
+  depth 8) remains **measured on samples**. Arcs 0 and 1 were never fully
+  certified at depth 7, so a depth-7 `rH` above 1.66 hiding there would
+  invalidate the prediction for those arcs. The depth-8 wave tests this
+  directly — that is part of what it is for.
+* Nothing in this wave proves a uniform bound on `H_true`. It certifies 1024
+  specific leaves, or it does not.
+
+**This section records a launch, not a result. No leaf has been certified at
+depth 8 by this wave yet; the only depth-8 leaves in hand are the 6 pre-flight
+ones.**
+
+## 10.7 Runner PIDs and one pusher correction (append-only)
+
+Live processes at launch:
+
+| process | PID | role |
+|---|---|---|
+| `run_local_queue_d8.sh` | 78862 | local queue, 11 shards sequential |
+| `q8_leaf_shard.py` (s05) | 78866 | shard driver, arc 1 leaves [64,128) |
+| pool workers | 78868-78879 | 12 workers, 94.5-99.3 %CPU each |
+| `push_d8_kaggle.sh` | **79519** | Kaggle pusher (see correction below) |
+
+**Correction to the first pusher launch.** The pusher first ran as PID 78986
+and decided push success by grepping the CLI's message for
+`successfully pushed`. That is unsafe: if Kaggle's wording drifts, a push that
+actually SUCCEEDED would be read as a failure and retried on every 300 s pass,
+spawning duplicate kernel versions and duplicate leaf work — and duplicated
+leaves are exactly what the merge coverage rule refuses. PID 78986 was stopped
+before it pushed anything (its only log lines are the two quota refusals) and
+relaunched as **PID 79519** with the authority moved to the kernel's own
+`kaggle kernels status`: a slug is marked pushed only when its status reads
+`RUNNING|QUEUED|COMPLETE|ERROR|CANCEL`, i.e. only when a run demonstrably
+exists. The superseded log is kept at `KAGGLE_PUSHER_D8.log.attempt1`.
+
+**Shard-map coverage was verified mechanically, not by eye**: the 5 Kaggle
+shards plus the 11 local shards cover **1024 leaves, 0 duplicates, 0
+missing**, and the 6 pre-flight leaves land in s02 (arc 0 leaf 128, the
+cross-host pair) and in local shards s05, s10, s13.
+
+## 10.8 HEAD moved mid-launch; the pin still holds (append-only)
+
+While this wave was being launched the orchestrator committed `332c2a9`
+("Promote effective theorem: CONFIRMED-conditional, eight gates"), so HEAD is
+no longer the `4be6d0e` recorded in §10 above. **The dataset pin is
+unaffected, and this was checked rather than assumed:**
+
+```text
+git diff --stat 4be6d0e HEAD -- .../lane_f/     ->  (empty)
+git show HEAD:.../lane_f/q8_schur_contour.py | shasum -a 256
+  6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0
+```
+
+`lane_f/` is byte-identical across `4be6d0e..332c2a9`, and the checker digest
+still equals the one in the §10.3 manifest table. Every in-flight shard is
+therefore bound to the same checker bytes as the uploaded dataset, and shards
+from the local queue and the Kaggle kernels remain mergeable with each other.
+The §10 line "HEAD `4be6d0e`" stands as a statement about launch time, not a
+claim about the current tip.
+
+This lane made **no commit and no push**. Working-tree changes it owns:
+`KAGGLE_SUBDIVISION_CAMPAIGN_SOL.md` (this append), `build_bundle.py` (the
+§10.3 depth-threading fix), and the new untracked
+`run_local_queue_d8.sh`, `push_d8_kaggle.sh`, `bundle/`,
+`bundle_d7_archived_20260821T045111Z/`, `shard_receipts/d8/`.
