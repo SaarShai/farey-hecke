@@ -1610,3 +1610,24 @@ directive 2026-08-15
   procedure documented in the note; loop ticks poll kernel status and
   the local queue, harvest receipts, and run the merge verification
   when coverage completes.
+
+- **qOp FINAL REPORT: RANK-ONE VERDICT; DEPTH-7 MARGIN MEASURED;
+  ORCHESTRATOR CLOSURE NOTE CORRECTED — 2026-08-20.**  The tightening
+  lane's completed §7: qOp_upper = 83.790069059487618... vs qF
+  83.790298954537757... — gain factor 1.0000027.  Root cause measured:
+  the entrywise-modulus matrix is numerically rank one
+  (sigma_2/sigma_1 = 2.34e-3), for which Frobenius IS the operator
+  norm; a phase-realisation probe shows even a perfect phase-aware
+  zero-width certificate lands ~43, not < 1.  No norm-level work can
+  close this gate — CLOSED as a research direction.  DECISIVE
+  BY-PRODUCT: exhaustive depth sweep (N=32, transferable by qOp's
+  measured N-independence) — the gate closes at DEPTH 7 with margin,
+  max_qOp = 0.654436018619157... over all 128 leaves (old Frobenius
+  gate closes there too, max_qF = 0.6544378; the tightening does not
+  reduce the leaf bill), priced ~365 h serial for four arcs at N=262.
+  The running Kaggle+local depth-7 campaign is exactly what the
+  measurement prescribes.  CORRECTION to my earlier closure note: §7
+  was NOT an abandoned stub — the lane's arc run completed
+  (runtime 1608.2 s) and §7 is now filled verbatim; the lane appended
+  its reply append-only.  Fresh judge receipts: 18/18 tests OK; the
+  note's only deletions are its own three placeholder lines.

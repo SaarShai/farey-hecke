@@ -24,8 +24,9 @@ arc it buys a relative improvement of `2.7e-6`, not a factor of `262`:
 ```text
 N = 262, arc 0, depth 0
 qF_upper  = 83.790298954537757620416957883198935009715399234915335736445465072103168161461759
-qOp_upper = 83.790069059...   (see section 5 for the verbatim Arb ball)
-gain      = 1.0000027
+qOp_upper = 83.790069059487618077666517899595847268148979295060633591602226405672414067854197
+qF/qOp    = 1.0000027438      (needed: a factor of 83.79)
+qOp_lt_1  = False             status = OPEN_MAX_DEPTH
 ```
 
 The reason is structural and is stated in section 3: the entrywise-modulus
@@ -36,6 +37,12 @@ matrix that the arc enclosure hands the gate is **numerically rank one**
 The verdict on the contour is unchanged: `status OPEN`, arc `OPEN_MAX_DEPTH`.
 **This is checker output, not a theorem.** Analytic gates 5-6 and continuation
 condition 8 of the 12-item ledger are untouched by anything in this note.
+
+The useful by-product is that this lane also **measured the depth at which the
+gate does close** — 7 bisections, `max_qOp = 0.654` over all 128 leaves — and
+priced it: `~365 h` single-threaded at `N = 262`, four arcs (section 4). The
+gate is compute-bound, not mathematically stuck, and the tightening does not
+reduce that bill by one leaf (the old Frobenius gate closes at depth 7 too).
 
 ## 1. What the winding argument actually needs at this step
 
@@ -350,7 +357,81 @@ What each new test pins:
 
 ## 7. `N = 262` run, verbatim
 
-(section filled below)
+Single arc, depth 0, tightened gate. This is the exact counterpart of the run
+recorded in `LANE_F_INTEGRATION_SOL.md` §4.4, so the two are directly
+comparable.
+
+```text
+$ cd research_notes/rh_goals_2026-08-14/lane_f
+$ /Users/za/.venvs/farey-rh/bin/python q8_schur_contour.py --N 262 --max-depth 0 \
+    --arc-start 0 --arc-end 1 --out /tmp/.../n262_d0.json
+Q8_SCHUR arc=0 leaves=1 status=OPEN
+{
+  "status": "OPEN",
+  "N": 262,
+  "arcs": 1,
+  "winding": null,
+  "Xop": "[11427.381413421776647965797940311588292095112143227954658522916179326186118725497 +/- 4.15e-76]",
+  "full_tau": "[5.9951138025373870505733021787159609718542285317402711682159608710390984184932643e-18 +/- 2.73e-98]",
+  "runtime_seconds": 1608.1880253749987
+}
+exit=0
+```
+
+The arc record, verbatim:
+
+```text
+dimension     = 262
+radius_upper  = [1.0000000000000000000000000000000000000000000000000000000000000000000000000000000e-6 +/- 1e-90]
+qF_upper      = [83.790298954537757620416957883198935009715399234915335736445465072103168161461759 +/- 4.90e-79]
+qOp_upper     = [83.790069059487618077666517899595847268148979295060633591602226405672414067854197 +/- 1.77e-79]
+qOp_lt_1      = False
+qOp_components:
+    frobenius        = [83.790298954537757620416957883198935009715399234915335736445465072103168161461759 +/- 4.90e-79]
+    schur_unweighted = [116.20385017256925328045212374081541591009143986754804347506672048940888349192393 +/- 5.45e-79]
+    schur_weighted   = [83.790069059487618077666517899595847268148979295060633591602226405672414067854197 +/- 1.77e-79]
+full_tau_upper        = [5.9951138025373870505733021787159609718542285317402711682159608710390984184932643e-18 +/- 2.73e-98]
+full_tail_open_reason = None
+status = OPEN_MAX_DEPTH
+```
+
+Bindings, unchanged and all verified in this run:
+
+```text
+checker_sha256          = 6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0
+geometry_verified       = True
+receipt_hashes_verified = {"R2": true, "TB": true, "W": true}
+source_hashes_verified  = {"q8_r3b_engine.py": true, "q8_contour_helpers.py": true,
+                           "f8_source_builder.py": true, "f8_certify_tb_blocks.py": true}
+```
+
+**The answer to the brief's question 4: `qOp < 1` does NOT hold.**
+
+```text
+qOp = 83.790069059487618077666517899595847268148979295060633591602226405672414067854197
+qF  = 83.790298954537757620416957883198935009715399234915335736445465072103168161461759
+qF/qOp = 1.0000027438...      absolute reduction = 2.2989e-4
+required reduction to clear the gate = a factor of 83.79
+```
+
+The tightening removed `0.00027%` of a gap that needed `98.8%` removed. Note
+also that the *unweighted* Schur test would have made the gate **worse**
+(`116.2`), which is exactly why the implementation minimises over candidates
+instead of substituting.
+
+Because `qOp >= 1`, the run stops at `FAIL_QOP`/`OPEN_MAX_DEPTH` before any
+determinant box is formed, so there is no winding verdict to report, and the
+four-arc run was **not** attempted — per the brief, a `qOp >= 1` single arc
+ends this lane's execution.
+
+**Runtime.** `1608.19 s` for one depth-0 leaf at `N = 262`. This is slower than
+the `1289.9 s` recorded in `LANE_F_INTEGRATION_SOL.md` §4.4 for the identical
+computation because the machine was concurrently running the `N = 32` depth
+sweep of section 4; `1289.9 s` is the uncontended figure and is the one used
+in the section-4 extrapolation. The tightened gate adds `O(N^2)` Arb work
+(entrywise moduli, two row/column sweeps, a float power iteration) on top of an
+`O(N^3)` interval inverse and matrix product; the overhead is not separately
+resolvable against the contention noise and is not material.
 
 ## 8. Honest status
 
@@ -377,3 +458,24 @@ qOp_upper = 83.790069059...) and graded in §8; a full-contour rerun at
 the pinned arcs is pointless at qOp ~ 84 and is SUPERSEDED by the
 orchestrator's subdivision decision (MAP entry "qOp GATE LANDED",
 2026-08-20): depth-7 parallel subdivision via the Kaggle campaign.
+
+### Authoring lane, reply (2026-08-20, append-only)
+
+The waiter did **not** die: the `N = 262` arc completed at
+`runtime_seconds = 1608.1880253749987` and **§7 above is now filled with its
+verbatim record** — the full run banner, the whole arc record (including
+`qOp_components`, so all three candidate bounds are on the page), and the
+verified `checker_sha256`/receipt/source bindings. §7 is no longer a stub;
+this reply is left in place only so the closure note is not silently
+contradicted.
+
+Nothing in the orchestrator's decision changes. The measurement confirms it:
+`qOp_lt_1 = False` at `qOp = 83.790069059...`, `qF/qOp = 1.0000027438`, and
+the four-arc run was correctly not attempted. Depth-7 parallel subdivision
+remains the only live path, and §4 now carries the exhaustive `N = 32` sweep
+that fixes the closure depth at **7** (`max_qOp = 0.654436018619157177...`
+over all 128 leaves) with the `~365 h` single-threaded price at `N = 262`.
+One caveat for the Kaggle campaign, stated in §4 and repeated here: depth 7 is
+measured at `N = 32` and carried to `N = 262` on the observed `N`-independence
+of `qOp`; that is strong evidence, not a proof, and the campaign must still
+produce the `N = 262` leaves.
