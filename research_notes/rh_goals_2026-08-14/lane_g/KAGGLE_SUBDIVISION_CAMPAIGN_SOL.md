@@ -29,17 +29,43 @@ private Kaggle CPU kernels; the remaining 3 were refused by a hard Kaggle quota
 nohup queue.** Nothing about the mathematics changed, and nothing here upgrades
 any ledger item.
 
-A cheap depth probe run during driver validation confirms the depth choice:
+**Depth 7 is the minimum viable depth, and this was measured, not assumed.**
+`qOp` is not constant along an arc: it peaks at the arc *midpoint*. Sampling the
+worst (mid-arc) leaf at each depth, `N = 32`:
 
 ```text
-arc 0, leaf 0, N = 32
-depth 6:  qOp = 0.880329623065626230634...     (margin 1.14x -- too tight)
-depth 7:  qOp = 0.438471653813449633916...     (margin 2.28x)
+depth 5:  worst mid-arc qOp = 2.6172   FAILS gate
+depth 6:  worst mid-arc qOp = 1.3089   FAILS gate
+depth 7:  worst mid-arc qOp = 0.6544   PASSES gate  (margin 1.53x)
+depth 8:  worst mid-arc qOp = 0.3272   PASSES gate
 ```
 
-Depth 6 would clear on this leaf but with 14% headroom against an arc whose
-`qOp` varies leaf to leaf. Depth 7 is the smallest depth with real margin, and
-it is the depth the campaign runs.
+The values halve exactly per level (2.6172 -> 1.3089 -> 0.6544 -> 0.3272),
+confirming the halving law `QF_TIGHTENING_SOL.md` §4 predicted.
+
+**A correction to an earlier draft of this note.** A first probe measured only
+*leaf 0* — the arc endpoint — and read depth 6 as `0.880`, i.e. "clears, but
+tight". That was a sampling error: leaf 0 is the arc *minimum*. At the arc
+midpoint depth 6 is `1.3089` and **fails outright**. Depth 7 is therefore not
+"the smallest depth with comfortable margin"; it is the smallest depth that
+works at all. Equally, the depth-7 margin is `1.53x` (worst leaf), not the
+`2.28x` that leaf 0 alone suggested. Never characterise an arc from its
+endpoint.
+
+Full depth-7 profile, all four arcs (`N = 32`; `qOp` is N-converged — the
+`N = 262` production run reproduces the `N = 32` value to 7 significant
+figures):
+
+```text
+leaf:    0      16     32     48     64     80     96     112    127
+qOp:   0.4385 0.4979 0.5675 0.6298 0.6544 0.6217 0.5589 0.4931 0.4385
+```
+
+Symmetric about the midpoint, and identical across all four arcs to 3-4
+decimals (the pin box is a square). Fine sweep around the peak (leaves 56-72,
+step 2) tops out at `0.6544` at leaf 64. This is a **sample of 9+9 of 128
+leaves, not a proof of the maximum** — which is precisely why the campaign
+certifies every leaf rather than trusting the profile.
 
 ## 1. Why a driver, and what it is not allowed to do
 
@@ -91,10 +117,17 @@ payload_sha256  e6b0325eea2a4af5efe27e17af378e1a1c096e47190147c7c708a176a852d0f1
 ## 3. Shard plan
 
 Geometry: `K = 1`, 4 arcs, depth 7 → 128 leaves per arc, **512 leaves total**.
-Shard unit: 64 leaves (half an arc). Kernel budget: 4 workers × 64 leaves ÷ 4 =
-16 rounds × ~1290 s ≈ **5.7 h**, against a 12 h Kaggle CPU session and an
-in-kernel `--deadline-seconds 39600` (11 h) guard that writes a partial receipt
-rather than losing the session's work.
+Shard unit: 64 leaves (half an arc). Kernel budget **as launched**: 4 workers ×
+64 leaves ÷ 4 = 16 rounds × ~1290 s ≈ 5.7 h, against a 12 h Kaggle CPU session
+and an in-kernel `--deadline-seconds 39600` (11 h) guard that writes a partial
+receipt rather than losing the session's work.
+
+**That sizing used the 1290 s reference and is now known to be optimistic.**
+§8.1 measures the marginal leaf at ~1990 s, making a 64-leaf shard ~8.8 h on
+hardware equal to this Mac — inside the guard by only 2.2 h, and over it on any
+slower core. The launched kernels stay at 64 (re-pushing would restart them and
+lose all progress); partial receipts are expected and are handled by §5 rule 1.
+Size the next wave at 32.
 
 | shard | kernel / process | arc | leaves | receipt | status (2026-08-20) |
 |---|---|---|---|---|---|
@@ -106,7 +139,7 @@ rather than losing the session's work.
 | s05 | local queue PID 34238 (slot 1) | 2 | 64–128 | `SHARD_a2_l64-128.json` | RUNNING (local, 12 workers) |
 | s06 | local queue PID 34238 (slot 2) | 3 | 0–64 | `SHARD_a3_l0-64.json` | QUEUED (local) |
 | s07 | local queue PID 34238 (slot 3) | 3 | 64–128 | `SHARD_a3_l64-128.json` | QUEUED (local) |
-| — | local validation PID 33707 | 0 | 0–4 | `LOCAL_VALIDATION_a0_l0-4.json` | RUNNING (cross-check of s00) |
+| — | local validation (PID 33707, exited) | 0 | 0–4 | `LOCAL_VALIDATION_a0_l0-4.json` | **COMPLETE — 4/4 PASS** (§8; cross-check of s00) |
 
 Kernel status output, verbatim (all five, `grep -iv key` applied):
 
@@ -378,41 +411,68 @@ running at the time of writing; its receipt lands at
 `shard_receipts/LOCAL_VALIDATION_a0_l0-4.json` and is the first real
 per-leaf-cost measurement on this hardware. Section 8 is filled on completion.
 
-## 8. `N = 262` local validation shard — interim measurement
-
-Still running at the time of writing (PID 33707, arc 0, leaves 0–4, 4 workers,
-each worker on its first leaf). Its receipt will land at
-`shard_receipts/LOCAL_VALIDATION_a0_l0-4.json`. What is **already measured** is
-the per-leaf cost, and it is the number the compute budget depends on:
+## 8. `N = 262` local validation shard — COMPLETE, all four leaves PASS
 
 ```text
-per-worker CPU time, all four workers, first leaf STILL not complete:
-  22:19 -> 23:53 -> 24:11 -> 26:50   (= 1610 s CPU and still climbing)
+Q8_SHARD arc=0 leaves=[0,4) depth=7 N=262 workers=4 resumed=0 pending=4
+Q8_SHARD leaf=0 status=PASS qOp=[0.438471637709677022842 leaf_seconds=1985.4
+Q8_SHARD leaf=1 status=PASS qOp=[0.441855455449863946139 leaf_seconds=1990.0
+Q8_SHARD leaf=2 status=PASS qOp=[0.445239331808402014894 leaf_seconds=1990.1
+Q8_SHARD leaf=3 status=PASS qOp=[0.448621147781441920416 leaf_seconds=1990.7
+{
+  "arc": 0,
+  "leaf_range": [0, 4],
+  "leaves_complete": true,
+  "status_counts": {"PASS": 4, "OPEN_MAX_DEPTH": 0},
+  "qOp_lt_1_all": true,
+  "payload_sha256": "374f53bd7b2d9e1d9dc4bdb2502f1f89306b84a34a7001fdbcee40b5a09a7ac9",
+  "wall_seconds": 1990.8501360416412
+}
 ```
 
-CPU time advances monotonically across every sample, so the workers are
-computing, not deadlocked. But the first leaf has now passed **1.25x** the
-1290 s reference without completing.
+This is the campaign's first production-parameter result, and it is the one that
+matters: at `N = 262`, depth 7, **all strict gates pass** — not just `qOp < 1`
+but `recorded_tail_receipt_checks_pass` and `full_output_projection_tail_available`
+too, which is why the status is `PASS` and not `FAIL_GATE`. Each leaf emitted a
+`finite_taylor_box` (leaf 0: real part `-2.4985087762988397183673640389853448...`).
 
-So on this host a depth-7 leaf at `N = 262` costs **more** than the 1290 s that
-`QF_TIGHTENING_SOL.md` §4 quotes. Two components are being conflated and should
-not be:
+Two independent cross-checks fall out:
 
-- the `arc_certificate` call itself (the 1290 s figure), and
-- `load_operator_bounds` — receipt parsing, hash verification, F1024 geometry
-  and the `N = 262` bound assembly — which each worker pays **once** in its pool
-  initializer.
+- **`qOp` really is N-converged.** Leaf 0 at `N = 32` gave
+  `0.438471653813449633916`; at `N = 262` it gives `0.438471637709677022842` —
+  agreement to 7 significant figures across an 8x change in truncation. This
+  reproduces `QF_TIGHTENING_SOL.md` §3's finding independently.
+- **The weighted Schur gate is doing real work but not much of it here.** Leaf 0:
+  `qOp = 0.4384716377...` against `qF = 0.4384734604...`. A relative gain of
+  `4.2e-6` — the same rank-one story §3 of that note tells, now confirmed at the
+  production `N` and at depth 7.
 
-That setup cost is why a 4-leaf validation shard looks expensive per leaf: it
-amortises over 1 leaf here, and over 16 leaves in a real 64-leaf shard. Do not
-read this number as the marginal leaf cost, and do not use the 4-leaf shard to
-extrapolate a shard runtime.
+### 8.1 Per-leaf cost: 1985-1991 s, not 1290 s
 
-**Budget consequence, stated before the fact rather than after:** if the true
-marginal cost is nearer 1600 s than 1290 s, a 64-leaf Kaggle shard needs
-~7.1 h at 4 workers on hardware equal to this Mac, and proportionally more on
-slower cores — a Kaggle core merely 1.5x slower already exceeds the 11 h guard. The 11 h deadline guard and the partial-shard merge rule (§5,
-rule 1) are what make that survivable; see the contingency in §5.
+The measured marginal cost is **~1990 s per leaf**, 1.54x the 1290 s that
+`QF_TIGHTENING_SOL.md` §4 quotes. All four leaves agree to within 0.3%, so this
+is a stable figure, not noise. Two components should not be conflated:
+
+A second correction to an earlier draft of this note. While the shard was still
+running I saw workers pass 1610 s CPU with no leaf yet and attributed the
+overshoot to `load_operator_bounds` amortising over a single leaf. **That was
+wrong.** `leaf_seconds` is timed *inside* `_certify_leaf`, which runs after the
+pool initializer has already built the bounds; it therefore excludes all setup.
+The workers were simply still computing their way to 1990 s. So:
+
+- **~1990 s is the clean marginal cost** of one `arc_certificate` call at
+  `N = 262`, depth 7, 384-bit precision, on this hardware;
+- worker setup (`load_operator_bounds`: receipt parsing, hash verification,
+  F1024 geometry, bound assembly) is paid once per worker **on top** of that,
+  and is not in the 1990 s.
+
+**Budget consequence.** At 1990 s marginal, a 64-leaf shard at 4 workers costs
+16 x 1990 s = **8.8 h** on hardware equal to this Mac, before setup. That is
+already inside the 11 h deadline guard by only 2.2 h, so a Kaggle core even
+25% slower overruns it. Expect partial receipts from s00-s04, and size the
+*next* wave at 32 leaves per kernel (§9, step 0). The deadline guard and the
+partial-shard merge rule (§5, rule 1) are what make an overrun survivable
+rather than wasted; see the contingency in §5.
 
 Cross-host determinism check, when both are in hand: leaves 0–3 of arc 0 appear
 in **both** this receipt and s00's. Their record content must match byte for
@@ -427,20 +487,27 @@ reported before any merged number is quoted.
   quota-refused and are draining through a local nohup queue.
 - **No shard has produced a certified arc yet.** No `qOp < 1` claim is made at
   `N = 262` beyond the depth probe at `N = 32`.
-- Per-leaf cost at `N = 262` is **measured to exceed** the 1290 s reference
-  (>1451 s CPU including one-off worker setup); §8 separates the two components
-  and states the budget consequence.
+- **4 of 512 leaves are certified PASS at production parameters** (`N = 262`,
+  depth 7, arc 0 leaves 0-3), with all strict gates passing and determinant
+  boxes emitted. That is the first evidence the depth-7 campaign will clear the
+  arc gate — but it is 4 leaves out of 512, on the arc's *easiest* stretch
+  (`qOp ~ 0.44` against a mid-arc peak of `~0.65`). It certifies nothing yet.
+- Depth 7 is the **minimum viable** depth: depth 6 fails outright at the arc
+  midpoint (`qOp = 1.3089`). An earlier draft of this note got that wrong by
+  sampling only the arc endpoint; §0 records the correction.
+- Marginal per-leaf cost is **~1990 s**, 1.54x the 1290 s reference. A second
+  earlier claim — that the overshoot was worker-setup amortisation — was also
+  wrong, and §8.1 records why.
 - The contour verdict remains `status OPEN`. This lane spent compute; it did not
   move a ledger item.
 
 ### Next loop tick
 
-0. **Read the real per-leaf cost first** (from
-   `LOCAL_VALIDATION_a0_l0-4.json`'s `timing.leaf_seconds_mean`, or from the
-   first harvested kernel receipt). Everything else in this plan is sized off
-   the 1290 s reference, and §8 already shows the true figure is larger. If the
-   marginal leaf is >~1600 s, re-shard the *remaining* work at 32 leaves per
-   kernel rather than 64 — a shard that dies at the deadline wastes a slot.
+0. **Size the next wave at 32 leaves per kernel, not 64.** §8.1 measures the
+   marginal leaf at ~1990 s, so a 64-leaf shard is ~8.8 h at 4 workers on
+   hardware equal to this Mac and overruns the 11 h guard on any core more than
+   ~25% slower. s00-s04 are already launched at 64; expect partial receipts from
+   them and do not re-push them at 64.
 1. Poll `kaggle kernels status saarshai/q8-schur-d7-s0{0..4}`; harvest each with
    `kaggle kernels output` as it completes.
 2. Harvest partial receipts too, and re-shard only their missing leaves (§5

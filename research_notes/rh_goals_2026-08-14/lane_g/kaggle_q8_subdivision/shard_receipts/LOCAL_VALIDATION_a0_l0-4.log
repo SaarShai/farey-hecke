@@ -1,0 +1,20 @@
+Q8_SHARD arc=0 leaves=[0,4) depth=7 N=262 workers=4 resumed=0 pending=4
+Q8_SHARD leaf=0 status=PASS qOp=[0.438471637709677022842 leaf_seconds=1985.4 elapsed=1985.5 done=1/4
+Q8_SHARD leaf=1 status=PASS qOp=[0.441855455449863946139 leaf_seconds=1990.0 elapsed=1990.1 done=2/4
+Q8_SHARD leaf=2 status=PASS qOp=[0.445239331808402014894 leaf_seconds=1990.1 elapsed=1990.2 done=3/4
+Q8_SHARD leaf=3 status=PASS qOp=[0.448621147781441920416 leaf_seconds=1990.7 elapsed=1990.8 done=4/4
+{
+  "arc": 0,
+  "leaf_range": [
+    0,
+    4
+  ],
+  "leaves_complete": true,
+  "status_counts": {
+    "PASS": 4,
+    "OPEN_MAX_DEPTH": 0
+  },
+  "qOp_lt_1_all": true,
+  "payload_sha256": "374f53bd7b2d9e1d9dc4bdb2502f1f89306b84a34a7001fdbcee40b5a09a7ac9",
+  "wall_seconds": 1990.8501360416412
+}

@@ -1667,3 +1667,25 @@ directive 2026-08-15
   rule makes truncation recoverable — only missing leaves re-run).
   Launch state unchanged: s00-s04 RUNNING, local queue + validation
   alive.
+
+- **FIRST LEAVES CERTIFY: 4/4 PASS AT PRODUCTION PARAMETERS —
+  2026-08-20.**  Local validation shard (arc 0, leaves 0-3, N = 262,
+  depth 7) completed: all four PASS on EVERY strict gate — qOp < 1,
+  recorded_tail_receipt_checks_pass, full_output_projection_tail_
+  available — each emitting a finite_taylor_box; receipt re-verifies
+  (374f53bd...); mean leaf 1989.0 s.  First evidence the depth-7
+  campaign clears the arc gate.  Two dated corrections from the lane's
+  own re-measurement: (1) depth 6 FAILS outright mid-arc (whole-arc
+  profile: d5 = 2.6172 FAIL, d6 = 1.3089 FAIL, d7 = 0.6544 PASS,
+  d8 = 0.3272; qOp peaks mid-arc, symmetric, identical across arcs,
+  halves exactly per level) — depth 7 is the MINIMUM viable depth,
+  margin 1.53x not 2.28x; (2) the cost overshoot was misdiagnosed —
+  1990 s is the clean marginal per-leaf cost (leaf_seconds excludes
+  setup), 1.54x reference, so a 64-leaf shard is ~8.8 h and any
+  Kaggle core > ~25% slower than this Mac overruns the 11 h guard —
+  partial receipts EXPECTED from s00-s04, next wave sized at 32
+  leaves, running kernels deliberately not re-pushed (restart would
+  lose progress; partial-merge rule makes overrun recoverable).
+  Caveats held: 4/512 leaves on the arc's easiest stretch; profile is
+  a sample, every leaf still gets certified; contour OPEN; analytic
+  gates untouched.  Cross-host determinism check pending s00 harvest.
