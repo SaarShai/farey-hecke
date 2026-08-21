@@ -1059,3 +1059,33 @@ the four cited ledgers actually run in.
 ---
 
 **READY FOR JUDGING**
+
+### Correction (2026-08-20, re-referee D12): the bare label `(RATE-A)` in the OPEN list is under-scoped
+
+Defective sentence (§ "OPEN", verbatim):
+
+> - `(RATE-A)` with `alpha>0`. Unchanged by this note; the rigorous campaign
+>   still proves only `alpha=0`. This remains the single standing blocker for
+>   every conditional statement above.
+
+**Corrected statement.**
+
+```text
+- Positive FULL-BOUNDARY RATE, and family-uniform N-independent whole-tail
+  monotonicity -- i.e. `(RATE-A) with alpha>0` in the form consumed by (G2)
+  and by the R5/DH2 activation, which additionally requires N-independent
+  K_+, K_F, nu_seed, omega_*. Unchanged by this note; no RIGOROUS
+  (machine-certified) campaign proves alpha>0. This remains the single
+  standing blocker for the conditional statements above.
+
+  NOT open, and not what this row grades: `(RATE-A)` restricted to the single
+  matched boundary Gamma_R^A with exponent 6/5 and activation q_RATE=12. That
+  statement is CONFIRMED AT PAPER LEVEL (BOUNDARY_ALPHA_THEOREM_SOL.md:728-734;
+  AM_REFEREE.md:7, which closes reason 1 of RATE_A_REFEREE.md:14-17). The two
+  gradings are different scopes, not a conflict; cf. this note's own D9, which
+  rules HOLOMORPHY_GATE_SOL.md:579 "correct as written, not stale" because it
+  is a conjunction whose first conjunct is the FULL-boundary rate.
+```
+
+No ledger promotion is licensed by this correction; it narrows a label, it
+does not upgrade a status.

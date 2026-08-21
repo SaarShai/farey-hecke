@@ -730,3 +730,68 @@ REFUTED; re-referee of attacks 1b/3/5 required before any promotion):
 
 STATUS: this note remains UNPROMOTED pending the re-referee (attacks
 1b, 3, 5 — the (RATE-A) grade-conflict adjudication among them).
+
+---
+
+## Dated correction block 2 (2026-08-20, re-referee findings, append-only)
+
+Applied per EFFECTIVE_THEOREM_ASSEMBLY_REREFEREE.md (combined verdict
+GAPS NOT REFUTED; attacks 1b/3/5 completed):
+
+- **Adjudication adopted (attack 5)**: the (RATE-A) ledger conflict is
+  RESOLVED as different scopes, both grades correct — Scope 1 (single
+  matched boundary Gamma_R^A, exponent 6/5, q_RATE = 12) is
+  CONFIRMED-conditional at paper level and is what this note's (H-RATE)
+  assumes; Scope 2 (positive full-boundary rate + family-uniform
+  N-independent whole-tail monotonicity, the (G2)/R5-DH2 form) is
+  GENUINELY OPEN.  §3's "LIVE LEDGER CONFLICT" phrasing is superseded:
+  (H-RATE) status reads "CONFIRMED-conditional (paper level)"; the two
+  banked OPEN rows grade Scope 2.  D12 appended to
+  R5_MONOTONICITY_GATE_SOL.md same turn.
+- **Hejhal pointer corrected (attack 1b)**: (7.22) is at printed p. 577
+  of lane_p/literature/Hejhal_LNM1001_Vol2_s7_pp568-600.pdf (in-range),
+  same phi_N family (LAW_HEJHAL_S7_EXTRACT.md:19-24), algebra exact —
+  BUT as printed it sits inside the contradiction proof of Thm 7.11
+  scoped to a no-zero subsequence; the correct citation for the
+  reflection at a zero is the UNCONDITIONAL phi(s)phi(1-s) ≡ 1 /
+  Hejhal Cor. 7.12 (p. 579, "Proof. Trivial.").  The delta choice
+  delta = 3/8 (< 1 and < gamma_1/10) is hereby stated.  D4 is thus
+  repaired: page printed, in-range asserted, pointer corrected to
+  Cor. 7.12.
+- **NEW gate row (H-REFL)** (attack 3): the reflection identity's own
+  hypotheses — unitarity |phi_q(1/2+it)| ≡ 1, meromorphic continuation
+  across the line, same-order transfer — are consumed in step (c).
+  Source: Hejhal Cor. 7.12 p. 579 + FJS §2.4 (phi(s)phi(1-s) = 1,
+  fn. 1 reality) as banked in the LAW notes.  Status:
+  PRINTED-LITERATURE, same tier as (H-RATE)'s printed inputs.
+- **Gate count**: the theorem assumes EIGHT named gates (the original
+  six + (H-TRANS) + (H-REFL)); §2's "six" is superseded.
+- **D1 completed and corrected**: §5(b):604's "~4.47" is refuted (body
+  unedited per append-only); the true values are 1/(alpha nu_z) =
+  5.36941580756... and (1-nu_z)/(alpha nu_z) = 4.53608247422680... —
+  correction block 1's "4.5357" (inherited from referee 1) is itself
+  WRONG and is superseded by 4.53608... .
+- **Cite fixes**: BOUNDARY_ALPHA Lemma 3.1 is at :335 not :333;
+  the R5_ACTIVATION_CLOSURE_REFEREE rows are at :41-43 (the :244-245
+  pointer was a quoted-file line-number confusion);
+  R3_TRANSPORT_EXECUTION_SOL simplicity sentence at :118 not :110;
+  LAW_SECOND_AUDIT_REFEREE:50 reads "generality used" not "needed".
+- **§1.1 hash staleness**: BOUNDARY_ALPHA_THEOREM_SOL.md is now
+  58ac377f... (the §10 promotion, commit 848bf17), superseding the
+  recorded 5a8d0bcc...; 14/15 other hashes unchanged.
+- **Q₀ UPDATED BY §10**: with the referee-CONFIRMED C_R''' =
+  541656022363559883954520, the propagated cutoff is q_A0''' =
+  2810199067910634377586449487575862960 (log10 = 36.4487,
+  re-referee-reproduced independently) — 4.19x smaller than the boxed
+  Q₀.  The theorem's threshold therefore reads Q₀ =
+  max{q_RATE, q_divisor, q_side''', q_A0''', q_monotone} ≥
+  2810199067910634377586449487575862960, superseding §4.5's boxed
+  value; all conditionality unchanged.
+- **Flag recorded**: the "RE-REFEREE: CONFIRMED — promotion unblocked"
+  quote backing (H-C4) is an orchestrating-session verdict recorded in
+  BOUNDARY_ALPHA:853-854, not a repo referee file.
+
+STATUS: still UNPROMOTED; combined verdict across both passes is GAPS
+NOT REFUTED.  Remaining dischargers: a referee for
+R3_TRANSPORT_EXECUTION ((H-TRANS)) and a final completeness pass over
+the eight-gate table.

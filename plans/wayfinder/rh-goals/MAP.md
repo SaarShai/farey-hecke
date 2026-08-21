@@ -1747,3 +1747,28 @@ directive 2026-08-15
   derivative-semantics verdict; Kaggle kernels s00-s04 still RUNNING
   cloud-side throughout.  Next referees due: derivative semantics,
   assembly re-referee, then R3-transport referee (the new named gap).
+
+- **ASSEMBLY RE-REFEREE: RATE-A CONFLICT ADJUDICATED (DIFFERENT SCOPES,
+  BOTH CORRECT); HEJHAL POINTER FIXED; Q0 SHARPENED TO 2.81e36 —
+  2026-08-21.**  EFFECTIVE_THEOREM_ASSEMBLY_REREFEREE.md installed
+  (488 lines; combined verdict GAPS NOT REFUTED — no mathematical
+  content refuted, the pass STRENGTHENS the note).  Attack 5
+  adjudication with receipts: Scope 1 ((RATE-A) on Gamma_R^A, 6/5,
+  q_RATE = 12) = CONFIRMED at paper level; Scope 2 (full-boundary rate
+  + family-uniform N-independent monotonicity, the (G2)/R5-DH2 form) =
+  GENUINELY OPEN; HOLOMORPHY_GATE:579 exonerated by its own D9 as a
+  correct conjunction; D12 appended to R5_MONOTONICITY_GATE_SOL.md
+  narrowing the label (no promotion licensed).  Attack 1b: (7.22)
+  verified at printed p. 577 (in-range, same phi_N family, algebra
+  exact) but scoped to a no-zero subsequence inside Thm 7.11's
+  contradiction proof — pointer corrected to the unconditional
+  Cor. 7.12 (p. 579); delta = 3/8 stated.  Attack 3: NEW (H-REFL) gate
+  row added (reflection identity's own hypotheses); gate count now
+  EIGHT; 4 cite errors fixed; §1.1 hash staleness recorded; D1's own
+  replacement number corrected (4.53608..., not 4.5357); and the
+  theorem's threshold SHARPENED by the same-commit §10 promotion:
+  Q0 >= q_A0''' = 2810199067910634377586449487575862960
+  (log10 36.4487, re-referee-reproduced), 4.19x below the boxed value.
+  Assembly remains UNPROMOTED; named dischargers: an
+  R3_TRANSPORT_EXECUTION referee ((H-TRANS)) and a final
+  eight-gate completeness pass.  R3-transport referee lane launched.
