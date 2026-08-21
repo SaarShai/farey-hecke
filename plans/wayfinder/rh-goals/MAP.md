@@ -1887,3 +1887,17 @@ directive 2026-08-15
   for the diagnostics archive); on full d8 coverage (0..255 x 4 arcs)
   run merge_shards with the depth-8 procedure incl. the cross-host
   determinism check against the PREFLIGHT receipts.
+
+- **OWNER PAUSE DIRECTIVE — 2026-08-21.**  Owner: pause once background
+  tasks complete; commit and push on completion.  Standing loop role
+  narrowed to HARVEST-ONLY: no new research lanes; each tick polls the
+  d7/d8 kernels and the local depth-8 queue, banks landed receipts
+  (commit + push), pushes queued d8 kernels as d7 slots free, and on
+  full depth-8 coverage runs the merge procedure (incl. cross-host
+  determinism check), banks the merged result, pushes, and STOPS the
+  loop.  Early depth-8 telemetry: 20/20 leaves PASS so far (arc-1
+  shard 12/64 in flight, qOp 0.44-0.46, ~1850 s/leaf).  All judgment
+  lanes are closed out; the effective theorem stands promoted
+  (CONFIRMED-conditional, eight gates); the LAW stands double-audited;
+  the q8 certificate awaits compute + merge + the analytic-assembly
+  referee campaign (resumes on owner instruction).

@@ -162,7 +162,9 @@ def flat_name(tree_path: str) -> str:
     return tree_path.replace("/", "__")
 
 
-def build_dataset(out_root: Path, username: str, dataset_slug: str, created: str) -> Path:
+def build_dataset(
+    out_root: Path, username: str, dataset_slug: str, created: str, depth: int
+) -> Path:
     dataset_dir = out_root / "dataset"
     dataset_dir.mkdir(parents=True, exist_ok=True)
     files = []
@@ -186,13 +188,22 @@ def build_dataset(out_root: Path, username: str, dataset_slug: str, created: str
         "created": created,
         "lane": "lane_g packaging of an UNMODIFIED lane_f engine",
         "purpose": (
-            "depth-7 parallel subdivision of the q=8 Schur contour arc gate; "
-            "qOp = 83.79 at depth 0 halves per bisection, so depth 7 is the "
-            "smallest depth with margin (measured qOp ~ 0.44 at N=32)"
+            f"depth-{depth} parallel subdivision of the q=8 Schur contour arc "
+            "gate; qOp = 83.79 at depth 0 halves per bisection, so depth 7 is "
+            "the smallest depth that clears qOp at all (worst mid-arc leaf "
+            "1.3089 at depth 6), and depth 8 is the smallest that also clears "
+            "the finite-Taylor zero-exclusion gate (worst rH 0.1945 against "
+            "the square-box predictor 0.41421)"
         ),
         "python": ">=3.11",
         "dependencies": {"python-flint": PYTHON_FLINT_PIN},
-        "geometry": {"K_per_edge": 1, "arcs": 4, "depth": 7, "leaves_total": 512},
+        "geometry": {
+            "K_per_edge": 1,
+            "arcs": 4,
+            "depth": depth,
+            "leaves_per_arc": 1 << depth,
+            "leaves_total": 4 * (1 << depth),
+        },
         "status_contract": (
             "Shard receipts are CHECKER OUTPUT, not a theorem.  E1, the q=8 "
             "MMS/Hilbert identification, K_s, analytic gates 5-6 and "
@@ -316,7 +327,7 @@ def main() -> int:
 
     args.out_root.mkdir(parents=True, exist_ok=True)
     dataset_dir = build_dataset(
-        args.out_root, args.username, args.dataset_slug, args.created
+        args.out_root, args.username, args.dataset_slug, args.created, args.depth
     )
     shards = plan(args.depth, args.shard_size)
     kernels = build_kernels(
