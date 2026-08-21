@@ -1901,3 +1901,20 @@ directive 2026-08-15
   (CONFIRMED-conditional, eight gates); the LAW stands double-audited;
   the q8 certificate awaits compute + merge + the analytic-assembly
   referee campaign (resumes on owner instruction).
+
+## 2026-08-21 06:35Z — HARVEST TICK: local d8 queue stall + clean relaunch
+
+- Local depth-8 queue found stalled at the 06:03Z harvest tick: the
+  04:52Z driver's parent shell was reaped by the harness, orphaning its
+  12 spawn workers (ppid=1); later relaunches contended with the
+  orphans (24+ workers on 16 cores, ~10% CPU each), so NO depth-8 leaf
+  ever completed locally.  Orphans are invisible to a
+  `pkill -f q8_leaf_shard` (their cmdline is multiprocessing
+  `spawn_main`) — killed by parent-pid filter instead.
+- 06:28:50Z: single clean relaunch of run_local_queue_d8.sh (harness
+  background runner, driver PID 82360); verified 12 workers, ~12 cores
+  busy.  Shard s05 a1_l64-128 restarted from zero (no checkpoint had
+  been written).
+- Kaggle: d7 s00..s04 all still RUNNING (poll receipts above);
+  push_d8_kaggle.sh pusher alive (PID 79519), deferring on the 5-slot
+  cap as designed.  No shard receipts landed yet; nothing banked.
