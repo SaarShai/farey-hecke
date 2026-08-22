@@ -1959,3 +1959,18 @@ directive 2026-08-15
   ~624 leaves ≈ 27 h local-only.  NO new Kaggle push (owner pause
   directive: no new lanes; a second Kaggle wave for a0/a3 would need
   owner approval — it would cut ~12 h off the clock).
+
+## 2026-08-22 20:32Z — OWNER GO: Kaggle d8 wave 2 launched (checkpoint-seeded)
+
+- Owner approved a second Kaggle wave.  The 5 kernels (s00-s04: a0 x4
+  shards + a1[0,64)) re-pushed at 20:30:37Z, all confirmed RUNNING.
+- Wave 2 resumes wave 1's progress: harvested checkpoints (108 leaves)
+  copied into the dataset as seed__SHARD_*.ckpt.json; kernels patched
+  to copy their seed into the working checkpoint before the driver
+  starts.  The driver validates the seed's params dict + payload
+  sha256 and refuses a foreign checkpoint with SystemExit, so seeding
+  cannot corrupt a run.  Saves ~54 kernel-hours.
+- Remaining on Kaggle after seeds: 212 leaves at ~2 leaves/h/kernel —
+  s02 (44 left) may hit the 12 h cap once more; the hourly harvest
+  tick re-seeds and re-pushes as needed.  Local queue unaffected
+  (12 workers, arc-2 in flight).
