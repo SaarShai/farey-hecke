@@ -1,0 +1,50 @@
+[{"stream_name":"stdout","time":1.081386745,"data":"mounted inputs: ['datasets']\n"}
+,{"stream_name":"stdout","time":1.091172302,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
+,{"stream_name":"stdout","time":5.375299778,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 64.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.491148654,"data":"python-flint 0.9.0\n"}
+,{"stream_name":"stdout","time":8.495282768,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
+,{"stream_name":"stdout","time":8.588251295,"data":"verified and staged 15 files\n"}
+,{"stream_name":"stdout","time":8.588289968,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 192 --leaf-end 256 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l192-256.json --checkpoint /kaggle/working/SHARD_a0_l192-256.ckpt.json\n"}
+,{"stream_name":"stdout","time":8.588299573,"data":"cpu_count 4\n"}
+,{"stream_name":"stdout","time":8.811705247999999,"data":"Q8_SHARD arc=0 leaves=[192,256) depth=8 N=262 workers=4 resumed=0 pending=64\n"}
+,{"stream_name":"stdout","time":8100.436204139,"data":"Q8_SHARD leaf=193 status=PASS qOp=[0.278889466801901235735 leaf_seconds=8091.3 elapsed=8091.6 done=1/64\n"}
+,{"stream_name":"stdout","time":8104.441217463,"data":"Q8_SHARD leaf=194 status=PASS qOp=[0.277761831903697724000 leaf_seconds=8095.2 elapsed=8095.6 done=2/64\n"}
+,{"stream_name":"stdout","time":8104.484146221,"data":"Q8_SHARD leaf=192 status=PASS qOp=[0.280012976936193642136 leaf_seconds=8095.3 elapsed=8095.7 done=3/64\n"}
+,{"stream_name":"stdout","time":8116.972073898,"data":"Q8_SHARD leaf=195 status=PASS qOp=[0.276666733915392821494 leaf_seconds=8107.7 elapsed=8108.2 done=4/64\n"}
+,{"stream_name":"stdout","time":16188.220130553,"data":"Q8_SHARD leaf=196 status=PASS qOp=[0.275600503521010569092 leaf_seconds=8087.8 elapsed=16179.4 done=5/64\n"}
+,{"stream_name":"stdout","time":16191.15618291,"data":"Q8_SHARD leaf=198 status=PASS qOp=[0.273481846124902321202 leaf_seconds=8086.7 elapsed=16182.3 done=6/64\n"}
+,{"stream_name":"stdout","time":16192.132519914,"data":"Q8_SHARD leaf=197 status=PASS qOp=[0.274522839814511265063 leaf_seconds=8087.7 elapsed=16183.3 done=7/64\n"}
+,{"stream_name":"stdout","time":16215.521190124,"data":"Q8_SHARD leaf=199 status=PASS qOp=[0.272483378247984552747 leaf_seconds=8098.5 elapsed=16206.7 done=8/64\n"}
+,{"stream_name":"stdout","time":24318.265200295,"data":"Q8_SHARD leaf=200 status=PASS qOp=[0.271476172868560617128 leaf_seconds=8130.0 elapsed=24309.5 done=9/64\n"}
+,{"stream_name":"stdout","time":24325.4421691,"data":"Q8_SHARD leaf=202 status=PASS qOp=[0.269491636853630152622 leaf_seconds=8133.3 elapsed=24316.6 done=10/64\n"}
+,{"stream_name":"stdout","time":24326.610384446,"data":"Q8_SHARD leaf=201 status=PASS qOp=[0.270489451802910733776 leaf_seconds=8135.5 elapsed=24317.8 done=11/64\n"}
+,{"stream_name":"stdout","time":24363.022918285,"data":"Q8_SHARD leaf=203 status=PASS qOp=[0.268483213314511146394 leaf_seconds=8147.5 elapsed=24354.2 done=12/64\n"}
+,{"stream_name":"stdout","time":32455.200184173,"data":"Q8_SHARD leaf=204 status=PASS qOp=[0.267521147669749964648 leaf_seconds=8136.9 elapsed=32446.4 done=13/64\n"}
+,{"stream_name":"stdout","time":32462.257550423,"data":"Q8_SHARD leaf=205 status=PASS qOp=[0.266565387893369092675 leaf_seconds=8136.8 elapsed=32453.4 done=14/64\n"}
+,{"stream_name":"stdout","time":32472.177182653,"data":"Q8_SHARD leaf=206 status=PASS qOp=[0.265601057945628756288 leaf_seconds=8145.6 elapsed=32463.4 done=15/64\n"}
+,{"stream_name":"stdout","time":32521.290014507,"data":"Q8_SHARD leaf=207 status=PASS qOp=[0.264626984544299685029 leaf_seconds=8158.3 elapsed=32512.5 done=16/64\n"}
+,{"stream_name":"stdout","time":40597.314251602,"data":"Q8_SHARD leaf=208 status=PASS qOp=[0.263643624722481644552 leaf_seconds=8142.1 elapsed=40588.5 done=17/64\n"}
+,{"stream_name":"stdout","time":40597.324597272,"data":"Q8_SHARD deadline reached; terminating pool\n"}
+,{"stream_name":"stdout","time":40597.427950674,"data":"{\n"}
+,{"stream_name":"stdout","time":40597.427979778,"data":"  \"arc\": 0,\n"}
+,{"stream_name":"stdout","time":40597.427987206,"data":"  \"leaf_range\": [\n"}
+,{"stream_name":"stdout","time":40597.427991754,"data":"    192,\n"}
+,{"stream_name":"stdout","time":40597.427995484,"data":"    256\n"}
+,{"stream_name":"stdout","time":40597.427999277,"data":"  ],\n"}
+,{"stream_name":"stdout","time":40597.428003025,"data":"  \"leaves_complete\": false,\n"}
+,{"stream_name":"stdout","time":40597.428007249,"data":"  \"status_counts\": {\n"}
+,{"stream_name":"stdout","time":40597.428011046,"data":"    \"PASS\": 17,\n"}
+,{"stream_name":"stdout","time":40597.42801493,"data":"    \"OPEN_MAX_DEPTH\": 0\n"}
+,{"stream_name":"stdout","time":40597.428018766,"data":"  },\n"}
+,{"stream_name":"stdout","time":40597.428022292,"data":"  \"qOp_lt_1_all\": true,\n"}
+,{"stream_name":"stdout","time":40597.428026122,"data":"  \"payload_sha256\": \"a43044a1d32f349cdb66ac88f000c5dab7edcfdf014f6da429d9fd15749392f2\",\n"}
+,{"stream_name":"stdout","time":40597.428030494,"data":"  \"wall_seconds\": 40588.61075735092\n"}
+,{"stream_name":"stdout","time":40597.428034262,"data":"}\n"}
+,{"stream_name":"stdout","time":40597.467161187,"data":"EXIT CODE: 3  wall_seconds: 40588.87887048721\n"}
+,{"stream_name":"stderr","time":40600.322120761,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":40600.322199257,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":40600.710005024,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":40600.710033544,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":40601.784378941,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":40603.402580437,"data":"[NbConvertApp] Writing 288188 bytes to __results__.html\n"}
+]

@@ -1940,3 +1940,22 @@ directive 2026-08-15
   (KernelWorkerStatus.RUNNING x5, s00-s04).  Local d8 queue relaunched
   19:11:10Z (shard a1_l64-128 from zero, 12 workers, ~12 cores busy).
   Coverage clock: Kaggle d8 ~6.3 h/kernel; local 11 shards ~23 h.
+
+## 2026-08-22 18:35Z — HARVEST TICK: d8 wave at 400/1024 leaves, ALL PASS, zero OPEN
+
+- Kaggle d8 wave closed: s00/s01/s03/s04 COMPLETE, s02 cancelled at the
+  12 h cap.  Harvested to shard_receipts/d8_kaggle_harvest/ (receipts +
+  logs).  Kaggle CPU is ~4x slower than local: 17-33 leaves per 12 h
+  kernel (vs 64 per ~2 h local shard).
+- Local queue landed 4 COMPLETE shards before the session exit killed
+  it (a1[64,128), a1[128,192), a1[192,256), a2[0,64) — 64/64 PASS
+  each) plus a2[64,128) checkpoint at 36 leaves.
+- Coverage: 400/1024 leaves certified, **status PASS on every single
+  one, zero OPEN_MAX_DEPTH, qOp<1 everywhere** — depth 8 is confirmed
+  sufficient across all sampled arcs (a0, a1, a2), matching the
+  pre-flight prediction.
+- 18:27:54Z: local queue relaunched, shard a2[64,128) resumed from
+  checkpoint (resumed=36, pending=28), 12 workers verified.  Remaining
+  ~624 leaves ≈ 27 h local-only.  NO new Kaggle push (owner pause
+  directive: no new lanes; a second Kaggle wave for a0/a3 would need
+  owner approval — it would cut ~12 h off the clock).

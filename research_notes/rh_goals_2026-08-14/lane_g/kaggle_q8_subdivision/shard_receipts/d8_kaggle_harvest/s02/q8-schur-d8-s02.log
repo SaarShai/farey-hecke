@@ -1,0 +1,30 @@
+[{"stream_name":"stdout","time":1.359717752,"data":"mounted inputs: ['datasets']\n"}
+,{"stream_name":"stdout","time":1.368011849,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
+,{"stream_name":"stdout","time":14.383650412,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 17.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":17.846763524,"data":"python-flint 0.9.0\n"}
+,{"stream_name":"stdout","time":17.851760888,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
+,{"stream_name":"stdout","time":17.949962736,"data":"verified and staged 15 files\n"}
+,{"stream_name":"stdout","time":17.949997192,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 128 --leaf-end 192 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l128-192.json --checkpoint /kaggle/working/SHARD_a0_l128-192.ckpt.json\n"}
+,{"stream_name":"stdout","time":17.950006733,"data":"cpu_count 4\n"}
+,{"stream_name":"stdout","time":18.195342733,"data":"Q8_SHARD arc=0 leaves=[128,192) depth=8 N=262 workers=4 resumed=0 pending=64\n"}
+,{"stream_name":"stdout","time":7472.683900507,"data":"Q8_SHARD leaf=129 status=PASS qOp=[0.327226208203956533532 leaf_seconds=7454.1 elapsed=7454.5 done=1/64\n"}
+,{"stream_name":"stdout","time":7473.709339178,"data":"Q8_SHARD leaf=128 status=PASS qOp=[0.327199274791140325602 leaf_seconds=7455.1 elapsed=7455.5 done=2/64\n"}
+,{"stream_name":"stdout","time":7474.175145593,"data":"Q8_SHARD leaf=131 status=PASS qOp=[0.327172366842348213059 leaf_seconds=7455.5 elapsed=7456.0 done=3/64\n"}
+,{"stream_name":"stdout","time":7483.183469774,"data":"Q8_SHARD leaf=130 status=PASS qOp=[0.327215271438486821750 leaf_seconds=7464.5 elapsed=7465.0 done=4/64\n"}
+,{"stream_name":"stdout","time":14844.445836392,"data":"Q8_SHARD leaf=133 status=PASS qOp=[0.327008062195249028435 leaf_seconds=7370.7 elapsed=14826.3 done=5/64\n"}
+,{"stream_name":"stdout","time":14850.69784979,"data":"Q8_SHARD leaf=134 status=PASS qOp=[0.326869392671224554069 leaf_seconds=7376.5 elapsed=14832.5 done=6/64\n"}
+,{"stream_name":"stdout","time":14853.310120103,"data":"Q8_SHARD leaf=132 status=PASS qOp=[0.327109088650171269084 leaf_seconds=7380.6 elapsed=14835.1 done=7/64\n"}
+,{"stream_name":"stdout","time":14859.038156963,"data":"Q8_SHARD leaf=135 status=PASS qOp=[0.326693210537100932948 leaf_seconds=7375.8 elapsed=14840.8 done=8/64\n"}
+,{"stream_name":"stdout","time":22385.891743783,"data":"Q8_SHARD leaf=138 status=PASS qOp=[0.325941303257852989926 leaf_seconds=7532.6 elapsed=22367.7 done=9/64\n"}
+,{"stream_name":"stdout","time":22387.935532952,"data":"Q8_SHARD leaf=136 status=PASS qOp=[0.326479674347288356349 leaf_seconds=7543.5 elapsed=22369.7 done=10/64\n"}
+,{"stream_name":"stdout","time":22392.158563985,"data":"Q8_SHARD leaf=137 status=PASS qOp=[0.326228968455750411634 leaf_seconds=7541.5 elapsed=22374.0 done=11/64\n"}
+,{"stream_name":"stdout","time":22403.761271634,"data":"Q8_SHARD leaf=139 status=PASS qOp=[0.325617208345630267516 leaf_seconds=7544.7 elapsed=22385.6 done=12/64\n"}
+,{"stream_name":"stdout","time":30051.847273216,"data":"Q8_SHARD leaf=140 status=PASS qOp=[0.325258463651908429745 leaf_seconds=7665.9 elapsed=30033.7 done=13/64\n"}
+,{"stream_name":"stdout","time":30052.522734996,"data":"Q8_SHARD leaf=141 status=PASS qOp=[0.324863667987718748129 leaf_seconds=7664.6 elapsed=30034.3 done=14/64\n"}
+,{"stream_name":"stdout","time":30061.404938815,"data":"Q8_SHARD leaf=142 status=PASS qOp=[0.324433042751709034596 leaf_seconds=7669.2 elapsed=30043.2 done=15/64\n"}
+,{"stream_name":"stdout","time":30079.687097139,"data":"Q8_SHARD leaf=143 status=PASS qOp=[0.323966928284573365575 leaf_seconds=7675.9 elapsed=30061.5 done=16/64\n"}
+,{"stream_name":"stdout","time":37769.008869553,"data":"Q8_SHARD leaf=145 status=PASS qOp=[0.322930449628100739831 leaf_seconds=7716.5 elapsed=37750.8 done=17/64\n"}
+,{"stream_name":"stdout","time":37771.681306717,"data":"Q8_SHARD leaf=144 status=PASS qOp=[0.323466059919639938842 leaf_seconds=7719.8 elapsed=37753.5 done=18/64\n"}
+,{"stream_name":"stdout","time":37785.20460822,"data":"Q8_SHARD leaf=146 status=PASS qOp=[0.322360456699845867425 leaf_seconds=7723.8 elapsed=37767.0 done=19/64\n"}
+,{"stream_name":"stdout","time":37817.261553621,"data":"Q8_SHARD leaf=147 status=PASS qOp=[0.321757030762632533555 leaf_seconds=7737.6 elapsed=37799.1 done=20/64\n"}
+]
