@@ -808,52 +808,37 @@ repairs):
 
 ---
 
-## 8. [PLACEHOLDER] Certified localization at \(q=8\) — computation in progress
+## 8. Certified localization at \(q=8\) — depth-8 checker output
 
-**No result is claimed in this section yet.** Intended content: an
-interval-arithmetic certified localization of a resonance for \(q=8\),
-produced by the Schur-complement contour machinery with adaptive
-subdivision, as a concrete instance sitting alongside the non-effective
-theorem of §3.
+The merged depth-8 campaign records the following bounded computational
+facts:
 
-Status at the time of drafting, from `plans/wayfinder/rh-goals/MAP.md`:
+- All 1024/1024 depth-8 leaves across 4 arcs have status `PASS`, satisfy
+  \(q_{\rm Op}<1\), and satisfy all strict gates.
+- Cross-host determinism is pinned: Kaggle and local produced a byte-identical
+  record with `rH = 0.1892125248420895230...` and
+  `qOp = 0.3271992747911403256...`.
+- The merged checkpoint was validated by the checker's own
+  `validate_checkpoint_records` routine.
+- Checker sha:
+  `6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0`.
 
-- Target box provenance (certified scan, lane-K harvest `q8_mms_plus`,
-  pin 1): \(s_0 = 0.4252310423737965 + 4.345760788321986\,i\), drift
-  \(2.57\times10^{-13}\)/\(4.67\times10^{-13}\) across \(N\!=\!22\to28\),
-  \(K_s\) box margin \(0.6227577\), \(\delta\ 0.0747680\), sign \(+1\);
-  backup pin 3 at \((0.437608560356531, 7.278671743987394)\).
-- Depth-8 subdivision wave: at the 2026-08-22 18:35Z tick, **400 of 1024
-  leaves certified, PASS on every one, zero OPEN_MAX_DEPTH, \(q_{\rm Op}<1\)
-  everywhere**; depth 8 confirmed sufficient across all sampled arcs.
-  Remaining leaves in compute.
-- The merged certificate additionally requires the merge procedure with the
-  cross-host determinism check, and then the analytic-assembly referee
-  campaign. Until both complete, **nothing from this lane may be stated as
-  a theorem.**
+**Mandatory scope caveat (verbatim from `Q8_D8_MERGE_REPORT.json`,
+`does_not_mean`):**
 
-**Related but distinct, and to be kept distinct:** the lane also holds a
-*conditional effective* theorem
-(`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md`, promoted CONFIRMED-conditional on
-eight named gates), which places an off-line zero of \(\varphi_q\) in an
-explicit disc for every integer \(q\ge Q_0\) with
-\(Q_0=11761546420922598622910053339543258496\) (\(\log_{10}Q_0\approx37.07\)).
-That statement is conditional on its gates and its threshold is astronomical;
-if it appears in the paper at all it belongs in a clearly-labelled remark,
-never in the abstract.
+> This is checker output, not a theorem.  E1, the q=8 MMS/Hilbert identification, K_s, analytic gates 5-6 and continuation condition 8 of the 12-item ledger are untouched and remain OPEN.
 
-**Forward outlook on the localization, at plan level only — NOT EXECUTED.**
-The refereed reduction plan (`NEXT1_Q0_GAP_PLAN_SOL.md` Section 2 correction
-block, referee-confirmed) licenses a refinement of the disc radius
-\(r_z:1/8\to1/40\) which would sharpen that conditional theorem's conclusion
-(c) from \(5/8\le\Re s_q\le7/8\) to
-\(0.725\le\Re s_q\le0.775\), \(|\Im s_q-\gamma_1/2|\le1/40\). The referee
-records that this lever touches \(\Omega\) not at all, so it carries **no
-exposure to the open (H-SIDE) gate** and needs no relicensing of \(K_+\).
-Nothing here is executed: the Arb cover for \(m_z\) has not been re-run at
-\(r_z=1/40\), and until it is, no sharpened localization may be stated. The
-remaining conditionality on the eight named gates is unchanged by this
-paragraph.
+**FIG-1 specification (not rendered).** Four overlaid histograms show the
+per-arc distribution of `qOp_upper`, using common bins and one series for each
+of the 256 leaves on arcs 0, 1, 2, and 3. The horizontal axis is
+`qOp_upper`; the vertical axis is leaf count. Use the brace-expanded receipt
+glob
+`research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/shard_receipts/d8/SHARD_a[0-3]_l{0-64,64-128,128-192,192-256}.json`.
+For each receipt, group by `$.payload.arc` and read the 64 interval-valued
+strings at `$.payload.records[*].qOp_upper`; the redundant per-record arc
+check is `$.payload.records[*].arc_index`. Draw a vertical reference line at
+\(1/(1+\sqrt2)\approx0.41421\), labelled “square-box predictor,” and annotate
+the observed `qOp_upper` range as approximately \(0.22\)–\(0.33\).
 
 ---
 
