@@ -2507,3 +2507,6 @@ paper its exhibit).
 - Deformation scoping: G_q rigid; what deforms = characters of fixed group / Teichmüller of punctured torus / real weight. PS position: our density claims conditional on N_d=o(T²) (= PS-open, per PGT-1 D2); LAW+pins are static exhibits, never PS proof.
 - Recommended PS-1: Γ₀(4)+χ_α (transfer-operator coding published → PS-2 is port-and-certify, our demonstrated capability); punctured-torus fallback; target the Fraczek λ=+1 zero with largest certified-drift signal. Caveat recorded: LNM 2139 unread-in-full. Kill trigger: if BFM's rigorous curves already cover the target sector. Novelty ceiling explicit: only certificates/effective constants would be ours.
 - PS-1 is owner-gated (NEXT-3 steps open one at a time). Referee for PS-0: queue behind S2 landing.
+
+## 2026-08-23 07:01Z — Timestamp correction (append-only)
+- The entries stamped 06:52Z–07:35Z today drifted ahead of the real clock (real time at the "07:35Z" entry was 07:01Z). Ordering is correct; wall-clock labels in that range are up to ~35 min early. From here, stamps come from `date -u` at write time.
