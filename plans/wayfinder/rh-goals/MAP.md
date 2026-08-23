@@ -2540,3 +2540,6 @@ paper its exhibit).
 - Exact evaluation with endpoint certificate re-derived at max_N=288 (CERTIFIED, wall 139 s): F_R(288) = 2.0894e-8 vs det bar 4.2493e-6 → margin ≈ 4.2284e-6, positive, clears the 1e-8 floor. F_R(256) reproduced to the printed digit (determinism check). Receipt appended to lane_g/S2_NSCALING_RECEIPT.md; JSON second_pin/F288_PROBE.json.
 - Caveat carried: det bar is the N=256 midpoint probe reused as proxy (N-stable within 2e-11 across edges/N so far); the freeze run recomputes per-arc at 288.
 - DECISION PENDING (owner): dispatch the full N=288 contour campaign (~58 CPU-h, Kaggle 16-chunk, ~2.9x flagship compute + B3–B5 code tasks). On success: second certified Z-zero box → Lemma 3.1 → two φ_5 zeros at distinct real parts → NOGO-OPEN-1 CLOSED.
+
+## 2026-08-23 08:09Z — OWNER GO: N=288 second-pin contour campaign
+- Owner approved the ~58 CPU-h Kaggle dispatch (~2.9x flagship compute) + B3–B5 code tasks. Launch order: (1) per-arc boundary det freeze at N=288 (replaces the midpoint-proxy caveat), (2) B3–B5 (merge seams, bundle rewrite, sha plumbing, guards), (3) Kaggle bundle build + dispatch respecting the 5-slot batch cap (d8 wave-2 kernels may still hold slots — poll like push_d8_kaggle.sh, non-destructive). On success: second certified Z-zero box → NOGO-OPEN-1 CLOSED.
