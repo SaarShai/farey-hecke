@@ -351,3 +351,77 @@ Phase numbering follows `SECOND_PIN_PREP.md` §4; deltas frozen here.
   `certify_r2_flagship.py:59,368-373,399-400`,
   `collocation_even_sonnet.py:119-167,189-217,235-270`,
   `results_sonnet.json`, commit `94bc6eb`.
+
+## §8 — Referee corrections applied (2026-08-23, append-only)
+
+The following entries record the cold referee's C1–C7 and m1–m7 corrections. Each corrected superseding statement governs any conflicting wording above.
+
+### C1 — §2 half-width reconciliation and object identity
+
+- **Referee point:** §2 used `1.00000000458067e-6` from the solid `flagship_s_box`, although the localization contour is constructed by `closed_boundary_segments(..., arb(HALF_WIDTH), ...)`; the cited receipt itself records the contour half-width, and the original a-fortiori implication reverses the load-bearing zero-localization logic.
+- **Corrected superseding statement:** The half-width reconciliation must cite the CONTOUR construction `arb("1e-6")` (radius ~4.5e-23) and the receipt's own `"half_width": "[1.00000000000000000000000e-6 +/- 1e-34]"` field, not the solid `flagship_s_box`. The a-fortiori direction in the original §2 is retracted; any a-fortiori statement is restricted to enclosure-type quantities and does not infer a zero in the smaller declared box from a zero in a larger region.
+
+### C2 — Reflected endpoint
+
+- **Referee point:** §4's `Re ρ ≈ 0.5894543` is an arithmetic/transposition error in the paper-facing reflected endpoint.
+- **Corrected superseding statement:** The reflected endpoint is `Re rho = 0.5894562645052637 (= 1 − 0.41054373549473627)`. The value `0.5894543` is WRONG and is superseded everywhere.
+
+### C3 — Missing B7 traceability artifacts
+
+- **Referee point:** The §7 receipts index lists three scratchpad artifacts that do not exist in the repository or worktrees; §1.3(b)(c) and the fallback winding row therefore cannot be reached by a later referee.
+- **Corrected superseding statement:** The three §7 receipts-index items `mms_q5_indep.py`, `crossval_grid.py`, and `repin_fallback.log` are declared MISSING. §1.3(b)(c) and the fallback winding ball `[0.99999949, 1.00000051]` are downgraded to UNVERIFIABLE-pending-artifact. The decisive proof-by-fix evidence remains separately reproduced, but it does not restore the missing receipt chain.
+
+### C4 — MMS citation and 1-E7 caveat
+
+- **Referee point:** The three-row operator display is `reduced3`, not MMS eq. (34); eq. (34) is the `LoverK` factorization, and the q=5 heading caveat was omitted.
+- **Corrected superseding statement:** The citation is corrected to `MMS reduced3 display (content verified)`, with eq.(34) identified as the `LoverK` factorization. The 1-E7 caveat is reinstated: the heading prints `q > 5` while Lemma 4.2 states `q ≥ 5`, so the q=5 identification rests on the general incidence formula and must carry that footnote.
+
+### C5 — Cross-validation coverage
+
+- **Referee point:** The advertised grid uses ordinates `5.76353724` and `10.56029678`, corresponding to the flagship and s_2 pins, while the selected second pin has `|t| = 7.8198` and is absent.
+- **Corrected superseding statement:** The crossval-grid coverage claim is narrowed to `t = 5.76` and `t = 10.56`; it does NOT cover the selected pin's `t = 7.82`.
+
+### C6 — Frozen execution plan and dead N=160 claims
+
+- **Referee point:** §6 names the wrong source directory for two scripts, incorrectly says there is no s-dependent K_s work, and retains the failed N=160 campaign constants and route.
+- **Corrected superseding statement:** The N=160 constants and associated cost/route claims are marked dead (gate FAIL); the campaign runs N=288. Source-directory names are corrected per the referee: `certify_r2_flagship.py` and `r3b_endpoint.py` are in `code/tb_certify/`, while `certify_r3_flagship.py` and `certify_r3b_flagship.py` are in `code/tc_rerun/`. The claim of “no s-dependent K_s work” is retracted: the divisor lattice is s-independent, but the per-pin K_s distance/clearance evaluation is required.
+
+### C7 — K_s grading
+
+- **Referee point:** §4 calls the flagship's `0.455100` “certified” while grading the identically derived candidate values as point margins, contrary to the assembly document's LEDGER RULE.
+- **Corrected superseding statement:** Grading is harmonized: flagship `0.455100` is restated as a point margin per the assembly doc. The candidate clearances are point margins as well, with no box-certification upgrade implied.
+
+### m1 — Pin digits
+
+- **Referee point:** The 17–18 significant digits quoted for the §3 pin come from double-precision midpoint Newton and include exact-binary-expansion digits beyond converged information.
+- **Corrected superseding statement:** `PIN_IM = 7.81976824701551188` is retained only as a frozen constant parsed by the code; it is not claimed as converged information beyond the supported stability (the rerun gives `7.819768247015512`).
+
+### m2 — B1 freezability
+
+- **Referee point:** The B1 evidence varies N only; `n_head = 4`, `sign = +1`, and double-precision midpoint arithmetic remain fixed.
+- **Corrected superseding statement:** The B1 result supports N-spread stability only. A stronger freezability statement remains pending one fixed-N perturbation of `n_head` (for example `n_head = 6`), with the fixed sign and arithmetic recorded.
+
+### m3 — s_2 B2 inconsistency
+
+- **Referee point:** §4's `s_2` value `B2 p = 0.4860548468` is derived from the N=22 value `0.24302842340131198`, not from the frozen §3 value `0.24302842350057649`.
+- **Corrected superseding statement:** The `0.4860548468` figure is explicitly N=22-derived; if it is derived from the frozen §3 value instead, the superseding figure is `0.4860548470`. The internal inconsistency is not treated as a single frozen value without its source N.
+
+### m4 — NOGO-OPEN-1 closing condition
+
+- **Referee point:** The conditional closure sentence omits the requirements that the zero be nonreal, off-line, and strictly interior.
+- **Corrected superseding statement:** The NOGO-OPEN-1 requirement is met by this pair only if the second box certifies and the selected zero is nonreal, off-line, and strictly interior with `0 < Re s* < 1/2`; both pins satisfy these conditions numerically.
+
+### m5 — Box-width convention
+
+- **Referee point:** `21675` and `21676` differ because the former is truncation-down and the latter round-up for the same full-width quantity; the half-width reading would give `43351`.
+- **Corrected superseding statement:** `21675` is the conservative truncation-down count of `21675.72` full box-widths at width `2e-6`; `21676` is a round-up convention, not a contradiction. On a half-width reading the corresponding count is `43351`.
+
+### m6 — Midpoint versus ball validation
+
+- **Referee point:** §1.3(c) compares the independent mpmath builder with Arb midpoints, validating the formula but not ball radii or enclosure semantics.
+- **Corrected superseding statement:** The mpmath cross-check is described as midpoint/formula validation only; it is not independent validation of Arb ball radii or enclosure semantics.
+
+### m7 — Dimension-tail qualification
+
+- **Referee point:** The §1.2 N=22 table has no dimension-tail bound, so `6.821e-09` and `2.295e-08` are small midpoint values, not certified zeros.
+- **Corrected superseding statement:** The §1.2 entries `6.821e-09` and `2.295e-08` are reported as small [ARB-MID] evidence, not as zeros; the phrase “zeros of NEITHER sector” is not promoted beyond what the midpoint evidence supports.

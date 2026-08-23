@@ -182,3 +182,7 @@ under the session cap), NOT overnight-local while the d8 queue owns the box.
 
 STATUS: UNREFEREED. Every number above is reproducible from the four JSON
 receipts in `lane_g/second_pin/` and the commands quoted inline.
+
+## ERRATA (2026-08-23, append-only)
+
+§0/§4/§5 print the boundary det level as ~4.2493 due to a truncated-string exponent misread; the correct level is ~4.2493e-6 (see `S2_NSCALING_RECEIPT.md` correction and `S2_BOUNDARY_DET_FREEZE_N288.json`). All margin statements in those sections must be read at the e-6 scale.
