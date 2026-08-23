@@ -72,3 +72,22 @@ freeze.
 Cost update: full contour at N=288 scales ≈ (288/256)² ≈ 1.27× over the
 46 CPU-h N=256 estimate → ≈ 58 CPU-h, Kaggle-chunk territory. Owner gate on
 that dispatch stands.
+
+## F_R(288) exact evaluation (orchestrator, 2026-08-23)
+
+Driver: `.worktrees/aletheia-restore/code/second_pin/f288_probe.py` (endpoint
+certificate re-derived at max_N=288, M=512 — status CERTIFIED; wall 139.0 s,
+single core, nice 10). Result JSON: `second_pin/F288_PROBE.json`.
+
+- F_R(256) = 1.9402e-3 (reproduces the N-scaling probe value — determinism check)
+- **F_R(288) = 2.0894e-8** (certified upper bound)
+- Margin vs the N=256 boundary det probe lower bound 4.2493e-6:
+  **≈ 4.2284e-6, POSITIVE, clears the 1e-8 floor** (margin rounded down).
+- Caveat: the det lower bound is the single bottom-edge midpoint probe at
+  N=256 reused as proxy; the freeze run must recompute boundary dets at
+  N=288 per arc (they were N-stable 4.2493e-6 within 2e-11 across all four
+  edges at both 160 and 256, so no surprise is expected — but this is a
+  projection input, not a certificate, until the per-arc run).
+
+**N* = 288 (measured, subject to per-arc confirmation).** Full contour at
+N=288 ≈ 58 CPU-h — Kaggle dispatch remains OWNER-GATED.
