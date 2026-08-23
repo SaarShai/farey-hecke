@@ -2368,3 +2368,26 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   explicit formula), Beurling generalized primes (~20-50,
   readers/amplifiers/referees), Cramér-type probabilistic models
   (~20-50, heuristic reinforcement).
+
+## 2026-08-23 06:20Z — DISSEMINATION DRAFTS LANDED (owner review pending)
+
+- dissemination/PAPER_SKELETON_DRAFT.md + KOYAMA_LETTER_DRAFT.md
+  banked, both marked DRAFT — NOT SENT.  Ledger-strength throughout:
+  main theorem verbatim from the LAW promotion block with its four
+  certified-as-absent items; Metatheorem I in the §9 unconditional
+  form; q8 = sourced placeholder only; effective theorem confined to
+  a labelled remark; prime geodesics = outlook remark.
+- Drafter's honesty ledger (7 tempted-but-unsourced claims omitted)
+  banked in the lane output; two notable: (a) the audience survey §3
+  phrase "arithmeticity is the exact discriminant" is CONTRADICTED by
+  the bank (q=3 shares the off-line property; Cor 3.5) — conflict
+  flagged in skeleton §2.1; (b) NO priority claim anywhere — Hejhal
+  Thm 7.11/Cor 7.12 is a printed partial antecedent and is cited
+  wherever novelty is framed.
+- Owner calibration (this session) to carry into any revision: the
+  two-sided gene/no-gene comparison at theorem strength ALREADY
+  exists in the Dirichlet-series world (Hardy 1914 + DH 1936); our
+  defensible novelty is the first SINGLE-FAMILY dichotomy in the
+  geometric/spectral setting (one parameter q, proven split).
+- NEXT: owner reviews both drafts; nothing sent/posted/submitted
+  without per-item approval.
