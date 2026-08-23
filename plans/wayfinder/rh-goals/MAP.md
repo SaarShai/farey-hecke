@@ -2008,3 +2008,27 @@ Owner-directed next steps once the LAW proof + q8 certification bank:
     conditional structure → projects/aristotle_dispatch_v33/.
 - Pause directive LIFTED for these two lanes only; harvest-only d8
   loop continues unchanged (compute + hourly tick unaffected).
+
+## 2026-08-23 05:35Z — NEXT-2 rung 1 DISPATCHED (Aristotle v33: LAW skeleton)
+
+- Lane opener landed projects/aristotle_dispatch_v33/ (LawSkeletonI.lean
+  + DISPATCH.md): 14 targets — divergence core A1-A3 (aT²logT beats
+  CT²+MT; finite family gives O(T); right-zero set infinite = LAW
+  statement skeleton), strictness/nonreality/reflection B1-B5, §4.2
+  calculus identity C1 (source of the 1/(4π) coefficient), and D1-D4
+  machine-checks of the second audit's Kelmer constant corrections
+  (previously verified only numerically).
+- Non-formalizable inputs carried as NAMED HYPOTHESES (v32 style),
+  never asserted: H3 hgrowth (Jensen growth O_q(T²) form), H4
+  hreal_finite, H5 hpole.  LEDGER WORDING (max strength): "statement
+  skeleton + those lemmas machine-verified CONDITIONAL on H3-H5; no
+  scattering-theoretic content machine-verified."  A returned file
+  discharging H3-H5 is a DEFECT.
+- Local pre-check exit=0, exactly the 14 target sorries.  Dispatch
+  receipt: project 4f83bfd0-b862-4aef-b17b-7f7e0cabf19c, task
+  1f7dca67-f547-4632-9440-25cbac8dc060, IN_PROGRESS (verified by
+  fresh `aristotle tasks` poll).
+- Rung 2 (planned, not launched): S6 critical-line integral (C2 +
+  weighted integral), which weakens H3 to the bare Jensen rectangle
+  (J).  (J) itself blocks on obtaining Selberg 1990 — do not dispatch
+  before that source is read.
