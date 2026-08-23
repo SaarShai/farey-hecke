@@ -103,6 +103,23 @@ signature" (`LAW_..._SOL.md:486–489`), and Corollary 3.5 of
 `NOGO_METATHEOREM_SOL.md` makes the blindness formal. The introduction must
 state the blindness explicitly rather than let a reader infer a dichotomy.
 
+**Where the novelty actually sits (framing paragraph).** The two-sided
+comparison — one theorem for the structure-rich side, one for the
+structure-poor side — already exists at theorem strength in the
+Dirichlet-series world: Hardy (1914) proves infinitely many zeros of \(\zeta\)
+*on* the line, Davenport–Heilbronn (1936) produces zeros *off* the line for a
+function without an Euler product. But those two theorems speak about
+**unrelated functions from different constructions**; the comparison is made
+by the reader, not by a parameter. The defensible novelty here is that this is
+the first **single-family** version of that comparison in the
+geometric/spectral setting: one parameter \(q\), one construction, where a
+proven classification (Takeuchi's list of the arithmetic \(G_q\)) sits beside
+the present theorem, so the family itself splits. Nothing stronger may be
+claimed: the split is a statement about the two literatures meeting inside one
+family, **not** an arithmeticity criterion (§2.1, Corollary 3.5) — the
+off-line conclusion of §3 holds for arithmetic \(q=3\) as well.
+*(Source note: owner-calibrated framing, MAP entry 2026-08-23 06:20Z.)*
+
 ### 2.2 Prior art, cited as prior art
 
 - **Davenport–Heilbronn (1936); Epstein zeta functions of class number > 1.**
@@ -110,6 +127,12 @@ state the blindness explicitly rather than let a reader infer a dichotomy.
   with almost all the properties of \(\zeta\) except an Euler product, with
   zeros off the line. Cite as the origin of the moral, not as something we
   extend.
+- **Beurling generalized primes (Beurling 1937; the Diamond–Zhang lineage).**
+  The series-side sibling programme: invented number systems that keep part of
+  the multiplicative structure and ask which PNT-facts survive, with known
+  failures of the RH-analogue among them. Cite as classical companion context
+  for the same question asked one construction over; we make no specific claim
+  about any Beurling system and consume nothing from that literature.
 - **The Selberg class.** The Euler product is an axiom there *precisely
   because* of Davenport–Heilbronn. Our axiom list \(A\) is the
   spectral-side mirror of that codification.
@@ -567,6 +590,15 @@ accommodate. Per `NOGO_AUDIENCE_SURVEY.md` (addendum), the prime-geodesic
 community has **direct object overlap** with this theorem's subject, and —
 unlike the class-(b) redirect targets — gains a *usable input* rather than
 only a no-go.
+
+**Why the two sides are now asymmetric in kind.** On the arithmetic side the
+divergence is already theorem-grade: improved error terms in the prime
+geodesic theorem for arithmetic surfaces are proven — Luo–Sarnak (1995) and
+its successors — by exploiting the hidden multiplicative structure those
+surfaces carry. On the non-arithmetic side the corresponding expectations have
+rested on heuristics. The theorem of §3 supplies a *structural* statement on
+that side: infinitely many off-line scattering resonances, in the frame the
+explicit formula uses. That is all it supplies.
 
 **What must not be said here.** We derive no prime geodesic error term, no
 effective first resonance height, and no \(q\)-uniform statement; the LAW

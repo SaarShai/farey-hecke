@@ -2391,3 +2391,13 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   geometric/spectral setting (one parameter q, proven split).
 - NEXT: owner reviews both drafts; nothing sent/posted/submitted
   without per-item approval.
+
+## 2026-08-23 06:12Z — Paper skeleton revised: 3 owner-directed additions
+
+- +32/−0 verified: §2.1 single-family novelty framing (Hardy 1914 /
+  DH 1936 precedent stated; non-discrimination limit restated so the
+  paragraph cannot read as an arithmeticity criterion); §2.2 Beurling
+  bullet (context only, consumes nothing); §9 asymmetry paragraph
+  (Luo–Sarnak arithmetic side proven; we supply the non-arithmetic
+  structural side; "That is all it supplies."), with the "what must
+  not be said" limits untouched.
