@@ -1,0 +1,164 @@
+{
+  "schema": "farey-hecke.s2-contour-n288-campaign/1",
+  "created": "2026-08-23",
+  "lane": "lane_g S2 second winding box (owner-approved ~58 CPU-h escalation)",
+  "purpose": "closed-contour certification of the second G_5 pin box 0.41054373549473627 + 7.81976824701551188 i (half-width 1e-6) at N=288: 192 base arcs in 16 chunks of 12; N*=288 frozen from F288_PROBE.json (F_R(288)=2.09e-8 certified) with N*=274 the measured floor (S2_NSCALING_RECEIPT.md); winding is claimed only at merge time (merge_s2_chunks.py), never by a chunk",
+  "python": ">=3.11",
+  "dependencies": {
+    "python-flint": "0.9.0"
+  },
+  "geometry": {
+    "K_per_edge": 48,
+    "base_arcs": 192,
+    "chunks": 16,
+    "arcs_per_chunk": 12,
+    "N_primary": 288
+  },
+  "status_contract": "Chunk receipts are CHUNK output (status CHUNK_ARCS_CLEAR at best), not a theorem.  The winding claim requires the local merge + overlap-polygon closure, then the assembly doc; the NO_VERTICAL_LINE corollary upgrade stays referee-gated.",
+  "files": [
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__second_pin__certify_r3b_flagship.py",
+      "tree_path": ".worktrees/aletheia-restore/code/second_pin/certify_r3b_flagship.py",
+      "sha256": "4ac59a18767bbf36ff39b0fb90a910685ea92b07391c352cff87ee75c8203840",
+      "bytes": 72028,
+      "role": "S2 contour orchestrator (second_pin copy; N_PRIMARY=288, B3 seam merge, --skip-comparison, in-memory T_tail extension)",
+      "repo_path": ".worktrees/aletheia-restore/code/second_pin/certify_r3b_flagship.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__second_pin__certify_r3_flagship.py",
+      "tree_path": ".worktrees/aletheia-restore/code/second_pin/certify_r3_flagship.py",
+      "sha256": "da75ee02527550b365b93e2008b0f1d8be89c63534edf2b3bb1943fd9e880b4d",
+      "bytes": 46687,
+      "role": "S2 R3 helper copy (closed_boundary_segments, load_and_validate_r2, winding primitives; S2 pin + S2 W binding)",
+      "repo_path": ".worktrees/aletheia-restore/code/second_pin/certify_r3_flagship.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__second_pin__certify_r2_flagship.py",
+      "tree_path": ".worktrees/aletheia-restore/code/second_pin/certify_r2_flagship.py",
+      "sha256": "16edea6c9212516f2ccd6ec14425480101e80bfea968c85e2d3e667108695347",
+      "bytes": 38074,
+      "role": "S2 R2 certifier copy (tail formulas single_block_tail/tail_block_tail used by the in-memory T_tail(288) extension)",
+      "repo_path": ".worktrees/aletheia-restore/code/second_pin/certify_r2_flagship.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__second_pin__r3b_endpoint.py",
+      "tree_path": ".worktrees/aletheia-restore/code/second_pin/r3b_endpoint.py",
+      "sha256": "9927240167b96e19b365bb7bd49d6ec3fe07268d875f17834c342e305c007311",
+      "bytes": 15443,
+      "role": "S2 endpoint certificate (enlarged contours; Kimi 1-C3 guard; S2 box)",
+      "repo_path": ".worktrees/aletheia-restore/code/second_pin/r3b_endpoint.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__tc_rerun__tc_rerun.py",
+      "tree_path": ".worktrees/aletheia-restore/code/tc_rerun/tc_rerun.py",
+      "sha256": "fb46771d5bea9946528dd9783999dc8948f0c891be43bff47a279663edf23c56",
+      "bytes": 12329,
+      "role": "source builder wrapper (loads the tracked q5 engine by path)",
+      "repo_path": ".worktrees/aletheia-restore/code/tc_rerun/tc_rerun.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__tc_rerun__r3b_engine.py",
+      "tree_path": ".worktrees/aletheia-restore/code/tc_rerun/r3b_engine.py",
+      "sha256": "579ede0d7a9b59ed92305a845263008e89d1559136a07fe3a366326c079cb8eb",
+      "bytes": 8277,
+      "role": "R3b block/derivative engine (hash-pinned by the orchestrator)",
+      "repo_path": ".worktrees/aletheia-restore/code/tc_rerun/r3b_engine.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__tb_certify__certify_tb_blocks.py",
+      "tree_path": ".worktrees/aletheia-restore/code/tb_certify/certify_tb_blocks.py",
+      "sha256": "c44f71c75aff3830439a02aae563c8ad895e48677b312082f2cf57d44e210430",
+      "bytes": 24453,
+      "role": "TB arc helper (imported by r3b_endpoint; R2 arc_helper binding)",
+      "repo_path": ".worktrees/aletheia-restore/code/tb_certify/certify_tb_blocks.py"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__zeta_cert_rosen_q5.py",
+      "tree_path": ".worktrees/aletheia-restore/code/zeta_cert_rosen_q5.py",
+      "sha256": "c84c5c3f6d9f7a320bca7f1dbfd96a4859c3eea9b3de5420eb4eb223ad0d597b",
+      "bytes": 47890,
+      "role": "certified q=5 Arb engine, UNMODIFIED (R2 engine binding)",
+      "repo_path": ".worktrees/aletheia-restore/code/zeta_cert_rosen_q5.py"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__second_pin__R2_SECONDPIN_ENVELOPE_RECEIPT.json",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/second_pin/R2_SECONDPIN_ENVELOPE_RECEIPT.json",
+      "sha256": "6410dff31e503176dbf03a1b181568c99f5bc386287b109ced371f08d7eee83d",
+      "bytes": 316265,
+      "role": "S2 R2 receipt (sha-pinned as R2_EXPECTED_SHA256)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/second_pin/R2_SECONDPIN_ENVELOPE_RECEIPT.json"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__TB_BLOCK_CERTIFICATES_V2_RECEIPT.json",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/TB_BLOCK_CERTIFICATES_V2_RECEIPT.json",
+      "sha256": "73b506f8ee26b1ba9e22eac2e5badc80395bafee15ec687e620201ec6156d63d",
+      "bytes": 67774,
+      "role": "TB V2 receipt (sha-pinned as TB_V2_EXPECTED_SHA256)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/TB_BLOCK_CERTIFICATES_V2_RECEIPT.json"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__second_pin__W_ENVELOPE_CERT_S2_RECEIPT.json",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/second_pin/W_ENVELOPE_CERT_S2_RECEIPT.json",
+      "sha256": "dc95c5112342517deaaf8fe4defebe70de5d33cea74d814db0adb74508ab977e",
+      "bytes": 163771,
+      "role": "S2 W envelope receipt (R2 W_V2_head_data_only binding)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/second_pin/W_ENVELOPE_CERT_S2_RECEIPT.json"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__second_pin__R2R3_SECONDPIN_CERT.md",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/second_pin/R2R3_SECONDPIN_CERT.md",
+      "sha256": "82f82b7923601b4e29921f1ae6190b6bee24f9f00f13adae19a026262d0f8386",
+      "bytes": 470,
+      "role": "attempt-1 report (mandatory immutable input)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/second_pin/R2R3_SECONDPIN_CERT.md"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__TB_R1_HILBERT_RESTATEMENT.md",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/TB_R1_HILBERT_RESTATEMENT.md",
+      "sha256": "6c319b78605efbf7acc2916db80656a95e12daffa313c4a46f26400c64b4861f",
+      "bytes": 5028,
+      "role": "R1 restatement (mandatory immutable input)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/TB_R1_HILBERT_RESTATEMENT.md"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__ADVERSARIAL_REVIEW_V3_TBCHAIN.md",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/ADVERSARIAL_REVIEW_V3_TBCHAIN.md",
+      "sha256": "0f0428cd41de0d6d3e939e4fd958c7206f04664d800df41b2cad2c24119e84d1",
+      "bytes": 27818,
+      "role": "adversarial review (R2 binding input)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/ADVERSARIAL_REVIEW_V3_TBCHAIN.md"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__TB_LEMMA_CHAIN.md",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/TB_LEMMA_CHAIN.md",
+      "sha256": "20d58d5ac259cf4d2dec84f54188b4ef05f9da53c2336a77eb18e9526508f3c3",
+      "bytes": 7907,
+      "role": "TB lemma chain (load_and_validate_r2 required input)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/TB_LEMMA_CHAIN.md"
+    },
+    {
+      "dataset_name": "research_notes__rh_goals_2026-08-14__lane_g__tb_disc_opt.json",
+      "tree_path": "research_notes/rh_goals_2026-08-14/lane_g/tb_disc_opt.json",
+      "sha256": "c16a1d540b43a69292bb41aa68ffe465691feeadacbfd218513349d3caaa1bf4",
+      "bytes": 174,
+      "role": "disc optimization constants (loaded at tc_rerun import time)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/tb_disc_opt.json"
+    },
+    {
+      "dataset_name": ".worktrees__aletheia-restore__code__out__resonance_geometry.json",
+      "tree_path": ".worktrees/aletheia-restore/code/out/resonance_geometry.json",
+      "sha256": "dcdd71196521b170fff9f8e494668c838595bc4a07060d38b23053ec9c8372ac",
+      "bytes": 3793,
+      "role": "G_5 geometry receipt (loaded at tc_rerun import time; G5_PINS)",
+      "repo_path": ".worktrees/aletheia-restore/code/out/resonance_geometry.json"
+    },
+    {
+      "dataset_name": "driver__merge_s2_chunks.py",
+      "tree_path": "driver/merge_s2_chunks.py",
+      "sha256": "23a228cc8536e2c93d35652e14d81d2ac75b9384282786da3fcdd7e45ceabdbd",
+      "bytes": 4999,
+      "role": "merge-time driver (carried for provenance; runs locally, not in-kernel)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/kaggle_s2_contour/merge_s2_chunks.py"
+    }
+  ]
+}

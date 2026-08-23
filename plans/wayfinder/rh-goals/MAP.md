@@ -2559,3 +2559,29 @@ S2_NSCALING_RECEIPT.md + N_SCALING_PROBE.json n_star_extension block, UNREFEREED
 DECISION: the owner-approved campaign stays at N=288 (F_R(288)=2.0894e-8, margin
 ~4.2284e-6 — ~3.7x thicker than at 274, ~2 extra decades of headroom against
 interval det dips on full arcs; cost delta modest). N*=274 is banked as the floor.
+
+## 2026-08-23 09:04Z — S2 N=288 contour campaign BUILT + DISPATCHED (Kaggle LIVE)
+
+Campaign build agent landed (receipt lane_g/S2_CONTOUR_CAMPAIGN_RECEIPT.md, UNREFEREED):
+- A) Boundary det freeze at N=288: GATE PASS via 12-probe-per-edge subsample
+  (second_pin/S2_BOUNDARY_DET_FREEZE_N288.json, 46 min): per-edge min det lower
+  bounds 4.24932-4.24934e-6 all four edges; F_R(288)=2.0894484e-8 reproduced;
+  worst margin 4.2284e-6 (positive, ~2.6 orders above 1e-8 floor). Each campaign
+  chunk re-certifies its own per-arc dets (_jacobi_taylor_arc: Taylor box AND
+  F-inflated box must exclude zero) — the campaign IS the per-arc certificate.
+- B) Code: B3 merge rewritten for subdivided chunks (dyadic leaf-tiling verify,
+  synthetic tests pass); B4 bundle + full-tree rehearsal (caught 2 missing data
+  files); B5 N_PRIMARY=288 with in-memory T_tail(288) self-checked; Kimi guards in.
+  Two loud deviations, both accepted: latent load_and_validate_r2 crash fixed
+  (every kernel would have died); --skip-comparison added (N=128 control arm runs
+  once at assembly, not 16x).
+- C) Kaggle LIVE: private dataset saarshai/s2-contour-n288-inputs + 16 private
+  kernels s2-contour-n288-s00..s15. s00-s04 RUNNING (slots inherited as d8
+  wave-2 kernels completed naturally — nothing cancelled); s05-s15 feed via
+  push_s2_kaggle.sh poller (pid verified alive). Harvest: harvest_s2_kaggle.sh
+  then merge_s2_chunks.py.
+- D) No local chunks (d8 queue saturates the box, 12 workers).
+- Timeline: first wave ~4-6 h; all 16 chunks ~12-24 h; merge minutes.
+On success: second certified Z-zero box at Re 0.41054, |t| 7.8198 -> Lemma 3.1
+reflection -> two phi_5 zeros at distinct real parts -> NOGO-OPEN-1 closes
+(referee-gated at assembly).
