@@ -2231,3 +2231,18 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   NOT state a no-go — do not over-cite.  Defensible framing:
   "spectral-side theorem-strength analogue of Dirichlet-series
   folklore", nothing stronger.
+
+## 2026-08-23 09:20Z — NEXT-1 correction block APPLIED; status CONFIRMED-with-corrections
+
+- Section 2 appended to NEXT1_Q0_GAP_PLAN_SOL.md (verified: git diff
+  --numstat 284 insertions, 0 deletions — no existing line touched).
+- Corrected gate count: FOUR clearly discharged/dischargeable
+  ((H-HOL), (H-ROUTE), (H-GEOM), (H-TRANS)); (H-RATE) Scope 1
+  conditional (q^{1−2σ} piece still conjectural); (H-C4), (H-REFL)
+  NOT discharged; (H-SIDE) open and coupled to Scope 2 via
+  family-uniform K₊ (not isolable).  "7 of 8" WITHDRAWN.
+- Corrected ranking: L2 (r_z, −6.97, zero (H-SIDE) exposure, sharpens
+  (c) to 0.725 ≤ Re s_q ≤ 0.775) → L1 (H, −4.59) → L3 → L4 → L5
+  (headroom −11.07) → L6 → L7.
+- Note status: CONFIRMED-with-corrections per referee.  L2 is the
+  licensed next rung when NEXT-1 resumes execution.

@@ -610,3 +610,287 @@ Reproduction scripts for §1.5–§1.6 (written fresh for this note):
 `final.py`, `mz.py`, `joint.py` under
 `/private/tmp/claude-501/-Users-za-Documents-farey-hecke/d132431f-d2c6-4401-96d1-90f58d3026fb/scratchpad/`.
 They are temporary; the method in §1.5.1 is complete enough to rebuild them.
+
+---
+
+## Section 2 — Correction block (2026-08-23, from NEXT1_Q0_GAP_PLAN_REFEREE.md)
+
+**Append-only.** Nothing in Section 1 is edited, deleted or rewritten. Every
+item below is the cold referee's finding, quoted with its line numbers in
+`NEXT1_Q0_GAP_PLAN_REFEREE.md`. Where Section 1 and this block disagree,
+**this block governs.** House verdict (referee `:24-25`):
+"CONFIRMED-with-corrections on Claims 1-3. Claim 4 (the gate audit) is
+REFUTED as stated."
+
+### D2 — §1.5.3's `sigma = 1.48` row (referee `:304-326`)
+
+The printed row is a composite of three different runs; three of four cells
+are wrong. Under §1.5's own stated method (`H = 1`, `r_z = 1/8`, `M_0`
+recomputed, `nu_z` floored 4dp, `m = 0.0439`) the correct per-column values
+are (referee `:309-311`):
+
+| column | printed (§1.5.3) | **correct** |
+|---|---|---|
+| `nu_z` (raw) | `0.056…` | **0.047187** |
+| `log10 C_R` | `21.4842` | **21.3956** |
+| `log10 Q_0` | `46.8492` | **46.9696** |
+| `log10 Q_0` (`nu_z` FROZEN) | `22.9859` | **21.1226** |
+
+Provenance of the wrong cells (referee `:316-320`): `0.056…` is `nu_z` at
+`sigma = 1.42`; `21.4842` is `log10 C_R` at `sigma = 1.48, H = 5`; `22.9859`
+is the frozen-`nu_z` value at `sigma = 1.40`; `46.8492` corresponds to
+`nu_z ≈ 0.0473`, matching neither. Direction (referee `:323-325`): the
+printed `Q_0` is `0.12 log10` **more favourable** than honest, so §1.3/§1.5's
+"`+10.40` worse" is an understatement — honest is **+10.52**. No conclusion
+moves. Also D1 (referee `:278-302`): rows `1.06`, `1.08`, `1.30` and the
+whole frozen-`nu_z` column were run with `M_0` **frozen** at `2.775`, against
+§1.5.1(3)'s declared recomputation; the two `Q_0` columns of a single row are
+not comparable.
+
+### D3 — the `r_z = 0.026` mislabel (referee `:328-350`)
+
+§1.6's `m_z` table row labelled `r_z = 0.025` is in fact `r_z = 0.026`:
+`m_z(0.026) = 0.0123393745`, `m_z/r = 0.474591` — exactly the printed pair.
+The true `r_z = 0.025` row is `m_z = 0.0119011586`, `m_z/r = 0.476046`.
+**Computations are unaffected**: the referee confirms (`:346-349`) the
+computation used `m_z = 0.01190` throughout — `29.4456`, `27.0186`,
+`32.5580` reproduce exactly with `0.01190` and do **not** reproduce with
+`0.01234`. Display defect only; the three joint-scan cells printing
+`m_z = 0.01234` should read `0.01190`. All other rows of the table reproduce
+to the printed digit.
+
+### D6a — the nine corrected line receipts (referee `:376-404`)
+
+All eight `file:line` pointers in §1.4 point at the wrong lines; the quoted
+strings are genuine. Corrected receipts against
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md` (referee `:383-393`):
+
+| # | receipt | §1.4 cites | **correct line** |
+|---|---|---|---|
+| 1 | (H-RATE) | `:775-780` | **165** (and `:748` for the superseding read) |
+| 2 | (H-HOL) | `:250-252` | **213** (`:250-252` is the (H-SIDE) quote) |
+| 3 | (H-ROUTE) | `:305` | **300** (`:305` reads "nothing — it is a constraint") |
+| 4 | (H-GEOM) | `:245-247` (and `:243-247` in §1.3) | **235** |
+| 5 | (H-SIDE) | `:270` | **255** (`:270` is the (H-C4) quote) |
+| 6 | (H-TRANS) | `:844-852` | **820** |
+| 7 | (H-REFL) | `:781-786` | **766** |
+| 8 | (H-SIDE) detail, "answered conditionally, not removed" | `:271-274` | **258** |
+| 9 | (H-REFL) "narrowed by F4" | `:871-878` | **850-856** |
+
+((H-C4)'s `:865-869` vs actual `864` the referee grades "acceptable",
+`:385`.) Further corrections outside the table (referee `:395-399`):
+`BOUNDARY_ALPHA_THEOREM_SOL.md:407` (R9c) is actually **`:433`**; `:238` is
+**`:237`**; the `phi_infty` definition cited as `EFFECTIVE:76-78` is at
+**`:80-81`**; and §1.2's "`85.35789877...` at `:434`" is at **`:428`**
+(`:434` is the Route-B `K_F=109` diagnostic line).
+
+### D6b — the elided R8 clause, restored verbatim (referee `:406-418`)
+
+R8 (§1.1) elides the load-bearing clause. The source
+(`R5_MONOTONICITY_GATE_SOL.md` D12) reads, restored verbatim:
+
+> "... in the form consumed by (G2) **and by the R5/DH2 activation, which
+> additionally requires N-independent `K_+`, `K_F`, `nu_seed`, `omega_*`.
+> Unchanged by this note;** no RIGOROUS ... campaign proves alpha>0."
+
+**Consequence (referee `:414-418`):** the omitted clause states that the open
+Scope-2 blocker *additionally requires a family-uniform `K_+`*. Scope 2 is
+therefore **coupled to (H-SIDE)**, and **(H-SIDE) is NOT isolable as §1.4 and
+§1.8 claim**. The referee grades this "a material misquote by omission, in
+the one receipt the section's whole ledger-conflict resolution rests on."
+§1.4's "the single highest-value open item on the page" and §1.8's "make
+(H-SIDE) the single named blocker" are withdrawn to that extent.
+
+### D7 — (H-RATE) is NOT discharge-clean (referee `:433-453`)
+
+§1.4 grades (H-RATE) Scope 1 "DISCHARGEABLE (formalization only) … *Blocker:*
+none identified". This omits five of the seven consumed sub-inputs
+(`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:192-201`), including a conjectural one:
+the M1 localization triple / Route-B repair row, whose referee
+(`M1_LOCALIZATION_TRIPLE_REFEREE.md:12`) states (referee `:442-445`):
+
+> "The note correctly leaves `O(q^{1-2 sigma})` conjectural."
+> "… The `q^{1-2 sigma}` RATE bound is still conjectural."
+
+At the banked `sigma = 11/10`, `q^{1-2 sigma} = q^{-6/5}` — **the very
+exponent (H-RATE) Scope 1 claims** (referee `:447-448`). The M1 row is
+listed as *consumed* and no banked source reconciles this with §2.3's
+"N1-RATE no longer needed". **Corrected gate-table entry:**
+
+| gate | corrected read |
+|---|---|
+| **(H-RATE) Scope 1** | **dischargeable ONLY IF** the M1 conjectural `O(q^{1-2σ})` piece is not consumed — unresolved in the banked ledger (referee `:261`). NOT "blocker: none identified". |
+
+Two further corrected entries the referee records: **(H-C4)** is **NOT**
+dischargeable by a banking act — the same `CR_REDUCTION_V3_REFEREE.md`
+paragraph §1.4 quotes also says "**No gate moves.** `q_monotone` stays. This
+is not a final `q_0`", a direct denial of §1.4's read (referee `:420-425`);
+**(H-REFL)** is **PRINTED-LITERATURE, not discharged** — grading it
+"DISCHARGED modulo citation hygiene" is an upgrade past its source, whose
+tier-mate (H-RATE)'s printed inputs are CONFIRMED-*conditional* (referee
+`:427-431`).
+
+**Corrected headline — the "7 of 8" figure is WITHDRAWN.** Referee
+`:270-272`:
+
+> "Clearly discharged or dischargeable-by-formalization: (H-HOL), (H-ROUTE),
+> (H-GEOM), (H-TRANS) — **four**, with (H-RATE) Scope 1 conditional on D7.
+> 'Seven of eight' is not supported."
+
+**The corrected count is FOUR** ((H-HOL), (H-ROUTE), (H-GEOM), (H-TRANS)),
+plus (H-RATE) Scope 1 conditional on D7; (H-C4) and (H-REFL) are not
+discharged; (H-SIDE) remains genuinely open **and coupled to Scope 2 per
+D6b**. §1.4's "Net" paragraph and §1.8's derived reading are superseded here.
+
+### D8 — L5's `−25.5` is wrong by a factor `ln 10` (referee `:455-472`)
+
+§1.3's L5 evidence cell reads "V1→V3 spent three referee cycles for 30.59
+e-folds = −25.5". One e-fold of `C_R` moves `log Q_0` by `1/alpha = 0.8333`
+**nats**, i.e. `0.36191 log10`, not `0.833 log10`. Correctly (referee
+`:463-466`):
+
+```
+30.5945 e-folds -> 30.5945/1.2/ln 10 = 11.0725 log10   (note printed: 25.5)
+ 1.7179 e-folds ->  1.7179/1.2/ln 10 =  0.6217 log10   (note: 0.62 — correct)
+```
+
+**`−25.5` → `−11.07`.** Cross-check (referee `:469-471`): `log10 Q_0(V1) =
+47.52` against `36.4487` now, an `11.07 log10` total. The L5 verdict
+("declining") is unaffected, but **`−25.5` must not be quoted**. §1.3's
+commentary figure `1.7179 e-folds = −0.62 log10` was already correct.
+
+### D9 — §1.7.6's "complete" frozen list is incomplete (referee `:474-516`)
+
+Additions required, in the referee's severity order:
+
+- **(a) (H-HOL) belongs in the frozen list** (referee `:478-485`). The banked
+  finite-Hecke holomorphy theorem (`HOLOMORPHY_GATE_SOL.md:373-379`) is
+  proved on "an open neighborhood of the full `H_0`, of the A0 domain
+  `overline{Omega}`, of `D_z`, and of the old Route-B right domains". A
+  rectangle of height `H = 6` is **none of those**; the domains used in
+  §1.5–§1.6 are not the domains (H-HOL) was proved for.
+- **(b) The `H`-axis of the §2–§4 chain** (referee `:506-511`). §1.7.3 is
+  scoped entirely to `p != 11/5`; changing `H` is an independent axis
+  (`Gamma_R` goes from a height-`1` to a height-`6` segment). The referee
+  reads it as **benign** — (3.15) is pointwise in `s`, only
+  `sup_{Gamma_R}|s|` enters, and `S(sigma,H)` is recomputed — but a list
+  calling itself complete must contain it.
+- **(c) The `H_0` underwriting `K_+ = 117` is only `±0.9999` tall** (referee
+  `:487-493`). `HOLOMORPHY_GATE_SOL.md:80`: `H_0 = [1/2, 1.4999] × [t_c −
+  0.9999, t_c + 0.9999]`. Against the proposed `H = 6` (half-width `3`) the
+  whole conditional apparatus that produced `117` is **out of domain** — on
+  the `sigma` axis the proposal stays inside (`1.48 < 1.4999`); on the `H`
+  axis it is **3× outside**. Not a matter of degree.
+- **(d) §1.7.2's monotonicity claim is FALSE for the `H` lever** (referee
+  `:495-504`). §1.7.2 states "Enlarging `Omega` enlarges that set, so the
+  true `K_+` on the modified `Omega` is `>= 117`." For the `sigma` lever
+  this is right (left edge unchanged, top/bottom extend ⇒ superset). For the
+  `H` lever it is **wrong**: the top and bottom edges *move* (from
+  `Im = t_0 ± 1/2` to `t_0 ± 3`), so
+  `∂Omega_{H=6} \ Gamma_R` does **not** contain `∂Omega_{H=1} \ Gamma_R`.
+  **Correct statement: `K_+` on the new domain is simply UNKNOWN**, not
+  `≥ 117`. The error is conservative in direction but is stated as fact and
+  is false.
+- **(e) `q_side'''` under every lever** (referee `:513-516`) — never
+  re-checked in the note. The referee checked it; `q_A0` still binds
+  everywhere (`log10 q_side = 18.945 < 31.603` at `K_+=10`;
+  `9.916 < 18.791` at the joint point). Unflagged, benign.
+
+### The REFUTED inference — §1.6's "nothing pushing back" (D5, referee `:196-211`, `:370-374`)
+
+§1.6 concludes: *"raising sigma raises alpha at NO cost in alpha*nu_z, so the
+`(log C_R)/alpha` term shrinks with nothing pushing back."* **This is false
+and is replaced by the referee's monotonicity fact.** At fixed
+`alpha*nu_z = 2d`,
+
+```
+T_0 = log(K_+/m_z)/(2d) - log(K_+)/alpha,
+```
+
+which is **strictly increasing in `alpha`**. From `alpha = 1.2` to
+`alpha = 1.96` the floor rises by exactly
+`log(K_+)*(1/1.2 - 1/1.96)/log 10 = +0.66829 log10` — and §1.6's own table
+shows it (`7.1493 → 7.8197` in the `H=6, r_z=1/40` rows, difference
+`0.6704`, the remainder being the `nu_z` residual off the exact strip limit).
+The net move is still favourable, so **no ranking changes**; but the sentence
+as written is contradicted by the note's own numbers. The strip-invariance
+statement itself (`alpha*nu_z → 2*(Re z_0 − r_z − 1/2)`) is CONFIRMED
+(referee `:191-194`).
+
+### The finding in the note's favour — L2 needs no (H-SIDE) relicensing (N1, referee `:520-527`, `:601-604`)
+
+> "`r_z` does not touch `Omega`, so the `(H-SIDE)` sup set is literally
+> unchanged and `K_+ = 117` is **fully licensed** for the `r_z`-only rows."
+
+Consequences:
+
+1. §1.7.2's blanket "Any use of §1.6's numbers must first discharge (H-SIDE)
+   at the new geometry" **over-caveats L2** and does not apply to the
+   `r_z`-only rows.
+2. §1.3's effort column mislabels L2 as "E1 (+E2)" — **the E2 leg is
+   unnecessary**; L2 is **E1 only**.
+3. L2 sharpens conclusion (c) to **`0.725 ≤ Re s_q ≤ 0.775`**,
+   `|Im s_q − gamma_1/2| ≤ 1/40`, in place of `5/8 ≤ Re s_q ≤ 7/8` (referee
+   `:138` grades this EXACT).
+4. **L2 is the new TOP-RANKED lever, strictly ahead of L1** (referee `:527`,
+   `:601-604`): "the only lever that needs no (H-SIDE) work at all, it is
+   worth `−6.97 log10` on its own, and it simultaneously sharpens conclusion
+   (c)".
+
+**Corrected ranking (supersedes §1.3's table ordering and §1.8's next-lane
+order):**
+
+| rank | # | lever | est. Δlog10 | effort | (H-SIDE) exposure |
+|---|---|---|---|---|---|
+| **1** | **L2** | **`r_z`: `1/8 → 1/40`** | **−6.97** | **E1 only** | **NONE — `K_+=117` fully licensed**; also sharpens conclusion (c) |
+| 2 | L1 | `Omega` aspect ratio `H: 1 → 6` | −4.59 | E1 (+E2 for `K_+`) | yes, and `K_+` is UNKNOWN not `≥117` (D9d); (H-HOL) out of domain (D9a,c) |
+| 3 | L3 | `alpha` via `sigma` | −0.58 alone at `H=1` (D4); **+10.52 WORSE** if pushed to `sigma=1.48` at `H=1` (D2); pays only after L1 | E2 | yes |
+| 4 | L4 | `K_+` sharpening 117 → 10 | −4.84 (exact, not a linearization — referee `:141-143`) | E3 | is the gate |
+| 5 | L5 | further `C_4`/`C_R` shaving | headroom **−11.07** total (D8), ~−0.62 per referee cycle | E2 per step | — |
+| 6 | L6 | gate consolidation | 0.00 for `Q_0` | E2/E3 | — |
+| 7 | L7 | `alpha ≥ 2` (`p ≥ 3`) | unbounded in principle | E3, blocked | — |
+
+Joint figures unchanged and referee-EXACT: L1+L2 `−9.40` (`27.0186`); joint
+`sigma=1.48, H=6, r_z=1/40` `−17.63` (`18.7911`).
+
+**Corrected §1.8 next-lane order:** (i) **L2** — re-run the `m_z` Arb cover at
+`r_z = 1/40` (no gate work required, and N4 at referee `:546-550` notes the
+sampled `m_z` clears its floor by only `1.4e-6`, so the Arb re-run "is not
+optional"); (ii) re-derive `K_+` on a tall/thin `Omega`, noting D9d that it is
+UNKNOWN there rather than `≥ 117`; (iii) re-run the `nu_z` cover at the new
+`(sigma, H)`; (iv) only then re-audit the §2–§4 chain at `p = 2 sigma`.
+
+### Nits recorded, no repair required (referee `:518-556`)
+
+**N2** — "termwise positive on the relevant range" (§1.5.1(1)) is false: at
+`y ≈ H/2`, `sin(n pi/2)` alternates and the `n=3` term is negative, so the
+truncation error is unsigned and flooring does not by itself certify a lower
+bound on `nu_z`. Tail is `~1e-40`, forty orders below flooring granularity —
+no number moves. **N3** — §1.5.1's "400 odd modes … 1440–2880 points" does not
+match the executed runs (100/200/300/400 modes; `M=720` for part of §1.5.3,
+`M=360` for `m_z` in `joint.py`); stability verified, nothing moves. **N4** —
+see above. **N5** — §1.2's `16.6706 + 19.7780` printed addends sum to
+`36.4486` (second addend truncates `19.7781030`); §1.5.2's `1.28e-4` is
+`1.157e-4` (the `4.2e-5` conclusion is right); §1.6's `m_z/r_z → 0.5` is
+`→ 0.51447`.
+
+### What the referee CONFIRMED (unchanged, for the record)
+
+Referee `:120-146` reproduces to the printed digit: L1 `−4.5913`, L2
+`−6.9734`, L1+L2 `−9.4004`, joint `18.7911` (`−17.6279`), rung min
+`35.8768` (`−0.5719`) at `sigma=1.16`, sensitivities `5.1334`/`1.29x` and
+`1.713`/`2.0e10`, L4 `4.5361`/`−4.84`, `alpha*nu_z` `0.4499` vs `0.1863`
+(`2.4x`), `H < gamma_2 − gamma_1 = 6.887314`, and §1.8's "seventeen orders".
+The elasticity artifact (`alpha·d(log Q_0)/d(alpha) = −log Q_0`), the
+`alpha = 2 sigma − 1` welding, and the programme-level conclusion (only a
+finite-base theorem bridges to `q ≤ 21`) are all CONFIRMED independently and
+are the note's most valuable output. No banked constant, gate status or
+threshold is altered by the note or by this block:
+`Q_0 >= 2810199067910634377586449487575862960` stands, as an inequality, with
+`q_monotone`'s remainder unevaluated.
+
+---
+
+**Post-correction status: CONFIRMED-with-corrections per referee; gate-audit
+headline WITHDRAWN and replaced by the corrected count; ranking updated with
+L2 first.**
