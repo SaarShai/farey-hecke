@@ -1,0 +1,3771 @@
+{
+  "M": 512,
+  "N_evaluation": 48,
+  "aggregation": {
+    "W0": "max over source-disc row sums; tail = direct Hurwitz-closed Phi_0 sup; single = plain |u_n| sup",
+    "W0_enters_F": false,
+    "W_ge1": "max over source-disc row sums; tail = V2 head sum of |u_n|*rho_n plus the certified deep |u_n|/(R_j*d_n) first-term-plus-integral bound; single = plain |u_n| sup",
+    "deep_integral_exponent": "1 + 2*sigma_lower"
+  },
+  "backend": "python-flint Arb/Acb ball arithmetic",
+  "blocks_source": {
+    "assignment_line": 19,
+    "blocks": [
+      [
+        1,
+        2,
+        2,
+        false,
+        false
+      ],
+      [
+        1,
+        3,
+        3,
+        false,
+        true
+      ],
+      [
+        1,
+        2,
+        1,
+        true,
+        false
+      ],
+      [
+        1,
+        3,
+        2,
+        true,
+        true
+      ],
+      [
+        2,
+        3,
+        2,
+        false,
+        true
+      ],
+      [
+        2,
+        2,
+        1,
+        true,
+        false
+      ],
+      [
+        2,
+        3,
+        2,
+        true,
+        true
+      ],
+      [
+        3,
+        1,
+        1,
+        false,
+        false
+      ],
+      [
+        3,
+        3,
+        2,
+        false,
+        true
+      ],
+      [
+        3,
+        2,
+        1,
+        true,
+        false
+      ],
+      [
+        3,
+        3,
+        2,
+        true,
+        true
+      ]
+    ],
+    "count": 11,
+    "exact_count_check": true,
+    "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/tb_disc_sweep.py",
+    "sha256": "1f7e3399a2e2ff5e1a33b562903a95e3501b9b7ba3da19d36437f28e7ee18308"
+  },
+  "boxes": [
+    {
+      "N_stable_source_flag": true,
+      "W0_row_sums_by_source_disc": {
+        "1": "[9.39265055602668145735889 +/- 6.80e-24]",
+        "2": "[8.22028666550757779837900 +/- 8.26e-24]",
+        "3": "[45.9375141993582343954994 +/- 7.27e-23]"
+      },
+      "W0_upper_bound": "[45.9375141993582343954994 +/- 7.28e-23]",
+      "W_ge1_row_sums_by_source_disc": {
+        "1": "[9.36307350563266641663437 +/- 9.58e-24]",
+        "2": "[7.69406908291246389286936 +/- 1.35e-23]",
+        "3": "[44.6658811851825879737774 +/- 9.39e-23]"
+      },
+      "W_ge1_upper_bound": "[44.6658811851825879737774 +/- 9.40e-23]",
+      "blocks": [
+        {
+          "W0_block_upper_bound": "[3.09724567217760575743782 +/- 4.94e-24]",
+          "W0_worst_arc_index": 140,
+          "W_ge1_block_upper_bound": "[3.09724567217760575743782 +/- 4.94e-24]",
+          "block": [
+            1,
+            2,
+            2,
+            false,
+            false
+          ],
+          "deep_tail": null,
+          "head_terms": [
+            {
+              "n": 2,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.145692331321380769343769 +/- 4.69e-25]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.543755611698494007472267 +/- 2.26e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.543755611698494007472267 +/- 2.27e-25]",
+              "weight_sup_upper_bound": "[3.09724567217760575743782 +/- 4.94e-24]",
+              "weight_worst_arc_index": 140,
+              "weighted_head_product_upper_bound": "[1.68414471505544726083819 +/- 4.18e-24]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[1.68414471505544726083819 +/- 4.19e-24]",
+          "label": "1\u21922, +2, head",
+          "n0": 2,
+          "negative_branch": false,
+          "plain_weight_sup_upper_bound": "[3.09724567217760575743782 +/- 4.94e-24]",
+          "plain_weight_worst_arc_index": 140,
+          "source_disc": 1,
+          "tail": false,
+          "target_disc": 2
+        },
+        {
+          "W0_block_upper_bound": "[1.10957169722816775986844 +/- 1.27e-24]",
+          "W0_worst_arc_index": 146,
+          "W_ge1_block_upper_bound": "[1.14069660625708089557419 +/- 1.89e-24]",
+          "block": [
+            1,
+            3,
+            3,
+            false,
+            true
+          ],
+          "deep_tail": {
+            "angle_bound": "[0.0213318172137343941240428 +/- 6.20e-26]",
+            "angle_factor": "[1.18152962126877620167835 +/- 5.20e-24]",
+            "deep_sum_upper_bound": "[0.185363926647689104703081 +/- 1.81e-25]",
+            "denominator_lower_bound": "[28.1112429871043535873697 +/- 2.45e-23]",
+            "first_n": 18,
+            "first_product_upper_bound": "[0.00836501188082760598189247 +/- 1.09e-26]",
+            "im_s_abs_upper_bound": "[7.81976924701551646067007 +/- 4.53e-24]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "integral_converges": true,
+            "integral_exponent_1_plus_p": "[1.82108547098946337865987 +/- 9.59e-25]",
+            "integral_upper_bound": "[0.176998914766861498721188 +/- 6.33e-25]",
+            "phi0_closed_tail_sup_upper_bound": "[1.10957169722816775986844 +/- 1.27e-24]",
+            "phi0_closed_tail_worst_arc_index": 146,
+            "range": "n\u226518",
+            "sigma_lower": "[0.410542735494731689329935 +/- 4.80e-25]",
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "target_radius": "[0.324671109562589379026101 +/- 1.92e-25]",
+            "weight_exponent_p": "[0.821085470989463378659869 +/- 4.14e-26]"
+          },
+          "head_terms": [
+            {
+              "n": 3,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0693845180812098999266305 +/- 8.52e-27]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.213707090152516652734417 +/- 2.78e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.213707090152516652734417 +/- 2.79e-25]",
+              "weight_sup_upper_bound": "[0.978539318833688605916658 +/- 1.11e-26]",
+              "weight_worst_arc_index": 137,
+              "weighted_head_product_upper_bound": "[0.209120790427773327414136 +/- 6.76e-25]"
+            },
+            {
+              "n": 4,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0259247926530889774271955 +/- 3.14e-26]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.0798493980200947112281015 +/- 3.74e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.0798493980200947112281015 +/- 3.75e-26]",
+              "weight_sup_upper_bound": "[0.541868324952337708333468 +/- 2.75e-25]",
+              "weight_worst_arc_index": 136,
+              "weighted_head_product_upper_bound": "[0.0432678595536012322166993 +/- 4.64e-26]"
+            },
+            {
+              "n": 5,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0607151600180294746382521 +/- 2.66e-27]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.187005120658340991875489 +/- 2.85e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.187005120658340991875489 +/- 2.86e-25]",
+              "weight_sup_upper_bound": "[0.367808782798326502260323 +/- 4.12e-25]",
+              "weight_worst_arc_index": 136,
+              "weighted_head_product_upper_bound": "[0.0687821258063985822423385 +/- 1.42e-25]"
+            },
+            {
+              "n": 6,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0833927747324033737114955 +/- 1.64e-26]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.256853080783053469943383 +/- 3.12e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.256853080783053469943383 +/- 3.13e-25]",
+              "weight_sup_upper_bound": "[0.278480194877651943262541 +/- 1.20e-25]",
+              "weight_worst_arc_index": 136,
+              "weighted_head_product_upper_bound": "[0.0715284959913900077044237 +/- 1.28e-25]"
+            },
+            {
+              "n": 7,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0993454592142078921515213 +/- 2.92e-26]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.305987986883250214362088 +/- 3.15e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.305987986883250214362088 +/- 3.16e-25]",
+              "weight_sup_upper_bound": "[0.224724400909185032598897 +/- 4.90e-25]",
+              "weight_worst_arc_index": 135,
+              "weighted_head_product_upper_bound": "[0.0687629670377459723017105 +/- 9.87e-26]"
+            },
+            {
+              "n": 8,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.111178311369709284772786 +/- 8.15e-26]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.342433644679667981344182 +/- 1.50e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.342433644679667981344182 +/- 1.51e-25]",
+              "weight_sup_upper_bound": "[0.188159897115855310141061 +/- 3.74e-26]",
+              "weight_worst_arc_index": 135,
+              "weighted_head_product_upper_bound": "[0.0644322793519336814710160 +/- 3.92e-26]"
+            },
+            {
+              "n": 9,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.120304759326209093985886 +/- 4.36e-25]",
+                "kind": "individual_arc",
+                "n": 9,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.370543469322813301744652 +/- 2.36e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.370543469322813301744652 +/- 2.37e-25]",
+              "weight_sup_upper_bound": "[0.162505654802797567776149 +/- 1.55e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0602154091152041086476046 +/- 8.20e-26]"
+            },
+            {
+              "n": 10,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.127558026781442836173760 +/- 3.77e-25]",
+                "kind": "individual_arc",
+                "n": 10,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.392883823119631411661841 +/- 4.90e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.392883823119631411661841 +/- 4.91e-25]",
+              "weight_sup_upper_bound": "[0.143269253720176875663634 +/- 4.46e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0562881721370795662172072 +/- 1.09e-25]"
+            },
+            {
+              "n": 11,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.133461137385967738911963 +/- 2.21e-27]",
+                "kind": "individual_arc",
+                "n": 11,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.411065639827862157769754 +/- 1.96e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.411065639827862157769754 +/- 1.97e-25]",
+              "weight_sup_upper_bound": "[0.128252811361148652345185 +/- 4.54e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0527203239618926797037403 +/- 7.43e-26]"
+            },
+            {
+              "n": 12,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.138358978337128543297408 +/- 1.42e-25]",
+                "kind": "individual_arc",
+                "n": 12,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.426151185806250510276948 +/- 3.45e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.426151185806250510276948 +/- 3.46e-25]",
+              "weight_sup_upper_bound": "[0.116204995848063704961807 +/- 4.58e-25]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0495208967772627650241966 +/- 5.39e-26]"
+            },
+            {
+              "n": 13,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.142488188838035454595509 +/- 1.57e-25]",
+                "kind": "individual_arc",
+                "n": 13,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.438869319262812007082022 +/- 1.95e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.438869319262812007082022 +/- 1.96e-25]",
+              "weight_sup_upper_bound": "[0.106325711912505940268809 +/- 4.96e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0466630928071753433413772 +/- 2.82e-26]"
+            },
+            {
+              "n": 14,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.146016539221460646585157 +/- 5.00e-25]",
+                "kind": "individual_arc",
+                "n": 14,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.449736779531077743857923 +/- 2.96e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.449736779531077743857923 +/- 2.97e-25]",
+              "weight_sup_upper_bound": "[0.0982375067614884889291167 +/- 2.65e-26]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0441810199200743077096769 +/- 5.07e-26]"
+            },
+            {
+              "n": 15,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.149066285297433525119484 +/- 1.24e-27]",
+                "kind": "individual_arc",
+                "n": 15,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.459130119394552585081178 +/- 1.46e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.459130119394552585081178 +/- 1.47e-25]",
+              "weight_sup_upper_bound": "[0.0913314681179339949743258 +/- 4.75e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0419330278614668079918976 +/- 4.66e-26]"
+            },
+            {
+              "n": 16,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.151728622606827791698456 +/- 4.67e-25]",
+                "kind": "individual_arc",
+                "n": 16,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.467330224765742155232446 +/- 1.14e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.467330224765742155232446 +/- 1.15e-25]",
+              "weight_sup_upper_bound": "[0.0853101029543583904175445 +/- 2.17e-27]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0398679895884489104694828 +/- 3.13e-26]"
+            },
+            {
+              "n": 17,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.154072961280599830212378 +/- 2.47e-25]",
+                "kind": "individual_arc",
+                "n": 17,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.474550881623478682864685 +/- 1.74e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.474550881623478682864685 +/- 1.75e-25]",
+              "weight_sup_upper_bound": "[0.0801773439800138809464237 +/- 4.70e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0380482292719444984156023 +/- 5.24e-26]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[0.955332679609391790871109 +/- 2.16e-24]",
+          "label": "1\u21923, +3, tail",
+          "n0": 3,
+          "negative_branch": false,
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "source_disc": 1,
+          "tail": true,
+          "target_disc": 3
+        },
+        {
+          "W0_block_upper_bound": "[3.89402245924575034952126 +/- 1.97e-26]",
+          "W0_worst_arc_index": 398,
+          "W_ge1_block_upper_bound": "[3.89402245924575034952126 +/- 1.97e-26]",
+          "block": [
+            1,
+            2,
+            1,
+            true,
+            false
+          ],
+          "deep_tail": null,
+          "head_terms": [
+            {
+              "n": 1,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.119978981227791315370640 +/- 3.29e-25]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.447787771235326160426074 +/- 3.34e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.447787771235326160426074 +/- 3.35e-25]",
+              "weight_sup_upper_bound": "[3.89402245924575034952126 +/- 1.97e-26]",
+              "weight_worst_arc_index": 398,
+              "weighted_head_product_upper_bound": "[1.74369563816595824418180 +/- 4.73e-24]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[1.74369563816595824418180 +/- 4.74e-24]",
+          "label": "1\u21922, \u22121, head",
+          "n0": 1,
+          "negative_branch": true,
+          "plain_weight_sup_upper_bound": "[3.89402245924575034952126 +/- 1.97e-26]",
+          "plain_weight_worst_arc_index": 398,
+          "source_disc": 1,
+          "tail": false,
+          "target_disc": 2
+        },
+        {
+          "W0_block_upper_bound": "[1.29181072737515759053137 +/- 5.66e-25]",
+          "W0_worst_arc_index": 401,
+          "W_ge1_block_upper_bound": "[1.23110876795222941410110 +/- 2.72e-24]",
+          "block": [
+            1,
+            3,
+            2,
+            true,
+            true
+          ],
+          "deep_tail": {
+            "angle_bound": "[0.0203013092675624854569952 +/- 2.85e-26]",
+            "angle_factor": "[1.17204672005053177939950 +/- 3.66e-24]",
+            "deep_sum_upper_bound": "[0.176165115167896428231331 +/- 3.46e-25]",
+            "denominator_lower_bound": "[29.5382939702291958596766 +/- 4.49e-24]",
+            "first_n": 18,
+            "first_product_upper_bound": "[0.00758234907839702398963619 +/- 1.02e-26]",
+            "im_s_abs_upper_bound": "[7.81976924701551646067007 +/- 4.53e-24]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "integral_converges": true,
+            "integral_exponent_1_plus_p": "[1.82108547098946337865987 +/- 9.59e-25]",
+            "integral_upper_bound": "[0.168582766089499404241695 +/- 1.54e-25]",
+            "phi0_closed_tail_sup_upper_bound": "[1.29181072737515759053137 +/- 5.66e-25]",
+            "phi0_closed_tail_worst_arc_index": 401,
+            "range": "n\u226518",
+            "sigma_lower": "[0.410542735494731689329935 +/- 4.80e-25]",
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "target_radius": "[0.324671109562589379026101 +/- 1.92e-25]",
+            "weight_exponent_p": "[0.821085470989463378659869 +/- 4.14e-26]"
+          },
+          "head_terms": [
+            {
+              "n": 2,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0830089512152930273170374 +/- 1.77e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.255670889002492983254859 +/- 3.38e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.255670889002492983254859 +/- 3.39e-25]",
+              "weight_sup_upper_bound": "[1.08041366372499719888977 +/- 2.98e-24]",
+              "weight_worst_arc_index": 395,
+              "weighted_head_product_upper_bound": "[0.276230321895010538534644 +/- 5.36e-25]"
+            },
+            {
+              "n": 3,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0205525439883286993999861 +/- 1.91e-26]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.0633026573137904202345232 +/- 1.18e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.0633026573137904202345232 +/- 1.19e-26]",
+              "weight_sup_upper_bound": "[0.570875909179796503673442 +/- 4.88e-25]",
+              "weight_worst_arc_index": 392,
+              "weighted_head_product_upper_bound": "[0.0361379620475072008451330 +/- 5.33e-26]"
+            },
+            {
+              "n": 4,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0573915500744626803933068 +/- 3.67e-26]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.176768269131746889221851 +/- 3.44e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.176768269131746889221851 +/- 3.45e-25]",
+              "weight_sup_upper_bound": "[0.383219866887086591515268 +/- 1.43e-26]",
+              "weight_worst_arc_index": 392,
+              "weighted_head_product_upper_bound": "[0.0677411125665287405856495 +/- 1.35e-25]"
+            },
+            {
+              "n": 5,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0811356426334490708932987 +/- 1.31e-26]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.249901023662864345508552 +/- 2.91e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.249901023662864345508552 +/- 2.92e-25]",
+              "weight_sup_upper_bound": "[0.287153333498983914065242 +/- 3.77e-25]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0717599119895999560558509 +/- 8.64e-26]"
+            },
+            {
+              "n": 6,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0977131234926982694152611 +/- 2.95e-27]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.300960327589176361255397 +/- 2.34e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.300960327589176361255397 +/- 2.35e-26]",
+              "weight_sup_upper_bound": "[0.229888928480208100414816 +/- 6.39e-27]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0691874472245281653037631 +/- 3.27e-26]"
+            },
+            {
+              "n": 7,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.109943155647968691707098 +/- 2.60e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.338629315666825887135110 +/- 2.72e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.338629315666825887135110 +/- 2.73e-25]",
+              "weight_sup_upper_bound": "[0.191983281425779942661774 +/- 3.23e-25]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0650111672086835072761511 +/- 6.39e-26]"
+            },
+            {
+              "n": 8,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.119337666009878692249560 +/- 9.15e-26]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.367564783237582895298715 +/- 7.97e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.367564783237582895298715 +/- 7.98e-26]",
+              "weight_sup_upper_bound": "[0.165008727589447068759957 +/- 3.44e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0606513971887244761689976 +/- 2.50e-26]"
+            },
+            {
+              "n": 9,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.126780333912066876632724 +/- 2.75e-25]",
+                "kind": "individual_arc",
+                "n": 9,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.390488497984531771303284 +/- 3.89e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.390488497984531771303284 +/- 3.90e-26]",
+              "weight_sup_upper_bound": "[0.145206358960369821641996 +/- 1.96e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0567014130082375680088946 +/- 5.44e-26]"
+            },
+            {
+              "n": 10,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.132822200312853266157078 +/- 6.99e-26]",
+                "kind": "individual_arc",
+                "n": 10,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.409097688093643256232761 +/- 4.19e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.409097688093643256232761 +/- 4.20e-25]",
+              "weight_sup_upper_bound": "[0.129784108856146132405876 +/- 3.64e-25]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0530943788843431139179422 +/- 9.34e-26]"
+            },
+            {
+              "n": 11,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.137824721939201988616180 +/- 9.47e-26]",
+                "kind": "individual_arc",
+                "n": 11,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.424505654737451911449159 +/- 2.28e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.424505654737451911449159 +/- 2.29e-25]",
+              "weight_sup_upper_bound": "[0.117437985249241601494572 +/- 2.66e-25]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0498530888192765257452521 +/- 6.22e-26]"
+            },
+            {
+              "n": 12,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.142034846383778377018967 +/- 4.47e-25]",
+                "kind": "individual_arc",
+                "n": 12,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.437473006376002214663362 +/- 1.82e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.437473006376002214663362 +/- 1.83e-25]",
+              "weight_sup_upper_bound": "[0.107434507787527097278836 +/- 1.20e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0469996971103355014124053 +/- 6.22e-26]"
+            },
+            {
+              "n": 13,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.145627029784967825243502 +/- 3.25e-25]",
+                "kind": "individual_arc",
+                "n": 13,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.448537074891457714551784 +/- 4.19e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.448537074891457714551784 +/- 4.20e-25]",
+              "weight_sup_upper_bound": "[0.0991544246542471317473358 +/- 2.23e-26]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0444744355969614469368147 +/- 5.21e-26]"
+            },
+            {
+              "n": 14,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.148728018023368112165952 +/- 2.94e-25]",
+                "kind": "individual_arc",
+                "n": 14,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.458088242664217259276779 +/- 7.62e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.458088242664217259276779 +/- 7.63e-26]",
+              "weight_sup_upper_bound": "[0.0920874800905385239026049 +/- 8.34e-27]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0421841919260508868872617 +/- 1.96e-26]"
+            },
+            {
+              "n": 15,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.151432112732862593343381 +/- 1.58e-25]",
+                "kind": "individual_arc",
+                "n": 15,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.466416962497458817762240 +/- 3.53e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.466416962497458817762240 +/- 3.54e-25]",
+              "weight_sup_upper_bound": "[0.0859450286672599594663636 +/- 2.87e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0400862192127404115119014 +/- 5.99e-26]"
+            },
+            {
+              "n": 16,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.153810928205500532455712 +/- 8.24e-26]",
+                "kind": "individual_arc",
+                "n": 16,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.473743809274317959035319 +/- 2.13e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.473743809274317959035319 +/- 2.14e-25]",
+              "weight_sup_upper_bound": "[0.0807636610724571282993505 +/- 1.39e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0382612844474057876193527 +/- 3.03e-26]"
+            },
+            {
+              "n": 17,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.155919827042125097087509 +/- 2.65e-25]",
+                "kind": "individual_arc",
+                "n": 17,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.480239302019162925829103 +/- 4.23e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.480239302019162925829103 +/- 4.24e-26]",
+              "weight_sup_upper_bound": "[0.0761487523087811046487089 +/- 8.95e-27]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0365696236583991590597568 +/- 3.30e-26]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[1.05494365278433298586977 +/- 2.10e-24]",
+          "label": "1\u21923, \u22122, tail",
+          "n0": 2,
+          "negative_branch": true,
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "source_disc": 1,
+          "tail": true,
+          "target_disc": 3
+        },
+        {
+          "W0_block_upper_bound": "[2.80124791530026319992192 +/- 1.69e-24]",
+          "W0_worst_arc_index": 136,
+          "W_ge1_block_upper_bound": "[2.38922563575977325555536 +/- 5.01e-24]",
+          "block": [
+            2,
+            3,
+            2,
+            false,
+            true
+          ],
+          "deep_tail": {
+            "angle_bound": "[0.0188970804533510298560622 +/- 5.02e-26]",
+            "angle_factor": "[1.15924717641596390093878 +/- 3.05e-24]",
+            "deep_sum_upper_bound": "[0.180504148295506556041489 +/- 4.93e-25]",
+            "denominator_lower_bound": "[28.3566746430358459622582 +/- 4.91e-23]",
+            "first_n": 18,
+            "first_product_upper_bound": "[0.00807835510714389545070228 +/- 1.01e-26]",
+            "im_s_abs_upper_bound": "[7.81976924701551646067007 +/- 4.53e-24]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "integral_converges": true,
+            "integral_exponent_1_plus_p": "[1.82108547098946337865987 +/- 9.59e-25]",
+            "integral_upper_bound": "[0.172425793188362660590786 +/- 4.65e-25]",
+            "phi0_closed_tail_sup_upper_bound": "[2.80124791530026319992192 +/- 1.69e-24]",
+            "phi0_closed_tail_worst_arc_index": 136,
+            "range": "n\u226518",
+            "sigma_lower": "[0.410542735494731689329935 +/- 4.80e-25]",
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "target_radius": "[0.324671109562589379026101 +/- 1.92e-25]",
+            "weight_exponent_p": "[0.821085470989463378659869 +/- 4.14e-26]"
+          },
+          "head_terms": [
+            {
+              "n": 2,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.214182942891143058981568 +/- 1.66e-27]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.659692028587635527095764 +/- 3.53e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.659692028587635527095764 +/- 3.54e-25]",
+              "weight_sup_upper_bound": "[2.06173269015708667180545 +/- 1.76e-24]",
+              "weight_worst_arc_index": 142,
+              "weighted_head_product_upper_bound": "[1.36010862077517152120613 +/- 4.42e-24]"
+            },
+            {
+              "n": 3,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0537456932833359229476385 +/- 1.95e-26]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.165538884429059269181911 +/- 2.23e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.165538884429059269181911 +/- 2.24e-25]",
+              "weight_sup_upper_bound": "[0.792598723988947840077369 +/- 2.01e-25]",
+              "weight_worst_arc_index": 138,
+              "weighted_head_product_upper_bound": "[0.131205908569026283049831 +/- 4.99e-25]"
+            },
+            {
+              "n": 4,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0307286334691778683062883 +/- 1.29e-26]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.0946454198237002983225344 +/- 1.66e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.0946454198237002983225344 +/- 1.67e-26]",
+              "weight_sup_upper_bound": "[0.468258425302215509095865 +/- 4.79e-25]",
+              "weight_worst_arc_index": 137,
+              "weighted_head_product_upper_bound": "[0.0443185152487129931001516 +/- 1.24e-26]"
+            },
+            {
+              "n": 5,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0637259400739093626969069 +/- 5.28e-27]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.196278443621804350270989 +/- 2.34e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.196278443621804350270989 +/- 2.35e-25]",
+              "weight_sup_upper_bound": "[0.330350459837659930089262 +/- 2.08e-25]",
+              "weight_worst_arc_index": 135,
+              "weighted_head_product_upper_bound": "[0.0648406741066832768824878 +/- 9.36e-26]"
+            },
+            {
+              "n": 6,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0854548379787650246114040 +/- 3.00e-26]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.263204318037084940532642 +/- 6.35e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.263204318037084940532642 +/- 6.36e-26]",
+              "weight_sup_upper_bound": "[0.255395166031381468584631 +/- 5.63e-26]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0672211105052578405812542 +/- 4.10e-26]"
+            },
+            {
+              "n": 7,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.100845625776561737473460 +/- 3.04e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.310608559882107220846663 +/- 1.24e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.310608559882107220846663 +/- 1.25e-25]",
+              "weight_sup_upper_bound": "[0.209031599889371067473402 +/- 9.30e-26]",
+              "weight_worst_arc_index": 135,
+              "weighted_head_product_upper_bound": "[0.0649270042114903903317499 +/- 6.22e-26]"
+            },
+            {
+              "n": 8,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.112318478901195325614797 +/- 3.32e-25]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.345945406268255652908761 +/- 2.58e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.345945406268255652908761 +/- 2.59e-25]",
+              "weight_sup_upper_bound": "[0.177013307745044361002473 +/- 2.65e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0612369406627471363976975 +/- 4.99e-26]"
+            },
+            {
+              "n": 9,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.121200523326312971916706 +/- 4.15e-26]",
+                "kind": "individual_arc",
+                "n": 9,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.373302458261837439112150 +/- 1.85e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.373302458261837439112150 +/- 1.86e-25]",
+              "weight_sup_upper_bound": "[0.154134466560260318441269 +/- 9.98e-26]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0575387752698221559970444 +/- 6.36e-26]"
+            },
+            {
+              "n": 10,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.128280310877872032164458 +/- 4.10e-25]",
+                "kind": "individual_arc",
+                "n": 10,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.395108487018437460675974 +/- 3.94e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.395108487018437460675974 +/- 3.95e-25]",
+              "weight_sup_upper_bound": "[0.136663972268980144507714 +/- 2.96e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0539970953131264385440158 +/- 9.83e-26]"
+            },
+            {
+              "n": 11,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.134055859351920297431115 +/- 4.03e-25]",
+                "kind": "individual_arc",
+                "n": 11,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.412897407264003282401615 +/- 2.07e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.412897407264003282401615 +/- 2.08e-25]",
+              "weight_sup_upper_bound": "[0.122926955737179686167439 +/- 3.17e-25]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0507562213067383857218627 +/- 4.92e-26]"
+            },
+            {
+              "n": 12,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.138857172603573862635427 +/- 2.26e-25]",
+                "kind": "individual_arc",
+                "n": 12,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.427685644068078942376077 +/- 2.76e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.427685644068078942376077 +/- 2.77e-25]",
+              "weight_sup_upper_bound": "[0.111831548137048212335230 +/- 3.88e-25]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0478287476921238384730910 +/- 3.80e-26]"
+            },
+            {
+              "n": 13,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.142911582139309428433288 +/- 2.05e-25]",
+                "kind": "individual_arc",
+                "n": 13,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.440173387560864110214396 +/- 3.50e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.440173387560864110214396 +/- 3.51e-25]",
+              "weight_sup_upper_bound": "[0.102656077046600515128066 +/- 4.46e-25]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0451864731873112148907074 +/- 6.85e-26]"
+            },
+            {
+              "n": 14,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.146380795337879370017705 +/- 2.16e-25]",
+                "kind": "individual_arc",
+                "n": 14,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.450858702935070986882759 +/- 1.42e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.450858702935070986882759 +/- 1.43e-25]",
+              "weight_sup_upper_bound": "[0.0950452683508410186160877 +/- 1.86e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0428519864087759351369647 +/- 2.99e-26]"
+            },
+            {
+              "n": 15,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.149382981327325765783581 +/- 1.37e-25]",
+                "kind": "individual_arc",
+                "n": 15,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.460105555830270277736877 +/- 3.38e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.460105555830270277736877 +/- 3.39e-25]",
+              "weight_sup_upper_bound": "[0.0885950299640772846653017 +/- 2.47e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0407630655054212292582030 +/- 3.37e-26]"
+            },
+            {
+              "n": 16,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.152006499748603715446443 +/- 2.49e-25]",
+                "kind": "individual_arc",
+                "n": 16,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.468186097473819851337597 +/- 1.98e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.468186097473819851337597 +/- 1.99e-26]",
+              "weight_sup_upper_bound": "[0.0829508265432308006416530 +/- 2.34e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0388364237615029786236450 +/- 3.95e-26]"
+            },
+            {
+              "n": 17,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.154318742847545856370088 +/- 1.98e-25]",
+                "kind": "individual_arc",
+                "n": 17,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.475307898677682099539106 +/- 2.08e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.475307898677682099539106 +/- 2.09e-25]",
+              "weight_sup_upper_bound": "[0.0780629251977067594927310 +/- 3.55e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0371039249403550813190276 +/- 4.91e-26]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[2.20872148746426669951386 +/- 9.25e-24]",
+          "label": "2\u21923, +2, tail",
+          "n0": 2,
+          "negative_branch": false,
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "source_disc": 2,
+          "tail": true,
+          "target_disc": 3
+        },
+        {
+          "W0_block_upper_bound": "[4.07593860010572025194351 +/- 4.28e-24]",
+          "W0_worst_arc_index": 398,
+          "W_ge1_block_upper_bound": "[4.07593860010572025194351 +/- 4.28e-24]",
+          "block": [
+            2,
+            2,
+            1,
+            true,
+            false
+          ],
+          "deep_tail": null,
+          "head_terms": [
+            {
+              "n": 1,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0808981696386693732958100 +/- 2.86e-26]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.301929643916046753086174 +/- 4.19e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.301929643916046753086174 +/- 4.20e-25]",
+              "weight_sup_upper_bound": "[4.07593860010572025194351 +/- 4.28e-24]",
+              "weight_worst_arc_index": 398,
+              "weighted_head_product_upper_bound": "[1.23064669015359019833262 +/- 4.88e-24]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[1.23064669015359019833262 +/- 4.89e-24]",
+          "label": "2\u21922, \u22121, head",
+          "n0": 1,
+          "negative_branch": true,
+          "plain_weight_sup_upper_bound": "[4.07593860010572025194351 +/- 4.28e-24]",
+          "plain_weight_worst_arc_index": 398,
+          "source_disc": 2,
+          "tail": false,
+          "target_disc": 2
+        },
+        {
+          "W0_block_upper_bound": "[1.34310015010159434651357 +/- 2.28e-24]",
+          "W0_worst_arc_index": 401,
+          "W_ge1_block_upper_bound": "[1.22890484704697038537049 +/- 4.20e-24]",
+          "block": [
+            2,
+            3,
+            2,
+            true,
+            true
+          ],
+          "deep_tail": {
+            "angle_bound": "[0.0182534103911746288293158 +/- 5.64e-26]",
+            "angle_factor": "[1.15342693800719126127661 +/- 3.57e-24]",
+            "deep_sum_upper_bound": "[0.174293031775403310887050 +/- 3.71e-25]",
+            "denominator_lower_bound": "[29.3566746430358459622582 +/- 4.91e-23]",
+            "first_n": 18,
+            "first_product_upper_bound": "[0.00754617386322155540857949 +/- 5.91e-27]",
+            "im_s_abs_upper_bound": "[7.81976924701551646067007 +/- 4.53e-24]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "integral_converges": true,
+            "integral_exponent_1_plus_p": "[1.82108547098946337865987 +/- 9.59e-25]",
+            "integral_upper_bound": "[0.166746857912181755478470 +/- 3.63e-25]",
+            "phi0_closed_tail_sup_upper_bound": "[1.34310015010159434651357 +/- 2.28e-24]",
+            "phi0_closed_tail_worst_arc_index": 401,
+            "range": "n\u226518",
+            "sigma_lower": "[0.410542735494731689329935 +/- 4.80e-25]",
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "target_radius": "[0.324671109562589379026101 +/- 1.92e-25]",
+            "weight_exponent_p": "[0.821085470989463378659869 +/- 4.14e-26]"
+          },
+          "head_terms": [
+            {
+              "n": 2,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0973572651021819005282857 +/- 1.20e-26]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.299864269516760258914002 +/- 2.33e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.299864269516760258914002 +/- 2.34e-25]",
+              "weight_sup_upper_bound": "[1.05237347057436609308298 +/- 2.31e-24]",
+              "weight_worst_arc_index": 393,
+              "weighted_head_product_upper_bound": "[0.315569202012600085768949 +/- 5.97e-25]"
+            },
+            {
+              "n": 3,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0131134286487378956896694 +/- 7.79e-27]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.0403898846016969609472237 +/- 1.05e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.0403898846016969609472237 +/- 1.06e-26]",
+              "weight_sup_upper_bound": "[0.556633965018523803268266 +/- 4.51e-25]",
+              "weight_worst_arc_index": 393,
+              "weighted_head_product_upper_bound": "[0.0224823816124831993768931 +/- 3.95e-26]"
+            },
+            {
+              "n": 4,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0528629191022140439791987 +/- 7.46e-27]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.162819904651920522216794 +/- 2.32e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.162819904651920522216794 +/- 2.33e-25]",
+              "weight_sup_upper_bound": "[0.372678290989632572165009 +/- 2.70e-25]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0606794438047726664760034 +/- 1.13e-25]"
+            },
+            {
+              "n": 5,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0780920965922326329289144 +/- 3.75e-26]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.240526780154358671447807 +/- 3.04e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.240526780154358671447807 +/- 3.05e-25]",
+              "weight_sup_upper_bound": "[0.280036736548354504933032 +/- 3.47e-25]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0673563345669101219802199 +/- 1.11e-25]"
+            },
+            {
+              "n": 6,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0955280242560814856229812 +/- 3.36e-26]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.294230134565347903890937 +/- 1.04e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.294230134565347903890937 +/- 1.05e-25]",
+              "weight_sup_upper_bound": "[0.224395061496224866371717 +/- 2.86e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0660237891398337605870509 +/- 5.97e-26]"
+            },
+            {
+              "n": 7,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.108298581792088927798537 +/- 1.45e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.333563962429528601233880 +/- 7.33e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.333563962429528601233880 +/- 7.34e-26]",
+              "weight_sup_upper_bound": "[0.188149732585700516160337 +/- 4.56e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0627599703313424601759517 +/- 1.76e-26]"
+            },
+            {
+              "n": 8,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.118055301559304590336547 +/- 3.42e-25]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.363615049452209267750657 +/- 3.40e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.363615049452209267750657 +/- 3.41e-25]",
+              "weight_sup_upper_bound": "[0.162019043146787886125373 +/- 3.90e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0589125623860189042691548 +/- 8.95e-26]"
+            },
+            {
+              "n": 9,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.125752471536624108203308 +/- 1.01e-25]",
+                "kind": "individual_arc",
+                "n": 9,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.387322640767277214836186 +/- 4.91e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.387322640767277214836186 +/- 4.92e-26]",
+              "weight_sup_upper_bound": "[0.142589647969016979602481 +/- 9.74e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0552281989974360827025986 +/- 3.46e-26]"
+            },
+            {
+              "n": 10,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.131979960567858220635072 +/- 4.46e-25]",
+                "kind": "individual_arc",
+                "n": 10,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.406503556000616111157531 +/- 3.78e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.406503556000616111157531 +/- 3.79e-25]",
+              "weight_sup_upper_bound": "[0.127632957333274794950721 +/- 1.94e-25]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0518832510188511173617206 +/- 8.70e-26]"
+            },
+            {
+              "n": 11,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.137122011870161522978177 +/- 3.36e-25]",
+                "kind": "individual_arc",
+                "n": 11,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.422341279625705177039520 +/- 2.14e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.422341279625705177039520 +/- 2.15e-25]",
+              "weight_sup_upper_bound": "[0.115701427505995369518018 +/- 3.96e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0488654889474028467116812 +/- 3.45e-26]"
+            },
+            {
+              "n": 12,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.141439660629150543518824 +/- 3.75e-25]",
+                "kind": "individual_arc",
+                "n": 12,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.435639810452195834515953 +/- 4.74e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.435639810452195834515953 +/- 4.75e-25]",
+              "weight_sup_upper_bound": "[0.105986599351323008256930 +/- 3.72e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0461719820518831773068570 +/- 9.89e-26]"
+            },
+            {
+              "n": 13,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.145116452562893633980679 +/- 4.89e-25]",
+                "kind": "individual_arc",
+                "n": 13,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.446964476631138025361044 +/- 8.59e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.446964476631138025361044 +/- 8.60e-26]",
+              "weight_sup_upper_bound": "[0.0978730461290916934325024 +/- 4.96e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0437457748393846981809964 +/- 5.15e-26]"
+            },
+            {
+              "n": 14,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.148285211287186151797694 +/- 3.59e-25]",
+                "kind": "individual_arc",
+                "n": 14,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.456724380210368106233504 +/- 4.69e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.456724380210368106233504 +/- 4.70e-25]",
+              "weight_sup_upper_bound": "[0.0909416764983103364176797 +/- 2.64e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0415352808339825877106057 +/- 6.98e-26]"
+            },
+            {
+              "n": 15,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.151044427124329227150113 +/- 2.83e-25]",
+                "kind": "individual_arc",
+                "n": 15,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.465222875320882889566253 +/- 7.85e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.465222875320882889566253 +/- 7.86e-26]",
+              "weight_sup_upper_bound": "[0.0849577605800729244164162 +/- 1.50e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0395242936578846853126745 +/- 4.42e-26]"
+            },
+            {
+              "n": 16,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.153468677162739054976798 +/- 1.49e-25]",
+                "kind": "individual_arc",
+                "n": 16,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.472689662377100733493375 +/- 3.54e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.472689662377100733493375 +/- 3.55e-25]",
+              "weight_sup_upper_bound": "[0.0798857516324756526662256 +/- 2.75e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0377611689678958400183037 +/- 4.10e-26]"
+            },
+            {
+              "n": 17,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.155615467534978462880761 +/- 4.71e-25]",
+                "kind": "individual_arc",
+                "n": 17,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.479301862566799331853245 +/- 1.83e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.479301862566799331853245 +/- 1.84e-25]",
+              "weight_sup_upper_bound": "[0.0753443600437748927669596 +/- 2.36e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0361126921028848405437760 +/- 3.19e-26]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[1.05461181527156707448344 +/- 5.03e-24]",
+          "label": "2\u21923, \u22122, tail",
+          "n0": 2,
+          "negative_branch": true,
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "source_disc": 2,
+          "tail": true,
+          "target_disc": 3
+        },
+        {
+          "W0_block_upper_bound": "[29.7372015571584358962280 +/- 3.01e-24]",
+          "W0_worst_arc_index": 149,
+          "W_ge1_block_upper_bound": "[29.7372015571584358962280 +/- 3.01e-24]",
+          "block": [
+            3,
+            1,
+            1,
+            false,
+            false
+          ],
+          "deep_tail": null,
+          "head_terms": [
+            {
+              "n": 1,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.193815196049383778201456 +/- 3.42e-25]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.646388243049058694023515 +/- 4.57e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.646388243049058694023515 +/- 4.58e-26]",
+              "weight_sup_upper_bound": "[29.7372015571584358962280 +/- 3.01e-24]",
+              "weight_worst_arc_index": 149,
+              "weighted_head_product_upper_bound": "[19.2217774677273737238992 +/- 2.27e-23]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[19.2217774677273737238992 +/- 2.28e-23]",
+          "label": "3\u21921, +1, head",
+          "n0": 1,
+          "negative_branch": false,
+          "plain_weight_sup_upper_bound": "[29.7372015571584358962280 +/- 3.01e-24]",
+          "plain_weight_worst_arc_index": 149,
+          "source_disc": 3,
+          "tail": false,
+          "target_disc": 1
+        },
+        {
+          "W0_block_upper_bound": "[2.99158901481462586982113 +/- 4.87e-24]",
+          "W0_worst_arc_index": 140,
+          "W_ge1_block_upper_bound": "[2.24420450712016270686343 +/- 5.91e-24]",
+          "block": [
+            3,
+            3,
+            2,
+            false,
+            true
+          ],
+          "deep_tail": {
+            "angle_bound": "[0.0226961901988486963400199 +/- 2.83e-26]",
+            "angle_factor": "[1.19420294371930699177972 +/- 3.57e-24]",
+            "deep_sum_upper_bound": "[0.184526756299304214377937 +/- 1.57e-25]",
+            "denominator_lower_bound": "[28.6089576823104653127588 +/- 4.56e-23]",
+            "first_n": 18,
+            "first_product_upper_bound": "[0.00818879119381166874092818 +/- 9.73e-27]",
+            "im_s_abs_upper_bound": "[7.81976924701551646067007 +/- 4.53e-24]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "integral_converges": true,
+            "integral_exponent_1_plus_p": "[1.82108547098946337865987 +/- 9.59e-25]",
+            "integral_upper_bound": "[0.176337965105492545637009 +/- 2.86e-25]",
+            "phi0_closed_tail_sup_upper_bound": "[2.99158901481462586982113 +/- 4.87e-24]",
+            "phi0_closed_tail_worst_arc_index": 140,
+            "range": "n\u226518",
+            "sigma_lower": "[0.410542735494731689329935 +/- 4.80e-25]",
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "target_radius": "[0.324671109562589379026101 +/- 1.92e-25]",
+            "weight_exponent_p": "[0.821085470989463378659869 +/- 4.14e-26]"
+          },
+          "head_terms": [
+            {
+              "n": 2,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.176609337063826729670103 +/- 1.33e-25]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.543963820192570512503775 +/- 4.22e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.543963820192570512503775 +/- 4.23e-25]",
+              "weight_sup_upper_bound": "[2.16959856828451977571406 +/- 1.41e-24]",
+              "weight_worst_arc_index": 139,
+              "weighted_head_product_upper_bound": "[1.18018312548837893228497 +/- 1.44e-24]"
+            },
+            {
+              "n": 3,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0395150469569634859757183 +/- 9.98e-27]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.121707924706327658469390 +/- 4.33e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.121707924706327658469390 +/- 4.34e-25]",
+              "weight_sup_upper_bound": "[0.851803005820180400098780 +/- 1.90e-25]",
+              "weight_worst_arc_index": 137,
+              "weighted_head_product_upper_bound": "[0.103671176096986096379668 +/- 4.59e-25]"
+            },
+            {
+              "n": 4,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0396015985525040590988608 +/- 8.07e-27]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.121974507081510898781138 +/- 4.16e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.121974507081510898781138 +/- 4.17e-26]",
+              "weight_sup_upper_bound": "[0.501023325159143384559164 +/- 1.46e-25]",
+              "weight_worst_arc_index": 136,
+              "weighted_head_product_upper_bound": "[0.0611120731226260724179516 +/- 6.91e-26]"
+            },
+            {
+              "n": 5,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0693856295744353409697387 +/- 2.97e-26]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.213710513596096029087583 +/- 2.41e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.213710513596096029087583 +/- 2.42e-25]",
+              "weight_sup_upper_bound": "[0.351125744152768842462301 +/- 1.67e-25]",
+              "weight_worst_arc_index": 136,
+              "weighted_head_product_upper_bound": "[0.0750392631196996414929227 +/- 9.69e-26]"
+            },
+            {
+              "n": 6,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0893765523886053253396853 +/- 3.75e-26]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.275283355236063931580702 +/- 4.10e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.275283355236063931580702 +/- 4.11e-25]",
+              "weight_sup_upper_bound": "[0.269664611517129594861876 +/- 2.77e-25]",
+              "weight_worst_arc_index": 135,
+              "weighted_head_product_upper_bound": "[0.0742341790468651632462843 +/- 1.39e-25]"
+            },
+            {
+              "n": 7,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.103722422434372335977629 +/- 4.28e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.319469208621954570897909 +/- 1.93e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.319469208621954570897909 +/- 1.94e-25]",
+              "weight_sup_upper_bound": "[0.218532433937092121716037 +/- 3.19e-25]",
+              "weight_worst_arc_index": 135,
+              "weighted_head_product_upper_bound": "[0.0698143837281123881242818 +/- 6.21e-26]"
+            },
+            {
+              "n": 8,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.114518490124746168967508 +/- 3.14e-25]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.352721528808123124704050 +/- 1.63e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.352721528808123124704050 +/- 1.64e-25]",
+              "weight_sup_upper_bound": "[0.184827829333573185467289 +/- 2.04e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0651927545288247986511637 +/- 5.43e-26]"
+            },
+            {
+              "n": 9,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.122937257513500696638098 +/- 3.89e-25]",
+                "kind": "individual_arc",
+                "n": 9,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.378651669004756716143520 +/- 3.64e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.378651669004756716143520 +/- 3.65e-25]",
+              "weight_sup_upper_bound": "[0.160173255796080772536492 +/- 4.51e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0606498706371118068913573 +/- 9.40e-26]"
+            },
+            {
+              "n": 10,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.129686069835591403204892 +/- 3.32e-25]",
+                "kind": "individual_arc",
+                "n": 10,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.399438280819965625087801 +/- 3.96e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.399438280819965625087801 +/- 3.97e-25]",
+              "weight_sup_upper_bound": "[0.141513948979193214087009 +/- 3.43e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0565260884922932668559541 +/- 8.01e-26]"
+            },
+            {
+              "n": 11,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.135216973723225892956088 +/- 1.86e-25]",
+                "kind": "individual_arc",
+                "n": 11,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.416473685956831534994764 +/- 4.46e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.416473685956831534994764 +/- 4.47e-25]",
+              "weight_sup_upper_bound": "[0.126949567697640673812764 +/- 2.26e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0528711543896627269557400 +/- 9.37e-26]"
+            },
+            {
+              "n": 12,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.139832364090685106962211 +/- 3.11e-25]",
+                "kind": "individual_arc",
+                "n": 12,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.430689272843133992560419 +/- 3.62e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.430689272843133992560419 +/- 3.63e-25]",
+              "weight_sup_upper_bound": "[0.115243477965867409739504 +/- 2.54e-25]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0496341297250331692431430 +/- 8.36e-26]"
+            },
+            {
+              "n": 13,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.143742178931798427240842 +/- 7.32e-27]",
+                "kind": "individual_arc",
+                "n": 13,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.442731658894608630508385 +/- 3.20e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.442731658894608630508385 +/- 3.21e-25]",
+              "weight_sup_upper_bound": "[0.105584786408522940998704 +/- 5.57e-26]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0467457276406782881708415 +/- 6.12e-26]"
+            },
+            {
+              "n": 14,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.147096725897786842871809 +/- 7.01e-26]",
+                "kind": "individual_arc",
+                "n": 14,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.453063797687332759477793 +/- 2.41e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.453063797687332759477793 +/- 2.42e-25]",
+              "weight_sup_upper_bound": "[0.0974714160133654808973573 +/- 1.69e-26]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0441607699049772648627621 +/- 2.84e-26]"
+            },
+            {
+              "n": 15,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.150006450183209220804441 +/- 4.82e-25]",
+                "kind": "individual_arc",
+                "n": 15,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.462025864836893683730434 +/- 3.84e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.462025864836893683730434 +/- 3.85e-25]",
+              "weight_sup_upper_bound": "[0.0907609816683411055379466 +/- 3.19e-26]",
+              "weight_worst_arc_index": 134,
+              "weighted_head_product_upper_bound": "[0.0419339210487607530202933 +/- 6.20e-26]"
+            },
+            {
+              "n": 16,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.152554327542117258333277 +/- 3.20e-25]",
+                "kind": "individual_arc",
+                "n": 16,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.469873428983702574227112 +/- 1.24e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.469873428983702574227112 +/- 1.25e-25]",
+              "weight_sup_upper_bound": "[0.0848953168805615519732487 +/- 2.3e-28]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0398900536473274647459053 +/- 3.61e-26]"
+            },
+            {
+              "n": 17,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.154803904456045837218476 +/- 4.54e-25]",
+                "kind": "individual_arc",
+                "n": 17,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.476802215831905063949916 +/- 4.48e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.476802215831905063949916 +/- 4.49e-25]",
+              "weight_sup_upper_bound": "[0.0797376332179717711270241 +/- 1.87e-27]",
+              "weight_worst_arc_index": 133,
+              "weighted_head_product_upper_bound": "[0.0380190802035206591422499 +/- 4.68e-26]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[2.05967775082085849248549 +/- 4.31e-24]",
+          "label": "3\u21923, +2, tail",
+          "n0": 2,
+          "negative_branch": false,
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "source_disc": 3,
+          "tail": true,
+          "target_disc": 3
+        },
+        {
+          "W0_block_upper_bound": "[11.0202711760496735389470 +/- 5.00e-23]",
+          "W0_worst_arc_index": 406,
+          "W_ge1_block_upper_bound": "[11.0202711760496735389470 +/- 5.00e-23]",
+          "block": [
+            3,
+            2,
+            1,
+            true,
+            false
+          ],
+          "deep_tail": null,
+          "head_terms": [
+            {
+              "n": 1,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.173721543517871723077573 +/- 1.12e-25]",
+                "kind": "individual_arc",
+                "n": 1,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.648366755504751163715637 +/- 5.00e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.648366755504751163715637 +/- 5.01e-25]",
+              "weight_sup_upper_bound": "[11.0202711760496735389470 +/- 5.00e-23]",
+              "weight_worst_arc_index": 406,
+              "weighted_head_product_upper_bound": "[7.14517746719785525182936 +/- 9.88e-24]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[7.14517746719785525182936 +/- 9.89e-24]",
+          "label": "3\u21922, \u22121, head",
+          "n0": 1,
+          "negative_branch": true,
+          "plain_weight_sup_upper_bound": "[11.0202711760496735389470 +/- 5.00e-23]",
+          "plain_weight_worst_arc_index": 406,
+          "source_disc": 3,
+          "tail": false,
+          "target_disc": 2
+        },
+        {
+          "W0_block_upper_bound": "[2.18845245133549909050326 +/- 4.78e-24]",
+          "W0_worst_arc_index": 399,
+          "W_ge1_block_upper_bound": "[1.66420394485431583173900 +/- 4.93e-24]",
+          "block": [
+            3,
+            3,
+            2,
+            true,
+            true
+          ],
+          "deep_tail": {
+            "angle_bound": "[0.0223971847680069199574028 +/- 4.38e-26]",
+            "angle_factor": "[1.19141397574740985026396 +/- 1.02e-24]",
+            "deep_sum_upper_bound": "[0.181995409280519977630122 +/- 1.92e-25]",
+            "denominator_lower_bound": "[28.9909236935605704645542 +/- 3.16e-23]",
+            "first_n": 18,
+            "first_product_upper_bound": "[0.00797470939226377774971443 +/- 9.42e-27]",
+            "im_s_abs_upper_bound": "[7.81976924701551646067007 +/- 4.53e-24]",
+            "image_ratio_bound": "1/(R_j*d_n)",
+            "integral_converges": true,
+            "integral_exponent_1_plus_p": "[1.82108547098946337865987 +/- 9.59e-25]",
+            "integral_upper_bound": "[0.174020699888256199880408 +/- 6.13e-25]",
+            "phi0_closed_tail_sup_upper_bound": "[2.18845245133549909050326 +/- 4.78e-24]",
+            "phi0_closed_tail_worst_arc_index": 399,
+            "range": "n\u226518",
+            "sigma_lower": "[0.410542735494731689329935 +/- 4.80e-25]",
+            "status": "FINITE_IMAGE_RADIUS_INTEGRAL",
+            "target_radius": "[0.324671109562589379026101 +/- 1.92e-25]",
+            "weight_exponent_p": "[0.821085470989463378659869 +/- 4.14e-26]"
+          },
+          "head_terms": [
+            {
+              "n": 2,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.131351102087849059590351 +/- 4.04e-25]",
+                "kind": "individual_arc",
+                "n": 2,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.404566646736171899509471 +/- 3.06e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.404566646736171899509471 +/- 3.07e-25]",
+              "weight_sup_upper_bound": "[1.63724414501547195887090 +/- 4.53e-24]",
+              "weight_worst_arc_index": 395,
+              "weighted_head_product_upper_bound": "[0.662374373637340240704252 +/- 9.24e-25]"
+            },
+            {
+              "n": 3,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0208648026928443286376588 +/- 5.31e-27]",
+                "kind": "individual_arc",
+                "n": 3,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.0642644266099138644877666 +/- 4.39e-27]"
+              },
+              "v2_image_ratio_upper_bound": "[0.0642644266099138644877666 +/- 4.40e-27]",
+              "weight_sup_upper_bound": "[0.731389748133288922996748 +/- 3.54e-25]",
+              "weight_worst_arc_index": 393,
+              "weighted_head_product_upper_bound": "[0.0470023427921551318592528 +/- 4.57e-26]"
+            },
+            {
+              "n": 4,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0478763611811655233061208 +/- 4.99e-26]",
+                "kind": "individual_arc",
+                "n": 4,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.147461106858773414199728 +/- 2.27e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.147461106858773414199728 +/- 2.28e-25]",
+              "weight_sup_upper_bound": "[0.454529965014817729936977 +/- 4.32e-25]",
+              "weight_worst_arc_index": 393,
+              "weighted_head_product_upper_bound": "[0.0670254917415645787567738 +/- 1.22e-25]"
+            },
+            {
+              "n": 5,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0747826728878807391625751 +/- 4.04e-26]",
+                "kind": "individual_arc",
+                "n": 5,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.230333622811808270060912 +/- 2.67e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.230333622811808270060912 +/- 2.68e-25]",
+              "weight_sup_upper_bound": "[0.326640372231542316275124 +/- 4.09e-25]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0752362602926887198672597 +/- 1.09e-25]"
+            },
+            {
+              "n": 6,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.0931725935719586854585300 +/- 4.88e-26]",
+                "kind": "individual_arc",
+                "n": 6,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.286975313872197423736123 +/- 1.22e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.286975313872197423736123 +/- 1.23e-25]",
+              "weight_sup_upper_bound": "[0.255337236107920444728105 +/- 7.04e-27]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0732754834753298509221775 +/- 3.55e-26]"
+            },
+            {
+              "n": 7,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.106537054010610501211950 +/- 4.12e-25]",
+                "kind": "individual_arc",
+                "n": 7,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.328138386424778344409470 +/- 4.08e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.328138386424778344409470 +/- 4.09e-25]",
+              "weight_sup_upper_bound": "[0.209832773725314786412271 +/- 2.53e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0688541877892604195811436 +/- 1.15e-25]"
+            },
+            {
+              "n": 8,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.116688400839537671624657 +/- 2.79e-26]",
+                "kind": "individual_arc",
+                "n": 8,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.359404940577389869593572 +/- 1.92e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.359404940577389869593572 +/- 1.93e-25]",
+              "weight_sup_upper_bound": "[0.178314294808832135460350 +/- 4.79e-25]",
+              "weight_worst_arc_index": 391,
+              "weighted_head_product_upper_bound": "[0.0640870385298674925415401 +/- 6.56e-26]"
+            },
+            {
+              "n": 9,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.124661042264240289485564 +/- 1.64e-26]",
+                "kind": "individual_arc",
+                "n": 9,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.383960994965609680279922 +/- 1.18e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.383960994965609680279922 +/- 1.19e-25]",
+              "weight_sup_upper_bound": "[0.155184056903851457835474 +/- 4.32e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0595846248916025957503271 +/- 3.88e-26]"
+            },
+            {
+              "n": 10,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.131088402771117426681916 +/- 3.29e-25]",
+                "kind": "individual_arc",
+                "n": 10,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.403757522336142736105628 +/- 6.68e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.403757522336142736105628 +/- 6.69e-26]",
+              "weight_sup_upper_bound": "[0.137640997086674801811843 +/- 2.11e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0555735879555920585604124 +/- 1.41e-26]"
+            },
+            {
+              "n": 11,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.136380056254043357338034 +/- 4.09e-25]",
+                "kind": "individual_arc",
+                "n": 11,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.420056026659656674728661 +/- 3.47e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.420056026659656674728661 +/- 3.48e-25]",
+              "weight_sup_upper_bound": "[0.123891727978691049562450 +/- 3.10e-25]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0520414669907279802657831 +/- 7.60e-26]"
+            },
+            {
+              "n": 12,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.140812584023990174544234 +/- 1.37e-25]",
+                "kind": "individual_arc",
+                "n": 12,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.433708389433537312537439 +/- 3.57e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.433708389433537312537439 +/- 3.58e-26]",
+              "weight_sup_upper_bound": "[0.112798722542457182693605 +/- 4.95e-27]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0489217522840495438362352 +/- 3.69e-26]"
+            },
+            {
+              "n": 13,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.144579501818221131819742 +/- 3.59e-25]",
+                "kind": "individual_arc",
+                "n": 13,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.445310646866623699262804 +/- 1.26e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.445310646866623699262804 +/- 1.27e-25]",
+              "weight_sup_upper_bound": "[0.103607999670298099328067 +/- 6.18e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0461377453537373815718468 +/- 4.29e-26]"
+            },
+            {
+              "n": 14,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.147820265777945175186176 +/- 7.20e-26]",
+                "kind": "individual_arc",
+                "n": 14,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.455292329450239276711926 +/- 4.33e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.455292329450239276711926 +/- 4.34e-26]",
+              "weight_sup_upper_bound": "[0.0958186608537957448798642 +/- 4.60e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0436255013049271177349615 +/- 1.41e-26]"
+            },
+            {
+              "n": 15,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.150637917419334633297714 +/- 6.10e-26]",
+                "kind": "individual_arc",
+                "n": 15,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.463970809174491666512893 +/- 9.88e-26]"
+              },
+              "v2_image_ratio_upper_bound": "[0.463970809174491666512893 +/- 9.89e-26]",
+              "weight_sup_upper_bound": "[0.0892582961727167762894255 +/- 2.50e-26]",
+              "weight_worst_arc_index": 390,
+              "weighted_head_product_upper_bound": "[0.0414132439007918352721555 +/- 2.37e-26]"
+            },
+            {
+              "n": 16,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.153110240965849293756720 +/- 1.33e-25]",
+                "kind": "individual_arc",
+                "n": 16,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.471585664557976446174755 +/- 3.96e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.471585664557976446174755 +/- 3.97e-25]",
+              "weight_sup_upper_bound": "[0.0836434955598485183056166 +/- 3.73e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0394450734395433156426886 +/- 8.08e-26]"
+            },
+            {
+              "n": 17,
+              "s_ball": {
+                "center": {
+                  "im": "7.81976824701551188",
+                  "re": "0.41054373549473627"
+                },
+                "half_width": {
+                  "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+                  "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+                },
+                "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+                "principal_branch": true,
+                "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+              },
+              "source_v2_term": {
+                "arc_cover": {
+                  "M": 512,
+                  "arc_enclosure": "Acb rectangular ball"
+                },
+                "certified_sup_upper_bound": "[0.155297055263365934083460 +/- 4.18e-25]",
+                "kind": "individual_arc",
+                "n": 17,
+                "pass": true,
+                "ratio_less_than_0_70": true,
+                "ratio_upper_bound": "[0.478321140037956198112010 +/- 4.33e-25]"
+              },
+              "v2_image_ratio_upper_bound": "[0.478321140037956198112010 +/- 4.34e-25]",
+              "weight_sup_upper_bound": "[0.0786299371832762770401686 +/- 4.59e-26]",
+              "weight_worst_arc_index": 389,
+              "weighted_head_product_upper_bound": "[0.0376103611946175912420726 +/- 4.96e-26]"
+            }
+          ],
+          "head_weighted_sum_upper_bound": "[1.48220853557379585410888 +/- 4.10e-24]",
+          "label": "3\u21923, \u22122, tail",
+          "n0": 2,
+          "negative_branch": true,
+          "plain_weight_sup_upper_bound": null,
+          "plain_weight_worst_arc_index": null,
+          "source_disc": 3,
+          "tail": true,
+          "target_disc": 3
+        }
+      ],
+      "name": "g5_pin_s2",
+      "pin_source_center": {
+        "im": "7.81976824701551188",
+        "re": "0.41054373549473627"
+      },
+      "s_ball": {
+        "center": {
+          "im": "7.81976824701551188",
+          "re": "0.41054373549473627"
+        },
+        "half_width": {
+          "im": "[1.00000000000000000000000e-6 +/- 1e-34]",
+          "re": "[1.00000000000000000000000e-6 +/- 1e-34]"
+        },
+        "im_interval": "[7.81976824701551188000000 +/- 1.01e-6]",
+        "principal_branch": true,
+        "re_interval": "[0.410543735494736270000000 +/- 1.01e-6]"
+      }
+    }
+  ],
+  "geometry": {
+    "centers": [
+      "[-0.713525491562421136153440 +/- 1.27e-25]",
+      "[-0.500000000000000000000000 +/- 2e-29]",
+      "[-0.190983005625052575897707 +/- 4.19e-25]"
+    ],
+    "lambda": "[1.61803398874989484820459 +/- 3.17e-24]",
+    "radius_multipliers": [
+      "[3.14000000000000000000000 +/- 2e-28]",
+      "[2.27000000000000000000000 +/- 6e-28]",
+      "[1.70000000000000000000000 +/- 2e-28]"
+    ],
+    "source_radii": [
+      "[0.299843318831332544159399 +/- 3.37e-25]",
+      "[0.267937154462261305424412 +/- 1.16e-25]",
+      "[0.324671109562589379026101 +/- 1.92e-25]"
+    ]
+  },
+  "kappa": 3,
+  "pins_source": {
+    "count": 1,
+    "exact_count_check": true,
+    "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/S2_SECOND_WINDING_BOX_SOL.md",
+    "sha256": "e98cb7a5020e7e6bb9f087ba3a3004732ae036f2cbd81d6cb5f50b739b56dfec"
+  },
+  "precision_bits": 384,
+  "q": 5,
+  "rho_star": "[0.697802000000000000000000 +/- 1e-29]",
+  "rho_star_source": "TB_LEMMA_CHAIN.md L3\u2032; supplied rho*=0.697802",
+  "runtime_seconds": 1.2716624579916243,
+  "schema": "tb-weight-envelope-cert/v2",
+  "summary": [
+    {
+      "F_upper_bound": "[1.41515213333341829837719e+188 +/- 1.33e+167]",
+      "N": 48,
+      "W0_upper_bound": "[45.9375141993582343954994 +/- 7.28e-23]",
+      "W_ge1_upper_bound": "[44.6658811851825879737774 +/- 9.40e-23]",
+      "box": "g5_pin_s2",
+      "contour_lower_bound": "[3.93905435819130400000000e-6 +/- 1e-34]",
+      "margin_lower_bound": "[-1.41515213333341829837719e+188 +/- 1.33e+167]",
+      "minimal_certifying_N": 1287,
+      "rho_star_used": "[0.697802000000000000000000 +/- 1e-29]",
+      "verdict": "NOT"
+    }
+  ],
+  "tc_bounds_source": {
+    "count": 9,
+    "directory": "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/tc_rerun",
+    "files": [
+      "/Users/za/Documents/farey-hecke/.worktrees/aletheia-restore/code/tc_rerun/tc_run_receipt_certifiedrho.json"
+    ],
+    "kind": "per_pin_output"
+  },
+  "v2_receipt_source": {
+    "path": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/TB_BLOCK_CERTIFICATES_V2_RECEIPT.json",
+    "rho_star_v2": "[0.697801419961940325828766 +/- 2.62e-25]",
+    "schema": "tb-block-certificates/v2",
+    "sha256": "73b506f8ee26b1ba9e22eac2e5badc80395bafee15ec687e620201ec6156d63d"
+  }
+}

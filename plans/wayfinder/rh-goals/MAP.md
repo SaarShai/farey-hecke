@@ -2519,3 +2519,8 @@ paper its exhibit).
 - NOGO-OPEN-1: CLOSABLE — no conceptual/convention blocker survives; remaining is compute+engineering (B2 F_R closure at N=160 at the new box, gated on the Phase-1 W/R2 re-run; B3–B6 seams/bundle/sha/guards). §6 of the deliverable is the frozen execution plan. On certification: Lemma 3.1 gives two φ_5 zeros at Re ≈ 0.5461 and ≈ 0.5895 → NOGO-OPEN-1 closed.
 - SCAT-1 gate ledger after S2: (i) divisor TODO-VERIFY — OPEN (one page); (ii) B7 — CLOSED; (iii) half-width — CLOSED.
 - NEXT: launch S2 §6 Phase-1 (W/R2 re-run at the fallback box) within the plan's core caps; PS-0 + S2 referees queue after.
+
+## 2026-08-23 07:54Z — S2 Phase-1 gate: endpoint CERTIFIED; F_R gate FAIL at N=160 (B2 quantified); reroute to N-scaling probe
+- Receipt: lane_g/S2_PHASE1_WR2_RECEIPT.md (orchestrator-written; source lane_g/second_pin/PHASE1_GATE_RESULT.json, wall 264 s, single core). Endpoint certificate at the fallback second box: CERTIFIED. W/R2 envelope receipts written.
+- Gate projection FAIL: F_R(160) ≈ 1.3957e12 vs boundary det lower bounds ≈ 4.2493 (all four edge midpoints; worst margin ≈ −1.4e12). Gate needed margin > 1e-8. B2 is now MEASURED, not estimated.
+- Decay: F_R falls ≈ 4.9 orders per 32 columns (N=128 → 160); projection (NOT certificate) puts closure at N ≈ 240. Next: N-scaling probe at N=192/224(/256) to fix N*, then contour dispatch (Kaggle if heavy). No contour arcs run; no spend beyond the gate.
