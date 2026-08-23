@@ -2210,3 +2210,24 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   WITHOUT (H-SIDE) work and outranks L1.  New top lever.
 - Correction block (dated, append-only) being applied now; no status
   above CONFIRMED-with-corrections until it lands.
+
+## 2026-08-23 09:00Z — NOGO audience survey banked
+
+- NOGO_AUDIENCE_SURVEY.md banked (SURVEY, not a research claim; URL
+  per classification).  Exposure classes: (b)=generic-machinery-only
+  (structurally redirected if NOGO holds): Hilbert–Pólya generic
+  realizations (~10² researchers, highest redirect value),
+  Berry–Keating/BBM (~50-150, high), physics-inspired stat-mech/PT
+  (~50-150, high volume/low influence), de Branges (already refuted
+  by Conrey–Li 2000 — cite as methodological precedent/template).
+  (a)=arithmetic-essential (safe; some become BENEFICIARIES):
+  Connes–Consani (confirmation of methodology), RMT/GUE (framing),
+  De Bruijn–Newman, ML/murmurations, Selberg-class axiomatics (best
+  referee community), Eisenstein/Maass–Selberg (contrast case).
+  (c)=mixed: Nyman–Beurling, Li's criterion.
+- Honesty anchors: moral not new (DH 1936; Euler product is an AXIOM
+  of the Selberg class); Conrey–Li = exact precedent; Sarnak Clay
+  article quotable (rejects generic self-adjointness); Bombieri does
+  NOT state a no-go — do not over-cite.  Defensible framing:
+  "spectral-side theorem-strength analogue of Dirichlet-series
+  folklore", nothing stronger.
