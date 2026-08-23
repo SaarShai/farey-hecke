@@ -2651,3 +2651,13 @@ grid+perturbation gluing (winding in acb with alpha an interval ball; new
 obligations: sector reduction re-derivation + dim-tail uniform in alpha).
 NEXT: corrections block §7 appended to PS0 SOL (delegated); PS-1 kickoff brief
 follows the corrected design (alpha-ball, G_5+chi_alpha, named obligations).
+
+## 2026-08-23 09:38Z — Aristotle dispatched on Lemma 3.1 reflection core (RUNNING)
+
+Project scat1-lemma31-reflection, id ca1833f9-c955-4f7b-b6a6-18e2e718ed15,
+status RUNNING at handoff. Statement: phi MeromorphicOn U, U stable under
+s -> 1-s, phi(z)phi(1-z)=1 on punctured nbhds; pole of order m at s* =>
+meromorphicOrderAt phi (1-s*) = +m. Reflection is 1-s (no conjugation), per
+SOL convention. Record + resume command:
+lane_g/SCAT1_LEMMA31_ARISTOTLE.md; Lean file
+projects/aristotle_dispatch_v33/Scat1Lemma31Reflection.lean. Poll at next ticks.
