@@ -2448,3 +2448,26 @@ paper its exhibit).
   only, four recorded weakenings, BBM never called wrong); §6.2 data
   availability draft (Zenodo TODO owner, explicit non-claim until the
   archive exists); two §11 checklist items.
+
+## 2026-08-23 06:34Z — PGT-1 LANDED (UNREFEREED): structural remark, NO Ω-result; audience row downgraded
+
+- PGT1_EXPLICIT_FORMULA_COROLLARY_SOL.md banked (380 lines).  At note
+  strength: the LAW's off-line φ_q zeros ARE Selberg-zeta zeros
+  (FJS divisor item 6, hash-matched source) but enter REFLECTED at
+  Re s < 1/2 — contribution to the prime geodesic formula
+  O_q(x^{1/2}(log x)²), dominated.  NO Ω-result (two blockers: strict
+  x^{1/2} bound; zero banked info on imaginary parts).  New
+  quantitative content Prop 3.2: unweighted lower bound
+  N^off_q(T) ≥ (1/(2π(σ₀−1/2)))·T log T·(1+o(1)), cross-checked at
+  q=3 vs Riemann–von Mangoldt.  Structural headline: the
+  compact-surface Selberg-zeta divisor description is FALSE for every
+  non-arith Hecke surface by an infinite counted margin — harmlessly.
+  Density trap flagged: off-line set is density ZERO vs the Weyl T²
+  count.  Gaps (EF)/(U) declared for the referee.
+- NOGO_AUDIENCE_SURVEY.md correction addendum (13+/0−): prime-geodesic
+  row DOWNGRADED high → low–moderate per PGT-1 §7 — honest ledger
+  hygiene; the paper's §9 remark already says "we derive no error
+  term" so it stays consistent, but its "must accommodate" phrasing
+  should be softened in the next paper pass.
+- PGT-1 referee: queued behind SCAT-1 (top priority) — the note is
+  remark-class, low blast radius.

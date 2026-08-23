@@ -184,3 +184,16 @@ additions to the outreach table (classification mine, owner-approved):
 Note: the prime-geodesic row is the strongest addition — unlike the
 class-(b) redirect targets, these researchers gain a USABLE INPUT (a
 certified off-line resonance family), not just a no-go.
+
+## Correction addendum (2026-08-23, from PGT1_EXPLICIT_FORMULA_COROLLARY_SOL.md §7)
+
+The prime-geodesic row above (2026-08-23 addendum) over-sold the
+redirect value.  PGT-1's receipted finding: the LAW's off-line φ_q
+zeros enter the Selberg-zeta divisor REFLECTED, at Re s < 1/2 (FJS
+item 6), so their total contribution to the prime geodesic explicit
+formula is O_q(x^{1/2}(log x)²) — dominated by the critical-line
+block.  No Ω-result follows; the PGT, its 3/4 exponent, and the
+conjectural 1/2+ε are unaffected.  Row value DOWNGRADED: high →
+low–moderate; nature restated as structural/bookkeeping (the
+compact-surface divisor description is false for every non-arith
+Hecke surface, by an infinite counted margin — but harmlessly).
