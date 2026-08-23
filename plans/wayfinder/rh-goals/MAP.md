@@ -2318,3 +2318,14 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   discharged for everything the LAW actually consumes; NOGO D1's
   H_Sel90 conditionality collapses to the bypass's own (refereed)
   inputs.
+
+## 2026-08-23 05:53Z — SEL90 bypass corrections APPLIED; H3 relabelled PROVED; PROMOTED
+
+- Correction block §8 (D-1..D-6) appended to the bypass SOL (verified
+  100+/0−) and DISPATCH.md §11 addendum relabels S5/H3 from
+  "paper-level import, NOT proved here" to "PROVED (this lane,
+  refereed)" (36+/0−).  H4/H5 untouched; GAP-1/GAP-2 restated.
+- STATUS: the LAW's proof chain now has ZERO unread citations for
+  everything it consumes — [Sel90] remains relevant only to the
+  unconsumed sharp forms.  Next: NOGO re-referee for final promotion
+  of the metatheorem with the D1 conditionality collapsed.

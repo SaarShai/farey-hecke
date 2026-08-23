@@ -344,3 +344,39 @@ rg -n -i "api[_-]?key|authorization|bearer|token" projects/aristotle_dispatch_v3
 
 The secret scan must print only names and locations, never values. Any
 key-like value in output or in a written file is a hard failure.
+
+---
+
+## 11. Addendum (2026-08-23) — S5 / H3 relabelled after cold referee
+
+APPEND-ONLY. No line above is modified. Source:
+`research_notes/rh_goals_2026-08-14/lane_g/SEL90_BYPASS_JENSEN_REDERIVATION_REFEREE.md`
+(cold referee of `SEL90_BYPASS_JENSEN_REDERIVATION_SOL.md`, 2026-08-23).
+
+Referee gate, verbatim:
+
+> The `[Sel90, Lemmas 1,2]` citation is **replaceable for the banked LAW**:
+> `S5`/`H3` in `projects/aristotle_dispatch_v33/DISPATCH.md` may be relabelled
+> from "paper-level import, NOT proved here" to "PROVED (this lane, refereed)"
+> **after** corrections D-1, D-2, D-3 are applied to the SOL note.
+
+Corrections D-1, D-2 and D-3 were applied on 2026-08-23 as the append-only
+§8 correction block of the SOL note. The relabelling licence is therefore live.
+
+**Relabelling (governs over the §1/§2 tables above):**
+
+| Row | Old label | New label |
+|---|---|---|
+| `S5` (line 35) — Jensen/Littlewood rectangle `(J)` | `[Sel90, Lem 1,2]`, unread citation | **PROVED** (`SEL90_BYPASS_JENSEN_REDERIVATION_SOL.md`, refereed 2026-08-23; corrections D-1..D-3 applied) — in the `(J)-avg` form the chain consumes |
+| **`H3`** (line 73) — `hgrowth` | *paper-level import, NOT proved here* | **PROVED** (`SEL90_BYPASS_JENSEN_REDERIVATION_SOL.md`, refereed 2026-08-23; corrections D-1..D-3 applied) |
+
+Scope limits, unchanged:
+
+* Only the `H3` consumed form is proved: `F_q(1/2,T) = (1/4π)T² log T + O_q(T²)`,
+  per-`q`, both halves (the chain imports the lower half). No `q`-uniform
+  constant, no effective first height, no machine formalization.
+* `GAP-1` and `GAP-2` remain: `(J)-sharp` (remainder `O_q(log T)` at *every*
+  height) and the sharp asymptotic `(C)` still rest on Selberg 1990. Nothing in
+  the LAW conclusion chain (`law_right_zeros_infinite_target`) touches them.
+* `H4` and `H5` are **not** affected by this addendum and keep their existing
+  "NOT proved here" labels.

@@ -517,3 +517,103 @@ scratchpad only; no PDF, script or JSON is a repository artifact. Interpreter
   i.e. whether a half-plane Carleman argument bounds `Σ_{ρ∈H}(β−½)` sharply
   enough to give a pointwise bound.
 * Append-only. No other file was read-modified; no `git` command was run.
+
+---
+
+## 8. Correction block (2026-08-23, from `SEL90_BYPASS_JENSEN_REDERIVATION_REFEREE.md`)
+
+**APPEND-ONLY.** Nothing above is altered or deleted. This block records the
+corrections required by the cold referee report
+`research_notes/rh_goals_2026-08-14/lane_g/SEL90_BYPASS_JENSEN_REDERIVATION_REFEREE.md`
+(gate: **PROMOTABLE-with-corrections**; blocking items D-1, D-2, D-3). Where a
+correction contradicts text above, **this block governs**.
+
+### D-1 — §3.3 Fubini justification gave a *wrong reason* (blocking; corrected)
+
+§3.3 writes: "the right-continued `arg L*` is bounded (by `π(2N+1)` with `N` the
+finite number of divisor points in that box)".
+
+**Replace that parenthetical with:** "bounded on the compact box for each fixed
+`T` (no uniformity in `T` claimed or needed)".
+
+*Why the original reason is false as a general principle.* The winding
+accumulated by continuing `arg` leftward along a horizontal segment is
+controlled by the number of **sign changes of `ℜ L*`** on that segment
+(Backlund / Titchmarsh, *Theory of the Riemann Zeta-Function*, Lemma 9.2 — the
+same machinery Kelmer cites for his Lemma 4.7), **not** by the count of divisor
+points in the box. So `π(2N+1)` with `N` = divisor count is not a valid bound in
+general.
+
+*The conclusion stands.* `arg L* − Σ_k arg(s−ρ_k)` is continuous on the compact
+box `[α,σ₁]×[0,T]`, hence bounded there for each fixed `q, T`; and only
+finiteness — not a uniform-in-`T` constant — is needed for the Fubini
+interchange of §3.3 and for the absolute continuity used in Lemma C step 3.
+Lemma C, `(J)-avg`, Lemma D and `H3` are unaffected.
+
+### D-2 — §3.7 quantifier arithmetic understated (blocking; corrected)
+
+Two facts are load-bearing in §3.7 and were left unstated. Both now recorded.
+
+**(a) `[T−1,T+1] → [T−1,T]` restriction is valid.** The consequence display
+integrates over `[T−1,T+1]` (length 2) while the conclusion asserts
+`T* ∈ [T−1,T]`. This is legitimate **because the integrand is `≥ 0`**
+(`(log|L*|)_−` and the weight `(x−½)` are both non-negative), so restricting to
+the length-1 subinterval preserves both the bound and the averaging argument.
+
+**(b) `κ(R)` is independent of `T`.** The half-disc `H` is a **pure translate**
+of a fixed half-disc: `H = H₀ + iT` with `H₀ = {|s−½| < R, ℜ s > ½}`. Hence the
+conformal map may be taken as `ψ = ψ₀(· − iT)`, so `|ψ′|` on `K = K₀ + iT`
+equals `|ψ₀′|` on `K₀`, and `κ(R) = inf_{K₀}|ψ₀′| > 0` depends on `R` only.
+Consequently `C_q(R) = κ(R)^{−2}·(…)` is **not secretly `C_q(R,T)`**; without
+this remark the reader cannot see that Lemma D's constant is `T`-free, which is
+what makes `(J)-avg` and §3.8 legitimate.
+
+### D-3 — §2 `(P)` extension: strip `3/2 < σ < σ₁` (blocking; corrected)
+
+§2 `(P)` reads: "for `½ ≤ σ ≤ 3/2` … With (E) this gives `≤ C_q′|t|^{1/2}` on
+the whole of `ℜ s ≥ ½`". But `(E)` starts only at `σ₁ ≥ 3/2`, so when
+`σ₁ > 3/2` the strip `3/2 < σ < σ₁` is covered by neither cited clause.
+
+**Correction — add the missing citation.** The strip is covered by the banked
+`LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md:172`:
+
+> "For `σ ≥ 3/2`, the absolutely convergent series supplies a bounded right
+> half-plane."
+
+With that clause the claimed bound holds on all of `ℜ s ≥ ½`, `|t| ≥ 1`. This is
+load-bearing for the **arc** bound in Lemma D (§3.7), where `ℜ s` runs up to
+`R = 2σ₁ + 4`.
+
+### D-4 — `σ₁` notation collision (cosmetic; renamed)
+
+`σ₁` denotes the right-edge normalisation constant (`σ₁ = σ₁(q) ≥ 3/2`) in §2
+and §3, and separately the **pole location** (`σ₁ = 1`) in §4 (line 415).
+
+**Rename:** the §4 occurrence is renamed **`σ_pole`** (`σ_pole = 1`, the single
+pole of `L*_3` in `ℜ s > ½`). Read §4 line 415 as "a single pole `σ_pole = 1`",
+and the pole term of §4's `E_num` definition as `T·(σ_pole − ½)`. Elsewhere in
+the note `σ₁` keeps its §2 `(E)` meaning.
+
+### D-5 — DISPATCH line citation off by one (cosmetic; corrected)
+
+§1.1 cites "line 86" for the sentence "The LAW's analytic weight lives entirely
+in H3." The sentence spans **`projects/aristotle_dispatch_v33/DISPATCH.md`
+lines 85–86**. Read the §1.1 bullet as `lines 85–86`.
+
+### D-6 — the numeric claim was *under*-stated (recorded, not weakened)
+
+§0 and §4 claim "14–16 significant digits". The referee re-ran the check
+independently at `mp.dps = 30` with `(G)` in closed form and obtained agreement
+of **`1e−26 … 1e−32`, i.e. ≈ 26–31 digits**, at seven heights (including
+`T = 3.9` and `T = 7.0`, where the divisor is empty, and `T = γ ± 10⁻⁶`
+straddling the first zero ordinate `γ = 7.06736257086735`). The note's weaker
+figure is an artefact of `dps = 25` plus float readout. **Recorded so that the
+stronger number is not later "corrected" downward.**
+
+### Post-correction status
+
+> Post-correction status: PROMOTED per referee gate — (J)-avg, Lemma C, Lemma D,
+> H3 CONFIRMED and independently reproduced; the [Sel90, Lemmas 1,2] citation is
+> REPLACEABLE for the banked LAW (H3 consumed form). GAP-1/GAP-2 remain:
+> (J)-sharp and (C) still rest on Selberg 1990; nothing in the LAW conclusion
+> chain touches them.
