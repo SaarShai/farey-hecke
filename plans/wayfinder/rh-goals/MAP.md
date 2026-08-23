@@ -2769,3 +2769,21 @@ text not accessible online). Consequence: SCAT-1 citations should read
 "Hejhal LNM 1001 Vol.II p.499" (drop the "Thm 5.3" designation, which was
 never verified). Load-bearing statement remains pinned via FJS §2.5 verbatim.
 Physical copy check stays optional.
+
+## 2026-08-23 15:57Z — S2 C3/C5 artifacts REGENERATED; fallback winding ball artifact FOUND
+
+S2_C3_ARTIFACT_REGEN.md + 9 artifacts banked (second_pin/):
+1. mms_q5_indep.py regenerated (independent mpmath from-paper builder):
+   reproduces SOL §1.3(b) table exactly at N=16 (flagship 4.26e-9, sonnet
+   0.355 no-vanish, fallback 8.56e-8, generic 1.64).
+2. C5 crossval EXTENDED to the selected pin ordinate t=7.81976824701551188:
+   all six points agree <=6.9e-24; grid worst 1.0e-20. Referee's precision
+   anomaly settled by experiment: aliasing in the independent discretization
+   (node-doubling -> 3.5e-29), NOT dps cancellation; historical 8.1e-11 not
+   reproduced (better-conditioned reimplementation) — stated honestly.
+3. Fallback winding ball: the artifact EXISTED all along at
+   .worktrees/aletheia-restore/code/out/resonance_v2.json (16-digit value;
+   SOL quoted an 8-digit rounding, so referee grep missed it). Independent
+   N=22 re-run reproduces [0.9999999492931789, 1.000000050706821]
+   bit-for-bit; scan-level scope caveat recorded.
+S2 referee C3/C5 items: closed pending cold verification at next referee pass.
