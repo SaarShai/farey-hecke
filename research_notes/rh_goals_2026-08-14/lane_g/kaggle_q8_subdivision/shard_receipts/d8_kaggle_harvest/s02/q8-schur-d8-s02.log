@@ -1,30 +1,71 @@
-[{"stream_name":"stdout","time":1.359717752,"data":"mounted inputs: ['datasets']\n"}
-,{"stream_name":"stdout","time":1.368011849,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
-,{"stream_name":"stdout","time":14.383650412,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 17.0 MB/s eta 0:00:00\n"}
-,{"stream_name":"stdout","time":17.846763524,"data":"python-flint 0.9.0\n"}
-,{"stream_name":"stdout","time":17.851760888,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
-,{"stream_name":"stdout","time":17.949962736,"data":"verified and staged 15 files\n"}
-,{"stream_name":"stdout","time":17.949997192,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 128 --leaf-end 192 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l128-192.json --checkpoint /kaggle/working/SHARD_a0_l128-192.ckpt.json\n"}
-,{"stream_name":"stdout","time":17.950006733,"data":"cpu_count 4\n"}
-,{"stream_name":"stdout","time":18.195342733,"data":"Q8_SHARD arc=0 leaves=[128,192) depth=8 N=262 workers=4 resumed=0 pending=64\n"}
-,{"stream_name":"stdout","time":7472.683900507,"data":"Q8_SHARD leaf=129 status=PASS qOp=[0.327226208203956533532 leaf_seconds=7454.1 elapsed=7454.5 done=1/64\n"}
-,{"stream_name":"stdout","time":7473.709339178,"data":"Q8_SHARD leaf=128 status=PASS qOp=[0.327199274791140325602 leaf_seconds=7455.1 elapsed=7455.5 done=2/64\n"}
-,{"stream_name":"stdout","time":7474.175145593,"data":"Q8_SHARD leaf=131 status=PASS qOp=[0.327172366842348213059 leaf_seconds=7455.5 elapsed=7456.0 done=3/64\n"}
-,{"stream_name":"stdout","time":7483.183469774,"data":"Q8_SHARD leaf=130 status=PASS qOp=[0.327215271438486821750 leaf_seconds=7464.5 elapsed=7465.0 done=4/64\n"}
-,{"stream_name":"stdout","time":14844.445836392,"data":"Q8_SHARD leaf=133 status=PASS qOp=[0.327008062195249028435 leaf_seconds=7370.7 elapsed=14826.3 done=5/64\n"}
-,{"stream_name":"stdout","time":14850.69784979,"data":"Q8_SHARD leaf=134 status=PASS qOp=[0.326869392671224554069 leaf_seconds=7376.5 elapsed=14832.5 done=6/64\n"}
-,{"stream_name":"stdout","time":14853.310120103,"data":"Q8_SHARD leaf=132 status=PASS qOp=[0.327109088650171269084 leaf_seconds=7380.6 elapsed=14835.1 done=7/64\n"}
-,{"stream_name":"stdout","time":14859.038156963,"data":"Q8_SHARD leaf=135 status=PASS qOp=[0.326693210537100932948 leaf_seconds=7375.8 elapsed=14840.8 done=8/64\n"}
-,{"stream_name":"stdout","time":22385.891743783,"data":"Q8_SHARD leaf=138 status=PASS qOp=[0.325941303257852989926 leaf_seconds=7532.6 elapsed=22367.7 done=9/64\n"}
-,{"stream_name":"stdout","time":22387.935532952,"data":"Q8_SHARD leaf=136 status=PASS qOp=[0.326479674347288356349 leaf_seconds=7543.5 elapsed=22369.7 done=10/64\n"}
-,{"stream_name":"stdout","time":22392.158563985,"data":"Q8_SHARD leaf=137 status=PASS qOp=[0.326228968455750411634 leaf_seconds=7541.5 elapsed=22374.0 done=11/64\n"}
-,{"stream_name":"stdout","time":22403.761271634,"data":"Q8_SHARD leaf=139 status=PASS qOp=[0.325617208345630267516 leaf_seconds=7544.7 elapsed=22385.6 done=12/64\n"}
-,{"stream_name":"stdout","time":30051.847273216,"data":"Q8_SHARD leaf=140 status=PASS qOp=[0.325258463651908429745 leaf_seconds=7665.9 elapsed=30033.7 done=13/64\n"}
-,{"stream_name":"stdout","time":30052.522734996,"data":"Q8_SHARD leaf=141 status=PASS qOp=[0.324863667987718748129 leaf_seconds=7664.6 elapsed=30034.3 done=14/64\n"}
-,{"stream_name":"stdout","time":30061.404938815,"data":"Q8_SHARD leaf=142 status=PASS qOp=[0.324433042751709034596 leaf_seconds=7669.2 elapsed=30043.2 done=15/64\n"}
-,{"stream_name":"stdout","time":30079.687097139,"data":"Q8_SHARD leaf=143 status=PASS qOp=[0.323966928284573365575 leaf_seconds=7675.9 elapsed=30061.5 done=16/64\n"}
-,{"stream_name":"stdout","time":37769.008869553,"data":"Q8_SHARD leaf=145 status=PASS qOp=[0.322930449628100739831 leaf_seconds=7716.5 elapsed=37750.8 done=17/64\n"}
-,{"stream_name":"stdout","time":37771.681306717,"data":"Q8_SHARD leaf=144 status=PASS qOp=[0.323466059919639938842 leaf_seconds=7719.8 elapsed=37753.5 done=18/64\n"}
-,{"stream_name":"stdout","time":37785.20460822,"data":"Q8_SHARD leaf=146 status=PASS qOp=[0.322360456699845867425 leaf_seconds=7723.8 elapsed=37767.0 done=19/64\n"}
-,{"stream_name":"stdout","time":37817.261553621,"data":"Q8_SHARD leaf=147 status=PASS qOp=[0.321757030762632533555 leaf_seconds=7737.6 elapsed=37799.1 done=20/64\n"}
+[{"stream_name":"stdout","time":1.020480513,"data":"mounted inputs: ['datasets']\n"}
+,{"stream_name":"stdout","time":1.026220903,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
+,{"stream_name":"stdout","time":5.38937509,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 27.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.356058396,"data":"python-flint 0.9.0\n"}
+,{"stream_name":"stdout","time":7.360758066,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
+,{"stream_name":"stdout","time":7.4299135530000004,"data":"verified and staged 15 files\n"}
+,{"stream_name":"stdout","time":7.4336103829999995,"data":"seeded checkpoint from /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs/seed__SHARD_a0_l128-192.ckpt.json\n"}
+,{"stream_name":"stdout","time":7.433638323,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 128 --leaf-end 192 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l128-192.json --checkpoint /kaggle/working/SHARD_a0_l128-192.ckpt.json\n"}
+,{"stream_name":"stdout","time":7.433644203,"data":"cpu_count 4\n"}
+,{"stream_name":"stdout","time":7.577249067,"data":"Q8_SHARD arc=0 leaves=[128,192) depth=8 N=262 workers=4 resumed=20 pending=44\n"}
+,{"stream_name":"stdout","time":4114.758997484,"data":"Q8_SHARD leaf=149 status=PASS qOp=[0.320455707908480616169 leaf_seconds=4107.0 elapsed=4107.2 done=21/64\n"}
+,{"stream_name":"stdout","time":4116.880236154,"data":"Q8_SHARD leaf=150 status=PASS qOp=[0.319764915408291651024 leaf_seconds=4109.1 elapsed=4109.3 done=22/64\n"}
+,{"stream_name":"stdout","time":4117.10063998,"data":"Q8_SHARD leaf=151 status=PASS qOp=[0.319042014812969684747 leaf_seconds=4109.3 elapsed=4109.5 done=23/64\n"}
+,{"stream_name":"stdout","time":4117.495466033,"data":"Q8_SHARD leaf=148 status=PASS qOp=[0.321120360729359270270 leaf_seconds=4109.7 elapsed=4109.9 done=24/64\n"}
+,{"stream_name":"stdout","time":8251.783865323,"data":"Q8_SHARD leaf=153 status=PASS qOp=[0.317501959895932556777 leaf_seconds=4134.9 elapsed=8244.2 done=25/64\n"}
+,{"stream_name":"stdout","time":8251.878871011,"data":"Q8_SHARD leaf=152 status=PASS qOp=[0.318287519551628727765 leaf_seconds=4137.1 elapsed=8244.3 done=26/64\n"}
+,{"stream_name":"stdout","time":8256.426274028,"data":"Q8_SHARD leaf=155 status=PASS qOp=[0.315839865260687366906 leaf_seconds=4138.9 elapsed=8248.8 done=27/64\n"}
+,{"stream_name":"stdout","time":8257.269085313,"data":"Q8_SHARD leaf=154 status=PASS qOp=[0.316685890595294449228 leaf_seconds=4140.2 elapsed=8249.7 done=28/64\n"}
+,{"stream_name":"stdout","time":12438.35695821,"data":"Q8_SHARD leaf=157 status=PASS qOp=[0.314063211308044953908 leaf_seconds=4186.5 elapsed=12430.8 done=29/64\n"}
+,{"stream_name":"stdout","time":12438.573077285,"data":"Q8_SHARD leaf=156 status=PASS qOp=[0.314964456615374188034 leaf_seconds=4186.8 elapsed=12431.0 done=30/64\n"}
+,{"stream_name":"stdout","time":12445.648600791,"data":"Q8_SHARD leaf=159 status=PASS qOp=[0.312178224297350674530 leaf_seconds=4188.4 elapsed=12438.1 done=31/64\n"}
+,{"stream_name":"stdout","time":12447.900201852,"data":"Q8_SHARD leaf=158 status=PASS qOp=[0.313134504733500617151 leaf_seconds=4191.5 elapsed=12440.3 done=32/64\n"}
+,{"stream_name":"stdout","time":16642.867049625,"data":"Q8_SHARD leaf=161 status=PASS qOp=[0.310405801610893446445 leaf_seconds=4204.3 elapsed=16635.3 done=33/64\n"}
+,{"stream_name":"stdout","time":16646.744069327,"data":"Q8_SHARD leaf=160 status=PASS qOp=[0.311293299937327575608 leaf_seconds=4208.4 elapsed=16639.2 done=34/64\n"}
+,{"stream_name":"stdout","time":16653.397374624,"data":"Q8_SHARD leaf=162 status=PASS qOp=[0.309491309915625942454 leaf_seconds=4207.7 elapsed=16645.8 done=35/64\n"}
+,{"stream_name":"stdout","time":16657.861134684,"data":"Q8_SHARD leaf=163 status=PASS qOp=[0.308550271968210657345 leaf_seconds=4210.0 elapsed=16650.3 done=36/64\n"}
+,{"stream_name":"stdout","time":20870.809211134,"data":"Q8_SHARD leaf=164 status=PASS qOp=[0.307606336766501979748 leaf_seconds=4227.9 elapsed=20863.2 done=37/64\n"}
+,{"stream_name":"stdout","time":20876.108305011,"data":"Q8_SHARD leaf=165 status=PASS qOp=[0.306717871162528718912 leaf_seconds=4229.4 elapsed=20868.5 done=38/64\n"}
+,{"stream_name":"stdout","time":20880.741190971,"data":"Q8_SHARD leaf=166 status=PASS qOp=[0.305803890962063387597 leaf_seconds=4227.3 elapsed=20873.2 done=39/64\n"}
+,{"stream_name":"stdout","time":20888.376046388,"data":"Q8_SHARD leaf=167 status=PASS qOp=[0.304865018517297380739 leaf_seconds=4230.5 elapsed=20880.8 done=40/64\n"}
+,{"stream_name":"stdout","time":25139.673014413,"data":"Q8_SHARD leaf=168 status=PASS qOp=[0.303901885434270905991 leaf_seconds=4268.9 elapsed=25132.1 done=41/64\n"}
+,{"stream_name":"stdout","time":25148.714429847,"data":"Q8_SHARD leaf=169 status=PASS qOp=[0.302958800009659130940 leaf_seconds=4272.6 elapsed=25141.1 done=42/64\n"}
+,{"stream_name":"stdout","time":25152.385057589,"data":"Q8_SHARD leaf=170 status=PASS qOp=[0.302082450760014092273 leaf_seconds=4271.6 elapsed=25144.8 done=43/64\n"}
+,{"stream_name":"stdout","time":25165.729036835,"data":"Q8_SHARD leaf=171 status=PASS qOp=[0.301184621711961087208 leaf_seconds=4277.3 elapsed=25158.2 done=44/64\n"}
+,{"stream_name":"stdout","time":29444.260995782,"data":"Q8_SHARD leaf=172 status=PASS qOp=[0.300269984136375274942 leaf_seconds=4304.6 elapsed=29436.7 done=45/64\n"}
+,{"stream_name":"stdout","time":29446.036929329,"data":"Q8_SHARD leaf=173 status=PASS qOp=[0.299332436023163718170 leaf_seconds=4297.3 elapsed=29438.5 done=46/64\n"}
+,{"stream_name":"stdout","time":29453.668020667,"data":"Q8_SHARD leaf=174 status=PASS qOp=[0.298419535637729374991 leaf_seconds=4301.3 elapsed=29446.1 done=47/64\n"}
+,{"stream_name":"stdout","time":29477.081935073,"data":"Q8_SHARD leaf=175 status=PASS qOp=[0.297516612527114236453 leaf_seconds=4311.3 elapsed=29469.5 done=48/64\n"}
+,{"stream_name":"stdout","time":33752.695690192,"data":"Q8_SHARD leaf=177 status=PASS qOp=[0.295646104551617170966 leaf_seconds=4306.7 elapsed=33745.1 done=49/64\n"}
+,{"stream_name":"stdout","time":33752.882098768,"data":"Q8_SHARD leaf=176 status=PASS qOp=[0.296591910966527304738 leaf_seconds=4308.6 elapsed=33745.3 done=50/64\n"}
+,{"stream_name":"stdout","time":33764.631559469,"data":"Q8_SHARD leaf=178 status=PASS qOp=[0.294679775773457283990 leaf_seconds=4311.0 elapsed=33757.1 done=51/64\n"}
+,{"stream_name":"stdout","time":33787.779315356,"data":"Q8_SHARD leaf=179 status=PASS qOp=[0.293693539012382040190 leaf_seconds=4310.7 elapsed=33780.2 done=52/64\n"}
+,{"stream_name":"stdout","time":38066.488612579,"data":"Q8_SHARD leaf=180 status=PASS qOp=[0.292688021633768034236 leaf_seconds=4313.8 elapsed=38058.9 done=53/64\n"}
+,{"stream_name":"stdout","time":38066.684057405,"data":"Q8_SHARD leaf=181 status=PASS qOp=[0.291663837291255053502 leaf_seconds=4313.8 elapsed=38059.1 done=54/64\n"}
+,{"stream_name":"stdout","time":38081.875005612,"data":"Q8_SHARD leaf=182 status=PASS qOp=[0.290634021107163392053 leaf_seconds=4317.2 elapsed=38074.3 done=55/64\n"}
+,{"stream_name":"stdout","time":38107.168647521,"data":"Q8_SHARD leaf=183 status=PASS qOp=[0.289613117561892495037 leaf_seconds=4319.4 elapsed=38099.6 done=56/64\n"}
+,{"stream_name":"stdout","time":42377.933084683,"data":"Q8_SHARD leaf=185 status=PASS qOp=[0.287562193016439500305 leaf_seconds=4311.2 elapsed=42370.4 done=57/64\n"}
+,{"stream_name":"stdout","time":42377.944977882,"data":"Q8_SHARD deadline reached; terminating pool\n"}
+,{"stream_name":"stdout","time":42378.05632459,"data":"{\n"}
+,{"stream_name":"stdout","time":42378.056359421,"data":"  \"arc\": 0,\n"}
+,{"stream_name":"stdout","time":42378.05636377,"data":"  \"leaf_range\": [\n"}
+,{"stream_name":"stdout","time":42378.056367261,"data":"    128,\n"}
+,{"stream_name":"stdout","time":42378.056370761,"data":"    192\n"}
+,{"stream_name":"stdout","time":42378.0563738,"data":"  ],\n"}
+,{"stream_name":"stdout","time":42378.05637682,"data":"  \"leaves_complete\": false,\n"}
+,{"stream_name":"stdout","time":42378.05637995,"data":"  \"status_counts\": {\n"}
+,{"stream_name":"stdout","time":42378.05638189,"data":"    \"PASS\": 57,\n"}
+,{"stream_name":"stdout","time":42378.05638389,"data":"    \"OPEN_MAX_DEPTH\": 0\n"}
+,{"stream_name":"stdout","time":42378.05638594,"data":"  },\n"}
+,{"stream_name":"stdout","time":42378.05638781,"data":"  \"qOp_lt_1_all\": true,\n"}
+,{"stream_name":"stdout","time":42378.05638985,"data":"  \"payload_sha256\": \"60d47cde864774f456e56a14a1112db0a25033c3c069fddfe92dab6dda8639f5\",\n"}
+,{"stream_name":"stdout","time":42378.05639208,"data":"  \"wall_seconds\": 42370.471764326096\n"}
+,{"stream_name":"stdout","time":42378.05639409,"data":"}\n"}
+,{"stream_name":"stdout","time":42378.09142504,"data":"EXIT CODE: 3  wall_seconds: 42370.65769934654\n"}
+,{"stream_name":"stderr","time":42380.220364549,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":42380.220411778,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":42380.545069132,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":42380.545092162,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":42381.422593054,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":42382.667052649,"data":"[NbConvertApp] Writing 289596 bytes to __results__.html\n"}
 ]

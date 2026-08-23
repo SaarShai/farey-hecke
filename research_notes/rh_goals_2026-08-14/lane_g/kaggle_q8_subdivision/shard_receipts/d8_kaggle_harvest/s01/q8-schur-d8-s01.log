@@ -1,66 +1,51 @@
-[{"stream_name":"stdout","time":0.742267171,"data":"mounted inputs: ['datasets']\n"}
-,{"stream_name":"stdout","time":0.748093501,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
-,{"stream_name":"stdout","time":4.925562698,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 23.7 MB/s eta 0:00:00\n"}
-,{"stream_name":"stdout","time":6.999230125,"data":"python-flint 0.9.0\n"}
-,{"stream_name":"stdout","time":7.004095696,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
-,{"stream_name":"stdout","time":7.061270878,"data":"verified and staged 15 files\n"}
-,{"stream_name":"stdout","time":7.061311698,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 64 --leaf-end 128 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l64-128.json --checkpoint /kaggle/working/SHARD_a0_l64-128.ckpt.json\n"}
-,{"stream_name":"stdout","time":7.061319538,"data":"cpu_count 4\n"}
-,{"stream_name":"stdout","time":7.206893064,"data":"Q8_SHARD arc=0 leaves=[64,128) depth=8 N=262 workers=4 resumed=0 pending=64\n"}
-,{"stream_name":"stdout","time":4264.659542075,"data":"Q8_SHARD leaf=65 status=PASS qOp=[0.284292364170018043330 leaf_seconds=4257.2 elapsed=4257.5 done=1/64\n"}
-,{"stream_name":"stdout","time":4267.335935101,"data":"Q8_SHARD leaf=64 status=PASS qOp=[0.283242188549042384048 leaf_seconds=4259.9 elapsed=4260.1 done=2/64\n"}
-,{"stream_name":"stdout","time":4267.948385559,"data":"Q8_SHARD leaf=66 status=PASS qOp=[0.285386266793701258731 leaf_seconds=4260.5 elapsed=4260.7 done=3/64\n"}
-,{"stream_name":"stdout","time":4271.098951706,"data":"Q8_SHARD leaf=67 status=PASS qOp=[0.286489853889643594595 leaf_seconds=4263.6 elapsed=4263.9 done=4/64\n"}
-,{"stream_name":"stdout","time":8510.870193251,"data":"Q8_SHARD leaf=68 status=PASS qOp=[0.287578449550520131476 leaf_seconds=4246.2 elapsed=8503.7 done=5/64\n"}
-,{"stream_name":"stdout","time":8514.260239243,"data":"Q8_SHARD leaf=69 status=PASS qOp=[0.288651456191565448830 leaf_seconds=4246.9 elapsed=8507.1 done=6/64\n"}
-,{"stream_name":"stdout","time":8515.836387891,"data":"Q8_SHARD leaf=70 status=PASS qOp=[0.289724427901293241973 leaf_seconds=4247.9 elapsed=8508.6 done=7/64\n"}
-,{"stream_name":"stdout","time":8519.789375911,"data":"Q8_SHARD leaf=71 status=PASS qOp=[0.290833504038535501552 leaf_seconds=4248.7 elapsed=8512.6 done=8/64\n"}
-,{"stream_name":"stdout","time":12985.719054176,"data":"Q8_SHARD leaf=72 status=PASS qOp=[0.291925795780330323188 leaf_seconds=4474.8 elapsed=12978.5 done=9/64\n"}
-,{"stream_name":"stdout","time":12986.601661509,"data":"Q8_SHARD leaf=74 status=PASS qOp=[0.294057761942951578347 leaf_seconds=4470.8 elapsed=12979.4 done=10/64\n"}
-,{"stream_name":"stdout","time":12996.226787707,"data":"Q8_SHARD leaf=73 status=PASS qOp=[0.293000676125658206906 leaf_seconds=4482.0 elapsed=12989.0 done=11/64\n"}
-,{"stream_name":"stdout","time":13001.896343635,"data":"Q8_SHARD leaf=75 status=PASS qOp=[0.295096277994141264567 leaf_seconds=4482.1 elapsed=12994.7 done=12/64\n"}
-,{"stream_name":"stdout","time":17435.880649808,"data":"Q8_SHARD leaf=76 status=PASS qOp=[0.296115632662683906671 leaf_seconds=4450.2 elapsed=17428.7 done=13/64\n"}
-,{"stream_name":"stdout","time":17443.397587695,"data":"Q8_SHARD leaf=77 status=PASS qOp=[0.297116285662779204606 leaf_seconds=4456.8 elapsed=17436.2 done=14/64\n"}
-,{"stream_name":"stdout","time":17460.165538403,"data":"Q8_SHARD leaf=78 status=PASS qOp=[0.298101971721290509074 leaf_seconds=4463.9 elapsed=17453.0 done=15/64\n"}
-,{"stream_name":"stdout","time":17465.052754689,"data":"Q8_SHARD leaf=79 status=PASS qOp=[0.299066487173216817180 leaf_seconds=4463.1 elapsed=17457.8 done=16/64\n"}
-,{"stream_name":"stdout","time":21878.277804677,"data":"Q8_SHARD leaf=80 status=PASS qOp=[0.300009243947666083327 leaf_seconds=4442.4 elapsed=21871.1 done=17/64\n"}
-,{"stream_name":"stdout","time":21888.550700335,"data":"Q8_SHARD leaf=81 status=PASS qOp=[0.300929607198095647756 leaf_seconds=4445.2 elapsed=21881.3 done=18/64\n"}
-,{"stream_name":"stdout","time":21911.517253437,"data":"Q8_SHARD leaf=83 status=PASS qOp=[0.302700577923355991147 leaf_seconds=4446.5 elapsed=21904.3 done=19/64\n"}
-,{"stream_name":"stdout","time":21913.662044717,"data":"Q8_SHARD leaf=82 status=PASS qOp=[0.301826914553469701034 leaf_seconds=4453.5 elapsed=21906.5 done=20/64\n"}
-,{"stream_name":"stdout","time":26330.991973614,"data":"Q8_SHARD leaf=84 status=PASS qOp=[0.303549872516616783894 leaf_seconds=4452.7 elapsed=26323.8 done=21/64\n"}
-,{"stream_name":"stdout","time":26363.201022469,"data":"Q8_SHARD leaf=85 status=PASS qOp=[0.304374167286446790856 leaf_seconds=4474.6 elapsed=26356.0 done=22/64\n"}
-,{"stream_name":"stdout","time":26383.009418904,"data":"Q8_SHARD leaf=86 status=PASS qOp=[0.305172921336958865403 leaf_seconds=4471.5 elapsed=26375.8 done=23/64\n"}
-,{"stream_name":"stdout","time":26383.362587886,"data":"Q8_SHARD leaf=87 status=PASS qOp=[0.305961388228735556019 leaf_seconds=4469.7 elapsed=26376.2 done=24/64\n"}
-,{"stream_name":"stdout","time":30779.715490941,"data":"Q8_SHARD leaf=88 status=PASS qOp=[0.306845786726969153105 leaf_seconds=4448.7 elapsed=30772.5 done=25/64\n"}
-,{"stream_name":"stdout","time":30821.048426032,"data":"Q8_SHARD leaf=89 status=PASS qOp=[0.307858592153389839932 leaf_seconds=4457.8 elapsed=30813.8 done=26/64\n"}
-,{"stream_name":"stdout","time":30840.813426009,"data":"Q8_SHARD leaf=90 status=PASS qOp=[0.308850097694529522083 leaf_seconds=4457.8 elapsed=30833.6 done=27/64\n"}
-,{"stream_name":"stdout","time":30843.972030999,"data":"Q8_SHARD leaf=91 status=PASS qOp=[0.309848772731364340337 leaf_seconds=4460.6 elapsed=30836.8 done=28/64\n"}
-,{"stream_name":"stdout","time":35339.06946287,"data":"Q8_SHARD leaf=92 status=PASS qOp=[0.310821681253811705432 leaf_seconds=4559.3 elapsed=35331.9 done=29/64\n"}
-,{"stream_name":"stdout","time":35405.340929919,"data":"Q8_SHARD leaf=93 status=PASS qOp=[0.311768642460174659513 leaf_seconds=4584.3 elapsed=35398.1 done=30/64\n"}
-,{"stream_name":"stdout","time":35419.082426431,"data":"Q8_SHARD leaf=94 status=PASS qOp=[0.312690352503477612726 leaf_seconds=4578.3 elapsed=35411.9 done=31/64\n"}
-,{"stream_name":"stdout","time":35432.154417124,"data":"Q8_SHARD leaf=95 status=PASS qOp=[0.313587250910182252186 leaf_seconds=4588.2 elapsed=35424.9 done=32/64\n"}
-,{"stream_name":"stdout","time":39909.358515563,"data":"Q8_SHARD leaf=96 status=PASS qOp=[0.314458801075612635473 leaf_seconds=4570.3 elapsed=39902.2 done=33/64\n"}
-,{"stream_name":"stdout","time":39909.365767273,"data":"Q8_SHARD deadline reached; terminating pool\n"}
-,{"stream_name":"stdout","time":39909.471196961,"data":"{\n"}
-,{"stream_name":"stdout","time":39909.471228381,"data":"  \"arc\": 0,\n"}
-,{"stream_name":"stdout","time":39909.471248701,"data":"  \"leaf_range\": [\n"}
-,{"stream_name":"stdout","time":39909.471254051,"data":"    64,\n"}
-,{"stream_name":"stdout","time":39909.471258841,"data":"    128\n"}
-,{"stream_name":"stdout","time":39909.471263291,"data":"  ],\n"}
-,{"stream_name":"stdout","time":39909.471267891,"data":"  \"leaves_complete\": false,\n"}
-,{"stream_name":"stdout","time":39909.471272481,"data":"  \"status_counts\": {\n"}
-,{"stream_name":"stdout","time":39909.471277281,"data":"    \"PASS\": 33,\n"}
-,{"stream_name":"stdout","time":39909.471282071,"data":"    \"OPEN_MAX_DEPTH\": 0\n"}
-,{"stream_name":"stdout","time":39909.471286981,"data":"  },\n"}
-,{"stream_name":"stdout","time":39909.471302341,"data":"  \"qOp_lt_1_all\": true,\n"}
-,{"stream_name":"stdout","time":39909.471306581,"data":"  \"payload_sha256\": \"e3f9843e6cf0e6ca3a9a155ab34246fe422164555c5b5040398d3ff0b6767535\",\n"}
-,{"stream_name":"stdout","time":39909.471310411,"data":"  \"wall_seconds\": 39902.25863838196\n"}
-,{"stream_name":"stdout","time":39909.471314181,"data":"}\n"}
-,{"stream_name":"stdout","time":39909.50856997,"data":"EXIT CODE: 3  wall_seconds: 39902.447246551514\n"}
-,{"stream_name":"stderr","time":39911.645463741,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":39911.645507931,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":39911.981204715,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":39911.981242685,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":39912.751328541,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":39914.018209558,"data":"[NbConvertApp] Writing 288184 bytes to __results__.html\n"}
+[{"stream_name":"stdout","time":0.843402049,"data":"mounted inputs: ['datasets']\n"}
+,{"stream_name":"stdout","time":0.859902815,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
+,{"stream_name":"stdout","time":4.7558433430000004,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 93.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.943996472,"data":"python-flint 0.9.0\n"}
+,{"stream_name":"stdout","time":7.949707835,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
+,{"stream_name":"stdout","time":8.041584296,"data":"verified and staged 15 files\n"}
+,{"stream_name":"stdout","time":8.0488057,"data":"seeded checkpoint from /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs/seed__SHARD_a0_l64-128.ckpt.json\n"}
+,{"stream_name":"stdout","time":8.048844043,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 64 --leaf-end 128 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l64-128.json --checkpoint /kaggle/working/SHARD_a0_l64-128.ckpt.json\n"}
+,{"stream_name":"stdout","time":8.0488526,"data":"cpu_count 4\n"}
+,{"stream_name":"stdout","time":8.276532847,"data":"Q8_SHARD arc=0 leaves=[64,128) depth=8 N=262 workers=4 resumed=33 pending=31\n"}
+,{"stream_name":"stdout","time":8228.739801888,"data":"Q8_SHARD leaf=97 status=PASS qOp=[0.315301591044996262734 leaf_seconds=8220.1 elapsed=8220.5 done=34/64\n"}
+,{"stream_name":"stdout","time":8231.848886399,"data":"Q8_SHARD leaf=100 status=PASS qOp=[0.317682455352256995088 leaf_seconds=8223.1 elapsed=8223.6 done=35/64\n"}
+,{"stream_name":"stdout","time":8233.668596626,"data":"Q8_SHARD leaf=98 status=PASS qOp=[0.316118682849943329163 leaf_seconds=8225.0 elapsed=8225.4 done=36/64\n"}
+,{"stream_name":"stdout","time":8234.093920874,"data":"Q8_SHARD leaf=99 status=PASS qOp=[0.316915728810599497887 leaf_seconds=8225.4 elapsed=8225.8 done=37/64\n"}
+,{"stream_name":"stdout","time":16477.450232685,"data":"Q8_SHARD leaf=101 status=PASS qOp=[0.318418413144585066554 leaf_seconds=8248.7 elapsed=16469.2 done=38/64\n"}
+,{"stream_name":"stdout","time":16480.680981519,"data":"Q8_SHARD leaf=104 status=PASS qOp=[0.320434040057273030091 leaf_seconds=8246.6 elapsed=16472.4 done=39/64\n"}
+,{"stream_name":"stdout","time":16483.543071957,"data":"Q8_SHARD leaf=102 status=PASS qOp=[0.319122692248605726551 leaf_seconds=8251.7 elapsed=16475.3 done=40/64\n"}
+,{"stream_name":"stdout","time":16493.051217502,"data":"Q8_SHARD leaf=103 status=PASS qOp=[0.319794741441876249118 leaf_seconds=8259.4 elapsed=16484.8 done=41/64\n"}
+,{"stream_name":"stdout","time":24803.0547164,"data":"Q8_SHARD leaf=105 status=PASS qOp=[0.321040084819559743606 leaf_seconds=8325.6 elapsed=24794.8 done=42/64\n"}
+,{"stream_name":"stdout","time":24803.172828241,"data":"Q8_SHARD leaf=106 status=PASS qOp=[0.321612391580935345776 leaf_seconds=8322.5 elapsed=24794.9 done=43/64\n"}
+,{"stream_name":"stdout","time":24806.759758688,"data":"Q8_SHARD leaf=107 status=PASS qOp=[0.322151664000708579459 leaf_seconds=8323.2 elapsed=24798.5 done=44/64\n"}
+,{"stream_name":"stdout","time":24816.014612096,"data":"Q8_SHARD leaf=108 status=PASS qOp=[0.322656909231700951217 leaf_seconds=8323.0 elapsed=24807.7 done=45/64\n"}
+,{"stream_name":"stdout","time":33215.249844335,"data":"Q8_SHARD leaf=109 status=PASS qOp=[0.323127985610482334369 leaf_seconds=8412.2 elapsed=33207.0 done=46/64\n"}
+,{"stream_name":"stdout","time":33217.689500772,"data":"Q8_SHARD leaf=111 status=PASS qOp=[0.323965288176936920285 leaf_seconds=8410.9 elapsed=33209.4 done=47/64\n"}
+,{"stream_name":"stdout","time":33223.309479239,"data":"Q8_SHARD leaf=110 status=PASS qOp=[0.323564451048629469200 leaf_seconds=8420.1 elapsed=33215.0 done=48/64\n"}
+,{"stream_name":"stdout","time":33230.534145112,"data":"Q8_SHARD leaf=112 status=PASS qOp=[0.324332106264152043475 leaf_seconds=8414.5 elapsed=33222.3 done=49/64\n"}
+,{"stream_name":"stdout","time":41714.902743637,"data":"Q8_SHARD leaf=113 status=PASS qOp=[0.324665477946844868707 leaf_seconds=8499.7 elapsed=41706.6 done=50/64\n"}
+,{"stream_name":"stdout","time":41714.921428475,"data":"Q8_SHARD deadline reached; terminating pool\n"}
+,{"stream_name":"stdout","time":41715.050129075,"data":"{\n"}
+,{"stream_name":"stdout","time":41715.050165822,"data":"  \"arc\": 0,\n"}
+,{"stream_name":"stdout","time":41715.050171074,"data":"  \"leaf_range\": [\n"}
+,{"stream_name":"stdout","time":41715.050175487,"data":"    64,\n"}
+,{"stream_name":"stdout","time":41715.050180645,"data":"    128\n"}
+,{"stream_name":"stdout","time":41715.050186307,"data":"  ],\n"}
+,{"stream_name":"stdout","time":41715.050192008,"data":"  \"leaves_complete\": false,\n"}
+,{"stream_name":"stdout","time":41715.050197704,"data":"  \"status_counts\": {\n"}
+,{"stream_name":"stdout","time":41715.050203942,"data":"    \"PASS\": 50,\n"}
+,{"stream_name":"stdout","time":41715.050209712,"data":"    \"OPEN_MAX_DEPTH\": 0\n"}
+,{"stream_name":"stdout","time":41715.050215336,"data":"  },\n"}
+,{"stream_name":"stdout","time":41715.050221061,"data":"  \"qOp_lt_1_all\": true,\n"}
+,{"stream_name":"stdout","time":41715.050227032,"data":"  \"payload_sha256\": \"f3c08ce6b3a35f01cec4f35dfa91d5a3939bd108b19607e12452ef7e32c99199\",\n"}
+,{"stream_name":"stdout","time":41715.050233307,"data":"  \"wall_seconds\": 41706.761389255524\n"}
+,{"stream_name":"stdout","time":41715.050239462,"data":"}\n"}
+,{"stream_name":"stdout","time":41715.098819033,"data":"EXIT CODE: 3  wall_seconds: 41707.04984855652\n"}
+,{"stream_name":"stderr","time":41718.161493063,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":41718.16157994,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":41718.58732366,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":41718.587398976,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":41719.61928275,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":41721.477439017,"data":"[NbConvertApp] Writing 289591 bytes to __results__.html\n"}
 ]

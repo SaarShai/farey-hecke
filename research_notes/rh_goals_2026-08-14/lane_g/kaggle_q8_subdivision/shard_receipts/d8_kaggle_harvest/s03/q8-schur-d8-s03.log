@@ -1,50 +1,31 @@
-[{"stream_name":"stdout","time":1.081386745,"data":"mounted inputs: ['datasets']\n"}
-,{"stream_name":"stdout","time":1.091172302,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
-,{"stream_name":"stdout","time":5.375299778,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 64.4 MB/s eta 0:00:00\n"}
-,{"stream_name":"stdout","time":8.491148654,"data":"python-flint 0.9.0\n"}
-,{"stream_name":"stdout","time":8.495282768,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
-,{"stream_name":"stdout","time":8.588251295,"data":"verified and staged 15 files\n"}
-,{"stream_name":"stdout","time":8.588289968,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 192 --leaf-end 256 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l192-256.json --checkpoint /kaggle/working/SHARD_a0_l192-256.ckpt.json\n"}
-,{"stream_name":"stdout","time":8.588299573,"data":"cpu_count 4\n"}
-,{"stream_name":"stdout","time":8.811705247999999,"data":"Q8_SHARD arc=0 leaves=[192,256) depth=8 N=262 workers=4 resumed=0 pending=64\n"}
-,{"stream_name":"stdout","time":8100.436204139,"data":"Q8_SHARD leaf=193 status=PASS qOp=[0.278889466801901235735 leaf_seconds=8091.3 elapsed=8091.6 done=1/64\n"}
-,{"stream_name":"stdout","time":8104.441217463,"data":"Q8_SHARD leaf=194 status=PASS qOp=[0.277761831903697724000 leaf_seconds=8095.2 elapsed=8095.6 done=2/64\n"}
-,{"stream_name":"stdout","time":8104.484146221,"data":"Q8_SHARD leaf=192 status=PASS qOp=[0.280012976936193642136 leaf_seconds=8095.3 elapsed=8095.7 done=3/64\n"}
-,{"stream_name":"stdout","time":8116.972073898,"data":"Q8_SHARD leaf=195 status=PASS qOp=[0.276666733915392821494 leaf_seconds=8107.7 elapsed=8108.2 done=4/64\n"}
-,{"stream_name":"stdout","time":16188.220130553,"data":"Q8_SHARD leaf=196 status=PASS qOp=[0.275600503521010569092 leaf_seconds=8087.8 elapsed=16179.4 done=5/64\n"}
-,{"stream_name":"stdout","time":16191.15618291,"data":"Q8_SHARD leaf=198 status=PASS qOp=[0.273481846124902321202 leaf_seconds=8086.7 elapsed=16182.3 done=6/64\n"}
-,{"stream_name":"stdout","time":16192.132519914,"data":"Q8_SHARD leaf=197 status=PASS qOp=[0.274522839814511265063 leaf_seconds=8087.7 elapsed=16183.3 done=7/64\n"}
-,{"stream_name":"stdout","time":16215.521190124,"data":"Q8_SHARD leaf=199 status=PASS qOp=[0.272483378247984552747 leaf_seconds=8098.5 elapsed=16206.7 done=8/64\n"}
-,{"stream_name":"stdout","time":24318.265200295,"data":"Q8_SHARD leaf=200 status=PASS qOp=[0.271476172868560617128 leaf_seconds=8130.0 elapsed=24309.5 done=9/64\n"}
-,{"stream_name":"stdout","time":24325.4421691,"data":"Q8_SHARD leaf=202 status=PASS qOp=[0.269491636853630152622 leaf_seconds=8133.3 elapsed=24316.6 done=10/64\n"}
-,{"stream_name":"stdout","time":24326.610384446,"data":"Q8_SHARD leaf=201 status=PASS qOp=[0.270489451802910733776 leaf_seconds=8135.5 elapsed=24317.8 done=11/64\n"}
-,{"stream_name":"stdout","time":24363.022918285,"data":"Q8_SHARD leaf=203 status=PASS qOp=[0.268483213314511146394 leaf_seconds=8147.5 elapsed=24354.2 done=12/64\n"}
-,{"stream_name":"stdout","time":32455.200184173,"data":"Q8_SHARD leaf=204 status=PASS qOp=[0.267521147669749964648 leaf_seconds=8136.9 elapsed=32446.4 done=13/64\n"}
-,{"stream_name":"stdout","time":32462.257550423,"data":"Q8_SHARD leaf=205 status=PASS qOp=[0.266565387893369092675 leaf_seconds=8136.8 elapsed=32453.4 done=14/64\n"}
-,{"stream_name":"stdout","time":32472.177182653,"data":"Q8_SHARD leaf=206 status=PASS qOp=[0.265601057945628756288 leaf_seconds=8145.6 elapsed=32463.4 done=15/64\n"}
-,{"stream_name":"stdout","time":32521.290014507,"data":"Q8_SHARD leaf=207 status=PASS qOp=[0.264626984544299685029 leaf_seconds=8158.3 elapsed=32512.5 done=16/64\n"}
-,{"stream_name":"stdout","time":40597.314251602,"data":"Q8_SHARD leaf=208 status=PASS qOp=[0.263643624722481644552 leaf_seconds=8142.1 elapsed=40588.5 done=17/64\n"}
-,{"stream_name":"stdout","time":40597.324597272,"data":"Q8_SHARD deadline reached; terminating pool\n"}
-,{"stream_name":"stdout","time":40597.427950674,"data":"{\n"}
-,{"stream_name":"stdout","time":40597.427979778,"data":"  \"arc\": 0,\n"}
-,{"stream_name":"stdout","time":40597.427987206,"data":"  \"leaf_range\": [\n"}
-,{"stream_name":"stdout","time":40597.427991754,"data":"    192,\n"}
-,{"stream_name":"stdout","time":40597.427995484,"data":"    256\n"}
-,{"stream_name":"stdout","time":40597.427999277,"data":"  ],\n"}
-,{"stream_name":"stdout","time":40597.428003025,"data":"  \"leaves_complete\": false,\n"}
-,{"stream_name":"stdout","time":40597.428007249,"data":"  \"status_counts\": {\n"}
-,{"stream_name":"stdout","time":40597.428011046,"data":"    \"PASS\": 17,\n"}
-,{"stream_name":"stdout","time":40597.42801493,"data":"    \"OPEN_MAX_DEPTH\": 0\n"}
-,{"stream_name":"stdout","time":40597.428018766,"data":"  },\n"}
-,{"stream_name":"stdout","time":40597.428022292,"data":"  \"qOp_lt_1_all\": true,\n"}
-,{"stream_name":"stdout","time":40597.428026122,"data":"  \"payload_sha256\": \"a43044a1d32f349cdb66ac88f000c5dab7edcfdf014f6da429d9fd15749392f2\",\n"}
-,{"stream_name":"stdout","time":40597.428030494,"data":"  \"wall_seconds\": 40588.61075735092\n"}
-,{"stream_name":"stdout","time":40597.428034262,"data":"}\n"}
-,{"stream_name":"stdout","time":40597.467161187,"data":"EXIT CODE: 3  wall_seconds: 40588.87887048721\n"}
-,{"stream_name":"stderr","time":40600.322120761,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":40600.322199257,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":40600.710005024,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":40600.710033544,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":40601.784378941,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
-,{"stream_name":"stderr","time":40603.402580437,"data":"[NbConvertApp] Writing 288188 bytes to __results__.html\n"}
+[{"stream_name":"stdout","time":1.177388864,"data":"mounted inputs: ['datasets']\n"}
+,{"stream_name":"stdout","time":1.183479457,"data":"dataset mount: /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs\n"}
+,{"stream_name":"stdout","time":5.858169843,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 52.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.861171479,"data":"python-flint 0.9.0\n"}
+,{"stream_name":"stdout","time":8.865687557,"data":"manifest farey-hecke.q8-schur-subdivision-campaign/1 2026-08-21\n"}
+,{"stream_name":"stdout","time":8.951672536,"data":"verified and staged 15 files\n"}
+,{"stream_name":"stdout","time":8.957403814,"data":"seeded checkpoint from /kaggle/input/datasets/saarshai/q8-schur-subdivision-inputs/seed__SHARD_a0_l192-256.ckpt.json\n"}
+,{"stream_name":"stdout","time":8.95744568,"data":"RUNNING: /usr/bin/python3 /kaggle/working/tree/driver/q8_leaf_shard.py --lane-f /kaggle/working/tree/lane_f --arc 0 --leaf-start 192 --leaf-end 256 --depth 8 --N 262 --K 1 --workers 4 --deadline-seconds 39600 --out /kaggle/working/SHARD_a0_l192-256.json --checkpoint /kaggle/working/SHARD_a0_l192-256.ckpt.json\n"}
+,{"stream_name":"stdout","time":8.957454103,"data":"cpu_count 4\n"}
+,{"stream_name":"stdout","time":9.174052661,"data":"Q8_SHARD arc=0 leaves=[192,256) depth=8 N=262 workers=4 resumed=17 pending=47\n"}
+,{"stream_name":"stdout","time":7173.21699506,"data":"Q8_SHARD leaf=212 status=PASS qOp=[0.259630340947303012302 leaf_seconds=7163.6 elapsed=7164.0 done=18/64\n"}
+,{"stream_name":"stdout","time":7179.809874375,"data":"Q8_SHARD leaf=211 status=PASS qOp=[0.260643304312547865736 leaf_seconds=7170.3 elapsed=7170.6 done=19/64\n"}
+,{"stream_name":"stdout","time":7186.533772804,"data":"Q8_SHARD leaf=209 status=PASS qOp=[0.262651425545325146606 leaf_seconds=7177.0 elapsed=7177.4 done=20/64\n"}
+,{"stream_name":"stdout","time":7188.916069358,"data":"Q8_SHARD leaf=210 status=PASS qOp=[0.261650837189674080525 leaf_seconds=7179.4 elapsed=7179.7 done=21/64\n"}
+,{"stream_name":"stdout","time":14356.121763673,"data":"Q8_SHARD leaf=213 status=PASS qOp=[0.258610201822995884246 leaf_seconds=7182.9 elapsed=14346.9 done=22/64\n"}
+,{"stream_name":"stdout","time":14364.43288609,"data":"Q8_SHARD leaf=214 status=PASS qOp=[0.257583293802017048485 leaf_seconds=7184.6 elapsed=14355.3 done=23/64\n"}
+,{"stream_name":"stdout","time":14382.990864921,"data":"Q8_SHARD leaf=216 status=PASS qOp=[0.255510758047121633656 leaf_seconds=7194.1 elapsed=14373.8 done=24/64\n"}
+,{"stream_name":"stdout","time":14519.4687003,"data":"Q8_SHARD leaf=215 status=PASS qOp=[0.256550015565742503391 leaf_seconds=7332.9 elapsed=14510.3 done=25/64\n"}
+,{"stream_name":"stdout","time":21864.86409656,"data":"Q8_SHARD leaf=218 status=PASS qOp=[0.253417502209606121423 leaf_seconds=7500.4 elapsed=21855.7 done=26/64\n"}
+,{"stream_name":"stdout","time":21866.073322096,"data":"Q8_SHARD leaf=217 status=PASS qOp=[0.254465903773607963574 leaf_seconds=7509.9 elapsed=21856.9 done=27/64\n"}
+,{"stream_name":"stdout","time":21903.751183357,"data":"Q8_SHARD leaf=219 status=PASS qOp=[0.252368295322129177545 leaf_seconds=7520.8 elapsed=21894.6 done=28/64\n"}
+,{"stream_name":"stdout","time":22059.325855032,"data":"Q8_SHARD leaf=220 status=PASS qOp=[0.251314959376058116885 leaf_seconds=7539.9 elapsed=22050.2 done=29/64\n"}
+,{"stream_name":"stdout","time":29271.614544396,"data":"Q8_SHARD leaf=221 status=PASS qOp=[0.250257375861043467470 leaf_seconds=7406.7 elapsed=29262.4 done=30/64\n"}
+,{"stream_name":"stdout","time":29290.01487574,"data":"Q8_SHARD leaf=222 status=PASS qOp=[0.249195886969731182191 leaf_seconds=7423.9 elapsed=29280.8 done=31/64\n"}
+,{"stream_name":"stdout","time":29329.424975262,"data":"Q8_SHARD leaf=223 status=PASS qOp=[0.248130817070865318171 leaf_seconds=7425.7 elapsed=29320.3 done=32/64\n"}
+,{"stream_name":"stdout","time":29465.301549388,"data":"Q8_SHARD leaf=224 status=PASS qOp=[0.247063101847413195089 leaf_seconds=7406.0 elapsed=29456.1 done=33/64\n"}
+,{"stream_name":"stdout","time":36599.264856022,"data":"Q8_SHARD leaf=225 status=PASS qOp=[0.245998502004250383842 leaf_seconds=7327.6 elapsed=36590.1 done=34/64\n"}
+,{"stream_name":"stdout","time":36629.956894283,"data":"Q8_SHARD leaf=226 status=PASS qOp=[0.245035693980478649302 leaf_seconds=7339.9 elapsed=36620.8 done=35/64\n"}
+,{"stream_name":"stdout","time":36669.074944267,"data":"Q8_SHARD leaf=227 status=PASS qOp=[0.244074167530597171757 leaf_seconds=7339.6 elapsed=36659.9 done=36/64\n"}
+,{"stream_name":"stdout","time":36795.765868556,"data":"Q8_SHARD leaf=228 status=PASS qOp=[0.243109234825448773948 leaf_seconds=7330.5 elapsed=36786.6 done=37/64\n"}
 ]

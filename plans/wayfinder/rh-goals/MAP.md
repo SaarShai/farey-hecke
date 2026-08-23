@@ -2723,3 +2723,18 @@ obligation 4; scoop gate still HOLDS (nothing certified-along-a-family).
 GATE: PS-2 compute BLOCKED until corrections §6 applied + pilot redesigned;
 given C6's honest cost, PS-2 scope decision (narrow pilot vs park) goes to
 the owner at next report.
+
+## 2026-08-23 11:24Z — d8 harvest: 923/1024 PASS, 101-leaf gap; local queue drained; gap-fill starts locally
+
+Local d8 queue DRAINED clean (11/11 shards, 704/704 PASS, 0 OPEN_MAX_DEPTH;
+log "QUEUE DRAINED 2026-08-23T11:19:36Z"). Kaggle wave-2 harvest
+(D8_HARVEST_RECEIPT.md, UNREFEREED): s01/s02/s04 COMPLETE, s00/s03
+"KernelWorkerStatus.CANCEL_ACKNOWLEDGED" (verbatim; cause unconfirmed —
+possibly evicted around the S2 slot handover). ALL five Kaggle shards partial
+(in-kernel deadline guard): 219 PASS leaves; fresher .ckpt.json used as
+authority for s00/s03. Coverage 923/1024, 0 FAIL, 0 OPEN_MAX_DEPTH; missing:
+arc0 l41-63,114-127,184,186-191,229-255 (71) + arc1 l33,35-63 (30).
+Merge correctly NOT run (fail-closed). Box now idle (d8 drained, S2 is
+Kaggle-only) -> gap-fill queue launched LOCALLY, seeded from harvested
+checkpoints (~101 leaf-solves); merge on full 16-span coverage, then paper §8
+placeholder + FIG-1.
