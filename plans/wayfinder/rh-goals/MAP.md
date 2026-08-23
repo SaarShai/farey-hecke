@@ -2486,3 +2486,10 @@ paper its exhibit).
 - 6 minors acknowledged incl. OPEN RECONCILIATION (12): parent half-width ±1.01e-6 (receipt) vs ±1e-6 (declaration); quotable margin until reconciled = ≥ 0.0461028 (safe under either).
 - Post-correction status: CONJECTURAL, conditional on (i) divisor TODO-VERIFY, (ii) B7, (iii) half-width reconciliation. Phase-1 infeasibility is UNCONDITIONAL and referee-confirmed.
 - NEXT: PGT-1 cold referee (now unblocked, launching); S2 second-winding-box remains the recommended route to the NOGO countermodel (blockers B1/B2/B7).
+
+## 2026-08-23 07:14Z — PGT-1 REFEREED: PROMOTABLE-WITH-CORRECTIONS; corrections applied
+- Referee installed verbatim: lane_g/PGT1_EXPLICIT_FORMULA_COROLLARY_REFEREE.md. All three load-bearing claims CONFIRMED (reflection direction, O_q(x^{1/2}(log x)²) bound, Prop 3.2 constant); q=3 cross-check reproduced with exact factor-2 slack; the no-Ω argument "could not break". FJS divisor list 1–7 independently extracted — item 6 is the ONLY nonreal off-line source, so the strong reading is licensed (D6 upgraded from asserted to receipted).
+- 4 HIGH defects corrected in appended §10 (numstat 71/0): C1 area factor 2 (|F_q| = 2π(1/2−1/q); Weyl constant /2 not /4); C2 density-zero vs ON-LINE zeros made CONDITIONAL on a discrete Weyl law (Phillips–Sarnak open — combined N_d+M ≍ T² stays unconditional); C3 Hejhal 7.11/7.12 disclosure attached to the quotable §5 block; C4 [Sel90] unread-citation inheritance declared.
+- 5 lower defects acknowledged incl. D5 (ψ_1→ψ formula slide — verdict survives by the easier Re<1/2 argument, adopted), D7 (cite Garbin–Jorgenson 2018 wherever novelty travels), D8 ("every non-arith" → "every finite q≥3, non-arith in particular").
+- Status: PROMOTED at remark-class with corrections. Referee also independently endorsed the §7 audience-row downgrade.
+- Referee queue now empty. Remaining lanes: d8 compute (local + Kaggle wave 2) → merge/bank → FIG-1 + paper §8 placeholder; paper §9 softening still pending next paper pass; S2 second-winding-box recommended next lane (owner-gated to open).

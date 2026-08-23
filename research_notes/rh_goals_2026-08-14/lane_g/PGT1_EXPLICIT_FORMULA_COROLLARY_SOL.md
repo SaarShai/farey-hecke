@@ -378,3 +378,74 @@ owner to action.
 
 **Final lane label: UNREFEREED / CONJECTURAL. Class = STRUCTURAL +
 REMARK-ONLY. Explicitly NOT an Ω-result. READY FOR COLD REFEREE.**
+
+---
+
+## §10 CORRECTION BLOCK (dated append-only, 2026-08-23, post cold referee)
+
+Referee: PGT1_EXPLICIT_FORMULA_COROLLARY_REFEREE.md — verdict
+PROMOTABLE-WITH-CORRECTIONS. All three load-bearing claims (reflection into
+Re s < 1/2; O_q(x^{1/2}(log x)²); Prop 3.2 constant) independently
+re-derived and CONFIRMED; the q=3 cross-check reproduced (factor-2 slack
+exact). The corrections below SUPERSEDE §§1–6 wherever they conflict; body
+text above untouched (append-only rule).
+
+### C1 (D1 — HIGH): fundamental-domain area factor 2.
+§3.5/§6 printed |F_q| = π(1/2 − 1/q). CORRECT (Gauss–Bonnet, (2,q,∞) von
+Dyck): |F_q| = **2π(1/2 − 1/q)**; q=3 check: π/3 ✓ (the printed formula gave
+π/6). Downstream Weyl constant corrected: ((1/2−1/q)/**2**)·T², not /4
+(q=5: 0.15, not 0.075). The slip was the reflection-triangle area; the
+density conclusion's ORDER (T² vs T log T) is unaffected.
+
+### C2 (D2 — HIGH): density-zero claim made CONDITIONAL.
+"Z_q has ≍_q T² zeros on Re s = 1/2" is NOT proven for non-arithmetic G_q —
+the trace formula gives only N_d(T) + M(T) ~ (|F_q|/4π)T² (discrete
+spectrum + scattering winding), and the Phillips–Sarnak expectation is
+precisely N_d(T) = o(T²) with M(T) carrying the T². Corrected statement:
+the COMBINED count N_d + M is ≍_q T², unconditionally; the claim "the
+off-line zeros are a density-zero subset OF THE ON-LINE ZETA ZEROS" is
+CONDITIONAL on a discrete Weyl law N_d(T) ≫ T log T for G_q, which is open
+(and, in an extreme cusp-dissolution scenario, false). The off-line set IS
+unconditionally density-zero against the combined T² count.
+
+### C3 (D3 — HIGH): mandated Hejhal disclosure attached to the quotable block.
+The §5 quotable paragraph and the §0 headline are amended to carry, wherever
+they travel: "Printed partial antecedent: Hejhal LNM 1001, Theorem 7.11 and
+Corollary 7.12 (pp. 577–579) prove zeros/poles of φ_N in prescribed
+rectangles for all sufficiently large N; the present count covers ALL finite
+q ≥ 3 with an explicit T log T lower bound." Mandate:
+LAW_ORBIFOLD_SCATTERING_COUNT_SOURCE_SOL.md:461-465.
+
+### C4 (D4 — HIGH): [Sel90] inheritance declared.
+Add to §1's consumed-caveats list and read into every "unconditional given
+the LAW" in this note: the LAW's (C) count rests on [Sel90, Lemmas 1, 2],
+unread by author and both referees at time of writing; per the sibling NOGO
+note's binding LEDGER-RULE clause, "PROVED"/"CONFIRMED" here means proved
+modulo that one unread citation. (The SEL90 bypass discharges the
+(J)-avg/H3 route for the LAW's conclusion chain, but the citation standing
+declared by the second audit still binds this note's (C) usage as written.)
+
+### C5 (D5–D9, acknowledged):
+- (D5) §4's ψ_{1,Γ}→ψ_Γ slide: the cited Avdispahić ψ_Γ formula absorbs the
+  zero-sum into the O(x^{3/4}) error; the derivation as written does not
+  attach to a cited formula. The VERDICT stands by the easier argument: any
+  reflected block sits at Re < 1/2, hence below x^{1/2}. Prop 4.1's proof is
+  reread as that easier argument.
+- (D6) "all of them in Re s < 1/2" now receipted: referee extracted the full
+  FJS Z-divisor list 1–7; items 1/2/5/7 real-or-on-line, 3 at s=1/2, 4 are
+  poles — item 6 is the ONLY source of nonreal off-line Z-zeros. The strong
+  reading ("all off-line zeros of Z_q") is licensed.
+- (D7) Prior art: Garbin–Jorgenson 2018 pp.161–163 (quantified accumulation
+  for Hecke G_N) is the sharpest banked antecedent — cite wherever §8.5's
+  novelty claim travels.
+- (D8) §5's "every non-arithmetic Hecke surface" corrected to "every finite
+  q ≥ 3, non-arithmetic in particular" — the property is NON-DISCRIMINATING
+  (q=3 has it too); never an arithmeticity signature.
+- (D9) "rounded UP (2, not 1)" withdrawn: 2 is the true log power under (U),
+  not safety slack.
+
+### Post-correction status
+Remark-class, refereed PROMOTABLE-WITH-CORRECTIONS (applied above). Headline
+unchanged and referee-confirmed: PGT-error-neutral, NO Ω-result; the no-Ω
+argument was the part the referee "could not break". Gates before any §5
+quotation leaves the lane: C1–C4 (done above); before paper-level use: C5.
