@@ -859,14 +859,23 @@ paragraph.
 
 ## 9. Remark / outlook — prime geodesics (NOT a theorem)
 
-**Label this a REMARK, not a result.** Off-line resonances enter the
-explicit formula behind the prime geodesic theorem for the underlying
-surface, so a proven family of off-line resonances on non-arithmetic Hecke
-surfaces is a constraint that error-term analyses in that literature must
-accommodate. Per `NOGO_AUDIENCE_SURVEY.md` (addendum), the prime-geodesic
-community has **direct object overlap** with this theorem's subject, and —
-unlike the class-(b) redirect targets — gains a *usable input* rather than
-only a no-go.
+**Label this a REMARK, not a result.** [Softened 2026-08-23 per PGT-1
+(`lane_g/PGT1_EXPLICIT_FORMULA_COROLLARY_SOL.md`, refereed with corrections
+§10).] The off-line resonances of §3 are Selberg-zeta zeros — by the
+Friedman–Jorgenson–Smajlović divisor description (item 6) they enter
+*reflected*, at \(1-\rho\) with \(\operatorname{Re}<1/2\). Their total
+contribution to the prime geodesic counting formula is therefore
+\(O_q(x^{1/2}(\log x)^2)\): dominated by the main term and by every error
+term under study. The correct statement is *structural bookkeeping*, not a
+constraint: the compact-surface divisor description of Selberg-zeta zeros
+fails for every finite \(q\ge 3\) (non-arithmetic in particular; the
+property is non-discriminating — \(q=3\) has it too), by an infinite,
+counted margin (\(\gg_q T\log T\) reflected zeros below height \(T\)) —
+harmlessly for the PGT. Printed partial antecedent: Hejhal LNM 1001,
+Thm 7.11/Cor 7.12 (large \(N\)); quantified accumulation: Garbin–Jorgenson
+(2018). No error-term analysis needs to change; per
+`NOGO_AUDIENCE_SURVEY.md` (correction addendum), the prime-geodesic
+audience row is low–moderate.
 
 **Why the two sides are now asymmetric in kind.** On the arithmetic side the
 divergence is already theorem-grade: improved error terms in the prime
@@ -878,6 +887,8 @@ that side: infinitely many off-line scattering resonances, in the frame the
 explicit formula uses. That is all it supplies.
 
 **What must not be said here.** We derive no prime geodesic error term, no
+Ω-result (the LAW gives no information on the imaginary parts, so no
+non-cancellation bound is reachable even in principle — PGT-1 §8.6), no
 effective first resonance height, and no \(q\)-uniform statement; the LAW
 gives no effective first height at all. The remark is an outlook paragraph
 naming a consumer, not a claim about the PGT.

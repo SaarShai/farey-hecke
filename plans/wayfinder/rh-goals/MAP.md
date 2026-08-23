@@ -2493,3 +2493,6 @@ paper its exhibit).
 - 5 lower defects acknowledged incl. D5 (ψ_1→ψ formula slide — verdict survives by the easier Re<1/2 argument, adopted), D7 (cite Garbin–Jorgenson 2018 wherever novelty travels), D8 ("every non-arith" → "every finite q≥3, non-arith in particular").
 - Status: PROMOTED at remark-class with corrections. Referee also independently endorsed the §7 audience-row downgrade.
 - Referee queue now empty. Remaining lanes: d8 compute (local + Kaggle wave 2) → merge/bank → FIG-1 + paper §8 placeholder; paper §9 softening still pending next paper pass; S2 second-winding-box recommended next lane (owner-gated to open).
+
+## 2026-08-23 07:20Z — Paper §9 softened per PGT-1 (deferred item cleared)
+- dissemination/PAPER_SKELETON_DRAFT.md §9 "must accommodate" replaced with the refereed structural-bookkeeping statement (reflected zeros, O_q(x^{1/2}(log x)²), harmless for PGT, all finite q≥3 non-discriminating, Hejhal + Garbin–Jorgenson antecedents, audience row low–moderate); "no Ω-result" added to the must-not-say list. DRAFT status unchanged; nothing sent.
