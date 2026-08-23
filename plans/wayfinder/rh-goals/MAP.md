@@ -2610,3 +2610,22 @@ lane; d8/S2 compute untouched):
 PS-1 (Gamma_0(4)+chi_alpha port-and-certify) opens on a PASS/COND-PASS PS-0
 referee verdict — not before. S2 Kaggle campaign in flight (s00-s04 RUNNING,
 poller feeding); harvest on completion.
+
+## 2026-08-23 09:34Z — SCAT-1 divisor gate: DISCHARGED-modulo-page-check (FJS §2.4-2.5 + §3.3)
+
+Literature agent landed (lane_g/SCAT1_DIVISOR_GATE_CHECK.md, UNREFEREED):
+- Statement pinned in FJS arXiv:2011.12795 (sha-receipted PDF matches repo bank):
+  phi-divisor (§2.4, per Venkov pp.59-60) + 7-item Z-divisor (§2.5, per Venkov
+  p.49 and Hejhal LNM 1001 Vol.II p.499). Item 6 = sole source of nonreal
+  off-line Z-zeros, all in Re s < 1/2.
+- Multiplicity: covered by 2-line derivation from FJS §3.3 (Z_- = Z_+ phi +
+  printed same-multiplicity symmetry) — gives Lemma 3.1(i)+(ii) exactly.
+- Orbifold/elliptic: explicitly covered (elliptic terms only enter real trivial
+  zeros s=-n); scalar-vs-determinant phi immaterial (one cusp, k=1).
+- Residue: Hejhal Vol.2 "Thm 5.3" page itself unopened — DISCHARGED-modulo-
+  page-check; nothing load-bearing depends on that page.
+CONSEQUENCE: SCAT-1's last gate is now citation-pinned (modulo one optional
+page check). The certified-conditional phi_5 zero rests on FJS+Venkov divisor
+statements, not on an unread citation. Next: Aristotle formalization of the
+abstract reflection core of Lemma 3.1 (phi meromorphic, phi(s)phi(1-s)=1,
+pole at s* => zero at 1-s*).
