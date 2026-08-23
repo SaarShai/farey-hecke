@@ -52,3 +52,15 @@ lake build shipped) — consistent with prior dispatches.
   `87925d91-8e83-452a-a4b5-785493464ca2` QUEUED → RUNNING (1% at ~30s).
   Note: `aristotle show` streams live progress and does not exit while the
   task runs — Ctrl-C after reading the status line.
+
+## COMPLETE (2026-08-23, append-only)
+
+Aristotle finished: full Lean proof, no sorry/admit (grep 0), axioms only
+propext / Classical.choice / Quot.sound per Aristotle's report. Proof route:
+affine change of variable z -> 1-z preserves meromorphic order (derivative
+-1 != 0); functional equation makes phi * g eventually 1 near s*, so order 0;
+order additivity gives -m + ord(phi at 1-s*) = 0. Result downloaded to
+projects/aristotle_dispatch_v33/aristotle_dispatch_v33_aristotle/ (75-line
+Scat1Lemma31Reflection.lean inside). Local lake build NOT run (toolchain
+fetch heavy); Aristotle-side elaboration report is the current evidence —
+MACHINE-VERIFIED (Aristotle-side), local re-elaboration optional.

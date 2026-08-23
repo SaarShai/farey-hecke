@@ -2738,3 +2738,15 @@ Merge correctly NOT run (fail-closed). Box now idle (d8 drained, S2 is
 Kaggle-only) -> gap-fill queue launched LOCALLY, seeded from harvested
 checkpoints (~101 leaf-solves); merge on full 16-span coverage, then paper §8
 placeholder + FIG-1.
+
+## 2026-08-23 11:58Z — Aristotle COMPLETE: Lemma 3.1 reflection core machine-verified
+
+scat1-lemma31-reflection finished (2h23m): sorry-free Lean proof of the
+Lemma 3.1 step (ii) core (pole order m at s* => zero order m at 1-s*, from
+phi(z)phi(1-z)=1 near s*), axioms propext/Classical.choice/Quot.sound only.
+Downloaded + banked under projects/aristotle_dispatch_v33/. SCAT-1 status:
+divisor gate citation-pinned (FJS) + reflection core now MACHINE-VERIFIED
+(Aristotle-side); the certified-conditional phi_5 zero chain is fully
+receipted modulo the optional Hejhal page check and local re-elaboration.
+Other lanes: d8 gap-fill healthy (a0 span done=53/64 at check); S2 kernels
+s00/s01 RUNNING, poller alive, 0 chunks harvested yet.
