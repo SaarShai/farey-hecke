@@ -190,3 +190,121 @@ LAW_DEFORMATION_PRIOR_ART.md — not duplicated here.)
   pass (contents inferred from the 2012 paper, BFM, and publisher/search
   abstracts); PS-1 must read the book's relevant chapter before committing
   the target zero. Web-search summaries above are secondary until then.
+
+## §7 — Referee corrections applied (2026-08-23, append-only)
+
+This section supersedes the corresponding statements in §§1–6; the original
+text is retained only to preserve the append-only record.
+
+### Major corrections
+
+- **C1 — missed Pohl coding and wrong family choice.** Referee point: the sweep
+  omitted Pohl's transfer operators for arbitrary finite-dimensional unitary
+  representations of Hecke triangle groups (arXiv:1503.00525) and the
+  Möller–Pohl identification for any Hecke triangle group and unitary character
+  (arXiv:1606.09109), invalidating the claim that the multiplier direction was
+  unswept and that Γ₀(4) was uniquely instrumented. **Correction:** PS-1 is
+  re-decided to the fixed-group family `G_5 + χ_α` via Pohl's coding, adding
+  unimodular `χ_α(γ)` weights to the already-calibrated Rosen blocks and
+  retaining the q=5 pins; it is **not** a Γ₀(4)/Mayer coding port. **New
+  obligation:** before compute, write the explicit `G_5` character,
+  generator/block weights, and specialization at the arithmetic point, and add
+  both Pohl papers to the prior-art ledger.
+
+- **C2 — fixed-group capability was over-claimed.** Referee point: the banked
+  result certifies a winding-1 box for a truncated transfer-operator determinant
+  plus a tail bound, while the determinant-to-resonance identification remains
+  outside its verdict. **Correction:** the repo holds (i)+(iii) at fixed groups
+  only **at conditional scope**; PS-2 is not yet demonstrated end to end.
+  **New obligation:** every capability or novelty claim must preserve the
+  determinant-to-resonance caveat until that link is separately discharged.
+
+- **C3 — BFM and the kill trigger were mischaracterized.** Referee point: BFM
+  Thms 1.4/1.5 give rigorous but asymptotic, non-effective curves only for
+  `k >= k1` with unspecified `k1`, with exponentially small character values
+  `α_k(t) ~ exp(-πk/t)`; they do not presently cover the finite `α ~ 0.1`
+  regime where visible drift occurs. **Correction:** the novelty axis is
+  effective finite-α localization, not merely certification, and the old BFM
+  overlap trigger is vacuous. **New obligation / kill trigger:** kill if an
+  effective version of BFM Thm 1.4 with explicit `k1` appears, or if the target
+  zero's α-range lies inside a proved locus.
+
+- **C4 — competitor coverage and scoop risk were understated.** Referee point:
+  Levitin–Strohmaier already rediscover the four arithmetic one-cusp genus-one
+  surfaces along a numerical family, while Bandtlow–Pohl–Schick–Weiße
+  (arXiv:2002.03334), combined with Bandtlow–Slipantschuk a-priori bounds, is the
+  nearest live route to certified family computations. **Correction:** the
+  Teichmüller option is already occupied at the numerical family-with-arithmetic-
+  point tier, so its only surviving delta is certification; the Schottky-family
+  line is the nearest scoop risk, although no interval-certified output was
+  found. **New obligation:** re-check the Bandtlow–Pohl–Schick–Weiße scoop risk
+  on **2026-11-01**.
+
+- **C5 — zeta zero versus resonance was assumed.** Referee point: for nonzero
+  character the singular cusps and continuous-spectrum contribution change, so
+  a zero of `Z(Γ,χ_α;s)` cannot be called a resonance without a
+  character-dependent divisor argument. **Correction:** the primary numerical
+  certificate is a Selberg-zeta/determinant zero; “resonance” is conditional
+  until the divisor identification is proved. **New obligation:** PS-2 must
+  contain a named **zeta-zero-vs-resonance identification** obligation for the
+  `G_5 + χ_α` family.
+
+- **C6 — PS relevance contradicted itself.** Referee point: finitely many
+  certified α-boxes carry no information about the counting conjecture
+  `N_d(T) = o(T^2)`. **Correction:** a PS-4/PS-5 output would be illustrative of
+  the dissolution/off-line-drift phenomenon only, with **no bearing on the
+  Phillips–Sarnak counting conjecture**; it is not “evidence-grade for PS.”
+
+- **C7 — the stated engine target does not exist in the main working tree.**
+  Referee point: `engine/certify/` is empty there, and the evaluator plus
+  `zeta_cert_rosen.py` exist only under `.worktrees/aletheia-restore/`.
+  **Correction:** the plan may name those engine capabilities only from the
+  restored worktree. **New obligation / restore precondition:** PS-2 cannot
+  begin until the engine has been restored or activated from the explicit path
+  `.worktrees/aletheia-restore` and its runnable state has been verified.
+
+- **C8 — grid-and-perturbation gluing is the weaker design.** Referee point:
+  because the determinant is holomorphic in `s`, real-analytic in `α`, and the
+  existing contour code uses `acb` balls, α itself can be enclosed as an
+  interval ball; contour exclusion of zero then certifies the constant winding
+  across the whole α interval. **Correction:** use **α-ball contour enclosure**,
+  not a finite α grid plus a separate perturbation-gluing lemma. **New
+  obligations:** (1) re-derive the sector reduction after the `sign = +/-1`
+  real/parity symmetry is lost, using the appropriate character-weighted
+  analogue; (2) prove `dim_tail_from_matrix` uniform in α over each interval
+  ball; and (3) choose and certify contour width against the full α-induced
+  zero drift, since insufficient width makes winding zero or indeterminate.
+
+### Minor corrections
+
+- **m1 — direct internal antecedent omitted.** Referee point: the repo's
+  `practical_value_2026-08-16/PRIOR_ART_CERTIFIED_SPECTRAL.md` already surveys
+  the INTLAB/kv/Arb/Petković argument-principle certification line.
+  **Correction:** that survey is the direct antecedent for the “(iii)
+  certified” column and must be cited with its conditional-scope caveat.
+
+- **m2 — arithmetic anchors were understated.** Referee point: BFM identify
+  arithmetic character values `α in {1/8, 1/4, 3/8, 1/2}`, not only `α = 0`.
+  **Correction:** the Γ₀(4) comparator has multiple certifiable arithmetic
+  anchors on its character path; these are comparison assets even though PS-1
+  is now the `G_5 + χ_α` family.
+
+- **m3 — prior art for the repo's own Hecke computations was omitted.**
+  Referee point: Fraczek–Mayer–Strömberg, arXiv:0804.4837, already computes
+  Selberg zeta functions on Hecke triangle groups. **Correction:** cite it as
+  prior art for `G_q` zeta computation and do not present use of a Hecke-group
+  transfer operator itself as novel.
+
+- **m4 — the closest published tail-bound analogue was omitted.** Referee
+  point: arXiv:2509.17936 approximates `Z_{Γ_w}` by finite determinants with an
+  explicit exponentially decaying error for infinite-area Hecke groups.
+  **Correction:** add it to the comparison table as the nearest published
+  analogue of the repo's tail-bound layer; its infinite-area setting means it
+  does not fill the cofinite certified-family gap.
+
+- **m5 — no cost claim was falsifiable.** Referee point: §§1–6 gave no matrix
+  size, α sampling/coverage density, or wall-clock estimate. **Correction:**
+  “squarely our demonstrated capability” is withdrawn; feasibility remains
+  conditional pending a costed preflight. **New obligation:** PS-2 must state
+  matrix size `N`, α-ball subdivision/coverage density, precision and tail
+  targets, and measured or benchmarked wall-clock cost before a production run.
