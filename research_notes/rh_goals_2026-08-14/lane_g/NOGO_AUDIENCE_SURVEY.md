@@ -169,3 +169,18 @@ Anything stronger than that is over-claiming.
   exposed. Do not report them as (b).
 - No claim here has been checked against the actual lane-G proof text; this
   survey takes the theorem statement as given by the task brief.
+
+## Addendum (2026-08-23, owner-directed) — three audience groups added
+
+Owner reviewed the prime-side reading of the LAW and directed these
+additions to the outreach table (classification mine, owner-approved):
+
+| Program | Exposure | Active scale | Redirect value |
+|---|---|---|---|
+| Prime geodesic theorems on hyperbolic surfaces (error terms, second moments) | **direct object overlap** — non-arith Hecke surfaces' scattering data IS our theorem's subject; off-line resonances enter the PGT explicit formula | ~30–80 | **high** — the LAW supplies the first proven off-line resonance family their error-term analyses must accommodate |
+| Beurling generalized primes | **a-adjacent** (their program = series-side sibling: which PNT facts survive weakened multiplicativity; known RH-failures) | ~20–50 | moderate–high as readers/amplifiers; natural referees for the "arithmetic input is essential" framing |
+| Probabilistic prime models (Cramér-type, random multiplicative f'ns) | heuristic | ~20–50 | low–moderate — LAW reinforces the known lesson that randomness models miss arithmetic-driven rigidity |
+
+Note: the prime-geodesic row is the strongest addition — unlike the
+class-(b) redirect targets, these researchers gain a USABLE INPUT (a
+certified off-line resonance family), not just a no-go.

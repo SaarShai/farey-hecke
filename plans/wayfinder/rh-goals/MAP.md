@@ -2353,3 +2353,18 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
 - NOT licensed: q-uniform constants, effective heights, H3
   formalization, (J)-sharp, (C), and the §6 paper draft (redraft per
   D9/D10/D11 pending).
+
+## 2026-08-23 06:03Z — OWNER: dissemination GO; audience expanded
+
+- Owner acknowledged the NOGO promotion and gave the GO for the
+  dissemination step.  DISSEMINATION LANE OPENED: draft (1) arXiv
+  paper skeleton — LAW + NOGO metatheorem + q8 certificate + audience
+  framing per NOGO_AUDIENCE_SURVEY.md honesty anchors; (2) Koyama
+  letter.  DRAFTS ONLY: nothing is sent, posted, or submitted without
+  explicit per-item owner approval.
+- Owner-directed audience additions banked in NOGO_AUDIENCE_SURVEY.md
+  addendum (15+/0−): prime-geodesic community (~30-80, HIGH — gains a
+  usable input: certified off-line resonance family entering the PGT
+  explicit formula), Beurling generalized primes (~20-50,
+  readers/amplifiers/referees), Cramér-type probabilistic models
+  (~20-50, heuristic reinforcement).
