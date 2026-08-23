@@ -2151,3 +2151,14 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   Jensen/Littlewood toolkit, which if successful REPLACES the citation
   and closes the dependency without the source.  Either route
   suffices; both are better (cross-check).
+
+## 2026-08-23 07:30Z — OWNER: NOGO lane is TOP PRIORITY; SEL90 bypass confirmed as the route
+
+- Owner: the NOGO metatheorem is now the program's top priority — it
+  converts the LAW into a proven no-go fact about RH proof strategies
+  (within its stated scope: schemas valid for all structures
+  satisfying A).  All judgment/referee capacity routes to NOGO first
+  when lanes contend.
+- Owner: the (J) re-derivation bypass is the chosen route for the
+  Selberg-1990 dependency (obtaining the printed source remains a
+  welcome cross-check, owner-side).
