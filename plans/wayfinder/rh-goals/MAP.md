@@ -2585,3 +2585,28 @@ Campaign build agent landed (receipt lane_g/S2_CONTOUR_CAMPAIGN_RECEIPT.md, UNRE
 On success: second certified Z-zero box at Re 0.41054, |t| 7.8198 -> Lemma 3.1
 reflection -> two phi_5 zeros at distinct real parts -> NOGO-OPEN-1 closes
 (referee-gated at assembly).
+
+## 2026-08-23 09:30Z — OWNER BLANKET GO: full autonomy; three lanes opened during Kaggle window
+
+Owner directive (2026-08-23): "continue without needing my permission. make as
+much progress as you can. remember to use kaggle and aristotle. also use gpt
+5.6 luna (xhigh effort) agents, via codex, for small-medium tasks." This
+unblocks previously owner-gated openings (PS-1 included); dissemination
+(sending paper/letter externally) stays gated — that is a separate per-item
+send approval, not covered by this directive.
+
+Opened concurrently (all background, read-only referee seats + one literature
+lane; d8/S2 compute untouched):
+1. COLD REFEREE of S2_SECOND_WINDING_BOX_SOL.md -> report to
+   S2_SECOND_WINDING_BOX_REFEREE.md (B7 root-cause, half-width reconciliation,
+   B1 spread, fallback selection, §6-vs-dispatched-N=288 consistency).
+2. COLD REFEREE of PS0_DEFORMATION_SCOPING_SOL.md -> report to
+   PS0_DEFORMATION_SCOPING_REFEREE.md (gap occupancy 2021-2026, DROP-verdict
+   consistency, BFM kill trigger, PS-1 technical coherence, Weyl constants).
+3. SCAT-1 divisor gate literature check (Hejhal LNM 1001 Vol.2 Thm 5.3 /
+   Venkov / FJS item 6 via the PGT-1 referee's extraction) -> report to
+   SCAT1_DIVISOR_GATE_CHECK.md. Discharges the LAST SCAT-1 gate if pinned.
+
+PS-1 (Gamma_0(4)+chi_alpha port-and-certify) opens on a PASS/COND-PASS PS-0
+referee verdict — not before. S2 Kaggle campaign in flight (s00-s04 RUNNING,
+poller feeding); harvest on completion.
