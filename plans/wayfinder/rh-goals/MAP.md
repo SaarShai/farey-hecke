@@ -2629,3 +2629,25 @@ page check). The certified-conditional phi_5 zero rests on FJS+Venkov divisor
 statements, not on an unread citation. Next: Aristotle formalization of the
 abstract reflection core of Lemma 3.1 (phi meromorphic, phi(s)phi(1-s)=1,
 pole at s* => zero at 1-s*).
+
+## 2026-08-23 09:37Z — PS-0 REFEREED: PROMOTABLE-WITH-CORRECTIONS (8 majors); PS-1 REDIRECTED to G_q + chi_alpha
+
+Cold referee report installed verbatim (PS0_DEFORMATION_SCOPING_REFEREE.md).
+Core gap (off-line resonances + deformation family w/ arithmetic point +
+interval-certified localization) SURVIVES the referee's independent 2021-2026
+sweep. Majors: C1 sweep missed Pohl (1503.00525, 1606.09109 — transfer ops +
+Selberg zeta for Hecke triangle groups with ARBITRARY unitary reps) so the
+Gamma_0(4) family recommendation is re-decided: PS-1 = G_5 + chi_alpha
+reusing our own calibrated Rosen coding (cheaper, keeps q=5/q=7 pins);
+C2 "(i)+(iii) held" downgraded to conditional scope per R3B_FLAGSHIP_CERT.md:83;
+C3 BFM thms are asymptotic/non-effective (kill trigger rewritten to effective-
+k1 form); C4 Levitin-Strohmaier already family+arithmetic-point numerically,
+Bandtlow-Pohl-Schick-Weisse + Bandtlow-Slipantschuk = nearest scoop risk
+(re-check date to set); C5 zeta-zero-vs-resonance is character-dependent —
+named PS-2 obligation; C6 evidence-grade-for-PS clause deleted (no bearing on
+N_d(T)=o(T^2)); C7 engine lives in .worktrees/aletheia-restore (restore is a
+precondition — path now named); C8 alpha-BALL contour enclosure replaces
+grid+perturbation gluing (winding in acb with alpha an interval ball; new
+obligations: sector reduction re-derivation + dim-tail uniform in alpha).
+NEXT: corrections block §7 appended to PS0 SOL (delegated); PS-1 kickoff brief
+follows the corrected design (alpha-ball, G_5+chi_alpha, named obligations).
