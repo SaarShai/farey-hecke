@@ -2471,3 +2471,11 @@ paper its exhibit).
   should be softened in the next paper pass.
 - PGT-1 referee: queued behind SCAT-1 (top priority) — the note is
   remark-class, low blast radius.
+
+## 2026-08-23 06:39Z — SCAT-1 LANDED (UNREFEREED): certified φ_q zero, split verdict
+- Deliverable: research_notes/rh_goals_2026-08-14/lane_g/SCAT1_PHIQ_ZERO_CERTIFIER_SOL.md (482 lines). Status UNREFEREED/CONJECTURAL.
+- Phase 1 (Dirichlet-series enumeration route from the brief): INFEASIBLE by proof, not budget. D_q(s)=Σ d_q(n) g_{q,n}^{−2s} has abscissa of convergence exactly σ_c=1 (Landau + residue Res_{s=1}φ_q = 1/vol; geometric N_q(X)≍A_qX²). Entire target strip 1/2<Re s<1 lies outside. Receipts: q=3 residue = 3/π to 12 digits; log-log slopes 1.9909/1.9080/2.0650/1.9541 (q=5/8/12/θ) vs predicted 2. No Riemann–Siegel repair (functional eq is multiplicatively inverse). STANDING: stop all d_q(n)/g_{q,n} strip-evaluation work; enumerator retains Re s>1 uses.
+- Phase 2 DELIVERED (conditional): via Lemma 3.1 (divisor theorem + φ(s)φ(1−s)=1), the declared G_5 off-line Z-zero box reflects to a certified zero of φ_5: Re ρ ∈ [0.5461038199250553, 0.5461058199250553], Im ρ ∈ [−5.7635382417301305, −5.7635362417301305]; strict-right margin ≥ 0.0461038 (rounded down); conj ρ by reality. No dependency beyond what the parent G_5 theorem already carries. Cross-check via Teo functional eq: |K*_5(ρ)|≈1.3169, no divisor obstruction (float midpoints, NOT EVIDENCE).
+- Structural finding: NOGO-OPEN-1 ≡ NO_VERTICAL_LINE_COROLLARY's open item — closing one closes both via Lemma 3.1. Blocker is computational: a second certified Z_{G_5} off-line zero at a distinct real part. Candidate: SECOND_PIN_PREP s_2 ≈ 0.2430284+10.5602968i (Re-separated >0.21), blocked on B2 (needs N>160). Three milder fallbacks at Re 0.4105/0.4471/0.4691.
+- Open gates: B7 convention gate (independent reimpl put G_5 pin at Re 0.4332 vs 0.4539 — qualitative survives, endpoints NOT paper-quotable until resolved); TODO-VERIFY Hejhal LNM 1001 Vol.2 Thm 5.3 (or Venkov) for orbifold divisor (one page, promotes Claim 3.2).
+- NEXT: cold referee for SCAT-1 (ahead of PGT-1 referee); then S2 second-winding-box lane is the recommended route to the NOGO countermodel.
