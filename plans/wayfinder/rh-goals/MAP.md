@@ -2127,3 +2127,27 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   digitization small press).  Obtainable: Springer Collected Papers
   Vol. II (institutional/purchase ~$70-120) or the Festschrift via
   academic libraries.  OWNER ACTION required to obtain a copy.
+
+## 2026-08-23 07:15Z — OWNER GO: NOGO metatheorem lane opened; Selberg-1990 bypass lane opened
+
+- **NOGO lane** (owner: "go for everything outlined").  Steps:
+  - NOGO-1: isolate the explicit axiom list A (functional equation,
+    meromorphic continuation, spectral structure, growth) from
+    LAW_MINIMAL_HYPOTHESES.md + the LAW proof's actually-used inputs.
+  - NOGO-2: verify BOTH sides satisfy A — the arithmetic (q=3,4,6)
+    scattering determinants and the non-arithmetic ones — with
+    citations/receipts per axiom.
+  - NOGO-3: state + prove the metatheorem: any derivation of on-line
+    rigidity from A alone is invalid, witnessed by the LAW's objects.
+  - NOGO-4: cold adversarial referee; then paper-section draft.
+  Lane launched (Opus), lands as NOGO_METATHEOREM_SOL.md UNREFEREED.
+- **SEL90 bypass lane**: the Selberg-1990 dependency is NOT about
+  novelty — it is an INPUT: our chain (via Kelmer) cites Selberg's
+  Lemmas 1-2 for the Jensen-rectangle/pole-counting step (J).  Two
+  parallel discharge routes: (a) OWNER obtains the printed source
+  (Springer Collected Papers Vol. II / Festschrift, library or ~$70-120
+  purchase — agent cannot purchase); (b) lane launched (Opus) to
+  RE-DERIVE the (J) content independently from the standard
+  Jensen/Littlewood toolkit, which if successful REPLACES the citation
+  and closes the dependency without the source.  Either route
+  suffices; both are better (cross-check).
