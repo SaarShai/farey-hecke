@@ -2496,3 +2496,8 @@ paper its exhibit).
 
 ## 2026-08-23 07:20Z — Paper §9 softened per PGT-1 (deferred item cleared)
 - dissemination/PAPER_SKELETON_DRAFT.md §9 "must accommodate" replaced with the refereed structural-bookkeeping statement (reflected zeros, O_q(x^{1/2}(log x)²), harmless for PGT, all finite q≥3 non-discriminating, Hejhal + Garbin–Jorgenson antecedents, audience row low–moderate); "no Ω-result" added to the must-not-say list. DRAFT status unchanged; nothing sent.
+
+## 2026-08-23 07:29Z — Owner GO: S2 + NEXT-3 lanes OPENED
+- Owner approved commencing both waiting lanes. S2 lane launched (deliverable lane_g/S2_SECOND_WINDING_BOX_SOL.md): priority order B7 convention gate root-cause → half-width ±1e-6/±1.01e-6 reconciliation → second certified G_5 winding box (candidates: milder 0.4105437+7.820i or s_2 0.2430284+10.5602968i), which closes NOGO-OPEN-1 via SCAT-1 Lemma 3.1 (both pins strictly in 0<Re<1/2, per the refereed C3 hypothesis).
+- NEXT-3 PS-0 lane launched (deliverable lane_g/PS0_DEFORMATION_SCOPING_SOL.md): scoping per the ledger's PS-0 mapping; carries the PGT-1 D2 fact (N_d+M split; density claims conditional on discrete Weyl law) and the corrected |F_q| = 2π(1/2−1/q).
+- Owner Q answered: certified φ_q zero EXISTS conditionally (SCAT-1, refereed) on divisor TODO-VERIFY + B7 + half-width; S2 targets the second zero.
