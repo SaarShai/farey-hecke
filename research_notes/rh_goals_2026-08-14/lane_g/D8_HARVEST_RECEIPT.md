@@ -75,3 +75,57 @@ are re-run, never rounded up.
    is the shortest path.
 3. Merge only after all 16 spans report `leaves_complete: true` and the
    payload_sha256 build-identity gate passes.
+
+## 6. Gap-fill relaunch — 2026-08-23 (local, seeded)
+
+Launched 2026-08-23T11:25:25Z by the d8 gap-fill compute lane.
+
+### Commands
+
+```
+# Seed: copy fresher harvested checkpoints into the local receipts dir
+# (no collisions — d8/ previously held only a1 l64-256, a2, a3)
+cp shard_receipts/d8_kaggle_harvest/s00/SHARD_a0_l0-64.ckpt.json    shard_receipts/d8/
+cp shard_receipts/d8_kaggle_harvest/s01/SHARD_a0_l64-128.ckpt.json  shard_receipts/d8/
+cp shard_receipts/d8_kaggle_harvest/s02/SHARD_a0_l128-192.ckpt.json shard_receipts/d8/
+cp shard_receipts/d8_kaggle_harvest/s03/SHARD_a0_l192-256.ckpt.json shard_receipts/d8/
+cp shard_receipts/d8_kaggle_harvest/s04/SHARD_a1_l0-64.ckpt.json    shard_receipts/d8/
+
+# Queue: run_gap_fill_d8.sh = run_local_queue_d8.sh with spans s00-s04
+# (same driver q8_leaf_shard.py, same flags --depth 8 --N 262 --K 1
+#  --workers 12, same receipt schema/paths)
+cd kaggle_q8_subdivision && nohup nice -n 10 ./run_gap_fill_d8.sh \
+  > shard_receipts/d8/GAP_FILL.log 2>&1 &   # queue pid 12652
+```
+
+### Seeding evidence
+
+Driver resume lines must show `resumed=` equal to the harvested checkpoint
+record counts (41/50/57/37/34). First shard, from GAP_FILL.log:
+
+```
+Q8_SHARD arc=0 leaves=[0,64) depth=8 N=262 workers=12 resumed=41 pending=23
+```
+
+resumed=41 matches the s00 checkpoint's 41 records; only the 23 missing
+leaves are computed. Expected for the rest of the queue: s01 resumed=50
+pending=14, s02 resumed=57 pending=7, s03 resumed=37 pending=27, s04
+resumed=34 pending=30. Total pending 23+14+7+27+30 = 101 = the missing set.
+Verified running: 12 spawn-pool workers at nice 15, ~100% CPU each.
+
+### Expected wall time
+
+Prior local wave: 64 leaves/shard in ~3-10.7 h at 12 workers. For 101
+leaves across 5 sequential shards (with parallel-tail inefficiency on the
+small pendings): estimate **~6-18 h wall**, done in the ballpark of
+2026-08-23 late evening to 2026-08-24 morning UTC.
+
+### Harvest / monitor
+
+- Progress: `tail shard_receipts/d8/GAP_FILL.log` — `done=N/64` lines;
+  `=== GAPFILL DRAINED ===` marks completion.
+- On completion each span's final receipt overwrites
+  `shard_receipts/d8/SHARD_a{0,1}_l*.json` with `leaves_complete: true`
+  (checkpoints updated per-leaf, so a kill resumes).
+- Then all 16 spans live in `shard_receipts/d8/` (the 5 gap-filled + the
+  11 prior local receipts) — run `merge_shards.py` per §4/§5 gates.
