@@ -64,3 +64,10 @@ projects/aristotle_dispatch_v33/aristotle_dispatch_v33_aristotle/ (75-line
 Scat1Lemma31Reflection.lean inside). Local lake build NOT run (toolchain
 fetch heavy); Aristotle-side elaboration report is the current evidence —
 MACHINE-VERIFIED (Aristotle-side), local re-elaboration optional.
+
+## LOCAL RE-ELABORATION PASS (2026-08-23, append-only)
+
+`lake build` in projects/aristotle_dispatch_v33/aristotle_dispatch_v33_aristotle
+completed successfully (8034 jobs; log projects/aristotle_dispatch_v33/
+LEAN_REELAB.log; only unused-variable linter warnings). Lemma 3.1 reflection
+core is now machine-verified BOTH Aristotle-side and locally.
