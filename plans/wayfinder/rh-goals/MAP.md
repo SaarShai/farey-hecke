@@ -2032,3 +2032,27 @@ Owner-directed next steps once the LAW proof + q8 certification bank:
   weighted integral), which weakens H3 to the bare Jensen rectangle
   (J).  (J) itself blocks on obtaining Selberg 1990 — do not dispatch
   before that source is read.
+
+## 2026-08-23 06:05Z — NEXT-1 opener LANDED (UNREFEREED): Q0-gap plan + alpha rung
+
+- NEXT1_Q0_GAP_PLAN_SOL.md banked (612 lines, UNREFEREED/CONJECTURAL
+  throughout).  Headlines, at note strength only:
+  - Lever ranking (Δlog10 Q₀): L2 disc radius −6.97 (−9.40 joint with
+    L1), L1 Ω aspect ratio −4.59, L4 K₊ 117→10 −4.84; joint optimum
+    σ=1.48,H=6,r_z=0.025 → log10 Q₀ ≈ 18.79 (−17.63 from 36.4487).
+  - CLAIMED CORRECTION to banked framing: the −85.4 "α elasticity" is
+    identically −ln Q₀ under frozen parameters (= banked log q_A0''
+    85.3579) — it measures Q₀'s SIZE, not achievable reduction;
+    constrained elasticity −24.9, zero at σ=1.16.  α is not free:
+    α=2σ−1, and α·ν_z is invariant in the strip limit.
+  - α rung executed: −0.57 log10 (×3.73) at σ=1.16/α=1.32; raises the
+    C_R-independent floor 10^16.67→10^18.61; a 1.29x growth in the
+    frozen open gate K₊ erases the gain.
+  - Gate read: 7 of 8 discharged/dischargeable; (H-SIDE) K₊=117 the
+    one genuinely open gate AND the tax on every geometry lever.
+  - Independent conclusion matches banked: even the joint optimum
+    leaves ~17 orders to certified q≤21 — only a finite-base covering
+    theorem bridges the gap.
+- Caveats recorded in the note §1.7 (K₊ frozen/unlicensed, §2-§4 chain
+  not re-audited at p≠11/5, float not interval).  Cold referee lane
+  launching now; NO status change before its verdict.

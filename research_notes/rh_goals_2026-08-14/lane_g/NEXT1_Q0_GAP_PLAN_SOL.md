@@ -1,0 +1,612 @@
+# NEXT-1 — the Q_0 gap: lever ranking and one executed rung
+
+**STATUS OF THIS WHOLE FILE: UNREFEREED. Everything produced here is
+CONJECTURAL / EXPLORATORY. No status of any banked object is upgraded by
+this note, and this note edits no other file.** A cold referee runs later.
+
+Append-only. New work goes in a new dated section below; nothing above a
+dated header is ever rewritten.
+
+---
+
+## Section 1 (2026-08-22) — decomposition, ranking, and the executed α rung
+
+### 1.0 What this note is and is not
+
+It is (a) a restatement of the current `Q_0` decomposition with each term's
+dominant constant-dependence, (b) a ranking of feasible levers by expected
+`log10` reduction per unit effort, (c) a dischargeable-vs-open reading of the
+eight gates, and (d) **one executed rung** of the top-ranked analytic lever.
+
+It is **not** a theorem, not a promotion, not a referee report, and not a
+claim that any threshold below is valid. Every number computed in §1.5–§1.7
+is produced under **frozen inputs that the banked assembly does not license
+freezing** (named explicitly in §1.7.6). Read those numbers as *sensitivity
+estimates*, never as thresholds.
+
+---
+
+### 1.1 Receipts — the exact source statements this note consumes
+
+Quoted verbatim, with file:line, before any claim is made about them.
+
+**R1 — the operative threshold and its decomposition.**
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:882-883` (correction block 3, STATUS
+PROMOTED):
+
+> ```
+> Q_0 = max{q_RATE, q_divisor, q_side''', q_A0''', q_monotone}
+>     >= 2810199067910634377586449487575862960.
+> ```
+
+and `:786-788` (correction block 2):
+
+> "The theorem's threshold therefore reads Q₀ =
+> max{q_RATE, q_divisor, q_side''', q_A0''', q_monotone} ≥
+> 2810199067910634377586449487575862960, superseding §4.5's boxed value; all
+> conditionality unchanged."
+
+**R2 — the V3 term values, independently reproduced by the final pass.**
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:836-839`:
+
+> "Independently reproduced this pass: q_side''' = 1134004458443795841,
+> q_A0''' = 2810199067910634377586449487575862960, log10 = 36.4487370
+> 8539722848..., ratio to the old box 4.18530721..., both minimality
+> directions and floor-endpoint agreement checked, E_R(q_A0''') <=
+> 9.890974306e-21 < 117 and K_+^{1-nu} E_R^{nu} < 0.0439 <= m_z both
+> re-displayed at the new constant."
+
+**R3 — the two small terms.** `EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:438-439`
+(receipt block, unchanged across V1/V2/V3 since neither depends on `C_R`):
+
+> ```
+>   q_RATE                       = 12
+>   q_divisor                    = 3
+> ```
+
+**R4 — the V3 constants.** `BOUNDARY_ALPHA_THEOREM_SOL.md` §10:
+
+> "permit the paper-level coefficient \[ C_4'''=65459394456774532, \] and the
+> identical assembly gives the sharper outward minimal ceiling
+> \[ \boxed{C_R'''=541656022363559883954520},\qquad \log C_R''' =
+> 54.6489\ldots \] — a further \(1.7179\) e-folds below Section 9 (cumulative
+> \(30.5945\) below Section 4)."
+
+and, same section:
+
+> "\[ q_{A0}'''=2810199067910634377586449487575862960,\qquad \log q_{A0}''' =
+> 83.9263\ldots,\qquad q_{\rm side}'''=1134004458443795841. \]"
+
+**R5 — the closed forms.** `BOUNDARY_ALPHA_THEOREM_SOL.md:629-630` (5.1):
+
+> \[ T:={(1-\nu)\log K_+-\log m\over\alpha\nu}+{1\over\alpha}\log C_R. \]
+
+with, `:604-607`, `K_+=117`, `\nu=0.1552`, `m=0.0439`, `\alpha=6/5`; and the
+side branch `T_side = (log C_R - log K_+)/alpha`
+(`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:357`, Stage-2 code).
+
+**R6 — the `C_R`-independent floor.**
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:600-604`:
+
+> "\(Q_0\sim C_R^{5/6}e^{T_0}\) and \(e^{T_0}\approx4.7\times10^{16}\) is
+> \(C_R\)-independent: it is fixed by \(K_+=117\), \(m_z=0.0439\),
+> \(\nu_z=0.1552\), \(\alpha=6/5\) alone. Driving \(C_R''\) to **1** would
+> still leave \(Q_0\approx4.7\times10^{16}\)."
+
+**R7 — the elasticities, and the corrected scope.**
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:701-707` (correction block 1, D2):
+
+> "nu_z is the most elastic parameter of the C_R-INDEPENDENT FLOOR e^{T_0}
+> (elasticity -42.4 vs -38.4 for alpha). For the FULL Q_0 at C_R'', alpha is
+> the most elastic parameter (elasticity -85.4), because alpha also discounts
+> C_R^{1/alpha}. A geometry change raising alpha dominates one raising nu_z at
+> current C_R; only nu_z (or m_z, K_+) moves the floor."
+
+reproduced by `EFFECTIVE_THEOREM_ASSEMBLY_REREFEREE.md:395`:
+
+> "All three independently reproduced: `ν·∂T₀/∂ν = −42.354`,
+> `α·∂T₀/∂α = −38.386`, `α·∂logQ₀/∂α = −85.358`."
+
+**R8 — the D12 scope split.** `R5_MONOTONICITY_GATE_SOL.md:1074-1087`:
+
+> ```
+> - Positive FULL-BOUNDARY RATE, and family-uniform N-independent whole-tail
+>   monotonicity -- i.e. `(RATE-A) with alpha>0` in the form consumed by (G2)
+>   ... no RIGOROUS (machine-certified) campaign proves alpha>0. This remains
+>   the single standing blocker for the conditional statements above.
+>
+>   NOT open, and not what this row grades: `(RATE-A)` restricted to the single
+>   matched boundary Gamma_R^A with exponent 6/5 and activation q_RATE=12. That
+>   statement is CONFIRMED AT PAPER LEVEL ...
+> ```
+
+**R9 — the exponent's origin.** `BOUNDARY_ALPHA_THEOREM_SOL.md:238`,
+`:253-255`, `:407` and `:529`:
+
+> "Referee-confirmed `(FW)` gives, for \(p=2\sigma\), …"
+> "Thus the first two pieces already have exponent \(p-1\). At \(p=11/5\),
+> this is \(6/5\)."
+> "For \(2<p<3\), positive layer cake now gives …"
+> "Set \(p=11/5\)."
+
+with the boundary fixed by `R3_TRANSPORT_EXECUTION_SOL.md:22-52`, quoted in
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:70-74`:
+
+> "\(\Omega=\{s:\frac12<\Re s<\frac{11}{10},\ |\Im s-t_0|<\frac12\}\);
+> \(\Gamma_R=\{\frac{11}{10}+it:|t-t_0|\le\frac12\}\)"; "\(r_z=\tfrac18\)".
+
+**R10 — what the finite block needs.**
+`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:583-588` quoting
+`R5_ACTIVATION_CLOSURE_SOL.md:483-488`, and `:589-604` (four reasons it is
+out of reach). Not re-quoted here; it binds §1.8.
+
+---
+
+### 1.2 (a) The decomposition, term by term
+
+`Q_0 = max{q_RATE, q_divisor, q_side''', q_A0''', q_monotone}` (R1). The
+`max` is **not claimed closed** — `q_monotone`'s remainder is un-evaluated
+(`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:533-544`), which is why R1 is an
+inequality.
+
+| term | value at V3 | closed form | dominant dependence | who moves it |
+|---|---|---|---|---|
+| `q_RATE` | **12** (R3) | absorption (4.1) at `p`, `q>=12` | none of `C_R,K_+,nu_z,m_z`; depends only on `p` through `F(q)=1/(3-p)+J_2(p)+J_4(p)/q` | (H-RATE) Scope 1 |
+| `q_divisor` | **3** (R3) | printed-theory holomorphy | none | (H-HOL) |
+| `q_side'''` | **1134004458443795841** (R2) | `floor(exp((log C_R - log K_+)/alpha))+1` | `C_R^{1/alpha}`, `K_+^{-1/alpha}` | (H-C4), (H-SIDE) |
+| `q_A0'''` | **2810199067910634377586449487575862960** (R2) | `floor(exp(T))+1`, `T` as in R5 | `e^{T_0} * C_R^{1/alpha}`, `T_0=((1-nu)log K_+ - log m)/(alpha nu)` | (H-C4), (H-SIDE), (H-GEOM) |
+| `q_monotone` | **un-evaluated remainder** | — | — | (H-RATE)/(H-ROUTE) scope |
+
+`q_A0'''` is the binding term, by 18 orders of magnitude over `q_side'''` and
+by 36 over `q_RATE`. **Every lever below is therefore a lever on `T`.**
+
+`T` splits as
+```
+log Q_0  =  T_0  +  (log C_R)/alpha
+T_0      =  ((1 - nu_z) log K_+  -  log m_z) / (alpha * nu_z)
+```
+At V3 constants this reads (reproduced §1.5, receipt R11):
+`log10 Q_0 = 16.6706 + 19.7780 = 36.4487` — i.e. **the floor `e^{T_0}` is
+already 46% of the exponent, and no `C_R` work can touch it** (R6).
+
+**A derived identity worth stating, because it deflates R7's headline number.**
+With `nu_z, m_z, K_+, C_R` frozen, `log Q_0 = A/alpha` for a constant `A`.
+Hence identically
+```
+alpha * d(log Q_0)/d(alpha)  =  - log Q_0.
+```
+Check against R7: the banked elasticity `-85.358` at `C_R''` equals minus the
+banked `log q_A0'' = 85.3579...`
+(`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:441` prints `q_A0_pp` whose log is
+`85.35789877...` at `:434`). At `C_R'''` the same quantity is
+`-83.9263` (R4's `log q_A0''' = 83.9263`). **So the "-85.4 elasticity" is not
+a measurement of how much `alpha` can buy; it is a restatement of how large
+`Q_0` is.** Any parameter entering as an overall `1/alpha` has that
+elasticity by definition. This does not refute R7 — R7 is arithmetically
+correct and its own scope sentence is careful — but it means the ranking
+below must be built on **constrained** derivatives (moving `alpha` along the
+geometry it is tied to), not on frozen-parameter elasticities. That
+observation is what motivated the executed rung in §1.5.
+
+---
+
+### 1.3 (b) Lever ranking
+
+Effort classes: **E1** = re-run existing certified machinery at new
+parameters (an Arb cover, a beta integral); **E2** = re-audit a banked
+paper-level chain at a shifted parameter; **E3** = new mathematics.
+
+Reductions are in `log10 Q_0`. To keep the arithmetic internally consistent
+they are measured against **this note's own calibration baseline
+`log10 Q_0 = 36.4190`** (§1.5.2, which uses this note's `m_z = 0.04444`
+rather than the banked floor `0.0439`); against the banked `36.4487` (R2)
+every figure below is a further `0.03` larger. All are **CONJECTURAL
+estimates from §1.5–§1.7**, under the frozen inputs of §1.7.6.
+
+| # | lever | est. Δlog10 | effort | per-unit-effort | evidence |
+|---|---|---|---|---|---|
+| **L1** | **`Omega` aspect ratio** — raise the rectangle height from `H=1` to `H≈6`, `sigma` unchanged | **−4.59** | E1 (+E2 for `K_+`) | **best** | §1.5.3, §1.6 |
+| **L2** | **`r_z`** — shrink the transport disc from `1/8` to `≈1/40` | **−6.97** alone; L1+L2 together **−9.40** | E1 (+E2) | **best** | §1.6 |
+| **L3** | **`alpha` via `sigma`** — move `Gamma_R` right, `alpha = 2*sigma - 1` | **−0.57 alone at `H=1`; +10.43 (WORSE) if pushed to `sigma=1.48` at `H=1`; −8.23 marginal once L1+L2 are in place** | E2 (whole §2–§4 chain at `p=2 sigma`) | conditional — see §1.5 | §1.5, §1.6 |
+| **L1+L2+L3 joint** | `sigma=1.48, H=6, r_z=0.025` | **−17.63** (to `log10 Q_0 ≈ 18.79`) | E1+E2 | — | §1.6 |
+| **L4** | **`K_+` sharpening** (117 → smaller) | `d log Q_0 / d log K_+ = (1-nu)/(alpha nu) = 4.5361` at banked geometry; 117→10 buys **−4.84** | E3 (the gate is only conditional today) | medium | §1.7.2 |
+| **L5** | **further `C_4` / `C_R` shaving** | remaining headroom to the floor is **−19.78** total, but at `1/alpha = 0.833 log10` per e-fold, and V1→V3 spent three referee cycles for 30.59 e-folds = −25.5 | E2 per step, and the cheap substitutions are spent | **declining** | R4, §1.7.3 |
+| **L6** | **gate consolidation** (see §1.4) | **0.00** | E2/E3 | n/a for `Q_0` | §1.4 |
+| **L7** | **exponent beyond `alpha >= 2`** (`p >= 3`) | unbounded in principle | **E3, blocked** | — | §1.7.4 |
+
+**Ranking commentary.**
+
+1. **The geometry levers (L1, L2) dominate and are the cheapest.** They move
+   the `C_R`-independent floor, which is the half of the exponent that
+   constant-shaving provably cannot reach (R6). Both consume only
+   recomputation of objects that already have certified machinery: the
+   harmonic-measure cover for `nu_z` and the `phi_infty` minimum cover for
+   `m_z` (both graded **PROVED, Arb interval cover** at
+   `EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:243-247`).
+2. **L3 is NOT a standalone lever and R7's steering sentence should not be
+   read as saying it is.** §1.5 shows `alpha` is bound to `nu_z` through the
+   same wall position: raising `sigma` pushes `Gamma_R` away from `D_z` and
+   `nu_z` falls. At the banked `H=1` the two effects nearly cancel (best
+   available `−0.57` at `sigma≈1.16`) and then **reverse** (`sigma=1.48` at
+   `H=1` gives `+10.40`, i.e. `Q_0` ten orders **worse**). L3 pays only
+   *after* L1 has lifted `nu_z` toward its strip limit.
+3. **L5 is the most-worked and now the least productive lever.** Its remaining
+   total headroom (−19.78) is larger than L1+L2, but that is the headroom to
+   `C_R = 1`, which is unattainable; and R4 records the V3 step as three
+   further substitutions inside the atom bridge for 1.7179 e-folds = −0.62
+   log10. At that rate L5 is roughly **−0.6 log10 per full referee cycle**,
+   versus L1's **−4.59 for one Arb cover re-run**.
+4. **L6 buys zero `log10`.** Gate work changes the theorem's *status*, not its
+   threshold. It is nonetheless the higher-value axis if the goal is a
+   publishable statement rather than a smaller number — see §1.8.
+
+---
+
+### 1.4 (c) The eight gates: dischargeable vs genuinely open
+
+Statuses below are **the banked ones**, unchanged. The "verdict" column is
+this note's UNREFEREED reading of *dischargeability*, not of truth.
+
+| gate | banked status (verbatim source) | this note's read |
+|---|---|---|
+| **(H-RATE) Scope 1** | "CONFIRMED-conditional (paper level)" (`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:775-780`); R8 confirms Scope 1 is *not* what the OPEN rows grade | **DISCHARGEABLE (formalization only)** |
+| **(H-HOL)** | "PROVED from printed theory" (`:250-252`) | **DISCHARGED** for the domains used |
+| **(H-C4)** | "CONFIRMED ... Required repairs: none ... fit to be banked as candidates" (`CR_REDUCTION_V3_REFEREE.md`, quoted at `:865-869`) | **DISCHARGEABLE (banking act)** |
+| **(H-ROUTE)** | "PROVED (domain correction), and BINDING on this note" (`:305`) | **DISCHARGED** (a constraint, honoured) |
+| **(H-GEOM)** | "PROVED (Arb interval cover)" (`:245-247`) | **DISCHARGED** |
+| **(H-SIDE)** | "CONFIRMED-conditional source input" (`:270`); historical row "CONJECTURAL / MISSING family-uniformly" (`R3_TRANSPORT_EXECUTION_SOL.md:250`) superseded only conditionally | **GENUINELY OPEN** |
+| **(H-TRANS)** | "ANALYTIC CORE REFEREED-CONFIRMED at the stated conditional scope" (`:844-852`) | **DISCHARGEABLE (formalization only)** |
+| **(H-REFL)** | "PRINTED-LITERATURE, same tier as (H-RATE)'s printed inputs" (`:781-786`, narrowed by F4 at `:871-878`) | **DISCHARGED** modulo citation hygiene |
+
+**Discharge sketch / blocker, one paragraph each.**
+
+- **(H-RATE) Scope 1 — dischargeable.** R8 settles the ledger conflict as a
+  scope split, so nothing mathematical is missing: what remains is machine
+  formalization of `BOUNDARY_ALPHA_THEOREM_SOL.md` §§3–4, whose sub-inputs
+  `(FW)` and `(DH_{2,4})` are each separately referee-CONFIRMED at paper level
+  (`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:194-195`). *Blocker:* none identified;
+  cost only. **Caution:** Scope 2 (full-boundary rate + family-uniform
+  whole-tail monotonicity) is **GENUINELY OPEN** per R8 and is *not* assumed
+  by the theorem — but it *is* what `q_monotone`'s remainder lives in, so
+  Scope 2 remains the reason R1 is an inequality.
+- **(H-HOL) — discharged.** `q_divisor = 3`; it contributes the smallest term
+  in the max and cannot bind.
+- **(H-C4) — dischargeable by a banking act.** The constant now in use,
+  `C_R'''`, has a repo referee file with "Required repairs: none". The
+  residual is that `CR_REDUCTION_V3_SOL.md` self-grades its outputs
+  "candidates". *Blocker:* administrative, not mathematical.
+- **(H-ROUTE) — discharged.** It forbids mixing the Route-B sixth-zero wall
+  with first-zero A0 quantities; the assembly consumes `K_+, m_z, nu_z` only.
+  Any geometry change in §1.5–§1.6 must re-honour it: a new `Omega` must be
+  re-declared as a first-zero A0 ledger, never silently paired with `K_F=109`.
+- **(H-GEOM) — discharged, and the *most reusable* asset here.** Both floors
+  are Arb interval covers of concrete functions. §1.5–§1.6 recompute the same
+  two objects at new geometry with ordinary floating point; converting those
+  to interval covers is exactly the existing machinery re-run.
+- **(H-SIDE) — genuinely open.** `K_+=117` is conditional on full-width `H_0`
+  and the anchor gate, and the family-uniformity concern is "answered
+  conditionally, not removed" (`EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:271-274`).
+  *Blocker:* an unconditional family-uniform bound on `sup|F_q|` over the
+  three non-RATE sides. This is also the gate every geometry lever leans on
+  (§1.7.6), which makes it the single highest-value open item on the page.
+- **(H-TRANS) — dischargeable (formalization only).** Its named discharger
+  reported: `R3_TRANSPORT_EXECUTION_REFEREE.md` confirms the two-constants
+  application, the `omega(s,Gamma_R;Omega)` interval cover, and Rouché
+  strictness. *Blocker:* none mathematical; but note the referee explicitly
+  did **not** discharge `C_R, alpha, q_RATE, q_divisor`, or a family-uniform
+  `K_+`, so it does not help (H-SIDE).
+- **(H-REFL) — discharged modulo citation.** Repaired at source to the
+  unconditional `phi_q(s) phi_q(1-s) = 1` (Hejhal Cor. 7.12, p. 579) plus
+  reality of the (7.5) coefficients; unitarity was withdrawn as an
+  over-broad extra hypothesis. *Blocker:* the printed page must be asserted
+  in-range before paper-level citation (D4/F4 chain).
+
+**Net.** Seven of eight gates are dischargeable or discharged in the sense
+above; **(H-SIDE) is the one genuinely open gate**, and it is also the one
+that every lever in §1.3 must pay a tax to. That is the single most useful
+output of part (c).
+
+---
+
+### 1.5 (d) THE EXECUTED RUNG — the sharpened `alpha` derivation
+
+**The lever, stated exactly.** By R9, the boundary exponent is not a free
+parameter: `alpha = p - 1` and `p = 2*sigma`, where `sigma = Re s` on
+`Gamma_R`. The banked choice `sigma = 11/10` gives `p = 11/5` and
+`alpha = 6/5`. The layer-cake (3.10) is valid for `2 < p < 3`, i.e.
+
+```
+1 < sigma < 3/2,      alpha = 2*sigma - 1  in  (1, 2).
+```
+
+So "sharpening `alpha`" **means moving the right wall of `Omega` to the
+right**. There is no other route to it inside this chain.
+
+**The constraint that R7's frozen elasticity omits.** `Gamma_R` is also the
+edge whose harmonic measure defines `nu_z`. Moving it right moves it *away*
+from `D_z`, so `nu_z` falls. `alpha` and `nu_z` are therefore **not
+independent**, and the quantity that actually enters `T_0` is the product
+`alpha * nu_z`.
+
+#### 1.5.1 Method
+
+All inequalities are re-derived, not assumed:
+
+1. **`nu_z(sigma, H)`.** `Omega` is the rectangle
+   `{1/2 < Re s < sigma, |Im s - t_0| < H/2}` (banked case `sigma = 11/10`,
+   `H = 1`). Put `x = Re s - 1/2 in [0, w]`, `w = sigma - 1/2`, and
+   `y = Im s - t_0 + H/2 in [0, H]`. The harmonic measure of the right edge
+   solves Laplace's equation with boundary data `1` on `x = w`, `0` elsewhere;
+   separation of variables gives the (uniformly convergent, termwise positive
+   on the relevant range) series
+   ```
+   omega(x,y) = sum_{n odd} (4/(n pi)) sin(n pi y / H) sinh(n pi x / H) / sinh(n pi w / H).
+   ```
+   `nu_z = inf_{partial D_z} omega`. Evaluated with 400 odd modes (tail
+   `< e^{-800 pi (w-x)/H}`, and `w - x >= 0.145` in every case run) at 1440–2880
+   equispaced points of `partial D_z`; the reported value is then **floored to
+   4 or 5 decimals (margin DOWN)**.
+2. **`m_z(r_z)`.** `m_z = min_{|s - z_0| = r_z} |phi_infty(s)|` with
+   `phi_infty` exactly as in `EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:76-78`,
+   `z_0 = 3/4 + i gamma_1/2`, evaluated at 360–720 boundary points, **floored
+   (margin DOWN)**.
+3. **`C_R(sigma, H)`.** The §4 assembly of R4/R9 re-run at general `p = 2 sigma`:
+   ```
+   C_R = M_0(sigma) * [ 2 pi^2 (S+1) p C_4''' F(12)  +  p * 128 (1+log 2) * G(p) ]
+   F(q) = 1/(3-p) + J_2(p) + J_4(p)/q
+   J_2(p) = 1/(p-2) + 2/(p-2)^2 + 2/(p-2)^3
+   J_4(p) = 1/(p-2) + 4/(p-2)^2 + 12/(p-2)^3 + 24/(p-2)^4 + 24/(p-2)^5
+   G(p)   = 1/(p-2) + 1/(p-2)^2
+   S      = sup_{Gamma_R} |s| = sqrt(sigma^2 + (t_0 + H/2)^2)
+   M_0(sigma) = B(sigma - 1/2, 1/2)
+   ```
+   `S` and `M_0` are **ceiled to 3 decimals (margin UP)**. `C_4'''` is held at
+   R4's value: the atom-bridge count `W_q(Y)` it bounds is `p`-free
+   (`BOUNDARY_ALPHA_THEOREM_SOL.md:407-418`), so this freeze is legitimate.
+   `M_0(sigma) = B(sigma-1/2, 1/2)` is **decreasing in `sigma`**, since the
+   integrand `u^{sigma-3/2}(1-u)^{-1/2}` decreases pointwise on `(0,1)`
+   (`M3_UNIFORMITY_EXECUTION_SOL.md:255-275`, quoted at
+   `EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:200`) — so raising `sigma` moves this
+   factor in the **favourable** direction, and the recomputation is legitimate
+   rather than a freeze.
+4. **`log Q_0`** from R5 with `K_+ = 117` frozen (see §1.7.6).
+
+#### 1.5.2 Calibration — the method reproduces three banked constants
+
+Run at the banked geometry `sigma = 1.1, H = 1, r_z = 1/8`:
+
+```
+nu_z computed  = 0.1552145055111849       banked floor: 0.1552          [R5]
+m_z computed   = 0.04444150               banked floor: 0.0439          [R5]
+log10 C_R      = 23.733673                banked: 54.6489/ln10 = 23.7337 [R4]
+log10 Q_0      = 36.448695  (at nu=0.1552) banked: 36.44873708          [R2]
+```
+
+**Receipt R11.** All four agree. The two floors sit *below* the raw computed
+values, i.e. the banked constants are conservative in the direction the
+assembly needs, exactly as `:451-457` asserts. The residual `4.2e-5` in
+`log10 Q_0` is explained: the banked assembly uses the rounded-up
+`S = 7.648` where the exact value is `7.6468932...`; a `1.28e-4` relative
+increase in `(S+1)`, scaled by `5/6`, is `4.3e-5` in `log10`. **My numbers are
+therefore ~4e-5 optimistic relative to banked, uniformly. Recorded, not
+corrected.**
+
+#### 1.5.3 The rung: `log10 Q_0` as `sigma` moves, with `nu_z` recomputed
+
+`H = 1` (banked height), `r_z = 1/8` (banked radius), `nu_z` floored:
+
+| `sigma` | `alpha` | `nu_z` (raw) | `log10 C_R` | **`log10 Q_0`** | `log10 Q_0` if `nu_z` FROZEN at 0.1552 |
+|---|---|---|---|---|---|
+| 1.06 | 1.12 | 0.175910 | 24.7809 | 37.6680 | 39.9872 |
+| 1.08 | 1.16 | 0.165236 | 24.1866 | 36.9442 | 38.0960 |
+| **1.10** | **1.20** | **0.155215** | **23.7337** | **36.4487** | **36.4487** |
+| 1.12 | 1.24 | 0.145802 | 23.3610 | 36.1200 | 34.9800 |
+| 1.14 | 1.28 | 0.136960 | 23.0508 | 35.9423 | 33.6518 |
+| **1.16** | **1.32** | **0.128654** | **22.7870** | **35.8768** ← min | 32.4388 |
+| 1.18 | 1.36 | 0.120850 | 22.5586 | 35.9184 | 31.3231 |
+| 1.20 | 1.40 | 0.113518 | 22.3587 | 36.0522 | 30.2912 |
+| 1.30 | 1.60 | 0.082992 | 21.7264 | 38.1136 | 26.0820 |
+| 1.48 | 1.96 | 0.056… | 21.4842 | **46.8492** | 22.9859 |
+
+**RUNG OUTCOME — the honest result.**
+
+1. **The `alpha` lever is real but shallow.** With `nu_z` recomputed
+   honestly, `log10 Q_0` is minimised at `sigma ≈ 1.16` (`alpha = 1.32`) at
+   `35.8768`, a reduction of **0.5719 log10 — a factor 3.73** — from the
+   banked `36.4487`.
+2. **The frozen-`nu_z` column is a mirage.** It shows `−13.5 log10` by
+   `sigma = 1.48`. The honest column shows `+10.40` there. The frozen column
+   is the picture R7's `−85.4` elasticity paints; §1.2's identity says why
+   that number cannot be read as achievable reduction.
+3. **The constrained elasticity is `−24.9`, not `−85.4`.** From the table,
+   `d(log Q_0)/d(sigma) ≈ (36.2683 - 36.4487)*ln(10)/0.01 = -41.5` at
+   `sigma = 1.1`; with `d(alpha) = 2 d(sigma)`, `alpha * d(log Q_0)/d(alpha)
+   = 1.2 * (-41.5/2) = -24.9`. It falls to `0` at `sigma = 1.16` and turns
+   positive after.
+4. **The floor moves the wrong way.** `e^{T_0}` at `sigma = 1.1` is
+   `10^{16.6706}` (= `4.68e16`, reproducing R6's `4.7e16`); at `sigma = 1.16`
+   it is `10^{18.6139}`. **The `alpha` rung buys `0.57` today and raises the
+   irreducible floor by `1.94` orders**, so it also devalues all future L5
+   work.
+5. **The gain is fragile against the open gate.** At `sigma = 1.16`,
+   `d(log Q_0)/d(log K_+) = (1-nu)/(alpha nu) = 5.1334`. A `K_+` growth of
+   only `exp(0.5719 * ln10 / 5.1334) = 1.29x` on the wider `Omega` erases the
+   entire gain. Since `Omega` grows, `K_+` — a supremum over a larger set —
+   can only grow or stay equal. **On its own, L3 is not worth taking.**
+
+**Verdict on the rung: NEGATIVE-ish but informative.** The sharpened `alpha`
+derivation succeeds analytically (`alpha` up to `1.32` is available inside
+the `2<p<3` constraint with all constants recomputed) and fails economically
+(`−0.57 log10`, wiped out by a `1.29x` move in the one genuinely open gate).
+**This is the precise blocker requested: not that `alpha` cannot be raised,
+but that `alpha * nu_z` is the invariant and raising `sigma` alone leaves it
+almost unchanged.**
+
+---
+
+### 1.6 What the rung uncovered — the `alpha * nu_z` invariant, and two better levers
+
+The rung's own algebra points at the fix. In the **tall-rectangle (strip)
+limit** `H -> infinity`, the harmonic measure of the right edge of a vertical
+strip is exactly linear, `omega(x) = x/w`. At the leftmost point of
+`partial D_z`, `x = (Re z_0 - r_z) - 1/2`, so
+
+```
+nu_z  ->  (Re z_0 - r_z - 1/2) / w,        w = sigma - 1/2,   alpha = 2w,
+```
+hence
+```
+alpha * nu_z  ->  2 * (Re z_0 - r_z - 1/2)     — INDEPENDENT OF sigma.
+```
+
+At the banked geometry `Re z_0 = 3/4`, `r_z = 1/8`, this is `2*(1/8) = 1/4`.
+Two consequences, both **CONJECTURAL/UNREFEREED**:
+
+- **`sigma` is asymptotically free.** Once `H` is large enough for the strip
+  limit, raising `sigma` raises `alpha` at **no cost in `alpha*nu_z`**, so the
+  `(log C_R)/alpha` term shrinks with nothing pushing back. That is why L3
+  only pays after L1.
+- **The floor is governed by one number,
+  `d := Re z_0 - r_z - 1/2 = 1/8`** — the distance from the left edge of `D_z`
+  to the critical line. `Re z_0 = 3/4` is forced (`z_0 = (1+rho_1)/2` and
+  `Re rho_1 = 1/2`). **`r_z` is not forced.** Shrinking `r_z` raises `d`, and
+  costs only through `m_z`, which is roughly linear in `r_z` near a simple
+  zero.
+
+**Computed `m_z(r_z)`** (this note, `phi_infty` evaluated directly; values
+floored):
+
+| `r_z` | `m_z` | `m_z / r_z` |
+|---|---|---|
+| 0.125 | 0.0444415 | 0.3555 |
+| 0.080 | 0.0323279 | 0.4041 |
+| 0.050 | 0.0220696 | 0.4414 |
+| 0.030 | 0.0140649 | 0.4688 |
+| 0.025 | 0.0123394 | 0.4746 |
+| 0.020 | 0.0096683 | 0.4834 |
+| 0.015 | 0.0073640 | 0.4909 |
+
+(`m_z/r_z -> |phi_infty'(z_0)| ≈ 0.5` as `r_z -> 0`, as a simple zero
+requires — an internal consistency check.)
+
+**Joint scan** (`nu_z, m_z` recomputed and floored; `S, M_0` ceiled;
+`K_+ = 117` frozen; `C_4'''` frozen):
+
+| `sigma` | `H` | `r_z` | `nu_z` | `m_z` | `log10 e^{T_0}` | **`log10 Q_0`** | Δ vs 36.4190 |
+|---|---|---|---|---|---|---|---|
+| 1.10 | 1 | 0.125 | 0.15521 | 0.04444 | 16.6409 | 36.4190 | 0 (calibration) |
+| 1.16 | 1 | 0.125 | 0.12865 | 0.04444 | 18.6139 | 35.8768 | −0.54 |
+| 1.48 | 1 | 0.125 | (small) | 0.04444 | — | 46.8492 | **+10.43** |
+| 1.10 | 6 | 0.125 | 0.20830 | 0.04444 | — | 31.8277 | −4.59 |
+| 1.10 | 1 | 0.025 | — | 0.01234 | — | 29.4456 | −6.97 |
+| 1.10 | 6 | 0.025 | — | 0.01234 | — | 27.0186 | −9.40 |
+| 1.48 | 1 | 0.025 | — | 0.01234 | — | 32.5580 | −3.86 |
+| 1.48 | 6 | 0.125 | 0.12751 | 0.04444 | 12.6309 | 23.6022 | −12.82 |
+| **1.48** | **6** | **0.025** | **0.22953** | **0.01190** | **7.8197** | **18.7911** | **−17.63** |
+
+At the joint point, `alpha * nu_z = 1.96 * 0.22953 = 0.4499` versus
+`1.2 * 0.15521 = 0.1863` at the banked point — a **2.4x** improvement in the
+one invariant that matters, and the source of essentially the whole gain.
+
+**Robustness of the joint point against the open gate.** At the joint point
+`d(log Q_0)/d(log K_+) = (1-nu)/(alpha nu) = 1.713`. `K_+` would have to grow
+by a factor `10^{17.63/1.713} ≈ 2.0e10` to erase the gain — versus `1.29x`
+for the `alpha`-only rung. **The joint lever is ~10 orders more robust
+against (H-SIDE) than the `alpha` lever alone.** That, not the raw `−17.63`,
+is the reason to rank L1/L2 first.
+
+**Bonus, recorded:** shrinking `r_z` also *strengthens* the theorem's
+conclusion (c). At `r_z = 1/40` the localization becomes
+`0.725 <= Re s_q <= 0.775`, `|Im s_q - gamma_1/2| <= 1/40`, in place of
+`5/8 <= Re s_q <= 7/8`. A lever that improves both the threshold and the
+conclusion is unusual and should be taken first.
+
+---
+
+### 1.7 Everything that is wrong with §1.5–§1.6 — read before quoting any number
+
+#### 1.7.1 Status
+**UNREFEREED. CONJECTURAL. Not a theorem. Not machine-verified.** No banked
+constant is superseded. `Q_0` remains R1.
+
+#### 1.7.2 `K_+` is FROZEN and this is the load-bearing optimism
+Every table above holds `K_+ = 117`. `K_+` is a supremum of `|F_q|` over the
+three non-`Gamma_R` sides of `partial Omega`. **Enlarging `Omega` enlarges
+that set, so the true `K_+` on the modified `Omega` is `>= 117`.** Nothing
+here bounds it. Sensitivity is given in §1.5(5) and §1.6. Any use of §1.6's
+numbers must first discharge (H-SIDE) at the new geometry — which is
+precisely the one gate §1.4 grades **GENUINELY OPEN**.
+
+#### 1.7.3 The §2–§4 chain is not re-audited at `p != 11/5`
+R9's chain is *stated* at `p = 11/5`. The re-run in §1.5.1(3) assumes the
+following are `p`-uniform, and **each is an unverified assumption of this
+note**: the Route-B/Ford premises; `C_4'''` (argued `p`-free above, but not
+refereed at general `p`); the endpoint comparison `x_W <= y_W`; the
+complex-power MVT step (3.12), whose stated validity condition
+`sigma > -1/2` is satisfied but whose constants were not re-checked;
+`(FW)`'s (2.3) at general `p > 2`; and `q_RATE = 12`, whose absorption (4.1)
+I re-derived as `F(12) = 36.86` at `p = 2.96` versus `7940` at `p = 2.2` —
+i.e. **easier**, so `q_RATE <= 12` appears to survive, but this is not
+refereed.
+
+#### 1.7.4 `alpha >= 2` is blocked, not merely unattempted
+`p >= 3` makes `1/(3-p)` in (3.10) infinite. Reaching `alpha >= 2` requires a
+new layer-cake with a different Ford/two-mark count, i.e. **E3 new
+mathematics**. Recorded as L7; not attempted.
+
+#### 1.7.5 Numerical hygiene
+Float64 with mpmath only for `Gamma/zeta/B`; **no interval arithmetic**;
+`nu_z` from a 1440–2880-point sample of `partial D_z`, not a certified
+infimum; `m_z` from a 360–720-point sample. Margins were rounded **DOWN**
+(`nu_z`, `m_z`: floor) and upper bounds **UP** (`S`, `M_0`: ceil), which is
+the correct direction, but sampling error is not bounded. Calibration §1.5.2
+is the only evidence of correctness. **These are not certified numbers.**
+
+#### 1.7.6 Complete list of frozen inputs
+`K_+ = 117` (unlicensed, §1.7.2); `C_4''' = 65459394456774532` (argued
+`p`-free); the `(H-RATE)` Scope-1 chain at `p != 11/5` (§1.7.3);
+`q_monotone`'s remainder (untouched, so R1 stays an inequality at every
+geometry); `t_0 = gamma_1/2` and `Re z_0 = 3/4` (forced). `H > gamma_2 -
+gamma_1 = 6.888` would admit `(1+rho_2)/2` into `Omega`; `H = 6` stays below
+that, which is why the scan stops there — recorded as an observation, not a
+proof that anything breaks above it.
+
+#### 1.7.7 What is NOT claimed
+That `log10 Q_0 = 18.79` is attainable. That the geometry may be changed at
+all — (H-ROUTE) requires any new `Omega` to be re-declared as a first-zero A0
+ledger. That the rung improves the theorem. That any gate is discharged.
+
+---
+
+### 1.8 Bottom line, and the honest bound on this whole programme
+
+- **The `alpha` rung is executed and its outcome is `−0.57 log10`, with the
+  precise blocker identified:** `alpha` and `nu_z` are tied by the same wall,
+  the invariant is `alpha * nu_z`, and at the banked aspect ratio moving
+  `sigma` leaves it nearly fixed — then makes it worse.
+- **The ranking that came out of the rung inverts the banked steering
+  sentence's practical reading:** the cheap wins are `H` (aspect ratio) and
+  `r_z` (disc radius), not `alpha`, and not further `C_R` shaving.
+- **Even the full joint optimum does not close the gap.** `10^{18.79}` against
+  certified computations at `q <= 21` leaves **seventeen orders of
+  magnitude**. `EFFECTIVE_THEOREM_ASSEMBLY_SOL.md:589-604` already says
+  constant-shaving cannot rescue this and that a finite-base *theorem* is
+  needed; **this note's independent conclusion is the same, and the levers
+  above do not change it.** They are worth taking to make the effective
+  statement less embarrassing and to make (H-SIDE) the single named blocker,
+  not to bridge to computation.
+- **Recommended next lane, in order:** (i) re-derive `K_+` on a tall/thin
+  `Omega` — it is simultaneously the open gate and the tax on every lever;
+  (ii) re-run the two Arb covers (`nu_z`, `m_z`) at `(sigma, H, r_z)` from
+  §1.6 to convert §1.6 from float to certified; (iii) only then re-audit the
+  §2–§4 chain at `p = 2 sigma`.
+
+---
+
+**READY FOR JUDGING — UNREFEREED, CONJECTURAL THROUGHOUT.**
+
+Reproduction scripts for §1.5–§1.6 (written fresh for this note):
+`<scratchpad>/alpha_rung2.py`, `alpha_rung3.py`, `alpha_rung4.py`,
+`final.py`, `mz.py`, `joint.py` under
+`/private/tmp/claude-501/-Users-za-Documents-farey-hecke/d132431f-d2c6-4401-96d1-90f58d3026fb/scratchpad/`.
+They are temporary; the method in §1.5.1 is complete enough to rebuild them.
