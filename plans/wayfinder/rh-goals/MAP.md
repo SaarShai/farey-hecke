@@ -2246,3 +2246,36 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   (headroom −11.07) → L6 → L7.
 - Note status: CONFIRMED-with-corrections per referee.  L2 is the
   licensed next rung when NEXT-1 resumes execution.
+
+## 2026-08-23 10:00Z — NOGO-4 REFEREE RETURNED: PROMOTABLE-with-corrections; SEL90 BYPASS LANDED: H3 REDERIVED
+
+- **NOGO-4** (NOGO_METATHEOREM_REFEREE.md, installed verbatim from the
+  read-only referee seat): NO claim refuted.  Prop 4.1 (P_line(3/4) ⟺
+  RH) CONFIRMED unconditionally, re-derived + verified to 20+ digits.
+  Metatheorem I confirmed as faithful — no step consumes group/
+  surface/arithmeticity/Euler-product/q; the two most likely attacks
+  (Selberg-class positivity; c^{1−2s} conjugation) both FAIL at the
+  primary source.  Gate: PROMOTABLE-with-corrections.  Promotion
+  blocked on D1 (entailment is A ∧ H_Sel90 ⊨, hypothesis-containment
+  risk stated in those words), D2 (A5 must exclude non-real right
+  poles), D8 (the OPEN row is RH-HARD: A ⊨ P_line(3/4) would prove RH
+  — the note's best unclaimed result — plus the cheap unconditional
+  "A fails to decide P_line(3/4) in at least one direction"), D9 (§6
+  arithmeticity gloss over-reads Cor 3.5: the Dirichlet data g_n ∈
+  Z[λ_q] encodes q).  D3-D7, D10-D13 mandatory pre-paper.  Referee
+  also independently confirmed Kelmer's printed B_Γ wrong (converges
+  to (−2logπ−3)/(8π) = −0.2104609172).
+- **SEL90 bypass** (SEL90_BYPASS_JENSEN_REDERIVATION_SOL.md, 519
+  lines, UNREFEREED): verdict **(J) REDERIVED in the form the chain
+  consumes — H3 proved outright with NO appeal to Selberg or Kelmer**;
+  PARTIALLY for the sharp printed form ((J)-sharp and (C) still need
+  Sel90 — GAP-1 local zero count O_q(log T), GAP-2 triple-height).
+  Load-bearing finding: Kelmer's own Lemmas 4.6/4.7 are strict
+  α>(d−1)/2; the boundary case the LAW uses was delegated ENTIRELY to
+  [Sel90] — so the unread citation carried real weight, and the
+  bypass removes it for H3.  Lemma C (branch-cut jumps purely
+  imaginary ⇒ divisor drops from the real part) verified numerically
+  to 14-16 digits at T=25/50/100.  IF the bypass survives referee,
+  NOGO D1's containment risk shrinks to the bypass's own inputs.
+- Next: correction block on NOGO SOL (D1-D13) + cold referee on the
+  bypass — both launching now.
