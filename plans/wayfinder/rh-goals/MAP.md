@@ -2758,3 +2758,14 @@ Owner (2026-08-23): park PS-2. Refereed design + corrections stay banked
 campaign closes NOGO-OPEN-1 and d8 merge lands (compute free), or (b) scoop
 re-check date, or (c) owner asks. Before any pilot compute: discharge Lerch
 z=1 regularisation, Pohl<->MMS coding transfer, unreduced-operator derivation.
+
+## 2026-08-23 15:06Z — Hejhal page check: SECONDARY-ONLY
+
+SCAT1_HEJHAL_PAGE_CHECK.md banked. Divisor theorem location confirmed as
+Hejhal LNM 1001 Vol.2 p.499 by multiple independent citations (FJS §2.4-2.5
+against their sha-verified PDF; Patterson-Perry Duke 2001 as further
+secondary), but Hejhal's own internal theorem NUMBER remains unpinned (book
+text not accessible online). Consequence: SCAT-1 citations should read
+"Hejhal LNM 1001 Vol.II p.499" (drop the "Thm 5.3" designation, which was
+never verified). Load-bearing statement remains pinned via FJS §2.5 verbatim.
+Physical copy check stays optional.
