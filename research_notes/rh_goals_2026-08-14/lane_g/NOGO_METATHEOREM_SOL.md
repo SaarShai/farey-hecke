@@ -640,3 +640,232 @@ find an input the list omits; (ii) Proposition 4.1's divisor bookkeeping at
 `s = ½` and `s = 1`; (iii) whether `A6` for `q = 3` really is the printed
 `N = 3` case of Hejhal 7.7; (iv) whether Metatheorem I's "no step consumes
 `q`" survives a line-by-line re-read of the LAW's §4.
+
+---
+
+## Section 8 — Correction block (2026-08-23, from NOGO_METATHEOREM_REFEREE.md)
+
+**Append-only.** Nothing above this line was altered. This block applies all
+thirteen corrections D1–D13 of the cold referee report
+`research_notes/rh_goals_2026-08-14/lane_g/NOGO_METATHEOREM_REFEREE.md`
+(dated 2026-08-22, gate **PROMOTABLE-with-corrections**). Where the referee
+prescribes exact language, that language is quoted and adopted. Where a
+correction contradicts text in §§0–7, **this block governs**.
+
+The referee refuted no claim of the note. Proposition 4.1 is **CONFIRMED
+unconditionally**, re-derived and verified numerically to 20+ digits. The two
+attacks most likely to land — positivity via Selberg's class, and the
+`c^{1−2s}` conjugation repair — both **fail**; `A4⁺` is genuinely not
+load-bearing for Metatheorem I, because Kelmer (4.10)–(4.12) carries *"real
+but not necessarily positive"* coefficients and positivity enters only in his
+Lemma 4.6, which the LAW does not consume.
+
+### D1 (SEVERE) — the entailment is `A ∧ H_Sel90 ⊨ ¬P_naive`, not `A ⊨ ¬P_naive`
+
+**Corrected statement of Metatheorem I.** Everywhere §0 (table row 1), §3.3,
+§5 SCOPE, and §6 write `A ⊨ ¬P_naive`, read instead
+
+```
+A ∧ H_Sel90  ⊨  ¬P_naive,
+```
+
+where `H_Sel90` denotes the (unread) hypothesis list of `[Sel90, Lemmas 1,2]`.
+
+**The risk, in the referee's words.** The Jensen identity `(J)` is Kelmer
+`(4.20)`, justified verbatim by *"By Proposition 4.4, `L*(s)` satisfies all the
+assumptions needed for `[Sel90, Lemma 1,2]`."* The note's LEDGER RULE treats
+this as a *truth* risk ("proved modulo one unread citation"). It is also, and
+more damagingly for a **metatheorem**, a *hypothesis-containment* risk: the
+claim `A ⊨ ¬P_naive` requires that every hypothesis of Sel90 Lemmas 1,2 is
+derivable from `A0–A7`. What is actually verified is only that Kelmer's Prop
+4.4 conclusions `(4.13)–(4.15)` follow from `A` (the referee confirms they do,
+at `d=2, κ=1`), and that Kelmer *asserts* Prop 4.4 suffices for Sel90. Nobody
+has checked Sel90's hypothesis list against Prop 4.4's conclusions. For a
+theorem about `φ_q` this is a normal citation dependency; for a **no-go
+quantifying over all models of an explicit axiom list**, an unread hypothesis
+list is a direct threat to the axiom list's exhaustiveness.
+
+**Consequence for §1.3.** `A` is exhaustive of what the LAW consumes **modulo
+the unread hypothesis list of `[Sel90, Lemmas 1,2]`**. The exhaustiveness claim
+of §1.3 **cannot be closed until Sel90 is read.** Per the referee's standing
+ambiguity: the note is graded against the weaker, checkable claim "no step
+*visible in the transcribed chain* consumes anything outside `A`", which it
+satisfies; the stronger claim, which is what a no-go metatheorem needs, remains
+**OPEN**, and belongs in the SCOPE box, not a footnote.
+
+**Cross-reference (added 2026-08-23, conditional only).** A sibling lane note,
+`research_notes/rh_goals_2026-08-14/lane_g/SEL90_BYPASS_JENSEN_REDERIVATION_SOL.md`
+(**UNREFEREED**), rederives `(J)` in exactly the form the chain consumes, with
+no appeal to Selberg 1990. **IF** that note survives a cold referee, D1's
+residual shrinks from `H_Sel90` to the bypass's own inputs (including its own
+declared residual `GAP-1`, which the bypass states does not block the imported
+form `H3`). This is stated **conditionally only**: the bypass is unrefereed, it
+discharges nothing today, and no claim in this file may be strengthened on it.
+
+### D2 — `A5`'s pole clause restated
+
+`A5` as printed (*"finitely many poles `σ_j ∈ (1/2,1]`"*) does not exclude a
+non-real pole in `Re s > 1/2`, but `(J)`'s pole term `T Σ_{σ_j > α}(σ_j − α)`
+requires every right pole to be real. **`A5`'s pole clause is hereby restated
+as:**
+
+> **every pole of `φ` in `Re s > 1/2` is real and lies in `(1/2,1]`, and there
+> are finitely many.**
+
+This is what both source columns actually deliver (Kelmer Prop 4.4: *"holomorphic
+in `Re s > (d−1)/2` except for finitely many poles in `((d−1)/2, d−1]`"*), so
+the fix costs nothing. The zero and strip-confinement clauses of `A5` are
+unchanged.
+
+### D3 — Hejhal Lemma 7.3 is an `N ≥ 4` citation
+
+In the §2 `A4⁺` row, the Hejhal Lemma 7.3 citation is printed for **`N ≥ 4`**
+(it uses `λ ≥ √2`, and `λ_q = 2cos(π/q) ≥ √2 ⟺ q ≥ 4`). It therefore does
+**not** cover `q = 3`. **`q = 3` is covered by the direct argument** that
+`d(n) = ϕ_Euler(n)` is a positive integer count. The non-arithmetic `q ≥ 5` all
+lie inside `N ≥ 4`. No fact changes; the row must not be presented as a
+whole-family receipt.
+
+### D4 — shared-citation count corrected to five
+
+§2's closing paragraph reads "in six of the nine rows the two columns are the
+same citation". **The correct count is five:** `A0, A4, A4⁺, A6, A7`. The rows
+`A1, A2, A3, A5` carry distinct arithmetic-side derivations from `Λ`. (Under the
+alternative reading "the generic citation also covers `q=3`" the count is 9. No
+reading yields 6.) The structural point of the paragraph is unaffected.
+
+### D5 — `d(n)` identified for `q = 3`
+
+In the §2 `A4` row, the arithmetic column's Dirichlet data is explicitly
+
+```
+d(n) = ϕ_Euler(n),   g_n = n,   d(1) = 1,
+Σ_{n≥1} ϕ_Euler(n) n^{−s} = ζ(s−1)/ζ(s),
+```
+
+so that `Σ d(n) g_n^{−2s} = ζ(2s−1)/ζ(2s) = L*_3(s)`; discrete, absolutely
+convergent for `Re s > 1`, `d(1) ≠ 0`, and `d(n) > 0`. This makes the arithmetic
+column a genuinely independent receipt rather than a restatement.
+
+### D6 — strip confinement added as an input; §5.3 flag 1 downgraded
+
+(a) **Added to Metatheorem I's input list** (§3.3 bullets): **strip confinement**
+(`A5`) is consumed at the divergence step, where `β` must be bounded to convert
+"unbounded weighted sum" into "infinitely many zeros".
+
+(b) **§5.3 flag 1 is downgraded** from "implicit step supplied by the referee"
+to an **"immediate corollary of `A4`"**: by `(4.12)` / the `(NF)` right-edge
+estimate, `|L* − 1| < 1` for `Re s` large, so `L*` has no zeros there. Strip
+confinement is therefore not an independent assumption. This is a
+*strengthening* of the note.
+
+### D7 — "unavoidable" weakened
+
+§3.4's status paragraph ("The conditionality is unavoidable") is corrected to
+**"unavoidable for this witness"**. The note gives no argument that no other
+`M ∈ 𝔐(A)` has unconditionally-collinear right-strip zeros.
+
+### D8 — the trichotomy is mis-calibrated; corrected table
+
+Two rows are added, both immediate from `φ_3 ∈ 𝔐(A)` plus Prop 4.1:
+
+(a) **`A ⊨ P_line(3/4)` is RH-HARD.** Since `φ_3 ∈ 𝔐(A)`, `A ⊨ P_line(3/4)`
+implies `φ_3 ⊨ P_line(3/4)` implies RH by Prop 4.1. The third row is therefore
+not "open" in the ordinary sense — it is **RH-hard**, and the note's own Prop
+4.1 supplies the reduction **in one line**.
+
+(b) **An unconditional statement the note missed.** `φ_3` alone shows that `A`
+**fails to decide `P_line(3/4)` in at least one direction**, unconditionally:
+if RH holds then `A ⊭ ¬P_line(3/4)`; if RH fails then `A ⊭ P_line(3/4)`.
+
+**Corrected trichotomy table** (supersedes the §0 table):
+
+| statement | relation to the axiom set `A` | status |
+|---|---|---|
+| `P_naive` (§3.1 definition) — no nonreal zero with `Re ρ > 1/2` | **`A ∧ H_Sel90 ⊨ ¬P_naive`** — `A` (plus the unread Sel90 hypothesis list) *entails the negation* | **PROVED** (§3.3), modulo `H_Sel90` (D1) |
+| `¬P_line(3/4)` — the RH-analogue fails | **`A ⊭ ¬P_line(3/4)`** — `A` cannot refute on-line rigidity | **PROVED CONDITIONAL ON RH** (§3.4); witness `φ_3`; conditionality unavoidable *for this witness* (D7) |
+| `P_line(3/4)` — the RH-analogue holds | **`A ⊨ P_line(3/4)`?** | **OPEN and RH-HARD** — a positive answer proves RH via `φ_3` + Prop 4.1, in one line (D8a) |
+| decidability of `P_line(3/4)` by `A` | **`A` fails to decide `P_line(3/4)` in at least one direction** | **PROVED UNCONDITIONALLY** — RH ⇒ `A ⊭ ¬P_line(3/4)`; ¬RH ⇒ `A ⊭ P_line(3/4)` (D8b) |
+
+This is the note's best unclaimed result and its most important honesty
+calibration.
+
+### D9 — the §6 arithmeticity gloss corrected
+
+§6's sentence *"What `A` cannot do is separate the arithmetic members of the
+family from the non-arithmetic ones"* is **REFUTED as written**. Corrected
+gloss: **"no *consequence of `A`* separates them."**
+
+Added sentence, mandatory in any redraft: *the Dirichlet data itself is **not**
+arithmeticity-blind* — the structures are pairs `M = (φ, 𝒟)` with
+`𝒟 = (d(n), g_n)` in the language, and the `g_n` are the `|c|`-values, which lie
+in `ℤ[λ_q]` and therefore encode `q`. An argument that inspects the Dirichlet
+data — still "generic analytic machinery" by any ordinary reading — is **not**
+covered by Corollary 3.5.
+
+### D10 — `P_naive` fixed to the §3.1 definition everywhere
+
+The note defines `P_naive` three incompatible ways (§0 "no zeros **at all** in
+`Re s > 1/2`"; §3.1; §6 "no zeros off the line `Re s = ½` in the right
+half-plane"). **The canonical definition, to be used everywhere, is §3.1's:**
+
+```
+P_naive :  φ has no zero ρ with Re ρ > 1/2 and Im ρ ≠ 0.
+```
+
+`A5` explicitly permits finitely many real right zeros, so the §0 and §6
+readings are non-derivable from `A` for a second and trivial reason, which
+weakens rather than strengthens the result. This is load-bearing for a note
+whose whole thesis is "say which statement you mean".
+
+### D11 — the exhibition is `φ_3`, not `φ_5`
+
+§3.3's Consequence ("the error can be exhibited: apply the argument to `φ_5`")
+is corrected to: **apply it to `φ_3`, where the failure is classical fact.**
+§5.1 remark 2 states there is no theorem-valid `φ_q` zero certifier for
+non-arithmetic `q`, so `φ_5` is not exhibitable.
+
+### D12 — header dependency set expanded
+
+The §0 LEDGER RULE header names Sel90 alone. Corrected: the residual dependency
+is **"one unread *engine* citation plus the not-read/transcribed source set
+enumerated in §2 and §5.3"**, namely:
+
+* `[Sel90, Lemmas 1,2]` — the unread complex-analytic **engine** citation,
+  reached only through Kelmer's transcription of `(4.20)`;
+* Iwaniec, *Spectral Methods of Automorphic Forms*, 2nd ed., §3.4 — declared
+  **NOT READ** (§2), source of the classical `φ_3` closed form;
+* Venkov, *Trudy Mat. Inst. Steklov* **153 (1981)**, Thm 3.5 p. 59 — reached
+  **only through FJS**, never at source;
+* Hejhal §7 and FJS — consumed through **`pdftotext` transcriptions**, relabelled
+  by the second audit as transcriptions and **not verbatim command output**
+  (§5.3 flag 3); the `A1` (order ≤ 2) and `A6` chains rest entirely on these.
+
+§5 DEPENDENCY was honest; the header was not, and the header is what gets
+quoted.
+
+### D13 — machine-verification pointer corrected
+
+§3.3's status line and §7 provenance cite
+`projects/aristotle_dispatch_v33/LawSkeletonI.lean`. That is the **dispatch
+skeleton**: 16 `sorry` occurrences, header *"Everything below with a `sorry`
+body is CONJECTURAL at the Lean level. This file machine-verifies nothing."*
+**The claim is true; the pointer was to the file that refutes it.** The correct
+citation for the machine-verified artifact is
+
+```
+projects/aristotle_dispatch_v33/aristotle_dispatch_v33_aristotle/LawSkeletonI.lean
+```
+
+— the returned, sorry-free artifact (3 `sorry` hits, all in prose; status line
+*"No `sorry` bodies remain"*), with the independent local re-compile recorded at
+MAP 2026-08-23 06:55Z. **The §1.3 claim-2 line references to the dispatch file
+at `:31-32,160-162,182-183,210-213` are correct and stay**; `H1`/`H2` are
+definitional per `DISPATCH.md:71-72`, so "the analytic imports are `H3`–`H5`" is
+accurate.
+
+---
+
+**Post-correction status: PROMOTABLE-with-corrections applied; promotion to
+CONFIRMED-conditional (on H_Sel90 containment) awaits re-referee sign-off;
+paper-section draft NOT usable until re-drafted per D9/D10/D11.**

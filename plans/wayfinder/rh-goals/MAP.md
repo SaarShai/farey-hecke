@@ -2279,3 +2279,17 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   NOGO D1's containment risk shrinks to the bypass's own inputs.
 - Next: correction block on NOGO SOL (D1-D13) + cold referee on the
   bypass — both launching now.
+
+## 2026-08-23 10:40Z — NOGO correction block APPLIED (D1-D13)
+
+- Section 8 appended to NOGO_METATHEOREM_SOL.md (verified: 229
+  insertions, 0 deletions).  Corrected 4-row trichotomy now on record:
+  (1) A ∧ H_Sel90 ⊨ ¬P_naive PROVED mod H_Sel90; (2) A ⊭ ¬P_line(3/4)
+  PROVED conditional on RH (witness φ₃, conditionality unavoidable for
+  this witness); (3) A ⊨ P_line(3/4)? OPEN and RH-HARD; (4) "A fails
+  to decide P_line(3/4) in at least one direction" PROVED
+  UNCONDITIONALLY.
+- Status: PROMOTABLE-with-corrections applied; promotion awaits
+  re-referee sign-off; §6 paper draft unusable until re-drafted per
+  D9/D10/D11.  SEL90 bypass cross-referenced conditionally only
+  (discharges nothing until its own referee returns).
