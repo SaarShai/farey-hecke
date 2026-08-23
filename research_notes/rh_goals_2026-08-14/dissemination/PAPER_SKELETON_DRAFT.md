@@ -287,6 +287,41 @@ Ramanujan bound; any group, surface, or spectral input beyond A0; any
 independent assumption: it is an immediate corollary of A4 via the (NF)
 right-edge estimate \(|L^*-1|<1\) for large \(\Re s\).
 
+#### 4.2.1 Dictionary — \(A\) against the Selberg-class axioms
+
+\(A\) is offered as the spectral-side mirror of the Selberg-class
+codification (§2.2). The mirror is not a translation, and the table below is
+printed so a reader from that community can see exactly where the two lists
+agree, where they differ in form only, and where one has nothing to say.
+
+| Selberg-class axiom | analogue in \(A\) | comment |
+|---|---|---|
+| **Dirichlet series.** \(F(s)=\sum_{n\ge1}a(n)n^{-s}\), absolutely convergent in \(\Re s>1\) | **A4** | Present in *form* only. The exponentials are \(g_n^{-2s}\) with \(g_n\) the \(\lvert c\rvert\)-values of the group, so the frequencies are a discrete subset of \(\mathbb R_{>0}\) — for non-arithmetic \(q\) inside \(\mathbb Z[\lambda_q]\), not \(\mathbb N\). The coefficients \(d(n)\) are **not** assumed multiplicative and are not multiplicative for \(q=3\) beyond the accident \(d(n)=\phi_{\rm Euler}(n)\). A4 also fixes an archimedean prefactor \(\sqrt\pi\,\Gamma(s-\frac12)/\Gamma(s)\), which the Selberg axiom does not. |
+| **Normalization** \(a(1)=1\) | **A4**, in the weaker form \(d(1)\neq0\) | Only non-degeneracy is consumed; the \((N)\)/(NF) rescaling by \(d(1)g_1^{-2s}\) is zero-free and pole-free in \(\Re s>1/2\), so nothing in the divisor depends on it. |
+| **Analytic continuation.** \((s-1)^m F(s)\) entire of finite order | **A1** | Weaker and differently shaped: order at most 2, and holomorphy in \(\Re s>1/2\) *apart from finitely many poles* (A5 adds that they are real and lie in \((1/2,1]\)). We do **not** assume the poles are confined to \(s=1\), and we assume nothing about \(\Re s<1/2\), where A2 supplies the reflected divisor instead. |
+| **Functional equation.** \(\Lambda(s)=Q^s\prod_j\Gamma(\lambda_js+\mu_j)F(s)\), \(\Lambda(s)=\omega\overline{\Lambda(1-\bar s)}\), \(\lvert\omega\rvert=1\) | **A2** (with **A3**) | Same reflection \(s\leftrightarrow1-s\), different algebra: our form is **multiplicative**, \(\varphi(s)\varphi(1-s)=1\), not the additive \(\Lambda\)-form, and there is no root number and no free \(\Gamma\)-data — the archimedean factor is already pinned inside A4 at \(\kappa=1\). A3 plays the role of the conjugation in the Selberg form. |
+| **Ramanujan bound.** \(a(n)\ll_\varepsilon n^\varepsilon\) | **NONE** | Not assumed, not available, and not consumed anywhere in §4.5. A4⁺ (\(d(n)>0\)) is a *positivity*, not a size bound, and is in any case not load-bearing for Metatheorem I. |
+| **Euler product.** \(\log F(s)=\sum_n b(n)n^{-s}\), \(b(n)\) supported on prime powers, \(b(n)\ll n^\theta\), \(\theta<1/2\) | **NONE — deliberately** | This absence is the entire content of the paper. The Selberg class carries this axiom *because* of Davenport–Heilbronn (§2.2); \(A\) omits it and §4.5 shows what the omission costs. |
+| **Degree** \(d_F=2\sum_j\lambda_j\) (bookkeeping, not an axiom) | **A0** | \(\kappa=1\), one channel, one cusp; the \(g_n^{-2s}\) variable is the \(d=2,\kappa=1\) specialization of the counting framework. |
+| *(no Selberg-class axiom)* | **A5** (finiteness and reality of the right divisor, strip confinement) | In the Selberg class the corresponding facts are theorems or conjectures about a zero-free region, not axioms. Here they are hypotheses, discharged per-\(q\) in §4.3. |
+| *(no Selberg-class axiom)* | **A6** (polynomial vertical bound) | In the Selberg class a convexity bound follows from the functional equation plus Ramanujan by Phragmén–Lindelöf; without a Ramanujan bound we must assume it, and we do, citing Hejhal Lemma 7.7. |
+| *(no Selberg-class axiom)* | **A7** (\(\lvert\varphi(1/2+it)\rvert=1\), exact modulus) | Has **no counterpart**: Selberg-class functions are not unimodular on the critical line. A7 is the scattering-theoretic input with no Dirichlet-series analogue, and it is what supplies the leading \(\frac1{4\pi}T^2\log T\). |
+
+**Where \(\varphi_q\) sits.** \(\varphi_q\) is **not** a member of the Selberg
+class. For \(q=3\) this is unconditional and elementary:
+\(\varphi_3=\Lambda(2s-1)/\Lambda(2s)\) has a pole at every
+\(s=\rho/2\) with \(\rho\) a nontrivial zero of \(\zeta\), so no
+\((s-1)^m\varphi_3(s)\) is entire, and \(\varphi_3\) is unimodular on
+\(\Re s=1/2\), which no Selberg-class function is. For general \(q\) the
+frequencies \(g_n\) are not integers, so even the Dirichlet-series axiom
+fails as stated. **To our knowledge** \(\varphi_q\) also lies outside the
+known extensions of the class (the extended/Lindelöf-type classes and the
+general Dirichlet-series classes of the Matsumoto–Steuding lineage), but we
+have not attempted a systematic check and make no claim of the form "no
+axiomatic class contains it". The dictionary above is offered as an
+orientation for referees from that community, not as a classification
+theorem.
+
 ### 4.3 Breadth lemma
 
 \(\varphi_q\in\mathfrak M(A)\) for every finite integer \(q\ge3\),
@@ -447,6 +482,147 @@ archimedean factor at \(\kappa=1\), A5, A6, and the exact modulus A7, none
 of which has been checked. **Nothing in this paper asserts that such an
 \(M\) exists.**
 
+### 4.11 A worked audit — how to apply Metatheorem I to a published construction
+
+A no-go of this kind is only useful if a reader can run it. This subsection
+runs it once, in full, on a named construction from the literature, so the
+procedure and — equally important — its limits are both visible.
+
+**Ledger discipline for this subsection, binding on every sentence below.**
+Metatheorem I licenses exactly one form of conclusion: *any derivation of
+\(P_{\mathrm{naive}}\) whose every step is available in an arbitrary
+\(M\in\mathfrak M(A)\) contains an error, and the error is exhibitable by
+running the derivation on \(\varphi_3\).* It licenses nothing about the
+correctness of any particular paper. Accordingly we do **not** claim that the
+construction audited below is wrong, that its Hamiltonian fails to exist, that
+its self-adjointness claim is false, or that its programme cannot succeed. The
+audit's only output is a **burden statement**: *name the step that is not
+available in a general \(M\in\mathfrak M(A)\).* A construction that can name
+one is untouched by this paper.
+
+#### 4.11.1 The test case
+
+We use the Berry–Keating \(xp\) lineage and, as its most visible recent
+instance, Bender, Brody and Müller, *Hamiltonian for the zeros of the Riemann
+zeta function*, Phys. Rev. Lett. **118**, 130201 (2017) (arXiv:1608.03679).
+As reported in that paper's abstract, the authors construct a Hamiltonian
+whose eigenvalues, subject to a boundary condition on the eigenfunctions,
+correspond to the nontrivial zeros of \(\zeta\); the classical limit
+reproduces the Berry–Keating \(xp\) picture; the operator is not Hermitian in
+the given inner product but is \(PT\)-symmetric with broken \(PT\) symmetry,
+and the authors give a *heuristic* construction of a metric operator defining
+an inner product in which the Hamiltonian would be Hermitian. The paper's own
+closing statement of the gap is explicit and is the reason it is the right
+test case: **a rigorous proof that this Hamiltonian is self-adjoint would
+establish the Riemann hypothesis.** The audience survey classifies this line
+as exposure class (b) with a (c) tail, its open gap being "precisely a
+*generic* self-adjointness claim" (`NOGO_AUDIENCE_SURVEY.md` §2 row 2, §4
+item 2).
+
+We audit the **self-adjointness step only** — the step that is open — and not
+the construction of the operator, which is manifestly \(\zeta\)-specific. We
+have not verified the paper's internal details beyond its abstract and the
+survey's classification; every description above is flagged "as reported in
+[BBM17]" and the audit is written schematically so that it does not depend on
+those details.
+
+#### 4.11.2 Step (i) — what the argument uses about the target function
+
+The self-adjointness step, stripped to the properties of the target function
+it consumes, uses (as reported in [BBM17] and in the surrounding \(xp\)
+literature):
+
+1. that the target is a meromorphic function of one complex variable with a
+   reflection symmetry about a distinguished vertical line;
+2. that its relevant divisor is discrete, of finite density in horizontal
+   strips, and confined to a vertical strip;
+3. that the reflection symmetry acts on the divisor as an involution pairing
+   \(\rho\) with its mirror image, together with the reality symmetry pairing
+   \(\rho\) with \(\bar\rho\);
+4. that the boundary condition on the eigenfunctions is a scalar,
+   one-channel condition;
+5. that the resulting spectral problem is unitary on the distinguished line,
+   in the sense that the associated scattering/transfer quantity has modulus
+   one there;
+6. polynomial vertical growth in the closed strip, used to control the
+   asymptotic and the metric-operator series.
+
+The conclusion sought is that the eigenvalues are real, i.e. that the divisor
+lies on the distinguished line.
+
+#### 4.11.3 Step (ii) — each item is a consequence of \(A\) or of ambient analysis
+
+| item | supplied by |
+|---|---|
+| 1. meromorphy with reflection about a distinguished line | **A1 + A2** |
+| 2. discreteness, finite strip density, strip confinement | **A5**, with strip confinement itself an A4 corollary (§4.2, D6b); finite density in strips from A1 (order \(\le2\)) via Jensen |
+| 3. reflection and reality involutions on the divisor | **A2 + A3** |
+| 4. scalar, one-channel boundary data | **A0** |
+| 5. unitarity on the distinguished line | **A7**, in the stronger exact-modulus form |
+| 6. polynomial vertical growth in the closed strip | **A6** |
+| the ambient toolkit (Stirling, Jensen/Littlewood, Phragmén–Lindelöf, Schwarz reflection, subharmonicity) | classical analysis, model-independent |
+
+No item on the list mentions primes, an Euler product, multiplicativity, a
+Ramanujan bound, a group, a surface, or arithmeticity. That is the substance
+of the audit: **the properties the self-adjointness step is reported to use
+are all in \(A\).**
+
+#### 4.11.4 Step (iii) — the conclusion Metatheorem I licenses
+
+Suppose the self-adjointness step could be completed using only items 1–6 and
+ambient analysis. Then the completed argument is a derivation, from premises
+each of which holds in every \(M\in\mathfrak M(A)\), of the statement that the
+divisor in the right half-plane lies on the distinguished line — that is, of
+\(P_{\mathrm{naive}}\) in the sense of §4.4. By Metatheorem I,
+\(A\models\neg P_{\mathrm{naive}}\). Hence such a completion is impossible,
+and any argument that appears to achieve it contains an error. Moreover the
+error is **exhibitable**, and cheaply: instantiate the argument at
+\(M=(\varphi_3,\mathcal D_3)\in\mathfrak M(A)\), where items 1–6 all hold and
+the conclusion is false as classical fact (§4.7); the first step of the
+argument that fails there is the step that was never available.
+
+The burden this places is therefore precise and small: **name the step of the
+self-adjointness argument that is not available for a general
+\(M\in\mathfrak M(A)\)** — equivalently, the step at which \(\zeta\)-specific
+arithmetic re-enters. If such a step can be named, the argument is untouched
+by this paper and has merely been disciplined in the sense of
+`NOGO_AUDIENCE_SURVEY.md` §1, honesty constraint 1. If it cannot, the
+argument is incomplete in a way that no amount of additional analytic rigour
+will repair.
+
+#### 4.11.5 What this audit does *not* establish — four explicit weakenings
+
+1. **No refutation of [BBM17].** We do not claim the construction is wrong.
+   The audit's conclusion is conditional on the self-adjointness step being
+   completable from items 1–6 alone, which is precisely what is open. Nothing
+   here bears on the correctness of the Hamiltonian, the \(PT\) analysis, or
+   the heuristic metric.
+2. **The construction *is* \(\zeta\)-specific; only the open step is
+   audited.** The operator in [BBM17] is built from \(\zeta\)-data, so the
+   programme as a whole is not an \(A\)-only schema. If the metric operator's
+   rigorous construction turns out to consume the Euler product, the explicit
+   formula over primes, or any other arithmetic input — the (c) tail of survey
+   row 2 — then the audit does not bite, and we do not assert that it does.
+3. **Items 1–6 are our reconstruction, not the paper's own hypothesis list.**
+   We have not read a rigorous statement of the intended self-adjointness
+   argument, because none is published; we reconstruct the properties it would
+   use from the abstract and from the \(xp\) literature. A published argument
+   using a property outside \(A\) escapes the audit automatically.
+4. **The transfer to \(\mathfrak M(A)\) requires the schema to be
+   restatable.** Metatheorem I quantifies over Hecke-type scattering pairs;
+   an operator-theoretic argument bites only once it has been restated as a
+   statement about \((\varphi,\mathcal D)\). Where a construction resists that
+   restatement, the audit is inapplicable rather than inconclusive. We record
+   this as a genuine limitation of the method, not as a formality.
+
+A fifth caveat is inherited from §4.9: an argument that inspects the
+**Dirichlet data** \(\mathcal D\) — the \(g_n\), which lie in
+\(\mathbb Z[\lambda_q]\) and encode \(q\) — is still "generic analytic
+machinery" by any ordinary reading, and is nonetheless outside the reach of
+the arithmeticity-blindness corollary. The audit above must be read as
+covering arguments that use \(\varphi\) and the axioms, not arguments that
+mine \(\mathcal D\).
+
 ---
 
 ## 5. Appendix A (summary) — the Jensen/Littlewood rectangle, re-derived
@@ -583,6 +759,24 @@ Two pointer corrections that the paper must respect:
    analytic content. **H4 and H5 keep their "NOT proved here" labels** and
    the paper must say so.
 
+### 6.2 Data availability
+
+**Draft paragraph, to be finalized at submission.**
+
+> All material supporting this paper is archived in the project repository:
+> the Lean 4 sources and their compilation logs; the interval-arithmetic
+> certificates and shard-level receipts of the localization computation
+> (§8), including the per-leaf certification records and the cross-host
+> determinism check; the numerical scripts and outputs underlying Appendix A
+> and the erratum of §5.1, together with the independently written referee
+> code and its values; the dated, append-only correction blocks and the full
+> cold-referee reports for every load-bearing claim; and the SHA-256 digests
+> of every primary source consumed. **TODO (owner, before submission):**
+> deposit a citable, immutable snapshot — Zenodo DOI or equivalent — and
+> replace this paragraph's repository reference with the DOI. No such archive
+> exists at the time of drafting, and no data-availability claim may be made
+> in a submitted version until it does.
+
 ---
 
 ## 7. Declarations of unread and transcribed sources
@@ -706,4 +900,9 @@ authorship decision are left blank deliberately. See the companion draft
 - [ ] The non-arithmeticity clause never presented as a discriminant.
 - [ ] §8 either carries a completed, refereed certificate or is deleted.
 - [ ] Bombieri cited at most once, and not as a no-go.
+- [ ] Zenodo (or equivalent) deposit created and its DOI substituted into the
+      data-availability paragraph of §6.2.
+- [ ] §4.11 re-checked against the published text of every construction it
+      names; the four weakenings of §4.11.5 survive into the submitted text,
+      and no sentence there asserts that a named paper is wrong.
 - [ ] A cold referee reads the assembled manuscript before submission.

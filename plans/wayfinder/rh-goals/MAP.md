@@ -2437,3 +2437,14 @@ paper its exhibit).
 - **FIG-1: resonance-cloud figure** (arith vs non-arith side by
   side) — QUEUED, blocked on q8 compute completion; not launched.
 - Data-availability paragraph: folded into PAPER-A/B edit pass.
+
+## 2026-08-23 06:29Z — PAPER-A/B landed: worked audit + dictionary + data availability
+
+- +199/−0 verified on PAPER_SKELETON_DRAFT.md.  §4.2.1 ten-row
+  Selberg-class dictionary (Euler product / Ramanujan = NONE
+  deliberately; three reverse rows where A has axioms Selberg lacks;
+  φ_q placed outside the class unconditionally at q=3); §4.11 worked
+  audit of BBM17 at exactly Metatheorem-I strength (burden statement
+  only, four recorded weakenings, BBM never called wrong); §6.2 data
+  availability draft (Zenodo TODO owner, explicit non-claim until the
+  archive exists); two §11 checklist items.
