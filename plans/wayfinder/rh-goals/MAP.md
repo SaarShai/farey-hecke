@@ -2524,3 +2524,9 @@ paper its exhibit).
 - Receipt: lane_g/S2_PHASE1_WR2_RECEIPT.md (orchestrator-written; source lane_g/second_pin/PHASE1_GATE_RESULT.json, wall 264 s, single core). Endpoint certificate at the fallback second box: CERTIFIED. W/R2 envelope receipts written.
 - Gate projection FAIL: F_R(160) ≈ 1.3957e12 vs boundary det lower bounds ≈ 4.2493 (all four edge midpoints; worst margin ≈ −1.4e12). Gate needed margin > 1e-8. B2 is now MEASURED, not estimated.
 - Decay: F_R falls ≈ 4.9 orders per 32 columns (N=128 → 160); projection (NOT certificate) puts closure at N ≈ 240. Next: N-scaling probe at N=192/224(/256) to fix N*, then contour dispatch (Kaggle if heavy). No contour arcs run; no spend beyond the gate.
+
+## 2026-08-23 07:56Z — S2 Phase-1 full receipt installed (agent's 184-line version supersedes stopgap); re-plan at N=256
+- The execution agent's own receipt landed after my stopgap and replaces it (same path, fuller: Kimi K3 mitigations installed, W envelope W^(≥1)=44.666 vs flagship 18.636, R2 CERTIFIED in 13 s with T_tail(160)=9.52e-22 and receipt sha pinned, deviations §6).
+- Diagnosis VERIFIED not-a-bug: the S2 zero IS in the box (center |det| 3.6e-16 at N=44; boundary modulus 4.2493 = simple-zero prediction, |det′|≈4.25e6). Failure is purely B_same 17.291→37.684 ⇒ exp inflation ≈5e17 from |t| 5.76→7.82 — SECOND_PIN_PREP §2 landing as predicted.
+- Re-plan projection from certified R2 tails: first positive margin N=240 (+3.66); comfortable N=256 (+4.247, F_R≈1.9e-3). Recommended re-freeze N=256 pending a B_same(256) verification run — the already-launched N-scaling probe (192/224/256) covers it.
+- Phase-3 cost at N=256: ≈46 CPU-h pre-subdivision (~870 s/arc) — Kaggle 16-chunk territory, NOT overnight-local. OWNER GATE: ≈2.7× compute escalation + B3–B5 code tasks need sign-off before dispatch.
