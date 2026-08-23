@@ -2293,3 +2293,28 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   re-referee sign-off; §6 paper draft unusable until re-drafted per
   D9/D10/D11.  SEL90 bypass cross-referenced conditionally only
   (discharges nothing until its own referee returns).
+
+## 2026-08-23 (harvest, see commit time) — SEL90 BYPASS REFEREED: PROMOTABLE-with-corrections — Sel90 citation REPLACEABLE for the LAW
+
+- SEL90_BYPASS_JENSEN_REDERIVATION_REFEREE.md installed verbatim
+  (read-only referee seat).  All 17 claim rows CONFIRMED (one
+  with-corrections).  The crux Lemma C survived the referee's hardest
+  attack "twice over" (jump argument correct AND ℜP manifestly
+  branch-free); numerics independently reproduced at dps=30 to
+  1e−26..1e−32 at seven heights including divisor-free heights and
+  T=γ±1e−6 straddling the first zero ordinate; cross-lineage match
+  with the LAW second audit's E(200)=−0.147.  No circularity (no zero
+  count consumed anywhere).
+- GATE: **the [Sel90, Lemmas 1,2] citation is REPLACEABLE for the
+  banked LAW** — H3 in the consumed form is proved outright — after
+  corrections D-1..D-3 land.  GAP-1/GAP-2 honestly scoped ((J)-sharp
+  and (C) still rest on Sel90; the LAW conclusion chain touches
+  neither, verified against the Lean signature).
+- Defects D-1..D-6 all cosmetic-to-rigor, none refutes; D-6 is an
+  UNDER-statement (referee's numeric agreement stronger than
+  claimed).  Correction agent applying D-1..D-6 + DISPATCH.md H3
+  relabel now.
+- CONSEQUENCE once corrections land: the LAW's last unread citation is
+  discharged for everything the LAW actually consumes; NOGO D1's
+  H_Sel90 conditionality collapses to the bypass's own (refereed)
+  inputs.
