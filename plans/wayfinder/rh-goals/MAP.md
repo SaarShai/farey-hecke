@@ -2661,3 +2661,21 @@ meromorphicOrderAt phi (1-s*) = +m. Reflection is 1-s (no conjugation), per
 SOL convention. Record + resume command:
 lane_g/SCAT1_LEMMA31_ARISTOTLE.md; Lean file
 projects/aristotle_dispatch_v33/Scat1Lemma31Reflection.lean. Poll at next ticks.
+
+## 2026-08-23 09:40Z — S2 REFEREED: PROMOTABLE-WITH-CORRECTIONS (7 majors)
+
+Cold referee report landed (S2_SECOND_WINDING_BOX_REFEREE.md). Headline
+dispositions SURVIVE; referee independently reproduced the sector table, the
+B7 proof-by-fix (own fix, digit-identical), B1 re-pins, K_s clearances.
+Majors: C1 half-width reconciliation targeted the solid s-box not the contour
+(contour is arb("1e-6"), radius 4.5e-23 — clean answer already in receipt);
+C2 PAPER-FACING DIGIT ERROR: reflected endpoint Re rho = 0.5894563 (=1-0.41054373...),
+not 0.5894543 (verified: 1-0.41054373549473627=0.5894562645052637);
+C3 three §7 receipts-index items missing from repo + uncited fallback winding
+ball; C4 MMS eq.(34) miscite (is LoverK; three-row display = reduced3) + 1-E7
+caveat dropped; C5 crossval grid covers t=5.76/10.56 not the selected pin's
+7.82; C6 stale N=160 constants + wrong source dirs; C7 inconsistent
+[FLOAT]/certified grading. Out-of-charge: WR2 receipt still carries the e-6
+exponent misread in §0/§4/§5 — errata stamp due.
+NEXT: §8 corrections block (luna) + errata stamp on S2_PHASE1_WR2_RECEIPT.md;
+C2's corrected digits propagate to any assembly/paper text before use.
