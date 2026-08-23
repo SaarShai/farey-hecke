@@ -2750,3 +2750,11 @@ divisor gate citation-pinned (FJS) + reflection core now MACHINE-VERIFIED
 receipted modulo the optional Hejhal page check and local re-elaboration.
 Other lanes: d8 gap-fill healthy (a0 span done=53/64 at check); S2 kernels
 s00/s01 RUNNING, poller alive, 0 chunks harvested yet.
+
+## 2026-08-23 12:24Z — OWNER DECISION: PS lane PARKED
+
+Owner (2026-08-23): park PS-2. Refereed design + corrections stay banked
+(PS1_GQ_CHI_DESIGN_SOL.md §6, referee report). Revisit triggers: (a) S2
+campaign closes NOGO-OPEN-1 and d8 merge lands (compute free), or (b) scoop
+re-check date, or (c) owner asks. Before any pilot compute: discharge Lerch
+z=1 regularisation, Pohl<->MMS coding transfer, unreduced-operator derivation.
