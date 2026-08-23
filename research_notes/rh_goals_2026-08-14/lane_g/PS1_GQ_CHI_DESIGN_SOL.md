@@ -372,3 +372,21 @@ strongest argument for the C1 relocation below: the interior is clean.
   conjugates of powers of S or U, all non-trivial in the abelianisation),
   which via Kurosh's subgroup theorem licenses "free" rather than merely
   "of Euler characteristic −3/10."
+
+**Append-only precision within C3b.** The corrected group element
+`g=S T^{±n}` has inverse weight
+`ρ(g)^{-1}=ρ(T)^{∓n}ρ(S)`, not `ρ(T)^{±n}ρ(S)`; the latter is the weight that
+was consistent with the superseded `S T^{∓n}` dictionary. This sign correction
+remains an implementation precondition before any code is written.
+
+**Append-only precision within m6.** The group has
+`χ(G_5)=−3/10`; the index-10 commutator subgroup has `χ=−3=1−r`, hence
+`r=4`. Its torsion-freeness via Kurosh is the licensing step for freeness.
+
+- **Favourable derivation — the interior arc is clean.** Referee point: this
+  structural fact was absent from the design. Superseding statement: for
+  `j=0`, the family is singular **ONLY at `θ=0`**,
+  `1 ∈ spec ρ(T) ⟺ cos 2θ=1`; the entire open arc `(0,π/2)` is regular and
+  the divisor bookkeeping is constant there. Named obligation: none added;
+  the result supports C1's interior `θ_0` anchor and holomorphy-domain
+  obligation.
