@@ -2056,3 +2056,50 @@ Owner-directed next steps once the LAW proof + q8 certification bank:
 - Caveats recorded in the note §1.7 (K₊ frozen/unlicensed, §2-§4 chain
   not re-audited at p≠11/5, float not interval).  Cold referee lane
   launching now; NO status change before its verdict.
+
+## 2026-08-23 06:30Z — OWNER: NEXT-3 added — Phillips–Sarnak deformation family
+
+Owner-directed future goal (queued after NEXT-1/NEXT-2; opens only on
+owner go): track scattering resonances along a family of surfaces
+continuously deformed AWAY from arithmetic, watching them peel off the
+critical line as arithmetic dissolves — the dynamic version of the
+LAW's static dichotomy.
+
+PRIOR-ART CAUTION (binding gate): the 2026-06-20 discovery synthesis
+(research_notes/DISCOVERY_SYNTHESIS_2026-06-20.md) judged "P-S
+dissolution" discovery aims owned/spurious — Phillips–Sarnak own the
+Fermi-golden-rule dissolution mechanism and the cusp-form side.  The
+sequel here is scoped to what that verdict did NOT cover: rigorous /
+certified RESONANCE localization along the deformation path, with our
+interval-certified tooling.  Step 0 re-checks that gap before any
+compute is spent.
+
+Mapped steps (each gated on the previous):
+- **PS-0 Prior-art gate.** Re-read the 2026-06-20 verdict; sweep the
+  literature for anyone tracking resonances (not cusp forms)
+  rigorously or numerically along Teichmüller/character-variety
+  deformations (Phillips–Sarnak, Wolpert, Hejhal, Farmer, Borthwick's
+  resonance computations).  Kill or narrow the goal per findings.
+- **PS-1 Family selection.** Hecke groups are rigid (triangle groups
+  do not deform), so pick a genuinely deformable family with an
+  arithmetic point: character-variety deformations of a punctured-
+  torus / Γ(2)-type surface at whose τ=0 the scattering matrix is
+  ζ-expressible.  Deliverable: written family spec + why the
+  arithmetic point is certified-computable.
+- **PS-2 Instrument.** Extend the certify engine (engine/certify/,
+  Aletheia lineage) from Hecke transfer operators to the deformed
+  family's scattering determinant — new symbolic coding/section.
+  This is the hard engineering rung; borrow-check Borthwick's
+  hyperbolic-resonance codes first.
+- **PS-3 Scout sweep (uncertified).** Numerically track the resonance
+  cloud along τ from the arithmetic point; measure WHERE and HOW FAST
+  off-line drift begins (perturbative in τ? threshold?).
+- **PS-4 Certified snapshots.** q8-style interval-certified resonance
+  boxes at selected τ values — the first rigorous off-line
+  localization along a deformation path.
+- **PS-5 Theorem attempt.** Qualitative statement ("for all small
+  τ≠0 an off-line resonance exists near s₀") via the certified
+  snapshots + perturbation bounds; adversarial referee cycle as for
+  the LAW.
+Dependencies: q8 certificate machinery (running), LAW paper framing
+(NEXT-goal 1 / dissemination, owner-gated).  Not launched.
