@@ -2401,3 +2401,12 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   (Luo–Sarnak arithmetic side proven; we supply the non-arithmetic
   structural side; "That is all it supplies."), with the "what must
   not be said" limits untouched.
+
+## 2026-08-23 06:24Z — Paper skeleton: four owner-approved additions applied
+
+- +83/−0 verified: §5.1 Kelmer (4.18) erratum remark (referee's
+  numeric attribution kept separate from the Lean-verified constant
+  identities — normalizations differ); §2.3 theta-group/A0 scope
+  sentence; §6.0 verification-methodology preamble (explicit
+  not-a-novelty disclaimer); §8 plan-level localization forecast
+  (0.725-0.775, NOT EXECUTED, m_z Arb cover un-run, gates unchanged).

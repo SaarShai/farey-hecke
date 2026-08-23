@@ -182,6 +182,15 @@ verbatim in the introduction, not only in a late section. In particular:
 - \(P_{\mathrm{naive}}\) failing is a statement about a naive formulation,
   not about RH.
 
+**One scope sentence to forestall an apparent conflict (theta group).** A
+reader who recalls Hejhal Theorem 7.11 may suspect tension with axiom A7,
+because that proof turns on \(|\varphi_\infty|\not\equiv1\) for the theta
+group \(G_\infty\). There is none: \(G_\infty\) has two cusps and therefore
+lies outside the scope fixed by A0 and by our standing restriction to finite
+\(q\ge3\) with one cusp. The paper should say this once, in the scope box,
+rather than in a footnote (`NOGO_METATHEOREM_REFEREE.md`, "Independent
+corroborations", third bullet).
+
 ---
 
 ## 3. The LAW (main theorem)
@@ -480,9 +489,70 @@ justification is by compactness on the box for each fixed \(T\), with no
 uniformity in \(T\) claimed or needed; the \(3/2<\sigma<\sigma_1\) strip is
 covered by the absolutely convergent series bound.
 
+### 5.1 Remark — an erratum in Kelmer, arXiv:1402.4780, eq. (4.18)
+
+**To be printed as a short remark, and framed as service to the literature.**
+Kelmer's (4.18) evaluates its last term as \(\log|t\tanh(\pi t)/\pi|\), where
+in fact \(|\Gamma(\tfrac12+it)/\Gamma(it)|^2=t\tanh(\pi t)\) exactly. The
+\(/\pi\) inside the logarithm injects a spurious \(-\tfrac12\log\pi\), so the
+printed constant \(B_\Gamma=(-4\log\pi-1)/(8\pi)\approx-0.22198\) is wrong.
+Direct numerical evaluation of
+\((1/2\pi)\int_{-T}^{T}(T-|t|)\log|L^*(\tfrac12+it)|\,dt-(1/4\pi)T^2\log T\),
+divided by \(T^2\), gives \(-0.2107732\) at \(T=200\), \(-0.2105234\) at
+\(T=1000\) and \(-0.2104734\) at \(T=5000\), converging to
+\((-2\log\pi-3)/(8\pi)\approx-0.2104609172\). The printed \(A_\Gamma\)
+assembly formula is likewise wrong; the corrected relation is
+\(A=a+2B\), the coefficient \(D\) cancelling identically
+(`LAW_..._SOL.md:480–485`, second-audit correction block;
+`NOGO_METATHEOREM_REFEREE.md`, "Independent corroborations", first bullet,
+confirmed at source and numerically).
+
+The constant identities of that correction block — the finite-difference
+leading term, the identity \(A=a+2B\) with \(D\) cancelling, the corrected
+constant, and its disequality from Kelmer's printed \(B_\Gamma\) (which
+reduces to \(\log\pi\neq1\)) — are the D1–D4 targets of
+`projects/aristotle_dispatch_v33/aristotle_dispatch_v33_aristotle/LawSkeletonI.lean`
+and are machine-verified there, `sorry`-free and axiom-clean
+(`ARISTOTLE_SUMMARY.md`).
+
+**What this remark does not do.** The argument of this paper consumes **none**
+of Kelmer's \(A_q\), \(B_q\), \(C_q\) constants (§3, consume-side warning), so
+nothing above is load-bearing for any statement here. The erratum is reported
+because it is in the printed literature, not because we depend on it.
+
 ---
 
 ## 6. Machine verification
+
+### 6.0 How the claims of this paper were checked
+
+**Documentation of process, not a claim of method.** Comparable verification
+pipelines exist elsewhere; nothing in this subsection is offered as a
+methodological novelty, and the paper must not use "novel method" language for
+it. It is recorded only so a referee can see what was done.
+
+- **Cold adversarial refereeing.** Every load-bearing claim passed at least one
+  cold adversarial referee pass on an independent lineage, with re-derivation
+  rather than transcription: the LAW twice
+  (`LAW_..._REFEREE.md`, `LAW_SECOND_AUDIT_REFEREE.md`), the metatheorem twice
+  (`NOGO_METATHEOREM_REFEREE.md` and the §8/§9 correction rounds), and the
+  Jensen/Littlewood re-derivation once (`SEL90_BYPASS_..._REFEREE.md`).
+- **Independent numerics.** The Appendix A crux was re-run on separately
+  written code at \(\mathrm{dps}=30\), agreeing with the author's values to
+  \(10^{-26}\)–\(10^{-32}\) (26–31 digits) at seven heights, four of them
+  never tested by the author.
+- **Hash-pinned primary sources.** Each consumed PDF is recorded with its
+  digest; e.g. arXiv:1402.4780 at sha256
+  `c15fb0c4d1d72cc1e09ee6c70532e27d835afd8a8e01a23668cdb6049f8d5030`. Sources
+  reached only through another author's transcription are declared as such in
+  §7.
+- **Machine verification of the combinatorial finish** in Lean 4, axiom-clean
+  and conditional on the named hypotheses, as detailed in §6.1 below.
+- **Append-only corrections.** Every correction was applied as a dated
+  append-only block, leaving the superseded text in place, so the full audit
+  trail is recoverable in the project repository.
+
+### 6.1 The verified statement
 
 Statement to be used, exactly:
 
@@ -577,6 +647,19 @@ explicit disc for every integer \(q\ge Q_0\) with
 That statement is conditional on its gates and its threshold is astronomical;
 if it appears in the paper at all it belongs in a clearly-labelled remark,
 never in the abstract.
+
+**Forward outlook on the localization, at plan level only — NOT EXECUTED.**
+The refereed reduction plan (`NEXT1_Q0_GAP_PLAN_SOL.md` Section 2 correction
+block, referee-confirmed) licenses a refinement of the disc radius
+\(r_z:1/8\to1/40\) which would sharpen that conditional theorem's conclusion
+(c) from \(5/8\le\Re s_q\le7/8\) to
+\(0.725\le\Re s_q\le0.775\), \(|\Im s_q-\gamma_1/2|\le1/40\). The referee
+records that this lever touches \(\Omega\) not at all, so it carries **no
+exposure to the open (H-SIDE) gate** and needs no relicensing of \(K_+\).
+Nothing here is executed: the Arb cover for \(m_z\) has not been re-run at
+\(r_z=1/40\), and until it is, no sharpened localization may be stated. The
+remaining conditionality on the eight named gates is unchanged by this
+paragraph.
 
 ---
 
