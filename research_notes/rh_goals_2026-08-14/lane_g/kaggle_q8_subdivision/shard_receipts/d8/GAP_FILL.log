@@ -1,2 +1,192 @@
 === GAPFILL START s00 a0_l0-64 2026-08-23T11:25:25Z ===
 Q8_SHARD arc=0 leaves=[0,64) depth=8 N=262 workers=12 resumed=41 pending=23
+Q8_SHARD leaf=41 status=PASS qOp=[0.258598058501835273173 leaf_seconds=1586.6 elapsed=1586.7 done=42/64
+Q8_SHARD leaf=49 status=PASS qOp=[0.267361257284783731665 leaf_seconds=1586.7 elapsed=1586.8 done=43/64
+Q8_SHARD leaf=50 status=PASS qOp=[0.268433754786405345312 leaf_seconds=1586.9 elapsed=1587.0 done=44/64
+Q8_SHARD leaf=42 status=PASS qOp=[0.259713160434201627914 leaf_seconds=1587.0 elapsed=1587.1 done=45/64
+Q8_SHARD leaf=44 status=PASS qOp=[0.261928116286333946588 leaf_seconds=1587.2 elapsed=1587.3 done=46/64
+Q8_SHARD leaf=52 status=PASS qOp=[0.270609602583958669363 leaf_seconds=1587.6 elapsed=1587.8 done=47/64
+Q8_SHARD leaf=46 status=PASS qOp=[0.264120870137000972469 leaf_seconds=1587.9 elapsed=1588.0 done=48/64
+Q8_SHARD leaf=45 status=PASS qOp=[0.263027196179242501525 leaf_seconds=1587.9 elapsed=1588.0 done=49/64
+Q8_SHARD leaf=51 status=PASS qOp=[0.269506151401661061260 leaf_seconds=1588.6 elapsed=1588.7 done=50/64
+Q8_SHARD leaf=47 status=PASS qOp=[0.265208094979785292847 leaf_seconds=1588.8 elapsed=1588.9 done=51/64
+Q8_SHARD leaf=48 status=PASS qOp=[0.266288360233872448950 leaf_seconds=1589.2 elapsed=1589.3 done=52/64
+Q8_SHARD leaf=43 status=PASS qOp=[0.260823304883548816072 leaf_seconds=1601.0 elapsed=1601.1 done=53/64
+Q8_SHARD leaf=54 status=PASS qOp=[0.272790766279307773161 leaf_seconds=1529.2 elapsed=3116.0 done=54/64
+Q8_SHARD leaf=53 status=PASS qOp=[0.271704629697849752868 leaf_seconds=1529.9 elapsed=3116.7 done=55/64
+Q8_SHARD leaf=56 status=PASS qOp=[0.274934480533173272501 leaf_seconds=1529.8 elapsed=3117.0 done=56/64
+Q8_SHARD leaf=55 status=PASS qOp=[0.273867538029235793921 leaf_seconds=1529.9 elapsed=3117.0 done=57/64
+Q8_SHARD leaf=57 status=PASS qOp=[0.275991294820202934992 leaf_seconds=1529.9 elapsed=3117.3 done=58/64
+Q8_SHARD leaf=58 status=PASS qOp=[0.277037301429472043211 leaf_seconds=1530.3 elapsed=3118.1 done=59/64
+Q8_SHARD leaf=63 status=PASS qOp=[0.282217168798986733919 leaf_seconds=1529.1 elapsed=3118.5 done=60/64
+Q8_SHARD leaf=61 status=PASS qOp=[0.280127238632401090835 leaf_seconds=1530.3 elapsed=3119.0 done=61/64
+Q8_SHARD leaf=62 status=PASS qOp=[0.281178678694646719302 leaf_seconds=1530.6 elapsed=3119.5 done=62/64
+Q8_SHARD leaf=59 status=PASS qOp=[0.278071982378330572913 leaf_seconds=1531.5 elapsed=3119.6 done=63/64
+Q8_SHARD leaf=60 status=PASS qOp=[0.279095999561435253669 leaf_seconds=1532.9 elapsed=3120.9 done=64/64
+{
+  "arc": 0,
+  "leaf_range": [
+    0,
+    64
+  ],
+  "leaves_complete": true,
+  "status_counts": {
+    "PASS": 64,
+    "OPEN_MAX_DEPTH": 0
+  },
+  "qOp_lt_1_all": true,
+  "payload_sha256": "a0cd4da728373c77c151338501e763d116a8397c87edd6c941fdc6a8f25372a9",
+  "wall_seconds": 3120.9780049324036
+}
+=== GAPFILL EXIT s00 a0_l0-64 rc=0 2026-08-23T12:17:26Z ===
+=== GAPFILL START s01 a0_l64-128 2026-08-23T12:17:26Z ===
+Q8_SHARD arc=0 leaves=[64,128) depth=8 N=262 workers=12 resumed=50 pending=14
+Q8_SHARD leaf=117 status=PASS qOp=[0.325628384718826429091 leaf_seconds=1748.2 elapsed=1748.3 done=51/64
+Q8_SHARD leaf=115 status=PASS qOp=[0.325221418907979542679 leaf_seconds=1748.9 elapsed=1749.0 done=52/64
+Q8_SHARD leaf=119 status=PASS qOp=[0.325954129211618185612 leaf_seconds=1749.1 elapsed=1749.2 done=53/64
+Q8_SHARD leaf=121 status=PASS qOp=[0.326204659538199995574 leaf_seconds=1749.4 elapsed=1749.5 done=54/64
+Q8_SHARD leaf=118 status=PASS qOp=[0.325781692176826740283 leaf_seconds=1749.6 elapsed=1749.6 done=55/64
+Q8_SHARD leaf=114 status=PASS qOp=[0.324962012445041485714 leaf_seconds=1749.9 elapsed=1750.0 done=56/64
+Q8_SHARD leaf=116 status=PASS qOp=[0.325443430434856360202 leaf_seconds=1750.0 elapsed=1750.0 done=57/64
+Q8_SHARD leaf=122 status=PASS qOp=[0.326409396309920256683 leaf_seconds=1750.0 elapsed=1750.1 done=58/64
+Q8_SHARD leaf=125 status=PASS qOp=[0.326945856537554937298 leaf_seconds=1750.5 elapsed=1750.6 done=59/64
+Q8_SHARD leaf=124 status=PASS qOp=[0.326804241531184631115 leaf_seconds=1750.8 elapsed=1750.8 done=60/64
+Q8_SHARD leaf=123 status=PASS qOp=[0.326625201584772410606 leaf_seconds=1750.8 elapsed=1750.9 done=61/64
+Q8_SHARD leaf=120 status=PASS qOp=[0.326098321318693376203 leaf_seconds=1753.6 elapsed=1753.7 done=62/64
+Q8_SHARD leaf=126 status=PASS qOp=[0.327050060849215176046 leaf_seconds=1473.8 elapsed=3222.1 done=63/64
+Q8_SHARD leaf=127 status=PASS qOp=[0.327134599748296738206 leaf_seconds=1474.0 elapsed=3223.0 done=64/64
+{
+  "arc": 0,
+  "leaf_range": [
+    64,
+    128
+  ],
+  "leaves_complete": true,
+  "status_counts": {
+    "PASS": 64,
+    "OPEN_MAX_DEPTH": 0
+  },
+  "qOp_lt_1_all": true,
+  "payload_sha256": "2f252713e5f5ad38a0f44b6a6cc9c123029137f5c2337a6d14f7067cd1cafb28",
+  "wall_seconds": 3223.085154056549
+}
+=== GAPFILL EXIT s01 a0_l64-128 rc=0 2026-08-23T13:11:09Z ===
+=== GAPFILL START s02 a0_l128-192 2026-08-23T13:11:09Z ===
+Q8_SHARD arc=0 leaves=[128,192) depth=8 N=262 workers=12 resumed=57 pending=7
+Q8_SHARD leaf=187 status=PASS qOp=[0.285470439515878225029 leaf_seconds=1854.0 elapsed=1854.1 done=58/64
+Q8_SHARD leaf=189 status=PASS qOp=[0.283319376983222076211 leaf_seconds=1855.3 elapsed=1855.5 done=59/64
+Q8_SHARD leaf=188 status=PASS qOp=[0.284402048022511730072 leaf_seconds=1855.8 elapsed=1855.9 done=60/64
+Q8_SHARD leaf=190 status=PASS qOp=[0.282229737078836057256 leaf_seconds=1856.1 elapsed=1856.2 done=61/64
+Q8_SHARD leaf=184 status=PASS qOp=[0.288584129330448768543 leaf_seconds=1856.4 elapsed=1856.5 done=62/64
+Q8_SHARD leaf=186 status=PASS qOp=[0.286524085565724894528 leaf_seconds=1856.6 elapsed=1856.7 done=63/64
+Q8_SHARD leaf=191 status=PASS qOp=[0.281127762878488723576 leaf_seconds=1857.2 elapsed=1857.3 done=64/64
+{
+  "arc": 0,
+  "leaf_range": [
+    128,
+    192
+  ],
+  "leaves_complete": true,
+  "status_counts": {
+    "PASS": 64,
+    "OPEN_MAX_DEPTH": 0
+  },
+  "qOp_lt_1_all": true,
+  "payload_sha256": "80424cc466865193f404ffaea1d685689022996bee498a0ce81be06e6021d6cd",
+  "wall_seconds": 1857.332899093628
+}
+=== GAPFILL EXIT s02 a0_l128-192 rc=0 2026-08-23T13:42:07Z ===
+=== GAPFILL START s03 a0_l192-256 2026-08-23T13:42:07Z ===
+Q8_SHARD arc=0 leaves=[192,256) depth=8 N=262 workers=12 resumed=37 pending=27
+Q8_SHARD leaf=240 status=PASS qOp=[0.231754810629643898418 leaf_seconds=1825.3 elapsed=1825.4 done=38/64
+Q8_SHARD leaf=239 status=PASS qOp=[0.232669827846314960637 leaf_seconds=1825.5 elapsed=1825.6 done=39/64
+Q8_SHARD leaf=236 status=PASS qOp=[0.235508575592240403836 leaf_seconds=1825.6 elapsed=1825.7 done=40/64
+Q8_SHARD leaf=230 status=PASS qOp=[0.241186705048934627443 leaf_seconds=1826.0 elapsed=1826.1 done=41/64
+Q8_SHARD leaf=237 status=PASS qOp=[0.234561787662032984028 leaf_seconds=1826.0 elapsed=1826.1 done=42/64
+Q8_SHARD leaf=234 status=PASS qOp=[0.237397180089672834637 leaf_seconds=1826.1 elapsed=1826.3 done=43/64
+Q8_SHARD leaf=229 status=PASS qOp=[0.242141183387626265785 leaf_seconds=1826.2 elapsed=1826.3 done=44/64
+Q8_SHARD leaf=232 status=PASS qOp=[0.239281477837137597492 leaf_seconds=1826.3 elapsed=1826.4 done=45/64
+Q8_SHARD leaf=235 status=PASS qOp=[0.236453788836338790978 leaf_seconds=1827.6 elapsed=1827.8 done=46/64
+Q8_SHARD leaf=233 status=PASS qOp=[0.238338507576147250864 leaf_seconds=1828.7 elapsed=1828.8 done=47/64
+Q8_SHARD leaf=238 status=PASS qOp=[0.233615341074358450765 leaf_seconds=1829.3 elapsed=1829.4 done=48/64
+Q8_SHARD leaf=231 status=PASS qOp=[0.240235363611379991742 leaf_seconds=1829.8 elapsed=1829.9 done=49/64
+Q8_SHARD leaf=247 status=PASS qOp=[0.225725210574041423246 leaf_seconds=1835.5 elapsed=3661.9 done=50/64
+Q8_SHARD leaf=241 status=PASS qOp=[0.230892190209224246925 leaf_seconds=1836.8 elapsed=3662.2 done=51/64
+Q8_SHARD leaf=242 status=PASS qOp=[0.230029558426342321792 leaf_seconds=1836.7 elapsed=3662.3 done=52/64
+Q8_SHARD leaf=245 status=PASS qOp=[0.227450046011231332257 leaf_seconds=1837.2 elapsed=3663.4 done=53/64
+Q8_SHARD leaf=248 status=PASS qOp=[0.224861792734219774493 leaf_seconds=1837.0 elapsed=3663.4 done=54/64
+Q8_SHARD leaf=246 status=PASS qOp=[0.226588020937673315139 leaf_seconds=1837.7 elapsed=3664.0 done=55/64
+Q8_SHARD leaf=243 status=PASS qOp=[0.229171003807085162695 leaf_seconds=1838.7 elapsed=3664.4 done=56/64
+Q8_SHARD leaf=244 status=PASS qOp=[0.228311102941922674499 leaf_seconds=1838.4 elapsed=3664.5 done=57/64
+Q8_SHARD leaf=250 status=PASS qOp=[0.223134808998090419038 leaf_seconds=1837.0 elapsed=3665.8 done=58/64
+Q8_SHARD leaf=249 status=PASS qOp=[0.223998296193632938356 leaf_seconds=1838.9 elapsed=3666.7 done=59/64
+Q8_SHARD leaf=252 status=PASS qOp=[0.221407658906123899345 leaf_seconds=1837.2 elapsed=3667.1 done=60/64
+Q8_SHARD leaf=251 status=PASS qOp=[0.222271210616601805268 leaf_seconds=1838.5 elapsed=3668.0 done=61/64
+Q8_SHARD leaf=255 status=PASS qOp=[0.218818800201619873230 leaf_seconds=1321.2 elapsed=4983.5 done=62/64
+Q8_SHARD leaf=254 status=PASS qOp=[0.219681302682053945477 leaf_seconds=1321.3 elapsed=4983.5 done=63/64
+Q8_SHARD leaf=253 status=PASS qOp=[0.220544306704956879762 leaf_seconds=1322.4 elapsed=4984.3 done=64/64
+{
+  "arc": 0,
+  "leaf_range": [
+    192,
+    256
+  ],
+  "leaves_complete": true,
+  "status_counts": {
+    "PASS": 64,
+    "OPEN_MAX_DEPTH": 0
+  },
+  "qOp_lt_1_all": true,
+  "payload_sha256": "fadc7d100c9b0a01cf21b1567b360b839d8c6599d6264c1effd31a4661007204",
+  "wall_seconds": 4984.382087945938
+}
+=== GAPFILL EXIT s03 a0_l192-256 rc=0 2026-08-23T15:05:11Z ===
+=== GAPFILL START s04 a1_l0-64 2026-08-23T15:05:11Z ===
+Q8_SHARD arc=1 leaves=[0,64) depth=8 N=262 workers=12 resumed=34 pending=30
+Q8_SHARD leaf=37 status=PASS qOp=[0.254093518546667827367 leaf_seconds=2016.8 elapsed=2016.9 done=35/64
+Q8_SHARD leaf=33 status=PASS qOp=[0.249543066811634199129 leaf_seconds=2017.5 elapsed=2017.6 done=36/64
+Q8_SHARD leaf=45 status=PASS qOp=[0.263025236443323992382 leaf_seconds=2017.7 elapsed=2017.9 done=37/64
+Q8_SHARD leaf=38 status=PASS qOp=[0.255224766195554499967 leaf_seconds=2018.4 elapsed=2018.6 done=38/64
+Q8_SHARD leaf=39 status=PASS qOp=[0.256352513712425276506 leaf_seconds=2018.5 elapsed=2018.6 done=39/64
+Q8_SHARD leaf=36 status=PASS qOp=[0.252959172710807403162 leaf_seconds=2018.5 elapsed=2018.6 done=40/64
+Q8_SHARD leaf=35 status=PASS qOp=[0.251822359263320804693 leaf_seconds=2018.9 elapsed=2019.1 done=41/64
+Q8_SHARD leaf=42 status=PASS qOp=[0.259711195868062711649 leaf_seconds=2019.5 elapsed=2019.7 done=42/64
+Q8_SHARD leaf=40 status=PASS qOp=[0.257476409202187993323 leaf_seconds=2019.7 elapsed=2019.9 done=43/64
+Q8_SHARD leaf=44 status=PASS qOp=[0.261926155042262258129 leaf_seconds=2020.8 elapsed=2021.0 done=44/64
+Q8_SHARD leaf=41 status=PASS qOp=[0.258596092581085501773 leaf_seconds=2021.1 elapsed=2021.3 done=45/64
+Q8_SHARD leaf=43 status=PASS qOp=[0.260821342089008470911 leaf_seconds=2024.2 elapsed=2024.4 done=46/64
+Q8_SHARD leaf=46 status=PASS qOp=[0.264118912928510124131 leaf_seconds=1884.8 elapsed=3901.7 done=47/64
+Q8_SHARD leaf=48 status=PASS qOp=[0.266286406694364111380 leaf_seconds=1884.2 elapsed=3902.1 done=48/64
+Q8_SHARD leaf=47 status=PASS qOp=[0.265206139387927712037 leaf_seconds=1884.5 elapsed=3902.1 done=49/64
+Q8_SHARD leaf=50 status=PASS qOp=[0.268431812038592612959 leaf_seconds=1884.1 elapsed=3902.7 done=50/64
+Q8_SHARD leaf=49 status=PASS qOp=[0.267359305842872304448 leaf_seconds=1885.7 elapsed=3904.3 done=51/64
+Q8_SHARD leaf=54 status=PASS qOp=[0.272788852066110732054 leaf_seconds=1884.9 elapsed=3904.8 done=52/64
+Q8_SHARD leaf=52 status=PASS qOp=[0.270607683714924392827 leaf_seconds=1886.0 elapsed=3905.0 done=53/64
+Q8_SHARD leaf=51 status=PASS qOp=[0.269504230691289780115 leaf_seconds=1886.8 elapsed=3905.4 done=54/64
+Q8_SHARD leaf=55 status=PASS qOp=[0.273865626269981191973 leaf_seconds=1886.5 elapsed=3907.5 done=55/64
+Q8_SHARD leaf=56 status=PASS qOp=[0.274932571512431503057 leaf_seconds=1887.0 elapsed=3908.3 done=56/64
+Q8_SHARD leaf=57 status=PASS qOp=[0.275989388568280770736 leaf_seconds=1887.9 elapsed=3912.3 done=57/64
+Q8_SHARD leaf=53 status=PASS qOp=[0.271702713173908672859 leaf_seconds=1896.4 elapsed=3916.1 done=58/64
+Q8_SHARD leaf=59 status=PASS qOp=[0.278070081540839900557 leaf_seconds=1330.9 elapsed=5233.0 done=59/64
+Q8_SHARD leaf=58 status=PASS qOp=[0.277035397734128782918 leaf_seconds=1331.3 elapsed=5233.0 done=60/64
+Q8_SHARD leaf=60 status=PASS qOp=[0.279094103323436740993 leaf_seconds=1331.0 elapsed=5233.1 done=61/64
+Q8_SHARD leaf=61 status=PASS qOp=[0.280125363873232034096 leaf_seconds=1330.8 elapsed=5233.5 done=62/64
+Q8_SHARD leaf=62 status=PASS qOp=[0.281176806667900682675 leaf_seconds=1331.1 elapsed=5235.3 done=63/64
+Q8_SHARD leaf=63 status=PASS qOp=[0.282215299678361732933 leaf_seconds=1331.4 elapsed=5236.2 done=64/64
+{
+  "arc": 1,
+  "leaf_range": [
+    0,
+    64
+  ],
+  "leaves_complete": true,
+  "status_counts": {
+    "PASS": 64,
+    "OPEN_MAX_DEPTH": 0
+  },
+  "qOp_lt_1_all": true,
+  "payload_sha256": "7b380b8662c6fdc8505e7a53e888f6370bad982ee32444253b80e62f6318f933",
+  "wall_seconds": 5236.206063747406
+}
+=== GAPFILL EXIT s04 a1_l0-64 rc=0 2026-08-23T16:32:27Z ===
+=== GAPFILL DRAINED 2026-08-23T16:32:27Z ===

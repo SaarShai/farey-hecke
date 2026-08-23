@@ -1,0 +1,83 @@
+{
+  "schema": "q8-schur-contour-shard-merge/v1",
+  "shards": [
+    "shard_receipts/d8/SHARD_a0_l0-64.json",
+    "shard_receipts/d8/SHARD_a0_l128-192.json",
+    "shard_receipts/d8/SHARD_a0_l192-256.json",
+    "shard_receipts/d8/SHARD_a0_l64-128.json",
+    "shard_receipts/d8/SHARD_a1_l0-64.json",
+    "shard_receipts/d8/SHARD_a1_l128-192.json",
+    "shard_receipts/d8/SHARD_a1_l192-256.json",
+    "shard_receipts/d8/SHARD_a1_l64-128.json",
+    "shard_receipts/d8/SHARD_a2_l0-64.json",
+    "shard_receipts/d8/SHARD_a2_l128-192.json",
+    "shard_receipts/d8/SHARD_a2_l192-256.json",
+    "shard_receipts/d8/SHARD_a2_l64-128.json",
+    "shard_receipts/d8/SHARD_a3_l0-64.json",
+    "shard_receipts/d8/SHARD_a3_l128-192.json",
+    "shard_receipts/d8/SHARD_a3_l192-256.json",
+    "shard_receipts/d8/SHARD_a3_l64-128.json"
+  ],
+  "shard_payload_sha256": {
+    "shard_receipts/d8/SHARD_a0_l0-64.json": "a0cd4da728373c77c151338501e763d116a8397c87edd6c941fdc6a8f25372a9",
+    "shard_receipts/d8/SHARD_a0_l128-192.json": "80424cc466865193f404ffaea1d685689022996bee498a0ce81be06e6021d6cd",
+    "shard_receipts/d8/SHARD_a0_l192-256.json": "fadc7d100c9b0a01cf21b1567b360b839d8c6599d6264c1effd31a4661007204",
+    "shard_receipts/d8/SHARD_a0_l64-128.json": "2f252713e5f5ad38a0f44b6a6cc9c123029137f5c2337a6d14f7067cd1cafb28",
+    "shard_receipts/d8/SHARD_a1_l0-64.json": "7b380b8662c6fdc8505e7a53e888f6370bad982ee32444253b80e62f6318f933",
+    "shard_receipts/d8/SHARD_a1_l128-192.json": "53109f31e519cf48e59d7c9b53a1cfeeeb78186e1fa883fcd049e4dbda9f503a",
+    "shard_receipts/d8/SHARD_a1_l192-256.json": "bfd426bbd789861f12f03bc00bb4e58d789c16340892b5e75c15c2b1e89f8741",
+    "shard_receipts/d8/SHARD_a1_l64-128.json": "3a43e3187a16826545e987d0d593c8f16f4977bd5b7a478541fd4786eac10d19",
+    "shard_receipts/d8/SHARD_a2_l0-64.json": "22688395dca2c251af5b0998d30139f2dacd3a5897a23fedc885338f5b85c7a6",
+    "shard_receipts/d8/SHARD_a2_l128-192.json": "e4323dd740b2d422b38bbfd59475148a93d337eb5d9bbbaf0a15eafe1b1c60f7",
+    "shard_receipts/d8/SHARD_a2_l192-256.json": "a47acfa55fd8077a023bf719ce1fca829dae4c12bc9df2729ca730c388031efe",
+    "shard_receipts/d8/SHARD_a2_l64-128.json": "0adc9eaf8d545e4780ca5a9b6182229359ebf8f8ad4cda9d63dc6078b0caf40b",
+    "shard_receipts/d8/SHARD_a3_l0-64.json": "e99589afea419c8cb21351021a4e87c7ccfce47c8390d14269c00391593d4fe5",
+    "shard_receipts/d8/SHARD_a3_l128-192.json": "1a4ca2f436d3ae43f82a1a97d36d0362d1fccfe5a4fa43555de3627b8e8cc68e",
+    "shard_receipts/d8/SHARD_a3_l192-256.json": "ede582555ceae686f100097da1d3b8f71124e0192268d9f79a36406eaa8ea834",
+    "shard_receipts/d8/SHARD_a3_l64-128.json": "27bca9862c2b2bf4c67265636346ab945e84da6945567d7000b5dabdea894a4b"
+  },
+  "N": 262,
+  "K": 1,
+  "depth": 8,
+  "leaves_expected": 1024,
+  "leaves_supplied": 1024,
+  "coverage_exact": true,
+  "missing_leaves": [],
+  "missing_leaf_count": 0,
+  "per_arc": {
+    "0": {
+      "leaves": 256,
+      "pass": 256,
+      "open": 0,
+      "qOp_lt_1_all": true,
+      "certified": true
+    },
+    "1": {
+      "leaves": 256,
+      "pass": 256,
+      "open": 0,
+      "qOp_lt_1_all": true,
+      "certified": true
+    },
+    "2": {
+      "leaves": 256,
+      "pass": 256,
+      "open": 0,
+      "qOp_lt_1_all": true,
+      "certified": true
+    },
+    "3": {
+      "leaves": 256,
+      "pass": 256,
+      "open": 0,
+      "qOp_lt_1_all": true,
+      "certified": true
+    }
+  },
+  "all_arcs_certified": true,
+  "checker_sha256": "6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0",
+  "means": "every depth-8 leaf of every arc satisfies qOp < 1 and all strict gates; the finite-section arc cover is complete",
+  "does_not_mean": "This is checker output, not a theorem.  E1, the q=8 MMS/Hilbert identification, K_s, analytic gates 5-6 and continuation condition 8 of the 12-item ledger are untouched and remain OPEN.",
+  "merged_checkpoint": "shard_receipts/d8/Q8_D8_MERGED_CHECKPOINT.json",
+  "merged_checkpoint_validated_by_checker": true
+}

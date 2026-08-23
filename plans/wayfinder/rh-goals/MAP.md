@@ -2787,3 +2787,18 @@ S2_C3_ARTIFACT_REGEN.md + 9 artifacts banked (second_pin/):
    N=22 re-run reproduces [0.9999999492931789, 1.000000050706821]
    bit-for-bit; scan-level scope caveat recorded.
 S2 referee C3/C5 items: closed pending cold verification at next referee pass.
+
+## 2026-08-23 17:00Z — q8 DEPTH-8 CAMPAIGN COMPLETE: all_arcs_certified=true (1024/1024)
+
+Gap-fill DRAINED 16:32Z (rc=0). Coverage verified: 16 final shard receipts,
+1024/1024 leaves PASS, 0 OPEN_MAX_DEPTH. Cross-host determinism check (SOL
+§10.5 step 5) PASS: arc0 leaf128 record byte-identical to
+PREFLIGHT_d8_a0_l128-129.json (rH 0.1892125248420895230...,
+qOp 0.3271992747911403256...). Gated merge run:
+Q8_D8_MERGED_CHECKPOINT.json + Q8_D8_MERGE_REPORT.json —
+"all_arcs_certified": true, checkpoint validated by the checker's own
+validate_checkpoint_records, checker sha 6a9c1c3d7b28c2e0....
+SCOPE (verbatim from report): checker output, not a theorem; E1 (q=8
+MMS/Hilbert identification), K_s, analytic gates 5-6, continuation cond. 8
+remain OPEN. Next: paper §8 placeholder + FIG-1 fill (routed to non-Opus
+lane per owner), then local Lean re-elaboration queue.
