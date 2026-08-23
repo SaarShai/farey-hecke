@@ -2103,3 +2103,27 @@ Mapped steps (each gated on the previous):
   the LAW.
 Dependencies: q8 certificate machinery (running), LAW paper framing
 (NEXT-goal 1 / dissemination, owner-gated).  Not launched.
+
+## 2026-08-23 06:55Z — NEXT-2 rung 1 RETURNED: all 14 targets PROVED, locally re-verified
+
+- Aristotle task 1f7dca67 COMPLETE in ~20 min.  ARISTOTLE_SUMMARY: all
+  14 targets proved, no sorry/axiom/implemented_by, #print axioms =
+  propext/Classical.choice/Quot.sound only; no statement weakened; the
+  three named hypotheses H3 hgrowth / H4 hreal_finite / H5 hpole
+  REMAIN hypotheses (as required — a discharge would have been a
+  defect).  Optional C2 (Gamma-quotient modulus) proved too.
+- Independent local re-verification (receipt): returned
+  LawSkeletonI.lean compiled in the v26 lake env — exit 0, sole
+  diagnostic the pre-flagged benign unused-variable warning (him in
+  A2).  The 3 grep hits for "sorry" are all prose/docstrings.
+- LEDGER WORDING (unchanged, max strength): statement skeleton of the
+  LAW + divergence core + strictness/nonreality/reflection + the §4.2
+  calculus identity + the audit's Kelmer constant corrections are now
+  MACHINE-VERIFIED CONDITIONAL on H3-H5.  No scattering-theoretic
+  content is machine-verified.
+- Selberg 1990 sourcing lane returned: [Sel90] = Festschrift
+  Piatetski-Shapiro Part II, Israel Math. Conf. Proc. 3, Weizmann
+  Press 1990, pp. 251-278; NO legal digital open access found (pre-
+  digitization small press).  Obtainable: Springer Collected Papers
+  Vol. II (institutional/purchase ~$70-120) or the Festschrift via
+  academic libraries.  OWNER ACTION required to obtain a copy.
