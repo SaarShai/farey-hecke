@@ -2162,3 +2162,31 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
 - Owner: the (J) re-derivation bypass is the chosen route for the
   Selberg-1990 dependency (obtaining the printed source remains a
   welcome cross-check, owner-side).
+
+## 2026-08-23 08:10Z — NOGO-1..3 LANDED (UNREFEREED): metatheorem drafted, with a critical reframing
+
+- NOGO_METATHEOREM_SOL.md banked (UNREFEREED).  At note strength:
+  - Axiom list A0-A7 isolated from the promoted LAW chain (scalar
+    1-cusp; order≤2 meromorphy; φ(s)φ(1−s)=1; reality; Dirichlet-type
+    series with Γ-factor; finite real-zero/pole sets; strip
+    confinement; ridge bound; critical-line modulus).  NO Euler
+    product, NO arithmeticity, NO q.  All receipts double-sided
+    (arithmetic q=3 AND non-arith), none failed.
+  - CRITICAL CORRECTION to the commissioned brief: naive P ("zeros on
+    Re s=1/2") is NOT the RH-analogue — for q=3 the RH line is
+    Re s=3/4 (zeros of φ₃=Λ(2s−1)/Λ(2s) sit at s=(1+ρ)/2); Prop 4.1
+    proves P_line(3/4) ⟺ RH unconditionally.
+  - Metatheorem TRICHOTOMY: (I) A ⊨ ¬P_naive — PROVED mod Sel90
+    (entailment of the negation, stronger than independence: any
+    generic-machinery derivation of naive on-line rigidity contains an
+    exhibitable error); (II) A ⊭ ¬P_line(3/4) — PROVED conditional on
+    RH (A cannot refute the RH-analogue); (III) A ⊭ P_line(3/4) —
+    OPEN, recorded as NOGO-OPEN-1 (need a model of A with two nonreal
+    right-zeros at distinct real parts; DH-type synthetic candidate
+    CONJECTURAL/UNATTEMPTED).
+  - Corollary: arithmeticity-blindness — no A-only argument can be an
+    arithmeticity criterion.
+  - Scope §5: does NOT claim "no proof of RH without Euler product";
+    does NOT settle the RH-analogue.  Global conditionality: [Sel90
+    Lem 1-2] (bypass lane running).
+- NOGO-4 cold referee launching now (top priority).
