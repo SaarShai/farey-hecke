@@ -480,3 +480,99 @@ quoted in §3.2; all are a few lines and re-derivable from this note.
 **Final lane label: Phase 1 INFEASIBLE-BY-PROOF; Phase 2 delivers one
 CONJECTURAL/UNREFEREED `φ_5` zero box in the strip; NOGO-OPEN-1 OPEN, reduced
 to one compute item. READY FOR COLD REFEREE.**
+
+---
+
+## §8 CORRECTION BLOCK (dated append-only, 2026-08-23, post cold referee)
+
+Referee: SCAT1_PHIQ_ZERO_CERTIFIER_REFEREE.md — verdict
+PROMOTABLE-WITH-CORRECTIONS, no blocking mathematical error; every §2.2/§3.4
+numeric receipt independently reproduced. The corrections below SUPERSEDE the
+corresponding statements in §§0–6 wherever they conflict. Body text above is
+untouched (append-only rule).
+
+### C1 (referee defect 1 — MAJOR): §3.2 rounding directions were wrong.
+The 10/11-digit "rounded DOWN" quantities were in fact round-to-nearest (UP).
+Corrected certified quantities (directed rounding, DOWN):
+- strict-right margin Re ρ − 1/2 ≥ **0.04610381992** (was printed 0.04610381993)
+- distance to Re = 1 ≥ **0.4538941800** (was printed 0.4538941801)
+The 7-digit forms (≥ 0.0461038) in §0 and CLAIM 3.2 were already safe and stand.
+
+### C2 (defect 2 — MAJOR): §5.1b/§5.2 fallback-candidate numerics WITHDRAWN.
+The claim "all three fallback pins separated from the flagship by > 0.015,
+i.e. > 10⁴ box widths" is FALSE for two of three. Correct table
+(KS_GATE_REPORT.md):
+| pin | ΔRe vs 0.4538952 | box widths (2e-6) | >0.015 | >1e4 bw | \|t\| |
+|---|---|---|---|---|---|
+| 0.4105437 | 0.0433514 | 21676 | yes | yes | 7.820 |
+| 0.4470830 | 0.0068122 | 3406 | NO | NO | 12.080 |
+| 0.4690553 | 0.0151601 | 7580 | yes | NO | 12.786 |
+The §5.2 rationale "milder … closer in |t|" is also WITHDRAWN: two of the
+three sit at |t| = 12.08 / 12.79, i.e. FARTHER than s_2's 10.56, which by the
+B2 logic is a degrader. Only 0.4105437 (|t| = 7.82) is a genuinely milder
+fallback.
+
+### C3 (defect 3 — MAJOR): §5.1 "same item" downgraded to a one-way implication.
+NOGO-OPEN-1 and NO_VERTICAL_LINE_COROLLARY item 4 are NOT the same item. The
+correct statement: IF both certified pins are nonreal, off-line, and satisfy
+0 < Re s* < 1/2 with distinct real parts, THEN Lemma 3.1 closes NOGO-OPEN-1
+as well as the vertical-line item. A pin at Re s* = 1/2 would close the
+vertical-line item while reflecting to Re ρ = 1/2, outside NOGO-OPEN-1's open
+interval. The reverse direction needs Lemma 3.1 run backwards and is not
+written here. So: closure of the vertical-line item by two STRICTLY interior
+pins ⇒ closure of NOGO-OPEN-1; no unqualified equivalence.
+
+### C4 (defect 4 — MAJOR): dependency posture restated honestly.
+"Adds no dependency the parent does not already carry" is corrected to:
+CLAIM 3.2 PROMOTES the parent's link 7 (divisor/resonance identification)
+from an interpretive citation to a LOAD-BEARING hypothesis — the parent's
+theorem statement is rigorous without link 7; CLAIM 3.2 is not. Additionally,
+the order-m (multiplicity) matching in Lemma 3.1 is an input link 7 does not
+assert (the bare existence conclusion needs only m ≥ 1), and link 7 speaks of
+the resolvent/scattering matrix while Lemma 3.1 needs the scalar φ
+specifically. The §3.3 TODO-VERIFY (Hejhal LNM 1001 Vol.2 Thm 5.3 / Venkov,
+orbifold scalar divisor with multiplicity) is exactly the discharge of all
+three points.
+
+### C5 (defect 5 — MAJOR): B7 convention gate attaches to EVERY endpoint quote.
+The B7 gate (independent reimplementation placed the G_5 pin at Re 0.4332 vs
+0.4539; even-sector convention gate not closed — SECOND_PIN_PREP.md) applies
+to §0 V2, CLAIM 3.2 (§3.2), the §5.1 blocker figure 0.4538952, and the §6
+ledger row, not only §5.1b. Until B7 is resolved, no box endpoint from this
+note is paper-quotable; the qualitative content (a nonreal φ_5 zero strictly
+right of the critical line) survives either convention.
+
+### C6 (defect 6 — MAJOR): LEDGER-RULE alignment of title/§0/§6.
+The title's "a certified zero of φ_q itself", §0's "ALREADY IN THE BANK", and
+the §6 row's leading word "Certified" are corrected to match the
+most-caveated phrasing (§4): **"Superseded, conditionally: a CONJECTURAL
+(UNREFEREED at time of writing; now refereed PROMOTABLE-WITH-CORRECTIONS)
+zero of φ_5 by reflection, conditional on the §3.3 TODO-VERIFY divisor
+citation and the B7 convention gate."** "Certified" without those two
+qualifiers is not to be quoted from this note.
+
+### C7 (minors 7–12, acknowledged):
+- (7) Prop 2.1's "diverges at every Re s ≤ 1" weakened to "Re s < 1, and at
+  real s = 1"; convergence at 1+it, t≠0 is not excluded (immaterial to the
+  target strip).
+- (8) §5.1b blocker relabel: the 4.5e-6 not-freezable finding is B1, not B2;
+  §6's blocker list is B1 + B2 + B7.
+- (9) §3.4 Route 2 is a different slice of the SAME divisor citation as §3.3,
+  not an independent check; "Independent of §3.3" is withdrawn.
+- (10) BOX_TO_THEOREM_UPGRADE_PLAN.md lives in lane_f (added to §1's reading
+  list by this note); its quoted content was verified by the referee.
+- (11) Mandated prior-art disclosure at the novelty claim (§4): Hejhal LNM
+  1001 Thm 7.11/Cor 7.12 prove φ_N zeros/poles in prescribed rectangles for
+  all sufficiently large N; q=5 is not covered by "large N", so the novelty
+  claim survives, but the citation is mandatory wherever novelty is framed.
+- (12) OPEN RECONCILIATION: W_ENVELOPE_CERT_RECEIPT.json records the parent
+  half-width as ±1.01e-6 vs the declared ±1e-6. If ±1.01e-6 is operative, the
+  margin drops to 0.0461028… (6th decimal shifts). Must be reconciled before
+  any paper-level quotation; the 7-digit ≥ 0.0461028 form is safe under
+  either reading — adopt THAT as the quotable margin until reconciled.
+
+### Post-correction status
+CONJECTURAL / refereed PROMOTABLE-WITH-CORRECTIONS (corrections applied
+above). Conditional on: (i) §3.3 TODO-VERIFY divisor citation, (ii) B7
+convention gate, (iii) §8-C7(12) half-width reconciliation. Phase-1
+infeasibility (Prop 2.1) is unconditional and CONFIRMED by the referee.
