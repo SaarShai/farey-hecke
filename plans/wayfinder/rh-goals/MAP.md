@@ -1995,3 +1995,16 @@ Owner-directed next steps once the LAW proof + q8 certification bank:
 - Neither goal depends on the running d8 compute (analytic/agent work
   + Aristotle cloud vs. local CPU); both CAN begin immediately on
   owner go.  Not yet launched — pause directive still governs.
+
+## 2026-08-23 05:10Z — OWNER GO: NEXT-1 and NEXT-2 lanes OPENED
+
+- Owner said "go".  Two Opus lanes launched (routing per the 2026-08-15
+  directive):
+  - NEXT-1 opener: ranked Q₀-reduction attack plan + one executed rung
+    of the α lever → NEXT1_Q0_GAP_PLAN_SOL.md (UNREFEREED on landing;
+    cold referee before any status change).
+  - NEXT-2 opener: first Aristotle formalization rung of the LAW —
+    statement skeleton + most self-contained lemma, v32-template
+    conditional structure → projects/aristotle_dispatch_v33/.
+- Pause directive LIFTED for these two lanes only; harvest-only d8
+  loop continues unchanged (compute + hourly tick unaffected).
