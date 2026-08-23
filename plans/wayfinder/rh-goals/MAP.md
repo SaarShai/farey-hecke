@@ -2190,3 +2190,23 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
     does NOT settle the RH-analogue.  Global conditionality: [Sel90
     Lem 1-2] (bypass lane running).
 - NOGO-4 cold referee launching now (top priority).
+
+## 2026-08-23 08:40Z — NEXT-1 REFEREED: core CONFIRMED digit-for-digit, gate audit REFUTED
+
+- NEXT1_Q0_GAP_PLAN_REFEREE.md banked (606 lines, independent legs).
+  Verdicts: elasticity-artifact claim CONFIRMED and understated (−85.4
+  ≡ −T₀ exactly, referee hit 20 digits); α=2σ−1 + strip-invariance
+  CONFIRMED (one inference refuted: "nothing pushing back" — the floor
+  is strictly increasing in α, +0.668 log10 across the range); the
+  executed α rung CONFIRMED digit-for-digit; lever ranking
+  CONFIRMED-with-corrections; **gate audit "7 of 8 dischargeable"
+  REFUTED as stated** (D7: (H-RATE) still carries the conjectural
+  q^{1−2σ} sub-input; D6b: the omitted clause couples Scope-2 to a
+  family-uniform K₊).
+- Defects D2,D3,D6a,D6b,D7,D8,D9 recorded (line-receipt drift ×9,
+  composite table row, r_z label, ln10 slip, incomplete frozen list).
+- Referee finding IN the note's favour: L2 (disc radius) never
+  touches Ω, so K₊=117 is fully licensed for it — L2 is worth −6.97
+  WITHOUT (H-SIDE) work and outranks L1.  New top lever.
+- Correction block (dated, append-only) being applied now; no status
+  above CONFIRMED-with-corrections until it lands.
