@@ -218,3 +218,157 @@ fine-scale α-ball gluing; unreduced operator until obligation 1 clears), on
 the U(2) arc family of §1 anchored at the flagship certificate. The crux
 (finite 1-dim character variety) is real and is resolved inside Pohl's
 framework without leaving G_5.
+
+## §6 — Referee corrections applied (2026-08-23, append-only)
+
+Source of truth: `PS1_GQ_CHI_DESIGN_REFEREE.md` (verdict:
+PROMOTABLE-WITH-CORRECTIONS, 7 majors, 6 minors). This section supersedes,
+but does not delete, the statements above wherever they conflict. Favourable
+outcome first: the referee independently derived a structural fact worth
+banking — for j=0 the family is singular ONLY at θ=0 (1 ∈ spec ρ(T) iff
+cos2θ = 1); the entire open interior arc (0, π/2) is regular. That is the
+strongest argument for the C1 relocation below: the interior is clean.
+
+- **C1 — anchor is an algebraic branch point (BLOCKING).** §1's θ=0 anchor
+  is RETIRED as the pilot target. The tail block Φ(z, s+m, a) has a branch
+  point of Lerch's formula at z=1 (singular part Γ(1−s)(−log z)^{s−1},
+  divergent for Re s ≈ 0.45); since z(θ) = 1 + O(θ²) at the anchor, det(1 −
+  L_{s,ρ_θ}) has an algebraic branch point in θ at θ=0, and the tail blocks
+  are unbounded and discontinuous there. Superseding statement: the pilot
+  re-anchors at an interior θ_0 bounded away from 0, with an alternative
+  route via Φ-regularisation at z=1 (analytically subtracting the singular
+  part before ball-evaluating) recorded as route (b). Named obligation:
+  prove det(1 − L_{s,ρ_θ}) is holomorphic in θ on a stated domain, with the
+  domain excluding θ=0 unless the z=1 regularisation is done.
+
+- **C2 — anchor factorisation stated against the wrong object.** §1's "Z(s,
+  ρ_0) = Z(s,1)·Z(s,χ′), whose first factor is the banked flagship G_5
+  certificate" is corrected: the flagship (`R3B_FLAGSHIP_CERT.md:7`) is
+  q=5, sign +1, the EVEN sector only, and Z(s,1) = Z_+ · Z_− under the
+  reflection extension. Superseding statement: the anchor is a
+  **four-factor product** Z(s,ρ_0) = Z_+ · Z_− · Z(s,χ′)'s two further
+  factors under the trivial/χ′ split, of which the flagship certifies a
+  winding box for the even-sector truncated determinant only, at
+  conditional scope (`R3B_FLAGSHIP_CERT.md`: "MMS sector/factorization and
+  the separate closed det(1−K_s) ≠ 0 identification remain outside this
+  verdict"). Identifying the tracked θ-arc zero with a specific factor is
+  an open obligation.
+
+- **C3 — coding compatibility asserted, not proved.** §1/§2's claim that
+  "this is exactly the shape Pohl's framework covers," with ρ(g)^{-1}
+  inserted directly into `build_reduced_matrix_ball`'s MMS eq. (32)–(34)
+  Rosen blocks, assumes Pohl's det(1−L_{s,χ}) = Z(Γ,χ;s) identity (proved
+  for HER slow/fast cross-section operators) transfers unchanged to our
+  MMS/Rosen coding. Named first-class obligation (promoted from implicit
+  to explicit, §4): prove or cite the transfer of Pohl's det ↔ Z identity
+  to the MMS coding. Candidate reference: Pohl, "Selberg zeta functions,
+  cuspidal accelerations, and existence of strict transfer operator
+  approaches" (2024-02).
+
+- **C3b — sign inconsistency in the block↔group-element dictionary
+  (implementation-critical).** §2's "`single_block(i,j,n,neg)` = the
+  inverse branch x ↦ −1/(x ± nλ), the group element g = S T^{∓n}" is
+  self-contradictory: x ↦ −1/(x±nλ) is S∘T^{±n}, not S T^{∓n}. Corrected
+  dictionary: g = S T^{±n} (matching the stated weight ρ(T)^{±n}ρ(S)).
+  Getting this backwards silently swaps z ↔ z̄ in every Lerch tail. Fix
+  required before any code is written.
+
+- **C4 — §3's headline viability figure refuted by the probe's own
+  machinery.** §3 Reading 2 / probe verdict "VIABLE at w ≤ 1e−8" and "the
+  dim-tail certification FAILED" only "at every w ≥ 1e−8" are both
+  corrected. Measured (N=10, 14, 18, prec 300): tail is OK at w=1e−12
+  (already 65× degraded, 1.3656e−7 → 8.8456e−6) and FAILS at w=1e−10 at
+  all three N. Superseding statement: certifiable α-ball width at flagship
+  scale is **w ≲ 1e−12**, not 1e−8 (100–1000× smaller); ball count for a
+  unit arc is ~1e12, not ~1e8. Obligation 2 (dim-tail uniform in α) is
+  promoted from a refinement to a **precondition** for any positive-width
+  α-ball enclosure at all.
+
+- **C5 — unreduced operator is not a code path; it is an unbuilt
+  derivation.** §2/§4 obligation 1's "run the UNREDUCED operator
+  (dimension ×2)" is corrected: `zeta_cert_rosen.py` has exactly one
+  builder (`build_reduced_matrix_ball`, the reduced sign=±1 MMS eq.
+  (33)/(34) placements); no unreduced builder exists (MMS eq. (32) for
+  even q is already `NotImplementedError` in the same file). Superseding
+  statement: the unreduced operator is an unbuilt MMS-eq.-(32)-class
+  derivation, not a dimension flag. §2's phrase "the sector saving later"
+  is WITHDRAWN as an expectation — the referee's independent check
+  (conjugation by reflection J sends ρ ↦ ρ^J with ρ^J(U) = ρ(ST^{−1}),
+  not isomorphic to ρ for generic θ) suggests obligation 1 resolves as a
+  counterexample, not a proof.
+
+- **C6 — cost model priced against the wrong machinery.** §5's ~35 CPU-h
+  (reduced) / ~270 CPU-h (unreduced) estimate used `winding_offline` at
+  N=14/dim 42/300 bits — the PROBE path, not the flagship's certification
+  machinery (N=160, dim 480, 384 bits, 284 accepted subarcs, 92 adaptive
+  splits, 512 enlarged-contour arcs per block, plus the Jacobi-derivative
+  rH<1 layer). Superseding cost, re-priced at U(2)-reduced dim 960:
+  ≈1.2e3 s/det × 284 subarcs ≈ 96 CPU-h per θ-step × 1571 steps ≈
+  **~1.5e5 CPU-h (reduced) / ~1.2e6 CPU-h (unreduced)** — three-plus orders
+  above the original figure, machinery graded at flagship scale. Matrix
+  build cost (now two `acb.lerch_phi` calls per tail entry instead of one
+  shared Hurwitz closure, expensive precisely near z=1 where C1 places the
+  pilot) is also no longer negligible and is omitted from both estimates.
+  PS-2 scope decision is escalated to the owner given this re-pricing.
+
+- **C7 — sweep missed six on-point Pohl papers.** §1/§4/§6-obligation-6's
+  citation list and 2026-11-01 scoop-recheck date are corrected. Six
+  papers added: Doll–Pohl, arXiv:2607.14981, "The divisor of the twisted
+  Selberg zeta function" (2026-07-16) — the reference for the zeta-zero-
+  vs-resonance obligation (named obligation 4) and for §2's 1 ∈ spec ρ(T)
+  bookkeeping; Pohl, "Some aspects of the spectral theory with twisting
+  representations" (2026-07-24); "Counting Resonances on Hyperbolic
+  Surfaces with Unitary Twists" (2021-09); "Scattering Theory with Unitary
+  Twists" (2022-02); "Odd and even Maass cusp forms for Hecke triangle
+  groups, and the billiard flow" (2013-03); "Selberg zeta functions,
+  cuspidal accelerations, and existence of strict transfer operator
+  approaches" (2024-02, also cited under C3 above). The scoop-recheck date
+  is re-dated off 2026-11-01 (which was calibrated against the six-year-old
+  2002.03334 while the 2026-07 twisted-divisor paper by the same group was
+  already out). What survives unchanged: no work was found computing or
+  certifying Z(Γ,χ) zeros along a unitary-rep family, on any surface — the
+  novelty claim is intact; only the ledger of citations was incomplete.
+
+- **m1 — large-w table rows are precision artifacts, not properties of the
+  family.** §3's w ≥ 1e−6 column (including the quoted amp 2.8e11 and rad
+  1.353e+39 at w=1e−4) is flagged: at N=14, w=1e−5 the radius is 3.382e+15
+  at prec 300 but 2.086e+27 at prec 600 and 1200 (converged) — a
+  precision artifact, not a converged measurement, and beyond any usable
+  width regardless.
+
+- **m2 — Cauchy remainder formula corrected.** §3 Reading 3's stated
+  remainder "M h²/R" is corrected to M(h/R)²/(1−h/R) ≈ M h²/R². With the
+  stated R=1e−2, h=1e−3 this is ≈1% of the sup of |det| on the disk, not
+  of |det| at the tracked point — the wrong comparand, since near a
+  tracked zero |det| at the point is orders smaller than the disk sup.
+  The ~1.6e3-step figure built on this formula is therefore unsupported
+  as stated.
+
+- **m3 — obligation 5 (lerch_phi existence) CLOSED.** §2/§4's obligation
+  5 ("availability in our pinned python-flint to be verified") is closed:
+  `python-flint 0.9.0` in `/Users/za/.venvs/farey-rh` ships `acb.lerch_phi`
+  (verified, ball radius 2.5e−87 at 300 bits on unimodular z). It is
+  replaced by the real remaining Lerch obligation, identified under C1
+  above: regularising Φ at z=1.
+
+- **m4 — provenance note.** §1/§3 name
+  `.worktrees/aletheia-restore/code/zeta_cert_rosen.py`, the general-q
+  wrapper used by the §3 probe. The banked flagship certificate is
+  sha-pinned instead to `zeta_cert_rosen_q5.py` plus `tb_certify/`,
+  `tc_rerun/` (`R3B_FLAGSHIP_CERT.md` §1). Harmless for the probe itself;
+  noted so the probe is not read as reusing the calibrated flagship
+  artifact.
+
+- **m5 — dissolution clause deleted.** §2's "Expected and welcome (that is
+  where dissolution starts)" is DELETED per PS-0 §7/C6, which explicitly
+  retired the Phillips–Sarnak dissolution framing ("no bearing on the
+  Phillips–Sarnak counting conjecture") and ordered that retirement
+  preserved on every capability claim. G_5 is non-arithmetic; there is
+  essentially nothing there to dissolve.
+
+- **m6 — torsion-freeness line added.** §1(b)'s "[G_5,G_5] is free of rank
+  4" is supplemented with the licensing step it omitted: torsion-freeness
+  of the commutator subgroup (all finite-order elements of G_5 are
+  conjugates of powers of S or U, all non-trivial in the abelianisation),
+  which via Kurosh's subgroup theorem licenses "free" rather than merely
+  "of Euler characteristic −3/10."
