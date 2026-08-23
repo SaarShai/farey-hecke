@@ -2809,3 +2809,11 @@ lake build completed successfully (8034 jobs, warnings only). Lemma 3.1
 reflection core verified locally as well as Aristotle-side. Optional loose
 ends now ALL closed (Hejhal SECONDARY-ONLY, S2 C3/C5 artifacts regenerated,
 local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
+
+## 2026-08-23T19:41:38Z — S2 wave-1 harvest: 1/5 chunk certified, 4 partial → local fill launched
+
+- Kaggle wave-1 (s00–s04) all exited COMPLETE at ~19:2x Z; harvested 5/16 receipts into lane_g/kaggle_s2_contour/chunk_receipts/.
+- s03 = S2_CHUNK_a036-048.json: status complete, CHUNK_ARCS_CLEAR, 12/12 base arcs, 24 accepted closed subarcs, all finite-Taylor + inflated enclosures exclude zero, winding deferred to merge (by design).
+- s00/s01/s02/s04 PARTIAL: hit the 39,600 s in-kernel SIGTERM deadline mid closed_contour phase (accepted leaves 12/8/5/12; Kaggle CPU ~2 evals/h/worker at N=288). Checkpoints harvested but certify_r3b_flagship.py has no resume path.
+- Remedy: local re-run of the 4 partial ranges (run_local_s2_fill.sh — 4 orchestrators x 3 workers, nice 10, 16-core box idle since d8 drained) → local_receipts/. Kaggle wave-2 (s05–s09) RUNNING; s10–s15 queued behind the 5-slot cap (poller pid 94033 alive, s09 pushed 19:33Z).
+- Merge caveat carried from d8: merge_s2_chunks.py glob S2_CHUNK_a*.json will also match .ckpt.json — exclude ckpts at merge time.
