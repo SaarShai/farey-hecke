@@ -1974,3 +1974,24 @@ directive 2026-08-15
   s02 (44 left) may hit the 12 h cap once more; the hourly harvest
   tick re-seeds and re-pushes as needed.  Local queue unaffected
   (12 workers, arc-2 in flight).
+
+## 2026-08-23 05:00Z — OWNER: two next-step goals added to the ledger
+
+Owner-directed next steps once the LAW proof + q8 certification bank:
+
+- **NEXT-1: Close the gap between Q₀ and certified computation.**
+  Drive toward an unconditional effective theorem: (a) shrink Q₀ from
+  2.81e36 — the α constant is the most elastic lever (elasticity
+  −85.4); the e^T₀ ≈ 4.68e16 floor is C_R-independent and is the hard
+  wall; (b) extend q8-style certified localization upward from small
+  q; (c) reduce the eight gates to fewer, sharper named conjectures —
+  each discharged gate is a paper-strength increment.  Honest target:
+  gates reduced + Q₀ materially down, not Q₀ meeting the certified
+  range (blocked by the e^T₀ floor).
+- **NEXT-2: Machine-certify the LAW itself** via the Aristotle
+  formalization ladder (v32 constant-chain pipeline is the proven
+  template).  Target: Lean-certified statement of the qualitative
+  off-line resonance theorem, axiom-clean, sorry-free.
+- Neither goal depends on the running d8 compute (analytic/agent work
+  + Aristotle cloud vs. local CPU); both CAN begin immediately on
+  owner go.  Not yet launched — pause directive still governs.
