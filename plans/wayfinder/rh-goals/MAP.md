@@ -2679,3 +2679,23 @@ caveat dropped; C5 crossval grid covers t=5.76/10.56 not the selected pin's
 exponent misread in §0/§4/§5 — errata stamp due.
 NEXT: §8 corrections block (luna) + errata stamp on S2_PHASE1_WR2_RECEIPT.md;
 C2's corrected digits propagate to any assembly/paper text before use.
+
+## 2026-08-23 09:43Z — PS-1 design landed (UNREFEREED): U(2) arc on G_5; alpha-ball viable only as gluing primitive
+
+PS1_GQ_CHI_DESIGN_SOL.md banked. Crux: Hom(G_5,U(1)) = mu_2 x mu_5 is FINITE —
+no continuous 1-dim family for ANY Hecke group (why Selberg/FM used
+Gamma_0(4)). Smallest continuous family in Pohl's framework: U(2)
+character-variety arc (rho(S)~diag(1,-1), rho(ST)~diag(zeta^j,zeta^k),
+modulus = relative eigenbasis angle theta in [0,pi/2], dim 1); theta=0 anchors
+to the banked flagship G_5 certificate (anchor is certified-computable, NOT
+zeta-expressible — G_5 non-arith; zeta-expressible anchor only in Gamma_0(4)
+fallback). Reserve: commutator-free-rank-4 U(1)^4 torus (~5x cost).
+Probe (flagship even sector, <1 CPU-min): weight-ball radius amplification
+~2.3e3-9.5e3 (N=10-18), linear through w=1e-7, blow-up onset w=1e-6,
+catastrophic w>=1e-5; dim-tail certification FAILS for every w>=1e-8 —
+referee C8(b) empirically confirmed. GO for PS-2 with amendment: Cauchy-Taylor
+continuation in complexified theta (~1e-3 steps, ~1.6e3/arc) as traversal,
+alpha-balls only as fine gluing; unreduced operator until sector reduction
+re-derived. New named obligation: certified lerch_phi primitive (Lerch tails).
+Cost: ~35 CPU-h reduced / ~270 unreduced; pilot local after d8 drains, full
+arc Kaggle after S2. PS-1 doc queued for cold referee.
