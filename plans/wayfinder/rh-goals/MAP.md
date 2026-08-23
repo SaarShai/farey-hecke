@@ -2329,3 +2329,27 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   everything it consumes — [Sel90] remains relevant only to the
   unconsumed sharp forms.  Next: NOGO re-referee for final promotion
   of the metatheorem with the D1 conditionality collapsed.
+
+## 2026-08-23 06:05Z — NOGO METATHEOREM **PROMOTED** — A ⊨ ¬P_naive, unconditional
+
+- Re-referee ruling installed (NOGO_METATHEOREM_REREFEREE.md): all 17
+  criteria PASS — every defect D1-D13 closed faithfully, append-only
+  verified at commit level, DISPATCH relabel exactly licensed.
+  RULING: **PROMOTED.**
+- The re-referee's own containment audit found NO bypass input exceeds
+  the corrected axiom list ((F)'s reality-of-poles clause derivable
+  only because of D2 — the correction was load-bearing), and licensed
+  the upgrade conditional on a banked genericity paragraph.  Section 9
+  appended to NOGO_METATHEOREM_SOL.md (verified 46+/0−) implementing
+  S-1 (staleness), S-2 (the genericity/transfer paragraph), S-3
+  (decision table naming).
+- FINAL BANKED FORM (maximum licensed strength):
+  - **Metatheorem I: A ⊨ ¬P_naive** — UNCONDITIONAL.  The generic
+    analytic axioms ENTAIL the failure of naive on-line rigidity.
+  - Metatheorem II: A ⊭ ¬P_line(3/4), conditional on RH, witness φ₃.
+  - D8a: A ⊨ P_line(3/4)? OPEN and RH-HARD.
+  - D8b: A fails to decide P_line(3/4) in at least one direction —
+    PROVED UNCONDITIONALLY.
+- NOT licensed: q-uniform constants, effective heights, H3
+  formalization, (J)-sharp, (C), and the §6 paper draft (redraft per
+  D9/D10/D11 pending).

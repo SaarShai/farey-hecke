@@ -869,3 +869,49 @@ accurate.
 **Post-correction status: PROMOTABLE-with-corrections applied; promotion to
 CONFIRMED-conditional (on H_Sel90 containment) awaits re-referee sign-off;
 paper-section draft NOT usable until re-drafted per D9/D10/D11.**
+
+## Section 9 — D1 addendum and genericity statement (2026-08-23, from NOGO_METATHEOREM_REREFEREE.md, S-1/S-2/S-3)
+
+**S-1 (staleness repair).** Section 8's D1 cross-reference described the
+SEL90 bypass as UNREFEREED; that was true at write time and is now
+superseded. The bypass was cold-refereed
+(SEL90_BYPASS_JENSEN_REDERIVATION_REFEREE.md, commit 0408361, gate
+PROMOTABLE-with-corrections), corrections D-1..D-3 applied, and
+DISPATCH.md §11 relabels S5/H3 to PROVED (consumed form, per-q).
+
+**S-2 (genericity / transfer statement — the paragraph licensing the
+upgrade).** The bypass derivation is written for L*_q, q ≥ 3, but every
+step of §§3.1–3.8 cites only the interface facts (D)/(NF), (E), (F),
+(G)/(U), (P), (Rl) together with ambient classical analysis (Littlewood/
+Titchmarsh 9.9, Stirling, subharmonicity, Carathéodory extension,
+Schwarz reflection, Fubini, dominated convergence); §4 is a q=3
+numerical check only and carries no proof weight. Each interface fact
+is a consequence of the corrected axiom list: (D)/(NF) = A4 (+A3);
+(E) = A4 (strict 0 < g₁ < g₂); (F) = A2 + A1 + A5 in its D2-corrected
+form (the reality-of-right-poles clause is used essentially — under the
+pre-D2 A5 this input exceeded A); (G)/(U) = A7 + the Γ-identity
+|Γ(½+it)/Γ(it)|² = t·tanh(πt); (P) = A6 + Stirling + A4's absolute
+convergence for σ ≥ 3/2; (Rl) = A3; Σ(σ_j−½) = O(1), monotonicity of
+F, and strip confinement = A5/A4. Hence the derivation transfers
+verbatim to an arbitrary M ∈ 𝔐(A), and Metatheorem I holds in the
+upgraded form
+
+> **A ⊨ ¬P_naive** (P_naive in the §3.1/D10 form),
+
+no longer conditional on H_Sel90. Residuals printed alongside, none a
+hypothesis on φ: (J) is consumed in the (J)-avg/H3 form only; GAP-1
+((J)-sharp) and GAP-2 ((C)/(DIF)) still rest on Selberg 1990 and are
+absent from the conclusion chain's signature (verified against
+LawSkeletonI.lean by the bypass referee, rows 2/15/16). This paragraph
+implements the re-referee's condition for certifying the A ⊨ sentence
+(NOGO_METATHEOREM_REREFEREE.md, Duty 2 and S-2); the containment audit
+it banks is the re-referee's own table, reproduced there.
+
+**S-3 (nomenclature).** The §8 "corrected trichotomy table" has four
+rows; it is henceforth the **decision table** of the metatheorem.
+
+**Post-addendum status:** Metatheorem I stands PROMOTED in the form
+A ⊨ ¬P_naive; Metatheorem II PROMOTED (conditional on RH, witness φ₃,
+conditionality unavoidable for this witness); D8a OPEN and RH-HARD;
+D8b PROVED unconditionally. The §6 paper draft remains unusable until
+redrafted per D9/D10/D11.
