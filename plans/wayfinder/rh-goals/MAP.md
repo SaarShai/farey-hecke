@@ -2410,3 +2410,30 @@ Dependencies: q8 certificate machinery (running), LAW paper framing
   sentence; §6.0 verification-methodology preamble (explicit
   not-a-novelty disclaimer); §8 plan-level localization forecast
   (0.725-0.775, NOT EXECUTED, m_z Arb cover un-run, gates unchanged).
+
+## 2026-08-23 06:30Z — OWNER: five reader-driven lanes QUEUED; φ_q certifier TOP PRIORITY
+
+Owner directive: queue all five audience-derived gaps, parallel where
+possible; TOP PRIORITY = the absent artifact, a certified zero of
+φ_q itself for a non-arithmetic q (settles NOGO-OPEN-1, gives the
+paper its exhibit).
+
+- **SCAT-1 (TOP): certified φ_q zero, non-arith q.**  Lane launched
+  (Opus).  Phase 1 feasibility: can φ_q/L*_q be evaluated to
+  certified (interval) accuracy — d(n) coefficients from the Hejhal
+  (7.5) expansion, truncation bounds from (E) — for q=5 or q=8?
+  Phase 2: argument-principle box certification of a right-strip
+  zero; TWO zeros at distinct real parts would also settle
+  NOGO-OPEN-1's countermodel form.  UNREFEREED until cycled.
+- **PAPER-A: worked audit** of a published generic spectral-
+  realization argument against A0-A7 (Berry-Keating/BBM class) —
+  lane launched (Opus; paper section draft, ledger discipline).
+- **PAPER-B: Selberg-class dictionary table** A0-A7 vs Selberg
+  axioms — lane launched (same agent as PAPER-A, one edit pass).
+- **PGT-1: explicit-formula corollary lane** — derive the
+  remark-level Ω/structural consequence of infinitely many off-line
+  resonances for the non-arith PGT error term — lane launched
+  (Opus research note, UNREFEREED, referee before any paper use).
+- **FIG-1: resonance-cloud figure** (arith vs non-arith side by
+  side) — QUEUED, blocked on q8 compute completion; not launched.
+- Data-availability paragraph: folded into PAPER-A/B edit pass.
