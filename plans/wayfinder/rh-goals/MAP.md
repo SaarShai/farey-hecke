@@ -2699,3 +2699,27 @@ alpha-balls only as fine gluing; unreduced operator until sector reduction
 re-derived. New named obligation: certified lerch_phi primitive (Lerch tails).
 Cost: ~35 CPU-h reduced / ~270 unreduced; pilot local after d8 drains, full
 arc Kaggle after S2. PS-1 doc queued for cold referee.
+
+## 2026-08-23 09:55Z — PS-1 design REFEREED: PROMOTABLE-WITH-CORRECTIONS (7 majors); PS-2 BLOCKED pending corrections
+
+Referee report installed verbatim (PS1_GQ_CHI_DESIGN_REFEREE.md). §1 crux
+(U(2) arc, dim 1, tr(AB)=cos2theta(zeta^j-zeta^k)) independently RE-DERIVED
+and CONFIRMED — resolves PS-0/C1's family question inside G_5. But:
+C1 BLOCKING — theta=0 anchor is an algebraic branch point of the Lerch tails
+(Phi singular part Gamma(1-s)(-log z)^{s-1} diverges at Re s~0.45; measured
+|Phi| growth exponent 0.546 = 1-Re s; det has theta^{2s-2} branch point);
+pilot must anchor AWAY from 0 or regularise Phi at z=1. Favourable referee
+derivation: family singular ONLY at theta=0, interior clean.
+C2 anchor is a 4-factor product; flagship = even-sector factor at conditional
+scope. C3/C3b Pohl det<->Z identity must be transferred to MMS coding (cite
+Pohl 2024-02 strict-transfer-operator paper); S T^{+-n} sign bug in dictionary.
+C4 certifiable alpha-ball width is w<~1e-12 (not 1e-8; tail fails at 1e-10).
+C5 unreduced operator = unbuilt derivation (MMS eq.32-class), not a dim flag;
+sector saving withdrawn (J-conjugation likely non-isomorphic for generic
+theta). C6 honest cost ~1.5e5 CPU-h reduced (~4000x quoted) — PS-2 needs a
+cheaper certification tier or narrower target. C7 six uncited Pohl papers
+incl. Doll-Pohl 2607.14981 twisted-divisor (2026-07) — THE reference for
+obligation 4; scoop gate still HOLDS (nothing certified-along-a-family).
+GATE: PS-2 compute BLOCKED until corrections §6 applied + pilot redesigned;
+given C6's honest cost, PS-2 scope decision (narrow pilot vs park) goes to
+the owner at next report.
