@@ -2823,3 +2823,9 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 - Local re-runs complete for a000-012 (exit 0 at 00:41:29Z), a048-060 (00:41:33Z), a024-036 (01:18:48Z): all CHUNK_ARCS_CLEAR, chunk_gate_pass=true, complete_closed_cover=true, all finite-Taylor + inflated enclosures exclude zero. Accepted leaves 24/27/24. Min finite-lower-minus-F margins (rounded down): 8.1396e-7, 6.0290e-8, 8.1400e-7 — all > 0.
 - a012-024 still running locally: eval 42, accepted 16, pending 22 (deeper subdivision in that range); queue2 (a120-192) waits for it before starting.
 - Chunk coverage: 4/16 certified (s03 Kaggle + 3 local). Kaggle wave-2 s05-s09 exits expected ~06:30-07:30Z.
+
+## 2026-08-24T04:37:17Z — a012-024 CERTIFIED (wave-1 fill drained); queue2 launched
+
+- Local a012-024 complete at 03:46:04Z: CHUNK_ARCS_CLEAR, chunk_gate_pass=true, complete_closed_cover=true, 38 accepted leaves (deepest range so far), min margin positive (e-8 scale, rounded down).
+- Chunk coverage now 5/16 certified (a000-060 fully + s03 within it: ranges 0-12,12-24,24-36,36-48,48-60).
+- queue2 started 03:47:54Z: a120-132/a132-144/a144-156/a156-168 running (4x3 workers); a168-192 in second batch. Kaggle wave-2 (s05-s09 = a060-120) exits ~06:30-07:30Z.
