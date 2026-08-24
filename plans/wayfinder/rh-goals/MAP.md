@@ -2817,3 +2817,9 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 - s00/s01/s02/s04 PARTIAL: hit the 39,600 s in-kernel SIGTERM deadline mid closed_contour phase (accepted leaves 12/8/5/12; Kaggle CPU ~2 evals/h/worker at N=288). Checkpoints harvested but certify_r3b_flagship.py has no resume path.
 - Remedy: local re-run of the 4 partial ranges (run_local_s2_fill.sh — 4 orchestrators x 3 workers, nice 10, 16-core box idle since d8 drained) → local_receipts/. Kaggle wave-2 (s05–s09) RUNNING; s10–s15 queued behind the 5-slot cap (poller pid 94033 alive, s09 pushed 19:33Z).
 - Merge caveat carried from d8: merge_s2_chunks.py glob S2_CHUNK_a*.json will also match .ckpt.json — exclude ckpts at merge time.
+
+## 2026-08-24T01:34:30Z — Local S2 fill: 3 of 4 wave-1 partial ranges now CERTIFIED
+
+- Local re-runs complete for a000-012 (exit 0 at 00:41:29Z), a048-060 (00:41:33Z), a024-036 (01:18:48Z): all CHUNK_ARCS_CLEAR, chunk_gate_pass=true, complete_closed_cover=true, all finite-Taylor + inflated enclosures exclude zero. Accepted leaves 24/27/24. Min finite-lower-minus-F margins (rounded down): 8.1396e-7, 6.0290e-8, 8.1400e-7 — all > 0.
+- a012-024 still running locally: eval 42, accepted 16, pending 22 (deeper subdivision in that range); queue2 (a120-192) waits for it before starting.
+- Chunk coverage: 4/16 certified (s03 Kaggle + 3 local). Kaggle wave-2 s05-s09 exits expected ~06:30-07:30Z.
