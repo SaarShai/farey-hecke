@@ -2829,3 +2829,9 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 - Local a012-024 complete at 03:46:04Z: CHUNK_ARCS_CLEAR, chunk_gate_pass=true, complete_closed_cover=true, 38 accepted leaves (deepest range so far), min margin positive (e-8 scale, rounded down).
 - Chunk coverage now 5/16 certified (a000-060 fully + s03 within it: ranges 0-12,12-24,24-36,36-48,48-60).
 - queue2 started 03:47:54Z: a120-132/a132-144/a144-156/a156-168 running (4x3 workers); a168-192 in second batch. Kaggle wave-2 (s05-s09 = a060-120) exits ~06:30-07:30Z.
+
+## 2026-08-24T05:40:04Z — s05 harvested PARTIAL (a060-072); queue3 self-heal armed
+
+- Kaggle s05 exited COMPLETE, receipt is status=partial (8 accepted leaves, 20 pending at SIGTERM) — as with wave-1, the 11 h deadline is too short for a full chunk. 6/16 receipts harvested; 5/16 ranges certified.
+- queue2 batch1 (a120-168) at eval 9/chunk, all base arcs subdividing (normal).
+- run_local_s2_queue3.sh launched: waits for queue2 DRAINED, then re-runs every range without a status=complete receipt (Kaggle or local), 4 at a time — self-healing coverage of the wave-2 partials without further dispatch decisions.
