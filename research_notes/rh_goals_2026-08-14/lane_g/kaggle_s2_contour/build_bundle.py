@@ -280,10 +280,11 @@ def build_kernels(
     workers: int,
     deadline: int,
     prefix: str,
+    arc_offset: int = 0,
 ) -> list[dict[str, object]]:
     made = []
     for chunk in range(chunks):
-        arc_start = chunk * arcs_per_chunk
+        arc_start = arc_offset + chunk * arcs_per_chunk
         arc_end = arc_start + arcs_per_chunk
         kernel_slug = f"{prefix}-s{chunk:02d}"
         kernel_dir = out_root / "kernels" / kernel_slug
@@ -348,17 +349,27 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--deadline", type=int, default=39600)
     parser.add_argument("--created", default="2026-08-23")
+    parser.add_argument("--arc-offset", type=int, default=0,
+                        help="first base arc of chunk 0 (partial re-dispatch)")
+    parser.add_argument("--skip-dataset", action="store_true",
+                        help="reuse the already-uploaded dataset; build kernels only")
     args = parser.parse_args()
 
-    if args.chunks * args.arcs_per_chunk != 192:
+    if args.arc_offset + args.chunks * args.arcs_per_chunk > 192:
+        raise SystemExit("offset + chunks * arcs_per_chunk must stay within the 192-arc cover")
+    if args.arc_offset == 0 and args.chunks * args.arcs_per_chunk != 192:
         raise SystemExit("chunks * arcs_per_chunk must tile the 192-arc cover")
     args.out_root.mkdir(parents=True, exist_ok=True)
-    dataset_dir = build_dataset(
-        args.out_root, args.username, args.dataset_slug, args.created
-    )
+    if args.skip_dataset:
+        dataset_dir = args.out_root / "dataset"
+    else:
+        dataset_dir = build_dataset(
+            args.out_root, args.username, args.dataset_slug, args.created
+        )
     kernels = build_kernels(
         args.out_root, args.username, args.dataset_slug, args.chunks,
         args.arcs_per_chunk, args.N, args.workers, args.deadline, args.prefix,
+        args.arc_offset,
     )
     summary = {
         "dataset_dir": str(dataset_dir),

@@ -2841,3 +2841,10 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 - s06-s09 exited and harvested (10/16 receipts on disk). All of a060-120 is status=partial (accepted 8/9/12/8/8 leaves) — consistent 11 h-deadline shortfall.
 - Poller pid 94033 killed: s10-s15 never pushed, deliberately — local queue2 (a120-192, running, eval 18/chunk) + queue3 self-heal sweep (will re-run a060-120 and any other incomplete range) are strictly faster than more Kaggle rounds.
 - Certified ranges: 5/16 (a000-060). Remaining 11 ranges all have local runs scheduled.
+
+## 2026-08-24T08:33:47Z — OWNER: local compute paused; S2 remainder re-delegated to Kaggle as 6-arc chunks
+
+- Owner directive: local device too taxed — pause at next checkpoint, delegate to Kaggle max, overnight local run on owner signal.
+- Local queues stopped cleanly: queue2/queue3 wrappers killed, orchestrators SIGTERMed -> checkpointed (a120-168 partial ckpts preserved in local_receipts/, e.g. a120-132 at 18/27 accepted). 0 certify processes.
+- Kaggle re-dispatch: build_bundle.py gained --arc-offset/--skip-dataset; built 22 six-arc kernels s2-contour-n288r-s00..s21 covering arcs 60-192 (6-arc chunk ~18 evals ~8h Kaggle -> fits the 11h deadline; dataset reused). push_s2r_kaggle.sh live (pid 963; slots momentarily busy, retries every 300s); harvest_s2r_kaggle.sh ready (receipt arithmetic fixed to 60+6k).
+- Overnight local finish: WAIT for owner launch signal. Certified so far: 5/16 twelve-arc ranges (a000-060).
