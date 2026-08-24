@@ -2853,3 +2853,22 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 
 - The 2h of SLOT BUSY on the r-wave: the retired poller had pushed s10-s14 (12-arc kernels, a120-180) at 05:26-06:39Z before being killed at ~08:30Z. They hold all 5 slots until ~16:30-17:30Z and will return partial (12-arc > 11h deadline) — redundant but unkillable (kaggle CLI has no cancel; delete is destructive and may not stop sessions).
 - r-wave (22 six-arc kernels) starts flowing when they exit; Kaggle-only completion estimate ~Aug 26. The owner-gated overnight local run (~6-8h for all of a060-192) remains the fast path.
+
+### 2026-08-24T20:06:06Z — S2 overnight local launch (owner signal)
+
+Owner: "continue in the local device overnight now". Local compute unpaused.
+- Verified state before launch: **5/16 twelve-arc ranges certified** (a000-012,
+  a012-024, a024-036, a036-048, a048-060 = base arcs 0-60); 0 certify procs running.
+- Injected the `queue2 DRAINED` marker into `local_receipts/LOCAL_FILL.log`
+  (queue2 was killed at the owner pause, so its own marker would never appear)
+  and launched `run_local_s2_queue3.sh` — the self-healing sweep that re-runs
+  any of the 16 ranges lacking a `status=complete` receipt in either
+  `chunk_receipts/` or `local_receipts/`, 4 at a time x 3 workers.
+- Confirmed live at 20:05:44Z: pids 74718/74725/74732/74737 on arcs 60:72,
+  72:84, 84:96, 96:108. Remaining queue after these: a108-120 ... a180-192.
+- Kaggle r-wave (22 six-arc kernels, `push_s2r_kaggle.sh`) left running; it
+  covers the same arcs 60-192 and is still slot-blocked by the stale
+  `s2-contour-n288-s10..s14` (exit ~16:30-17:40Z Aug 24). Redundant, not
+  harmful: the merge takes any receipt with `status=complete` per range,
+  first-complete wins.
+- ETA for full 192-arc cover from local alone: ~6-8 h (3 waves of 4).
