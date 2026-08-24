@@ -2848,3 +2848,8 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 - Local queues stopped cleanly: queue2/queue3 wrappers killed, orchestrators SIGTERMed -> checkpointed (a120-168 partial ckpts preserved in local_receipts/, e.g. a120-132 at 18/27 accepted). 0 certify processes.
 - Kaggle re-dispatch: build_bundle.py gained --arc-offset/--skip-dataset; built 22 six-arc kernels s2-contour-n288r-s00..s21 covering arcs 60-192 (6-arc chunk ~18 evals ~8h Kaggle -> fits the 11h deadline; dataset reused). push_s2r_kaggle.sh live (pid 963; slots momentarily busy, retries every 300s); harvest_s2r_kaggle.sh ready (receipt arithmetic fixed to 60+6k).
 - Overnight local finish: WAIT for owner launch signal. Certified so far: 5/16 twelve-arc ranges (a000-060).
+
+## 2026-08-24T10:36:43Z — Slot-blockage diagnosed: old poller pushed s10-s14 before retirement
+
+- The 2h of SLOT BUSY on the r-wave: the retired poller had pushed s10-s14 (12-arc kernels, a120-180) at 05:26-06:39Z before being killed at ~08:30Z. They hold all 5 slots until ~16:30-17:30Z and will return partial (12-arc > 11h deadline) — redundant but unkillable (kaggle CLI has no cancel; delete is destructive and may not stop sessions).
+- r-wave (22 six-arc kernels) starts flowing when they exit; Kaggle-only completion estimate ~Aug 26. The owner-gated overnight local run (~6-8h for all of a060-192) remains the fast path.
