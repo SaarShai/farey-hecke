@@ -2835,3 +2835,9 @@ local Lean build). Remaining: S2 campaign harvest (~19:23Z) -> NOGO assembly.
 - Kaggle s05 exited COMPLETE, receipt is status=partial (8 accepted leaves, 20 pending at SIGTERM) — as with wave-1, the 11 h deadline is too short for a full chunk. 6/16 receipts harvested; 5/16 ranges certified.
 - queue2 batch1 (a120-168) at eval 9/chunk, all base arcs subdividing (normal).
 - run_local_s2_queue3.sh launched: waits for queue2 DRAINED, then re-runs every range without a status=complete receipt (Kaggle or local), 4 at a time — self-healing coverage of the wave-2 partials without further dispatch decisions.
+
+## 2026-08-24T06:42:43Z — Wave-2 harvested: all 5 PARTIAL; poller retired; local queues own the rest
+
+- s06-s09 exited and harvested (10/16 receipts on disk). All of a060-120 is status=partial (accepted 8/9/12/8/8 leaves) — consistent 11 h-deadline shortfall.
+- Poller pid 94033 killed: s10-s15 never pushed, deliberately — local queue2 (a120-192, running, eval 18/chunk) + queue3 self-heal sweep (will re-run a060-120 and any other incomplete range) are strictly faster than more Kaggle rounds.
+- Certified ranges: 5/16 (a000-060). Remaining 11 ranges all have local runs scheduled.
