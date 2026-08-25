@@ -2914,3 +2914,57 @@ Owner: "do 1 and 7 and 8" (from the parallel-work survey).
 - S2 compute untouched: 4 chunks in flight (a108-120/120-132/132-144/144-156),
   9/16 certified. Both sol lanes are remote-reasoning; local CPU stays with
   the campaign.
+
+### 2026-08-25T06:11:55Z — U1 LANDED (UNREFEREED): PARTIAL — elliptic obstruction made exact
+
+Deliverable: lane_g/U1_QUNIFORM_GROWTH_SOL.md (gpt-5.6-sol via codex, 19 KB).
+**VERDICT: PARTIAL-with-obligation.** U1 is NOT proved; the value is that the
+obstruction is now exact rather than vague.
+
+- **Source-state correction (banked, do not lose):** the three files the brief
+  named contain NO literal U1. The operative definitions are
+  `LAW_T2_DETERMINANT.md` §§3.2/5.2 (original U1) and
+  `LAW_MINIMAL_HYPOTHESES.md` §4 (U1-min, strictly weaker, currently
+  operative). Sol states both so the norm/uniformity is not silently changed.
+- **Result:** after the banked Hurwitz/parabolic tail is separated, a fixed
+  interior matrix coefficient and the absolute branch mass of the canonical
+  full cyclic factor of the order-q elliptic generator are exactly
+  Θ_K(q^(1−2Re s)) for Re s < 1/2, locally uniformly on compacts. At the
+  theta-anchor s_∞ = ρ₁/2 = 1/4 + i·7.067362570867346895… the coefficient is a
+  NONZERO constant times q^(1/2−2it_∞), so modulus Θ(q^(1/2)). At Re s = 1/2
+  the absolute mass is Θ(log q); O(1) only for Re s > 1/2.
+- **Consequence:** any termwise/nuclear majorant dominating that cyclic factor
+  CANNOT establish U1 — and no O(q^a) majorant with a>0 helps, because
+  normalizing by it sends the known Euler-region limit to zero, so
+  Vitali–Hurwitz no longer transports the nonzero theta zeta. This kills a
+  whole class of attempts.
+- **NOT proved false:** U1 concerns the scalar Selberg zeta Z_{G_q}; a Fredholm
+  determinant can stay bounded while an operator block grows.
+- **Exact remaining obligation (§6):** prove sup_{q≥Q₁} sup_{s∈K'} |Z_{G_q}(s)|
+  ≤ A(K') < ∞ independent of q. Any transfer-operator route must additionally
+  (1) supply a q-comparable space or work at determinant level (reduced MMS
+  spaces have Θ(q) components; the naive fixed-disc space does not exist),
+  (2) show the exact MMS incidence removes/cancels the C(s)q^(1−2s) term or
+  give a holomorphic determinant-level regularization, (3) prove the
+  regularized determinant IS Z_{G_q} with the right MMS sector factor,
+  (4) retain the banked Hurwitz tail. Bypass option: scattering-determinant
+  estimate in the still-open strip 3/4 < Re s < 1 plus horizontal-edge control.
+- Status UNREFEREED — referee before any paper or ticket-closure use; the
+  document ships its own 5-item "what a referee must check" list.
+- M1g lane (deliverable 8) still RUNNING (codex pid 21617, ~33 min elapsed);
+  its wrapper false-completed earlier with no artifact — see tasks/lessons.md.
+
+### 2026-08-25T06:11:55Z — OWNER: Opus subagent ban LIFTED; local compute pausing after current chunks
+
+- Owner: "remove the no opus subagents rule". The 2026-08-23 restriction is
+  RETIRED; no pre-Agent-call model gate remains. Pool is now Opus 5 + luna/sol
+  via codex + grok/cursor, chosen by fit. Aristotle/Kaggle first-choice rules
+  and the local-CPU owner gate are unchanged. Banked to memory
+  (agent-routing-opus5.md + MEMORY.md index).
+- Owner: "pause local compute after whatever is running finishes." Killed the
+  queue4 dispatcher (pid 16121) ONLY — no further chunks will launch. The four
+  in-flight orchestrators (a108-120, a120-132, a132-144, a144-156) keep running
+  and will write their receipts normally.
+- Projected coverage at pause: **13/16** twelve-arc ranges (base arcs 0-156).
+  Remaining after pause: a156-168, a168-180, a180-192 — 36 base arcs, awaiting
+  either a Kaggle r-wave slot or an owner overnight signal.

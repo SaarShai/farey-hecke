@@ -111,3 +111,38 @@ discrepancy non-load-bearing by an argument about signs/positivity alone.
 Corollary: validate any instantiation of a cited lemma at the KNOWN cases
 (here: arithmetic q) before consuming it at the unknown ones — and if the
 known cases fail, suspect the instantiation before the lemma.
+
+## 2026-08-23 — model routing under credit pressure
+Owner: Opus credits low; no Opus 5 subagents until further notice. Use
+gpt-5.6-luna xhigh (codex) + Grok 4.6 (cursor) for subagent work; Fable main
+loop does judgment-dense work itself. Rule: check agent model before spawn.
+- [2026-08-23] Owner: subagents = luna AND sol via codex (sol ban lifted); grok/cursor ok; NO Opus. Gate: check model before spawn. Keep persist-verbatim habit for sol.
+
+## 2026-08-25 — codex-rescue wrapper can false-complete
+
+**Pattern:** the codex-rescue subagent returned a task-notification with
+status "completed" and the body "I'll wait for the background task to complete
+rather than polling" — while its underlying `codex-companion.mjs task` process
+was still running and had written nothing. Reporting that as a result would
+have been a fabricated completion.
+
+**Rule:** never treat a subagent completion notification as evidence the work
+landed. Check the declared deliverable path on disk (and, if absent, whether
+the underlying runner process is still alive) BEFORE reporting any outcome.
+An agent's self-report is a claim; the artifact is the receipt.
+
+**Gate:** on every subagent completion, run `ls -la <deliverable>` first. If
+missing and the runner is alive → report "still running", do NOT re-dispatch
+(that duplicates live work). If missing and the runner is dead → the lane
+produced nothing; re-dispatch or reroute.
+
+## 2026-08-25 — brief a lane with the file that actually defines the term
+
+**Pattern:** the U1 brief pointed sol at three files as the source of U1's
+definition. None of them contains a literal U1; the operative definitions live
+in `LAW_T2_DETERMINANT.md` §§3.2/5.2 and `LAW_MINIMAL_HYPOTHESES.md` §4. Sol
+caught it and stated both forms rather than silently inventing one.
+
+**Rule:** before briefing a lane on an named obligation (U1, B7, T2'), grep for
+the literal token and cite the file that defines it. A brief that misnames its
+own source invites a silently-changed statement.
