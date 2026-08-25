@@ -2872,3 +2872,23 @@ Owner: "continue in the local device overnight now". Local compute unpaused.
   harmful: the merge takes any receipt with `status=complete` per range,
   first-complete wins.
 - ETA for full 192-arc cover from local alone: ~6-8 h (3 waves of 4).
+
+### 2026-08-25T04:37:08Z — S2 at 9/16; queue3 dispatcher bug found and replaced
+
+- **Progress: 9/16 twelve-arc ranges certified** (base arcs 0-108). Overnight
+  wave-1 landed a060-072, a072-084, a084-096, a096-108 by 03:10Z.
+- **Bug:** `run_local_s2_queue3.sh` kept 4 chunks in flight via `wait -n`.
+  macOS ships bash 3.2.57, which has no `wait -n` ("wait: -n: invalid option"),
+  so the `|| wait` fallback fired — a FULL barrier. After wave-1 drained,
+  queue3 launched only `a108-120` and blocked on it: 3 cores busy, 13 idle,
+  the last 7 ranges effectively serialized.
+- **Fix:** `run_local_s2_queue4.sh` — same self-heal skip logic, but the
+  dispatcher polls `ps` for in-flight `certify_r3b_flagship.py --arcs`
+  processes instead of using `wait -n`. It also ADOPTS an already-running
+  chunk rather than duplicating it. Killed the queue3 wrapper only (pids
+  74693/14080/14078); the a108-120 orchestrator survived with its checkpoint.
+- Confirmed 4 in flight at 04:36:49Z: a108-120 (adopted), a120-132, a132-144,
+  a144-156. Queued: a156-168, a168-180, a180-192.
+- Kaggle r-wave still slot-starved ("Maximum batch CPU session count of 5
+  reached"), 8 of 22 pushed, 14 unpushed. Local is the load-bearing lane.
+- Revised ETA to full 192-arc cover: ~2 more waves, ~14 h.
