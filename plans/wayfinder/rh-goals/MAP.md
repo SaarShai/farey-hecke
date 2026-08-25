@@ -2892,3 +2892,25 @@ Owner: "continue in the local device overnight now". Local compute unpaused.
 - Kaggle r-wave still slot-starved ("Maximum batch CPU session count of 5
   reached"), 8 of 22 pushed, 14 unpushed. Local is the load-bearing lane.
 - Revised ETA to full 192-arc cover: ~2 more waves, ~14 h.
+
+### 2026-08-25T05:38:04Z — Merge script hardened; U1 + M1g lanes dispatched (sol/codex)
+
+Owner: "do 1 and 7 and 8" (from the parallel-work survey).
+- **(1) merge_s2_chunks.py fixed** for the campaign's real receipt topology:
+  reads chunk_receipts/ + local_receipts/ (repeatable --chunk-dir), takes only
+  status=complete receipts, dedupes by arc range, and greedily assembles a
+  non-overlapping cover of base arcs [0,192) at mixed 6/12-arc granularity
+  (widest receipt wins per position). Dropped the fixed EXPECTED_CHUNKS=16.
+  Dry-run verified: assembles the current 9-chunk prefix and fails cleanly at
+  "no complete receipt starting at base arc 108" — will pass on full coverage.
+- **(7) U1 lane dispatched** (gpt-5.6-sol xhigh via codex, background): derive
+  or isolate the obstruction to the q-uniform growth bound — last crux of the
+  LAW ticket; elliptic-order-q danger term. Deliverable:
+  lane_g/U1_QUNIFORM_GROWTH_SOL.md, UNREFEREED on landing.
+- **(8) M1g lane dispatched** (gpt-5.6-sol xhigh via codex, background):
+  diagnose q=5-specific steps of the proven tail bound, attempt the even-q
+  (q=4/q=6) port, adjudicate the q4 k2 chi winding-0-vs-1 discrepancy.
+  Deliverable: lane_g/M1G_EVENQ_TAIL_SOL.md, UNREFEREED on landing.
+- S2 compute untouched: 4 chunks in flight (a108-120/120-132/132-144/144-156),
+  9/16 certified. Both sol lanes are remote-reasoning; local CPU stays with
+  the campaign.

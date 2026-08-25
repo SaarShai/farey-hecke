@@ -30,35 +30,64 @@ import certify_r3b_flagship as orch  # noqa: E402
 
 N_PRIMARY = 288
 EXPECTED_BASE_ARCS = 192
-EXPECTED_CHUNKS = 16
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--chunk-dir", type=Path, default=HERE / "chunk_receipts")
+    parser.add_argument(
+        "--chunk-dir", type=Path, action="append", dest="chunk_dirs",
+        help="receipt directory; repeatable, earlier dirs win on duplicate "
+             "arc ranges (default: chunk_receipts + local_receipts)",
+    )
     parser.add_argument(
         "--out", type=Path, default=HERE / "chunk_receipts" / "S2_MERGED_CONTOUR_RECEIPT.json"
     )
     args = parser.parse_args()
+    chunk_dirs = args.chunk_dirs or [HERE / "chunk_receipts", HERE / "local_receipts"]
     ctx.prec = orch.PRECISION_BITS_DEFAULT
     t0 = time.time()
 
-    paths = sorted(args.chunk_dir.glob("S2_CHUNK_a*.json"))
-    paths = [p for p in paths if not p.name.endswith(".ckpt.json")]
-    if len(paths) != EXPECTED_CHUNKS:
-        raise SystemExit(
-            f"expected {EXPECTED_CHUNKS} chunk receipts, found {len(paths)} in {args.chunk_dir}"
-        )
+    # Collect complete receipts from every dir; dedupe by arc range
+    # (first dir wins — receipts may exist in both Kaggle and local dirs,
+    # at mixed 6-arc/12-arc granularity).
+    by_range: dict[tuple[int, int], Path] = {}
+    for d in chunk_dirs:
+        for p in sorted(d.glob("S2_CHUNK_a*.json")):
+            if p.name.endswith(".ckpt.json"):
+                continue
+            try:
+                st = json.loads(p.read_text())
+            except json.JSONDecodeError:
+                continue
+            if st.get("status") != "complete":
+                continue
+            rng = st.get("closed_contour", {}).get(str(N_PRIMARY), {}).get("chunk_arc_range")
+            if rng is None:
+                raise SystemExit(f"{p.name}: not a chunk receipt (arc_range is None)")
+            by_range.setdefault((rng[0], rng[1]), p)
+
+    # Greedy sweep: build a non-overlapping cover of [0, EXPECTED_BASE_ARCS).
+    paths = []
+    pos = 0
+    while pos < EXPECTED_BASE_ARCS:
+        starts = [(b, p) for (a, b), p in by_range.items() if a == pos]
+        if not starts:
+            have = sorted(by_range)
+            raise SystemExit(
+                f"no complete receipt starting at base arc {pos}; have ranges {have}"
+            )
+        b, p = max(starts)  # prefer the widest receipt at this position
+        paths.append(p)
+        pos = b
+    if pos != EXPECTED_BASE_ARCS:
+        raise SystemExit(f"cover overshoots: ends at {pos} != {EXPECTED_BASE_ARCS}")
+
     chunk_states = []
     chunk_meta = []
     f_values = set()
     for path in paths:
         state = json.loads(path.read_text())
-        attempt = state.get("closed_contour", {}).get(str(N_PRIMARY))
-        if attempt is None:
-            raise SystemExit(f"{path.name}: no closed_contour[{N_PRIMARY}] block")
-        if attempt.get("chunk_arc_range") is None:
-            raise SystemExit(f"{path.name}: not a chunk receipt (arc_range is None)")
+        attempt = state["closed_contour"][str(N_PRIMARY)]
         if not state.get("immutable_hashes_verified"):
             raise SystemExit(f"{path.name}: immutable hashes not verified in-kernel")
         f_text = state.get("endpoint_trace_bounds", {}).get(str(N_PRIMARY), {}).get(
