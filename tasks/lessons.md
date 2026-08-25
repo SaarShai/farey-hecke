@@ -146,3 +146,21 @@ caught it and stated both forms rather than silently inventing one.
 **Rule:** before briefing a lane on an named obligation (U1, B7, T2'), grep for
 the literal token and cite the file that defines it. A brief that misnames its
 own source invites a silently-changed statement.
+
+## 2026-08-25 — a runner's "COMPLETE" is not the work's "certified"
+
+**Pattern:** polled all 22 Kaggle r-wave kernels; 13 returned
+`KernelWorkerStatus.COMPLETE` and I reported "13-for-13 certified". The
+receipts showed 7 complete and 6 `status: "partial"` with
+`SignalTermination: signal 15` — the kernel process exited cleanly after
+being killed by the in-kernel deadline, so the RUNNER succeeded while the
+WORK did not.
+
+**Rule:** never map an executor's exit/status onto the task's success. Read
+the artifact the task was supposed to produce and check its own status field.
+This is the same failure shape as the codex wrapper false-completion banked
+earlier the same day: agent-said vs artifact-shows.
+
+**Gate:** for any batch lane, count outcomes by parsing the receipts, never by
+counting runner statuses. If a claim is "N certified", the number must come
+from `sum(1 for r in receipts if r["status"] == "complete")`.
