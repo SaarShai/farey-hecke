@@ -3040,3 +3040,28 @@ Owner: "kill the three young ones". SIGTERM to pids 16162/16176/16191
   expected to land within the hour → 10/16. Will be banked on landing.
 - Remaining after that: a120-132, a132-144, a144-156, a156-168, a168-180,
   a180-192 (72 base arcs) — awaiting Kaggle r-wave slots or an owner signal.
+
+### 2026-08-25T21:11:35Z — Both lanes resumed; r-wave harvested 7/13; KERNEL-COMPLETE != CERTIFIED
+
+Owner: "continue local and kaggle" + "you have many hours to run whatever you need".
+- **a108-120 CERTIFIED** (7.35 h wall) before the pause took effect → the
+  10th twelve-arc range. Contiguous coverage reached base arc 120.
+- **Local relaunched** (run_local_s2_queue4.sh): a120-132, a132-144, a144-156,
+  a156-168 in flight; a168-180 and a180-192 queued behind them.
+- **r-wave harvested: 13 receipts pulled, but only 7 are status=complete.**
+  Complete: a078-084, a084-090, a090-096, a096-102, a102-108, a126-132,
+  a132-138. Partial (SignalTermination: signal 15): a060-066, a066-072,
+  a072-078, a108-114, a114-120, a120-126.
+- **CORRECTION / LESSON (banked): Kaggle KernelWorkerStatus.COMPLETE does NOT
+  mean the chunk certified.** All 13 polled COMPLETE; 6 of them contain a
+  partial receipt that hit the in-kernel deadline. Only the receipt's
+  `status` field is authoritative. An earlier claim in this session that the
+  6-arc kernels were "13-for-13" was wrong and is corrected here.
+- Re-sizing verdict, honestly stated: 12-arc kernels 0/10 certified; 6-arc
+  kernels 7/13 (~54%). The re-size helped substantially but 6 arcs is still
+  marginal at N=288 when adaptive subdivision runs deep. A future wave should
+  use 3-4 arcs, or the driver should gain a real resume path.
+- Coverage now: contiguous base arcs 0-120; certified islands 126-138.
+  Holes: 120-126 and 138-192, all assigned to one or both live lanes.
+- s18-s21 still unpushed (slot cap); their harvest-time "permission denied"
+  lines are the expected not-yet-pushed signature, not an auth fault.
