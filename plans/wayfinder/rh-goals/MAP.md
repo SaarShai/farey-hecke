@@ -3020,3 +3020,23 @@ not closed. Obligation stated in the document.
 
 UNREFEREED — referee before any ticket closure or paper use; ships its own
 "what a referee must check" list.
+
+### 2026-08-25T06:43:37Z — OWNER: three young chunks killed; device returned
+
+Owner: "kill the three young ones". SIGTERM to pids 16162/16176/16191
+(a120-132, a132-144, a144-156), each ~2h06m in.
+- **No-resume confirmed by source audit** (the reason this costs real work):
+  `certify_r3b_flagship.py` WRITES the checkpoint (atomic_write_json, line
+  1406) but never reads one — no `--resume` flag, and no read_text/json.load
+  of args.checkpoint anywhere. Checkpoints are diagnostic, not restart state.
+  A killed chunk restarts from its first arc. Same root cause as the Kaggle
+  11h-deadline losses earlier in this campaign.
+- All three wrote status="partial", error="SignalTermination: signal 15".
+  Explicitly verified NO killed chunk left a status=complete receipt — a false
+  complete would silently poison the merge cover.
+- Load returned: arc workers 12→3, farey-rh CPU 1110.9%→296.6%, load 15.51→12.50.
+- **Certified count unchanged: 9/16** (base arcs 0-108).
+- a108-120 (pid 14081) deliberately left running at 10/12 arcs, ~3h33m in;
+  expected to land within the hour → 10/16. Will be banked on landing.
+- Remaining after that: a120-132, a132-144, a144-156, a156-168, a168-180,
+  a180-192 (72 base arcs) — awaiting Kaggle r-wave slots or an owner signal.
