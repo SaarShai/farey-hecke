@@ -2968,3 +2968,55 @@ obstruction is now exact rather than vague.
 - Projected coverage at pause: **13/16** twelve-arc ranges (base arcs 0-156).
   Remaining after pause: a156-168, a168-180, a180-192 — 36 base arcs, awaiting
   either a Kaggle r-wave slot or an owner overnight signal.
+
+### 2026-08-25T06:29:15Z — M1g LANDED (UNREFEREED): q4 k2 chi "OPEN DISCREPANCY" was a HARNESS COORDINATE BUG — independently verified
+
+Deliverable: lane_g/M1G_EVENQ_TAIL_SOL.md (gpt-5.6-sol via codex, 22 KB).
+Three verdicts: portability diagnosis PROVED; even-q tail bound
+PARTIAL-with-obligation; q4 k2 chi discrepancy PROVED.
+
+**(3) The q4 k2 chi 1-vs-0 discrepancy is RESOLVED, and it was never a math
+problem.** The v2 run tested the WRONG BOX. Verified here independently, not
+taken on the agent's word:
+- `zeta_cert_rosen_even.winding_box` parameterises the box as
+  s = (1/2 + re0 + dx) + i(im0 + dy); the source comment is explicit —
+  "re0 is the dx-offset from 1/2 (0 for an on-line zero)".
+- Receipt `m1g_receipts/q4_chi_k2_v2.json` records `re0_off: 0.0`,
+  box_hx = box_hy = 0.001 → the run enclosed **Re s ∈ [0.499, 0.501]**.
+- The chi prediction is a zero at **Re s = 0** (pole of (2^(1−s)−1)/(2^s−1)
+  at 2^s = 1). So the run never tested the prediction; winding 0 is the
+  CORRECT answer for the box it actually traversed.
+- Ordinate cross-check (ours): receipt im0_center = 9.064720283654388 equals
+  2π/log 2 = 9.064720283654388 to <1e−12. The imaginary part was right all
+  along; only the real part was off by exactly 1/2.
+- Intended call needs `re0 = -0.5`. Sol's heuristic-tail spot-check at
+  N=28,K=12: re0=0.0 → winding ball [−0.06716, 0.06716] → 0;
+  re0=−0.5 → [0.88674, 1.11590] → 1. CORROBORATING ONLY (heuristic dim-tail,
+  NOT a certified enclosure).
+- Sector-sign chain independently reconstructed in §3.1: chi block = −L_{s,+},
+  D_4^chi = det(I + L_{s,+}); implementation agrees (det_sign = −1). Contour is
+  CCW and increments are arg(B·conj(A)) summed, so a simple zero gives **+1**.
+  **The predicted winding is +1; MMS sign +1. Not an orientation bug.**
+- LEDGER EFFECT: the M1g row's "OPEN DISCREPANCY — sign-convention vs
+  escalation-ladder question" is CLOSED as a test-harness coordinate error.
+  Still NOT a theorem-grade certificate: needs (2.17)-(2.18), a closed-arc
+  cover, plus the G6/G7 sector/quotient identification and divisor
+  noncancellation.
+
+**(1) Portability PROVED — and the refusal was right for a deeper reason than
+recorded.** Beyond differing constants (even q uses eq. (32), κ=h=(q−2)/2;
+q=4 one component/two families, q=6 two components/four families/one single
+branch; new disc optimisations; per-family L1 receipts non-transferable), there
+is a genuine ANALYTIC obstruction: the q=5 R2 box sits at Re s ≈ 0.454, so its
+first-order centre split leaves Σ n^(−(2σ+1)), convergent since 2σ > 0. Every
+intended M1g box is centred on Re s = 0 with half-width 1e−3, so σ_min =
+−0.001 and the same remainder is **Σ n^(−0.998), which DIVERGES**. A
+second-order split is necessary — not a missing constant.
+
+**(2) Even-q tail bound PARTIAL-with-obligation** — exact Möbius-disc geometry
+and feasible even-q disc choices derived (q=4 one-variable, q=6 two-radius;
+neither is the q=5 vector (3.14, 2.27, 1.70)); full second-order certificate
+not closed. Obligation stated in the document.
+
+UNREFEREED — referee before any ticket closure or paper use; ships its own
+"what a referee must check" list.
