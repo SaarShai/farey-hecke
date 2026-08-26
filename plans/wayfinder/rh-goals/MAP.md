@@ -3541,3 +3541,7 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 ## 2026-08-26 13:46 UTC — T1 GAP-10 CLOSED-WITH-CAVEAT (truncation sweep, cold-verified)
 - Sweep q ∈ {0.90…1.0}: leading constant ([I⁻¹]_ωω/local = 0.99432) and Λ(50) = 0.15652 EXACTLY q-invariant (mean-field r_γ ≡ 1 convention — §7.2 mootness confirmed, stronger than claimed). Truncation matters only via GAP-17's Berry–Esseen constant: max 2a_γ/σ = 1.77 → 17.7 → ∞ (q = 0.90 → 0.999 → 1), Pareto(α=2) labelled analogue (no per-zero r_γ export in-repo; caveat carried to GAP-17). Frontier cold re-run reproduced all numbers; script sha 11f1c370…. Side-confirmation: σ(50) = 1.42912e-3 independently matches the GAP-17 correction.
 - Gap count: 10 open (8, 10, 16 closed this session; 3/14/15 closed earlier).
+
+## 2026-08-26 14:01 UTC — Aristotle v35 dispatched (T1 GAP-5/6 finite cores); v21 locally re-built
+- v21 RieszImport local re-elaboration: Build completed successfully (8034 jobs) — our own build now matches the luna referee's independent one.
+- v35 (project 377b0097-e0a5-402e-a841-5d5b1fc61f85): 5 targets — 3 oscillatory-integral bounds + perturbed-inverse quadratic-form lower bound (GAP-5) + Gaussian FIM data-processing PSD domination (GAP-6). Trivial-escape antecedent removed before submit. On return: byte-identity + axiom check + local build, then GAP-5/6 rows update to PART-FORMALIZED (paper steps remain: oscillatory-integral identification, continuous limit).
