@@ -3176,3 +3176,59 @@ either reading and needs no gate change.
 **LESSON (banked to tasks/lessons.md):** before calling a numeric disagreement
 a defect, establish whether the quantity is an ENCLOSURE (must intersect) or a
 BOUND (need not). Platform, not just code, is part of a receipt's identity.
+
+### 2026-08-26T07:23:46Z — TWO-SEAT REFEREE on the F_R merge gate: UNANIMOUS SOUND-WITH-CONDITIONS
+
+Owner asked for an independent Fable seat plus a sol xhigh seat. Both ran cold
+and blind to each other (each forbidden to read the other's filename).
+Reports installed verbatim: lane_g/S2_FR_GATE_REFEREE_FABLE.md,
+lane_g/S2_FR_GATE_REFEREE_SOL.md.
+
+**Both verdicts: SOUND-WITH-CONDITIONS.** The exact-string F_R equality gate is
+stronger than soundness requires; merging on a definitely-positive adjusted
+margin against F_max is sound.
+
+Agreed findings (each independently re-derived, and spot-checked by the
+orchestrator):
+- F is an upper BOUND: `F = (T_tail * (1 + 2*B_same).exp()).upper()`, a chain
+  of .upper() calls (certify_r3b_flagship.py:561-563). Not an enclosure.
+- F is absent from the merge: `merge_chunks_and_verify_closure`
+  (lines 251-365) contains ZERO F/margin references — verified here by an
+  AST-scoped scan. Sol's exhaustive dataflow: `_jacobi_taylor_arc` (593-716)
+  is the ONLY mathematical consumer of F; cover code merely aggregates.
+- Per-arc zero-exclusion is genuinely LOCAL: |d_N| >= L_A and |d - d_N| <= U on
+  a leaf give |d_N + t(d-d_N)| >= L_A - tU > 0 for all t in [0,1].
+- All 16 cover chunks pass against F_max. Tightest adjusted margin, three
+  independent computations agreeing digit-for-digit, at arcs [156,168)
+  (receipt sha256 83d431ee142731ec…):
+    Fable  3.0645543293767844921e-8
+    Sol    3.0645543293767844920819612492252622347645773199367…e-8 +/- 1.03e-148
+    Orch.  3.0645543293767844921e-8 +/- 1.81e-28
+  F_max inflation costs ~1.7e-21 against ~3e-8 margins (~13 orders of headroom).
+
+**Sol's conditions are STRICTLY STRONGER than Fable's — two are substantive:**
+- (C4) CODE CHANGE REQUIRED: the positivity re-check must become a prerequisite
+  of the merged verdict. Today `closed_contour_gate_pass = (winding is not None
+  and winding >= 1)` — "not sufficient by itself after removing exact F_R
+  equality". Relaxing the gate WITHOUT this would leave the merge weaker.
+- (C5) LIMITS THE CLAIM: the scalar margin supports only the RADIAL
+  absolute-error straight-line homotopy statement. Retaining the stronger
+  coordinate-square `inflated_det_excludes_zero` claim at F_max requires
+  re-inflating and rechecking every stored finite box. Fable did not surface
+  this.
+- Also (C2) verify record-level F_R consistency WITHIN each chunk; (C3) outward
+  Arb endpoints only, midpoint arithmetic FORBIDDEN at the theorem gate;
+  (C6) record F_max, every adjusted margin, and hashes in the merged receipt;
+  seam/tiling/winding checks unweakened.
+
+**DECISION (orchestrator, owner-reviewable):** do NOT hand-apply the relaxation
+now. It is refereed-sound but adopting it properly means a gate edit (C4) plus
+either a claim restatement or box re-inflation (C5) — real work that should be
+done deliberately, not to unblock something already unblocked. The a036-048
+re-run reached 12/12 arcs accepted at 07:22Z and makes the cover single-source,
+needing none of it. The F_max relaxation is BANKED as a refereed decision with
+sol's six conditions as its implementation spec.
+
+Process note: the first sol dispatch was killed at exit 143 by the codex
+wrapper's ~10 min FOREGROUND timeout with no file written; re-dispatched with
+an explicit background-mode instruction. Banked to tasks/lessons.md.
