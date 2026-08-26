@@ -1035,5 +1035,7 @@ One row per remaining OPEN/OWED item. No history.
 Independent recomputation at Γ_op = 51.23361986: Λ = 0.151290 (≤ 0.1513 UP ✓);
 d_K mean-field-scalar = 0.148282 (≤ 0.1483 UP ✓); σ²_as = 1.918673e-6 vs the
 note's 1.91848e-6 — agreement to 4 significant figures; the 5th-digit gap
-(~0.001%) is presumed asymptotic-vs-quadrature convention and is within every
-rounding used downstream. Sent to cold re-referee.
+is ~0.01% (CORRECTED 2026-08-26: my original note wrote 0.001%, understating
+it tenfold — caught by the v4 referee, minor defect 1) and is within every
+rounding used downstream. Sent to cold re-referee; verdict NOT-PROMOTABLE, see
+T1_V4_REFEREE_2026-08-26.md.
