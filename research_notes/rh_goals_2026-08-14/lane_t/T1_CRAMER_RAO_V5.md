@@ -1,0 +1,1144 @@
+# T1 — Cramér–Rao and van Trees in the exact Gaussian surrogate
+
+**v5 DRAFT (grok lane) 2026-08-26 — UNREFEREED**
+
+This file supersedes `T1_CRAMER_RAO_V4.md`. It is written to the six minimum corrections of `T1_V4_REFEREE_2026-08-26.md` and keeps the eleven v4 repairs of the nineteen governing defects. Supporting derivations cited by filename are not imported as current theorems. No statement from v3 or v4 is current except as restated here.
+
+Rounding convention (binding): error bounds and ceilings round **UP**; lower-bound floors, RMSE margins, and sample-complexity coefficients that multiply a lower bound on \(T\) round **DOWN**.
+
+v4→v5 map (the six corrections): **N1** discrete sampling experiment, exact finite-\(n\) Fisher, \(T^3\) recovered only as a named-error limit; **N2** Theorem B prior on ordinates only, with \(A_j:=2a(\gamma_j)\); **N3** \(\Gamma_{\mathrm{op}}=51.23362034\) and full-ordinate (M5); **GAP-4 / \(F_{\mathrm{win}}\) / N5 / N6** exact \(D(\omega)\) bound, certified \(C_{\mathrm{win}}\), explicit Schur step, Loewner Lemma 1″; **N4** no numerical Theorem A floor; **minors + N7** arithmetic, wording, and a complete ledger.
+
+---
+
+## Model Declaration (binding)
+
+The following choices are the model.
+
+**(a) Defects 1, 2, 5 — exact Gaussian surrogate, mean-field marks, fixed covariance (v4 repair, kept).**
+Theorems A and B are theorems about a stipulated Gaussian experiment \(\mathcal{G}_{N2}^{n}\), defined in §2. Clause **(M3′)** is part of that experiment: marks are the deterministic interpolant \(r(\omega)\equiv 1\). The covariance \(\Sigma=\Sigma_{\eta}+\sigma_s^2 I_n\) does **not** depend on \(\theta\). There is no Gaussian covariance-information term. The actual non-Gaussian phase sum is confined to §14 and carries **no transfer claim**, by Stam (`T1_GAP17_PROPAGATION.md` §2).
+
+**(b) N1 — discrete sampling, not a continuous band-limited record.**
+The observation is \(n\) samples of the trigonometric mean plus **two** stipulated noises: the sampled tail Gaussian \(\eta\) *and* i.i.d. sampling noise \(\varepsilon_k\sim N(0,\sigma_s^2)\). Mean shifts lie in \(\mathbb{R}^n\), which is the Cameron–Martin space of the nondegenerate law \(N(0,\Sigma)\). The exact Fisher is the finite-dimensional Gram (4.0n). The continuous band-limited formula (v4 (4.0)) is **not** the Fisher of this experiment. The \(T^3\) scaling is **Proposition A\(\infty\)**, a limit with a named error, not Theorem A.
+
+**(c) Defects 3, 4, N2 — two theorems, one quantifier each; Godambe dropped; prior compatible with (M-amp).**
+- **Theorem A:** pointwise frequentist Cramér–Rao for unbiased estimators of \(\theta\) in \(\mathcal{G}_{N2}^{n}\). Quantifier: every unbiased estimator of the \(n\)-sample Gaussian vector.
+- **Theorem B:** Bayes van Trees risk under a prior on the ordinates \(\gamma_j\) only, with \(A_j:=2a(\gamma_j)\) a deterministic function of the drawn \(\gamma_j\) (so (M-amp) holds \(\pi\)-almost surely and the window cancellation is preserved). Centres \(\mu_j\) are externally specified. Unbiasedness is not assumed.
+- The phrases “Gaussian-score class” and “Godambe sandwich as a lower bound” are not used.
+
+**(d) Defect 7, N3 — sole operating point, full stored ordinate.**
+\[
+\Gamma_{\mathrm{op}}:=51.23362034,
+\]
+which is the eight-decimal **UP** rounding of the (M5) threshold at the **full** stored tenth ordinate \(\gamma_{10}=49.773832477672302\). Every finite-\(\Gamma\) quantity is evaluated at \(\Gamma_{\mathrm{op}}\) unless labelled out-of-theorem. \(\Gamma=50\) is not an operating point. The truncated six-decimal \(\gamma_d=49.773832\) is not used to pass (M5).
+
+**(e) Defect 6, N5 — Schur reduction to the per-tone \(3\times 3\); global matrix OPEN.**
+Theorem A estimates the full \(3d\)-parameter vector. The step from \(I\in\mathbb{R}^{3d\times 3d}\) to the principal \(3\times 3\) of tone \(j\) is the nuisance Schur-complement inequality of Lemma 3′(a): \([I^{-1}]_{\gamma_j\gamma_j}\ge[I_{jj}^{-1}]_{\gamma_j\gamma_j}\). Hypothesis (B1)\(_j\) is optional and is **not** inserted into Theorem A. The global \(3d\times 3d\) Loewner comparison remains **OPEN-B1-global**. The factor \(F^{\mathrm{cross}}\) is **not** a theorem factor.
+
+**(f) Defects 8, 9, 18, N4, N6 — exact flatness, Loewner Lemma 1″, no fake floor.**
+Lemma 1″ is a **Loewner-order** Gram inequality. GAP-4 is closed by an elementary bound on the exact logarithmic derivative \(D(\omega)\) over each Lemma-1 band, by endpoint evaluation (no remainder \(r(\omega)\), no “modulo OWED” in any theorem factor). \(C_{\mathrm{win}}\) is certified in Lemma 2. Theorem A displays **no numerical floor**. Certified multiplicative factors and missing ones are labelled separately in §12.
+
+**(g) Defect 10 — fixed \(d\), last-tone attainment OWED.**
+Theorems A and B are for a **fixed** admissible \(d\). The bound is not asserted uniformly in \(d\). That the maximum over \(j\) of a corrected right-hand side is attained at \(j=d\) is **OWED-last-tone**.
+
+**(h) Defects 11, 12 — Prop. R disclosure; (S1) distinct from \(\mathcal{G}_{N2}^{n}\).**
+The full Prop. R list (RH; simplicity of every nontrivial zero; conjectural Gonek–Hejhal \(J_{-1}(T)=O(T)\)) is stated in §1.1, in the interpretation clauses of Theorems A and B, and at every empirical use. The arithmetic experiment (S1) is not \(\mathcal{G}_{N2}^{n}\). Identification is **OWED-S1**.
+
+**(i) Defect 16 — GAP-11 split; no “violates the bound”.**
+As in v4: amplitude validation on \(y(t)\) is resolved conditional on Prop. R; Gate-1 location-risk comparison is **OPEN**. A single realised absolute error is not a violation of an RMSE bound.
+
+**(j) Defect 17 — two epsilons.**
+\(E_{\mathrm{Riesz}}\) is the Prop. R remainder. \(\eta_{\Gamma}\) is tail interference. The symbol \(\varepsilon\) is not used for either. Sampling noise is \(\sigma_s^2\), never called \(\varepsilon\) as a process.
+
+---
+
+## 0. What the theorems say
+
+In the discrete Gaussian experiment \(\mathcal{G}_{N2}^{n}\) of §2, with deterministic marks \(r\equiv 1\) and \(\theta\)-independent covariance \(\Sigma=\Sigma_{\eta}+\sigma_s^2 I_n\succ 0\), an unbiased estimator of the \(n\)-sample vector satisfies Theorem A: for each target index \(j\) at a **fixed** admissible \(d\),
+
+\[
+\mathrm{Var}(\widehat{\gamma}_j)
+\;\ge\;
+\bigl[I(\theta)^{-1}\bigr]_{\gamma_j\gamma_j}
+\;\ge\;
+\bigl[I_{jj}(\theta)^{-1}\bigr]_{\gamma_j\gamma_j}
+\;\ge\;
+F_j^{\mathrm{win}}
+\cdot
+\frac{24\,\sigma_s^2}{A_j^2 n T^2},
+\]
+
+where \(I(\theta)\) is the exact \(3d\times 3d\) Fisher (4.0n), \(I_{jj}\) is its principal \(3\times 3\) at tone \(j\), the second inequality is the Schur step (Lemma 3′(a)), and the third is the sampling-noise envelope with certified \(F_j^{\mathrm{win}}=1-C_{\mathrm{win}}/(\gamma_j T)\) and \(C_{\mathrm{win}}=84\) (Lemma 2). This is a pointwise frequentist bound in \(\mathcal{G}_{N2}^{n}\). It is not a bound on the zeta phase-sum experiment, and it is not the \(T^{-3}\) law.
+
+The \(T^3\) scaling with the mean-field window cancellation \(S_{\eta}(\gamma_j)/A_j^2=\log(\gamma_j/2\pi)/4\) is **Proposition A\(\infty\)**: a fine-sampling limit with named error \(E_n\), not Theorem A.
+
+Theorem B bounds the Bayes MSE of an arbitrary measurable estimator under an externally centred raised-cosine prior on the ordinates only, with \(A_j=2a(\gamma_j)\). It does not discharge unbiasedness in Theorem A.
+
+At the unique operating point \(\Gamma_{\mathrm{op}}=51.23362034\), \(T=\log(3\cdot 10^7)\), \(K=4\), \(d=10\), the **limit-skeleton** (Proposition A\(\infty\) leading term at \(S_s=0\), no named factors) is \(\mathrm{RMSE}\ge 0.04932\) (rounded down). This number is **not** a Theorem A floor. Section 12 lists certified factors and missing factors separately and displays **no** numerical product floor for Theorem A.
+
+---
+
+## 1. Observable, Proposition R, and the sampling experiment
+
+### 1.1 Proposition R (order-1 Riesz explicit formula)
+
+Window (spec clause (W′), `G1_MODEL_SPEC.md` AMENDMENT A2): \(W(x)=(1-x)_+\), \(M_W(s)=1/(s(s+1))\) for \(\mathrm{Re}\,s>0\), meromorphic on \(\mathbb{C}\) with simple poles only at \(s=0\) (residue \(1\)) and \(s=-1\) (residue \(-1\)), and
+
+\[
+|M_W(\tfrac12+i\omega)|
+=\bigl((\tfrac14+\omega^2)(\tfrac94+\omega^2)\bigr)^{-1/2}.
+\]
+
+**Mandatory disclosure, carried at this use and at every later use.** Proposition R is conditional on **RH**, **simplicity of every nontrivial zero**, and the conjectural Gonek–Hejhal bound
+
+\[
+J_{-1}(T)\;:=\;\sum_{0<\gamma\le T}\bigl|\zeta'(\tfrac12+i\gamma)\bigr|^{-2}\;=\;O(T).
+\]
+
+Lean checks only the eight finite/algebraic lemmas in `RieszImport.lean` (Aristotle v21, sorry-free, axioms `propext` / `Classical.choice` / `Quot.sound`). The Riesz–Perron inversion, meromorphic residue calculus, absolute convergence of the zero and trivial-zero sums, the RH zero-avoiding contour shift, and the \(O_A(N^{-A})\) remainder remain cited classical analysis and are not formalised in Lean. Citations: Hardy–Riesz, *The General Theory of Dirichlet’s Series*, Ch. IV and Ch. VII §2; Hardy–Littlewood, *Acta Math.* 41 (1916), §2.25x; Titchmarsh §14.16 (RH zero-avoiding heights) and §14.27; Ng (2004), Lemmas 3–4. Status: **closed at citation + Lean standing** (`T1_GAP16_RIESZ_IMPORT.md`; luna review `T1_GAP16_REVIEW_LUNA.md`).
+
+> **Proposition R.** Assume RH, simplicity of every nontrivial zero, and \(J_{-1}(T)=O(T)\). For every integer \(N\ge 2\) and every fixed \(A\in(1,2)\),
+>
+> \[
+> \begin{aligned}
+> \frac1N\sum_{0\le k<N}M(k)
+> &=\sum_{n\le N}\mu(n)\bigl(1-n/N\bigr)\\
+> &=-2+\frac{12}N
+> +2\,\mathrm{Re}\sum_{\gamma>0}
+> \frac{N^{1/2+i\gamma}}{(\tfrac12+i\gamma)(\tfrac32+i\gamma)\,\zeta'(\tfrac12+i\gamma)}
+> +R_{\mathrm{triv}}(N)+E_{\mathrm{Riesz}}(N),
+> \end{aligned}
+> \]
+>
+> where \(M(k)=\sum_{n\le k}\mu(n)\),
+> \(R_{\mathrm{triv}}(N)=\sum_{n\ge 1}N^{-2n}/\bigl((-2n)(1-2n)\zeta'(-2n)\bigr)=O(N^{-2})\) (simple poles; **no** \(\log N\)),
+> and \(E_{\mathrm{Riesz}}(N):=I_{-A}(N)-R_{\mathrm{triv}}(N)\) with \(|E_{\mathrm{Riesz}}(N)|\le C_A N^{-A}\). The constant \(C_A\) is not made explicit here (**OWED-ERiesz-\(C_A\)**).
+
+The Cesàro identity (first equality) is a finite algebraic identity, independent of RH. Absolute convergence of the zero sum uses \(J_{-1}(T)=O(T)\) via Cauchy–Schwarz and dyadic summation: \(N_{\zeta}(T)=O(T\log T)\) gives \(\sum_{0<\gamma\le T}1/|\zeta'(\rho)|\le J_{-1}(T)^{1/2}N_{\zeta}(T)^{1/2}=O(T\sqrt{\log T})\), hence a convergent tail \(O(\sqrt{\log G}/G)\) beyond height \(G\).
+
+### 1.2 Integer \(N\) versus the discrete Gaussian experiment (S1)
+
+Proposition R is a statement about **integer** \(N\). Theorems A and B below are statements about the **discrete-time** Gaussian vector of §2. These are different experiments.
+
+**(S1) Arithmetic sampling experiment.** The arithmetic observation is the finite sequence
+
+\[
+Y_N
+:=N^{-1/2}\Bigl(\sum_{n\le N}\mu(n)\bigl(1-n/N\bigr)+2-\frac{12}N-R_{\mathrm{triv}}(N)\Bigr),
+\qquad N=2,3,\dots,N_{\max},
+\]
+
+with \(N_{\max}=\lfloor e^{T}\rfloor\). At the operating point, \(N_{\max}=3\cdot 10^7\). Under Prop. R’s three hypotheses,
+
+\[
+Y_N
+=2\sum_{\gamma>0}a_{\gamma}\cos(\gamma\log N+\phi_{\gamma})
++N^{-1/2}E_{\mathrm{Riesz}}(N),
+\]
+
+with \(a_{\gamma}=|M_W(\tfrac12+i\gamma)/\zeta'(\tfrac12+i\gamma)|\) and \(\phi_{\gamma}=\arg(M_W(\tfrac12+i\gamma)/\zeta'(\tfrac12+i\gamma))\).
+
+Theorems A and B are **not** theorems about \((Y_N)\). They are theorems about \(\mathcal{G}_{N2}^{n}\). A Fisher comparison of (S1) to \(\mathcal{G}_{N2}^{n}\) is **OWED-S1**. Until OWED-S1 is closed, no numerical comparison of a Theorem A/B number to an estimator computed from \((Y_N)\) is a comparison of the same experiment.
+
+### 1.3 Notation: \(E_{\mathrm{Riesz}}\) and \(\eta_{\Gamma}\)
+
+- \(E_{\mathrm{Riesz}}(N)\) is the remainder in Proposition R. For a continuous label write \(E_{\mathrm{Riesz}}(t):=E_{\mathrm{Riesz}}(e^{t})\) only at \(t=\log N\in\log\mathbb{Z}_{\ge 2}\).
+- \(\eta_{\Gamma}\) is interference from ordinates \(\gamma>\Gamma\). In \(\mathcal{G}_{N2}^{n}\) it is the centred Gaussian vector obtained by sampling the stationary process with spectral density \(S_{\eta}\) of §2.4. In §14 it is the random-phase sum \(2\sum_{\gamma>\Gamma}a_{\gamma}\cos(\gamma t+\phi_{\gamma})\). These are different objects sharing a symbol by analogy of role.
+
+On the arithmetic side, after the \(N^{-1/2}\) normalisation, \(N^{-1/2}E_{\mathrm{Riesz}}(N)=O_A(N^{-A-1/2})\). An explicit \(C_A\) is **OWED-ERiesz-\(C_A\)**. The surrogate \(\mathcal{G}_{N2}^{n}\) does not include \(E_{\mathrm{Riesz}}\).
+
+---
+
+## 2. The exact Gaussian surrogate \(\mathcal{G}_{N2}^{n}\)
+
+### 2.1 Parameter and observation (N1)
+
+Fix an integer \(d\ge 1\) and a cut \(\Gamma\) with \(\gamma_d<\Gamma<\gamma_{d+1}\). The parameter is
+
+\[
+\theta=(\gamma_1,\dots,\gamma_d,\,A_1,\dots,A_d,\,\phi_1,\dots,\phi_d)\in\Theta\subset\mathbb{R}^{3d},
+\]
+
+with \(A_j>0\). Fix an integer \(n\ge n_{\star}\) (declared in (M-n) below) and a sampling-noise variance \(\sigma_s^2>0\). Set \(\Delta:=T/n\) and \(t_k:=k\Delta\) for \(k=0,\dots,n-1\). The observation in \(\mathcal{G}_{N2}^{n}\) is the \(\mathbb{R}^n\)-valued vector \(Y=(Y_0,\dots,Y_{n-1})\) with
+
+\[
+Y_k
+=m_{\theta}(t_k)+\eta_k+\varepsilon_k,
+\qquad
+m_{\theta}(t)=\sum_{j=1}^{d}A_j\cos(\gamma_j t+\phi_j).
+\]
+
+Both noise sources are part of the model:
+
+- \((\eta_0,\dots,\eta_{n-1})\sim N(0,\Sigma_{\eta})\), where \(\Sigma_{\eta}\) is the Gram of the stipulated tail process at the sample times,
+\[
+(\Sigma_{\eta})_{k\ell}
+=\frac1{2\pi}\int_{-\Omega}^{\Omega}S_{\eta}(\omega)\,e^{i\omega(t_k-t_{\ell})}\,d\omega,
+\qquad
+\Omega:=2\Gamma.
+\]
+- \(\varepsilon_k\) are i.i.d. \(N(0,\sigma_s^2)\), independent of \(\eta\) and of \(\theta\).
+
+The law of \(Y\) is \(N\bigl(m(\theta),\,\Sigma\bigr)\) with \(\Sigma=\Sigma_{\eta}+\sigma_s^2 I_n\). Since \(\sigma_s^2>0\), one has \(\Sigma\succeq\sigma_s^2 I_n\succ 0\). The experiment is a nondegenerate finite-dimensional Gaussian location family. Every mean shift \(m(\theta)-m(\theta')\) lies in \(\mathbb{R}^n\), which is the Cameron–Martin space of \(N(0,\Sigma)\). The laws \(P_{\theta}\) are mutually equivalent. Regularity (R1)–(R4) is elementary and is recorded in §9.
+
+### 2.2 Model clauses of \(\mathcal{G}_{N2}^{n}\)
+
+Random marks drawn from \(1/|\zeta'|\) are **not** part of \(\mathcal{G}_{N2}^{n}\).
+
+- **(M3′)** *Deterministic mean-field marks.* For every real frequency \(\omega\), \(r(\omega)\equiv 1\). Define \(a(\omega):=|M_W(\tfrac12+i\omega)|\). This interpolant is a declared function of frequency, not an estimator of \(1/|\zeta'(\tfrac12+i\omega)|\).
+- **(M-amp)** *True surrogate amplitudes.* At the true parameter of \(\mathcal{G}_{N2}^{n}\), and at every prior draw in Theorem B, \(A_j=2\,a(\gamma_j)\). The estimator need not know this. Treating \(A_j\) as unknown nuisances in Theorem A covers unknown phase and a possible constant amplitude misspecification. Because \(\Sigma\) is independent of \(\theta\), tying \(A_j\) to \(a(\gamma_j)\) does not re-introduce a covariance-information term.
+- **(M4)** *Gaussian tail regulariser, including the fill.* The process whose samples form \(\eta\) is Gaussian with spectral density \(S_{\eta}\) on \(|\omega|\le\Omega\), including every target frequency \(\gamma_j<\Gamma\). The positive value \(S_{\eta}(\gamma_j)\) is supplied by this clause, **not** by a tail calculation evaluated at a target. (The tail calculation is Proposition 4.4\(^\prime\), valid only for \(|\omega|>\Gamma\).)
+- **(M-n)** *Sampling design.* \(n\ge n_{\star}:=\bigl\lceil 2\Omega T/\pi\bigr\rceil\), so that \(|\omega|\le\Omega\) implies \(\omega\Delta\le\pi/2\). Both \(\eta\) and \(\varepsilon\) are observed; neither is optional.
+- **(M4″)** *Spectral floor.* \(S_{\eta}(\omega)=a(|\omega|)^2\,\vartheta(|\omega|)\) with \(\vartheta(u)=\max\{\log(u/2\pi),\vartheta_{\min}\}\) and \(\vartheta_{\min}:=\log(\gamma_1/2\pi)\).
+- **(M5)** *Resolvability.* \(T\cdot\min_{j\ne k}|\gamma_j-\gamma_k|\ge 2\pi K\) and \(T\cdot(\Gamma-\gamma_d)\ge 2\pi K\), with a fixed \(K\ge 4\), and \(\gamma_d<\Gamma<\gamma_{d+1}\).
+- **(W′)** as in §1.1.
+
+Phase randomisation (M1) and the ordinate point process (M2) are **not** used to construct \(\mathcal{G}_{N2}^{n}\). They appear only in §14. GUE pair correlation is not used in Theorems A or B.
+
+The continuous band-limited record of v4 is **not** an observation of \(\mathcal{G}_{N2}^{n}\). It is not used to define Fisher information.
+
+### 2.3 Spectral convention
+
+\[
+\mathbb{E}\bigl[\eta(t)\,\eta(t+\tau)\bigr]
+=\frac1{2\pi}\int_{\mathbb{R}}S_{\eta}(\omega)\,e^{i\omega\tau}\,d\omega
+\tag{2.1}
+\]
+
+for the underlying tail process (restricted to \(|\omega|\le\Omega\) in \(\Sigma_{\eta}\)). A white sequence with \(\mathrm{Var}(\varepsilon_k)=\sigma_s^2\) has discrete-time covariance \(\sigma_s^2\delta_{k\ell}\). The continuous-equivalent two-sided PSD of the sampling noise, in convention (2.1) on the Nyquist band \(|\omega|\le\pi/\Delta\), is \(S_s:=\sigma_s^2\Delta\). This identification is used only in Proposition A\(\infty\); Theorem A is stated in \((\sigma_s^2,n)\) directly.
+
+### 2.4 Spectral density of the tail
+
+Under (M3′), (M4), (M4″), (W′),
+
+\[
+S_{\eta}(\omega)
+=a(|\omega|)^2\,\vartheta(|\omega|)
+=\frac{\vartheta(|\omega|)}{(\tfrac14+\omega^2)(\tfrac94+\omega^2)},
+\qquad
+\vartheta(u)=\max\bigl\{\log(u/2\pi),\vartheta_{\min}\bigr\}.
+\tag{2.2}
+\]
+
+This is a declared function of \(\omega\). It does not depend on \(\theta\). Defects 1 and 2 are thereby avoided.
+
+At every target with \(\gamma_j>2\pi e^{\vartheta_{\min}}\) (all tabulated zeros qualify), \(\vartheta(\gamma_j)=\log(\gamma_j/2\pi)\), so
+
+\[
+\frac{S_{\eta}(\gamma_j)}{a(\gamma_j)^2}=\log(\gamma_j/2\pi).
+\tag{2.3}
+\]
+
+With (M-amp), \(A_j=2a(\gamma_j)\), hence \(S_{\eta}(\gamma_j)/A_j^2=\log(\gamma_j/2\pi)/4\). This is cancellation of the **mean-field window factor** \(a(\omega)\), not of \(1/|\zeta'(\rho)|\). The quantity \(1/|\zeta'|\) is absent from \(\mathcal{G}_{N2}^{n}\). Equation (2.3) is used in Proposition A\(\infty\) and in Theorem B’s leading Fisher; it is not required for the sampling-noise envelope in Theorem A.
+
+**Attribution (Defect 15, kept).** Equation (2.2) at \(\omega=\gamma_j<\Gamma\) is the (M4) fill. Proposition 4.4\(^\prime\) derives the same algebraic expression only for \(|\omega|>\Gamma\). GAP-9 remains **OPEN** for any claim connecting this fill to a fixed zeta configuration; see §14.3.
+
+### 2.5 Tail identity (not used at targets)
+
+> **Proposition 4.4\(^\prime\) (tail only).** Let \(\eta^{\mathrm{ph}}(t)=2\sum_{\gamma>\Gamma}a(\gamma)\cos(\gamma t+\phi_{\gamma})\) with i.i.d. uniform phases, deterministic \(a(\gamma)\) as in (M3′), and intensity \(\lambda(\omega)=\log(\omega/2\pi)/(2\pi)\) for \(\omega>\Gamma\). Then the intensity-smoothed spectral density of \(\eta^{\mathrm{ph}}\) on \(\{\Gamma<|\omega|\le\Omega\}\) equals \(a(|\omega|)^2\log(|\omega|/2\pi)\). GUE pair correlation does not enter the first-moment density.
+
+*Proof.* Phase averaging kills cross terms; Campbell’s formula converts the atomic masses \(a(\gamma)^2\) at \(\pm\gamma\) into \(a(\omega)^2\lambda(\omega)\,d\omega\); matching to convention (2.1) gives the claim. \(\square\)
+
+---
+
+## 3. Named signed factors
+
+No displayed lower bound in this file contains an unsigned \(O(K^{-1})\). Factors used *inside a theorem* are certified or are explicit hypotheses. Factors used only in the limit proposition are labelled as such.
+
+**Half-width.** \(h:=2\pi K/T\). Near-tone band of tone \(j\):
+
+\[
+B_j:=\bigl\{\nu:\bigl||\nu|-\gamma_j\bigr|\le h\bigr\}\cap[-\Omega,\Omega].
+\]
+
+**Flatness (GAP-4, closed).** Let
+
+\[
+D(\omega)
+:=\partial_{\omega}\log S_{\eta}(\omega)
+=-\frac{2\omega}{\tfrac14+\omega^2}-\frac{2\omega}{\tfrac94+\omega^2}+\frac1{\omega\log(\omega/2\pi)}
+\tag{3.0}
+\]
+
+on \(\{\omega>2\pi e^{\vartheta_{\min}}\}\). Lemma 4 bounds \(D\) on each \(B_j\) by an endpoint evaluation. Define
+
+\[
+1+\delta_j
+\;:=\;
+\exp\bigl(2h\cdot\bigl(-D(\gamma_j-h)\bigr)\bigr),
+\qquad
+F_j^{\mathrm{flat}}
+\;:=\;
+(1+\delta_j)^{-1}
+=\exp\bigl(2h\,D(\gamma_j-h)\bigr).
+\tag{3.1}
+\]
+
+There is no remainder \(r(\omega)\) and no “modulo OWED” in (3.1). The factor \(F_j^{\mathrm{flat}}\) enters **Proposition A\(\infty\)**, not Theorem A.
+
+**Window (certified).** Lemma 2 supplies an absolute constant \(C_{\mathrm{win}}=84\) such that the discrete single-tone inverse satisfies the lower bound of (5.3) with
+
+\[
+F_j^{\mathrm{win}}\;:=\;1-\frac{C_{\mathrm{win}}}{\gamma_j T},
+\]
+
+provided \(\gamma_j T>C_{\mathrm{win}}\) (true for every tabulated tone at the operating \(T\)). This factor **does** enter Theorem A. A tighter continuous comparison constant \(C_{\mathrm{win}}^{\infty}=32\) is recorded for Proposition A\(\infty\) only.
+
+**Per-tone leakage (optional hypothesis, not a theorem factor).** Split the \(3\times 3\) block \(I_{jj}=I_{N_j}+I_{R_j}\) by near-tone versus complement frequency content of the sampled Gram. If there exists \(\kappa_j\ge 0\) with \(\lambda_{\max}(I_{N_j}^{-1}I_{R_j})\le\kappa_j\), set \(F_j^{\mathrm{leak}}:=(1+\kappa_j)^{-1}\). This hypothesis is **not** used in Theorem A. It is named in Proposition A\(\infty\) and in §12 as **missing** from any certified product. A numerical \(\kappa_d\) transferred from a nearby cut is **OWED-B1-receipt**, not a theorem input.
+
+**Cross-tone (not a theorem factor).** The constant \(C_{\diamond}\) and the factor \(F^{\mathrm{cross}}(d,K)\) of v4 are **OWED-\(C_{\diamond}\)**. They are not inserted into Theorem A: the Schur step already yields a valid weaker bound from the principal \(3\times 3\). A dimension-uniform frame bound is **OWED-frame-uniform**.
+
+**Prior (Theorem B only).** \(F_j^{\mathrm{prior}}:=I^{\mathrm{eff},\uparrow}_j/\bigl(I^{\mathrm{eff},\uparrow}_j+I(\pi_{\gamma})\bigr)\), with \(I^{\mathrm{eff},\uparrow}_j\) the support-uniform upper bound on \(\mathbb{E}_{\pi}[I^{\mathrm{eff}}_j]\) of §8.
+
+---
+
+## 4. Lemma 1″ (Loewner) and Lemma 4 (exact \(D\))
+
+### 4.1 Lemma 1″ — Loewner order, not entrywise (N6)
+
+Let \(\partial_{\alpha}m_{\theta}\) denote a coordinate derivative, sampled at \((t_k)\) to give a vector in \(\mathbb{R}^n\). Write \(D_j\in\mathbb{R}^{n\times 3}\) for the three sampled derivatives of tone \(j\). The principal block is \(I_{jj}=D_j^{\mathsf T}\Sigma^{-1}D_j\).
+
+For the fine-sampling analysis, let \(G^P_j\) denote the (continuous or discrete) near-tone Euclidean Gram of those derivatives after frequency projection onto \(B_j\). Pointwise bounds on a positive continuous spectral density imply a **Loewner** sandwich, not an entrywise one: cross-Gram integrands have no fixed sign.
+
+> **Lemma 1″ (projected local whitening, Loewner order).** Assume \(S_{\eta}\) is continuous and bounded below on \([-\Omega,\Omega]\), and that \(S_{\eta}\) varies by at most a factor \(1+\delta_j\) on \(B_j\). Then
+>
+> \[
+> (1+\delta_j)^{-1}S_{\eta}(\gamma_j)^{-1}\,G^P_j
+> \;\preceq\;
+> I_{N_j}^{\mathrm{(sym)}}
+> \;\preceq\;
+> (1+\delta_j)\,S_{\eta}(\gamma_j)^{-1}\,G^P_j
+> \]
+>
+> in the Loewner order on \(3\times 3\) symmetric matrices, where \(I_{N_j}^{\mathrm{(sym)}}\) is the Gram of the \(B_j\)-projected derivatives in the inner product with weight \(1/S_{\eta}\). With (3.1), one may take this \(1+\delta_j\).
+
+*Proof.* Pointwise \(S_{\eta}(\gamma_j)/(1+\delta_j)\le S_{\eta}(\nu)\le(1+\delta_j)S_{\eta}(\gamma_j)\) on \(B_j\), hence the same bounds for \(1/S_{\eta}\). If \(g(\nu)\in\mathbb{C}^3\) stacks the three Fourier transforms, the Gram is \(\int_{B_j} g(\nu)g(\nu)^*\,S_{\eta}(\nu)^{-1}\,d\nu/(2\pi)\). For a positive scalar \(m(\nu)\) with \(m_{-}\le m(\nu)\le m_{+}\), one has \(m_{-}GG^*\preceq \int m\,gg^*\preceq m_{+}GG^*\) in Loewner order. Entrywise inequalities are not claimed. \(\square\)
+
+> **Lemma 1-compare.** Frequency projection is an orthogonal projection on \(L^2\), so \(G^P_j\preceq G_j\) in the Loewner order.
+
+### 4.2 Lemma 4 — exact bound on \(D\) by endpoint evaluation (GAP-4 closed)
+
+> **Lemma 4 (exact logarithmic derivative on the Lemma-1 band).** Let \(h=2\pi K/T\) and let \(\omega_{-}:=\gamma_j-h\ge\gamma_1-h\). On \([\omega_{-},\gamma_j+h]\),
+>
+> \[
+> D(\omega)<0,
+> \qquad
+> D'(\omega)>0,
+> \qquad
+> \sup_{|u-\gamma_j|\le h}\lvert D(u)\rvert
+> =-D(\omega_{-}).
+> \]
+>
+> Consequently
+> \[
+> \bigl\lvert\log S_{\eta}(\omega)-\log S_{\eta}(\gamma_j)\bigr\rvert
+> \le h\cdot\bigl(-D(\omega_{-})\bigr),
+> \qquad
+> 1+\delta_j\le\exp\bigl(2h\cdot(-D(\omega_{-}))\bigr),
+> \]
+> which is (3.1). The bound uses only the value of \(D\) at the left endpoint.
+
+*Proof.* Write \(D=-R+P\) with \(R(\omega)=2\omega/(\omega^2+1/4)+2\omega/(\omega^2+9/4)>0\) and \(P(\omega)=1/(\omega L(\omega))\), \(L(\omega)=\log(\omega/2\pi)\). For \(\omega\ge\omega_{\min}:=\gamma_1-h\), one has \(L\ge L_{\min}:=L(\omega_{\min})>0\) and
+
+\[
+R(\omega)
+\ge\frac{4\omega}{\omega^2+9/4}
+=\frac{4}{\omega+9/(4\omega)}
+>\frac{4}{\omega+9/(4\omega_{\min})}.
+\]
+
+With \(\omega_{\min}=12.674937282357\) (arithmetic: \(\gamma_1-h=14.134725141734693-1.459787859377702\)), one has \(9/(4\omega_{\min})\le 0.178\) and \(4L_{\min}\ge 2.80>1\), hence \(R>P\) and \(D<0\).
+
+Differentiating,
+
+\[
+D'(\omega)
+=\frac{2(\omega^2-1/4)}{(\omega^2+1/4)^2}
++\frac{2(\omega^2-9/4)}{(\omega^2+9/4)^2}
+-\frac{L+1}{\omega^2 L^2}.
+\]
+
+The first two summands are positive for \(\omega>3/2\). A lower bound is \(4(\omega^2-9/4)/(\omega^2+9/4)^2\). The map \(L\mapsto(L+1)/L^2=1/L+1/L^2\) is decreasing for \(L>0\), so on \(\omega\ge\omega_{\min}\) one has \((L+1)/L^2\le(L_{\min}+1)/L_{\min}^2\). With \(L_{\min}=\log(\omega_{\min}/2\pi)\),
+
+\[
+\omega_{\min}/2\pi=12.674937282357/6.283185307180=2.01727892,
+\qquad
+L_{\min}=0.701733,
+\qquad
+\frac{L_{\min}+1}{L_{\min}^2}=3.4558.
+\]
+
+Thus \(D'(\omega)>0\) on \([\omega_{\min},\infty)\) as soon as \(4u(u-9/4)\ge 3.4558\,(u+9/4)^2\) for \(u=\omega^2\ge\omega_{\min}^2=160.654\). The difference \(\psi(u)=4u(u-9/4)-3.4558(u+9/4)^2\) satisfies \(\psi'(u)=8u-9-6.9116(u+9/4)=1.0884\,u-24.55>0\) for \(u>23\). At the left endpoint, \(4\times 160.654\times 158.404=101793\) and \(3.4558\times 162.904^2=3.4558\times 26537.7=91709\), so \(\psi(\omega_{\min}^2)>0\). Hence \(D'>0\) on the whole operating range, \(D\) is strictly increasing, \(\lvert D\rvert=-D\) is strictly decreasing, and the supremum of \(\lvert D\rvert\) on \([\gamma_j-h,\gamma_j+h]\) is attained at the left endpoint. Integrating \(D\) along the band gives the log-ratio bound of length at most \(2h\), and exponentiating gives (3.1). \(\square\)
+
+Widths are \(O(1/T)\). A uniform bound of \(F^{\mathrm{flat}}\) over an interval of length \(O(1/T)\) is therefore the same bound evaluated at the leftmost frequency that appears; this is used in Theorem B.
+
+The superseded leading-order ceiling \(\exp(16\pi K/(\gamma_j T))\) (which dropped \(r(\omega)=D(\omega)+4/\omega\)) is **not** used.
+
+---
+
+## 5. Lemma 2 — discrete single-tone \(3\times 3\), certified \(C_{\mathrm{win}}\)
+
+Let \(m(t)=A\cos(\omega t+\phi)\) on the sample grid \(t_k=k\Delta\), \(k=0,\dots,n-1\), \(\Delta=T/n\), \(n\ge n_{\star}\), and let the envelope noise be white of variance \(\sigma_s^2\) (the sampling-noise envelope \(\Sigma\succeq\sigma_s^2 I_n\)). The discrete Gram \(G^{\mathrm{disc}}\) has entries \(\sum_{k=0}^{n-1}(\partial_{\alpha}m)(t_k)(\partial_{\beta}m)(t_k)\). Write \(\psi:=\omega\Delta\). Under (M-n), \(\omega\le\Omega\) implies \(\psi\le\pi/2\), hence \(\lvert\sin\psi\rvert\ge 2\psi/\pi=2\omega T/(\pi n)\).
+
+The non-oscillatory parts (replacing \(\sin^2\) by \(1/2\)) are the exact power sums
+
+\[
+a_0=\frac{A^2 T^2(n-1)(2n-1)}{12n},\quad
+b_0=\frac{A^2 T(n-1)}{4},\quad
+c_0=\frac{A^2 n}{2}.
+\]
+
+Their Schur complement on the \((\omega,\phi)\) block has determinant \(A^4 T^2(n^2-1)/48\) and inverse \(\omega\omega\)-entry
+
+\[
+[H_0^{-1}]_{\omega\omega}
+=\frac{24}{A^2 n T^2}\cdot\frac{n^2}{n^2-1}
+\ge
+\frac{24}{A^2 n T^2}.
+\tag{5.1}
+\]
+
+Oscillatory remainders are controlled by Abel summation. If \(S_m=\sum_{k=0}^{m-1}e^{ik\theta}\) with \(\theta=2\psi\), then \(\lvert S_m\rvert\le 1/\lvert\sin\psi\rvert\). For \(a_k=k^2\),
+
+\[
+\Bigl\lvert\sum_{k=0}^{n-1}k^2 e^{ik\theta}\Bigr\rvert
+\le\frac{2n^2}{\lvert\sin\psi\rvert},
+\]
+
+and likewise \(\lvert\sum k\,e^{ik\theta}\rvert\le 2(n-1)/\lvert\sin\psi\rvert\), \(\lvert\sum e^{ik\theta}\rvert\le 1/\lvert\sin\psi\rvert\). Transferring to \(t_k=\Delta k\) and using \(\lvert\sin\psi\rvert\ge 2\omega T/(\pi n)\) yields relative errors, against \((a_0,b_0,c_0)\), of size at most
+
+\[
+\varepsilon_a=\frac{3\pi}{\tau},\qquad
+\varepsilon_b=\frac{2\pi}{\tau},\qquad
+\varepsilon_c=\frac{\pi}{2\tau},
+\qquad\tau:=\omega T.
+\]
+
+> **Lemma 2 (discrete white \(3\times 3\), certified window).** Assume \(n\ge n_{\star}\) and \(\omega T\ge\gamma_1 T-2\pi K\). Let \(H\) be the \((\omega,\phi)\) block of \(G^{\mathrm{disc}}/A^2\). Then
+>
+> \[
+> [H^{-1}]_{\omega\omega}
+> \;\ge\;
+> F^{\mathrm{win}}(\omega)\cdot\frac{24}{n T^2},
+> \qquad
+> F^{\mathrm{win}}(\omega)=1-\frac{84}{\omega T}.
+> \tag{5.3}
+> \]
+> Hence under the sampling-noise envelope \(\Sigma\succeq\sigma_s^2 I_n\),
+> \[
+> \bigl[I_{jj}^{-1}\bigr]_{\omega\omega}
+> \;\ge\;
+> F_j^{\mathrm{win}}\cdot\frac{24\,\sigma_s^2}{A_j^2 n T^2}.
+> \tag{5.4}
+> \]
+> The constant is \(C_{\mathrm{win}}=84\). (The \(A\)-row of the \(3\times 3\) only increases the \(\omega\omega\) inverse, by the same Schur comparison as Lemma 3′(a); a lower bound from the \((\omega,\phi)\) block is therefore valid for the \(3\times 3\).)
+
+*Proof of (5.3).* Write \(a=a_0(1+\delta_a)\) etc.\ with \(\lvert\delta_a\rvert\le\varepsilon_a\). For an upper bound on \(\det=ac-b^2\), take the extremes \(a\le a_0(1+\varepsilon_a)\), \(c\le c_0(1+\varepsilon_c)\), \(\lvert b\rvert\ge b_0(1-\varepsilon_b)\). As in the expansion under (5.1), \(b_0^2/\det_0=3(n-1)/(n+1)\le 3\), and
+
+\[
+\frac{\det_{\mathrm{hi}}}{\det_0}
+\le 1+4\varepsilon_a+4\varepsilon_c+6\varepsilon_b+4\varepsilon_a\varepsilon_c
+=1+\frac{26\pi}{\tau}+\frac{6\pi^2}{\tau^2}.
+\]
+
+The inverse ratio against \([H_0^{-1}]_{\omega\omega}\) is at least \((1-\varepsilon_c)\) over that quantity. Dropping the favourable factor \(n^2/(n^2-1)\ge 1\) in (5.1), the ratio against \(24/(n T^2)\) is at least
+
+\[
+r(\tau)
+=\frac{1-\pi/(2\tau)}{1+26\pi/\tau+6\pi^2/\tau^2}.
+\]
+
+Then \(\tau\bigl(1-r(\tau)\bigr)=(53\pi/2+6\pi^2/\tau)/d(\tau)\le 53\pi/2+6\pi^2/\tau_{\min}\) with \(d>1\) and \(\tau_{\min}=(\gamma_1-h)T\ge 218.22\), hence \(\tau(1-r)\le 83.53\). Taking \(C_{\mathrm{win}}=84\) gives \(1-84/\tau\le r(\tau)\) for all \(\tau\ge\tau_{\min}\), and \(F^{\mathrm{win}}>0\). \(\square\)
+
+*Convention.* Rife–Boorstyn and Kay, Example 3.14, quote \(12\) because they use a complex exponential or a different PSD identification. In (2.1) with a real cosine and both \(A\) and \(\phi\) unknown, \(24\) is the leading constant of the *continuous* white formula; the discrete leading constant in (5.1) is the matching \(24/(n T^2)\). Getting the factor wrong changes the RMSE coefficient by \(\sqrt{2}\).
+
+**Continuous comparison constant (Proposition A\(\infty\) only).** For the continuous-time \((\omega,\phi)\) Gram of Lemma 2 in v4, the same remainder identities
+
+\[
+\bigl\lvert\tfrac{T^3}6-\int_0^T t^2\sin^2\bigr\rvert
+\le\frac{T^2}{2\omega}+\frac T{2\omega^2}+\frac1{4\omega^3},\quad
+\bigl\lvert\tfrac{T^2}4-\int_0^T t\sin^2\bigr\rvert
+\le\frac T{2\omega}+\frac1{4\omega^2},\quad
+\bigl\lvert\tfrac T2-\int_0^T\sin^2\bigr\rvert
+\le\frac1{2\omega}
+\]
+
+give, by the identical \(ac-b^2\) envelope, a ratio against \(24/T^3\) whose implied \(C(\omega)=(1-\mathrm{ratio})\,\omega T\) is at most \(31.75\) on \([\gamma_1-h,\Omega]\) at the operating \(T\) (explicit evaluations: \(25.77\) at \(\gamma_1-h\), \(31.75\) at \(\gamma_{10}-h\), \(29.27\) at \(\Gamma_{\mathrm{op}}\); as \(\omega T\to\infty\) the same envelope tends to \(29\)). We take \(C_{\mathrm{win}}^{\infty}:=32\) as a certified continuous comparison constant. It is **not** the theorem constant; the theorem uses \(C_{\mathrm{win}}=84\).
+
+A numerical white-noise check of the *continuous* \(3\times 3\) at \(T=\log(3\cdot 10^7)\), from `t1_verify.py` / `T1_VERIFY_RECEIPT.json` block 4, gave \(T^3[I^{-1}]_{\omega\omega}=23.927,\,23.824,\,23.947\) at \(\omega=3.7,14.13,49.77\). All lie below \(24\). That check is not a substitute for \(C_{\mathrm{win}}\) (GAP-8).
+
+---
+
+## 6. Lemma 3′ — Schur reduction and the unused cross-tone factor (N5)
+
+**(a) Nuisance Schur complement (the step from \(3d\times 3d\) to \(3\times 3\)).** Let \(I(\theta)\in\mathbb{R}^{3d\times 3d}\) be positive definite, and let \(I_{jj}\) be the principal \(3\times 3\) corresponding to \((A_j,\gamma_j,\phi_j)\). Partition \(I=\bigl(\begin{smallmatrix}A&B\\B^{\mathsf T}&C\end{smallmatrix}\bigr)\) with \(A=I_{jj}\). The corresponding block of \(I^{-1}\) is the inverse of the Schur complement \(A-BC^{-1}B^{\mathsf T}\). Since \(BC^{-1}B^{\mathsf T}\succeq 0\),
+
+\[
+A-BC^{-1}B^{\mathsf T}\;\preceq\;A,
+\qquad
+\bigl[I^{-1}\bigr]_{jj}
+=(A-BC^{-1}B^{\mathsf T})^{-1}
+\;\succeq\;
+A^{-1}=I_{jj}^{-1}
+\]
+
+in the Loewner order. In particular
+
+\[
+\bigl[I^{-1}\bigr]_{\gamma_j\gamma_j}
+\;\ge\;
+\bigl[I_{jj}^{-1}\bigr]_{\gamma_j\gamma_j}.
+\tag{6.1}
+\]
+
+This is a valid weaker per-tone Cramér–Rao bound: unknown other tones can only increase the \(\gamma_j\)-variance bound. The diagonal block \(I_{jj}=D_j^{\mathsf T}\Sigma^{-1}D_j\) is exactly the single-tone Gram in the same noise (other tones do not enter the \(j\)-derivatives). No unproved \(F^{\mathrm{cross}}\) is required for (6.1).
+
+**(b)** Off-diagonal \(3\times 3\) blocks and a factor \(F^{\mathrm{cross}}(d,K)=(1+C(d,K)/K)^{-1}\) with \(C(d,K)=(C_{\diamond}/\pi)H_{d-1}\) would *tighten* (6.1) toward a block-diagonal approximation. The constant \(C_{\diamond}\) is **OWED-\(C_{\diamond}\)**. A dimension-uniform confluent Ingham / Montgomery–Vaughan bound for the coloured family \(\{e^{\pm i\gamma_j t},\, t e^{\pm i\gamma_j t}\}\) with nuisance Schur complements is **OWED-frame-uniform** and is not claimed. Pairwise \(O(K^{-1})\) estimates do not imply a \(d\)-uniform operator bound.
+
+**(c)** Near-tone bands of width \(2h\) overlap when gaps are less than \(2h\). Condition (M5) only guarantees gaps \(\ge h\). Overlap is harmless for (6.1). Overlap *is* an obstruction to treating the \(B_j\) as disjoint supports in a simultaneous multi-tone frame bound; that obstruction is **OWED-overlap**.
+
+---
+
+## 7. Theorem A — pointwise Cramér–Rao in \(\mathcal{G}_{N2}^{n}\)
+
+> **Theorem A (pointwise CR, discrete Gaussian surrogate, fixed \(d\)).**
+> Fix \(d\ge 1\), \(K\ge 4\), \(n\ge n_{\star}\), and \(\sigma_s^2>0\). Assume \(\mathcal{G}_{N2}^{n}\) with clauses (M3′), (M-amp), (M4), (M-n), (M4″), (M5), (W′). Let \(\widehat\theta\) be any estimator of \(\theta\) that is unbiased on an open neighbourhood of the true \(\theta\) and is a measurable function of \(Y\in\mathbb{R}^n\). Then for each \(j\in\{1,\dots,d\}\),
+>
+> \[
+> \mathrm{Var}(\widehat{\gamma}_j)
+> \;\ge\;
+> \bigl[I(\theta)^{-1}\bigr]_{\gamma_j\gamma_j}
+> \;\ge\;
+> \bigl[I_{jj}(\theta)^{-1}\bigr]_{\gamma_j\gamma_j}
+> \;\ge\;
+> F_j^{\mathrm{win}}
+> \cdot
+> \frac{24\,\sigma_s^2}{A_j^2 n T^2},
+> \tag{A.1}
+> \]
+>
+> with \(I_{\alpha\beta}(\theta)=(\partial_{\alpha}m)^{\mathsf T}\Sigma^{-1}(\partial_{\beta}m)\) as in (4.0n), \(F_j^{\mathrm{win}}=1-84/(\gamma_j T)\), and \(\Sigma=\Sigma_{\eta}+\sigma_s^2 I_n\). The first inequality is the Cramér–Rao inequality in a regular finite-dimensional Gaussian location family. The second is Lemma 3′(a). The third is Lemma 2. The bound is for this fixed \(d\); it is not asserted uniformly in \(d\).
+>
+> **Arithmetic interpretation (not used in the Fisher calculation).** If the surrogate mean is identified with the trigonometric sum in Proposition R, assume RH, simplicity of every nontrivial zero, and \(J_{-1}(T)=O(T)\). That identification is OWED-S1.
+
+*Proof.* The law of \(Y\) is \(N(m(\theta),\Sigma)\) with \(\Sigma\) independent of \(\theta\) and \(\Sigma\succ 0\). The Fisher information of a Gaussian location family is exactly (4.0n); (R1)–(R4) hold as in §9. Cramér–Rao for unbiased estimators gives \(\mathrm{Cov}(\widehat\theta)\succeq I(\theta)^{-1}\). Lemma 3′(a) yields (6.1). Lemma 2 with the envelope \(\Sigma^{-1}\preceq\sigma_s^{-2}I_n\) (equivalently \(\Sigma\succeq\sigma_s^2 I_n\)) yields (5.4). Collecting is (A.1). Unbiasedness converts \(\sqrt{\mathrm{Var}}\) into RMSE. \(\square\)
+
+**Not claimed.** A \(T^{-3}\) law. A numerical product of \(F^{\mathrm{flat}}F^{\mathrm{leak}}F^{\mathrm{cross}}F^{\mathrm{win}}\). A max-\(j\) law attained at \(j=d\) (**OWED-last-tone**). Transfer to the phase sum.
+
+**Corollary A (sample complexity, sampling-noise envelope).** If some \(j\) has \(\mathrm{RMSE}(\widehat{\gamma}_j)\le\varepsilon\) and \(F_j^{\mathrm{win}}>0\), then from (A.1)
+
+\[
+n T^2
+\;\ge\;
+F_j^{\mathrm{win}}\cdot\frac{24\,\sigma_s^2}{A_j^2\varepsilon^2}.
+\]
+
+This is a finite-\(n\) resource bound in \((n,T,\sigma_s)\). It is not the \(T\sim\varepsilon^{-2/3}\) law of the continuous locally-white heuristic.
+
+---
+
+## 7bis. Proposition A\(\infty\) — \(T^3\) scaling as a limit, with named error
+
+Write \(S_s:=\sigma_s^2\Delta=\sigma_s^2 T/n\) for the continuous-equivalent sampling-noise PSD in convention (2.1) on the Nyquist band. Hold \(T,d,\theta,S_{\eta}\) fixed.
+
+> **Proposition A\(\infty\) (fine-sampling expansion; not Theorem A).**
+> Assume the hypotheses of Theorem A, \(n\ge n_{\star}\), and that \(S_s\) is held fixed as \(n\to\infty\) (equivalently \(\sigma_s^2=S_s n/T\)). Let \(I^{(n)}\) be the exact discrete Fisher (4.0n). Then for each \(j\),
+>
+> \[
+> T^3\bigl[(I^{(n)})^{-1}\bigr]_{\gamma_j\gamma_j}
+> =
+> 24\cdot\frac{S_{\eta}(\gamma_j)+S_s}{A_j^2}
+> \cdot
+> F_j^{\mathrm{flat}}\,F_j^{\mathrm{win},\infty}\,F_j^{\mathrm{leak}}
+> \cdot\bigl(1+E_n\bigr),
+> \tag{A\(\infty\).1}
+> \]
+>
+> where \(F_j^{\mathrm{flat}}\) is (3.1), \(F_j^{\mathrm{win},\infty}=1-32/(\gamma_j T)\), \(F_j^{\mathrm{leak}}=(1+\kappa_j)^{-1}\) if (B1)\(_j\) is assumed and \(F_j^{\mathrm{leak}}:=1\) if it is not, and the error satisfies
+>
+> \[
+> \lvert E_n\rvert
+> \;\le\;
+> E_{\mathrm{alias}}+E_{\mathrm{disc}}+E_{\mathrm{Sz}}
+> \]
+>
+> with \(E_{\mathrm{alias}}=0\) for \(n\ge n_{\star}\) (no aliasing of \(S_{\eta}\) into the principal Nyquist cell), \(E_{\mathrm{disc}}\le C_{\mathrm{win}}/(\gamma_j T)\) already absorbed into \(F^{\mathrm{win},\infty}\) at the continuous comparison, and \(E_{\mathrm{Sz}}\) the Toeplitz–symbol (Szegő) remainder for the inverse of \(\Sigma_{\eta}+\sigma_s^2 I_n\). The term \(E_{\mathrm{Sz}}\) is **OWED-Szego**. In particular, *if* \(E_{\mathrm{Sz}}\to 0\) as \(n\to\infty\) (the standard Szegő regime for a continuous strictly positive symbol \(S_{\eta}+S_s\)), then
+>
+> \[
+> \lim_{n\to\infty}T^3\bigl[(I^{(n)})^{-1}\bigr]_{\gamma_j\gamma_j}
+> =
+> 24\cdot\frac{S_{\eta}(\gamma_j)+S_s}{A_j^2}
+> \cdot
+> F_j^{\mathrm{flat}}\,F_j^{\mathrm{win},\infty}\,F_j^{\mathrm{leak}}.
+> \tag{A\(\infty\).2}
+> \]
+>
+> At the true surrogate parameter, (M-amp) and (2.3) give \(S_{\eta}(\gamma_j)/A_j^2=\log(\gamma_j/2\pi)/4\). If moreover \(S_s/S_{\eta}(\gamma_j)\to 0\), the leading coefficient tends to \(6\log(\gamma_j/2\pi)\). That double limit is **not** a finite-\(n\) theorem and is **not** a numerical floor in §12.
+
+*Proof sketch.* Under \(n\ge n_{\star}\), the discrete-time symbol of \(\Sigma\) on the principal cell is \(f(\lambda)=\sigma_s^2+\Delta^{-1}S_{\eta}(\lambda/\Delta)\) with no aliasing sum. On the near-tone band, Lemma 4 supplies the factor \(1+\delta_j\) for \(S_{\eta}\) and hence for \(f\) up to the additive white floor \(S_s\). Lemma 1″ in Loewner order converts this into a sandwich of the projected Gram. Lemma 2 with \(C_{\mathrm{win}}^{\infty}=32\) converts the Euclidean Gram into the \(24/T^3\) leading term. Lemma 3′(a) reduces to the \(3\times 3\). The identification of \(u^{\mathsf T}\Sigma^{-1}u\) with the symbol integral \((2\pi)^{-1}\int\lvert\tilde u\rvert^2/f\) is exact for circulant embeddings and carries an \(O((\log n)/n)\) edge error for Toeplitz matrices generated by a \(C^1\) symbol; an explicit constant for that error is OWED-Szego, which is why (A\(\infty\).1) is a proposition with a named remainder and not Theorem A. \(\square\)
+
+**Corollary A\(\infty\) (sample complexity, limit form, not a finite-\(T\) floor).** Under the conclusion of (A\(\infty\).2) with \(S_s=0\) and all displayed factors equal to \(1\), the leading \(T^{-3/2}\) coefficient is \(\sqrt{6}\). That asymptotic corollary is not used as a numerical floor in §12.
+
+---
+
+## 8. Theorem B — Bayes van Trees, ordinates only (N2)
+
+This is a different theorem from Theorem A. It bounds a **Bayes-average** MSE. Unbiasedness is not assumed, and is not dropped from Theorem A.
+
+### 8.1 van Trees inequality
+
+Let \(\pi\) be a density on an interval, absolutely continuous, vanishing at the endpoints, with finite prior information \(I(\pi)=\int(\pi')^2/\pi\). For a regular parametric family and an arbitrary measurable estimator \(\widehat\theta\),
+
+\[
+\mathbb{E}\bigl[(\widehat\theta-\theta)^2\bigr]
+\;\ge\;
+\frac1{\mathbb{E}_{\pi}[I(\theta)]+I(\pi)},
+\tag{8.1}
+\]
+
+the left side over the joint law \(\pi(d\theta)\,P_{\theta}\). *Citation.* Van Trees (1968), Part I, §2.4; Gill–Levit, *Bernoulli* 1 (1995), Theorem 1. A uniform prior is illegal.
+
+### 8.2 Prior (P1″): ordinates only, amplitudes tied (N2)
+
+On \(u\in[-1,1]\) let \(\lambda(u)=\cos^2(\pi u/2)\). Then \(\int_{-1}^1\lambda=1\), \(\lambda(\pm 1)=0\), and \(I(\lambda)=\pi^2\). Scale: for a **declared** centre \(\mu\in\mathbb{R}\) and half-width \(\alpha>0\),
+
+\[
+\pi_{\gamma}(\gamma)
+=\alpha^{-1}\lambda\bigl((\gamma-\mu)/\alpha\bigr)
+\quad\text{on }[\mu-\alpha,\mu+\alpha].
+\]
+
+Then \(I(\pi_{\gamma})=\pi^2/\alpha^2\). Choice: \(\alpha=\pi K/T=h/2\), hence \(I(\pi_{\gamma})=T^2/K^2\). Adjacent interiors are disjoint under (M5).
+
+**External centres (Defect 4 repair, kept).** The centres \(\mu_1,\dots,\mu_d\) are parameters of \(\pi\), specified independently of the unknown true \(\theta\). For numerical evaluation the centres are the published Odlyzko ordinates of §11.1.
+
+**Amplitudes (N2 repair).** There is **no** independent prior on \(A_j\). At every \(\gamma_j\) in the support, set
+
+\[
+A_j(\gamma_j)\;:=\;2\,a(\gamma_j).
+\]
+
+This is (M-amp) pathwise. The cancellation (2.3) therefore holds \(\pi\)-almost surely, and \(I^{\mathrm{eff}}_{\mathrm{leading}}(\gamma)=T^3/\bigl(6\log(\gamma/2\pi)\bigr)\) in the A\(\infty\) leading term (or the exact discrete \(I_{jj}\) as a function of \(\gamma\) in Theorem A’s experiment). Phases: \(\phi_j\) uniform on the circle (**OWED-H-circle** if a Euclidean Gill–Levit statement is insisted upon; a cuff prior on \([0,2\pi]\) only strengthens the \(\omega\) bound). The v4 items **OWED-amp-avg** and the independent raised-cosine prior on \(A_j\) are vacated: there is no independent amplitude coordinate under \(\pi\).
+
+### 8.3 Averaged Fisher, support-uniform factors
+
+Gill–Levit requires \(\overline{J}=\int I(\theta)\,\pi(\theta)\,d\theta\). The leading location information \(I^{\mathrm{eff}}_{\mathrm{leading}}(\gamma)=T^3/\bigl(6\log(\gamma/2\pi)\bigr)\) is strictly decreasing in \(\gamma\) for \(\gamma>2\pi\). On \([\mu_j-\alpha,\mu_j+\alpha]\),
+
+\[
+\mathbb{E}_{\pi}\bigl[I^{\mathrm{eff}}_{\mathrm{leading},j}\bigr]
+\le
+I^{\mathrm{eff}}_{\mathrm{leading}}(\mu_j-\alpha)
+=\frac{T^3}{6\log\bigl((\mu_j-\alpha)/2\pi\bigr)}
+=:I^{\mathrm{eff},\uparrow}_j,
+\]
+
+provided \(\mu_j-\alpha>2\pi\). This is an **upper** bound, hence valid in the van Trees denominator.
+
+The factors \(F^{\mathrm{flat}}\), \(F^{\mathrm{win}}\), \(F^{\mathrm{leak}}\) vary over the prior support. The support has width \(2\alpha=h=O(1/T)\). A uniform lower bound is the value at the leftmost frequency that appears.
+
+- \(F^{\mathrm{flat}}(\gamma)\) decreases as \(\gamma\) decreases, and the Lemma-1 band of a point \(\gamma\) extends a further \(h\) to the left. The leftmost frequency is \(\mu_j-\alpha-h\). By Lemma 4, \(\inf_{\mathrm{supp}}F_j^{\mathrm{flat}}=\exp\bigl(2h\,D(\mu_j-\alpha-h)\bigr)\). This is a single endpoint evaluation.
+- \(F^{\mathrm{win}}(\gamma)=1-C_{\mathrm{win}}/(\gamma T)\) is increasing in \(\gamma\). The infimum on the prior support is \(1-C_{\mathrm{win}}/((\mu_j-\alpha)T)\), again an endpoint evaluation.
+- \(F^{\mathrm{leak}}\): without a closed form for \(\kappa_j(\gamma)\), a uniform bound is an additional hypothesis **(B1)\(_{j,\pi}\)**: a single \(\kappa_j^{\pi}\) dominating \(\kappa_j\) on the prior support. Numerically this factor is **missing**.
+
+Using an upper bound on \(\mathbb{E}_{\pi}[I]\) of the form \(I^{\mathrm{eff},\uparrow}/\inf F\) (when those \(F\) that are certified are inserted, and missing factors omitted rather than replaced by \(1\) in a claimed floor) produces a valid van Trees lower bound.
+
+> **Theorem B (Bayes van Trees, ordinate-only prior, discrete Gaussian surrogate, fixed \(d\)).**
+> Assume the hypotheses of Theorem A except unbiasedness. Let \(\pi\) be the product prior (P1″) on \((\gamma_1,\dots,\gamma_d)\) with **externally specified** centres \(\mu_1,\dots,\mu_d\), \(\alpha=\pi K/T\), and \(A_j=2a(\gamma_j)\). Let \(\widehat{\gamma}_j\) be any measurable function of \(Y\). Then
+>
+> \[
+> \mathbb{E}_{\pi}\bigl[(\widehat{\gamma}_j-\gamma_j)^2\bigr]
+> \;\ge\;
+> \frac{1}{\mathbb{E}_{\pi}\bigl[I^{\mathrm{eff}}_j(\theta)\bigr]+T^2/K^2},
+> \tag{B.0}
+> \]
+>
+> where \(I^{\mathrm{eff}}_j=[I(\theta)^{-1}]_{\gamma_j\gamma_j}^{-1}\) is the exact efficient information for \(\gamma_j\) in \(\mathcal{G}_{N2}^{n}\). Moreover, with the leading-term envelope of §8.3,
+>
+> \[
+> \mathbb{E}_{\pi}\bigl[I^{\mathrm{eff}}_{\mathrm{leading},j}\bigr]
+> \;\le\;
+> I^{\mathrm{eff},\uparrow}_j
+> =\frac{T^3}{6\log\bigl((\mu_j-\alpha)/2\pi\bigr)},
+> \tag{B.1}
+> \]
+>
+> and the certified factors admit the support-uniform lower bounds
+>
+> \[
+> \inf_{\mathrm{supp}\,\pi_j}F_j^{\mathrm{flat}}
+> =e^{2h\,D(\mu_j-\alpha-h)},
+> \qquad
+> \inf_{\mathrm{supp}\,\pi_j}F_j^{\mathrm{win}}
+> =1-\frac{84}{(\mu_j-\alpha)T}.
+> \tag{B.2}
+> \]
+>
+> The left side of (B.0) is Bayes RMSE (including bias\(^2\)). The bound is a statement about \(\pi\), not a uniform frequentist bound on \(\mathrm{supp}(\pi)\) (**OWED-B-uniform**). No numerical product floor is claimed for Theorem B in §12: \(F^{\mathrm{leak}}\) is missing, and (B.1) is the leading-term envelope, not the exact \(\mathbb{E}_{\pi}[I^{\mathrm{eff}}]\) of the finite-\(n\) experiment (that comparison is the content of Proposition A\(\infty\) under \(\pi\)).
+>
+> **Arithmetic interpretation:** the same Prop. R disclosure as in Theorem A.
+
+A minimax corollary is not stated. Ziv–Zakai is **OWED-ZZ**.
+
+---
+
+## 9. Regularity of \(\mathcal{G}_{N2}^{n}\)
+
+Let \(P_{\theta}\) be the law of \(Y\in\mathbb{R}^n\) under \(\theta\). This is Gaussian with **fixed** covariance \(\Sigma\succ 0\) and mean \(m(\theta)\in\mathbb{R}^n\).
+
+**(R1) Mutual absolute continuity.** All nondegenerate Gaussians on \(\mathbb{R}^n\) with the same covariance are equivalent. Cameron–Martin is \(\mathbb{R}^n\) itself. **Holds** because \(\sigma_s^2>0\). The v4 continuous band-limited obstruction (pure tones not in the RKHS of a compactly supported spectrum) does not arise. The unrestricted continuous record is not an observation of this experiment.
+
+**(R2) Differentiable log-likelihood.** \(\log dP_{\theta}/dP_0=\langle Y,m(\theta)\rangle_{\Sigma}-\tfrac12\|m(\theta)\|_{\Sigma}^2\). The map \(\theta\mapsto m(\theta)\) is real-analytic into \(\mathbb{R}^n\). **Holds.**
+
+**(R3) Differentiation under the integral.** The score \(\partial_{\alpha}\log dP_{\theta}/dP_0=\langle Y-m(\theta),\,\partial_{\alpha}m(\theta)\rangle_{\Sigma}\) is Gaussian, mean zero, finite variance. **Holds.**
+
+**(R4) Fisher information finite and nonsingular.** Finiteness is \(\|\partial_{\alpha}m\|_{\Sigma}^2<\infty\), automatic in finite dimension. Nonsingularity of the \(3d\) Gram is (M5) plus \(A_j>0\). If (M5) fails, T1 is silent.
+
+**(R5) Unbiasedness.** An assumption on the estimator class in Theorem A. Periodogram estimators (T2) are biased at finite \(T\); they are not in the quantifier of Theorem A. They are in the quantifier of Theorem B.
+
+**(R6) is not a regularity condition of \(\mathcal{G}_{N2}^{n}\).** The noise *is* Gaussian by stipulation. Lindeberg / Berry–Esseen quantities \(\Lambda(\Gamma)\) and \(d_K\) are diagnostics of a *different* experiment (the phase sum). They are computed in §11 and interpreted in §14. They do not enter Theorems A or B.
+
+---
+
+## 10. Exact Fisher information of the discrete experiment
+
+\[
+I_{\alpha\beta}(\theta)
+=(\partial_{\alpha}m(\theta))^{\mathsf T}\Sigma^{-1}(\partial_{\beta}m(\theta)),
+\qquad
+\Sigma=\Sigma_{\eta}+\sigma_s^2 I_n.
+\tag{4.0n}
+\]
+
+This is the exact Fisher information of \(\mathcal{G}_{N2}^{n}\). It replaces v4’s continuous band-limited integral (4.0), which is not the Fisher of a singular continuous experiment and is not used here.
+
+**(a)** Every target is interior to the pass band with margin \(\Omega-\gamma_j>\Gamma\), and Lemma-4 neighbourhoods are interior under (M5): \(\gamma_j+h\le\Gamma<\Omega\).
+
+**(b)** The value \(S_{\eta}(\gamma_j)\) is (2.2), by (M4), not by Proposition 4.4\(^\prime\).
+
+**(c)** The constant \(24\) in (5.1) is a discrete white-noise leading term. A coloured, band-limited numerical check at \(\Gamma=51.234\), \(\Omega=2\Gamma\), tone \(\gamma_d\), window (W′), from the superseded draft’s scripts, gave \([I^{-1}]_{\omega\omega}\) equal to \(0.99392\) of \(24\,S_{\eta}(\gamma_d)/(A^2 T^3)\). That number is a **computation**, not a theorem factor, and it belongs to the continuous formal Gram, not to (4.0n). The conversion of a variance ratio \(0.993916700836\) to an RMSE uses the square root: \(\sqrt{0.993916700836}=0.99695371\) (minor 2).
+
+---
+
+## 11. Operating point \(\Gamma_{\mathrm{op}}=51.23362034\)
+
+### 11.1 Inputs
+
+\[
+\begin{aligned}
+T&=\log(3\cdot 10^7)=17.2167079396264295,\\
+K&=4,\\
+\gamma_{10}&=49.773832477672302,\\
+L_{10}&=\log(\gamma_{10}/2\pi)=2.06961232726741,\\
+\gamma_1&=14.134725141734693,\qquad L_1=\log(\gamma_1/2\pi)=0.81075727,\\
+\vartheta_{\min}&=L_1.
+\end{aligned}
+\]
+
+Arithmetic for \(T\): \(\log(3\cdot 10^7)=\log 3+7\log 10\), with \(\log 10=2.302585092994045684\), \(7\log 10=16.11809565095831979\), \(\log 3=1.098612288668109691\), sum \(17.21670793962642948\).
+
+Arithmetic for \(L_{10}\): the truncated-ordinate value \(\log(49.773832/2\pi)=2.06961231767041\) (cold-referee independent) plus \(\log(1+4.77672302\times 10^{-7}/49.773832)=\log(1+9.5970\times 10^{-9})=9.5970\times 10^{-9}\) gives \(2.06961232726741\).
+
+Odlyzko ordinates used as **external prior centres** and as labels:
+
+| \(j\) | \(\gamma_j\) | \(\log(\gamma_j/2\pi)\) | \(\lvert M_W(\tfrac12+i\gamma_j)\rvert\) |
+|---:|---:|---:|---:|
+| 1 | 14.134725141734693 | 0.810757 | \(4.97414\times 10^{-3}\) |
+| 2 | 21.022039638771555 | 1.207624 | \(2.25643\times 10^{-3}\) |
+| 3 | 25.010857580145688 | 1.381505 | \(1.59543\times 10^{-3}\) |
+| 4 | 30.424876125859513 | 1.577330 | \(1.07886\times 10^{-3}\) |
+| 5 | 32.935061587739189 | 1.656668 | \(9.20840\times 10^{-4}\) |
+| 10 | 49.773832477672302 | 2.069612327 | \(4.03441\times 10^{-4}\) |
+
+\(\lvert M_W\rvert=\bigl((\gamma^2+1/4)(\gamma^2+9/4)\bigr)^{-1/2}\). At \(j=10\): \(\gamma^2=2477.4344\), product \(2477.6844\times 2479.6844\), square root \(2478.684\), reciprocal \(4.0344\times 10^{-4}\).
+
+Also \(\gamma_9=48.005150881167159\), \(\gamma_{11}=52.97032147771446\). One has \(\gamma_{10}<\Gamma_{\mathrm{op}}<\gamma_{11}\).
+
+### 11.2 Admissibility arithmetic (N3, Defect 7)
+
+\[
+2\pi K=8\pi=25.1327412287183459,
+\qquad
+h=\frac{8\pi}T=1.4597878593777017.
+\]
+
+(Receipt for \(h\): independent v4-referee evaluation of \(8\pi/T\), which does not depend on \(\Gamma\).) Full-ordinate (M5) threshold:
+
+\[
+\gamma_{10}+h
+=49.773832477672302+1.4597878593777017
+=51.2336203370500037.
+\]
+
+Eight-decimal **UP**: \(\Gamma_{\mathrm{op}}=51.23362034\). Excess over the threshold: \(2.95\times 10^{-9}\). Pass-band: \(\Omega_{\mathrm{op}}=2\Gamma_{\mathrm{op}}=102.46724068\).
+
+Explicit (M5) check with the **full** ordinate:
+
+\[
+\Gamma_{\mathrm{op}}-\gamma_{10}
+=51.23362034-49.773832477672302
+=1.459787862327698,
+\]
+
+\[
+T(\Gamma_{\mathrm{op}}-\gamma_{10})
+=17.2167079396264295\times 1.459787862327698
+=25.132741279507,
+\]
+
+\[
+T(\Gamma_{\mathrm{op}}-\gamma_{10})-8\pi
+=5.079\times 10^{-8}
+>0.
+\]
+
+Thus \(T(\Gamma_{\mathrm{op}}-\gamma_{10})\ge 2\pi K\). The cut \(\Gamma=50\) fails: \(T(50-\gamma_{10})=T\cdot 0.226167522=3.89386<25.13274\). \(\Gamma=50\) is retained in §11.8 only as an out-of-theorem diagnostic.
+
+Among the first ten stored gaps, the smallest is \(\gamma_{10}-\gamma_9=1.768681596505143>h\), so \(d=10\) passes the internal-gap test at this \(T,K\). Gaps versus \(2h=2.919575718755\): \(\gamma_5-\gamma_4=2.510185\), \(\gamma_8-\gamma_7=2.408183\), and \(\gamma_{10}-\gamma_9=1.768682\) all lie in \((h,2h)\). Disjointness of near-tone bands of radius \(h\) fails inside \(d=10\) (**OWED-overlap**).
+
+Nyquist integers: \(\Omega T/\pi=561.546\), \(2\Omega T/\pi=1123.092\), hence \(n_{\star}=\lceil 2\Omega T/\pi\rceil=1124\).
+
+### 11.3 \(d\)-dependence of the leading A\(\infty\) constants (fixed \(d\))
+
+\[
+C_{\mathrm{var}}(d)=6L_d,\qquad
+C_{\mathrm{RMSE}}(d)=\sqrt{6L_d},\qquad
+C_X(d)=(6L_d)^{1/3}.
+\]
+
+At \(d=10\): \(6L_{10}=12.417673963604\), \(\sqrt{6L_{10}}=3.523872007\), \((6L_{10})^{1/3}=2.315688209\). Round \(C_X\) **DOWN** to \(2.3156\) when used as a sample-complexity lower-bound coefficient (minor 3: v4 rounded this UP, which is the unsafe direction for Corollary A\(\infty\)). The raw single-tone coefficient before evaluating \(L_d\) is \(\sqrt6=2.44948974278318\). A non-asymptotic inversion of Riemann–von Mangoldt is **OWED-RvM**. The mean-spacing surrogate \(X\gtrsim(\gamma_d/2\pi)^K\) is heuristic (**OWED-mean-gap**).
+
+### 11.4 Lindeberg ratio and \(\sigma^2\) at \(\Gamma_{\mathrm{op}}\) (mean-field scalar)
+
+These are **diagnostics of the phase-sum experiment**, not inputs to Theorems A or B. Intensity-smoothed, \(a_{\omega}=\omega^{-2}\):
+
+\[
+\sigma^2(\Gamma)=\frac{\Gamma^{-3}}{3\pi}\Bigl(\log\frac{\Gamma}{2\pi}+\frac13\Bigr),
+\qquad
+\Lambda(\Gamma)=\frac{6\pi}{\Gamma\bigl(\log(\Gamma/2\pi)+1/3\bigr)}.
+\]
+
+At \(\Gamma=\Gamma_{\mathrm{op}}\):
+
+\[
+\frac{\Gamma_{\mathrm{op}}}{2\pi}=8.15408392960,
+\qquad
+\log(\Gamma_{\mathrm{op}}/2\pi)=2.09851889740,
+\qquad
+\log(\Gamma_{\mathrm{op}}/2\pi)+\tfrac13=2.43185223073.
+\]
+
+Receipt: old-cut independent values at \(\Gamma=51.23361986\) were \(\Gamma/2\pi=8.15408385321010\), \(L=2.09851888803441\), \(\Gamma(L+1/3)=124.592592265252\) (`T1_V4_REFEREE_2026-08-26.md` §II). The cut shift \(\delta\Gamma=4.8\times 10^{-7}\) gives \(\delta\Gamma/\Gamma=9.368\times 10^{-9}=\delta L\), hence \(\Gamma/2\pi\leftarrow +7.639\times 10^{-8}\), \(L\leftarrow +9.368\times 10^{-9}\), and \(\Gamma(L+1/3)\leftarrow\times(1+1.322\times 10^{-8})\).
+
+\[
+\Gamma_{\mathrm{op}}\bigl(\log(\Gamma_{\mathrm{op}}/2\pi)+\tfrac13\bigr)=124.59259391,
+\qquad
+6\pi=18.84955592153876,
+\qquad
+\Lambda_{\mathrm{as}}(\Gamma_{\mathrm{op}})=18.84955592153876/124.59259391=0.1512895376.
+\]
+
+Round **UP**: \(\Lambda_{\mathrm{as}}(\Gamma_{\mathrm{op}})\le\mathbf{0.1513}\).
+
+\[
+\sigma^2_{\mathrm{as}}(\Gamma_{\mathrm{op}})
+=\frac{\Gamma_{\mathrm{op}}^{-3}}{3\pi}\bigl(L+\tfrac13\bigr)
+=1.91867279\times 10^{-6},
+\qquad
+\sigma_{\mathrm{as}}(\Gamma_{\mathrm{op}})
+=1.38516165\times 10^{-3}.
+\]
+
+Receipt: old-cut independent \(\sigma_{\mathrm{as}}^2=1.91867284051605\times 10^{-6}\) (v4-referee §II), times \(1-2.425\times 10^{-8}\) from \(d\log\sigma^2=-3\,\delta\Gamma/\Gamma+\delta(L+1/3)/(L+1/3)\). The identity \(\sigma^2=2\Gamma^{-4}/\Lambda\) holds algebraically and is not an independent evaluation. v4’s displayed \(1.91848\times 10^{-6}\) was not a rounding of this formula (minor 1).
+
+Exact-Riesz mean-field: the v4-referee’s independent quadrature at the old cut was \(\Lambda_{\mathrm{Riesz}}=0.151227204626720\). The relative cut shift \(9\times 10^{-9}\) does not change the UP rounding. Round **UP**: \(\Lambda_{\mathrm{Riesz}}(\Gamma_{\mathrm{op}})\le\mathbf{0.1513}\). A hashed quadrature receipt at the new cut is **OWED-quad-receipt** (GAP-8).
+
+### 11.5 Kolmogorov label \(d_K\) (mean-field scalar, Defect 13)
+
+Berry–Esseen, Shevtsova constant \(C=0.56\):
+
+\[
+\frac{\rho_{\mathfrak{p}}}{\sigma^3}
+=\frac{16}{15\pi^2}\,(3\pi)^{3/2}\,\Gamma^{-1/2}\,
+\frac{L+1/5}{(L+1/3)^{3/2}}.
+\]
+
+Ingredients: \(16/(15\pi^2)=0.108076\), \((3\pi)^{3/2}=28.9334\), \(\Gamma_{\mathrm{op}}^{-1/2}=0.139708\), \(L+1/5=2.29851890\), \((L+1/3)^{3/2}=3.7923\). Updating the old-cut independent value \(0.264789314387639\) by the logarithmic differential \(-6.386\times 10^{-9}\) gives \(\rho/\sigma^3=0.264789313\). Then \(0.56\times 0.264789313=0.148282015\). Round **UP**: \(d_K^{\mathrm{as}}(\Gamma_{\mathrm{op}})\le\mathbf{0.1483}\). The old-cut exact-Riesz quadrature \(0.148254612631188\) likewise UP-rounds to \(0.1483\).
+
+**Label.** Mean-field scalar approximation only: intensity integrals, \(a_{\omega}=\omega^{-2}\) or exact \(\lvert M_W\rvert\), marks \(r\equiv 1\), at a single time. Not a bound on the efficient score or the path. Transfer to the score is **OWED-H-score-BE**. Path-space distance is **OWED-path**.
+
+### 11.6 GAP-4 ceilings from exact \(D\) (Lemma 4)
+
+Endpoint evaluations of (3.0) at \(\omega_{-}=\gamma_j-h\), with \(h=1.4597878593777\). Intermediates for \(j=10\) (load-bearing):
+
+\[
+\omega_{-}=48.3140446182946,\quad
+\omega_{-}^2=2334.24691,\quad
+\frac{2\omega_{-}}{\omega_{-}^2+1/4}=0.04139140,\quad
+\frac{2\omega_{-}}{\omega_{-}^2+9/4}=0.04135597,
+\]
+
+\[
+\frac{\omega_{-}}{2\pi}=7.689419,\quad
+L=2.039845,\quad
+\frac1{\omega_{-}L}=0.01014680,\quad
+D(\omega_{-})=-0.07260057.
+\]
+
+Then \(2h\cdot(-D)=0.211961\), \(\exp(2h\cdot(-D))=1.23610\). Round **UP** \(1+\delta_{10}\le\mathbf{1.237}\). \(F_{10}^{\mathrm{flat}}\ge 1/1.23610=0.808996\), **DOWN** \(\mathbf{0.8089}\).
+
+| \(j\) | \(\omega_{-}=\gamma_j-h\) | \(-D(\omega_{-})\) | \(2h(-D)\) | \(1+\delta_j\) exact | UP | \(F^{\mathrm{flat}}\) DOWN |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 12.67493728 | 0.20072927 | 0.585043 | 1.79507 | **1.796** | **0.5570** |
+| 2 | 19.56225178 | 0.15880115 | 0.463637 | 1.58985 | **1.590** | **0.6290** |
+| 3 | 23.55106972 | 0.13732644 | 0.400940 | 1.49323 | **1.494** | **0.6696** |
+| 4 | 28.96508827 | 0.11530075 | 0.336630 | 1.40022 | **1.401** | **0.7141** |
+| 5 | 31.47527373 | 0.10720657 | 0.313001 | 1.36752 | **1.368** | **0.7312** |
+| 10 | 48.31404462 | 0.07260057 | 0.211961 | 1.23610 | **1.237** | **0.8089** |
+
+(Intermediates for \(j=1,\dots,5\): the same three-term evaluation of (3.0) as displayed for \(j=10\); \(D'\) at each \(\omega_{-}\) is positive, min on 41 samples of \([\gamma_1-h,\Gamma_{\mathrm{op}}]\) equals \(D'(\Gamma_{\mathrm{op}})=0.001321>0\), matching Lemma 4.) The superseded \(\exp(16\pi K/(\gamma_j T))\) column (e.g. \(1.2644\) at \(j=10\), UP \(1.27\)) is larger than the exact-\(D\) ceiling at \(j=10\) and is not used.
+
+### 11.7 Per-tone leakage (not a theorem input)
+
+The superseded draft’s coloured band-limited \(3\times 3\) at \(\Gamma=51.234\), \(\Omega=102.468\), tone \(\gamma_d\): \(\lambda_{\max}(I_{N_d}^{-1}I_{R_d})=0.0862\), and \([I^{-1}]_{\omega\omega}/\bigl(24 S_{\eta}(\gamma_d)/(A^2 T^3)\bigr)=0.99392\). Relative cut shift \(\lvert 51.234-\Gamma_{\mathrm{op}}\rvert/\Gamma_{\mathrm{op}}=7.4\times 10^{-6}\). Adopt, rounding **UP**, \(\kappa_d\le\mathbf{0.0863}\) at \(\Gamma_{\mathrm{op}}\) for \(j=d\), pending a dedicated receipt (**OWED-B1-receipt**). Then \(F_d^{\mathrm{leak}}=(1.0863)^{-1}=0.920556\), **DOWN** \(0.9205\). This factor is **missing** from Theorem A and from any certified product.
+
+Per-tone \(\kappa_j\) for \(j\ne d\) at \(\Gamma_{\mathrm{op}}\) is unmeasured. Global \(3d\times 3d\): **OPEN-B1-global**. Intensity-smoothed tail leakage numbers of v4 §11.7 are unchanged at this relative cut shift and remain non-Fisher diagnostics (`T1_GAP9_STATIONARY_EXTENSION.md`).
+
+### 11.8 Out-of-theorem diagnostic \(\Gamma=50\)
+
+\(\Lambda_{\mathrm{as}}(50)=0.156591636223\) (v4-referee; UP to \(0.157\)). Exact-Riesz quadrature \(\Lambda(50)=0.156523843835\). \(d_K^{\mathrm{as}}(50)\le 0.151\) (mean-field scalar). Not theorem-operating values.
+
+### 11.9 Harmonic constant (audit only)
+
+\(H_9=7129/2520=2.828968253968254\), \(H_9/\pi=7129/(2520\pi)=0.900488562938192\). If \(C_{\diamond}=1\) (audit, not a theorem), \(C(10,4)/K=H_9/(\pi K)=0.225122\), \(F^{\mathrm{cross}}(10,4)=1/1.225122=0.816245\), **DOWN** \(0.816\). \(C_{\diamond}\) remains OWED; this audit number is not multiplied into any claimed theorem floor.
+
+### 11.10 Certified \(F^{\mathrm{win}}\) at the operating \(T\)
+
+\(\gamma_{10}T=49.773832477672302\times 17.2167079396264295=856.941537\). Then \(84/(\gamma_{10}T)=0.098023\), \(F_{10}^{\mathrm{win}}=0.901977\), **DOWN** \(\mathbf{0.9019}\). At \(j=1\): \(\gamma_1 T=243.353\), \(84/(\gamma_1 T)=0.3452\), \(F_1^{\mathrm{win}}=0.6548\). Continuous comparison: \(32/(\gamma_{10}T)=0.03734\), \(F_{10}^{\mathrm{win},\infty}=0.96266\), **DOWN** \(0.9626\).
+
+---
+
+## 12. Numerical displays at \(\Gamma_{\mathrm{op}}\) (no Theorem A floor)
+
+Auxiliary: \(T^{3/2}=71.43733\), \(\sqrt6=2.44948974278318\), \(\sqrt{6L_{10}}=3.523872007\).
+
+**Limit-skeleton (Proposition A\(\infty\) leading term at \(S_s=0\), unnamed factors; not Theorem A):**
+
+\[
+\frac{\sqrt{6L_{10}}}{T^{3/2}}=0.049328165.
+\]
+
+Round **DOWN**: \(\mathbf{0.04932}\). At \(j=1\): \(\sqrt{6L_1}/T^{3/2}=0.03087421\), **DOWN** \(0.03087\).
+
+**Certified Theorem A factors** (all of them): \(F_j^{\mathrm{win}}\) with \(C_{\mathrm{win}}=84\). At \(j=10\): \(F_{10}^{\mathrm{win}}\ge 0.9019\) (DOWN). No other multiplicative factor is certified for Theorem A.
+
+**Certified Proposition A\(\infty\) factors:** \(F_{10}^{\mathrm{flat}}\ge 0.8089\) (DOWN), \(F_{10}^{\mathrm{win},\infty}\ge 0.9626\) (DOWN).
+
+**Missing factors (not inserted, not replaced by 1 in any claimed floor):** \(F^{\mathrm{leak}}\) (OWED-B1-receipt / (B1)\(_j\)); \(F^{\mathrm{cross}}\) (OWED-\(C_{\diamond}\); not a theorem factor); \(E_{\mathrm{Sz}}\) (OWED-Szego).
+
+**No numerical Theorem A floor is displayed.** A product that omits a factor in \((0,1]\) is an upper envelope on the unfinished right-hand side, not a weaker certified floor (N4).
+
+**Measured coloured inverse (computation, not a theorem; minor 2).** Variance ratio \(0.993916700836\) at \(\Gamma=51.234\), \(j=d\). RMSE conversion uses the square root: \(\sqrt{0.993916700836}=0.99695371\), times the limit-skeleton \(0.049328165\times 0.99695371=0.04917790\), **DOWN** \(\mathbf{0.04917}\). v4 multiplied the RMSE by the variance ratio and obtained \(0.04903\), which is not a correct RMSE.
+
+**Theorem B, \(j=d\), external centre \(\mu_{10}=\gamma_{10}\), ordinate-only prior.** \(\alpha=\pi K/T=4\pi/T=0.72989392969\), \(\mu-\alpha=49.04393854798\), \(\log((\mu-\alpha)/2\pi)=2.05483954\).
+
+\[
+I^{\mathrm{eff},\uparrow}_{10}=\frac{T^3}{6\times 2.05483954}=\frac{5103.29103}{12.32903724}=413.9250
+\quad\text{(UP as a denominator)},
+\]
+
+\[
+I(\pi_{\gamma})=\frac{T^2}{K^2}=\frac{296.415032}{16}=18.5259395,
+\qquad
+I^{\mathrm{eff},\uparrow}+I(\pi_{\gamma})=432.45094\quad\text{(UP)}.
+\]
+
+\[
+\sqrt{1/432.45094}=0.0480874.
+\]
+
+Round **DOWN**: \(0.04808\). This is the leading-term Bayes number **before** certified support-uniform factors, and **not** a Theorem B floor (exact \(\mathbb{E}_{\pi}[I^{\mathrm{eff}}]\) of the discrete experiment is not this leading term; \(F^{\mathrm{leak}}\) is missing).
+
+Support-uniform certified factors for Theorem B at \(j=10\): leftmost frequency \(\mu-\alpha-h=47.5841506886\), \(D=-0.07363534\), \(2h(-D)=0.214983\), \(\exp=1.23984\), \(F^{\mathrm{flat,unif}}\ge 1/1.23984=0.80656\), **DOWN** \(0.8065\). \(F^{\mathrm{win,unif}}=1-84/((\mu-\alpha)T)\), \((\mu-\alpha)T=844.375\), \(84/844.375=0.09948\), \(F^{\mathrm{win,unif}}=0.90052\), **DOWN** \(0.9005\).
+
+**Sample-complexity coefficient (A\(\infty\) heuristic, not Theorem A).** \(C_X(10)=2.315688209\), round **DOWN** to \(\mathbf{2.3156}\).
+
+**Resource max with resolution.** Accuracy and (M5) combine as \(\log X\ge\max\{C_X(d)\,\varepsilon^{-2/3}\cdot(\text{A}\infty\text{ factors})^{1/3},\; 2\pi K/\Delta_d^+\}\), with \(\Delta_d^+=\min\{\min_{j<d}(\gamma_{j+1}-\gamma_j),\,\gamma_{d+1}-\gamma_d\}\). At the operating point the resolution term is already satisfied by construction of \(\Gamma_{\mathrm{op}}\). This display is not a Theorem A floor.
+
+---
+
+## 13. Empirical notes (Prop. R disclosure on every use)
+
+**Disclosure, repeated.** Every numerical comparison in this section that uses Proposition R assumes RH, simplicity of every nontrivial zero, and \(J_{-1}(T)=O(T)\). Lean standing covers only the eight finite-core lemmas.
+
+### 13.1 GAP-11 amplitude validation — resolved, conditional on Prop. R
+
+On the actual Cesàro observable at \(N_{\max}=3\cdot 10^7\), a matched filter applied to \(y(t)\) constructed from the Möbius sieve (`t1_gap11_yt_estimator.py`; receipt `T1_GAP11_YT_RECEIPT.json`) gives
+
+\[
+|C(\gamma_1)|=6.287349\times 10^{-3},
+\qquad
+a_{\gamma_1}^{\text{Prop. R}}=6.271348\times 10^{-3},
+\qquad
+\text{ratio }=1.0026.
+\]
+
+This is a same-observable, same-estimator comparison of a measured amplitude to Prop. R’s predicted amplitude. It is **not** a location-error comparison and **not** a test of Theorems A or B. Status: resolved, conditional on Prop. R’s three hypotheses.
+
+### 13.2 GAP-11 Gate-1 location risk — OPEN
+
+The superseded draft compared a model-N2 RMSE number \(0.03087\) at \(\gamma_1\) to Gate-1’s MUSIC/periodogram absolute error \(0.00565\) on a **different** observable (prime counts) under a **different** noise model (N1). RMSE is an expectation; a single realised absolute error below an RMSE number is not a contradiction of an RMSE bound.
+
+What remains **OPEN** is a comparison of empirical **MSE** of a named estimator on the **same** observable (S1) or on \(\mathcal{G}_{N2}^{n}\), against Theorem A or Theorem B. This file does not say that Gate-1 “violates the bound.”
+
+### 13.3 Prior art (GAP-12)
+
+Live re-scout `T1_GAP12_LIVE_RECHECK_2026-08-26.md`: CR / Fisher bound for zeta-zero *location* unoccupied (NONE/SETUP-ONLY). Setup citations: Hardy–Riesz, Ingham, Titchmarsh, Ng 2004, Odlyzko–te Riele 1985, Rife–Boorstyn / Kay.
+
+---
+
+## 14. Model-fidelity discussion (no transfer)
+
+This section is not a theorem. Nothing in it is claimed to transfer a \(\mathcal{G}_{N2}^{n}\) bound to the random-phase sum or to a fixed zeta configuration.
+
+### 14.1 Stam obstruction (why no transfer is claimed)
+
+Let \(\xi\) have density \(f\), mean \(0\), variance \(1\), Fisher information \(I(f)=\int(f')^2/f\). Stam’s inequality \(I(f)\ge 1=I(\varphi)\), equality iff \(f\) is Gaussian (*citation:* Stam, *Information and Control* 2 (1959); written out in `T1_GAP17_PROPAGATION.md` §2.1). In a location family, the **true** van Trees / CR number is *smaller* than the Gaussian number. The Gaussian display is therefore **not** a lower bound for the full phase-sum class.
+
+The same projection argument on path space, for additive noise with **fixed** covariance, gives \(I_{\mathrm{true}}(\theta)\succeq I_{\mathcal{G}}(\theta)\) whenever the true score exists (`T1_GAP17_PROPAGATION.md` §2.3). The infinite-dimensional RKHS statement is **OWED-Stam-path** (distinct from **OWED-path**, which is path-space distance of \(\{\eta_{\Gamma}(t)\}\) to the Gaussian process with spectrum \(S_{\eta}\)). Direction: to turn \(I_{\mathcal{G}}\) into a valid MSE lower bound for the full class one must **upper**-bound \(I_{\mathrm{true}}\).
+
+Godambe’s sandwich is not an information inequality. It is not used.
+
+### 14.2 Why the \(\sqrt{m}\) full-class route is vacuous (Defect 14)
+
+The phase sum has bounded support. Intensity-smoothed at \(\Gamma_{\mathrm{op}}\) with \(a_{\omega}=\omega^{-2}\),
+
+\[
+\sum_{\gamma>\Gamma}a_{\gamma}
+\approx\frac{L+1}{2\pi\Gamma}=0.009625,
+\qquad
+R_*\approx\frac{2\sum a}{\sigma_{\mathrm{as}}}=13.90,
+\]
+
+rounded **UP** to \(R_*\le 14\). The truncated-Gaussian reference \(\varphi^R\) remains strictly positive at \(\pm R_*\), while the true density vanishes at the edge of its support. Hence \(m=\mathrm{ess\,inf}_{[-R_*,R_*]}f/\varphi^R=0\). A multiplicative law \(\mathrm{MSE}\ge m/(I_{\mathcal{G}}+I(\pi))\) is vacuous. **H-ratio is not proposed as a viable full-class theorem.** A bulk-plus-tail inequality is **OPEN-full-class**.
+
+Edgeworth main-term kurtosis, same smoothing, at \(\Gamma_{\mathrm{op}}\): \(\lvert\gamma_2\rvert\le 0.0897\) (UP), \(\gamma_2^2/6\le 0.00134\). Lyapunov\(_6\le 0.0141\) (UP). The remainder constant in \(r=O(\mathrm{Lyapunov}_6)\) is **OWED-Edgeworth**.
+
+### 14.3 The fill is an order-one modelling replacement (GAP-9)
+
+For fixed \(\gamma_j<\Gamma\), true-tail leakage through a length-\(T\) Fejér probe is \(O(T^{-1})\) (`T1_GAP9_STATIONARY_EXTENSION.md` (4.3)–(4.5)). The (M4) fill is the **entire** noise floor of the *coloured* A\(\infty\) coefficient, not a vanishing error. In the discrete experiment the sampling noise \(\sigma_s^2\) already regularises Cameron–Martin membership; removing the fill still changes the in-band symbol by an order-one relative amount. GAP-9 remains **OPEN** as a justification of \(\mathcal{G}_{N2}^{n}\) from a fixed zeta configuration. Inside \(\mathcal{G}_{N2}^{n}\), the fill is a stipulated regulariser.
+
+### 14.4 Heavy tails of \(1/|\zeta'|\)
+
+Under (M3′) the mark \(r\equiv 1\) is deterministic. The divergent second moment of \(1/|\zeta'|\) does not enter \(S_{\eta}\) or the leading constants of Theorems A and B. Falsification gate G-a of `G1_MODEL_SPEC.md` §5 does not fire **for \(\mathcal{G}_{N2}^{n}\)**.
+
+---
+
+## 15. Current ledger
+
+One row per remaining OPEN/OWED item. No history. Closed v4 items (GAP-4 remainder, independent amplitude prior, “modulo OWED” in Theorem A, incomplete ledger) are not rows.
+
+| ID | Status | Content | Needed to close |
+|---|---|---|---|
+| OPEN-B1-global | OPEN | Full \(3d\times 3d\) \(\lambda_{\max}(I_N^{-1}I_R)\) at \(\Gamma_{\mathrm{op}}\) | Committed script + `*_RECEIPT.json` at \(d=10\), \(K=4\), \(\Omega=2\Gamma_{\mathrm{op}}\) |
+| OWED-B1-receipt | OWED | Per-tone \(\kappa_j\) at \(\Gamma_{\mathrm{op}}\) for all \(j\); \(j=d\) transferred from \(\Gamma=51.234\) | Same receipt, per-tone \(3\times 3\), including a uniform \(\kappa_j^{\pi}\) on Theorem B’s prior support |
+| OWED-\(C_{\diamond}\) | OWED | Coloured pairwise block constant in \(C(d,K)\); not a Theorem A factor | Operator-norm bound on off-diagonal \(3\times 3\) blocks |
+| OWED-frame-uniform | OWED | Dimension-uniform confluent-frame bound for the coloured family with nuisance Schur complements (§6(b)) | Distinct from the fixed-\(d\) constant \(C_{\diamond}\) |
+| OWED-overlap | OWED | Near-tone bands overlap under (M5); harmless for (6.1), not for a disjoint-band frame | Partitioned decomposition or gaps \(>2h\) |
+| OWED-last-tone | OWED | \(\arg\max_j\) of a named-factor right-hand side | Evaluate at all \(j\) once every \(F_j\) is numerical |
+| OWED-S1 | OWED | Integer-\(N\) Prop. R vs discrete Gaussian surrogate | Real-\(N\) Riesz formula, or a Fisher comparison of (S1) to \(\mathcal{G}_{N2}^{n}\) |
+| OWED-ERiesz-\(C_A\) | OWED | Explicit \(C_A\) in \(\lvert E_{\mathrm{Riesz}}(N)\rvert\le C_A N^{-A}\) | Bound the vertical integral on \(\mathrm{Re}\,s=-A\) |
+| OPEN-GAP-9 | OPEN | Fill as a model of a fixed zeta configuration | Palm/continuum limit in a high-height regime, or a minimax (N3) replacement |
+| OPEN-GAP-11-Gate1 | OPEN | Ensemble location-risk comparison of a named estimator on (S1) or \(\mathcal{G}_{N2}^{n}\) to Theorem A/B | Same observable, MSE not a single absolute error |
+| OPEN-full-class | OPEN | Any multiplicative/additive transfer of \(I_{\mathcal{G}}\) to the phase-sum class; \(m=0\) | Upper bound on \(I(f)\), or a bulk+tail inequality |
+| OWED-H-score-BE | OWED | \(d_K\) of the whitened profiled score versus scalar \(\eta_{\Gamma}(t)\) | Lyapunov ratio of the matched-filter weights |
+| OWED-path | OWED | Path-space distance of \(\{\eta_{\Gamma}(t)\}\) to the Gaussian process with spectrum \(S_{\eta}\) | Hellinger / RKHS-control metric on the band |
+| OWED-Stam-path | OWED | Infinite-dimensional RKHS form of the Stam projection \(I_{\mathrm{true}}\succeq I_{\mathcal{G}}\) (`T1_GAP17_PROPAGATION.md` §2.3) | Distinct from OWED-path |
+| OWED-Edgeworth | OWED | Remainder in the Edgeworth expansion of \(I(f)\) | Remainder theorem with explicit constant |
+| OWED-Szego | OWED | Explicit constant for the Toeplitz–symbol remainder \(E_{\mathrm{Sz}}\) in Proposition A\(\infty\) | Szegő expansion with a named \(O((\log n)/n)\) constant for this symbol |
+| OWED-B-uniform | OWED | Conversion of Theorem B into a frequentist bound uniform on \(\mathrm{supp}(\pi)\) | Modulus of continuity of \(I(\theta)\) |
+| OWED-H-circle | OWED | Uniform phase prior on \(\mathbb{R}/2\pi\mathbb{Z}\) versus Euclidean Gill–Levit | Cuff prior, or a manifold statement |
+| OWED-ZZ | OWED | Ziv–Zakai bound for the periodogram threshold region | Separate note |
+| OWED-mean-gap | OWED | Replacing \(\Delta_d^+\) by the mean spacing \(2\pi/L_d\) | Not a consequence of Riemann–von Mangoldt |
+| OWED-RvM | OWED | Non-asymptotic inversion of \(N_{\zeta}(H)\) with a published remainder | Choose a remainder and invert |
+| OWED-quad-receipt | OWED | Hashed quadrature receipt for exact-Riesz \(\Lambda\) and \(d_K\) at \(\Gamma_{\mathrm{op}}\) (distinct from the generic GAP-8 row) | Committed integrator + `*_RECEIPT.json` at \(\Gamma_{\mathrm{op}}=51.23362034\) |
+| GAP-8 | OWED | Committed scripts + hashed receipts for every numerical figure in §11–§12; list of missing receipts: new-cut \(\kappa_d\), exact-Riesz integrals at \(\Gamma_{\mathrm{op}}\), discrete Gram (5.3) at \(n=n_{\star}\) | `t1_verify.py` successor under version control with `*_RECEIPT.json` |
+| OPEN-N3 | OPEN | Minimax over admissible zero configurations | Spec §3-N3; not in v5 scope |
+
+Vacated v4 rows (not open): OWED-GAP4-remainder (closed by Lemma 4); OWED-\(C_{\mathrm{win}}\) (closed by Lemma 2, \(C_{\mathrm{win}}=84\)); OWED-amp-avg (no independent amplitude prior); OWED-B-avg for the leading term (closed by the decreasing-in-\(\gamma\) endpoint bound (B.1)); OWED-GAP-6 (Theorem A is already discrete; a comparison to a continuous record is not claimed).
+
+---
+
+## 16. Claims and not-claims
+
+**Claimed.**
+
+- Theorem A: a pointwise Cramér–Rao lower bound for unbiased estimators of the discrete exact Gaussian surrogate \(\mathcal{G}_{N2}^{n}\), at fixed admissible \(d\), with exact Fisher (4.0n), the Schur step (6.1), and certified \(F^{\mathrm{win}}\) (\(C_{\mathrm{win}}=84\)).
+- Proposition A\(\infty\): a fine-sampling \(T^3\) expansion with named error \(E_n\), certified \(F^{\mathrm{flat}}\) and \(C_{\mathrm{win}}^{\infty}=32\), and \(E_{\mathrm{Sz}}\) OWED. Not Theorem A.
+- Theorem B: a Bayes van Trees lower bound (B.0) for arbitrary measurable estimators of the same surrogate, under an externally centred raised-cosine prior on ordinates only, with \(A_j=2a(\gamma_j)\), and support-uniform certified \(F^{\mathrm{flat}}\), \(F^{\mathrm{win}}\).
+- Spectral density (2.2) of the tail under (M3′); covariance independent of \(\theta\); cancellation of the mean-field window factor \(a(\omega)\) at the true surrogate parameter and \(\pi\)-almost surely under (P1″), not of \(1/|\zeta'|\).
+- (M5)-admissibility of \(\Gamma_{\mathrm{op}}=51.23362034\) at the stated \(T,K\) and the **full** stored \(\gamma_{10}\), via \(T(\Gamma_{\mathrm{op}}-\gamma_{10})-8\pi=5.079\times 10^{-8}>0\).
+- Proposition R as a cited + Lean-core statement, with the three hypotheses disclosed at every use in this file.
+- GAP-11 amplitude match \(\lvert C(\gamma_1)\rvert/a_{\gamma_1}=1.0026\) on \(y(t)\), conditional on Prop. R.
+- The arithmetic of §11–§12, with the stated rounding and with no Theorem A numerical floor.
+
+**Not claimed.**
+
+- Anything unconditional about \(\zeta\).
+- Any transfer of Theorem A, Theorem B, or Proposition A\(\infty\) to the non-Gaussian phase sum (Stam).
+- Any transfer to a fixed, non-randomised zeta configuration (GAP-9).
+- A global \(3d\times 3d\) leakage inequality (OPEN-B1-global).
+- Uniformity in \(d\); last-tone attainment after corrections.
+- That \(0.04932\), \(0.0419\), or any partial product is a Theorem A floor.
+- That \(d_K\le 0.1483\) is a certified misspecification bound for the efficient score or the path.
+- That \(\Gamma=50\) is an operating point.
+- That a single Gate-1 absolute error contradicts an RMSE bound.
+- That (S1) *is* \(\mathcal{G}_{N2}^{n}\) (OWED-S1).
+- A minimax (N3) bound.
+- A Ziv–Zakai bound.
+- That unbiasedness has been dropped from the pointwise law.
+- That Godambe’s sandwich is a lower-bound theorem.
+- Any use of the phrase “violates the bound.”
+- That \(E_{\mathrm{Sz}}=0\) at finite \(n\).
+
+---
+
+## 17. Defect map (all 19 governing + N1–N7)
+
+| Defect | Disposition in v5 |
+|---:|---|
+| 1 | Repaired (kept): (M3′) deterministic \(r\equiv 1\); \(S_{\eta}\) has no \(E[r^2\mid\omega]\); no \(1/\lvert\zeta'\rvert\) cancellation claimed |
+| 2 | Repaired (kept): \(\Sigma\) independent of \(\theta\); no covariance-information term; (M-amp) at the true mean and \(\pi\)-a.s. under (P1″) |
+| 3 | Repaired (kept): Godambe / “Gaussian-score class” deleted; Theorem A is unbiased CR; full-class transfer refused in §14 |
+| 4 | Repaired in v5: Theorem B prior is on \(\gamma_j\) only; \(A_j=2a(\gamma_j)\); centres external; \(\mathbb{E}_{\pi}[I]\) upper-bounded by an endpoint, with support-uniform \(F^{\mathrm{flat}}\), \(F^{\mathrm{win}}\) |
+| 5 | Repaired (kept): Theorems A/B are exact-Gaussian-surrogate theorems; phase sum only in §14 with no transfer (Stam) |
+| 6 | Per-tone bound via the explicit Schur step (6.1); global \(3d\times 3d\) **OPEN-B1-global**; \(F^{\mathrm{cross}}\) not a theorem factor |
+| 7 | Repaired in v5: sole cut \(\Gamma_{\mathrm{op}}=51.23362034\); (M5) checked with the full stored \(\gamma_{10}\) |
+| 8 | Repaired in v5: Lemma 4 bounds exact \(D(\omega)\) by a left-endpoint evaluation; no \(r(\omega)\) remainder; no “modulo OWED” in a theorem factor |
+| 9 | Repaired (kept) and N6: Lemma 1″ is Loewner order, not entrywise |
+| 10 | Fixed \(d\); the bound is not asserted uniformly in \(d\); last-tone attainment **OWED-last-tone** |
+| 11 | Repaired (kept): Prop. R’s three hypotheses in §1.1, theorem interpretation clauses, and §13 |
+| 12 | Status reconciled; (S1) vs \(\mathcal{G}_{N2}^{n}\) declared + **OWED-S1** |
+| 13 | Repaired (kept): \(d_K\le 0.1483\) labelled mean-field scalar approximation |
+| 14 | Repaired (kept): \(\sqrt{m}\) route vacuous (\(m=0\)); bulk+tail **OPEN-full-class** |
+| 15 | Repaired (kept): target-frequency floor attributed to (M4); GAP-9 **OPEN** outside the surrogate |
+| 16 | Repaired (kept): GAP-11 split; “violates the bound” deleted |
+| 17 | Repaired (kept): \(E_{\mathrm{Riesz}}\) vs \(\eta_{\Gamma}\) throughout |
+| 18 | Repaired in v5: named signed factors; no bare \(O(K^{-1})\); no numerical Theorem A floor; certified vs missing labelled |
+| 19 | Repaired in v5: this file is a single integrated text; §15 is the only ledger; one row per remaining OPEN/OWED item, including **OWED-Stam-path**, **OWED-quad-receipt**, **OWED-frame-uniform** |
+| N1 | Repaired: discrete sampling + \(\sigma_s^2\); exact Fisher (4.0n); \(T^3\) is Proposition A\(\infty\) |
+| N2 | Repaired: prior on \(\gamma_j\) only |
+| N3 | Repaired: \(\Gamma_{\mathrm{op}}=51.23362034\) |
+| N4 | Repaired: no “partially certified floor” |
+| N5 | Repaired: (6.1) stated and used |
+| N6 | Repaired: Lemma 1″ Loewner |
+| N7 | Repaired: ledger complete |
+
+Minors: (1) \(\sigma_{\mathrm{as}}^2=1.91867279\times 10^{-6}\), \(\sigma_{\mathrm{as}}=1.38516165\times 10^{-3}\); (2) coloured RMSE uses \(\sqrt{0.993916700836}\), display \(0.04917\) DOWN; (3) \(C_X\) DOWN \(2.3156\); (4) wording is “not asserted uniformly in \(d\)”, without a claim that the phrase is absent; (5) \(\Gamma/2\pi=8.15408392960\), \(L=2.09851889740\), \(\Gamma(L+1/3)=124.59259391\), \(H_9/\pi=0.900488562938192\).
+
+---
+
+**v5 DRAFT (grok lane) 2026-08-26 — UNREFEREED.** Not promotable until a cold referee accepts the six minimum corrections against this text. Nothing in `T1_CRAMER_RAO_V4.md` or `T1_CRAMER_RAO_DRAFT.md` may be cited as a result in preference to this file.
+
+## FRONTIER VERIFICATION 2026-08-26 (fable) — spot-check PASS
+Independent recomputation: M5 margin T(Γ_op−γ_10)−8π = 5.0789e-08 > 0 with the
+full stored ordinate ✓ (matches the note's 5.079e-08); σ²_as(Γ_op) =
+1.91867279e-06 ✓ exact match. Sent to cold re-referee (round 3).
