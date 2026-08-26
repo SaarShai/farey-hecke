@@ -14,7 +14,7 @@
 ## Preprint
 - [x] Preprint main.tex assembled, compiles (15pp), intervals verbatim, 0 discrepancies
 - [x] FIG-1 rendered from d8 shard receipts (range 0.2188–0.3273, matches spec) — referee pending
-- [ ] Data-availability / Zenodo package (certificates + Lean files)
+- [x] Zenodo package assembled (28 files, 7.5M) — pin-cert match verified; licence + upload = owner
 - [ ] §11 pre-submission checklist
 - [ ] Cold adversarial referee of assembled PDF
 - [ ] Owner read before arXiv post
