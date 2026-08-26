@@ -183,3 +183,29 @@ real part are, per the q=4/q=6 winding ticket, certified only
 modulo a tail heuristic that was shown non-monotone at one box corner.
 Corollary 2 is therefore stated in the weak form the certificates carry,
 and the general single-line refutation is listed as open.
+
+## UPGRADE 2026-08-26 — Scope-limit item 4 DISCHARGED: no single vertical line
+
+The condition item 4 demanded — "a second G_5 pin at a *distinct* real
+part … certified to the same standard as s*" — is now met:
+`THEOREM_G5_SECONDPIN_ASSEMBLY.md` (STATUS: REFEREED — PROMOTED
+2026-08-26; two cold seats, both PASS-WITH-CORRECTIONS, corrections
+applied) certifies s₂ with
+  Re(s₂) ∈ [0.41054273549473627, 0.41054473549473627],
+  Im(s₂) ∈ [7.81976724701551188, 7.81976924701551188],
+winding 1 (simple), same contour standard as s*.
+
+**COROLLARY 3 (two-pin; ends the EMPIRICAL status of item 4).**
+Λ° contains two zeros with certified real-part intervals
+  Re(s*) ⊂ [0.45389418007494470, 0.45389618007494470],
+  Re(s₂) ⊂ [0.41054273549473627, 0.41054473549473627],
+disjoint with closed-interval separation ≥ 0.04334944458020843 > 0.
+Hence **no single vertical line V_c contains Λ°, for ANY c ∈ ℝ**: for
+each fixed c at least one of the two certified real parts differs from
+c. The hypothesis Λ° ⊂ V_{0.45390} left open by Corollary 2 is refuted.
+Machine-verified logical core: no_common_line + pin gap lemmas in
+projects/aristotle_dispatch_v34/project_aristotle/TwoPinNoLine.lean
+(sorry-free; axioms propext, Classical.choice, Quot.sound). The φ_5
+scattering-side consequence and the NOGO discharge live in
+NOGO_METATHEOREM_III_DRAFT.md (REFEREED — PROMOTED; NOGO-OPEN-1
+CLOSED at its stated standing). Items 1–3 and 5 above are unchanged.
