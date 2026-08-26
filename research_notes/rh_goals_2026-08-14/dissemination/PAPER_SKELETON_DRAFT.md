@@ -238,7 +238,7 @@ wrong (`LAW_..._SOL.md:480–485`).
 
 Beside the LAW's infinitude statement, two individual Selberg-zeta zeros
 of \(G_5\) are interval-certified to contour standard (Arb argument
-principle, directed rounding, winding = 1 so each zero is simple):
+principle, directed rounding, winding = 1: each box contains exactly one zero of det(1−L_{s,+}) counted with multiplicity; the induced Z_{G_5} zero has multiplicity at least that of the + factor — CORRECTED 2026-08-26 per preprint referee D-1):
 
 > **THEOREM (two pins; computer-assisted).** \(Z_{G_5}\) has zeros
 > \(s_1, s_2\) with

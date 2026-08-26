@@ -60,16 +60,6 @@ the spectral/scattering side. This paper supplies one.
 
 \maketitle
 
-\noindent \emph{Ledger notes on the abstract (retained from the source
-skeleton, not for publication as prose).} The first paragraph is the
-promoted LAW, quoted verbatim from the source promotion block and must not
-be strengthened. The ``in particular, nonarithmetic'' clause is
-\textbf{non-discriminating}: $q=3$ (arithmetic) has the same off-line
-property; the paper must never present it as an arithmeticity signature.
-Metatheorem I below is stated in its upgraded, unconditional form
-$A \models \neg P_{\mathrm{naive}}$; \S\ref{sec:metatheorems} gives the
-exact residuals that upgrade permits and does not permit.
-
 \section{Introduction --- the honest framing}
 
 \subsection{What is claimed, in one paragraph}
@@ -95,14 +85,14 @@ reader infer a dichotomy.
 \textbf{Where the novelty actually sits.} The two-sided comparison ---
 one theorem for the structure-rich side, one for the structure-poor side
 --- already exists at theorem strength in the Dirichlet-series world:
-Hardy (1914) proves infinitely many zeros of $\zeta$ \emph{on} the line,
+Hardy (1914) \cite{Hardy1914} proves infinitely many zeros of $\zeta$ \emph{on} the line,
 Davenport--Heilbronn (1936) produces zeros \emph{off} the line for a
 function without an Euler product. But those two theorems speak about
 \textbf{unrelated functions from different constructions}; the comparison
 is made by the reader, not by a parameter. The defensible novelty here is
 that this is the first \textbf{single-family} version of that comparison
 in the geometric/spectral setting: one parameter $q$, one construction,
-where a proven classification (Takeuchi's list of the arithmetic $G_q$)
+where a proven classification (Takeuchi's list of the arithmetic $G_q$ \cite{Takeuchi1977})
 sits beside the present theorem, so the family itself splits. Nothing
 stronger may be claimed: the split is a statement about the two
 literatures meeting inside one family, \textbf{not} an arithmeticity
@@ -158,10 +148,6 @@ through FJS.
 operator for the Hecke triangle groups --- presentation and the one-cusp
 statement.
 \end{itemize}
-
-Bombieri is not over-cited: the Clay problem description does not state a
-no-go; at most it is cited once, for framing the Euler product as the
-defining extra structure of the global $L$-function class.
 
 \subsection{What is \emph{not} claimed}
 
@@ -500,10 +486,13 @@ $A\nvDash P_{\mathrm{line}}(c)$: no member of the family
 $P_{\mathrm{line}}(c)$ is derivable from $A$. One common countermodel
 serves all $c$.
 
-\textbf{Standing (part of the statement).} This result holds at the
-caveat level of the underlying metatheorem note, superseded by its later
-corrections, and at the computer-assisted/citation standing of the two
-pin assemblies. The scope is exactly the family $P_{\mathrm{line}}(c)$
+\textbf{Standing (part of the statement).} This result is
+computer-assisted and citation-backed: it rests on the Arb interval
+certificates for the two pins, the Lean-verified logical joints of
+\S\ref{sec:machineverif}, and the cited published theorems --- the FJS
+divisor classification (with the $k$-notation caveat of the dependency
+ledger) and MMS Theorem 6.4 at $q=5$ (with the heading caveat stated
+there). The scope is exactly the family $P_{\mathrm{line}}(c)$
 --- not every statement informally describable as ``on-line rigidity.''
 \end{metatheorem}
 
@@ -896,7 +885,7 @@ corrections D-1..D-3 applied), in the consumed (J)-avg form only. Scope
 limits unchanged: no $q$-uniform constant, no effective first height, no
 machine formalization of the analytic content. \textbf{H4 and H5 keep
 their ``NOT proved here'' labels.}
-\item[3.] The logical core of Metatheorem III / Corollary~\ref{cor:novertical} is
+\item The logical core of Metatheorem III / Corollary~\ref{cor:novertical} is
 machine-verified in
 \texttt{aristotle\_dispatch\_v34/project\_aristotle/TwoPinNoLine.lean}
 (returned artifact; local re-elaboration ``Build completed successfully
@@ -1008,7 +997,8 @@ $1/(1+\sqrt2)\approx0.41421$ marked. \textbf{Not yet rendered.}}
 
 \begin{remark}
 The off-line resonances of \S\ref{sec:law} are Selberg-zeta zeros --- by
-the Friedman--Jorgenson--Smajlovi\'c divisor description they enter
+the Friedman--Jorgenson--Smajlovi\'c divisor description (subject to
+the FJS $k$-notation caveat of the dependency ledger) they enter
 \emph{reflected}, at $1-\rho$ with $\operatorname{Re}<1/2$. Their total
 contribution to the prime geodesic counting formula is therefore
 $O_q(x^{1/2}(\log x)^2)$: dominated by the main term and by every error
@@ -1018,8 +1008,9 @@ of Selberg-zeta zeros fails for every finite $q\ge 3$ (non-arithmetic in
 particular; the property is non-discriminating --- $q=3$ has it too), by
 an infinite, counted margin ($\gg_q T\log T$ reflected zeros below
 height $T$) --- harmlessly for the PGT. Printed partial antecedent:
-Hejhal LNM 1001, Thm.\ 7.11/Cor.\ 7.12 (large $N$); quantified
-accumulation: Garbin--Jorgenson (2018) \cite{GarbinJorgenson2018}.
+Hejhal LNM 1001, Thm.\ 7.11/Cor.\ 7.12 (large $N$).
+%% Removed unresolved citation "Garbin--Jorgenson (2018)": no verified
+%% title/venue could be confirmed; restore only with full bibliographic data.
 \end{remark}
 
 \textbf{Why the two sides are now asymmetric in kind.} On the
@@ -1180,20 +1171,27 @@ Princeton University Press, 1976. %% BIB-TODO: confirm citation detail; NOT READ
 \emph{Hamiltonian for the zeros of the Riemann zeta function}, Phys.
 Rev. Lett. \textbf{118}, 130201 (2017), arXiv:1608.03679.
 
-\bibitem{GarbinJorgenson2018} D.~Garbin and J.~Jorgenson.
-%% BIB-TODO: confirm exact title/venue/year (2018) -- source docs cite as "Garbin--Jorgenson (2018)" without full detail.
+\bibitem{LuoSarnak1995} W.~Luo and P.~Sarnak, \emph{Quantum ergodicity
+of eigenfunctions on $\mathrm{PSL}_2(\mathbf{Z})\backslash\mathbf{H}^2$},
+Inst. Hautes \'Etudes Sci. Publ. Math. \textbf{81} (1995), 207--237.
+(Contains the improved prime geodesic theorem error term for the modular
+surface.)
 
-\bibitem{LuoSarnak1995} W.~Luo and P.~Sarnak, \emph{Number variance for
-arithmetic hyperbolic surfaces}, Comm. Math. Phys. \textbf{161} (1994),
-419--432. %% BIB-TODO: confirm year (1994 vs 1995) and title against source docs -- flagged as "Luo--Sarnak (1995)" there.
+\bibitem{Hardy1914} G.~H.~Hardy, \emph{Sur les z\'eros de la fonction
+$\zeta(s)$ de Riemann}, C. R. Acad. Sci. Paris \textbf{158} (1914),
+1012--1014.
+
+\bibitem{Takeuchi1977} K.~Takeuchi, \emph{Arithmetic triangle groups},
+J. Math. Soc. Japan \textbf{29} (1977), 91--106.
 
 \bibitem{Simon1977} B.~Simon, \emph{Notes on infinite determinants of
 Hilbert space operators}, Adv. Math. \textbf{24} (1977), 244--273. (Thm.\
 4.2 with Lidskii Cor.\ 4.3.)
 
 \bibitem{GrothendieckResume} A.~Grothendieck, \emph{La th\'eorie de
-Fredholm}, Bull. Soc. Math. France \textbf{84} (1956), 319--384. (Cited
-in the source notes as the ``R\'esum\'e,'' Thm.\ 8.) %% BIB-TODO: confirm this is the intended "Grothendieck Résumé" reference (vs. the 1955 Mem. AMS "Résumé de la théorie métrique des produits tensoriels topologiques").
+Fredholm}, Bull. Soc. Math. France \textbf{84} (1956), 319--384. (The Fredholm-determinant theory paper; Thm.~8 is consumed for the
+determinant factorization. The 1955 tensor-norm \emph{R\'esum\'e} is a
+different paper and is not the intended reference.)
 
 \end{thebibliography}
 
