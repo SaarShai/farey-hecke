@@ -1189,3 +1189,16 @@ at the finite Γ = 50 of §5, where the Lindeberg ratio is 0.157 (GAP-17).
 - **GAP-17 CLOSED-AT-CLASS-RESTRICTED.** `T1_GAP17_PROPAGATION.md` (+ corrected Berry–Esseen note, d_K ≤ 0.151 at Γ=50): by Stam, I(f) ≥ I_G — the Gaussian CR number is NOT automatically a floor for the full noise class (the Berry–Esseen note's §4 direction claim was wrong and is corrected in situ). **Mandatory quantifier, carried wherever the T1 law is stated: the headline bound holds over the Gaussian-score (Godambe) estimator class**; the full-class version carries a multiplicative √m under the explicit density-ratio hypothesis H-ratio (d_K=0.151 is too large for Landau interpolation to yield m>0). Edgeworth remainder OWED.
 
 Remaining OWED items (disclosed, non-blocking for the class-restricted law): GAP-4 remainder constant; GAP-7 Ziv–Zakai; GAP-9 Cameron–Martin comparison; GAP-13 range extension; GAP-17 Edgeworth remainder + full-class m. Next: cold adversarial referee of this entire draft.
+
+
+---
+
+## COLD REFEREE VERDICT 2026-08-26: NOT-PROMOTABLE
+
+`T1_COLD_REFEREE_2026-08-26.md` (installed verbatim): 19 defects, 8 BLOCKING.
+Arithmetic audit PASSED; failures are structural — see the report's seven
+minimum conditions. THIS DRAFT AND ITS LEDGER UPDATE ARE SUPERSEDED for
+claim purposes: the law is NOT promotable as stated. Next: clean v4
+(T1_CRAMER_RAO_V4.md) meeting all seven conditions; until v4 passes a cold
+referee, T1 remains CONJECTURAL/UNREFEREED and nothing from this file may be
+cited as a result.

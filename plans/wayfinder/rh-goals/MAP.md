@@ -3566,3 +3566,8 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 - T1 gaps: GAP-4/7/12/13 CLOSED, GAP-9 addressed (Cameron–Martin OWED), GAP-11 resolved (same-observable, 0.26%), GAP-17 CLOSED-AT-CLASS-RESTRICTED (mandatory Gaussian-score quantifier; Stam direction correction banked against the Berry–Esseen note). Ledger update in T1_CRAMER_RAO_DRAFT.md; commits 55548ea, 079078a, a35df73.
 - Preprint: main.tex assembled from skeleton (15pp, tectonic-compiled, intervals verbatim, 0 discrepancies), FIG-1 rendered from d8 receipts (range 0.2188–0.3273); commit 6e926ec. PDF sent to owner.
 - Cold referees launched: T1 full draft (codex) + preprint fidelity/overclaim (frontier-verifier).
+
+## 2026-08-26 — T1 cold referee: NOT-PROMOTABLE; preprint: PROMOTABLE-WITH-CORRECTIONS (applied)
+- Preprint referee (frontier-verifier): 14 defects, all corrected same-day (commit 764984f); intervals character-exact; PDF v2 sent to owner.
+- T1 referee (codex, cold): NOT-PROMOTABLE — 19 defects, 8 BLOCKING (marked-amplitude cancellation underived; Godambe class-restriction not a lower bound; van Trees is Bayes-average not pointwise; Γ=50 violates M5, admissible cut Γ≥51.2337; Prop. R disclosures missing at principal uses; body/ledger contradictions). Arithmetic audit passed. Report installed verbatim; draft stamped SUPERSEDED-for-claims.
+- Next: clean v4 rewrite against the referee's 7 minimum conditions, then re-referee. T1 stays CONJECTURAL.
