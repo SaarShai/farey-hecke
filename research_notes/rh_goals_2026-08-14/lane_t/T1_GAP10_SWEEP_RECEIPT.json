@@ -1,0 +1,39 @@
+{
+  "gap": "GAP-10",
+  "date": "2026-08-26",
+  "script": "research_notes/rh_goals_2026-08-14/lane_t/t1_gap10_sweep.py",
+  "script_sha256": "11f1c370e621a669d1915257a787b9ea3d25a5b61c5efa5ec0ad0916aa5d0299",
+  "reused_module": "research_notes/rh_goals_2026-08-14/lane_t/t1_verify.py",
+  "reused_module_sha256": "8736c5c9c1cfca6bf31ee3f0bc86f538eae9e7dcad1048688691bab241367a67",
+  "python": "/Users/za/.venvs/farey-rh/bin/python",
+  "window": "riesz1 (W')",
+  "Gamma": 50.0,
+  "Omega": 100.0,
+  "T": 17.216708,
+  "structural_finding": "t1_verify.py's amplitude a_gamma = |M_W(1/2+i*gamma)| * r_gamma uses r_gamma == 1 identically (mean-field / intensity-smoothed convention); no (M3) quantile-truncatable amplitude LAW exists in the reused machinery, so quantities (a) and (b) below are exactly q-invariant by construction.",
+  "a_factor24": {
+    "note": "q-invariant by construction (S_eps uses mean-field a_gamma only)",
+    "I_inv_ww_over_local24_at_gamma_d": 0.994317,
+    "lam_max_B1_at_gamma_d": 0.085752,
+    "constant_movement_across_q_sweep_pct": 0.0
+  },
+  "b_lindeberg": {
+    "note": "q-invariant by construction (sigma^2(Gamma) integral uses mean-field a_omega only)",
+    "Lambda_at_Gamma_50": 0.156516,
+    "constant_movement_across_q_sweep_pct": 0.0
+  },
+  "c_bounded_summand": {
+    "note": "NEAREST WELL-DEFINED ANALOGUE (labelled): no committed empirical r_gamma quantile function exists; r_gamma modelled as Pareto(alpha=2, x_m=1), the tail index implied by the draft's own stated fact that E[r]=J_-1 is finite while E[r^2]=J_-2 diverges (Gonek-Hejhal). Quantile r_q = (1-q)^(-1/2). max_2a_gamma = 2*|M_W(1/2+i*50)|*r_q, sigma = sqrt(2*a_Gamma^2/Lambda(50)) from the mean-field Lindeberg computation.",
+    "MW_at_Gamma": 0.0225907,
+    "sigma_meanfield": 0.00142912,
+    "sweep": [
+      {"q": 0.90,  "r_q": 3.16228,  "max_2a_gamma": 0.00252856, "ratio_c_max2a_over_sigma": 1.76932},
+      {"q": 0.95,  "r_q": 4.47214,  "max_2a_gamma": 0.00357592, "ratio_c_max2a_over_sigma": 2.50219},
+      {"q": 0.99,  "r_q": 10.0,     "max_2a_gamma": 0.007996,   "ratio_c_max2a_over_sigma": 5.59507},
+      {"q": 0.995, "r_q": 14.1421,  "max_2a_gamma": 0.0113081,  "ratio_c_max2a_over_sigma": 7.91262},
+      {"q": 0.999, "r_q": 31.6228,  "max_2a_gamma": 0.0252856,  "ratio_c_max2a_over_sigma": 17.6932},
+      {"q": 1.0,   "r_q": "inf",    "max_2a_gamma": "inf",      "ratio_c_max2a_over_sigma": "inf"}
+    ]
+  },
+  "mootness_reading": "(a) and (b), which are the leading-constant quantities the T1 headline and section 7.2 mootness claim concern, move 0.0% across the sweep -- structurally stronger than the <1% mootness bar. (c), which is not a leading-constant quantity but the GAP-17 Berry-Esseen bounded-summand input, is highly q-sensitive under the nearest well-defined analogue (grows without bound as q -> 1), confirming the draft's own remark that (M3) truncation is load-bearing for GAP-17, not for the CR leading constant."
+}
