@@ -2,13 +2,21 @@
 
 Frontier write-up v1, 2026-08-26.
 
-STATUS: **UNREFEREED / CONJECTURAL as an assembly.** This document is the
-S2-specific assembly required by both merged-certificate referee seats
-(S2_MERGED_REFEREE_FABLE.md, S2_MERGED_REFEREE_SOL.md — unanimous
-PROMOTABLE-WITH-CORRECTIONS). It binds the merged contour certificate to
-R5, MMS Theorem 6.4, the K_s exclusion, and the scalar scattering-divisor
-source. Per the standing rule, NOGO-OPEN-1 and NO_VERTICAL_LINE_COROLLARY
-remain **OPEN** until a cold adversarial referee passes THIS document.
+STATUS: **REFEREED — PROMOTED 2026-08-26.** Two cold adversarial seats
+on THIS assembly: seat 1 fable (S2_ASSEMBLY_REFEREE_FABLE.md,
+PASS-WITH-CORRECTIONS, 4 corrections applied and re-banked) and seat 2
+sol (S2_ASSEMBLY_REFEREE_SOL.md, PASS-WITH-CORRECTIONS, 4 exact required
+corrections applied 2026-08-26 — reflection/divisor direction fixed [no
+conjugation: ρᵢ = 1 − sᵢ], first pin explicitly instantiated through the
+FJS/Lean bridge, interval-only phrasing made literal, N* point-probe
+qualified). Neither seat refuted the certificate, the winding, the R5
+domain, the K_s exclusion, the FJS/MMS source content, or the real-part
+separation. This document establishes the TWO-PIN PREMISE of
+NOGO-OPEN-1; closure of NOGO-OPEN-1 itself additionally requires the
+Metatheorem III note (NOGO_METATHEOREM_III_DRAFT.md) to instantiate
+M = (φ_5, 𝒟) ∈ 𝔐(A) and pass its own cold referee gate.
+The merged-certificate seats (S2_MERGED_REFEREE_FABLE.md,
+S2_MERGED_REFEREE_SOL.md) were unanimous PROMOTABLE-WITH-CORRECTIONS.
 The template and all shared links follow THEOREM_G5_OFFLINE_ASSEMBLY.md
 (the first pin, DECLARED 2026-08-15 after five adversarial rounds); only
 S2-specific data and the two-pin consequence are new here.
@@ -28,7 +36,8 @@ with
 
 In particular Re(s₂) ≤ 0.41054473549473627 < 1/2: a second off-line zero,
 with essential gap δ₂ := 1/2 − Re(s₂) ≥ 0.08945526450526372 (rounded
-down). Since Im(s₂) ≈ 7.82 ≠ 0, s₂ is neither a small-eigenvalue
+down). Since Im(s₂) ∈ [7.81976724701551188, 7.81976924701551188]
+⊂ (0, ∞), s₂ is neither a small-eigenvalue
 parameter nor a tempered zero; by the standard spectral reading it is a
 second scattering RESONANCE of X_5.
 
@@ -135,7 +144,8 @@ check.
    specialization independently checked against the three-row engine
    code). Any publication must carry this internal heading
    inconsistency. det(1−L_{s,−}) is analytic near Box₂ (MMS determinant
-   poles are real-line only; Im ≈ 7.82). With link 5, Z_S(s₂) = 0 with
+   poles are real-line only; Im(s₂) ∈ [7.81976724701551188,
+   7.81976924701551188] ⊂ (0, ∞)). With link 5, Z_S(s₂) = 0 with
    multiplicity ≥ that of the + factor.
 
 7. SELBERG ZERO → φ_5 SCATTERING DIVISOR → REFLECTED ZERO [CITED +
@@ -150,15 +160,24 @@ check.
    Γ/G₁ trivial divisors lie on real loci and meet neither pin box. MMS
    states every Hecke triangle group has one cusp, so the scattering
    matrix is 1×1 and its determinant is the scalar φ_5. Hence the
-   nonreal off-line zero s₂ supplies a pole/zero of the scalar φ_5 as
-   FJS prescribes. (M1F_EISENSTEIN_DERIVATION.md does NOT supply this
+   nonreal off-line Selberg zero s₂ is identified by FJS as a pole of
+   φ_5 of the same order. (M1F_EISENSTEIN_DERIVATION.md does NOT supply this
    bridge and is not cited for it.)
    (b) REFLECTION CORE [LEAN — SCAT1_LEMMA31_ARISTOTLE.md]: machine-
    verified: a pole of φ at s is a zero of the same order at 1−s under
    φ(s)φ(1−s) = 1. ONLY this step is attributed to the Aristotle/Lean
    core.
-   Composition: ρ₂ = 1 − s̄-type reflection of the s₂ box gives the ρ₂
-   intervals in the Statement.
+   Composition: FJS identifies s₂ as a pole of φ_5 of the same order;
+   by the Lean reflection core, φ_5 has a zero ρ₂ := 1 − s₂ of the same
+   order. There is no conjugation in this step; the negative-imaginary
+   ρ₂ interval displayed in the Statement is the image of the s₂ box
+   under s ↦ 1 − s.
+   FIRST-PIN INSTANTIATION (sol-seat correction 2): applying the same
+   FJS divisor step and Lean reflection core to the first-pin zero s₁
+   gives the φ_5 zero ρ₁ := 1 − s₁ in the stated ρ₁ box. This FJS/Lean
+   scalar-φ_5 bridge is asserted HERE, not inherited from
+   THEOREM_G5_OFFLINE_ASSEMBLY.md (whose link 7 is only the standard
+   resonance interpretation).
 
 ## Interval-separation arithmetic (link for NOGO-OPEN-1)
 
@@ -176,8 +195,11 @@ The two closed intervals are disjoint; both lie strictly in
 
 ## Controls
 
-- N* floor (S2): N = 274 measured floor; N = 273 fails honestly
-  (margin −2.11e-7) — the certificate is not a loose-tail artefact.
+- N* probe (S2): N = 274 bottom-edge-midpoint POINT-PROBE floor;
+  N = 273 fails that probe honestly (margin −2.11e-7). This is NOT a
+  minimum-N theorem for the full contour (full interval arcs may need
+  subdivision; S2_NSCALING_RECEIPT.md caveat) and is non-load-bearing
+  for the N = 288 certificate.
 - N = 128 control arm: RUN and FILED 2026-08-26, receipt
   kaggle_s2_contour/local_receipts/S2_CONTROL_N128.json
   (status: complete). Result: N = 128 fails HONESTLY as designed —

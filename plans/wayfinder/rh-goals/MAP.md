@@ -3500,3 +3500,10 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   86a65af8-106f-4d03-a588-e806fb08a83a. Machine-verifies ONLY the final
   logical step; analytic weight stays with the S2 assembly + FJS
   bridge referee.
+
+## 2026-08-26 12:19 UTC — S2 assembly PROMOTED: sol seat 2 PASS-WITH-CORRECTIONS; all 4 corrections applied
+- Sol seat 2 (S2_ASSEMBLY_REFEREE_SOL.md, installed verbatim): PASS-WITH-CORRECTIONS. No refutation of the certificate, winding=1 (simple zero), R5 domain, whole-box K_s exclusion, FJS/MMS sources, or real-part separation. Independent Arb replay of all 452 leaves, merge, winding, and separation arithmetic: all MATCH.
+- 4 exact required corrections APPLIED same turn to THEOREM_G5_SECONDPIN_ASSEMBLY.md: (1) reflection/divisor direction fixed — s₂ is a POLE of φ_5 (FJS), Lean core gives zero ρ₂ := 1 − s₂; NO conjugation; (2) first pin explicitly instantiated through the same FJS/Lean bridge (not inherited from the first-pin assembly); (3) interval-only phrasing literal (Im(s₂) box, twice); (4) N=274 qualified as bottom-edge-midpoint POINT-PROBE floor, not a minimum-N theorem.
+- STATUS header: UNREFEREED → REFEREED/PROMOTED 2026-08-26 (both assembly seats PASS-WITH-CORRECTIONS, corrections applied).
+- TWO-PIN PREMISE of NOGO-OPEN-1 now established. NOGO-OPEN-1 itself stays OPEN pending Metatheorem III's own cold referee (gate 2) — dispatching now.
+- Non-verdict-bearing hygiene noted by sol (N=128 receipt inherited date/verdict fields; merge script should emit provenance itself) — logged, not blocking.

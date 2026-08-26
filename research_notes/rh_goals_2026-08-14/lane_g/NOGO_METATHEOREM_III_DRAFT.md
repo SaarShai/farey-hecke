@@ -1,11 +1,12 @@
 # Metatheorem III (DRAFT): A ⊭ P_line(c) for every c — NOGO-OPEN-1 discharge via the two certified pins
 
 STATUS: **DRAFT / UNREFEREED / GATED.** This note may not be promoted, and
-NOGO-OPEN-1 may not be marked closed, until (i) the S2 assembly document
-THEOREM_G5_SECONDPIN_ASSEMBLY.md passes its full referee cycle (seat 1
-fable: PASS-WITH-CORRECTIONS, all 4 corrections applied and re-banked;
-seat 2 sol: IN FLIGHT), and (ii) this note itself passes a cold
-adversarial referee. Written 2026-08-26.
+NOGO-OPEN-1 may not be marked closed, until (i) — SATISFIED 2026-08-26:
+THEOREM_G5_SECONDPIN_ASSEMBLY.md passed its full referee cycle (seat 1
+fable PASS-WITH-CORRECTIONS, seat 2 sol PASS-WITH-CORRECTIONS; all
+corrections applied; STATUS promoted to REFEREED) — and (ii) this note
+itself passes a cold adversarial referee (IN FLIGHT). Written
+2026-08-26.
 
 ## What is being upgraded
 
