@@ -3532,3 +3532,8 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 
 ## 2026-08-26 13:23 UTC — T1 GAP-17 draft landed (GLM lane) + frontier-corrected
 - GLM-5.2 Berry–Esseen note written; STRUCTURE CONFIRMED by independent recomputation (third-moment algebra, ρ_p = O(√Λ·σ³) with O(1/log Γ) gain), but its σ(50) carried a factor-√5 arithmetic slip. Corrected: σ = 1.4295e-3, ρ_p/σ³ = 0.2692, d_K ≤ 0.151 (note claimed 0.0135). Correction appended to the file; GAP-17 stays OPEN (0.15 not negligible; van Trees propagation OWED).
+
+## 2026-08-26 13:42 UTC — T1 GAP-16 CLOSED at citation+Lean standing (luna KEEP-OPEN items all discharged)
+- Luna frontier review installed (T1_GAP16_REVIEW_LUNA.md, 388 lines): residue calculus CONFIRMED (R₀=−2, R_{−1}=12/N, simple trivial poles, O(N^{−2})); Lean core independently re-elaborated by the referee, axioms clean; ruling KEEP-OPEN pending 5 exact repairs + mandatory disclosure.
+- ALL 6 items APPLIED same turn: RH added to Prop. R; J_{−1} notation corrected (was first-absolute-moment, standard is Σ1/|ζ′(ρ)|², conjectural) + Cauchy–Schwarz/dyadic convergence inserted, also fixed in G1_MODEL_SPEC.md (2 sites); citations corrected (Hardy–Riesz Ch. IV/VII§2 p.50, Hardy–Littlewood Acta 41 §2.25x, Titchmarsh §14.16/§14.27 under RH, Ng Lemmas 3–4; §9.7 claim withdrawn); E_A := I_{−A} − R_triv assembly repair; ζ′(−2n) DECAY (not growth) + leading term −(2π²/ζ(3))N^{−2}; non-monotone K=25→50 row corrected; mandatory disclosure inserted verbatim in Prop. R and the draft ledger.
+- Per the ruling's closing paragraph these repairs license CLOSED AT CITATION+LEAN STANDING. Gap count: 13 → 11 open (GAP-8, GAP-16 closed this session).

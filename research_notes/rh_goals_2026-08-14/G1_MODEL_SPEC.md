@@ -290,9 +290,13 @@ of the program consumes:
    After the e^{−t/2} normalisation both R_{−1} and R_triv are O(e^{−3t/2}).
 4. **Absolute convergence of the zero sum is now a hypothesis, not automatic.**
    Σ_γ a_γ ≍ Σ_γ γ^{−2}/|ζ′(ρ)| converges given
-   J_{−1}(T) = Σ_{0<γ≤T} 1/|ζ′(ρ)| = O(T) (Gonek–Hejhal; lane_a measured
-   slope 0.0928 against the target 3/π³ = 0.0968). Under the Gaussian window
-   the e^{−πγ/4} factor made this free. Stated, not hidden.
+   the conjectural Gonek–Hejhal bound J_{−1}(T) := Σ_{0<γ≤T} 1/|ζ′(ρ)|² =
+   O(T) via Cauchy–Schwarz with N_ζ(T) = O(T log T) and dyadic summation
+   (notation corrected 2026-08-26 per the luna GAP-16 review: the earlier
+   text misnamed the first-absolute-moment sum "J_{−1}"; lane_a measured the
+   squared-reciprocal slope 0.0928 against the conjectured 3/π³ = 0.0968).
+   Under the Gaussian window the e^{−πγ/4} factor made this free. Stated,
+   not hidden.
 
 ## A2.2 Why this window, and what was rejected
 
@@ -374,8 +378,9 @@ Stated plainly, because A2 is the larger amendment §A1.5 warned it would be:
    superpolynomially small E_A. Under (W′) the arithmetic side is *exact and
    finite*, but the contour-shift remainder is only polynomially controlled and
    its exact form is part of the GAP-16 obligation.
-3. **Absolute convergence of the zero sum now rests on J_{−1}(T) = O(T)**
-   (§A2.1.4) — a conjecture with lane_a empirical support, not a theorem.
+3. **Absolute convergence of the zero sum now rests on the conjectural
+   J_{−1}(T) := Σ 1/|ζ′(ρ)|² = O(T)** (§A2.1.4, notation corrected
+   2026-08-26) — a conjecture with lane_a empirical support, not a theorem.
 4. **A residual on (R6).** Lindeberg now *holds*, but Λ(50) = 0.157 is not
    small at the operating point of §5; the finite-Γ Berry–Esseen rate is a new
    quantitative obligation, **GAP-17**.
