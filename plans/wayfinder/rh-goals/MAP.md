@@ -3443,3 +3443,16 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   artefact. Negative + non-load-bearing per both seats. Fable seat
   correction 4 CLOSED — all 4 fable-seat corrections now closed.
   Fable's stricter reading satisfied; the seat split is MOOT.
+
+- **METATHEOREM III DRAFTED (GATED): the ACTUAL broadening of the NOGO** 2026-08-26T11:14:29Z —
+  NOGO_METATHEOREM_III_DRAFT.md: A ⊭ P_line(c) for EVERY c, witness
+  (φ_5, 𝒟) with the two certified pins ρ₁, ρ₂ (distinct real parts,
+  separation ≥ 0.04334944458020843) — exactly the §5.1 NOGO-OPEN-1
+  discharge; upgrades the no-go from P_naive to the genuine RH-analogue,
+  making the informal "any RH proof from shared properties cannot work"
+  slogan actually licensed. Bonus: the pin chain never consumes the LAW,
+  so Metatheorem III would be free of the [Sel90] citation debt (subject
+  to referee confirmation). DOUBLE-GATED: (i) S2 assembly seat 2 (sol,
+  in flight) must pass; (ii) the draft itself needs a cold referee, who
+  must specifically rule whether the FJS Selberg-zeta bypass meets
+  NOGO-OPEN-1's standard for "zeros of φ" (D11 blocker discharge).
