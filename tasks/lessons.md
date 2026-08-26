@@ -164,3 +164,23 @@ earlier the same day: agent-said vs artifact-shows.
 **Gate:** for any batch lane, count outcomes by parsing the receipts, never by
 counting runner statuses. If a claim is "N certified", the number must come
 from `sum(1 for r in receipts if r["status"] == "complete")`.
+
+## 2026-08-26 — enclosure vs bound: check which one before calling it a defect
+
+**Pattern:** the S2 merge refused on two disjoint F_R(288) intervals from
+Kaggle vs local. I reasoned "two rigorous enclosures of the same real must
+intersect; these don't; therefore one is unsound" and reported a probable
+code-version skew. Both wrong. F_R is an upper BOUND produced by a rounding
+chain, not an enclosure of a unique value — two valid upper bounds may be
+disjoint. The cause was platform (linux/x86_64 vs macOS/arm64), with all nine
+source_bindings sha256 identical across lanes.
+
+**Rule:** before treating a numeric disagreement between lanes as a defect,
+determine the quantity's type. Enclosure/interval of a unique real → disjoint
+means a real bug. Upper/lower bound → different values are both admissible;
+compare by direction (take max of upper bounds), not by intersection.
+
+**Gate:** when two lanes disagree numerically, FIRST diff the recorded
+source hashes (source_bindings) to test the code-skew hypothesis before
+asserting it, and state the quantity's type explicitly in the diagnosis.
+Platform is part of a receipt's identity, not an incidental detail.

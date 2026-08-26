@@ -3100,3 +3100,79 @@ Owner: "continue local and kaggle" + "you have many hours to run whatever you ne
   REJECTED alternatives: forcing the merge; taking max(F_R) across lanes — a
   winding certificate assembled from inconsistent endpoint bounds is worthless.
 - On landing: merge → second certified Z-zero box → Lemma 3.1 → NOGO-OPEN-1.
+
+## 2026-08-25 — S2 divergence root-caused: PLATFORM, not code skew; certification code now git-tracked
+
+- **Code-skew hypothesis REFUTED.** All 39 S2 chunk receipts (23 Kaggle +
+  16 local) carry identical `source_bindings` for all nine bound sources;
+  `R3b_orchestrator` sha256 `4ac59a18767bbf36...` in every receipt equals the
+  current worktree `code/second_pin/certify_r3b_flagship.py` byte-for-byte,
+  and equals the pin in the Kaggle bundle `dataset/manifest.json`
+  (kernels stage the driver from the sha256-verified dataset tree — see
+  `bundle/kernels/*/s2_contour_*.py`; the driver's local dataset copy was
+  deleted after upload, which is why `dataset/` looks driver-less).
+- **Actual root cause: platform-dependent upper bounds.** F_R(288) =
+  T_tail·exp(1+2·B_same) is built from `.upper()` dyadics of Arb balls — it is
+  an upper BOUND, not an enclosure of a unique real. Same python-flint 0.9.0
+  on Kaggle linux/x86_64 vs local macOS/arm64 bundles different Arb C builds;
+  column norms in one component block (indices 576–863, max delta ~2e-14)
+  differ but both bounds are valid. The 23 Kaggle receipts share one F_R
+  string exactly; the 16 local receipts share the other exactly — a clean
+  platform split. Radii ~4e-128 are radii of the dyadic representation, not
+  of an enclosure; "disjoint enclosures" was a category error in the merge's
+  equality check. Neither value is "wrong"; the single-source cover
+  (RESOLUTION CHOSEN above) remains the right call, and any future merge
+  across platforms must either take max(F_R) per-N with per-chunk consistency
+  relaxed, or stay single-platform.
+- **Reproducibility defect FIXED** (worktree aletheia-restore, branch
+  aletheia-stack-work):
+  - `9763dba` tracks the pristine receipt-producing snapshot of
+    `code/second_pin/` + siblings (`tb_certify/`, `tc_rerun/`,
+    `family_prep/`, `family_sweep/`); only `__pycache__` was gitignored — the
+    files were never added. Driver sha in this commit matches the receipt pin.
+  - `6c6fb90` extends provenance: `immutable_hashes_verified` only verifies
+    the R2/TB_V2 input receipts (driver sha was already *recorded* in
+    `source_bindings` — that is what enabled this refutation). New r3b
+    receipts now also record an `environment` block (platform, machine,
+    python, python-flint version); `certify_w_second_pin.py` now records
+    `driver_source` sha256 + environment (it previously hashed only inputs).
+- No existing receipt JSON was modified; no certification re-run.
+
+### 2026-08-26T06:50:23Z — CORRECTION (append-only) to the F_R diagnosis: platform, not code skew
+
+The preceding entry's root-cause analysis was WRONG on three points. Corrected
+here; the earlier entry stands unedited per the append-only rule.
+
+1. **NOT code-version skew.** Verified by comparing `source_bindings` sha256
+   across a Kaggle receipt (a036-048) and a local one (a000-012): all NINE
+   bindings match exactly — engine c84c5c3f6d9f, R2_code 16edea6c9212,
+   R3b_orchestrator 4ac59a18767b, R3b_derivative 579ede0d7a9b, R3b_endpoint
+   9927240167b9, plus the four input receipts. Only the `path` fields differ.
+   **Identical code ran on both lanes.**
+2. **Disjoint F_R balls are NOT evidence of unsoundness.** The earlier claim
+   ("two rigorous enclosures of one number must intersect, so one is wrong")
+   is a CATEGORY ERROR: **F_R is an upper BOUND, not an enclosure of a unique
+   real**. Two different valid upper bounds may be disjoint as intervals.
+   Kaggle linux/x86_64 vs local macOS/arm64 take different rounding paths
+   through the bound chain (~2e-14 deltas in one component block) and land on
+   different, BOTH-VALID bounds. No defect exists.
+3. **The code WAS version-pinned.** `code/second_pin/` is indeed untracked in
+   git, but every receipt already records the driver sha256 in
+   `source_bindings` — the very field that disproved hypothesis 1. The real
+   (narrower) gap: `immutable_hashes_verified` covers only the R2/TB_V2 input
+   receipts, not the driver, and no platform was recorded.
+   Now closed by worktree commits 9763dba (track the certification code) and
+   6c6fb90 (record platform/python/python-flint provenance in r3b and
+   certify_w_second_pin receipts).
+
+**Consequence for the merge:** the gate is stricter than soundness requires —
+mixed valid F_R bounds could be merged by taking max(F_R) and re-verifying
+every chunk margin against it. That relaxation is NOT being applied
+unilaterally; it should be refereed before any gate is loosened.
+The a036-048 local re-run (pid 26990, started 05:46Z) remains the chosen fix:
+it makes the cover single-platform and single-source, which is sound under
+either reading and needs no gate change.
+
+**LESSON (banked to tasks/lessons.md):** before calling a numeric disagreement
+a defect, establish whether the quantity is an ENCLOSURE (must intersect) or a
+BOUND (need not). Platform, not just code, is part of a receipt's identity.
