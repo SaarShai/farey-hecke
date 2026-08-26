@@ -3507,3 +3507,9 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 - STATUS header: UNREFEREED → REFEREED/PROMOTED 2026-08-26 (both assembly seats PASS-WITH-CORRECTIONS, corrections applied).
 - TWO-PIN PREMISE of NOGO-OPEN-1 now established. NOGO-OPEN-1 itself stays OPEN pending Metatheorem III's own cold referee (gate 2) — dispatching now.
 - Non-verdict-bearing hygiene noted by sol (N=128 receipt inherited date/verdict fields; merge script should emit provenance itself) — logged, not blocking.
+
+## 2026-08-26 12:40 UTC — NOGO-OPEN-1 CLOSED: Metatheorem III promoted (gate 2 PASS-WITH-CORRECTIONS)
+- Cold referee (NOGO_METATHEOREM_III_REFEREE.md, installed verbatim): PASS-WITH-CORRECTIONS. RULED: the FJS Selberg-zeta bypass MEETS §5.1's standard ("zeros of φ", no certification technology mandated); D11's blocker superseded for these two pins. Sel90-independence CONFIRMED (= absence of the named [Sel90, Lemmas 1,2] engine; route not citation-free). Pin data matches promoted assembly exactly. Quantifier structure valid (one common countermodel for all c).
+- All 5 exact corrections APPLIED same turn: (1) witness formalized M₅=(φ₅,𝒟₅), 𝒟₅ = q=5 Hejhal/FJS A4 Dirichlet data; (2) exact Im intervals, ρᵢ=1−sᵢ no conjugation; (3) Lean scope narrowed (reflection implication only, nested v33 file named); (4) fixed-witness quantifiers printed, "ANY on-line rigidity" → "any member of the family P_line(c)"; (5) standing sentence inside theorem block + NEW FJS p.4 k=0 notation caveat added to ledger.
+- NOGO_METATHEOREM_III_DRAFT.md STATUS → REFEREED/PROMOTED; **NOGO-OPEN-1 marked CLOSED** at the stated citation/computer-assisted standing, per the referee's closing ruling.
+- Aristotle v34 harvested: all 4 TwoPinNoLine targets sorry-free, statements byte-identical to dispatch, axioms clean; local lake re-elaboration running (bwnu9043z).
