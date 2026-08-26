@@ -3399,3 +3399,19 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   "do what you need to do"): driver without --skip-comparison, --arcs 0:1,
   receipt local_receipts/S2_CONTROL_N128.json — result to be banked on
   completion.
+
+- **FIG-1 LANDED (UNREFEREED)** 2026-08-26T10:36:22Z — resonance-cloud figure built by a
+  non-Opus builder lane per owner routing: lane_g/fig1/
+  (make_fig1.py + PDF/PNG + FIG1_DATA_SOURCES.md). Left panel: 8 q=3
+  even resonances on Re=1/4 (interval-certified tier, std 6.5e-14);
+  right panel: 8 G_5 even resonances scattered (numerically-validated
+  tier, labelled as such, NOT presented as certified) + 2 black stars =
+  the two argument-principle-certified off-line pins (1e-6 boxes).
+  Data source byte-cached with sha dcdd7119… (= worktree
+  resonance_geometry.json, commit 659932c); pin-2 coincides with cloud
+  point 2 to ~1e-6 — recorded, not silently merged. Script self-check
+  asserts counts + q=3 line. One orchestrator fix post-build: right
+  legend moved upper-left (was covering the first-pin star);
+  regenerated. Q8 depth-8 data deliberately unused (winding object,
+  not a resonance list) — recorded as a non-gap. Paper use gated on
+  referee like all figure claims.
