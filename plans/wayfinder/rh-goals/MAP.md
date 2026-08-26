@@ -3519,3 +3519,8 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 - Three artifact pages updated to refereed status and republished PRIVATE (owner directive): line-and-cloud STATUS (no-vertical-line clause now REFEREED), no-go-dossier (Met III chip Refereed·promoted; D8a row SETTLED NO unconditional), the-wobble (footer clause refereed).
 - Paper fold DONE (owner go): PAPER_SKELETON_DRAFT.md — new §3b (two certified pins + no-single-line theorem), §4.10 rewritten as Metatheorem III DISCHARGED (fixed-witness quantifiers + standing sentence), decision table row 3 SETTLED NO + new row 5 (sharpest statement), §6.1 item 3 (TwoPinNoLine machine-verification with scope warning).
 - Koyama update email DRAFTED for owner review (not sent — owner sends).
+
+## 2026-08-26 13:18 UTC — T1 CAMPAIGN RESUMED (owner directive: continue to completion; grok/gemini/luna lanes)
+- Aristotle v21 (GAP-16 Lean core, RieszImport.lean) found COMPLETE ~10 days unharvested — HARVESTED: 8 theorems sorry-free (Cesàro identity, k=1 Mellin, M_W residues, R₀=−2, R_{−1}=12/N, simple trivial poles); local re-elaboration launched.
+- Lanes launched: grok 4.6 xhigh via cursor — GAP-12 prior-art re-scout → T1_GAP12_PRIOR_ART_RESCOUT.md; luna xhigh via codex, task-mta4ccvr-v1rqz8 — GAP-16 frontier review + closure ruling → T1_GAP16_REVIEW_LUNA.md; GAP-17 Berry–Esseen derivation — gemini CLI DEAD, IneligibleTierError, individual tier retired — REROUTED to GLM-5.2 → T1_GAP17_BERRY_ESSEEN_DRAFT.md; builder — GAP-11 deterministic N1 re-run, Möbius sieve 3e7, + GAP-8 receipts.
+- Remaining after this wave: GAP-4/5/6/10 Aristotle-able — dispatch after luna rules; GAP-7/9/13 frontier; GAP-11 interpretation frontier after data lands.
