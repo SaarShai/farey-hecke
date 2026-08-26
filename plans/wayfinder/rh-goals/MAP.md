@@ -3317,3 +3317,55 @@ Fable escalated to the owner rather than adjudicated here.
 
 STATUS UNCHANGED: **UNREFEREED = CONJECTURAL**. No promotion, no paper claim,
 no dissemination.
+
+### 2026-08-26 (see commit time) — SECOND SEAT (sol) IN: UNANIMOUS PROMOTABLE-WITH-CORRECTIONS; my own correction corrected
+
+Report installed verbatim: lane_g/S2_MERGED_REFEREE_SOL.md (gpt-5.6-sol via
+codex, background). **VERDICT: PROMOTABLE-WITH-CORRECTIONS** — agreeing with
+the Fable seat. Two seats, run blind to each other, reached the same verdict.
+
+**C-E. SUPERSEDES C-B: the real parts are INTERVALS, not points.** My C-B said
+"the correct value is 0.58945626450526373". That is the interval CENTRE. The
+S2 box has coordinate half-width 1e-6, so only an interval is certified.
+Verified here by arb:
+  Re rho_2 in [0.58945526450526373, 0.58945726450526373]  (centre 0.58945626450526373)
+  Re rho_1 in [0.54610381992505530, 0.54610581992505530]  (centre 0.54610481992505530)
+  guaranteed separation = 0.043349444580208430
+    (= centre difference 0.043351444580208430 minus 2 x 1e-6)
+Quoting 17 digits as a point value overstates the certified precision by ~11
+orders of magnitude. Ledger and any future paper text must use the intervals.
+
+**C-F. Over-attribution to the Lean core.** Only the POLE-TO-REFLECTED-ZERO
+step is carried by the Aristotle/Lean reflection core. The Selberg-to-phi_5
+step needs the Friedman-Jorgenson-Smajlovic completed-zeta divisor statement
+plus the one-cusp scalar specialization. My entries attributed too much to
+Lemma 3.1.
+
+**C-G. MMS citation error.** Equation (34) is the odd-q REDUCED OPERATOR;
+Theorem 6.4 is the DETERMINANT QUOTIENT. Carry the printed "q > 5" heading
+inconsistency and the independently checked h_q = 1 specialization for q=5.
+
+**C-H. Exact restatement of what is certified** (sol's wording): not "a second
+zero of Z_{G_5}", but "the merged receipt certifies winding 1 for the q=5
+plus-sector Hilbert Fredholm determinant; the separate R5 + MMS Theorem 6.4 +
+zero-free K_s assembly promotes it to a Z_{G_5} zero."
+
+**C-I. Provenance must be reproducible**, beyond Fable's C-D: every chunk
+records its local_receipts/... path, merge script sha256
+1fb975c2a201b58186dc74b17e9cf7cf92a49efaf1ced798e7ec3436fdefa0b9, archived
+producer path + sha256 4ac59a18767bbf36ff39b0fb90a910685ea92b07391c352cff87ee75c8203840,
+and an explicit local-only merge command that recreates the stored hashes and
+the common F_R.
+
+**SPLIT BETWEEN SEATS (owner-visible, not adjudicated here):** the N=128
+control arm. Fable requires it RUN and filed before promotion. Sol permits
+EITHER completing it OR explicitly labelling it an unrun, non-load-bearing
+negative control in the promoted package. Sol is the more permissive seat;
+taking Fable's stricter reading costs only compute on an idle box.
+
+Both seats independently confirm: closed CCW contour, 452-leaf seam continuity
+incl. wraparound, homogeneous all-local chunk set, a036-048 re-run clean,
+real parts genuinely distinct. Sol adds a 10-item list for a third seat.
+
+STATUS UNCHANGED: **UNREFEREED/CONJECTURAL for the ledger claim**; NOGO-OPEN-1
+and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
