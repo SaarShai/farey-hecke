@@ -184,3 +184,21 @@ compare by direction (take max of upper bounds), not by intersection.
 source hashes (source_bindings) to test the code-skew hypothesis before
 asserting it, and state the quantity's type explicitly in the diagnosis.
 Platform is part of a receipt's identity, not an incidental detail.
+
+## 2026-08-26 — codex-rescue has a ~10 min foreground ceiling
+
+**Pattern:** a referee task dispatched to gpt-5.6-sol via codex-rescue was
+killed at exit 143 after ~10 minutes, mid-audit, with no report file written.
+The wrapper ran codex in the foreground, where a timeout applies. This is the
+second distinct failure mode of the same wrapper in one day (the first: a
+stall-phrase false completion while its codex child was still alive).
+
+**Rule:** for any codex task expected to exceed ~10 minutes — research
+derivations, adversarial audits, anything requiring several file reads plus
+numerics — instruct the wrapper explicitly to launch codex in BACKGROUND mode
+and poll, rather than assuming a foreground run will survive.
+
+**Gate:** when briefing codex-rescue for long work, state the background
+requirement in the first line of the prompt, and on completion check the
+deliverable file exists before reporting any result (see the 2026-08-25
+false-completion lesson — same check, different failure).
