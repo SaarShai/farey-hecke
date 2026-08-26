@@ -91,3 +91,8 @@ original heuristic O(√Λ) ≈ 0.40 — the Berry–Esseen route improves it by
 OPEN at the corrected value: d_K ≈ 0.15 at Γ = 50 is NOT negligible, and
 the propagation into the CR bound (van Trees) is still OWED, now with a
 3× larger misspecification input than the note's headline claimed.
+
+## CORRECTION 2026-08-26 (grok GAP-17 propagation, frontier-accepted)
+§4's direction claim is WRONG: by Stam's inequality the Gaussian minimizes
+Fisher information at fixed variance, so the true I(f) ≥ I_Gaussian and the
+Gaussian CR bound is not automatically conservative. See T1_GAP17_PROPAGATION.md.
