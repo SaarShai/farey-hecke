@@ -3456,3 +3456,24 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   in flight) must pass; (ii) the draft itself needs a cold referee, who
   must specifically rule whether the FJS Selberg-zeta bypass meets
   NOGO-OPEN-1's standard for "zeros of φ" (D11 blocker discharge).
+
+- **THIRD-PIN PROBE COMPLETE: Im 11.66 point NOT feasibly certifiable with current machinery** 2026-08-26T11:16:52Z —
+  Setup done in ~30 min (third_pin code copy at centre
+  0.3998208929499856 + 11.664755512713677i; W envelope 1.3s; R2 tail
+  envelope CERTIFIED 5.3s; orchestrator sha re-pinned; probe ladder
+  N=288..512, 1114s wall). VERDICT: N_star = null at N ≤ 512. Root
+  cause: the enlarged-contour trace-norm bound B_same ≈ 165.009 at this
+  height (vs 37.68 at the S2 pin), entering F_R exponentially:
+  exp(1+2·B_same) ≈ 10^143.8. Boundary det probe at N=512:
+  det_lower = 7.07292315214429635808e-6 but F_R astronomically larger;
+  margin_positive = False. T_tail decay measured ≈ 0.156 orders/N
+  (e-41 at N=288 → e-76 at N=512) ⇒ extrapolated N* ≈ 1030, cost
+  ≈ 46× the full S2 campaign (~months). CORRECTION of my earlier
+  estimate to owner ("4–8 overnights"): WRONG — that assumed B_same
+  stayed ~38; it more than quadruples by Im 11.66. Overnight contour
+  runs for this point are NOT recommended; certifying more cloud points
+  needs machinery work (re-centred/shrunk enlarged discs to tame
+  B_same), not compute. Receipts: third_pin/N_SCALING_PROBE.json,
+  R2_THIRDPIN_ENVELOPE_RECEIPT.json, W_ENVELOPE_CERT_S2_RECEIPT.json.
+  Kaggle push: NOT executed (nothing feasible to run). Owner decision
+  point: park the third pin, or open a machinery lane.
