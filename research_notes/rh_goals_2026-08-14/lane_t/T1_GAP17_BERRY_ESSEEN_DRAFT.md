@@ -73,3 +73,21 @@ For the direction of the error: the presence of non-Gaussianity and the bounded 
 - **Rigorous propagation formula:** Replacing the asymptotic information-geometric bound with a strict formulation. If utilizing Bayesian Cramér–Rao (van Trees), a direct propagation of the metric perturbation is OWED.
 - **Numerical verification:** Direct numerical computation of $\rho_\mathfrak{p}$ over Riemann zeros to verify the accuracy of the intensity-smoothed integral at $\Gamma=50$.
 - **Alternative CLT bounds:** Comparison of the classical Berry–Esseen approach to modern quantitative CLT bounds (e.g., Tikhomirov, Stein methods) to potentially tighten the constant $C$ for this specific class of bounded, independent trigonometric summands.
+
+## FRONTIER VERIFICATION 2026-08-26 (fable) — arithmetic correction, structure confirmed
+
+Independent recomputation (receipts: this section's numbers reproduced by
+direct evaluation of the note's own formulas):
+- σ²(50) = Γ⁻³(log(Γ/2π)+1/3)/(3π) = **2.0435e-06** (cross-checked via
+  σ² = 2a_Γ²/Λ: identical) — the note's 1.0203e-5 is an arithmetic slip
+  (factor 5), so σ(50) = **1.4295e-3**, not 3.194e-3.
+- ρ_p(50) = 7.865e-10 ✓ (note's value confirmed).
+- Corrected ratio ρ_p/σ³ = **0.2692** (not 0.0241); with C = 0.56:
+  **d_K ≤ 0.151** (not 0.0135).
+Consequence: the corrected bound is of the same order as the draft's
+original heuristic O(√Λ) ≈ 0.40 — the Berry–Esseen route improves it by
+~2.6×, not ~30×. The closed-form structure of §§1–2 (third-moment algebra,
+ρ_p = O(√Λ·σ³) with an O(1/log Γ) gain) is CONFIRMED. GAP-17 remains
+OPEN at the corrected value: d_K ≈ 0.15 at Γ = 50 is NOT negligible, and
+the propagation into the CR bound (van Trees) is still OWED, now with a
+3× larger misspecification input than the note's headline claimed.
