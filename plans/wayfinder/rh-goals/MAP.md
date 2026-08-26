@@ -3415,3 +3415,23 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   regenerated. Q8 depth-8 data deliberately unused (winding object,
   not a resonance list) — recorded as a non-gap. Paper use gated on
   referee like all figure claims.
+
+- **S2 ASSEMBLY REFEREE, SEAT 1 (fable): PASS-WITH-CORRECTIONS — all 4 corrections applied** 2026-08-26T10:39:57Z —
+  Report S2_ASSEMBLY_REFEREE_FABLE.md installed verbatim. All numeric
+  claims survived fresh recomputation (census 452/260/depth-8, min
+  margin, max rH, F_R formula reproduced at 450 bits, T_tail, norm sum,
+  all 16 shas, winding=1 by ball containment AND independent 452-term
+  argument-increment sum, box/reflection/gap decimals, whole-box K_s,
+  R5 domain, N* floor, no-overclaim audit). Corrections applied same
+  turn: (1) FJS PDF actually BANKED at
+  lane_p/literature/FJS_completed_zeta_divisor.pdf, sha
+  36c9d020…7228 verified on the banked copy (was /tmp-only); (2)
+  post-merge append of merge_provenance DISCLOSED in receipt + doc
+  (aggregate fields remain byte-reproduced by the recorded command);
+  (3) F_R platform split corrected 12th → **14th** significant digit
+  (re-verified against a Kaggle checkpoint receipt: local
+  …4480794… vs kaggle …4497520…, first differing significant digit =
+  14); (4) N=128 control arm noted in-flight (receipt status:running),
+  will be banked as a filed result on completion — NOT claimed filed.
+  Seat 2 (sol via codex, xhigh) still running. NOGO-OPEN-1 /
+  NO_VERTICAL_LINE_COROLLARY: still OPEN pending seat 2 + control arm.

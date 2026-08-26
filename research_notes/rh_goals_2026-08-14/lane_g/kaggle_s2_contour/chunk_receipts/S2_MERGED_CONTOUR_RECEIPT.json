@@ -6122,7 +6122,7 @@
  "note": "winding >= 1 with every chunk CHUNK_ARCS_CLEAR certifies at least one zero of the finite/Fredholm determinant inside the S2 box (same straight-line homotopy argument as the flagship). The N=128 control arm and the assembly doc are separate steps.",
  "wall_seconds": 0.16953516006469727,
  "merge_provenance": {
-  "chunk_source": "local_receipts/ only (Kaggle chunk_receipts copies excluded: F_R upper bound differs at the 12th significant digit due to platform split linux/x86_64 vs macOS/arm64; F_R is an upper bound, both valid, but the merge gate requires a single common F_R)",
+  "chunk_source": "local_receipts/ only (Kaggle chunk_receipts copies excluded: F_R upper bound differs at the 14th significant digit due to platform split linux/x86_64 vs macOS/arm64; F_R is an upper bound, both valid, but the merge gate requires a single common F_R)",
   "chunk_paths": [
    "local_receipts/S2_CHUNK_a000-012.json",
    "local_receipts/S2_CHUNK_a012-024.json",
@@ -6149,6 +6149,7 @@
   "producer_script_sha256_runtime": "4ac59a18767bbf36ff39b0fb90a910685ea92b07391c352cff87ee75c8203840",
   "producer_runtime_sha_source": "source_bindings.R3b_orchestrator.sha256, identical in all 16 merged chunk receipts (verified below); certified bytes preserved at .worktrees/aletheia-restore commit 9763dba (git show 9763dba:code/second_pin/certify_r3b_flagship.py hashes to the run-time sha)",
   "producer_drift_note": "live worktree file now hashes 7468cbd1... = commit 6c6fb90 (post-run, adds platform provenance to future receipts); drift explained, certified bytes intact in git",
-  "producer_script_sha256_live": "7468cbd19a5866b1df2870a93de1330ea4f35252afd665d4948b949a606a010e"
+  "producer_script_sha256_live": "7468cbd19a5866b1df2870a93de1330ea4f35252afd665d4948b949a606a010e",
+  "block_provenance": "this merge_provenance block was appended by the orchestrator AFTER the merge run (2026-08-26), not emitted by the sha-bound merge script; the aggregate fields above it are byte-reproduced by the recorded merge_command (verified to scratch 2026-08-26 and independently by the fable referee seat)"
  }
 }

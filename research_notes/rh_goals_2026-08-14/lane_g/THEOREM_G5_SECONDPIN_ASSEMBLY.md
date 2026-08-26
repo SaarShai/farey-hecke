@@ -71,12 +71,16 @@ check.
    (schema s2-merged-contour/v1) with full merge provenance: 16 chunk
    receipts from local_receipts/ ONLY (macOS/arm64; the Kaggle copies
    are excluded because their equally valid F_R upper bound differs at
-   the 12th significant digit — F_R is a bound, not an enclosure, and
+   the 14th significant digit — F_R is a bound, not an enclosure, and
    the merge gate requires a single common F_R), merge script sha256
    1fb975c2…f0b9, run-time producer sha256 4ac59a18…8040 (identical in
    all 16 receipts' source_bindings; certified bytes preserved at
    worktree commit 9763dba), reproduction command verified to recreate
-   every stored aggregate field.
+   every stored aggregate field. Disclosure (fable-seat correction 2):
+   the merge_provenance block was appended by the orchestrator AFTER the
+   merge run, not emitted by the sha-bound merge script; the aggregate
+   fields are byte-reproduced by the recorded merge command (verified to
+   scratch and independently by the fable referee seat).
 
 2. FINITE SECTION = det(I − L P_N) [PAPER + LEAN]. Unchanged from the
    first pin: restriction identity + Sylvester; Lean
@@ -136,8 +140,10 @@ check.
 
 7. SELBERG ZERO → φ_5 SCATTERING DIVISOR → REFLECTED ZERO [CITED +
    LEAN, correctly attributed]. Two separate steps:
-   (a) DIVISOR STEP [CITED — Friedman–Jorgenson–Smajlović, banked PDF
-   sha 36c9d020…7228]: the FJS completed-zeta factorization
+   (a) DIVISOR STEP [CITED — Friedman–Jorgenson–Smajlović, PDF banked
+   2026-08-26 at lane_p/literature/FJS_completed_zeta_divisor.pdf,
+   sha256 36c9d020fcc7d0118264c486330db9936f866670c45c0e77b185cdc2b9127228
+   (matches the sol-seat hash; fable-seat correction 1 closed)]: the FJS completed-zeta factorization
    Z₊(s) = Z(s)/(G₁(s)Γ(s−1/2)^k), Z₋(s) = Z₊(s)φ(s), with its
    enumerated nontrivial zero set, identifies nonreal left-half-strip
    Selberg zeros with reflections of scattering-determinant zeros; the
