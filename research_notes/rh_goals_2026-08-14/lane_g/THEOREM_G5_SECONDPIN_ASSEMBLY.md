@@ -178,12 +178,16 @@ The two closed intervals are disjoint; both lie strictly in
 
 - N* floor (S2): N = 274 measured floor; N = 273 fails honestly
   (margin −2.11e-7) — the certificate is not a loose-tail artefact.
-- N = 128 control arm: RUN 2026-08-26 on the idle local box (Fable
-  seat's stricter reading), receipt
-  kaggle_s2_contour/local_receipts/S2_CONTROL_N128.json — result to be
-  recorded on completion; the arm is NEGATIVE and NON-LOAD-BEARING (the
-  N = 288 trace-norm bound and positive boundary margin stand alone;
-  both seats agree it is not a logical premise).
+- N = 128 control arm: RUN and FILED 2026-08-26, receipt
+  kaggle_s2_contour/local_receipts/S2_CONTROL_N128.json
+  (status: complete). Result: N = 128 fails HONESTLY as designed —
+  NOT_CERTIFIED at base arc 0, depth 0, Jacobi self-consistency
+  rH = [1.2165204080717385566… ± 2.33e-115] > 1 — while the N = 288
+  arm in the same run certifies its arc (CHUNK_ARCS_CLEAR). The
+  certificate is therefore not a loose-tail artefact. The arm is
+  NEGATIVE and NON-LOAD-BEARING (the N = 288 trace-norm bound and
+  positive boundary margin stand alone; both seats agree it is not a
+  logical premise). Fable-seat correction 4: CLOSED.
 
 ## Dependency classes
 

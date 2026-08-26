@@ -3435,3 +3435,11 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   will be banked as a filed result on completion — NOT claimed filed.
   Seat 2 (sol via codex, xhigh) still running. NOGO-OPEN-1 /
   NO_VERTICAL_LINE_COROLLARY: still OPEN pending seat 2 + control arm.
+
+- **N=128 CONTROL ARM FILED: honest failure as designed** 2026-08-26T11:13:50Z — receipt
+  S2_CONTROL_N128.json complete: N=128 NOT_CERTIFIED at base arc 0
+  depth 0 (rH = 1.21652… > 1, full exponent in receipt) while the same
+  run's N=288 arc certifies (CHUNK_ARCS_CLEAR). Not a loose-tail
+  artefact. Negative + non-load-bearing per both seats. Fable seat
+  correction 4 CLOSED — all 4 fable-seat corrections now closed.
+  Fable's stricter reading satisfied; the seat split is MOOT.
