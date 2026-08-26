@@ -234,6 +234,38 @@ alone; no explicit formula for the group-dependent linear coefficient
 carries a spurious \(\log\pi\) and his \(A_\Gamma\) assembly formula is
 wrong (`LAW_..._SOL.md:480–485`).
 
+### 3b. The two certified pins at \(q=5\) [FOLDED 2026-08-26]
+
+Beside the LAW's infinitude statement, two individual Selberg-zeta zeros
+of \(G_5\) are interval-certified to contour standard (Arb argument
+principle, directed rounding, winding = 1 so each zero is simple):
+
+> **THEOREM (two pins; computer-assisted).** \(Z_{G_5}\) has zeros
+> \(s_1, s_2\) with
+> \(\Re s_1\in[0.45389418007494470,\,0.45389618007494470]\),
+> \(\Im s_1\in[5.7635362417301305,\,5.7635382417301305]\);
+> \(\Re s_2\in[0.41054273549473627,\,0.41054473549473627]\),
+> \(\Im s_2\in[7.81976724701551188,\,7.81976924701551188]\).
+> The closed real-part intervals are disjoint with separation
+> \(\ge 0.04334944458020843\). Consequently the nonreal strip zeros of
+> \(Z_{G_5}\) lie on **no single vertical line** \(\Re s=c\), for any
+> \(c\in\mathbb R\).
+
+Sources: `THEOREM_G5_OFFLINE_ASSEMBLY.md` (pin 1, DECLARED 2026-08-15,
+five adversarial rounds) and `THEOREM_G5_SECONDPIN_ASSEMBLY.md` (pin 2,
+REFEREED — PROMOTED 2026-08-26; two cold seats, both
+PASS-WITH-CORRECTIONS, corrections applied). The no-single-line
+consequence is `NO_VERTICAL_LINE_COROLLARY.md` Corollary 3; its logical
+core is machine-verified (§6.1, `TwoPinNoLine.lean`). By the FJS
+completed-zeta divisor classification (one cusp, scalar
+\(\varphi_5\)) and the Lean-verified pole-to-zero reflection under
+\(\varphi(s)\varphi(1-s)=1\), the pins transport to two zeros
+\(\rho_i=1-s_i\) of \(\varphi_5\) with distinct real parts in
+\((1/2,1)\) — the witness §4.10 consumes. Dependency standing:
+computer-assisted + citation-backed (FJS/MMS); ledgers in the two
+assembly documents, including the MMS \(q=5\) heading caveat and the
+FJS p. 4 \(k\)-notation caveat.
+
 ---
 
 ## 4. The axiom list \(A\) and the metatheorem
@@ -445,11 +477,14 @@ equivalence above does not depend on them).
 |---|---|---|
 | \(P_{\mathrm{naive}}\) (§4.4 definition) | \(A\models\neg P_{\mathrm{naive}}\) | **PROVED**, unconditional in the §9-upgraded form; residuals GAP-1/GAP-2 outside the conclusion chain |
 | \(\neg P_{\mathrm{line}}(3/4)\) | \(A\nvDash\neg P_{\mathrm{line}}(3/4)\) | **PROVED, conditional on RH**; witness \(\varphi_3\); conditionality unavoidable *for this witness* |
-| \(P_{\mathrm{line}}(3/4)\) | \(A\models P_{\mathrm{line}}(3/4)\)? | **OPEN and RH-HARD** — a positive answer proves RH via \(\varphi_3\) and the Proposition, in one line |
+| \(P_{\mathrm{line}}(3/4)\) | \(A\models P_{\mathrm{line}}(3/4)\)? | **SETTLED NO (2026-08-26)** — Metatheorem III gives \(A\nvDash P_{\mathrm{line}}(3/4)\) unconditionally (was OPEN/RH-hard; a positive answer would have proved RH) |
 | decidability of \(P_{\mathrm{line}}(3/4)\) by \(A\) | \(A\) fails to decide it in at least one direction | **PROVED UNCONDITIONALLY** — RH \(\Rightarrow A\nvDash\neg P_{\mathrm{line}}(3/4)\); \(\neg\)RH \(\Rightarrow A\nvDash P_{\mathrm{line}}(3/4)\) |
+| \(P_{\mathrm{line}}(c)\), every \(c\in(1/2,1)\) | \(A\nvDash P_{\mathrm{line}}(c)\) for every \(c\) simultaneously | **PROVED (Metatheorem III, §4.10)** — computer-assisted/citation standing; witness \(M_5\); unconditional, Sel90-free |
 
-The fourth row is the sharpest honest statement in the paper and should be
-displayed as such.
+The fifth row (2026-08-26) is now the sharpest statement in the paper and
+should be displayed as such; in particular
+\(A\nvDash P_{\mathrm{line}}(3/4)\) holds **unconditionally**, so the
+third row's question is settled negatively without RH.
 
 ### 4.9 Corollary — arithmeticity-blindness, correctly glossed
 
@@ -466,21 +501,47 @@ still "generic analytic machinery" by any ordinary reading — is **not**
 covered by this corollary. Any gloss of the form "\(A\) cannot separate the
 arithmetic members from the non-arithmetic ones" is refuted as written.
 
-### 4.10 The open problem
+### 4.10 Metatheorem III — the former open problem, discharged [FOLDED 2026-08-26]
 
-> **OPEN.** Exhibit \(M=(\varphi,\mathcal D)\in\mathfrak M(A)\) and two
-> nonreal zeros \(\rho_1,\rho_2\) with \(1/2<\Re\rho_i<1\) and
-> \(\Re\rho_1\neq\Re\rho_2\). Any such \(M\) gives
-> \(A\nvDash P_{\mathrm{line}}(c)\) for every \(c\) simultaneously.
+The problem as originally posed: exhibit \(M=(\varphi,\mathcal D)\in\mathfrak M(A)\)
+and two nonreal zeros \(\rho_1,\rho_2\) with \(1/2<\Re\rho_i<1\) and
+\(\Re\rho_1\neq\Re\rho_2\). It is now discharged by the §3b pins:
 
-Three reasons it is not available today, all to be stated: the \(G_5\)
-off-line pin is a zero of the *Selberg zeta*, a different function, and on
-the wrong side of the line; we have **no certified zero of any
-\(\varphi_q\) for non-arithmetic \(q\)**; and a synthetic
-Davenport–Heilbronn-type countermodel would still have to satisfy A4's
-archimedean factor at \(\kappa=1\), A5, A6, and the exact modulus A7, none
-of which has been checked. **Nothing in this paper asserts that such an
-\(M\) exists.**
+> **METATHEOREM III (fixed-witness quantifiers explicit).** There exists
+> one \(M_5=(\varphi_5,\mathcal D_5)\in\mathfrak M(A)\) —
+> \(\mathcal D_5\) the Hejhal/FJS Dirichlet data of the \(q=5\) A4
+> receipt — such that for every \(c\in(1/2,1)\), \(M_5\) does not
+> satisfy \(P_{\mathrm{line}}(c)\). Hence for every \(c\in(1/2,1)\),
+> \(A\nvDash P_{\mathrm{line}}(c)\): no member of the family
+> \(P_{\mathrm{line}}(c)\) is derivable from \(A\). One common
+> countermodel serves all \(c\).
+>
+> **Standing (part of the statement):** at the caveat level of
+> \(§\)3.2/\(§\)5.3 of `NOGO_METATHEOREM_SOL.md` as superseded by its
+> \(§\)8, and at the computer-assisted/citation standing of the two pin
+> assemblies. The scope is exactly the family \(P_{\mathrm{line}}(c)\)
+> — not every statement informally describable as "on-line rigidity."
+
+How each of the three original blockers fell: the Selberg-zeta pins
+transport to \(\varphi_5\) zeros \(\rho_i=1-s_i\) by the FJS divisor
+classification + one-cusp scalar specialization + the Lean-verified
+reflection (§3b) — an indirect, citation-backed certificate the cold
+referee ruled sufficient (§5.1 of the metatheorem note asks for zeros of
+\(\varphi\), not a certification technology); the second certified pin
+(2026-08-26) supplies the distinct real part; and no synthetic
+Davenport–Heilbronn countermodel is needed. Membership
+\(M_5\in\mathfrak M(A)\) is the §4.3 breadth lemma at \(q=5\).
+**Sel90-independence:** the pin chain does not consume the LAW, so
+Metatheorem III is free of the [Sel90, Lemmas 1, 2] residual carried by
+Metatheorem I — independence from that named engine, not from the
+Selberg/scattering literature at large. Referee provenance:
+`NOGO_METATHEOREM_III_DRAFT.md` (REFEREED — PROMOTED 2026-08-26; own cold
+referee PASS-WITH-CORRECTIONS, five corrections applied;
+`NOGO_METATHEOREM_III_REFEREE.md`). Since RH is literally
+\(P_{\mathrm{line}}(3/4)\) for \(\varphi_3\) (§4.7), Metatheorem III is
+the licensed form of the slogan: any derivation of any
+\(P_{\mathrm{line}}(c)\) from the shared axioms alone contains an error,
+exhibitable by running it on \(M_5\).
 
 ### 4.11 A worked audit — how to apply Metatheorem I to a published construction
 
@@ -758,6 +819,18 @@ Two pointer corrections that the paper must respect:
    constant, no effective first height, no machine formalization of the
    analytic content. **H4 and H5 keep their "NOT proved here" labels** and
    the paper must say so.
+3. [ADDED 2026-08-26] The logical core of Metatheorem III / Corollary 3 is
+   machine-verified in
+   `projects/aristotle_dispatch_v34/project_aristotle/TwoPinNoLine.lean`
+   (returned artifact; local re-elaboration `Build completed successfully
+   (8034 jobs)`; four theorems — `no_common_line`, exact interval gap
+   \(4334944458020843/10^{17}\), disjointness, distinct real parts —
+   `sorry`-free, axioms exactly `[propext, Classical.choice, Quot.sound]`;
+   statements byte-identical to the dispatch). The same scope warning
+   applies: \(\varphi_5\) has no Lean definition; FJS/MMS content is
+   cited, not formalized. The pole-to-zero reflection core is the v33
+   nested artifact `Scat1Lemma31Reflection.lean` (root dispatch stub still
+   carries `sorry`; cite the nested file).
 
 ### 6.2 Data availability
 

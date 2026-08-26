@@ -3513,3 +3513,9 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 - All 5 exact corrections APPLIED same turn: (1) witness formalized M₅=(φ₅,𝒟₅), 𝒟₅ = q=5 Hejhal/FJS A4 Dirichlet data; (2) exact Im intervals, ρᵢ=1−sᵢ no conjugation; (3) Lean scope narrowed (reflection implication only, nested v33 file named); (4) fixed-witness quantifiers printed, "ANY on-line rigidity" → "any member of the family P_line(c)"; (5) standing sentence inside theorem block + NEW FJS p.4 k=0 notation caveat added to ledger.
 - NOGO_METATHEOREM_III_DRAFT.md STATUS → REFEREED/PROMOTED; **NOGO-OPEN-1 marked CLOSED** at the stated citation/computer-assisted standing, per the referee's closing ruling.
 - Aristotle v34 harvested: all 4 TwoPinNoLine targets sorry-free, statements byte-identical to dispatch, axioms clean; local lake re-elaboration running (bwnu9043z).
+
+## 2026-08-26 13:07 UTC — Post-closure tick: Lean v34 locally re-verified; pages updated (private); paper folded
+- v34 TwoPinNoLine locally re-elaborated: Build completed successfully (8034 jobs); #print axioms → exactly [propext, Classical.choice, Quot.sound] for all 4 theorems.
+- Three artifact pages updated to refereed status and republished PRIVATE (owner directive): line-and-cloud STATUS (no-vertical-line clause now REFEREED), no-go-dossier (Met III chip Refereed·promoted; D8a row SETTLED NO unconditional), the-wobble (footer clause refereed).
+- Paper fold DONE (owner go): PAPER_SKELETON_DRAFT.md — new §3b (two certified pins + no-single-line theorem), §4.10 rewritten as Metatheorem III DISCHARGED (fixed-witness quantifiers + standing sentence), decision table row 3 SETTLED NO + new row 5 (sharpest statement), §6.1 item 3 (TwoPinNoLine machine-verification with scope warning).
+- Koyama update email DRAFTED for owner review (not sent — owner sends).
