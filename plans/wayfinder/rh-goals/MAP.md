@@ -3065,3 +3065,38 @@ Owner: "continue local and kaggle" + "you have many hours to run whatever you ne
   Holes: 120-126 and 138-192, all assigned to one or both live lanes.
 - s18-s21 still unpushed (slot cap); their harvest-time "permission denied"
   lines are the expected not-yet-pushed signature, not an auth fault.
+
+### 2026-08-26T06:06:30Z — FULL 192-ARC COVER REACHED; merge REFUSED on F_R inconsistency (gate working)
+
+- **a168-180 (4.46 h) and a180-192 (3.85 h) CERTIFIED** → contiguous cover of
+  all 192 base arcs, 23 complete receipts across both lanes.
+- **merge_s2_chunks.py REFUSED to merge**, exactly as designed:
+  "chunks disagree on F_R(288) — 2 distinct values". The split is precisely
+  Kaggle vs local:
+  - Kaggle (8 chunks): F_R = 2.089448415544975208…e−8 ± 4.52e−128
+  - Local (15 chunks): F_R = 2.089448415544807945…e−8 ± 4.18e−128
+  The two balls are **DISJOINT** — midpoints ~1.7e−21 apart with radii ~4e−128.
+  Two sound enclosures of one quantity must intersect, so the lanes are not
+  computing the same object. This is a REAL inconsistency, not formatting.
+- **Localised:** of 864 column norms, exactly **288 differ — indices 576-863**,
+  i.e. one entire component block (864 = 3 x 288). Max delta ~1.98e−14 at
+  index 577. `T_tail_R2_upper_bound`, `F_R_formula`, the first two blocks,
+  precision_bits (384) and matrix_dimension (864) all agree exactly.
+  Divergence propagates: finite_column_norm_sum → B_retained → F_R.
+- **Probable cause:** code-version skew. Every Kaggle receipt (wave-1 AND the
+  r-wave, which reused the dataset via --skip-dataset) ran the 2026-08-23
+  bundle snapshot; local runs the current worktree.
+- **REPRODUCIBILITY DEFECT FOUND (flagged, not fixed):**
+  `.worktrees/aletheia-restore/code/second_pin/` is **UNTRACKED in git**
+  (`git status` shows `?? code/second_pin/`). The code behind the flagship
+  and S2 certificates is therefore not version-pinned and the two versions
+  cannot be diffed. Both receipts nonetheless assert
+  `immutable_hashes_verified: true`, so that check does NOT cover the driver.
+  This needs its own ticket before any paper claims reproducibility.
+- **RESOLUTION CHOSEN (no soundness compromise):** the greedy cover draws only
+  ONE range from Kaggle — a036-048; local already owns the other 15. Re-running
+  a036-048 locally makes the cover single-source and removes the inconsistency
+  without weakening any bound. Launched 05:46Z, 6 workers, pid 26990.
+  REJECTED alternatives: forcing the merge; taking max(F_R) across lanes — a
+  winding certificate assembled from inconsistent endpoint bounds is worthless.
+- On landing: merge → second certified Z-zero box → Lemma 3.1 → NOGO-OPEN-1.
