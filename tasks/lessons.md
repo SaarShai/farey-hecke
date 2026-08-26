@@ -202,3 +202,12 @@ and poll, rather than assuming a foreground run will survive.
 requirement in the first line of the prompt, and on completion check the
 deliverable file exists before reporting any result (see the 2026-08-25
 false-completion lesson — same check, different failure).
+
+## 2026-08-26 — routing corrections are time-scoped
+- Pattern: owner said "don't use opus 5 for now" (turn 396), later lifted it
+  ("remove the no opus subagents rule", 2026-08-25). The correction was
+  temporary by its own wording ("for now").
+- Rule: bank routing corrections in memory/agent-routing-*.md with a date and
+  scope; before spawning, check that file — the LATEST owner directive wins.
+- Gate: memory/agent-routing-opus5.md carries the lifted-ban block; canary
+  item [turn 396] closed as superseded by the 2026-08-25 owner directive.

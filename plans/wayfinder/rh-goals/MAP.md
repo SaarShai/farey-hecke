@@ -3369,3 +3369,33 @@ real parts genuinely distinct. Sol adds a 10-item list for a third seat.
 
 STATUS UNCHANGED: **UNREFEREED/CONJECTURAL for the ledger claim**; NOGO-OPEN-1
 and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
+
+- **S2 PROMOTION PREREQUISITES: provenance + assembly doc + N=128 control** 2026-08-26T10:32:16Z —
+  (1) PROVENANCE DONE: `merge_provenance` block added to
+  S2_MERGED_CONTOUR_RECEIPT.json — chunk source = local_receipts/ only
+  (Kaggle copies excluded, F_R platform split at 12th significant digit),
+  all 16 chunk paths, merge script sha 1fb975c2…f0b9, RUN-TIME producer
+  sha 4ac59a18…8040 (identical in all 16 receipts' source_bindings;
+  certified bytes preserved at worktree commit 9763dba — live file
+  drifted to 7468cbd1… = post-run commit 6c6fb90, drift explained),
+  merge command re-run to scratch and verified to reproduce every stored
+  aggregate field (N, arc count, F_R, winding, min margin, gate, chunk
+  list — all MATCH). Sol correction 4 + Fable provenance defects: CLOSED.
+  (2) ASSEMBLY DOC WRITTEN (UNREFEREED):
+  lane_g/THEOREM_G5_SECONDPIN_ASSEMBLY.md — S2 instantiation of the
+  seven-link first-pin template; whole-box K_s exclusion (Re ≥
+  0.41054273549473627 > 0, exact, no point-distance); R5 domain check
+  (Box₂ ⊂ {Re>0, Im>1} component of Ω*); corrected MMS citation (eq 34 =
+  reduced operator, Thm 6.4 = quotient, q>5 heading footnote, h_q=1);
+  FJS divisor step cited for Selberg→φ_5 with Lean attribution limited
+  to the reflection core; interval-only real parts; rigorous ρ-separation
+  ≥ 0.04334944458020843. Constants (directed rounding): T_tail(288) ≤
+  1.4251151e-41, ‖L‖₁ ≤ 37.6839779, F_R(288) ≤ 2.0894485e-8, min margin
+  ≥ 3.064554329376951375e-8, max rH ≤ 0.49470747, census 452 subarcs /
+  260 splits. Sol corrections 1,2,3,5,7 + Fable corrections: addressed
+  in the doc. NOGO-OPEN-1 / NO_VERTICAL_LINE_COROLLARY: STILL OPEN —
+  doc is UNREFEREED; closure gated on a cold referee pass of the doc.
+  (3) N=128 CONTROL LAUNCHED 2026-08-26T10:32:16Z (Fable's stricter reading; owner said
+  "do what you need to do"): driver without --skip-comparison, --arcs 0:1,
+  receipt local_receipts/S2_CONTROL_N128.json — result to be banked on
+  completion.
