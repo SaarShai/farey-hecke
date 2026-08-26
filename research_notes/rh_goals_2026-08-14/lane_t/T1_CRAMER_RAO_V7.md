@@ -497,7 +497,7 @@ Then
 =\frac{53\pi/2+6\pi^2/\tau}{1+26\pi/\tau+6\pi^2/\tau^2}
 \le\frac{53\pi}{2}+\frac{6\pi^2}{\tau_{\min}}
 \]
-with the denominator \(>1\) and \(\tau_{\min}=(\gamma_1-h)T\). Arithmetic: \(\gamma_1-h=12.674937282357\), \(\tau_{\min}=12.674937282357\times 17.2167079396264295=218.22069\), \(53\pi/2=83.252182\), \(6\pi^2/\tau_{\min}=59.217626/218.22069=0.271366\), sum \(83.523548\le 83.53<84\). Taking \(C_{\mathrm{win}}=84\) gives \(1-84/\tau\le r(\tau)\) for all \(\tau\ge\tau_{\min}\), and \(F^{\mathrm{win}}>0\). \(\square\)
+with the denominator \(>1\) and \(\tau_{\min}=(\gamma_1-h)T\). Arithmetic: \(\gamma_1-h=12.674937282357\), \(\tau_{\min}=12.674937282357\times 17.2167079396264295=218.22069\), \(53\pi/2=83.252182\), \(6\pi^2/\tau_{\min}=59.217626/218.22069=0.271366\), sum \(83.523571\le 83.53<84\) (corrected 2026-08-26; was misprinted 83.523548). Taking \(C_{\mathrm{win}}=84\) gives \(1-84/\tau\le r(\tau)\) for all \(\tau\ge\tau_{\min}\), and \(F^{\mathrm{win}}>0\). \(\square\)
 
 *Convention.* Rife–Boorstyn and Kay, Example 3.14, quote \(12\) because they use a complex exponential or a different PSD identification. In (2.1) with a real cosine and both \(A\) and \(\phi\) unknown, \(24\) is the leading constant of the *continuous* white formula; the discrete leading constant in (5.1) is the matching \(24/(n T^2)\). Getting the factor wrong changes the RMSE coefficient by \(\sqrt{2}\).
 
@@ -695,7 +695,7 @@ At \(n=n_{\star}=1124\), \(\omega=\Omega=102.46724068\): \(\Omega T/\pi=561.5459
 \[
 \frac{6}{1124}=0.005338078,\qquad
 \frac{3\times 1764.148555}{1124}=4.70858155,\qquad
-\varepsilon_a^{\mathrm{Riem}}\le 4.71391963.
+\varepsilon_a^{\mathrm{Riem}}\le 4.71391964.
 \]
 (The withdrawn expression evaluated to \(0.27379913\).) The derivative bound is therefore **not a theorem factor**. It is recorded because it is the elementary summation-vs-integral comparison for these integrands; it is too crude for the \(b\) and \(c\) entries at the band edge, and the \(a\)-entry bound exceeds \(1\).
 
@@ -1240,7 +1240,7 @@ Then \(2h\cdot(-D)=0.211961\), \(\exp(2h\cdot(-D))=1.23610\). Round **UP** \(1+\
 | \(j\) | branch | \(\omega_{-}=\gamma_j-h\) | \(-D(\omega_{-})\) | \(2h(-D)\) | \(1+\delta_j\) exact | UP | \(F^{\mathrm{flat}}\) DOWN |
 |---:|:---|---:|---:|---:|---:|---:|---:|
 | 1 | floor | 12.67493728 | \(0.31315886\) | \(0.914291\) | \(2.49500569\) | **2.49501** | **0.4008** |
-| 2 | log | 19.56225178 | \(0.15880115\) | \(0.463637\) | \(1.58983795\) | **1.590** | **0.6289** |
+| 2 | log | 19.56225178 | \(0.15880115\) | \(0.463632\) | \(1.58983795\) | **1.590** | **0.6289** |
 | 3 | log | 23.55106972 | \(0.13732644\) | \(0.400940\) | \(1.49322016\) | **1.494** | **0.6696** |
 | 4 | log | 28.96508827 | \(0.11530075\) | \(0.336630\) | \(1.40021986\) | **1.401** | **0.7141** |
 | 5 | log | 31.47527373 | \(0.10720657\) | \(0.313001\) | \(1.36751840\) | **1.368** | **0.7312** |
@@ -1510,7 +1510,7 @@ Restored as an open row, as required: **OWED-Ainfinity-validity**.
 | V6-R4-M3 | Repaired: \(H\) is \(G^{\mathrm{disc}}/A^2\); (5.1) written for the normalised block |
 | V6-R4-M4 | Weakened: \(j=1\) excluded from Theorem B; \(\vartheta_{\min}\) is an external anchor |
 | V6-R4-M5 | Ledger restored/closed as above |
-| V6-R4-m1 | Repaired: \(\varepsilon_a^{\mathrm{Riem}}\le 6/n+3\omega T/n=4.71391963\) at \((n,\Omega)\) |
+| V6-R4-m1 | Repaired: \(\varepsilon_a^{\mathrm{Riem}}\le 6/n+3\omega T/n=4.71391964\) (UP) at \((n,\Omega)\) |
 | V6-R4-m2 | Repaired: \(D'(\Gamma_{\mathrm{op}})=0.001253651\); \(j=1,2\) table directions |
 | V6-R4-m3 | Weakened: named continuous-envelope evaluations withdrawn; \(C_{\mathrm{win}}^{\infty}=32\) kept |
 | V6-R4-m4 | Repaired: joint prior, cuff/manifold branch, “does not enlarge \(1/M_{\gamma\gamma}\)”, MSE not RMSE |
@@ -1521,3 +1521,23 @@ Minors (unfaulted v5/v6 displays, not revised except where a v6 referee figure r
 ---
 
 **v7 DRAFT (grok lane) 2026-08-26 — UNREFEREED.** Not promotable until a cold referee accepts the four v6 remaining repairs against this text. Nothing in `T1_CRAMER_RAO_V6.md`, `T1_CRAMER_RAO_V5.md`, `T1_CRAMER_RAO_V4.md`, or `T1_CRAMER_RAO_DRAFT.md` may be cited as a result in preference to this file.
+
+
+## POST-REFEREE CORRECTION PASS 2026-08-26 (fable) — round-5 verdict PROMOTABLE-WITH-CORRECTIONS, corrections applied
+Referee: T1_V7_REFEREE_2026-08-26.md. Applied: C_win sum 83.523548 -> 83.523571
+(constituents were right, the sum was misprinted; still < 83.53 < 84);
+eps_a^Riem display and ledger row 4.71391963 -> 4.71391964 (UP);
+j=2 intermediate 2h|D| 0.463637 -> 0.463632 (final 0.6289 DOWN unchanged).
+NOT applied, with receipts: the referee's recomputed prior widths
+rho_{1,2,3}=...851, rho_{4,5}=...989, rho_10=2.9499963e-9 are double-precision
+artifacts on the referee's side — 40-digit mpmath recomputation (this pass)
+gives rho_{1,2,3}=h/2=0.72989392968885083 (v7's printed float is exact),
+rho_{4,5}=0.52519880125098767 (v7's ...987 is the correct DOWN display), and
+rho_10=2.9499963406e-9 (v7's 2.94999634e-9 is the correct display; the
+referee's 2.9499963 is the same value truncated). No other display changed.
+STANDING AFTER ROUND 5: all load-bearing defects repaired or honestly demoted;
+remaining open items are the labelled OWED/OPEN ledger rows (notably
+OWED-Ainfinity-validity, OWED-B1-receipt, OWED-overlap, conditional H-circle,
+prior-dominated j=d at this Gamma_op with Gamma_op=52/n=1140 documented as the
+repair path). T1 v7 stands as a CONDITIONAL, PARTIALLY-CERTIFIED result at
+this standing.
