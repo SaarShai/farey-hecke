@@ -1,7 +1,7 @@
 # 2026-08-26 — T1 completion + preprint assembly
 
 ## T1 final wave
-- [ ] GAP-4: Lemma-1 restatement with band-edge constant (builder lane)
+- [x] GAP-4: Lemma-1 restatement — closed at ceiling standing, OWED-1 disclosed
 - [ ] GAP-7: van Trees / Bayesian CR replacing unbiasedness (grok 4.6 xhigh)
 - [ ] GAP-17 propagation: van Trees with corrected d_K≈0.151 input (grok, same lane)
 - [ ] GAP-9: stationary extension idealization statement (luna via codex)
