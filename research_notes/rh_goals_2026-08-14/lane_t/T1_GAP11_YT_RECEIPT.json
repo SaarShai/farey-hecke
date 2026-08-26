@@ -1,0 +1,19 @@
+{
+  "purpose": "GAP-11: apply the SAME matched-filter estimator directly to y(t) (reusing t1_gap11_rerun.py's y(t) construction verbatim, same N_MAX/grid/R0/R_-1/R_triv/matched-filter formula) as an independent verification that |C(gamma_1)| already reported in T1_GAP11_N1_RECEIPT.json was in fact computed on y(t) itself.",
+  "script": "research_notes/rh_goals_2026-08-14/lane_t/t1_gap11_yt_estimator.py",
+  "script_sha256": "b36efa6ca612319f2654392915c539587b78d84f2bc219a79a1c6fed3c1497b2",
+  "reused_script": "research_notes/rh_goals_2026-08-14/lane_t/t1_gap11_rerun.py",
+  "python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "numpy_version": "2.5.1",
+  "mpmath_version": "1.4.1",
+  "N_MAX": 30000000,
+  "grid_size": 200,
+  "grid_min": 1000,
+  "grid_max": 30000000,
+  "gamma_1": 14.134725141734693,
+  "abs_C1_this_run_on_yt": 0.006287348644552258,
+  "predicted_a_gamma1": 0.0062713476035110354,
+  "ratio_this_run_vs_predicted": 1.00255145178562,
+  "previous_abs_C1_N1_rerun_receipt": 0.006287348644552258,
+  "ratio_this_run_vs_previous": 1.0
+}

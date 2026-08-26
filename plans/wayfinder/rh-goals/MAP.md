@@ -3556,3 +3556,8 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 
 ## 2026-08-26 15:27 UTC — v35 locally RE-VERIFIED: all 6 theorems axiom-clean
 - Local lake build exit 0; #print axioms → exactly [propext, Classical.choice, Quot.sound] for osc_bound_p0 (corrected 2/λ), the formal counterexample, p1, p2, block_inverse_lower_bound, gaussian_fim_data_processing. T1 GAP-5/6 finite cores now verified on our machine as well as Aristotle's. (Answers owner Q "is T1 done locally" — YES as of this tick.)
+
+## 2026-08-26 — T1 final wave + preprint assembly launched
+- Owner: "do what you need to complete T1" + "assemble the pre-print".
+- Lanes launched in parallel: GAP-7+17-propagation (grok 4.6 xhigh via cursor), GAP-9+13 (luna via codex), GAP-4 (builder), GAP-11 y(t) estimator (builder), GAP-12 live-web recheck (research-lite), preprint LaTeX assembly from PAPER_SKELETON_DRAFT.md (builder).
+- All lanes deliver UNREFEREED drafts; frontier cold-verify before banking; full T1 cold referee + preprint cold referee to follow.
