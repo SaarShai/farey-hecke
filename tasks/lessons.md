@@ -211,3 +211,13 @@ false-completion lesson — same check, different failure).
   scope; before spawning, check that file — the LATEST owner directive wins.
 - Gate: memory/agent-routing-opus5.md carries the lifted-ban block; canary
   item [turn 396] closed as superseded by the 2026-08-25 owner directive.
+
+## 2026-08-26 — a watcher on a file is not a watcher on the task
+- Pattern: codex referee task died at launch (+2h undetected) on a model-name
+  error; my watcher polled only for the OUTPUT FILE, so the failure was
+  invisible until I read the plugin's job state file.
+- Rule: when backgrounding a delegated task, watch the TASK STATE
+  (~/.claude/plugins/data/codex-inline/state/<proj>/jobs/<id>.json), not just
+  the artifact path; check status=running within minutes of dispatch.
+- Gate: any codex dispatch through codex-rescue gets a status check in the
+  same turn as the launch confirmation.

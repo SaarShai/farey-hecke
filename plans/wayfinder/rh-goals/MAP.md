@@ -3477,3 +3477,26 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
   R2_THIRDPIN_ENVELOPE_RECEIPT.json, W_ENVELOPE_CERT_S2_RECEIPT.json.
   Kaggle push: NOT executed (nothing feasible to run). Owner decision
   point: park the third pin, or open a machinery lane.
+
+- **PARALLEL CLOSE-OUT TICK** 2026-08-26T12:01:23Z — owner: "continue, close what needs
+  closing; aristotle+kaggle as needed; overnight compute waits for
+  owner go" (nothing currently queued for overnight — third pin probe
+  verdict stands, N*≈1030 not recommended). Actions:
+  (1) SOL SEAT AUTOPSY + REDISPATCH: the 08:12Z codex referee task
+  task-mt9yh9da-apbfxs FAILED ~10:33Z with "The 'gpt-5' model is not
+  supported when using Codex with a ChatGPT account" — my watcher
+  guarded a dead task for ~2h. Redispatched with the DEFAULT model:
+  task-mta1kyhn-buq7q0, state=running (verified in the plugin job
+  state file). LESSON banked below.
+  (2) PAPER §8/§9 ALREADY DONE: builder lane verified §8 (q8 checker
+  output, commit 28074a4) and §9 (PGT-1 softening, commit 4b8b044)
+  are already filled and match their source artifacts value-by-value
+  (checker sha 6a9c1c3d…, 1024/1024, rH 0.18921252…, scope quote
+  byte-identical). My "publishable" list was stale on both — closed.
+  (3) ARISTOTLE V34 DISPATCHED: projects/aristotle_dispatch_v34/
+  TwoPinNoLine.lean — Metatheorem III logical core (no_common_line +
+  exact pin-interval gap 4334944458020843/1e17 + disjointness +
+  distinct-Re composition), 4 sorry targets, statements pinned; project
+  86a65af8-106f-4d03-a588-e806fb08a83a. Machine-verifies ONLY the final
+  logical step; analytic weight stays with the S2 assembly + FJS
+  bridge referee.
