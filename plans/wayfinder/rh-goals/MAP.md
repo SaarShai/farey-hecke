@@ -3561,3 +3561,8 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 - Owner: "do what you need to complete T1" + "assemble the pre-print".
 - Lanes launched in parallel: GAP-7+17-propagation (grok 4.6 xhigh via cursor), GAP-9+13 (luna via codex), GAP-4 (builder), GAP-11 y(t) estimator (builder), GAP-12 live-web recheck (research-lite), preprint LaTeX assembly from PAPER_SKELETON_DRAFT.md (builder).
 - All lanes deliver UNREFEREED drafts; frontier cold-verify before banking; full T1 cold referee + preprint cold referee to follow.
+
+## 2026-08-26 — T1 final wave LANDED; preprint assembled
+- T1 gaps: GAP-4/7/12/13 CLOSED, GAP-9 addressed (Cameron–Martin OWED), GAP-11 resolved (same-observable, 0.26%), GAP-17 CLOSED-AT-CLASS-RESTRICTED (mandatory Gaussian-score quantifier; Stam direction correction banked against the Berry–Esseen note). Ledger update in T1_CRAMER_RAO_DRAFT.md; commits 55548ea, 079078a, a35df73.
+- Preprint: main.tex assembled from skeleton (15pp, tectonic-compiled, intervals verbatim, 0 discrepancies), FIG-1 rendered from d8 receipts (range 0.2188–0.3273); commit 6e926ec. PDF sent to owner.
+- Cold referees launched: T1 full draft (codex) + preprint fidelity/overclaim (frontier-verifier).
