@@ -21,4 +21,4 @@
 
 ## Review / results
 (append as lanes land)
-- [ ] T1 v4 clean rewrite vs referee 7 conditions (grok lane) + re-referee
+- [x] T1 v4→v7 loop converged: round-5 PROMOTABLE-WITH-CORRECTIONS, corrections applied; T1 stands as conditional partially-certified result

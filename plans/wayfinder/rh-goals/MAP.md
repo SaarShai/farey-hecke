@@ -3571,3 +3571,8 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 - Preprint referee (frontier-verifier): 14 defects, all corrected same-day (commit 764984f); intervals character-exact; PDF v2 sent to owner.
 - T1 referee (codex, cold): NOT-PROMOTABLE — 19 defects, 8 BLOCKING (marked-amplitude cancellation underived; Godambe class-restriction not a lower bound; van Trees is Bayes-average not pointwise; Γ=50 violates M5, admissible cut Γ≥51.2337; Prop. R disclosures missing at principal uses; body/ledger contradictions). Arithmetic audit passed. Report installed verbatim; draft stamped SUPERSEDED-for-claims.
 - Next: clean v4 rewrite against the referee's 7 minimum conditions, then re-referee. T1 stays CONJECTURAL.
+
+## 2026-08-26 — T1 referee loop CONVERGED at round 5
+- v4→v7 iteration (grok drafts, codex cold referees): round-5 verdict on T1_CRAMER_RAO_V7.md = PROMOTABLE-WITH-CORRECTIONS. 3 real transcription fixes applied; the referee's 3 rho-width "corrections" were refuted by 40-digit mpmath recomputation (receipts installed in the draft's correction pass).
+- Final standing: T1 v7 = CONDITIONAL, PARTIALLY-CERTIFIED information-cost result for the declared discrete-sampling Gaussian-surrogate experiment; Theorem A (pointwise CR, envelope form) + Theorem B (van Trees, j∈{2..d}, conditional on H-circle); honest OWED ledger (Ainfinity-validity, B1-receipt, overlap, j=d prior-dominated at this cut; Gamma_op=52/n=1140 documented as upgrade path).
+- The original sqrt(6) headline law is NOT certified for the real zeta noise: no transfer claim (Stam obstruction). What survives is narrower and honest.
