@@ -3232,3 +3232,40 @@ sol's six conditions as its implementation spec.
 Process note: the first sol dispatch was killed at exit 143 by the codex
 wrapper's ~10 min FOREGROUND timeout with no file written; re-dispatched with
 an explicit background-mode instruction. Banked to tasks/lessons.md.
+
+### 2026-08-26T08:25:12Z — S2 MERGE PASSED: merged_winding = 1 — SECOND G_5 WINDING BOX CERTIFIED (UNREFEREED)
+
+- **a036-048 re-run CERTIFIED** (2.06 h, CHUNK_ARCS_CLEAR) — the cover is now
+  single-platform, single-source, one F_R value throughout.
+- **BUG FOUND AND FIXED IN THE FIX:** the first merge attempt STILL refused.
+  Cause: the dedupe uses `by_range.setdefault`, so the FIRST --chunk-dir wins,
+  and the default order put chunk_receipts (Kaggle) before local_receipts —
+  it kept selecting the Kaggle a036-048 and the F_R split persisted. Resolved
+  by explicit precedence:
+  `--chunk-dir local_receipts --chunk-dir chunk_receipts`.
+  Directory ORDER is load-bearing in that script and not obvious from its help.
+- **MERGE RESULT** (chunk_receipts/S2_MERGED_CONTOUR_RECEIPT.json):
+    merged_winding = 1
+    closed_contour_gate_pass = true
+    N = 288, expected_base_closed_arc_count = 192
+    chunks = 16, ALL CHUNK_ARCS_CLEAR with chunk_gate_pass = true
+    ranges verified to tile [0,192) contiguously, no gap or overlap
+    single F_R = [2.0894484155448079454689317030351840248427932615021426610342925555390...e-8
+    minimum_finite_lower_minus_F_margin =
+      [3.064554329376951755251952620056559943464231764407801654136...e-8
+    schema s2-merged-contour/v1, status UNREFEREED
+- **MEANING:** winding >= 1 with every chunk CHUNK_ARCS_CLEAR certifies at least
+  one zero of the finite/Fredholm determinant inside the S2 box (the same
+  straight-line homotopy argument as the flagship). This is the **second
+  certified G_5 winding box**, centre 0.41054373549473627 + 7.81976824701551188i,
+  half-width 1e-6 — a real part distinct from the flagship pin.
+- **CONSEQUENCE (pending referee):** via SCAT-1 Lemma 3.1 (reflection core,
+  machine-verified sorry-free by Aristotle, project ca1833f9, local lake build
+  PASS), two certified Z_{G_5} zeros at distinct real parts give two phi_5
+  zeros at Re ~ 0.5461 and Re = 0.5894562645052637 -> **NOGO-OPEN-1 CLOSABLE**,
+  and with it the open item of NO_VERTICAL_LINE_COROLLARY (closing one closes
+  both).
+- **STATUS DISCIPLINE: UNREFEREED = CONJECTURAL.** No promotion, no paper claim,
+  no dissemination until a cold adversarial referee passes. The N=128 control
+  arm and the assembly document remain separate outstanding steps (named in the
+  merge receipt's own note field).
