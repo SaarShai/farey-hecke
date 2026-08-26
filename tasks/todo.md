@@ -2,10 +2,10 @@
 
 ## T1 final wave
 - [x] GAP-4: Lemma-1 restatement — closed at ceiling standing, OWED-1 disclosed
-- [ ] GAP-7: van Trees / Bayesian CR replacing unbiasedness (grok 4.6 xhigh)
-- [ ] GAP-17 propagation: van Trees with corrected d_K≈0.151 input (grok, same lane)
-- [ ] GAP-9: stationary extension idealization statement (luna via codex)
-- [ ] GAP-13: d-dependence statement (luna, same lane)
+- [x] GAP-7: van Trees closed — constant 2.395 vs √6, verified
+- [x] GAP-17 propagation: closed-at-class-restricted (Gaussian-score class); Stam direction correction banked
+- [x] GAP-9: landed (luna) — Cameron–Martin obstruction named, OWED items disclosed
+- [x] GAP-13: landed (luna) — C_RMSE(d)=√(6·log(γ_d/2π)), draft claim corrected
 - [ ] GAP-11 interpretation: estimator run on y(t) itself (local python, builder lane)
 - [x] GAP-12: live-web prior-art re-check (research-lite) — NONE/SETUP-ONLY, closed
 - [ ] Frontier cold-verify every lane's numbers before banking
