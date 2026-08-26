@@ -3269,3 +3269,51 @@ an explicit background-mode instruction. Banked to tasks/lessons.md.
   no dissemination until a cold adversarial referee passes. The N=128 control
   arm and the assembly document remain separate outstanding steps (named in the
   merge receipt's own note field).
+
+### 2026-08-26 (see commit time) — CORRECTION (append-only): my S2 merge entry OVERREACHED; Fable referee PROMOTABLE-WITH-CORRECTIONS
+
+Fable referee seat (report installed verbatim: lane_g/S2_MERGED_REFEREE_FABLE.md)
+verdict: **PROMOTABLE-WITH-CORRECTIONS**. The merged receipt itself withstood
+every attack, but the CLAIM I banked from it was too strong. Corrections to the
+preceding "S2 MERGE PASSED" entry, which stands unedited per append-only:
+
+**C-A. NOGO-OPEN-1 is NOT closed.** I wrote "NOGO-OPEN-1 CLOSABLE". The certified
+object is a **Fredholm-determinant zero**, NOT yet a Z_{G_5} or phi_5 zero. The
+K_s-divisor exclusion, sector identification, multiplicity, and the SCAT-1
+Lemma 3.1 application must first be bound to the S2 box in an assembly document.
+Until that exists, **NOGO-OPEN-1 stays OPEN**.
+
+**C-B. Reflected real part mis-stated (truncation).** I wrote
+0.5894562645052637. The correct value is **0.58945626450526373**, verified here
+by direct arb reflection: 1 - 0.41054373549473627 = [0.58945626450526373000
++/- 1e-25]. The figure 0.5894543 is a documented transposition error and must
+never appear.
+
+**C-C. First real part under-stated.** I wrote "Re ~ 0.5461". The artifact
+supports **0.5461048199250553**: 1 - 0.4538951800749447 =
+[0.54610481992505530000 +/- 3e-25]. The two Z-zero box real parts are
+0.4538951800749447 (flagship) and 0.41054373549473627 (S2) — genuinely
+distinct, so the distinctness requirement of NOGO-OPEN-1 IS met.
+
+**C-D. Merge provenance unrecorded.** S2_MERGED_CONTOUR_RECEIPT.json does not
+record that the cover is local_receipts ONLY, with the Kaggle chunk_receipts
+copies excluded because of the F_R platform split at the 12th significant
+digit. The receipt should state this.
+
+Fable's six promotion prerequisites, in full: (1) record merge provenance;
+(2) run and file the N=128 control arm; (3) write the S2 assembly document
+binding K_s/sector/multiplicity/SCAT-1 to the S2 box; (4) quote the reflected
+real part only as 0.58945626450526373; (5) commit the a036-048 local artifacts
+and the merged receipt; (6) obtain a second referee seat.
+
+Confirmed-by-Fable (independently recomputed by that seat): geometrically
+closed CCW contour with seam continuity across all 452 leaves including
+wraparound; homogeneous all-local chunk set; a036-048 re-run genuinely fresh
+and uncontaminated by its stale checkpoint; real parts genuinely distinct.
+
+Second seat (gpt-5.6-sol via codex, background) still RUNNING; its report will
+be installed verbatim at lane_g/S2_MERGED_REFEREE_SOL.md and any split with
+Fable escalated to the owner rather than adjudicated here.
+
+STATUS UNCHANGED: **UNREFEREED = CONJECTURAL**. No promotion, no paper claim,
+no dissemination.
