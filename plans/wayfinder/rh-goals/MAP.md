@@ -3553,3 +3553,6 @@ and NO_VERTICAL_LINE_COROLLARY remain **OPEN** pending the S2 assembly document.
 
 ## 2026-08-26 15:14 UTC — Outreach list DONE: 200 mathematicians, 168 verified public emails
 - dissemination/OUTREACH_LIST_200.md: 200 rows (name, affiliation, community per NOGO_AUDIENCE_SURVEY, why-relevant, email, source). Name gen: luna (codex, spectral/quantum-chaos/Connes/metamath ~100) + grok 4.6 (cursor, analytic NT/computational/dynamics ~111); 209 unique, trimmed to 200. Emails: 6 web-search agent waves, public institutional pages only, zero pattern-guessed; 168 found, 32 marked — (deceased/retired/unlisted). Gemini unusable (CLI IneligibleTierError). Data fixes: Tobias Mühlenbruch name; 8 affiliation moves caught. Provenance batches kept (outreach_batch_A/B, emails_*.tsv). CONTACT REMAINS OWNER-GATED per item.
+
+## 2026-08-26 15:27 UTC — v35 locally RE-VERIFIED: all 6 theorems axiom-clean
+- Local lake build exit 0; #print axioms → exactly [propext, Classical.choice, Quot.sound] for osc_bound_p0 (corrected 2/λ), the formal counterexample, p1, p2, block_inverse_lower_bound, gaussian_fim_data_processing. T1 GAP-5/6 finite cores now verified on our machine as well as Aristotle's. (Answers owner Q "is T1 done locally" — YES as of this tick.)
