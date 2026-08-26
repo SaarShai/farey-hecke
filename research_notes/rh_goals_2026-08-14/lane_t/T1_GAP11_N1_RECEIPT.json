@@ -1,0 +1,32 @@
+{
+  "purpose": "GAP-11 N1 (deterministic) re-run of the frozen T1 observable y(t) on the actual arithmetic side (Mobius sieve), compared against the Prop R explicit-formula prediction (T1_GAP16_RIESZ_IMPORT.md).",
+  "script": "research_notes/rh_goals_2026-08-14/lane_t/t1_gap11_rerun.py",
+  "script_sha256": "60bbbd5012e58ef7556eaa0369231664985c17f7c8e2636b5110d790a7699dd4",
+  "python": "3.13.13 (main, Apr 14 2026, 14:32:41) [Clang 22.1.3 ]",
+  "numpy_version": "2.5.2",
+  "mpmath_version": "1.4.1",
+  "N_MAX": 30000000,
+  "grid_size": 200,
+  "grid_min": 1000,
+  "grid_max": 30000000,
+  "R0": -2.0,
+  "R_triv_leading_coeff_at_n1": -16.42119333144247,
+  "zeta_prime_neg2": -0.03044845705839327,
+  "residual_rmse_vs_K_zeros": {
+    "1": 0.003726917725252961,
+    "3": 0.0019765176305203062,
+    "10": 0.0006891093707915179
+  },
+  "matched_filter_gamma1": {
+    "gamma_1": 14.134725141734693,
+    "abs_C1": 0.006287348644552258,
+    "predicted_a_gamma1": 0.0062713476035110354,
+    "ratio": 1.00255145178562
+  },
+  "matched_filter_off_tone_control": {
+    "gamma": 17.0,
+    "abs_C": 0.0003274835614451496
+  },
+  "T1_bound_RMSE_at_gamma1_X3e7": 0.030874216034421375,
+  "gate1_empirical_abs_error_at_gamma1_from_draft": 0.005653890056693877
+}
