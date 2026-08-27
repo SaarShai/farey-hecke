@@ -1,60 +1,50 @@
-# Reply email draft — 2026-08-27
+# Reply email draft — 2026-08-27 (tightened)
 
-**Subject:** Agreed: Experimental Mathematics — final TeX, frontier replication complete, Zenodo ready
+**Subject:** Agreed: Experimental Mathematics — final TeX attached, replication complete, Zenodo ready
 
 Dear Professor Koyama,
 
-Thank you for both messages. I am glad the revision met your approval, and I
-fully agree with the two-stage strategy: Experimental Mathematics is the right
-home for this joint manuscript, and it keeps your Stage-2 analytic paper for
-Inventiones cleanly separated. Let us proceed on that basis.
+Thank you for both messages. I agree with the two-stage strategy:
+Experimental Mathematics for this joint manuscript now, with your Stage-2
+analytic paper for Inventiones kept cleanly separate. Let us proceed.
 
-Since your last message I have completed the remaining technical items:
+Since your last message I completed three items:
 
-1. **Independent frontier replication.** The extension from `1.3 x 10^13` to
-   `3 x 10^14` was previously a single run of our own sieve, and I did not
-   want it in the paper without independent confirmation. I have now
-   recomputed the entire frontier with a second, independent implementation
-   (a primesieve-based iterator, run as three range-split cloud jobs). The
-   two computations agree exactly in all 4896 shared class cells at all 72
-   frontier grid points, and the range counts reproduce the published values
-   of pi(10^14), pi(2 x 10^14), and pi(3 x 10^14). The manuscript's
-   "one run" caveat is removed, and the replication code, outputs, and
-   receipt are included in the archive package.
+1. **Independent replication of the frontier.** The extension from
+   1.3 x 10^13 to 3 x 10^14 had been a single run of our own sieve. I
+   recomputed it with a second, independent primesieve-based implementation:
+   all 4896 shared class cells agree exactly at all 72 frontier checkpoints,
+   and the range counts reproduce the published values of pi(10^14),
+   pi(2 x 10^14), and pi(3 x 10^14). The "one run" caveat is removed from
+   the manuscript; the replication code and receipt are in the archive.
 
-2. **Zenodo archive.** The complete computational package (data, zero tables,
-   reconstruction and verification code, the new replication material, the
-   Lean sources, and SHA-256 manifests) is assembled and ready to upload,
-   with metadata listing both of us as creators and linking your preprint
-   arXiv:2607.28931 as the companion theoretical reference. I will upload it,
-   reserve the DOI, and insert it at the marked placeholder in the TeX before
-   we finalize.
+2. **Zenodo archive.** The complete computational package (data, zero
+   tables, verification code, the replication material, Lean sources,
+   SHA-256 manifests) is assembled, with both of us as creators and
+   arXiv:2607.28931 linked as the companion reference. I will upload it,
+   reserve the DOI, and insert it at the marked placeholder before we
+   finalize.
 
-3. **Final TeX.** Attached. Beyond the DOI placeholder, the changes since the
-   version you reviewed are: the abstract now leads with the verified
-   computational results (the framing you proposed for Experimental
-   Mathematics), your preprint is cited as the source of the regularized
-   framework, and the replication sentences replace the single-run caveat.
-   The compiled PDF is still eight pages with no warnings. One confirmation:
-   the finite-x mollified comparison plot remains excluded, for the reasons
-   we discussed — the statistic is not yet analytically fixed, so the plot
+3. **Final TeX — attached.** Changes since the version you reviewed: the
+   abstract leads with the verified computational results, your preprint is
+   cited as the source of the regularized framework, and the replication
+   replaces the single-run caveat. Still eight pages, no warnings. As
+   discussed, the finite-x mollified plot stays excluded — that statistic
    belongs to Stage 2.
 
-I have also drafted a short cover letter for the Experimental Mathematics
-submission (attached); please edit freely. Two small points to settle at your
-convenience: which of us acts as corresponding author for the submission, and
-whether you would like any wording changes before I upload the Zenodo package
-(its README and metadata are in the attached archive).
+A draft cover letter for Experimental Mathematics is attached; edit freely.
+Two points to settle at your convenience: who acts as corresponding author,
+and any wording changes you want in the Zenodo README/metadata before I
+upload.
 
-As agreed, neither of us submits or replaces anything until we have both
-approved the same final compiled PDF.
+As agreed, neither of us submits anything until we have both approved the
+same final compiled PDF.
 
 Best regards,
 
 Saar
 
 **Attachments:**
-- `koyama_final_packet_2026-08-27.zip` (manuscript TeX + PDF, changelog,
-  verification report, numerics, Lean, checksums)
+- `koyama_final_packet_2026-08-27.zip`
 - `cover_letter_draft.md`
 - (after DOI reservation) final TeX with the DOI inserted
