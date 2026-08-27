@@ -1,3 +1,18 @@
+# 2026-08-27 — Koyama finalization (Exp.Math retarget) — WORK COMPLETE, owner gates remain
+
+- [x] T1-prep Reply email drafted: output/koyama_final_2026-08-26/koyama_reply_email_draft_2026-08-27.md (owner sends)
+- [x] T2 Kaggle auth: kaggle.json key dead; OAuth ~/.kaggle/access_token works (bearer)
+- [x] T3 Frontier replication PASS: 3 range-split kernels (farey-frontier-p1/p2/p3), merged;
+      4896/4896 cells exact across all 72 grid points vs curve_3e14.tsv; pi(1e14)/pi(2e14)/pi(3e14)
+      anchors exact. Receipt: projects/minus1-dominance/kaggle_frontier/REPLICATION_FRONTIER_2026-08-27.md
+      (first single kernel hit the 12h cap and was cancelled)
+- [x] T4 Zenodo package assembled+zipped (output/koyama_final_2026-08-26/zenodo/), checksums verified;
+      OWNER: upload, reserve DOI
+- [x] T5/T5b Final TeX: Exp.Math reframe, arXiv:2607.28931 cited, DOI placeholder, replication
+      sentences; compiles 8pp, 0 warnings
+- [ ] T6 OWNER: insert reserved DOI (marked placeholder), send packet + email; both-approve gate
+- [x] T7 Exp.Math format OK (standard LaTeX2e accepted); cover_letter_draft.md written
+
 # 2026-08-26 — T1 completion + preprint assembly
 
 ## T1 final wave
@@ -25,6 +40,7 @@
 
 
 ## Koyama finalization — 2026-08-26 (Exp.Math retarget + Zenodo + final TeX)
+[SUPERSEDED 2026-08-27 by the section at the top of this file: session 32f5fbb1 finished — T3 replication PASS (4896/4896), packet+zip final. Kept for provenance only; do not action items below.]
 [RESTORED 2026-08-26 by session d132431f: this section, added by session
 "Koyama paper revision coordination" (32f5fbb1) at 05:35 local, was lost when
 this session rewrote todo.md at ~11:00; reconstructed from that session's
