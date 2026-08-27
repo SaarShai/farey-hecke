@@ -12,7 +12,7 @@ Two defects from that report nevertheless reappear in the current source and PDF
 
 The potentially publishable mathematical core is much narrower than the manuscript says:
 
-1. a fixed-​`q` consequence of the classical Selberg/Hejhal weighted scattering-divisor machinery, if the authors can prove that the precise orbifold hypotheses and normalization cover every finite Hecke triangle group and if this consequence is not already explicit in the literature; and
+1. a fixed-`q` consequence of the classical Selberg/Hejhal weighted scattering-divisor machinery, if the authors can prove that the precise orbifold hypotheses and normalization cover every finite Hecke triangle group and if this consequence is not already explicit in the literature; and
 2. two rigorously interval-certified `q=5` transfer-operator zeros, hence two Selberg-zeta zeros and, after a published divisor theorem plus the scattering functional equation, two scattering zeros with distinct real parts.
 
 The first item is presently asserted rather than proved. Its engine is recognizably classical. The second may be a real computational upgrade over heuristic numerics, but the paper does not expose the certificate chain sufficiently and the advertised archive does not contain the final promoted second-pin assembly/merged contour receipt. The “metatheorems” add almost no mathematical content: once a class has a universal off-line theorem or one counterexample, the displayed semantic non-entailments are immediate.
