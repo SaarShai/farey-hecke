@@ -1,0 +1,73 @@
+{
+  "dataset_dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/dataset",
+  "dataset_id": "saarshai/q8-schur-subdivision-inputs",
+  "shard_count": 8,
+  "leaves_total": 512,
+  "leaves_per_shard": 64,
+  "kernels": [
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s00",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s00",
+      "arc": 0,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a0_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s01",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s01",
+      "arc": 0,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a0_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s02",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s02",
+      "arc": 1,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a1_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s03",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s03",
+      "arc": 1,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a1_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s04",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s04",
+      "arc": 2,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a2_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s05",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s05",
+      "arc": 2,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a2_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s06",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s06",
+      "arc": 3,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a3_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d7-s07",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d7-s07",
+      "arc": 3,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a3_l64-128.json"
+    }
+  ]
+}

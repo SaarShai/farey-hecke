@@ -1,0 +1,140 @@
+{
+  "schema": "farey-hecke.q8-schur-subdivision-campaign/1",
+  "created": "2026-08-21",
+  "lane": "lane_g packaging of an UNMODIFIED lane_f engine",
+  "purpose": "depth-8 parallel subdivision of the q=8 Schur contour arc gate; qOp = 83.79 at depth 0 halves per bisection, so depth 7 is the smallest depth that clears qOp at all (worst mid-arc leaf 1.3089 at depth 6), and depth 8 is the smallest that also clears the finite-Taylor zero-exclusion gate (worst rH 0.1945 against the square-box predictor 0.41421)",
+  "python": ">=3.11",
+  "dependencies": {
+    "python-flint": "0.9.0"
+  },
+  "geometry": {
+    "K_per_edge": 1,
+    "arcs": 4,
+    "depth": 8,
+    "leaves_per_arc": 256,
+    "leaves_total": 1024
+  },
+  "status_contract": "Shard receipts are CHECKER OUTPUT, not a theorem.  E1, the q=8 MMS/Hilbert identification, K_s, analytic gates 5-6 and continuation condition 8 of the 12-item ledger are untouched.",
+  "files": [
+    {
+      "dataset_name": "lane_f__q8_schur_contour.py",
+      "tree_path": "lane_f/q8_schur_contour.py",
+      "sha256": "6a9c1c3d7b28c2e0741a5e880d1b12d48066437ea03efcfd3cda90743f1fc3b0",
+      "bytes": 59070,
+      "role": "lane_f checker, UNMODIFIED (commit 3f8dd58 lineage, v4-operator-norm-gate)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/q8_schur_contour.py"
+    },
+    {
+      "dataset_name": "lane_f__q8_contour_helpers.py",
+      "tree_path": "lane_f/q8_contour_helpers.py",
+      "sha256": "54ff4dcf39b6f1521cdf25ad769e37a1b4858fc8e07dc711e015fb7cd13da2f0",
+      "bytes": 4967,
+      "role": "contour geometry + certified winding (hash-pinned by the checker)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/q8_contour_helpers.py"
+    },
+    {
+      "dataset_name": "lane_f__q8_r3b_engine.py",
+      "tree_path": "lane_f/q8_r3b_engine.py",
+      "sha256": "8b63dfbfc6bad21b01a951cbbf9f25e5a218f0353f9dd1c3493674b311aca2fc",
+      "bytes": 9466,
+      "role": "q8 R3b block/derivative engine (hash-pinned by the checker)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/q8_r3b_engine.py"
+    },
+    {
+      "dataset_name": "lane_f__f8_source_builder.py",
+      "tree_path": "lane_f/f8_source_builder.py",
+      "sha256": "e7a27aaa23074eb5722c1d392a5a93f73f787c02ebc6f5faeb2af1d0802f747a",
+      "bytes": 6770,
+      "role": "F1024 source geometry builder (hash-pinned by the checker)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/f8_source_builder.py"
+    },
+    {
+      "dataset_name": "lane_f__f8_certify_tb_blocks.py",
+      "tree_path": "lane_f/f8_certify_tb_blocks.py",
+      "sha256": "30fd9b15a9425b1a356753f667909a8d58d826d4ac1e30f1a2e7667fcc73871c",
+      "bytes": 19376,
+      "role": "TB block certifier (hash-pinned by the checker)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/f8_certify_tb_blocks.py"
+    },
+    {
+      "dataset_name": "lane_f__q8_tb_support.py",
+      "tree_path": "lane_f/q8_tb_support.py",
+      "sha256": "b159154422d0047497548a58498429977e854bf67872fea32e627927ca2ec6d0",
+      "bytes": 8930,
+      "role": "TB support primitives (imported by f8_certify_tb_blocks)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/q8_tb_support.py"
+    },
+    {
+      "dataset_name": "lane_g__law_probes__kaggle_boundary_rate__zeta_cert_rosen_q5.py",
+      "tree_path": "lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_q5.py",
+      "sha256": "c84c5c3f6d9f7a320bca7f1dbfd96a4859c3eea9b3de5420eb4eb223ad0d597b",
+      "bytes": 47890,
+      "role": "vendored q-agnostic Arb/Hurwitz primitives (f8_source_builder TRACKED_ENGINE_DIR)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_q5.py"
+    },
+    {
+      "dataset_name": "lane_g__law_probes__kaggle_boundary_rate__zeta_cert_rosen_even.py",
+      "tree_path": "lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_even.py",
+      "sha256": "693d2a88fd525e94c8ab6a63486e82fe0670d9dce142effbd5be5e324597212a",
+      "bytes": 23770,
+      "role": "vendored trusted generic even-q engine (cross-check import)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen_even.py"
+    },
+    {
+      "dataset_name": "lane_g__law_probes__kaggle_boundary_rate__zeta_cert_rosen.py",
+      "tree_path": "lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen.py",
+      "sha256": "965c2e5f65ae88b458d79bc425375e31589dcbf50703173664ef0e30901dceac",
+      "bytes": 19959,
+      "role": "vendored odd-q engine (transitively imported by the even engine)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/law_probes/kaggle_boundary_rate/zeta_cert_rosen.py"
+    },
+    {
+      "dataset_name": "lane_f__f8_receipts__Q8_R2_F1024_LOCAL_RECEIPT.json",
+      "tree_path": "lane_f/f8_receipts/Q8_R2_F1024_LOCAL_RECEIPT.json",
+      "sha256": "80daa5de82c4e47d43c3b4aaa84a5955be5281f2cb147e7730766a1bba946043",
+      "bytes": 88162,
+      "role": "pinned R2 receipt (PINNED_RECEIPT_SHA256['R2'])",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/f8_receipts/Q8_R2_F1024_LOCAL_RECEIPT.json"
+    },
+    {
+      "dataset_name": "lane_f__f8_receipts__Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json",
+      "tree_path": "lane_f/f8_receipts/Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json",
+      "sha256": "5f9cd3f9179c5b15539b3666bd3a2a3144995408648369dc1db6eda36f51d35c",
+      "bytes": 48659,
+      "role": "pinned TB receipt (PINNED_RECEIPT_SHA256['TB'])",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/f8_receipts/Q8_TB_BLOCK_CERTIFICATES_F1024_RECEIPT.json"
+    },
+    {
+      "dataset_name": "lane_f__f8_receipts__Q8_W_ENVELOPE_F1024_RECEIPT.json",
+      "tree_path": "lane_f/f8_receipts/Q8_W_ENVELOPE_F1024_RECEIPT.json",
+      "sha256": "7d7b33966e48c3fe5f45fcf9618943f17a65ca4ef91caa7e3b2067904d03011e",
+      "bytes": 212014,
+      "role": "pinned W envelope receipt (PINNED_RECEIPT_SHA256['W'])",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_f/f8_receipts/Q8_W_ENVELOPE_F1024_RECEIPT.json"
+    },
+    {
+      "dataset_name": "lane_g__l_out__Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json",
+      "tree_path": "lane_g/l_out/Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json",
+      "sha256": "15f1603af9319ccef1ae7deb942e5cd946835472ef507dbe0bd8b0d2372054d5",
+      "bytes": 111970,
+      "role": "pinned L-OUT omitted-output receipt (PINNED_LOUT_SHA256)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/l_out/Q8_R2OUT_F1024_REPIN_THETA1p230_RECEIPT.json"
+    },
+    {
+      "dataset_name": "driver__q8_leaf_shard.py",
+      "tree_path": "driver/q8_leaf_shard.py",
+      "sha256": "24f247af088f82727f0cd25f259e82e6d98f357ee707f93e6b47de676ddef4ea",
+      "bytes": 14008,
+      "role": "leaf-sharded driver (this campaign; adds no mathematics)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/q8_leaf_shard.py"
+    },
+    {
+      "dataset_name": "driver__merge_shards.py",
+      "tree_path": "driver/merge_shards.py",
+      "sha256": "fe9e19d6d732ba2c8c707d0b068a11a70d3da288e7c0db3d2529f54bd7bb7260",
+      "bytes": 9198,
+      "role": "merge-time verifier (carried for provenance; not run in-kernel)",
+      "repo_path": "research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/merge_shards.py"
+    }
+  ]
+}

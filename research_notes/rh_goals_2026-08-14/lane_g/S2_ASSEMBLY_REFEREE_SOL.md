@@ -200,8 +200,9 @@ values are upper bounds, not enclosures of one unique real; selecting the
 homogeneous local family is valid. The current producer differs from the
 archived runtime producer only by added platform/version receipt fields.
 
-The N=128 control is a completed, honest failure, while its N=288 comparison
-certifies the same base arc:
+The N=128 control in
+`kaggle_s2_contour/local_receipts/S2_CONTROL_N128.json` is a completed, honest
+failure, while its N=288 comparison certifies the same base arc:
 
 ```text
 receipt_status = complete all_theorem_gates_pass = False

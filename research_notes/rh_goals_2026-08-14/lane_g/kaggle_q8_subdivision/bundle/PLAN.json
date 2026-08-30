@@ -1,0 +1,137 @@
+{
+  "dataset_dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/dataset",
+  "dataset_id": "saarshai/q8-schur-subdivision-inputs",
+  "shard_count": 16,
+  "leaves_total": 1024,
+  "leaves_per_shard": 64,
+  "kernels": [
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s00",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s00",
+      "arc": 0,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a0_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s01",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s01",
+      "arc": 0,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a0_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s02",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s02",
+      "arc": 0,
+      "leaf_start": 128,
+      "leaf_end": 192,
+      "receipt": "SHARD_a0_l128-192.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s03",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s03",
+      "arc": 0,
+      "leaf_start": 192,
+      "leaf_end": 256,
+      "receipt": "SHARD_a0_l192-256.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s04",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s04",
+      "arc": 1,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a1_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s05",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s05",
+      "arc": 1,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a1_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s06",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s06",
+      "arc": 1,
+      "leaf_start": 128,
+      "leaf_end": 192,
+      "receipt": "SHARD_a1_l128-192.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s07",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s07",
+      "arc": 1,
+      "leaf_start": 192,
+      "leaf_end": 256,
+      "receipt": "SHARD_a1_l192-256.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s08",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s08",
+      "arc": 2,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a2_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s09",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s09",
+      "arc": 2,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a2_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s10",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s10",
+      "arc": 2,
+      "leaf_start": 128,
+      "leaf_end": 192,
+      "receipt": "SHARD_a2_l128-192.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s11",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s11",
+      "arc": 2,
+      "leaf_start": 192,
+      "leaf_end": 256,
+      "receipt": "SHARD_a2_l192-256.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s12",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s12",
+      "arc": 3,
+      "leaf_start": 0,
+      "leaf_end": 64,
+      "receipt": "SHARD_a3_l0-64.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s13",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s13",
+      "arc": 3,
+      "leaf_start": 64,
+      "leaf_end": 128,
+      "receipt": "SHARD_a3_l64-128.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s14",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s14",
+      "arc": 3,
+      "leaf_start": 128,
+      "leaf_end": 192,
+      "receipt": "SHARD_a3_l128-192.json"
+    },
+    {
+      "kernel_id": "saarshai/q8-schur-d8-s15",
+      "dir": "/Users/za/Documents/farey-hecke/research_notes/rh_goals_2026-08-14/lane_g/kaggle_q8_subdivision/bundle/kernels/q8-schur-d8-s15",
+      "arc": 3,
+      "leaf_start": 192,
+      "leaf_end": 256,
+      "receipt": "SHARD_a3_l192-256.json"
+    }
+  ]
+}
