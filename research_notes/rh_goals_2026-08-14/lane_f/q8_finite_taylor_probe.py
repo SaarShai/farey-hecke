@@ -192,6 +192,8 @@ def main() -> int:
         segment, depth = pending.pop(0)
         try:
             record, box = arc_certificate(args.N, segment)
+            if not record["finite_taylor_excludes_zero"]:
+                raise ArithmeticError("finite Taylor determinant box contains zero")
         except (ArithmeticError, ZeroDivisionError) as error:
             if depth >= max_depth:
                 raise ArithmeticError(

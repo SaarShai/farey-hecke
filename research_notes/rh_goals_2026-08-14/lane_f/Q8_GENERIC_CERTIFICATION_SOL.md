@@ -469,3 +469,46 @@ All promotion-level items in this correction remain **AWAITING COLD
 REFEREE**; the first remaining mathematical gap is still the theorem-valid
 Fredholm tail plus a continuous full-contour enclosure at a certified
 finite-section margin.
+
+## 8. Dated correction block — 2026-08-19 — adaptive acceptance defect
+
+This block is appended rather than rewriting §7.3.  The first serial adaptive
+run exposed a false target in the driver: `arc_certificate` reported whether
+the finite Taylor image excluded zero, but the adaptive loop subdivided only
+when the Neumann or Jacobi inequalities raised an exception.  It could
+therefore accept a subarc with `finite_taylor_abs_lower=0`.  The proposed run
+was **REFUTED as a continuous finite-section certificate** and was terminated;
+it is not evidence for a winding.
+
+A direct fresh replay of four depth-7 bottom subarcs gave:
+
+```text
+$ PYTHONDONTWRITEBYTECODE=1 /Users/za/.venvs/farey-rh/bin/python -c \
+    '<construct depth-7 bottom subarcs; call arc_certificate(32, seg)>'
+depth7_i 0 q [0.21101694584349112887758422932742941673552857465510236014584888445305880717411280 +/- 4.24e-82] rH [0.47909396346609150190538098910372947665035846544469063359619625124470720113806669 +/- 3.03e-81] lower 0 excludes False
+depth7_i 32 q [0.24584593412013942685331759087447720863690099789717489333359312933278168485797049 +/- 1.88e-82] rH [0.73970826868101673129170947534477868983769664060156555296388073946954118361559783 +/- 4.65e-81] lower 0 excludes False
+depth7_i 64 ERR ArithmeticError('finite Jacobi rH not below one: [1.205588034870194486422405081797422972950229249596373422603911172639326779239927609681070199892441163029928541617292 +/- 4.71e-116]')
+depth7_i 96 q [0.29250501708270615238943568439953851570636779940800540674434535964106118038498305 +/- 3.43e-81] rH [0.94363388892703881512225264217287689842727498801331180407998701980476137900784764 +/- 4.23e-82] lower 0 excludes False
+```
+
+Thus `rH<1` does not imply zero exclusion; the negation is witnessed by
+three quoted interval rows.  The loop is now repaired to treat every
+non-excluding finite Taylor box as a subdivision failure.  No corrected full
+run is claimed here.  Moreover, even a positive finite lower bound is not the
+full theorem gate: an accepted subarc must eventually have a strict lower
+bound exceeding an upward theorem-valid Fredholm determinant-tail allowance.
+That comparison remains **OPEN / CONJECTURAL**.  The proposed terminal
+block-Schur evaluator is being developed separately to make the corrected
+continuous computation tractable.
+
+The terminated process receipt was:
+
+```text
+$ kill -TERM 39096
+$ ps -ww -p 39096 -o pid=,ppid=,stat=,etime=,%cpu=,command=
+[no output]
+```
+
+No TB, R2 scalar arithmetic, E1, or `K_s` diagnostic is numerically refuted by
+this driver bug.  Their paper-level binding and all downstream promotion
+statuses remain exactly as caveated in §7.6 and await a cold referee.
