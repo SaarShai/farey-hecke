@@ -38,7 +38,7 @@ for i in $(seq -w 0 21); do
     rm -rf "$tmp"
   fi
 done
-echo "harvested: $have/16"
-if [ "$have" -eq 16 ]; then
+echo "harvested: $have/22"
+if [ "$have" -eq 22 ]; then
   echo "ALL CHUNKS IN — run: /Users/za/.venvs/farey-rh/bin/python $HERE/merge_s2_chunks.py"
 fi
