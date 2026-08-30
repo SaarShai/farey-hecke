@@ -1,6 +1,45 @@
 # Metatheorem III: A ⊭ P_line(c) for every c — NOGO-OPEN-1 discharged via the two certified pins
 
-STATUS: **REFEREED — PROMOTED 2026-08-26.** Gate (i): the S2 assembly
+## STATUS SUPERSEDED — 2026-08-27 (read before citing anything below)
+
+The `REFEREED — PROMOTED` label below was earned against this note's own
+referee and stands only relative to the premises that referee accepted. The
+later cold adversarial review of the preprint
+(`dissemination/preprint/PREPRINT_SOL_ADVERSARIAL_2026-08-26.md`, verdict
+REJECT-IN-PRESENT-FORM) attacked two of those premises directly:
+
+- **Defect 5 — the breadth lemma is an assertion, not a lemma.** `φ_q ∈ 𝔐(A)`
+  for every finite `q` is exactly step 1 (Membership) of the exhibition below.
+  Sol: "no theorem environment, no receipt table, and no proofs of A0–A7 …
+  particularly inadequate for A1, A5, and A6." Accepted in the triage; the
+  breadth lemma was deleted from the rewritten preprint rather than repaired.
+- **Defect 3 — the displayed axiom system is not a well-defined mathematical
+  class.** If `𝔐(A)` is not a well-defined class, "`M₅ ∈ 𝔐(A)`" and
+  "`A ⊭ P_line(c)`" do not yet have their intended meanings.
+
+What survives, and what does not:
+
+- The **two certified pins are untouched** — they are interval-certified,
+  two-seat refereed, and independent of this note.
+- The **non-entailment direction** `A ⊭ P_line(c)` is what this note proves,
+  and sol did not dispute that direction. What sol refuted is the stronger
+  *undecidability* reading: "Failure of one entailment is not undecidability",
+  since `A ⊭ ¬P_line(3/4)` holds only conditionally on RH.
+- The **membership premise is not established at paper level**, so this note
+  is CONDITIONAL on the breadth lemma, not free-standing.
+- Sol's independent-novelty assessment: "III is the two-pin counterexample
+  plus elementary logic."
+
+Accordingly this note is **CONDITIONAL / NOT PROMOTED** until the breadth
+lemma is proved as a proposition with a source table and the axiom class is
+given a well-defined formulation. The entire metatheorem apparatus was
+removed from preprint v2; the paper now states the two certified zeros and
+nothing about axioms deciding anything.
+
+---
+
+STATUS (as of the 2026-08-26 promotion, now superseded above):
+**REFEREED — PROMOTED 2026-08-26.** Gate (i): the S2 assembly
 THEOREM_G5_SECONDPIN_ASSEMBLY.md passed its full referee cycle (seats
 fable + sol, both PASS-WITH-CORRECTIONS, all corrections applied;
 STATUS: REFEREED — PROMOTED). Gate (ii): this note passed its own cold
